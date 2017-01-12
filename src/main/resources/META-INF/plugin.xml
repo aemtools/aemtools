@@ -1,0 +1,108 @@
+<idea-plugin version="2">
+    <id>com.aemtools</id>
+    <name>AEM Tools</name>
+    <version>0.3.1</version>
+    <category>Framework integration</category>
+    <vendor email="dmytrotroynikov@gmail.com" url="">Dmytro Troynikov</vendor>
+
+    <description><![CDATA[
+        AEM Tools is a plugin which contains set of AEM related extensions and features
+       <ul>
+        <li><b>HTL</b>(<b>Sightly</b>) support:
+            <ul>
+                <li><b>Syntax Highlighting</b> - Done</li>
+                <li><b>Code Completion</b> - In progress</li>
+                <li><b>Code navigation</b> - Planned</li>
+                <li><b>Quick Documentation</b> (ctrl+q) - Planned</li>
+            </ul>
+            <i>
+            Note: to make the completion work, AEM dependencies should be present in
+            project's POM, the project should be indexed
+            </i>
+        </li>
+        <li>dialog.xml completion for <b>Classic UI</b></li>
+       </ul>
+    ]]></description>
+
+    <change-notes><![CDATA[
+        0.3.1
+        <ul>
+            <li>Search is working now</li>
+            <li>Added completion for HTL attributes</li>
+        </ul>
+
+        0.3 - beta release
+    ]]>
+    </change-notes>
+
+    <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
+    <idea-version since-build="131"/>
+
+    <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!--<documentationProvider implementation="com.aemtools.documentation.DocumentationProvider"/>-->
+
+        <lang.documentationProvider language="HTML" order="first"
+                                    implementationClass="com.aemtools.documentation.htl.HtlAttributesDocumentationProvider"/>
+        <lang.documentationProvider language="Htl" order="first"
+                                    implementationClass="com.aemtools.documentation.htl.el.HtlELDocumentationProvider"/>
+        <lang.documentationProvider language="XML" order="first"
+                                    implementationClass="com.aemtools.documentation.widget.WidgetDocumentationProvider"/>
+        <!-- widget.xml completion -->
+        <completion.contributor language="XML"
+                                implementationClass="com.aemtools.completion.widget.WidgetCompletionContributor"/>
+
+        <!-- _cq_editConfig.xml completion -->
+        <completion.contributor language="XML"
+                                implementationClass="com.aemtools.completion.editconfig.EditConfigCompletionContributor"/>
+
+        <!-- _rep_policy.xml completion -->
+        <completion.contributor language="XML"
+                                implementationClass="com.aemtools.completion.reppolicy.RepPolicyCompletionContributor"/>
+
+        <!-- Htl -->
+        <psi.referenceContributor language="HTML" implementation="com.aemtools.documentation.ReferenceContributor"/>
+
+        <lang.substitutor language="HTML"
+                          implementationClass="com.aemtools.lang.htl.HtlLanguageSubstitutor"/>
+        <fileTypeFactory implementation="com.aemtools.lang.htl.file.HtlFileTypeFactory"/>
+
+        <lang.fileViewProviderFactory language="Htl"
+                                      implementationClass="com.aemtools.lang.htl.file.HtlViewProviderFactory"/>
+
+        <lang.syntaxHighlighterFactory language="Htl"
+                                       implementationClass="com.aemtools.lang.htl.highlight.HtlHighlighterFactory"/>
+        <!-- Htl Completion Contributor  -->
+        <completion.contributor language="HTML"
+                                implementationClass="com.aemtools.completion.htl.html.HtlCompletionContributor"/>
+
+        <completion.contributor language="Htl"
+                                implementationClass="com.aemtools.completion.htl.HtlELCompletionContributor"/>
+
+        <lang.parserDefinition language="Htl"
+                               implementationClass="com.aemtools.lang.htl.HtlParserDefinition"/>
+
+        <applicationService serviceInterface="com.aemtools.service.repository.IRepositoryService"
+                            serviceImplementation="com.aemtools.service.repository.impl.RepositoryService"
+                            id="aemtools.repository-service"/>
+
+        <internalFileTemplate name="_rep_policy"/>
+
+        <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
+    </extensions>
+
+    <application-components>
+    </application-components>
+
+    <project-components>
+    </project-components>
+
+    <actions>
+    </actions>
+
+</idea-plugin>

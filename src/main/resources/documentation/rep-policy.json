@@ -1,0 +1,96 @@
+[
+  {
+    "nodeName": "jcr:root",
+    "childNodes": [
+      "*"
+    ],
+    "attributes": [
+      {
+        "name": "jcr:primaryType",
+        "type": "String",
+        "values": [
+          "rep:ACL"
+        ],
+        "autoinsert": "true"
+      }
+    ]
+  },
+  {
+    "nodeName": "allow_\nd|deny_\nd",
+    "childNodes": ["rep:restrictions"],
+    "attributes": [
+      {
+        "name": "jcr:primaryType",
+        "type": "String",
+        "values": [
+          "rep:GrantACE",
+          "rep:DenyACE"
+        ]
+      },
+      {
+        "name": "rep:principalName",
+        "type": "String",
+        "values": []
+      },
+      {
+        "name": "rep:privileges",
+        "type": "Array|Name",
+        "values": [
+          "jcr:versionManagement",
+          "jcr:addChildNodes",
+          "jcr:readAccessControl",
+          "jcr:nodeTypeDefinitionManagement",
+          "jcr:lifecycleManagement",
+          "jcr:retentionManagement",
+          "rep:alterProperties",
+          "rep:indexDefinitionManagement",
+          "jcr:write",
+          "rep:privilegeManagement",
+          "jcr:workspaceManagement",
+          "rep:removeProperties",
+          "jcr:modifyAccessControl",
+          "jcr:namespaceManagement",
+          "rep:userManagement",
+          "jcr:read",
+          "rep:write",
+          "rep:addProperties",
+          "jcr:lockManagement",
+          "jcr:nodeTypeManagement",
+          "jcr:removeChildNodes",
+          "jcr:modifyProperties",
+          "rep:readNodes",
+          "crx:replicate"
+        ]
+      }
+    ]
+  },
+  {
+    "nodeName": "rep:restrictions",
+    "childNodes": [],
+    "attributes": [
+      {
+        "name": "jcr:primaryType",
+        "type": "String",
+        "values": [
+          "rep:Restrictions"
+        ],
+        "autoinsert": "true"
+      },
+      {
+        "name": "rep:glob",
+        "type": "String",
+        "values": ["glob"]
+      },
+      {
+        "name": "rep:ntNames",
+        "type": "Array|Name",
+        "values": []
+      },
+      {
+        "name": "rep:prefixes",
+        "type": "String",
+        "values": []
+      }
+    ]
+  }
+]

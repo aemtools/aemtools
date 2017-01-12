@@ -1,0 +1,12 @@
+apply plugin: 'idea'
+
+idea {
+    project {
+        jdkName = javaVersion
+        languageLevel = javaVersion
+    }
+
+    module {
+        generatedSourceDirs += file('gen')
+    }
+}

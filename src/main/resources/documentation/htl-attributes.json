@@ -1,0 +1,32 @@
+[
+  {
+    "name": "data-sly-use",
+    "pattern": "data-sly-use\\.\\w+",
+    "description": ""
+  },
+  {
+    "name": "data-sly-test",
+    "pattern": "data-sly-test",
+    "description": ""
+  },
+  {
+    "name": "data-sly-text",
+    "pattern": "data-sly-text",
+    "description": ""
+  },
+  {
+    "name": "data-sly-list",
+    "pattern": "data-sly-list\\.\\w+",
+    "description": ""
+  },
+  {
+    "name": "data-sly-resource",
+    "pattern": "data-sly-resource",
+    "description": ""
+  },
+  {
+    "name": "data-sly-include",
+    "pattern": "data-sly-include",
+    "description": ""
+  }
+]

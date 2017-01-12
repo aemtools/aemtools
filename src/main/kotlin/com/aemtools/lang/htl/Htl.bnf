@@ -1,0 +1,156 @@
+{
+    parserClass="com.aemtools.lang.htl.HtlParser"
+    parserUtilClass="com.aemtools.lang.htl.parser.HtlParserUtil"
+
+    extends="com.aemtools.lang.htl.psi.HtlPsiBaseElement"
+
+    psiClassPrefix="Htl"
+    psiPackage="com.aemtools.lang.htl.psi"
+
+    elementTypeHolderClass="com.aemtools.lang.htl.psi.HtlTypes"
+    elementTypeClass="com.aemtools.lang.htl.psi.HtlElement"
+    tokenTypeClass="com.aemtools.lang.htl.psi.HtlToken"
+
+    parserImports='static com.aemtools.lang.htl.psi.HtlTypes.*'
+
+    tokens = [
+        LBRACE      = '{'
+        RBRACE      = '}'
+        LBRACKET    = '('
+        RBRACKET    = ')'
+        LSQRBRACKET = '['
+        RSQRBRACKET = ']'
+        QUESTION    = '?'
+        COLON       = ':'
+        EQ          = '=='
+        SINGLE_EQ   = '='
+        NEQ         = '!='
+        GT          = '>'
+        LT          = '<'
+        GTE         = '>='
+        LTE         = '<='
+        EL_START    = '${'
+        MINUS       = '-'
+        PLUS        = '+'
+        EXCLAMATION = '!'
+        COMMA       = ','
+        DOT         = '.'
+        MULTIPLY    = '*'
+        AND_AND     = '&&'
+        OR_OR       = '||'
+        AT          = '@'
+
+        // unclosed string is considered as a 'string until the end of line'
+        DOUBLE_QUOTED_STRING = "regexp:\"((\\[\"btnfr])|[^\"\n])*\"?"
+        SINGLE_QUOTED_STRING = "regexp:'((\\['btnfr])|[^'\n])*'?"
+
+        SQUOT       = "'"
+        TRUE        = 'true'
+        FALSE       = 'false'
+
+        INTEGER     = 'regexp:\d+'
+        VAR_NAME    = 'regexp:[\w\d:]+'
+
+    ]
+
+    mixin       ("property_access") = "com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin"
+    mixin       ("variable_name") = "com.aemtools.lang.htl.psi.mixin.VariableNameMixin"
+    mixin       ("access_identifier") = "com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin"
+}
+
+root ::= ( htl_el | outer_lang )*
+
+private recover_rule ::= !(OUTER_LANGUAGE | EL_START)
+
+private outer_lang ::= OUTER_LANGUAGE+
+
+htl_el ::= ( hel_start hel? context? hel_end?) {recoverWhile="recover_rule" pin=1}
+
+hel_start ::= EL_START
+
+hel_end ::= RBRACE
+
+hel ::= array_expression | expression
+
+array_expression ::= LSQRBRACKET operand (COMMA operand)+ LSQRBRACKET
+    | LSQRBRACKET operand LSQRBRACKET
+
+expression ::= statement
+
+statement ::= ternary_operation
+    | operand operator operand (operator operand)+
+    | operand operator operand
+    | operand
+
+array_statement ::= ternary_operation
+    | operand logical_operator operand
+    | operand
+
+operand ::= array_expression
+    | unary_operator? property_access
+    | unary_operator? literal
+    | braced_operand
+
+braced_operand ::= LBRACKET statement RBRACKET
+
+ternary_operation ::= operand [logical_operator operand] QUESTION operand COLON operand
+
+operator ::= PLUS
+    | MINUS
+    | MULTIPLY
+    | DIVIDE
+    | SINGLE_EQ
+    | EQ
+    | NEQ
+    | GT
+    | GTE
+    | LT
+    | LTE
+    | AND_AND
+    | OR_OR
+
+// Within array literal only logical operations are allowed
+logical_operator ::= EQ
+    | NEQ
+    | GT
+    | GTE
+    | LT
+    | LTE
+    | AND_AND
+    | OR_OR
+
+unary_operator ::= EXCLAMATION | MINUS
+
+property_access ::= unary_operator? variable_name [access_identifier+]
+
+variable_name ::= VAR_NAME
+
+access_identifier ::= dot_access | array_like_access
+
+dot_access ::= DOT variable_name
+
+array_like_access ::= LSQRBRACKET (SINGLE_QUOTED_STRING|DOUBLE_QUOTED_STRING|INTEGER|property_access) RSQRBRACKET
+
+literal ::= string_literal | boolean_literal | number_literal | array_literal
+
+array_literal ::= LSQRBRACKET array_statement [(COMMA array_statement)+] RSQRBRACKET
+
+string_literal ::= SINGLE_QUOTED_STRING | DOUBLE_QUOTED_STRING
+
+boolean_literal ::= TRUE | FALSE
+
+number_literal ::= INTEGER
+
+private context ::= AT context_expression (COMMA context_expression)+
+    | AT context_expression
+
+context_expression ::= assignment
+    | variable_name
+
+assignment ::= variable_name SINGLE_EQ assignment_value
+
+assignment_value ::= array_expression
+    | ternary_operation
+    | literal
+    | property_access
+    | variable_name

@@ -1,0 +1,276 @@
+[
+  {
+    "name": "properties",
+    "className": "org.apache.sling.api.resource.ValueMap",
+    "predefinedMode": "merge",
+    "predefined": [
+      {
+        "name": "jcr:title",
+        "type": "java.lang.String",
+        "description": "String value of <b>jcr:title</b> property, or empty String if such property does not exist."
+      },
+      {
+        "name": "jcr:description",
+        "type": "java.lang.String",
+        "description": "String value of <b>jcr:description</b> property, or empty String if such property does not exist."
+      },
+      {
+        "name": "jcr:primaryType",
+        "type": "java.lang.String",
+        "description": "String defines primary type of the component."
+      },
+      {
+        "name": "jcr:mixinTypes",
+        "type": "java.lang.String",
+        "description": "String array of mixin types"
+      },
+      {
+        "name": "jcr:createdBy",
+        "type": "java.lang.String",
+        "description": "ID of user, created the component or page."
+      },
+      {
+        "name": "cq:lastReplicationAction",
+        "type": "java.lang.String",
+        "description": "Last replication action performed on this node."
+      },
+      {
+        "name": "cq:lastReplicatedBy",
+        "type": "java.lang.String",
+        "description": "ID of user, which replicated current node the last time."
+      },
+      {
+        "name": "jcr:lastModifiedBy",
+        "type": "java.lang.String",
+        "description": "ID of user, which modified current node the last time."
+      },
+      {
+        "name": "jcr:lastModified",
+        "type": "java.util.Calendar",
+        "description": "Date and time of last modified action."
+      },
+      {
+        "name": "cq:lastReplicated",
+        "type": "java.util.Calendar",
+        "description": "Date and time of last replication action."
+      },
+      {
+        "name": "sling:resourceType",
+        "type": "java.lang.String",
+        "description": "String defines the resource type of the component or page."
+      }
+    ]
+  },
+  {
+    "name": "pageProperties",
+    "className": "org.apache.sling.api.resource.ValueMap",
+    "predefinedMode": "merge",
+    "predefined": [
+      {
+        "name": "jcr:title",
+        "type": "java.lang.String",
+        "description": "String value of <b>jcr:title</b> property, or empty String if such property does not exist."
+      },
+      {
+        "name": "jcr:description",
+        "type": "java.lang.String",
+        "description": "String value of <b>jcr:description</b> property, or empty String if such property does not exist."
+      },
+      {
+        "name": "jcr:primaryType",
+        "type": "java.lang.String",
+        "description": "String defines primary type of the component."
+      },
+      {
+        "name": "jcr:mixinTypes",
+        "type": "java.lang.String",
+        "description": "String array of mixin types"
+      },
+      {
+        "name": "jcr:createdBy",
+        "type": "java.lang.String",
+        "description": "ID of user, created the component or page."
+      },
+      {
+        "name": "cq:lastReplicationAction",
+        "type": "java.lang.String",
+        "description": "Last replication action performed on this node."
+      },
+      {
+        "name": "cq:lastReplicatedBy",
+        "type": "java.lang.String",
+        "description": "ID of user, which replicated current node the last time."
+      },
+      {
+        "name": "jcr:lastModifiedBy",
+        "type": "java.lang.String",
+        "description": "ID of user, which modified current node the last time."
+      },
+      {
+        "name": "jcr:lastModified",
+        "type": "java.util.Calendar",
+        "description": "Date and time of last modified action."
+      },
+      {
+        "name": "cq:lastReplicated",
+        "type": "java.util.Calendar",
+        "description": "Date and time of last replication action."
+      },
+      {
+        "name": "sling:resourceType",
+        "type": "java.lang.String",
+        "description": "String defines the resource type of the component or page."
+      }
+    ]
+  },
+  {
+    "name": "inheritedPageProperties",
+    "className": "org.apache.sling.api.resource.ValueMap",
+    "predefinedMode": "merge",
+    "predefined": [
+      {
+        "name": "jcr:title",
+        "type": "java.lang.String",
+        "description": "String value of <b>jcr:title</b> property, or empty String if such property does not exist."
+      },
+      {
+        "name": "jcr:description",
+        "type": "java.lang.String",
+        "description": "String value of <b>jcr:description</b> property, or empty String if such property does not exist."
+      },
+      {
+        "name": "jcr:primaryType",
+        "type": "java.lang.String",
+        "description": "String defines primary type of the component."
+      },
+      {
+        "name": "jcr:mixinTypes",
+        "type": "java.lang.String",
+        "description": "String array of mixin types"
+      },
+      {
+        "name": "jcr:createdBy",
+        "type": "java.lang.String",
+        "description": "ID of user, created the component or page."
+      },
+      {
+        "name": "cq:lastReplicationAction",
+        "type": "java.lang.String",
+        "description": "Last replication action performed on this node."
+      },
+      {
+        "name": "cq:lastReplicatedBy",
+        "type": "java.lang.String",
+        "description": "ID of user, which replicated current node the last time."
+      },
+      {
+        "name": "jcr:lastModifiedBy",
+        "type": "java.lang.String",
+        "description": "ID of user, which modified current node the last time."
+      },
+      {
+        "name": "jcr:lastModified",
+        "type": "java.util.Calendar",
+        "description": "Date and time of last modified action."
+      },
+      {
+        "name": "cq:lastReplicated",
+        "type": "java.util.Calendar",
+        "description": "Date and time of last replication action."
+      },
+      {
+        "name": "sling:resourceType",
+        "type": "java.lang.String",
+        "description": "String defines the resource type of the component or page."
+      }
+    ]
+  },
+  {
+    "name": "component",
+    "className": "com.day.cq.wcm.api.components.Component"
+  },
+  {
+    "name": "componentContext",
+    "className": "com.day.cq.wcm.api.components.ComponentContext"
+  },
+  {
+    "name": "currentDesign",
+    "className": "com.day.cq.wcm.api.designer.Design"
+  },
+  {
+    "name": "currentNode",
+    "className": "javax.jcr.Node"
+  },
+  {
+    "name": "currentPage",
+    "className": "com.day.cq.wcm.api.Page"
+  },
+  {
+    "name": "currentSession",
+    "className": "javax.servlet.http.HttpSession"
+  },
+  {
+    "name": "currentStyle",
+    "className": "com.day.cq.wcm.api.designer.Style"
+  },
+  {
+    "name": "designer",
+    "className": "com.day.cq.wcm.api.designer.Designer"
+  },
+  {
+    "name": "editContext",
+    "className": "com.day.cq.wcm.api.components.EditContext"
+  },
+  {
+    "name": "log",
+    "className": "org.slf4j.Logger"
+  },
+  {
+    "name": "out",
+    "className": "java.io.PrintWriter"
+  },
+  {
+    "name": "pageManager",
+    "className": "com.day.cq.wcm.api.PageManager"
+  },
+  {
+    "name": "reader",
+    "className": "java.io.BufferedReader"
+  },
+  {
+    "name": "request",
+    "className": "org.apache.sling.api.SlingHttpServletRequest"
+  },
+  {
+    "name": "resource",
+    "className": "org.apache.sling.api.resource.Resource"
+  },
+  {
+    "name": "resourceDesign",
+    "className": "com.day.cq.wcm.api.designer.Design"
+  },
+  {
+    "name": "resourcePage",
+    "className": "com.day.cq.wcm.api.Page"
+  },
+  {
+    "name": "response",
+    "className": "org.apache.sling.api.SlingHttpServletResponse"
+  },
+  {
+    "name": "sling",
+    "className": "org.apache.sling.api.scripting.SlingScriptHelper"
+  },
+  {
+    "name": "slyWcmHelper",
+    "className": "com.adobe.cq.sightly.WCMScriptHelper"
+  },
+  {
+    "name": "wcmmode",
+    "className": "com.adobe.cq.sightly.SightlyWCMMode"
+  },
+  {
+    "name": "xssAPI",
+    "className": "com.adobe.granite.xss.impl.XSSAPImpl"
+  }
+]

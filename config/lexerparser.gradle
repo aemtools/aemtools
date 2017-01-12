@@ -1,0 +1,43 @@
+/*
+    Generate Lexer and Parser tasks
+ */
+
+task generateHtlLexer(type: JavaExec) {
+    group = "lexerparser"
+
+    ext.src = "src/main/kotlin/com/aemtools/lang/htl/lexer/Htl.flex"
+    ext.dst = "src/main/gen/com/aemtools/lang/htl/lexer/"
+
+    main = "jflex.Main"
+
+    args = ["--skel", "src/main/kotlin/com/aemtools/lang/htl/lexer/HtlLexer.skeleton",
+            "-d", dst,
+            src]
+
+    inputs.file file(src)
+    outputs.dir file(dst + "_HtlLexer.java")
+
+    classpath configurations.gen
+}
+
+task generateHtlPsiAndParser(type: JavaExec) {
+    group = "lexerparser"
+
+    ext.src = "src/main/kotlin/com/aemtools/lang/htl/Htl.bnf"
+    ext.dst = "src/main/gen"
+
+    main = "org.intellij.grammar.Main"
+
+    args = [ dst, file(src) ]
+
+    inputs.file file(src)
+    outputs.dir fileTree(dir: dst + "/com/aemtools/lang/htl", include: "**/*.java")
+
+    classpath configurations.gen
+}
+
+task generateLexerAndParser {
+    dependsOn generateHtlLexer
+    dependsOn generateHtlPsiAndParser
+    group = "lexerparser"
+}

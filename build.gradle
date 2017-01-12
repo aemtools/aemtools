@@ -1,0 +1,90 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+        mavenCentral()
+        maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'de.undercouch:gradle-download-task:3.1.2'
+        classpath 'org.apache.ivy:ivy:2.3.0'
+    }
+
+}
+
+plugins {
+    id "org.jetbrains.intellij" version "0.1.10"
+    id "de.undercouch.download" version "3.1.2"
+}
+
+allprojects {
+    apply plugin: 'org.jetbrains.intellij'
+
+    intellij {
+        pluginName 'aemtools'
+        version "IC-2016.3"
+
+        updateSinceUntilBuild = false
+        downloadSources = true
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'kotlin'
+
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+
+    tasks.withType(JavaCompile) {options.encoding = 'UTF-8'}
+
+    sourceSets {
+        main.java.srcDirs += "src/main/gen"
+        main.kotlin.srcDirs += "src/main/kotlin"
+        main.resources.srcDir "src/main/resources"
+
+        test.kotlin.srcDir 'src/test/kotlin'
+        test.resources.srcDirs += "src/main/resources"
+    }
+
+    test {
+        apply from: "config/download-test-dependencies.gradle"
+        dependsOn downloadTestDependencies
+
+        testLogging {
+            events "passed", "skipped", "failed"
+            exceptionFormat = 'full'
+        }
+    }
+
+    configurations {
+        gen
+    }
+
+    repositories {
+        mavenLocal()
+        jcenter()
+        mavenCentral()
+    }
+
+    dependencies {
+        compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+        compile "org.jetbrains.kotlin:kotlin-runtime:$kotlin_version"
+
+        compile "com.google.code.gson:gson:$gson_version"
+
+        gen files('lib/grammar-kit-2.jar')
+
+        gen 'de.jflex:jflex:1.6.1'
+
+        testCompile "junit:junit:$junit_version"
+        testCompile "org.assertj:assertj-core:$assertj_version"
+    }
+
+}
+
+apply from: "config/idea.gradle"
+
+/**
+ * Import Lexer Parser Related tasks.
+ */
+apply from: "config/lexerparser.gradle"
