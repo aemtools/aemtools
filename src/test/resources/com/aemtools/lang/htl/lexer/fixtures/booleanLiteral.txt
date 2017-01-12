@@ -1,0 +1,7 @@
+[Htl] ${ ('${')
+[Htl] true ('true')
+[Htl] } ('}')
+[Htl] OUTER_LANGUAGE ('\n')
+[Htl] ${ ('${')
+[Htl] false ('false')
+[Htl] } ('}')

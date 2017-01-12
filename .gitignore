@@ -8,6 +8,5 @@
 out
 gen
 
-test_data/**
 src/test/resources/testLibs/**
 

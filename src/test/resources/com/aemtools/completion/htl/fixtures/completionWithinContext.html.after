@@ -1,0 +1,3 @@
+<div data-sly-use.bean="${'com.bean.name' @ param1=request.requestPathInfo.extension}">
+
+</div>

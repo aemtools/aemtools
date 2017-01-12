@@ -1,0 +1,13 @@
+HtlFile:booleanLiteralFalse.html
+  HtlHtlElImpl([Htl] HTL_EL)
+    HtlHelStartImpl([Htl] HEL_START)
+      PsiElement([Htl] ${)('${')
+    HtlHelImpl([Htl] HEL)
+      HtlExpressionImpl([Htl] EXPRESSION)
+        HtlStatementImpl([Htl] STATEMENT)
+          HtlOperandImpl([Htl] OPERAND)
+            HtlLiteralImpl([Htl] LITERAL)
+              HtlBooleanLiteralImpl([Htl] BOOLEAN_LITERAL)
+                PsiElement([Htl] false)('false')
+    HtlHelEndImpl([Htl] HEL_END)
+      PsiElement([Htl] })('}')

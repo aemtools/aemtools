@@ -1,0 +1,13 @@
+HtlFile:emptySingleQuotedString.html
+  HtlHtlElImpl([Htl] HTL_EL)
+    HtlHelStartImpl([Htl] HEL_START)
+      PsiElement([Htl] ${)('${')
+    HtlHelImpl([Htl] HEL)
+      HtlExpressionImpl([Htl] EXPRESSION)
+        HtlStatementImpl([Htl] STATEMENT)
+          HtlOperandImpl([Htl] OPERAND)
+            HtlLiteralImpl([Htl] LITERAL)
+              HtlStringLiteralImpl([Htl] STRING_LITERAL)
+                PsiElement([Htl] SINGLE_QUOTED_STRING)('''')
+    HtlHelEndImpl([Htl] HEL_END)
+      PsiElement([Htl] })('}')

@@ -1,0 +1,3 @@
+<div>
+    ${wcmmode.edit ? "Text" : request.requestPathInfo}
+</div>

@@ -1,0 +1,7 @@
+<div data-sly-use.bean="${'com.aemtools.completion.htl.fixtures.classes.IterableModel'}">
+    <div data-sly-test.array="${bean.fieldModelArray}">
+        <div data-sly-list="${array}">
+            ${item.<caret>}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,5 @@
+[Htl] OUTER_LANGUAGE ('<div>\n    ')
+[Htl] ${ ('${')
+WHITE_SPACE ('\n')
+[Htl] < ('<')
+[Htl] OUTER_LANGUAGE ('/div>')

@@ -1,0 +1,6 @@
+[Htl] ${ ('${')
+[Htl] ! ('!')
+[Htl] VAR_NAME ('property')
+[Htl] . ('.')
+[Htl] VAR_NAME ('name')
+[Htl] } ('}')

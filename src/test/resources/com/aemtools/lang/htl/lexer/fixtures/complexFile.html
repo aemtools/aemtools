@@ -1,0 +1,34 @@
+<sly data-sly-use.pageResolverUseApi="${'com.package.MyBean' @ path=properties.dataPath}">
+    <sly data-sly-test.page="${pageResolverUseApi.page}">
+        <div data-ng-click="chooseLoadingStrategy('${page.path}')">
+            <div data-alt="${page.properties.name}">
+                <sly data-sly-use.adaptiveImageTemplate="${'template/path'}">
+                    <sly data-sly-call="${adaptiveImageTemplate.adaptive @ imagePath=page.properties.photo,
+                        desktopWidth='180', desktopHeight='150', tabletWidth='', tabletHeight='', mobileWidth='144', mobileHeight='120'}"></sly>
+                </sly>
+            </div>
+            <h4 class="test" data-sly-test="${page.properties.name}">${page.properties.name}</h4>
+            <span class="test" data-sly-list.title="${page.properties.titles}">
+                ${title} ${titleList.last ? '' : ', '}
+            </span>
+        </div>
+
+        <div data-sly-test="${properties.jcr:title}">
+            ${properties.jcr:title || properties.pageTitle || "Default title"}
+        </div>
+
+        <style type="text/css">
+            h1 {
+                background-color: ${properties.value @ context=''};
+            }
+        </style>
+
+        <div style="background-color: ${properties.bgColor @ context='styleToken'};">
+        </div>
+
+        <script type="application/javascript">
+            var test = ${properties.testValue @ context='scriptToken'};
+        </script>
+
+    </sly>
+</sly>
