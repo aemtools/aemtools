@@ -1,4 +1,4 @@
-package com.aemtools.completion.htl.html
+package com.aemtools.completion.html
 
 import com.aemtools.constant.const
 import com.aemtools.constant.const.htl.DATA_SLY_UNWRAP
@@ -14,7 +14,7 @@ import com.intellij.util.ProcessingContext
  * Provider of Htl specific attributes.
  * @author Dmytro_Troynikov
  */
-object HtlAttributeCompletionProvider : CompletionProvider<CompletionParameters>() {
+object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters>() {
     override fun addCompletions(parameters: CompletionParameters,
                                 context: ProcessingContext?,
                                 result: CompletionResultSet) {
