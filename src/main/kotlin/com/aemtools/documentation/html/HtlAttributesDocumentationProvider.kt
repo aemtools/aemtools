@@ -1,8 +1,8 @@
-package com.aemtools.documentation.htl
+package com.aemtools.documentation.html
 
 import com.aemtools.completion.util.isHtlAttribute
 import com.aemtools.constant.const.htl.HTL_ATTRIBUTES
-import com.aemtools.documentation.BaseDocumentationProvider
+import com.intellij.lang.documentation.AbstractDocumentationProvider
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 
@@ -10,13 +10,7 @@ import com.intellij.psi.xml.XmlAttribute
  * TODO: fill documentation values
  * @author Dmytro_Troynikov
  */
-open class HtlAttributesDocumentationProvider : BaseDocumentationProvider() {
-
-    override fun acceptGenerateDoc(element: PsiElement): Boolean {
-        val file = element.containingFile
-
-        return false
-    }
+class HtlAttributesDocumentationProvider : AbstractDocumentationProvider() {
 
     override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {
         val attribute = element as? XmlAttribute ?: return null
