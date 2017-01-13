@@ -79,7 +79,7 @@
                                        implementationClass="com.aemtools.lang.htl.highlight.HtlHighlighterFactory"/>
         <!-- Htl Completion Contributor  -->
         <completion.contributor language="HTML"
-                                implementationClass="com.aemtools.completion.htl.html.HtlCompletionContributor"/>
+                                implementationClass="com.aemtools.completion.html.HtmlCompletionContributor"/>
 
         <completion.contributor language="Htl"
                                 implementationClass="com.aemtools.completion.htl.HtlELCompletionContributor"/>
