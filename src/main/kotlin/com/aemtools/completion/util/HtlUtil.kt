@@ -1,6 +1,9 @@
 package com.aemtools.completion.util
 
 import com.aemtools.constant.const
+import com.aemtools.lang.htl.psi.*
+import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
+import com.intellij.psi.xml.XmlAttribute
 
 /**
  * Htl related utility methods.
@@ -31,4 +34,47 @@ fun extractItemAndItemListNames(value: String): Pair<String, String> {
         }
     }
     return item to "${item}List"
+}
+
+/**
+ * Check if current string literal is the main EL's string
+ * (e.g. ${'main string' @ param='not main string'})
+ */
+fun HtlStringLiteral.isMainString(): Boolean {
+    val expression = this.findParentByType(com.aemtools.lang.htl.psi.HtlExpression::class.java) ?: return false
+
+    return expression.parent is HtlHel
+}
+
+/**
+ * Check if current variable is "option"
+ */
+fun HtlVariableName.isOption() : Boolean {
+    return this.hasParent(HtlContextExpression::class.java)
+        && !this.hasParent(HtlAssignment::class.java)
+}
+
+/**
+ * Extract first (top level) [PropertyAccessMixin].
+ */
+fun HtlHtlEl.extractPropertyAccess(): PropertyAccessMixin? {
+    val propertyAccessItems = findChildrenByType(PropertyAccessMixin::class.java)
+    if (propertyAccessItems.isEmpty()) {
+        return null
+    }
+    return propertyAccessItems.first()
+}
+
+/**
+ * Check if current [HtlHtlEl] element resides within attribute with given name.
+ * @param attributeName the name of attribute
+ * @return __true__ if current element is the value of attribute with given name
+ */
+fun HtlHtlEl.isInsideOF(attributeName: String) : Boolean {
+    val html = this.containingFile.getHtmlFile()
+            ?: return false
+    val attribute = html.findElementAt(this.textOffset - 1)
+            .findParentByType(XmlAttribute::class.java) ?: return false
+
+    return attribute.name.startsWith(attributeName)
 }

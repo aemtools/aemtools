@@ -12,15 +12,14 @@ import com.aemtools.constant.const.htl.DATA_SLY_INCLUDE
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.constant.const.htl.DATA_SLY_RESOURCE
+import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_TEXT
 import com.aemtools.constant.const.htl.DATA_SLY_UNWRAP
 import com.aemtools.constant.const.htl.DATA_SLY_USE
 import com.aemtools.lang.htl.HtlLanguage
-import com.aemtools.lang.htl.psi.HtlHel
 import com.aemtools.lang.htl.psi.HtlHtlEl
-import com.aemtools.lang.htl.psi.HtlStringLiteral
-import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
+import com.aemtools.lang.htl.psi.HtlVariableName
 import com.intellij.openapi.util.Conditions
 import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.xml.XmlTokenImpl
@@ -105,16 +104,6 @@ fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T? {
 }
 
 /**
- * Check if current string literal is the main EL's string
- * (e.g. ${'main string' @ param='not main string'})
- */
-fun HtlStringLiteral.isMainString(): Boolean {
-    val expression = this.findParentByType(com.aemtools.lang.htl.psi.HtlExpression::class.java) ?: return false
-
-    return expression.parent is HtlHel
-}
-
-/**
  * Check if current [PsiElement] has parent of specified class.
  */
 fun <T : PsiElement> PsiElement?.hasParent(type: Class<T>): Boolean {
@@ -134,17 +123,6 @@ fun XmlAttribute.extractHtlHel(): HtlHtlEl? {
     val valueElement = valueElement ?: return null
     val helStart = htlFile.findElementAt(valueElement.textOffset + 1)
     return helStart.findParentByType(HtlHtlEl::class.java)
-}
-
-/**
- * Extract first (top level) [PropertyAccessMixin].
- */
-fun HtlHtlEl.extractPropertyAccess(): PropertyAccessMixin? {
-    val propertyAccessItems = findChildrenByType(PropertyAccessMixin::class.java)
-    if (propertyAccessItems.isEmpty()) {
-        return null
-    }
-    return propertyAccessItems.first()
 }
 
 /**
@@ -267,4 +245,28 @@ fun Collection<XmlAttribute>.extractDeclarations(): Collection<HtlVariableDeclar
                     }
                 }
             }
+}
+
+/**
+ * Extract template parameters from current [XmlAttribute]
+ * e.g.
+ *
+ * ```
+ *   data-sly-template.myTemplate="${@ param1, param2}"
+ * ```
+ *
+ * will return list of "param1" and "param2".
+ *
+ * @return list of parameter names, empty list if no parameters were declared
+ * or in case if the attribute is not `data-sly-template`
+ */
+fun XmlAttribute.extractTemplateParameters(): List<String> {
+    if (!this.name.startsWith(DATA_SLY_TEMPLATE)) {
+        return listOf()
+    }
+
+    val htlHel = this.extractHtlHel() ?: return listOf()
+
+    return htlHel.findChildrenByType(HtlVariableName::class.java)
+            .filter(HtlVariableName::isOption).map { it.text }
 }
