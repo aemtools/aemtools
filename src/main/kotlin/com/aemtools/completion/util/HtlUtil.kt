@@ -41,7 +41,7 @@ fun extractItemAndItemListNames(value: String): Pair<String, String> {
  * (e.g. ${'main string' @ param='not main string'})
  */
 fun HtlStringLiteral.isMainString(): Boolean {
-    val expression = this.findParentByType(com.aemtools.lang.htl.psi.HtlExpression::class.java) ?: return false
+    val expression = this.findParentByType(HtlExpression::class.java) ?: return false
 
     return expression.parent is HtlHel
 }
@@ -66,7 +66,7 @@ fun HtlHtlEl.extractPropertyAccess(): PropertyAccessMixin? {
 }
 
 /**
- * Check if current [HtlHtlEl] element resides within attribute with given name.
+ * Check if current [HtlHtlEl] element resides isWithin attribute with given name.
  * @param attributeName the name of attribute
  * @return __true__ if current element is the value of attribute with given name
  */

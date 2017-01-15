@@ -14,9 +14,8 @@ import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.htl.psi.util.isNotPartOf
-import com.aemtools.lang.htl.psi.util.isNotWithin
 import com.aemtools.lang.htl.psi.util.isPartOf
-import com.aemtools.lang.htl.psi.util.within
+import com.aemtools.lang.htl.psi.util.isWithin
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
@@ -35,7 +34,7 @@ import com.intellij.psi.xml.XmlTag
 import java.util.*
 
 /**
- * Resolves variables declared within htl (html) file.
+ * Resolves variables declared isWithin htl (html) file.
  * @author Dmytro Troynikov
  */
 object FileVariablesResolver {
@@ -131,7 +130,7 @@ object FileVariablesResolver {
 
                         val tag = it.findParentByType(XmlTag::class.java) ?: return result
 
-                        if (position.within(tag)) {
+                        if (position.isWithin(tag)) {
                             result.add(LookupElementBuilder.create(itemName))
                             result.add(LookupElementBuilder.create(itemListName))
                         } else {
@@ -151,17 +150,17 @@ object FileVariablesResolver {
                     }
                     startsWith(DATA_SLY_TEMPLATE) -> {
                         val tag = it.findParentByType(XmlTag::class.java)
-                        if (tag == null || position.isNotWithin(tag)) {
-                            // doing nothing
-                        } else {
+                            ?: return@forEach
+
+                        if (position.isWithin(tag)) {
                             val templateParameters = it.extractTemplateParameters()
 
                             templateParameters.forEach {
                                 result.add(LookupElementBuilder.create(it)
                                         .withTypeText("Template parameter"))
                             }
+                        } else {
                         }
-
                     }
                     else -> {
                     }

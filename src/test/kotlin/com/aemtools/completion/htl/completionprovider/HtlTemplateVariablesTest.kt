@@ -10,6 +10,6 @@ class HtlTemplateVariablesTest : BaseVariantsCheckContributorTest("com/aemtools/
     fun testTemplateVariablesResolution() = assertVariantsPresent(listOf("param1", "param2"))
     fun testTemplateVariablesOutOfTemplate() = assertVariantsAbsent(listOf("param1", "param2"))
 
-    fun testTemplateOptionsDontHaveVariants() =assertVariantsAreEmpty()
+    fun testTemplateOptionsDontHaveVariants() = assertVariantsAreEmpty()
 
 }
