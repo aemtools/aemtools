@@ -78,25 +78,43 @@ fun PsiClass.byNormalizedName(normalizedName: String,
             name == normalizedName
         } ?: return null
 
-        val type = when (psiMember) {
-            is PsiMethod -> psiMember.returnType
-            is PsiField -> psiMember.type
-            else -> null
-        } ?: return null
+        val type = psiMember.resolveReturnType()
+                ?: return null
 
-        val className = when (type) {
-            is PsiClassReferenceType -> resolveClassReferenceType(type, project, declarationType)
-            is PsiClassType -> type.className
-            is PsiPrimitiveType -> type.getBoxedType(psiMember)?.className
-            is PsiArrayType -> type.canonicalText.substring(0, type.canonicalText.indexOf("[]"))
-            else -> null
-        } ?: return null
+        val className = type.resolveClassName(psiMember, declarationType, project)
+                ?: return null
 
         val clazz = JavaPsiFacade.getInstance(project)
                 .findClass(className, GlobalSearchScope.allScope(project)) ?: return null
 
         return psiMember to clazz
     }
+}
+
+fun PsiType.resolveClassName(holder: PsiMember?,
+                             declarationType: DeclarationType,
+                             project: Project): String? = when (this) {
+    is PsiClassReferenceType -> resolveClassReferenceType(this, project, declarationType)
+    is PsiClassType -> this.className
+    is PsiPrimitiveType -> {
+        if (holder != null) {
+            this.getBoxedType(holder)?.className
+        } else {
+            this.getBoxedType(PsiManager.getInstance(project), GlobalSearchScope.allScope(project))
+                    ?.className
+        }
+    }
+    is PsiArrayType -> this.canonicalText.substring(0, this.canonicalText.indexOf("[]"))
+    else -> null
+}
+
+/**
+ * Get return [PsiType] of current [PsiMember].
+ */
+fun PsiMember.resolveReturnType(): PsiType? = when (this) {
+    is PsiMethod -> this.returnType
+    is PsiField -> this.type
+    else -> null
 }
 
 /**
@@ -122,7 +140,9 @@ private fun resolveClassReferenceType(type: PsiClassReferenceType,
 
     return when {
         collectionClass.isInheritor(collectionInterface, true)
-                || collectionClass.isInheritor(mapInterface, true) ->
+        || collectionClass.isEquivalentTo(collectionInterface)
+                || collectionClass.isInheritor(mapInterface, true)
+                || collectionClass.isEquivalentTo(mapInterface)->
             type.reference.parameterList?.typeArguments?.get(0)?.canonicalText
         else -> null
     }
