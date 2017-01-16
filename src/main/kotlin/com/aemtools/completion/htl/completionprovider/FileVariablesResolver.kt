@@ -34,7 +34,7 @@ import com.intellij.psi.xml.XmlTag
 import java.util.*
 
 /**
- * Resolves variables declared isWithin htl (html) file.
+ * Resolves variables declared within htl (html) file.
  * @author Dmytro Troynikov
  */
 object FileVariablesResolver {

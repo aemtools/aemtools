@@ -66,7 +66,7 @@ fun HtlHtlEl.extractPropertyAccess(): PropertyAccessMixin? {
 }
 
 /**
- * Check if current [HtlHtlEl] element resides isWithin attribute with given name.
+ * Check if current [HtlHtlEl] element resides within attribute with given name.
  * @param attributeName the name of attribute
  * @return __true__ if current element is the value of attribute with given name
  */
