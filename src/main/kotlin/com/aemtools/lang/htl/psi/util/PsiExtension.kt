@@ -161,7 +161,7 @@ fun PsiMethod.elName() = this.name.run {
  *
  *  @return __true__ if current element is situated within given tag's body.
  */
-fun PsiElement.within(tag: XmlTag): Boolean {
+fun PsiElement.isWithin(tag: XmlTag): Boolean {
     val composite = tag as CompositeElement
     val tagEnd = composite.findChildByType(XmlTokenType.XML_TAG_END) ?: return false
     val endTagStart = composite.findChildByType(XmlTokenType.XML_END_TAG_START) ?: return false
@@ -174,9 +174,9 @@ fun PsiElement.within(tag: XmlTag): Boolean {
 
 /**
  * Check if current [PsiElement] is not within the body of give [XmlTag]
- * (inverted version of [within])
+ * (inverted version of [isWithin])
  */
-fun PsiElement.isNotWithin(tag: XmlTag): Boolean = !within(tag)
+fun PsiElement.isNotWithin(tag: XmlTag): Boolean = !isWithin(tag)
 
 /**
  * Check if current [PsiElement] is part of given [XmlTag]

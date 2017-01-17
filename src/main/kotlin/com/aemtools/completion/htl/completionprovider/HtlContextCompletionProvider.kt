@@ -2,6 +2,8 @@ package com.aemtools.completion.htl.completionprovider
 
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.findParentByType
+import com.aemtools.completion.util.isInsideOF
+import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.lang.htl.psi.HtlContextExpression
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.intellij.codeInsight.completion.CompletionParameters
@@ -24,6 +26,10 @@ object HtlContextCompletionProvider {
     fun contextParameters(parameters: CompletionParameters): List<LookupElement> {
         val currentPosition = parameters.position
         val hel = currentPosition.findParentByType(HtlHtlEl::class.java)
+                ?: return listOf()
+        if (hel.isInsideOF(DATA_SLY_TEMPLATE)) {
+            return listOf()
+        }
         var children = hel.findChildrenByType(HtlContextExpression::class.java)
         if (children != null) {
             val parent = currentPosition.findParentByType(HtlContextExpression::class.java)

@@ -6,6 +6,7 @@ import com.aemtools.completion.htl.predefined.HtlELPredefined.DATA_SLY_LIST_REPE
 import com.aemtools.completion.util.*
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
+import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_USE
 import com.aemtools.lang.htl.HtlLanguage
@@ -14,7 +15,7 @@ import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.htl.psi.util.isNotPartOf
 import com.aemtools.lang.htl.psi.util.isPartOf
-import com.aemtools.lang.htl.psi.util.within
+import com.aemtools.lang.htl.psi.util.isWithin
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
@@ -127,11 +128,9 @@ object FileVariablesResolver {
                     startsWith(DATA_SLY_LIST) -> {
                         val (itemName, itemListName) = extractItemAndItemListNames(this)
 
-                        val itemClass = resolveClassForDataSlyList(it)
-
                         val tag = it.findParentByType(XmlTag::class.java) ?: return result
 
-                        if (position.within(tag)) {
+                        if (position.isWithin(tag)) {
                             result.add(LookupElementBuilder.create(itemName))
                             result.add(LookupElementBuilder.create(itemListName))
                         } else {
@@ -147,6 +146,20 @@ object FileVariablesResolver {
                             result.add(LookupElementBuilder.create(itemListName))
                         } else {
 
+                        }
+                    }
+                    startsWith(DATA_SLY_TEMPLATE) -> {
+                        val tag = it.findParentByType(XmlTag::class.java)
+                            ?: return@forEach
+
+                        if (position.isWithin(tag)) {
+                            val templateParameters = it.extractTemplateParameters()
+
+                            templateParameters.forEach {
+                                result.add(LookupElementBuilder.create(it)
+                                        .withTypeText("Template parameter"))
+                            }
+                        } else {
                         }
                     }
                     else -> {
@@ -217,16 +230,6 @@ object FileVariablesResolver {
      */
     private fun resolveTestClass(attribute: XmlAttribute): String? {
         return attribute.resolveUseClass()
-    }
-
-    private fun resolveClassForDataSlyList(attribute: XmlAttribute): String? {
-        val htlHel = attribute.extractHtlHel() ?: return null
-
-        val propertyAccess = htlHel.extractPropertyAccess()
-
-        val accessChain = propertyAccess?.accessChain() ?: return null
-
-        return accessChain.last().className
     }
 
 }
