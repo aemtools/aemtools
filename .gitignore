@@ -3,10 +3,12 @@
 ### Example user template
 
 # IntelliJ project files
-.idea
+.idea/
 *.iml
-out
-gen
-
+out/
+gen/
+.gradle/
+build/
+classes/
 src/test/resources/testLibs/**
 
