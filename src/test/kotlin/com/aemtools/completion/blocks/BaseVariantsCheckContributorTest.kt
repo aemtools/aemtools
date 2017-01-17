@@ -75,6 +75,8 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
                 "isBooleanField", "publicBoolean", "publicString",
                 "publicStringArray", "publicStringList", "publicStringMap",
                 "stringArray", "stringField", "stringList", "stringMap", "modelList")
+
+        val OBJECT_VARIANTS = listOf("class", "hashCode", "toString")
     }
 
     override fun getTestDataPath(): String = "${HtlTestCase.testResourcesPath}/$dataPath"
