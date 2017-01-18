@@ -102,8 +102,8 @@ fun <T : PsiElement> PsiElement?.findChildrenByType(type: Class<T>): Collection<
 /**
  * Searches for parent PSI element of specified class
  */
-fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T {
-    return PsiTreeUtil.findFirstParent(this, Conditions.instanceOf(type)) as T
+fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T? {
+    return PsiTreeUtil.findFirstParent(this, Conditions.instanceOf(type)) as T?
 }
 
 /**
@@ -257,7 +257,7 @@ fun XmlAttribute.isHtlDeclarationAttribute(): Boolean =
             }
         }
 
-fun XmlTag.isSlyTag(): Boolean = this.name == SLY_TAG
+fun XmlTag?.isSlyTag(): Boolean = this?.name == SLY_TAG
 
 /**
  * Extract list of Htl variable declarations from current [XmlAttribute] collection.

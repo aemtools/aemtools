@@ -38,7 +38,7 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
     /**
      * Filter out obsolete attribute for autocompletion
      */
-    private fun filterLookupElementsForTag(tag: XmlTag, vars: List<LookupElement>): List<LookupElement> {
+    private fun filterLookupElementsForTag(tag: XmlTag?, vars: List<LookupElement>): List<LookupElement> {
         val obsoleteAttributes = ArrayList<String>()
         if (tag.isSlyTag()) {
             obsoleteAttributes.add(DATA_SLY_UNWRAP)
@@ -56,7 +56,7 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
      * @param tag XmlTag where method search unique attributes
      * @return collection of names of attributes
      */
-    private fun getUniqueHtlAttributes(tag: XmlTag): Collection<String> =
+    private fun getUniqueHtlAttributes(tag: XmlTag?): Collection<String> =
             tag.findChildrenByType(XmlAttribute::class.java)
                     .filter(XmlAttribute::isUniqueHtlAttribute)
                     .map { it.name }
