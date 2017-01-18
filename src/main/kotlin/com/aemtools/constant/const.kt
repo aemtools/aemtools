@@ -57,6 +57,12 @@ object const {
         )
     }
 
+    object java {
+        val USE_INTERFACE = "io.sightly.java.api.Use"
+        val WCM_USE_CLASS = "com.adobe.cq.sightly.WCMUse"
+        val SLING_MODEL = "org.apache.sling.models.annotations.Model"
+    }
+
     object js {
         object type {
             val STRING : String = "String"
