@@ -1,23 +1,17 @@
 package com.aemtools.completion.util
 
+import com.aemtools.completion.htl.model.DataSlyUseType
 import com.aemtools.completion.htl.model.DeclarationType
 import com.aemtools.completion.htl.model.HtlVariableDeclaration
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.htl.predefined.HtlELPredefined
-import com.aemtools.constant.const
 import com.aemtools.constant.const.SLY_TAG
-import com.aemtools.constant.const.htl.DATA_SLY_ATTRIBUTE
-import com.aemtools.constant.const.htl.DATA_SLY_CALL
-import com.aemtools.constant.const.htl.DATA_SLY_ELEMENT
-import com.aemtools.constant.const.htl.DATA_SLY_INCLUDE
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
-import com.aemtools.constant.const.htl.DATA_SLY_RESOURCE
 import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.constant.const.htl.DATA_SLY_TEST
-import com.aemtools.constant.const.htl.DATA_SLY_TEXT
-import com.aemtools.constant.const.htl.DATA_SLY_UNWRAP
 import com.aemtools.constant.const.htl.DATA_SLY_USE
+import com.aemtools.constant.const.htl.HTL_ATTRIBUTES
 import com.aemtools.constant.const.htl.UNIQUE_HTL_ATTRIBUTES
 import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.HtlHtlEl
@@ -28,68 +22,6 @@ import com.intellij.psi.impl.source.xml.XmlTokenImpl
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
-
-/**
- * @author Dmytro_Troynikov
- */
-object PsiXmlUtil {
-
-    /**
-     * Extracts the tag containing given element (itself in case if passed element is tag itself)
-     * @param element the starting point of lookup
-     * @return tag container *null* if no tag found
-     */
-    fun extractTag(element: PsiElement): XmlTag? {
-        var currentElement: PsiElement? = element
-        while (currentElement != null) {
-            if (currentElement is XmlTag) {
-                return currentElement
-            }
-            currentElement = currentElement.parent
-        }
-        return null
-    }
-
-    /**
-     * Removes Idea placeholder which denotes the position of caret.
-     *
-     *
-     * __Example input:__
-     *
-     *
-     *    "pathfIntellijIdeaRulezzzield" -> "pathfield"
-     *
-     *
-     *    "IntellijIdeaRulezzz" -> ""
-     * @param input string to process.
-     * @return the input string without caret placeholder.
-     */
-    fun removeCaretPlaceholder(input: String?): String? {
-        if (input == null) {
-            return null
-        }
-
-        if (input.contains(const.IDEA_STRING_CARET_PLACEHOLDER)) {
-            return input.substring(0, input.indexOf(const.IDEA_STRING_CARET_PLACEHOLDER))
-        }
-
-        return input
-    }
-
-    /**
-     * Extract name of attribute associated with given PsiElement
-     */
-    fun nameOfAttribute(element: PsiElement?): String? {
-        if (element == null) {
-            return null
-        }
-
-        var attr: PsiElement? = element.findParentByType(XmlAttribute::class.java) ?: return null
-
-        return (attr as XmlAttribute).name
-    }
-
-}
 
 /**
  * Searches for children by type (@see [PsiTreeUtil])
@@ -192,27 +124,38 @@ private fun extractBeanNameFromEl(el: String): String? {
 fun XmlAttribute.isDataSlyUse(): Boolean = this.name.startsWith(DATA_SLY_USE)
 
 /**
+ * Resolve [DataSlyUseType]
+ * @return [DataSlyUseType], __null__ if current attribute is not [DATA_SLY_USE]
+ */
+fun XmlAttribute.dataSlyUseType(): DataSlyUseType? {
+    if (!this.isDataSlyUse()) {
+        return null
+    }
+
+    val name = resolveUseClass() ?: return DataSlyUseType.UNKNOWN
+    return with(name) {
+        when {
+            endsWith(".js") -> DataSlyUseType.JAVASCRIPT
+            length > 0 -> DataSlyUseType.JAVA
+            else -> DataSlyUseType.UNKNOWN
+        }
+    }
+}
+
+/**
  * Check if current [XmlAttribute] is Htl attribute.
  *
  * @return __true__ if current element is Htl attribute
  */
 fun XmlAttribute.isHtlAttribute(): Boolean = with(this.name) {
-    when {
-        startsWith(DATA_SLY_USE)
-                || startsWith(DATA_SLY_TEST)
-                || startsWith(DATA_SLY_REPEAT)
-                || startsWith(DATA_SLY_LIST)
-                || startsWith(DATA_SLY_ATTRIBUTE)
-                || startsWith(DATA_SLY_ELEMENT)
-                || startsWith(DATA_SLY_CALL)
-                || startsWith(DATA_SLY_INCLUDE)
-                || startsWith(DATA_SLY_UNWRAP)
-                || startsWith(DATA_SLY_TEXT)
-                || startsWith(DATA_SLY_RESOURCE) -> true
-        else -> false
+    HTL_ATTRIBUTES.forEach {
+        if (startsWith(it)) {
+            return true
+        }
     }
-}
 
+    return false
+}
 
 /**
  * Check if current element is Htl attribute which declares some variable.

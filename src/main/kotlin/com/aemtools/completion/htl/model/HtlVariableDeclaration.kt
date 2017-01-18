@@ -23,4 +23,5 @@ data class HtlVariableDeclaration(
         /**
          * Certain declarations may have own [ResolutionResult]. By default the result is empty.
          */
+        @Deprecated("The resolution result will be removed")
         val resolutionResult: ResolutionResult = ResolutionResult())

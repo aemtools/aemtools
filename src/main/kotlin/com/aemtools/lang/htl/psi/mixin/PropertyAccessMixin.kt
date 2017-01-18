@@ -1,5 +1,6 @@
 package com.aemtools.lang.htl.psi.mixin
 
+import com.aemtools.completion.htl.callchain.HtlCallChainResolver
 import com.aemtools.completion.htl.completionprovider.FileVariablesResolver
 import com.aemtools.completion.htl.model.HtlVariableDeclaration
 import com.aemtools.completion.htl.model.PropertyAccessChainUnit
@@ -7,6 +8,7 @@ import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.util.extractHtlHel
 import com.aemtools.completion.util.extractPropertyAccess
 import com.aemtools.completion.util.resolveUseClass
+import com.aemtools.lang.htl.psi.chain.RawChainUnit
 import com.aemtools.lang.htl.psi.util.byNormalizedName
 import com.aemtools.lang.htl.psi.util.resolveClassName
 import com.aemtools.lang.htl.psi.util.resolveReturnType
@@ -26,7 +28,7 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
     fun accessChain(): List<PropertyAccessChainUnit> {
         val callChain = callChain()
         var chainElement = callChain.pop()
-
+        val res = HtlCallChainResolver.resolveCallChain(this)
         var (names, propertyAccessChain, resolutionResult)
                 = resolveFirstItem(chainElement)
 
@@ -46,7 +48,7 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
         return propertyAccessChain
     }
 
-    private fun resolveSubChain(callChain: CallChainUnit,
+    private fun resolveSubChain(callChain: RawChainUnit,
                                 previousResolutionResult: ResolutionResult,
                                 previousChainUnit: PropertyAccessChainUnit,
                                 previousDeclaration: HtlVariableDeclaration?): Deque<PropertyAccessChainUnit> {
@@ -124,7 +126,7 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
         }
     }
 
-    private fun resolveFirstItem(firstChainElement: CallChainUnit): Triple<LinkedList<PsiElement>, LinkedList<PropertyAccessChainUnit>, ResolutionResult> {
+    private fun resolveFirstItem(firstChainElement: RawChainUnit): Triple<LinkedList<PsiElement>, LinkedList<PropertyAccessChainUnit>, ResolutionResult> {
         val propertyAccessChain = LinkedList<PropertyAccessChainUnit>()
         var names = firstChainElement.myCallChain
 
@@ -199,8 +201,8 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
     /**
      * Returns call chain of current element.
      */
-    private fun callChain(): LinkedList<CallChainUnit> {
-        var result = LinkedList<CallChainUnit>()
+    fun callChain(): LinkedList<RawChainUnit> {
+        var result = LinkedList<RawChainUnit>()
         var myChain = LinkedList(listOf(*this.children))
 
         val firstElement = myChain.first() as VariableNameMixin
@@ -225,18 +227,18 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
             }
         }
 
-        val myChainUnit = CallChainUnit(myChain, declaration)
+        val myChainUnit = RawChainUnit(myChain, declaration)
 
         return LinkedList(listOf(*result.toTypedArray(), myChainUnit))
     }
 
-    private fun createUseChainUnit(declaration: HtlVariableDeclaration, useClass: String): LinkedList<CallChainUnit> {
-        val result = LinkedList<CallChainUnit>()
+    private fun createUseChainUnit(declaration: HtlVariableDeclaration, useClass: String): LinkedList<RawChainUnit> {
+        val result = LinkedList<RawChainUnit>()
 
         val jpc = JavaPsiFacade.getInstance(project)
         val clazz = jpc.findClass(useClass, GlobalSearchScope.allScope(project))
 
-        result.add(CallChainUnit(LinkedList(), HtlVariableDeclaration(
+        result.add(RawChainUnit(LinkedList(), HtlVariableDeclaration(
                 declaration.xmlAttribute,
                 declaration.variableName,
                 declaration.type,
@@ -244,8 +246,5 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
         )))
         return result
     }
-
-    private data class CallChainUnit(val myCallChain: LinkedList<PsiElement>,
-                                     val myDeclaration: HtlVariableDeclaration? = null)
 
 }
