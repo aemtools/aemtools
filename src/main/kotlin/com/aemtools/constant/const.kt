@@ -27,6 +27,7 @@ object const {
         val DATA_SLY_TEST = "${HTL_PREFIX}test"
         val DATA_SLY_REPEAT = "${HTL_PREFIX}repeat"
         val DATA_SLY_LIST = "${HTL_PREFIX}list"
+        val DATA_SLY_TEMPLATE = "${HTL_PREFIX}template"
         val DATA_SLY_ATTRIBUTE = "${HTL_PREFIX}attribute"
         val DATA_SLY_ELEMENT = "${HTL_PREFIX}element"
         val DATA_SLY_CALL = "${HTL_PREFIX}call"
@@ -39,6 +40,7 @@ object const {
                 DATA_SLY_TEST,
                 DATA_SLY_REPEAT,
                 DATA_SLY_LIST,
+                DATA_SLY_TEMPLATE,
                 DATA_SLY_ATTRIBUTE,
                 DATA_SLY_ELEMENT,
                 DATA_SLY_CALL,
