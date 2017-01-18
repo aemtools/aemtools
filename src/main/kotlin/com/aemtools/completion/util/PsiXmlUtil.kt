@@ -5,6 +5,7 @@ import com.aemtools.completion.htl.model.HtlVariableDeclaration
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.htl.predefined.HtlELPredefined
 import com.aemtools.constant.const
+import com.aemtools.constant.const.SLY_TAG
 import com.aemtools.constant.const.htl.DATA_SLY_ATTRIBUTE
 import com.aemtools.constant.const.htl.DATA_SLY_CALL
 import com.aemtools.constant.const.htl.DATA_SLY_ELEMENT
@@ -16,6 +17,7 @@ import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_TEXT
 import com.aemtools.constant.const.htl.DATA_SLY_UNWRAP
 import com.aemtools.constant.const.htl.DATA_SLY_USE
+import com.aemtools.constant.const.htl.UNIQUE_HTL_ATTRIBUTES
 import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.HtlHel
 import com.aemtools.lang.htl.psi.HtlHtlEl
@@ -100,8 +102,8 @@ fun <T : PsiElement> PsiElement?.findChildrenByType(type: Class<T>): Collection<
 /**
  * Searches for parent PSI element of specified class
  */
-fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T? {
-    return PsiTreeUtil.findFirstParent(this, Conditions.instanceOf(type)) as T?
+fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T {
+    return PsiTreeUtil.findFirstParent(this, Conditions.instanceOf(type)) as T
 }
 
 /**
@@ -153,6 +155,13 @@ fun HtlHtlEl.extractPropertyAccess(): PropertyAccessMixin? {
 fun Collection<XmlAttribute>.htlAttributes(): Collection<XmlAttribute> =
         filter { it.isHtlAttribute() }
 
+
+/**
+ * Extract Htl unique attributes as [Collection<String>] from given [XmlAttribute] collection.
+ */
+fun Array<PsiElement>.uniqueHtlAttributes(): Collection<String> =
+        filter { it.isUniqueHtlAttribute() }.map { it.text }
+
 /**
  * Resolves the class of variable declared in current [XmlAttribute] element.
  *
@@ -192,6 +201,15 @@ private fun extractBeanNameFromEl(el: String): String? {
  * Check if current [XmlAttribute] is `data-sly-use` attribute.
  */
 fun XmlAttribute.isDataSlyUse(): Boolean = this.name.startsWith(DATA_SLY_USE)
+
+
+/**
+ * Check if current [PsiElement] is unique. Unique attributes are
+ *  `data-sly-unwrap`
+ *  `data-sly-list`
+ */
+fun PsiElement.isUniqueHtlAttribute(): Boolean = UNIQUE_HTL_ATTRIBUTES.contains(this.text)
+
 
 /**
  * Check if current [XmlAttribute] is Htl attribute.
@@ -238,6 +256,8 @@ fun XmlAttribute.isHtlDeclarationAttribute(): Boolean =
                 else -> false
             }
         }
+
+fun XmlTag.isSlyTag(): Boolean = this.name == SLY_TAG
 
 /**
  * Extract list of Htl variable declarations from current [XmlAttribute] collection.

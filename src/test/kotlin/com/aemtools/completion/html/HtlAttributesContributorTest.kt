@@ -13,4 +13,8 @@ class HtlAttributesContributorTest : BaseVariantsCheckContributorTest("com/aemto
 
     fun testHtlAttributesFilterOutUnwrap() = assertVariantsAbsent(listOf(DATA_SLY_UNWRAP))
 
+    fun testHtlAttributesFilterOutUnwrap2() = assertVariantsAbsent(listOf(DATA_SLY_UNWRAP))
+
+    fun testHtlAttributesFilterOutUnwrap3() = assertVariantsAbsent(listOf(DATA_SLY_UNWRAP))
+
 }

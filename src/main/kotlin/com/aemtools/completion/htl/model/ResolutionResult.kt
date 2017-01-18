@@ -4,10 +4,12 @@ import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.psi.PsiClass
 
 /**
+ * The result of type resolution.
  * @author Dmytro_Troynikov
  */
 data class ResolutionResult(val psiClass: PsiClass? = null,
-                       val predefined: List<LookupElement>? = null) {
+                            val predefined: List<LookupElement>? = null) {
+
     /**
      * Check if current [ResolutionResult] is empty.
      */

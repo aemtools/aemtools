@@ -45,12 +45,10 @@
     -->
 
     <extensions defaultExtensionNs="com.intellij">
-        <!--<documentationProvider implementation="com.aemtools.documentation.DocumentationProvider"/>-->
-
         <lang.documentationProvider language="HTML" order="first"
-                                    implementationClass="com.aemtools.documentation.htl.HtlAttributesDocumentationProvider"/>
+                                    implementationClass="com.aemtools.documentation.html.HtlAttributesDocumentationProvider"/>
         <lang.documentationProvider language="Htl" order="first"
-                                    implementationClass="com.aemtools.documentation.htl.el.HtlELDocumentationProvider"/>
+                                    implementationClass="com.aemtools.documentation.htl.HtlELDocumentationProvider"/>
         <lang.documentationProvider language="XML" order="first"
                                     implementationClass="com.aemtools.documentation.widget.WidgetDocumentationProvider"/>
         <!-- widget.xml completion -->
@@ -66,7 +64,8 @@
                                 implementationClass="com.aemtools.completion.reppolicy.RepPolicyCompletionContributor"/>
 
         <!-- Htl -->
-        <psi.referenceContributor language="HTML" implementation="com.aemtools.documentation.ReferenceContributor"/>
+        <psi.referenceContributor language="HTML" implementation="com.aemtools.reference.html.HtmlReferenceContributor"/>
+        <psi.referenceContributor language="Htl" implementation="com.aemtools.reference.htl.HtlReferenceContributor"/>
 
         <lang.substitutor language="HTML"
                           implementationClass="com.aemtools.lang.htl.HtlLanguageSubstitutor"/>
@@ -79,7 +78,7 @@
                                        implementationClass="com.aemtools.lang.htl.highlight.HtlHighlighterFactory"/>
         <!-- Htl Completion Contributor  -->
         <completion.contributor language="HTML"
-                                implementationClass="com.aemtools.completion.htl.html.HtlCompletionContributor"/>
+                                implementationClass="com.aemtools.completion.html.HtmlCompletionContributor"/>
 
         <completion.contributor language="Htl"
                                 implementationClass="com.aemtools.completion.htl.HtlELCompletionContributor"/>
