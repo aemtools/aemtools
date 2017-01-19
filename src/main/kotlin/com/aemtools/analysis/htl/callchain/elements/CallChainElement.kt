@@ -1,9 +1,9 @@
-package com.aemtools.completion.htl.callchain.elements
+package com.aemtools.analysis.htl.callchain.elements
 
-import com.aemtools.completion.htl.callchain.typedescriptor.ArrayTypeDescriptor
-import com.aemtools.completion.htl.callchain.typedescriptor.ListTypeDescriptor
-import com.aemtools.completion.htl.callchain.typedescriptor.MapTypeDescriptor
-import com.aemtools.completion.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.ArrayTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.ListTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.MapTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.intellij.psi.PsiElement
 
 /**

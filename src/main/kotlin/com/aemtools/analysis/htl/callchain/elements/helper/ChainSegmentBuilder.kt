@@ -1,10 +1,10 @@
-package com.aemtools.completion.htl.callchain.elements.helper
+package com.aemtools.analysis.htl.callchain.elements.helper
 
-import com.aemtools.completion.htl.callchain.elements.BaseCallChainSegment
-import com.aemtools.completion.htl.callchain.elements.CallChain
-import com.aemtools.completion.htl.callchain.elements.CallChainElement
-import com.aemtools.completion.htl.callchain.elements.CallChainSegment
-import com.aemtools.completion.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.elements.BaseCallChainSegment
+import com.aemtools.analysis.htl.callchain.elements.CallChain
+import com.aemtools.analysis.htl.callchain.elements.CallChainElement
+import com.aemtools.analysis.htl.callchain.elements.CallChainSegment
+import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 
 /**
  * @author Dmytro_Troynikov

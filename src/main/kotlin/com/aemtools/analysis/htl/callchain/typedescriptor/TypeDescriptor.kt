@@ -1,4 +1,4 @@
-package com.aemtools.completion.htl.callchain.typedescriptor
+package com.aemtools.analysis.htl.callchain.typedescriptor
 
 import com.intellij.codeInsight.lookup.LookupElement
 

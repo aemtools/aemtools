@@ -1,7 +1,7 @@
-package com.aemtools.completion.htl.callchain.typedescriptor.java
+package com.aemtools.analysis.htl.callchain.typedescriptor.java
 
-import com.aemtools.completion.htl.callchain.typedescriptor.MapTypeDescriptor
-import com.aemtools.completion.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.MapTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.intellij.psi.PsiClass
 
 /**

@@ -1,6 +1,6 @@
-package com.aemtools.completion.htl.callchain.elements
+package com.aemtools.analysis.htl.callchain.elements
 
-import com.aemtools.completion.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 
 /**
  * @Author Dmytro_Troynikov

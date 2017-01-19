@@ -1,15 +1,15 @@
-package com.aemtools.completion.htl.callchain.rawchainprocessor
+package com.aemtools.analysis.htl.callchain.rawchainprocessor
 
-import com.aemtools.completion.htl.callchain.elements.BaseChainElement
-import com.aemtools.completion.htl.callchain.elements.CallChain
-import com.aemtools.completion.htl.callchain.elements.CallChainElement
-import com.aemtools.completion.htl.callchain.elements.CallChainSegment
-import com.aemtools.completion.htl.callchain.elements.helper.chainSegment
-import com.aemtools.completion.htl.callchain.typedescriptor.PredefinedVariantsTypeDescriptor
-import com.aemtools.completion.htl.callchain.typedescriptor.TypeDescriptor
-import com.aemtools.completion.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
-import com.aemtools.completion.htl.callchain.typedescriptor.java.ListJavaTypeDescriptor
-import com.aemtools.completion.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
+import com.aemtools.analysis.htl.callchain.elements.BaseChainElement
+import com.aemtools.analysis.htl.callchain.elements.CallChain
+import com.aemtools.analysis.htl.callchain.elements.CallChainElement
+import com.aemtools.analysis.htl.callchain.elements.CallChainSegment
+import com.aemtools.analysis.htl.callchain.elements.helper.chainSegment
+import com.aemtools.analysis.htl.callchain.typedescriptor.PredefinedVariantsTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.java.ListJavaTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
 import com.aemtools.completion.htl.completionprovider.FileVariablesResolver
 import com.aemtools.completion.htl.completionprovider.PredefinedVariables
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess

@@ -1,9 +1,10 @@
-package com.aemtools.completion.htl.callchain
+package com.aemtools.analysis.htl.callchain
 
-import com.aemtools.completion.htl.callchain.elements.CallChain
-import com.aemtools.completion.htl.callchain.elements.CallChainSegment
-import com.aemtools.completion.htl.callchain.rawchainprocessor.RawCallChainProcessor
+import com.aemtools.analysis.htl.callchain.elements.CallChain
+import com.aemtools.analysis.htl.callchain.elements.CallChainSegment
+import com.aemtools.analysis.htl.callchain.rawchainprocessor.RawCallChainProcessor
 import com.aemtools.completion.htl.model.ResolutionResult
+import com.aemtools.lang.htl.psi.chain.RawChainUnit
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import java.util.*
 
@@ -18,12 +19,12 @@ object HtlCallChainResolver {
     }
 
     private fun callChain(propertyAccessMixin: PropertyAccessMixin): CallChain? {
-        val rawCallChain = propertyAccessMixin.callChain()
+        val rawCallChain: LinkedList<RawChainUnit> = propertyAccessMixin.callChain()
 
         val callChainElements = ArrayList<CallChainSegment>()
 
         val firstRawCallChainUnit = rawCallChain.pop()
-        val rawChainProcessor = RawCallChainProcessor.forRawChain(firstRawCallChainUnit)
+        val rawChainProcessor = RawCallChainProcessor.forRawChain(rawCallChain)
 
         return rawChainProcessor?.processChain(rawCallChain)
     }

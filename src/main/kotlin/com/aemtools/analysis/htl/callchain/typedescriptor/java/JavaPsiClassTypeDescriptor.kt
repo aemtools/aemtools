@@ -1,6 +1,6 @@
-package com.aemtools.completion.htl.callchain.typedescriptor.java
+package com.aemtools.analysis.htl.callchain.typedescriptor.java
 
-import com.aemtools.completion.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.aemtools.lang.htl.psi.util.*
 import com.aemtools.lang.java.JavaSearch
 import com.intellij.codeInsight.lookup.LookupElement

@@ -1,6 +1,6 @@
 package com.aemtools.lang.htl.psi.mixin
 
-import com.aemtools.completion.htl.callchain.HtlCallChainResolver
+import com.aemtools.analysis.htl.callchain.HtlCallChainResolver
 import com.aemtools.completion.htl.completionprovider.FileVariablesResolver
 import com.aemtools.completion.htl.model.HtlVariableDeclaration
 import com.aemtools.completion.htl.model.PropertyAccessChainUnit

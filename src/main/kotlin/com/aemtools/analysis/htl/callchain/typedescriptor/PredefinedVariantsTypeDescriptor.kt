@@ -1,6 +1,6 @@
-package com.aemtools.completion.htl.callchain.typedescriptor
+package com.aemtools.analysis.htl.callchain.typedescriptor
 
-import com.aemtools.completion.htl.callchain.typedescriptor.TypeDescriptor.Companion.empty
+import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor.Companion.empty
 import com.intellij.codeInsight.lookup.LookupElement
 
 /**

@@ -1,6 +1,6 @@
-package com.aemtools.completion.htl.callchain.rawchainprocessor
+package com.aemtools.analysis.htl.callchain.rawchainprocessor
 
-import com.aemtools.completion.htl.callchain.elements.CallChain
+import com.aemtools.analysis.htl.callchain.elements.CallChain
 import com.aemtools.lang.htl.psi.chain.RawChainUnit
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import java.util.*
