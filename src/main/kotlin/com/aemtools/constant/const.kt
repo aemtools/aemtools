@@ -19,6 +19,8 @@ object const {
 
     val  REP_POLICY: String = "_rep_policy.xml"
 
+    val SLY_TAG: String = "sly"
+
     object htl {
         val HTL_PREFIX = "data-sly-"
         val DATA_SLY_USE = "${HTL_PREFIX}use"
@@ -46,6 +48,12 @@ object const {
                 DATA_SLY_UNWRAP,
                 DATA_SLY_TEXT,
                 DATA_SLY_RESOURCE
+        )
+        // Attributes, which can meet in tag only one time
+        val UNIQUE_HTL_ATTRIBUTES = listOf(
+                DATA_SLY_LIST,
+                DATA_SLY_UNWRAP,
+                DATA_SLY_REPEAT
         )
     }
 
