@@ -61,6 +61,14 @@ fun PsiClass.elMembers(): List<PsiMember> {
     return this.elMethods() + this.elFields()
 }
 
+fun PsiClass.findElMemberByName(name: String) : PsiMember? = elMembers().find {
+    val normalizedName = when (it) {
+        is PsiMethod -> it.elName()
+        else -> it.name
+    }
+    normalizedName == name
+}
+
 /**
  * Find the field or method by Htl normalized name and find the corresponding [PsiClass]
  * @return the [PsiClass] of field type or of method's return type
