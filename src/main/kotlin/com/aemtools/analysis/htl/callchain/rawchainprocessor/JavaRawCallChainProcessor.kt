@@ -12,10 +12,12 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.java.ListJavaTypeDescr
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
 import com.aemtools.completion.htl.completionprovider.FileVariablesResolver
 import com.aemtools.completion.htl.completionprovider.PredefinedVariables
+import com.aemtools.completion.util.resolveUseClass
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
 import com.aemtools.lang.htl.psi.chain.RawChainUnit
 import com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
+import com.aemtools.lang.java.JavaSearch
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiElement
 import java.util.*
@@ -48,6 +50,10 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
 
         val inputType = resolveFirstType(rawChainUnit)
 
+        if (inputType.isEmpty()) {
+
+        }
+
         // TODO: construct and return chain with empty values
         if (inputType.isEmpty()) {
         }
@@ -68,18 +74,47 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
             elements.first() as? VariableNameMixin
         } else {
             null
-        } ?: return TypeDescriptor.empty()
+        }
 
-        val psiClass: PsiClass =
-                // take predefined class
-                rawChainUnit.myDeclaration?.resolutionResult?.psiClass
-                        // try to find class from variables declared in current file
-                        ?: FileVariablesResolver.resolveVariable(firstElement).psiClass
-                        // try to find class from predefined context objects
-                        ?: PredefinedVariables.resolveByIdentifier(firstElement.variableName(), firstElement)
-                        ?: return TypeDescriptor.empty()
+        var psiClass: PsiClass? = rawChainUnit.myDeclaration?.resolutionResult?.psiClass
 
-        return JavaPsiClassTypeDescriptor(psiClass)
+        if (psiClass == null && firstElement != null) {
+            psiClass = FileVariablesResolver.resolveVariable(firstElement).psiClass
+        }
+
+        if (psiClass == null && firstElement != null) {
+            psiClass = PredefinedVariables.resolveByIdentifier(firstElement.variableName(), firstElement.project)
+        }
+
+        // in that case the new chain segment should be created here
+        if (psiClass == null) {
+            val attribute = rawChainUnit.myDeclaration?.xmlAttribute
+            if (attribute != null) {
+                val className = rawChainUnit.myDeclaration?.xmlAttribute?.resolveUseClass()
+                if (className != null) {
+                    psiClass = JavaSearch.findClass(className, attribute.project)
+                }
+            }
+        }
+
+        return if (psiClass != null) {
+            JavaPsiClassTypeDescriptor(psiClass)
+        } else {
+            TypeDescriptor.empty()
+        }
+    }
+
+    private fun createAttributeChainElement(rawChainUnit: RawChainUnit): CallChainSegment {
+        val xmlAttribute = rawChainUnit.myDeclaration?.xmlAttribute
+        if (xmlAttribute != null) {
+            val className = xmlAttribute.resolveUseClass()
+            if (className != null) {
+                val psiClass = JavaSearch.findClass(className, xmlAttribute.project)
+                if (psiClass != null) {
+                    return
+                }
+            }
+        }
     }
 
     /**

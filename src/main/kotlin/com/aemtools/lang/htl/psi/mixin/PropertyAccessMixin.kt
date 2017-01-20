@@ -12,6 +12,7 @@ import com.aemtools.lang.htl.psi.chain.RawChainUnit
 import com.aemtools.lang.htl.psi.util.byNormalizedName
 import com.aemtools.lang.htl.psi.util.resolveClassName
 import com.aemtools.lang.htl.psi.util.resolveReturnType
+import com.aemtools.lang.java.JavaSearch
 import com.intellij.lang.ASTNode
 import com.intellij.psi.JavaPsiFacade
 import com.intellij.psi.PsiClass
@@ -235,12 +236,11 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
     private fun createUseChainUnit(declaration: HtlVariableDeclaration, useClass: String): LinkedList<RawChainUnit> {
         val result = LinkedList<RawChainUnit>()
 
-        val jpc = JavaPsiFacade.getInstance(project)
-        val clazz = jpc.findClass(useClass, GlobalSearchScope.allScope(project))
-
+        val clazz = JavaSearch.findClass(useClass, project)
         result.add(RawChainUnit(LinkedList(), HtlVariableDeclaration(
                 declaration.xmlAttribute,
                 declaration.variableName,
+                declaration.attributeType,
                 declaration.type,
                 ResolutionResult(clazz)
         )))

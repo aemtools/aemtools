@@ -1,6 +1,7 @@
 package com.aemtools.lang.htl.psi.util
 
 import com.aemtools.completion.htl.model.DeclarationType
+import com.aemtools.lang.java.JavaSearch
 import com.intellij.openapi.project.Project
 import com.intellij.psi.*
 import com.intellij.psi.impl.source.PsiClassReferenceType
@@ -11,8 +12,8 @@ import com.intellij.psi.xml.XmlTag
 import com.intellij.psi.xml.XmlTokenType
 
 /**
- * Created by Dmytro_Troynikov on 12/2/2016.
- */
+* @author Dmytro Troynikov
+*/
 
 /**
  * Find all methods which may used from EL
@@ -92,9 +93,7 @@ fun PsiClass.byNormalizedName(normalizedName: String,
         val className = type.resolveClassName(psiMember, declarationType, project)
                 ?: return null
 
-        val clazz = JavaPsiFacade.getInstance(project)
-                .findClass(className, GlobalSearchScope.allScope(project)) ?: return null
-
+        val clazz = JavaSearch.findClass(className, project)
         return psiMember to clazz
     }
 }

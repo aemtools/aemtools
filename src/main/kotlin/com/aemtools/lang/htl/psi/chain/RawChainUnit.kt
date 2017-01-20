@@ -14,14 +14,14 @@ import java.util.*
  *
  * @author Dmytro_Troynikov
  */
-data class RawChainUnit(val myCallChain: LinkedList<PsiElement>,
-                        val myDeclaration: HtlVariableDeclaration? = null) {
+open class RawChainUnit(val myCallChain: LinkedList<PsiElement>,
+                   val myDeclaration: HtlVariableDeclaration? = null) {
     /**
      * Check if current unit has [HtlVariableDeclaration]
      * The existence of the declaration means that the unit is part of
      * "declaration" HTL attribute (e.g. data-sly-use or data-sly-test)
      */
-    fun  hasDeclaration(): Boolean = myDeclaration != null
+    fun hasDeclaration(): Boolean = myDeclaration != null
 
     /**
      * Check if current unit has [com.aemtools.completion.htl.model.ResolutionResult].
@@ -34,5 +34,9 @@ data class RawChainUnit(val myCallChain: LinkedList<PsiElement>,
      * Check if current unit has predefined completion variants.
      */
     fun hasPredefinedVariants(): Boolean = myDeclaration?.resolutionResult?.predefined != null
+
+    override fun toString(): String {
+        return "RawChainUnit(myCallChain=$myCallChain, myDeclaration=$myDeclaration)"
+    }
 
 }

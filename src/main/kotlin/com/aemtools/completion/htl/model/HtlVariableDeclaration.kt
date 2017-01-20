@@ -17,6 +17,10 @@ data class HtlVariableDeclaration(
          */
         val variableName: String,
         /**
+         * The type of Htl declaration attribute.
+         */
+        val attributeType: DeclarationAttributeType,
+        /**
          * The [DeclarationType] of current variable.
          */
         val type: DeclarationType = DeclarationType.VARIABLE,
