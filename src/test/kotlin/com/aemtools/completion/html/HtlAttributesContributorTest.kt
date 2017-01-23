@@ -1,6 +1,8 @@
 package com.aemtools.completion.html
 
 import com.aemtools.completion.blocks.BaseVariantsCheckContributorTest
+import com.aemtools.constant.const.htl.DATA_SLY_LIST
+import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.constant.const.htl.DATA_SLY_UNWRAP
 import com.aemtools.constant.const.htl.HTL_ATTRIBUTES
 
@@ -16,5 +18,9 @@ class HtlAttributesContributorTest : BaseVariantsCheckContributorTest("com/aemto
     fun testHtlAttributesFilterOutUnwrap2() = assertVariantsAbsent(listOf(DATA_SLY_UNWRAP))
 
     fun testHtlAttributesFilterOutUnwrap3() = assertVariantsAbsent(listOf(DATA_SLY_UNWRAP))
+
+    fun testHtlAttributesFilterOutDataSlyList() = assertVariantsAbsent(listOf(DATA_SLY_LIST))
+
+    fun testHtlAttributesFilterOutDataSlyRepeat() = assertVariantsAbsent(listOf(DATA_SLY_REPEAT))
 
 }
