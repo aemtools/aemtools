@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.aemtools</id>
     <name>AEM Tools</name>
-    <version>0.3.1</version>
+    <version>0.3.2</version>
     <category>Framework integration</category>
     <vendor email="dmytrotroynikov@gmail.com" url="">Dmytro Troynikov</vendor>
 
@@ -25,6 +25,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        0.3.2
+        <ul>
+            <li>Fixed issue with broken HTML formatting</li>
+            <li>Better completion for <i>data-sly-list</i> and <i>data-sly-repeat</i></li>
+        </ul>
+
         0.3.1
         <ul>
             <li>Search is working now</li>
