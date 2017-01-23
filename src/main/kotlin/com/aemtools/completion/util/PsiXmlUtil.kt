@@ -5,6 +5,7 @@ import com.aemtools.completion.htl.model.HtlVariableDeclaration
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.htl.predefined.HtlELPredefined
 import com.aemtools.constant.const
+import com.aemtools.constant.const.SLY_TAG
 import com.aemtools.constant.const.htl.DATA_SLY_ATTRIBUTE
 import com.aemtools.constant.const.htl.DATA_SLY_CALL
 import com.aemtools.constant.const.htl.DATA_SLY_ELEMENT
@@ -17,6 +18,7 @@ import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_TEXT
 import com.aemtools.constant.const.htl.DATA_SLY_UNWRAP
 import com.aemtools.constant.const.htl.DATA_SLY_USE
+import com.aemtools.constant.const.htl.UNIQUE_HTL_ATTRIBUTES
 import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.HtlVariableName
@@ -109,6 +111,24 @@ fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T? {
 fun <T : PsiElement> PsiElement?.hasParent(type: Class<T>): Boolean {
     return this.findParentByType(type) != null
 }
+
+/**
+ * Extract Htl unique attributes as [Collection<String>] from given [XmlAttribute] collection.
+ */
+fun Array<PsiElement>.uniqueHtlAttributes(): Collection<String> =
+        filter { it.isUniqueHtlAttribute() }.map { it.text }
+
+/**
+ * Check if current [PsiElement] is unique. Unique attributes are
+ *  `data-sly-unwrap`
+ *  `data-sly-list`
+ */
+fun PsiElement.isUniqueHtlAttribute(): Boolean = UNIQUE_HTL_ATTRIBUTES.contains(this.text)
+
+/**
+ * Check if current [XmlTag] is sly tag.
+ */
+fun XmlTag.isSlyTag(): Boolean = this.name == SLY_TAG
 
 /**
  * Get element type String.
