@@ -1,17 +1,13 @@
-package com.aemtools.documentation.htl.el
+package com.aemtools.documentation.htl
 
-import com.aemtools.documentation.BaseDocumentationProvider
+import com.intellij.lang.documentation.AbstractDocumentationProvider
 import com.intellij.psi.PsiElement
 
 /**
  *
  * @author Dmytro Troynikov.
  */
-open class HtlELDocumentationProvider : BaseDocumentationProvider() {
-
-    override fun acceptGenerateDoc(element: PsiElement): Boolean {
-        return false
-    }
+open class HtlELDocumentationProvider : AbstractDocumentationProvider() {
 
     override fun generateDoc(element: PsiElement?, originalElement: PsiElement?): String? {
 //        val result = super.generateDoc(element, originalElement)

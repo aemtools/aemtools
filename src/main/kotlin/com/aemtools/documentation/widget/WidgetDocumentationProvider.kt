@@ -5,7 +5,6 @@ import com.aemtools.completion.model.WidgetMember
 import com.aemtools.completion.model.psi.SelectedAttribute
 import com.aemtools.completion.util.WidgetDefinitionUtil
 import com.aemtools.constant.const
-import com.aemtools.documentation.BaseDocumentationProvider
 import com.aemtools.service.ServiceFacade
 import com.intellij.lang.documentation.AbstractDocumentationProvider
 import com.intellij.psi.PsiElement
@@ -15,11 +14,11 @@ import com.intellij.psi.PsiElement
  *
  * @author Dmytro_Troynikov
  */
-open class WidgetDocumentationProvider : BaseDocumentationProvider() {
+open class WidgetDocumentationProvider : AbstractDocumentationProvider() {
 
     val widgetRepository = ServiceFacade.getWidgetRepository()
 
-    override fun acceptGenerateDoc(element: PsiElement): Boolean {
+    fun acceptGenerateDoc(element: PsiElement): Boolean {
         if (element.containingFile
                 .originalFile
                 .name != const.DIALOG_XML) {
@@ -32,6 +31,7 @@ open class WidgetDocumentationProvider : BaseDocumentationProvider() {
         if (originalElement == null || !acceptGenerateDoc(originalElement)) {
             return null
         }
+
         val widgetDefinition = WidgetDefinitionUtil.extract(originalElement as PsiElement) ?: return null
 
         val widgetXType = widgetDefinition.getFieldValue(const.XTYPE) ?: return null

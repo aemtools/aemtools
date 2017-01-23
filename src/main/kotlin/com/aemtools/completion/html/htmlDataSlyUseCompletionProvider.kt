@@ -1,30 +1,22 @@
-package com.aemtools.completion.htl.html
+package com.aemtools.completion.html
 
 import com.aemtools.completion.htl.completionprovider.SlyUseCompletionProvider
 import com.aemtools.completion.util.elementType
 import com.aemtools.completion.util.findParentByType
 import com.aemtools.constant.const
-import com.intellij.codeInsight.completion.*
-import com.intellij.patterns.PlatformPatterns.psiElement
-import com.intellij.patterns.XmlPatterns.xmlAttribute
+import com.intellij.codeInsight.completion.CompletionParameters
+import com.intellij.codeInsight.completion.CompletionProvider
+import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlToken
 import com.intellij.psi.xml.XmlTokenType
 import com.intellij.util.ProcessingContext
 
 /**
+ * Provides available "data-sly-use" variants.
  * @author Dmytro_Troynikov
  */
-class HtlCompletionContributor : CompletionContributor() { init {
-    extend(CompletionType.BASIC,
-            psiElement(),
-            HtlDataSlyUseCompletionProvider)
-    extend(CompletionType.BASIC,
-            psiElement(XmlTokenType.XML_NAME).inside(xmlAttribute()),
-            HtlAttributeCompletionProvider)
-} }
-
-private object HtlDataSlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
+object htmlDataSlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
     override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext?,
                                 result: CompletionResultSet) {
         if (result.isStopped

@@ -24,14 +24,3 @@ data class HtlVariableDeclaration(
          * Certain declarations may have own [ResolutionResult]. By default the result is empty.
          */
         val resolutionResult: ResolutionResult = ResolutionResult())
-
-enum class DeclarationType {
-    /**
-     * The ordinary variable (spawned by `data-sly-use`, `data-sly-test`)
-     */
-    VARIABLE,
-    /**
-     * Iterable variable (`data-sly-list`, `data-sly-repeat`)
-     */
-    ITERABLE
-}
