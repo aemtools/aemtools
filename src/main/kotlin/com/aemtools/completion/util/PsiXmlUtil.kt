@@ -2,10 +2,7 @@ package com.aemtools.completion.util
 
 import com.aemtools.completion.htl.model.*
 import com.aemtools.completion.htl.predefined.HtlELPredefined
-<<<<<<< cb3f8a3fd10738ad083810a058da82a183a0adc0
 import com.aemtools.constant.const.SLY_TAG
-=======
->>>>>>> #16 WIP update variable resolution chain
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
@@ -21,6 +18,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.xml.XmlTokenImpl
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.xml.XmlAttribute
+import com.intellij.psi.xml.XmlTag
 
 /**
  * Searches for children by type (@see [PsiTreeUtil])

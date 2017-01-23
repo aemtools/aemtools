@@ -1,6 +1,5 @@
 package com.aemtools.completion.htl.completionprovider
 
-import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.htl.psi.util.elFields
 import com.aemtools.lang.htl.psi.util.elMethods
 import com.aemtools.lang.htl.psi.util.elName
@@ -9,9 +8,7 @@ import com.aemtools.service.ServiceFacade
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.project.Project
-import com.intellij.psi.JavaPsiFacade
 import com.intellij.psi.PsiClass
-import com.intellij.psi.search.GlobalSearchScope
 import java.util.*
 
 /**
