@@ -125,6 +125,9 @@ fun Array<PsiElement>.uniqueHtlAttributes(): Collection<String> =
  */
 fun PsiElement.isUniqueHtlAttribute(): Boolean = UNIQUE_HTL_ATTRIBUTES.contains(this.text)
 
+/**
+ * Check if current [XmlTag] is sly tag.
+ */
 fun XmlTag.isSlyTag(): Boolean = this.name == SLY_TAG
 
 /**
