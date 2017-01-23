@@ -18,9 +18,8 @@ import java.util.*
  */
 object HtlCallChainResolver {
 
-    fun resolveCallChain(propertyAccessMixin: PropertyAccessMixin): ResolutionResult? {
-        val callChain = callChain(propertyAccessMixin)
-        return null
+    fun resolveCallChain(propertyAccessMixin: PropertyAccessMixin): CallChain? {
+        return callChain(propertyAccessMixin)
     }
 
     private fun callChain(propertyAccessMixin: PropertyAccessMixin): CallChain? {
@@ -28,11 +27,7 @@ object HtlCallChainResolver {
 
         val inputType = resolveInputType(rawCallChain)
 
-        val result = JavaRawCallChainProcessor.processChain(rawCallChain)
-
-        return null
-
-//        return rawChainProcessor?.processChain(rawCallChain)
+        return JavaRawCallChainProcessor.processChain(rawCallChain)
     }
 
     private fun resolveInputType(rawCallChain: LinkedList<RawChainUnit>): TypeDescriptor {

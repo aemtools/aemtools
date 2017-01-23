@@ -18,6 +18,7 @@ import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.lang.StdLanguages
+import com.intellij.openapi.components.StateStorageChooserEx
 import com.intellij.psi.PsiElement
 import com.intellij.psi.templateLanguages.OuterLanguageElement
 import com.intellij.psi.util.PsiTreeUtil
@@ -37,7 +38,7 @@ object HtlELCompletionProvider : CompletionProvider<CompletionParameters>() {
         val currentPosition = parameters.position
         when {
             currentPosition is OuterLanguageElement -> return
-            // ${object.<caret>}
+        // ${object.<caret>}
             isMemberAccess(currentPosition) -> {
                 val resolutionResult = resolveClass(currentPosition, parameters, context)
 
@@ -134,9 +135,24 @@ object HtlELCompletionProvider : CompletionProvider<CompletionParameters>() {
         val propertyAccessElement = element.findParentByType(PropertyAccessMixin::class.java)
                 ?: return ResolutionResult()
 
-        val propertyAccessChain = propertyAccessElement.accessChain()
-        context.put("property-access-chain", propertyAccessChain)
-        return propertyAccessChain.last().resolutionResult
+        val chain = propertyAccessElement.accessChain()
+
+        val lastSegment = chain?.callChainSegments?.lastOrNull()
+
+        val lastItem = lastSegment?.chainElements()?.lastOrNull()
+
+        if (lastItem != null && lastItem.name.contains(const.IDEA_STRING_CARET_PLACEHOLDER)) {
+            val prevItem = lastSegment?.chainElements()?.get(
+                    lastSegment?.chainElements()?.size - 2
+            )
+            if (prevItem != null) {
+                return prevItem.type.asResolutionResult()
+            }
+        } else if (lastItem != null) {
+            return lastItem.type.asResolutionResult()
+        }
+
+        return ResolutionResult()
     }
 
     /**

@@ -1,12 +1,10 @@
 package com.aemtools.analysis.htl.callchain.rawchainprocessor
 
-import com.aemtools.analysis.htl.callchain.elements.BaseChainElement
-import com.aemtools.analysis.htl.callchain.elements.CallChain
-import com.aemtools.analysis.htl.callchain.elements.CallChainElement
-import com.aemtools.analysis.htl.callchain.elements.CallChainSegment
+import com.aemtools.analysis.htl.callchain.elements.*
 import com.aemtools.analysis.htl.callchain.elements.helper.chainSegment
 import com.aemtools.analysis.htl.callchain.typedescriptor.PredefinedVariantsTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.ListJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
@@ -33,29 +31,36 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
 
         val segments = ArrayList<CallChainSegment>()
 
-        val firstElement: RawChainUnit = rawChain.first()
+        val firstElement: RawChainUnit = rawChain.pop()
 
-        segments.add(extractFirstSegment(firstElement))
+        var firstSegment = extractFirstSegment(firstElement)
 
-        return CallChain.empty()
+        segments.add(firstSegment)
+
+        while (rawChain.isNotEmpty() && firstSegment.outputType() is JavaPsiClassTypeDescriptor) {
+            val newSegment = constructJavaChainSegment(firstSegment.outputType() as JavaPsiClassTypeDescriptor, rawChain.pop())
+            segments.add(newSegment)
+            firstSegment = newSegment
+        }
+        return CallChain(segments)
     }
 
     private fun extractFirstSegment(rawChainUnit: RawChainUnit): CallChainSegment {
-        val chainUnitDeclaration = rawChainUnit.myDeclaration
-        val elements = rawChainUnit.myCallChain
-
         if (rawChainUnit.hasPredefinedVariants()) {
             return constructPredefinedChainSegment(rawChainUnit)
         }
 
-        val inputType = resolveFirstType(rawChainUnit)
-
-        if (inputType.isEmpty()) {
-
+        if (rawChainUnit.myDeclaration?.resolutionResult?.psiClass != null) {
+            return createAttributeChainElement(rawChainUnit)
         }
 
-        // TODO: construct and return chain with empty values
+        val inputType = resolveFirstType(rawChainUnit)
+
+        var chainSegment: CallChainSegment?
+
         if (inputType.isEmpty()) {
+            chainSegment = createAttributeChainElement(rawChainUnit)
+            return chainSegment
         }
 
         if (inputType is JavaPsiClassTypeDescriptor) {
@@ -86,17 +91,6 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
             psiClass = PredefinedVariables.resolveByIdentifier(firstElement.variableName(), firstElement.project)
         }
 
-        // in that case the new chain segment should be created here
-        if (psiClass == null) {
-            val attribute = rawChainUnit.myDeclaration?.xmlAttribute
-            if (attribute != null) {
-                val className = rawChainUnit.myDeclaration?.xmlAttribute?.resolveUseClass()
-                if (className != null) {
-                    psiClass = JavaSearch.findClass(className, attribute.project)
-                }
-            }
-        }
-
         return if (psiClass != null) {
             JavaPsiClassTypeDescriptor(psiClass)
         } else {
@@ -111,10 +105,12 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
             if (className != null) {
                 val psiClass = JavaSearch.findClass(className, xmlAttribute.project)
                 if (psiClass != null) {
-                    return
+                    val typeDescriptor = JavaPsiClassTypeDescriptor(psiClass)
+                    return BaseCallChainSegment(typeDescriptor, typeDescriptor, listOf())
                 }
             }
         }
+        return CallChainSegment.empty()
     }
 
     /**
@@ -127,46 +123,42 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
         val rawElements = LinkedList(rawChainUnit.myCallChain)
         val result: ArrayList<CallChainElement> = ArrayList()
 
-        var currentType = inputType
+        var currentType: TypeDescriptor = inputType
         var currentElement = rawElements.pop()
 
-        var nextCallChainElement = when {
-            rawElements.firstOrNull() is HtlArrayLikeAccess
-                    && currentType.isList() -> {
-                // create list element
-                // consume next raw item
-                // currentType = list value type
-                TypeDescriptor.empty()
-            }
-            rawElements.firstOrNull() is HtlArrayLikeAccess
-                    && currentType.isMap() -> {
-                // create map element
-                // consume next raw item
-                // currentType = map value type
-                TypeDescriptor.empty()
-            }
-            else -> {
-                JavaPsiClassTypeDescriptor(currentType.psiClass)
-            }
-        }
+        var callChainElement = BaseChainElement(currentElement, extractElementName(currentElement), currentType)
 
-        result += BaseChainElement(currentElement, extractElementName(currentElement),
-                currentType)
+        result.add(callChainElement)
 
         while (rawElements.isNotEmpty()) {
-            currentElement = rawElements.pop()
+            val nextRawElement = rawElements.pop()
+            val varName = extractElementName(nextRawElement)
 
             when {
-                currentType is ListJavaTypeDescriptor
-                        && rawElements.firstOrNull() is HtlArrayLikeAccess -> {
+                currentType.isArray() and (nextRawElement is HtlArrayLikeAccess) -> {
+                    callChainElement = ArrayAccessIdentifierElement(nextRawElement)
+//                    currentType = currentType.arrayType()
+                }
+                currentType.isList() and (nextRawElement is HtlArrayLikeAccess) -> {
+                    callChainElement = ArrayAccessIdentifierElement(nextRawElement)
+//                    currentType = currentType.listType()
+                }
+                currentType.isMap() and (nextRawElement is HtlArrayLikeAccess) -> {
 
                 }
-                currentType is MapJavaTypeDescriptor
-                        && rawElements.firstOrNull() is HtlArrayLikeAccess -> {
-
+                else -> {
+                    val varName = extractElementName(nextRawElement)
+                    val newType = currentType.subtype(varName)
+                    callChainElement = BaseChainElement(nextRawElement, varName, newType)
+                    currentType = newType
                 }
             }
+            result.add(callChainElement)
         }
+
+        chain = result
+
+        outputType = result.last().type
     }
 
     /**

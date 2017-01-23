@@ -1,6 +1,7 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor.java
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.lang.htl.psi.util.*
 import com.aemtools.lang.java.JavaSearch
 import com.intellij.codeInsight.lookup.LookupElement
@@ -14,7 +15,8 @@ import java.util.*
  * Type descriptor which uses given [PsiClass] to provide type information.
  * @author Dmytro_Troynikov
  */
-open class JavaPsiClassTypeDescriptor(val psiClass: PsiClass, private val isArray: Boolean = false) : TypeDescriptor {
+open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
+                                      private val isArray: Boolean = false) : TypeDescriptor {
     override fun isArray(): Boolean = isArray
 
     override fun isList(): Boolean {
@@ -77,6 +79,10 @@ open class JavaPsiClassTypeDescriptor(val psiClass: PsiClass, private val isArra
         val psiType = psiMember.resolveReturnType()
                 ?: return TypeDescriptor.empty()
 
+        if (psiType is PsiClassReferenceType) {
+            return JavaPsiClassReferenceTypeDescriptor(psiType)
+        }
+
         val className = with(psiType) { when {
             this is PsiClassReferenceType -> this.resolve()?.qualifiedName
             this is PsiClassType -> this.className
@@ -92,6 +98,10 @@ open class JavaPsiClassTypeDescriptor(val psiClass: PsiClass, private val isArra
             ?: return TypeDescriptor.named(className)
 
         return JavaPsiClassTypeDescriptor(typeClass)
+    }
+
+    override fun asResolutionResult(): ResolutionResult {
+        return ResolutionResult(psiClass, myVariants())
     }
 
 }

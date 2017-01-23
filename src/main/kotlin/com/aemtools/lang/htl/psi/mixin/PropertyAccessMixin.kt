@@ -1,6 +1,7 @@
 package com.aemtools.lang.htl.psi.mixin
 
 import com.aemtools.analysis.htl.callchain.HtlCallChainResolver
+import com.aemtools.analysis.htl.callchain.elements.CallChain
 import com.aemtools.completion.htl.completionprovider.FileVariablesResolver
 import com.aemtools.completion.htl.model.HtlVariableDeclaration
 import com.aemtools.completion.htl.model.PropertyAccessChainUnit
@@ -26,157 +27,8 @@ import java.util.*
  */
 abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
 
-    fun accessChain(): List<PropertyAccessChainUnit> {
-        val callChain = callChain()
-        var chainElement = callChain.pop()
-        val res = HtlCallChainResolver.resolveCallChain(this)
-        var (names, propertyAccessChain, resolutionResult)
-                = resolveFirstItem(chainElement)
-
-        // unable to resolve root element, no need to proceed with resolution
-        if (resolutionResult.isEmpty()) {
-            return propertyAccessChain
-        }
-
-        while (callChain.isNotEmpty()) {
-            chainElement = callChain.pop()
-            val subChainResolution = resolveSubChain(chainElement,
-                    resolutionResult, propertyAccessChain.last(), chainElement.myDeclaration)
-
-            propertyAccessChain.addAll(subChainResolution)
-        }
-
-        return propertyAccessChain
-    }
-
-    private fun resolveSubChain(callChain: RawChainUnit,
-                                previousResolutionResult: ResolutionResult,
-                                previousChainUnit: PropertyAccessChainUnit,
-                                previousDeclaration: HtlVariableDeclaration?): Deque<PropertyAccessChainUnit> {
-        val elements = LinkedList(callChain.myCallChain)
-        val result = LinkedList<PropertyAccessChainUnit>()
-        var resolutionResult: ResolutionResult = previousResolutionResult
-
-        if (elements.isNotEmpty()) {
-            val firstElement = elements.pop()
-            val variableName = extractElementName(firstElement)
-            val previousMember = previousChainUnit.psiMember
-
-            val previousPsiClass = previousResolutionResult.psiClass
-
-            if (previousMember != null) {
-                val returnType = previousMember.resolveReturnType() ?: return LinkedList()
-                val previousDeclarationType = previousDeclaration?.type ?: return LinkedList()
-                val className = returnType.resolveClassName(previousMember, previousDeclarationType, project)
-                        ?: return LinkedList()
-                val psiClass = JavaPsiFacade.getInstance(project).findClass(className, GlobalSearchScope.allScope(project))
-                        ?: return LinkedList()
-
-                resolutionResult = ResolutionResult(psiClass)
-
-                result.add(PropertyAccessChainUnit(
-                        variableName,
-                        variableName,
-                        className,
-                        resolutionResult,
-                        previousMember
-                ))
-            } else if (previousPsiClass != null) {
-                result.add(PropertyAccessChainUnit(variableName, variableName, previousPsiClass.qualifiedName, previousResolutionResult, null))
-            } else {
-                return LinkedList()
-            }
-        }
-
-        while (elements.isNotEmpty() && resolutionResult.psiClass != null) {
-            val nextField = elements.pop()
-            val variableName = extractElementName(nextField)
-
-            val clazz = resolutionResult.psiClass as PsiClass
-
-            val memberAndTypeClass =
-                    extractMemberAndTypeClass(clazz, previousDeclaration, variableName)
-
-            if (memberAndTypeClass != null) {
-                val (psiMember, clazzOfVariable) = memberAndTypeClass
-
-                resolutionResult = ResolutionResult(clazzOfVariable)
-                result.add(PropertyAccessChainUnit(variableName,
-                        psiMember?.name, resolutionResult.psiClass?.qualifiedName, resolutionResult, psiMember))
-            }
-
-        }
-        return result
-    }
-
-    private fun extractMemberAndTypeClass(clazz: PsiClass, declaration: HtlVariableDeclaration?, variableName: String)
-            : Pair<PsiMember, PsiClass?>? {
-        val prevDeclarationType = declaration?.type
-        return if (prevDeclarationType != null) {
-            clazz.byNormalizedName(variableName, project, prevDeclarationType)
-        } else {
-            clazz.byNormalizedName(variableName, project)
-        }
-    }
-
-    private fun extractElementName(nextField: PsiElement?): String {
-        return when (nextField) {
-            is AccessIdentifierMixin -> nextField.variableName()
-            is VariableNameMixin -> nextField.variableName()
-            else -> ""
-        }
-    }
-
-    private fun resolveFirstItem(firstChainElement: RawChainUnit): Triple<LinkedList<PsiElement>, LinkedList<PropertyAccessChainUnit>, ResolutionResult> {
-        val propertyAccessChain = LinkedList<PropertyAccessChainUnit>()
-        var names = firstChainElement.myCallChain
-
-        if (firstChainElement.myDeclaration?.resolutionResult?.isNotEmpty() ?: false) {
-            val resolutionResult = firstChainElement.myDeclaration?.resolutionResult
-            val declaration = firstChainElement.myDeclaration
-            if (resolutionResult != null &&
-                    declaration != null) {
-
-                propertyAccessChain.add(PropertyAccessChainUnit(declaration.variableName,
-                        declaration.variableName, resolutionResult.psiClass?.qualifiedName, resolutionResult, null))
-
-                return Triple(
-                        firstChainElement.myCallChain,
-                        propertyAccessChain,
-                        firstChainElement.myDeclaration?.resolutionResult ?: ResolutionResult()
-                )
-            }
-        }
-
-        var firstElement = names.pop() as VariableNameMixin
-        var resolutionResult = firstElement.resolve()
-
-        if (resolutionResult.predefined != null) {
-            propertyAccessChain.add(PropertyAccessChainUnit(firstElement.variableName(),
-                    firstElement.variableName(), resolutionResult.psiClass?.qualifiedName, resolutionResult, null))
-        } else {
-            propertyAccessChain.add(PropertyAccessChainUnit(firstElement.variableName(),
-                    firstElement.variableName(), resolutionResult.psiClass?.qualifiedName, ResolutionResult(resolutionResult.psiClass), null))
-        }
-
-        while (names.isNotEmpty()) {
-            var nextItem = names.pop()
-            val variableName = extractElementName(nextItem)
-            val clazz = resolutionResult.psiClass ?: break
-
-            val memberAndTypeClass =
-                    extractMemberAndTypeClass(clazz, null, variableName)
-
-            if (memberAndTypeClass != null) {
-                val (psiMember, clazzOfVariable) = memberAndTypeClass
-
-                resolutionResult = ResolutionResult(clazzOfVariable)
-                propertyAccessChain.add(PropertyAccessChainUnit(variableName,
-                        psiMember?.name, resolutionResult.psiClass?.qualifiedName, resolutionResult, psiMember))
-            }
-        }
-
-        return Triple(names, propertyAccessChain, resolutionResult)
+    fun accessChain(): CallChain? {
+        return HtlCallChainResolver.resolveCallChain(this)
     }
 
     fun resolveIterable(): ResolutionResult {

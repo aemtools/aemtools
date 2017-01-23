@@ -1,5 +1,6 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor
 
+import com.aemtools.completion.htl.model.ResolutionResult
 import com.intellij.codeInsight.lookup.LookupElement
 
 /**
@@ -28,6 +29,8 @@ interface TypeDescriptor {
 
         fun named(name: String) = NamedTypeDescriptor(name)
     }
+
+    fun asResolutionResult(): ResolutionResult = ResolutionResult()
 
 }
 

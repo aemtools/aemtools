@@ -11,8 +11,8 @@ class CollectionsTest : BaseVariantsWithJdkContributorTest("com/aemtools/complet
     fun testCollectionsResolveArrayWithLiteral() = assertVariants(MY_MODEL_VARIANTS)
     fun testCollectionsResolveArrayWithVariable() = assertVariants(MY_MODEL_VARIANTS)
 
-    fun testCollectionsResolveListWithLiteral() =assertVariants(MY_MODEL_VARIANTS)
-    fun testCollectionsResolveListWithVariable() =assertVariants(MY_MODEL_VARIANTS)
+    fun testCollectionsResolveListWithLiteral() = assertVariants(MY_MODEL_VARIANTS)
+    fun testCollectionsResolveListWithVariable() = assertVariants(MY_MODEL_VARIANTS)
 
     fun testCollectionsResolveMapWithLiteral() = assertVariants(MY_MAP_MODEL_VARIANTS)
     fun testCollectionsResolveMapWithVariable() = assertVariants(MY_MAP_MODEL_VARIANTS)
