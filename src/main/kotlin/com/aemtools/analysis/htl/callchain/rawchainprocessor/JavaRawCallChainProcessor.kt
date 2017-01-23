@@ -139,9 +139,9 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
                     callChainElement = ArrayAccessIdentifierElement(nextRawElement)
 //                    currentType = currentType.arrayType()
                 }
-                currentType.isList() and (nextRawElement is HtlArrayLikeAccess) -> {
+                currentType.isIterable() and (nextRawElement is HtlArrayLikeAccess) -> {
                     callChainElement = ArrayAccessIdentifierElement(nextRawElement)
-//                    currentType = currentType.listType()
+//                    currentType = currentType.iterableType()
                 }
                 currentType.isMap() and (nextRawElement is HtlArrayLikeAccess) -> {
 

@@ -13,7 +13,7 @@ class ArrayJavaTypeDescriptor(psiClass: PsiClass)
 
     override fun isArray() = true
 
-    override fun isList() = false
+    override fun isIterable() = false
 
     override fun isMap() = false
 

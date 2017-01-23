@@ -10,16 +10,8 @@ import com.aemtools.completion.util.extractHtlHel
 import com.aemtools.completion.util.extractPropertyAccess
 import com.aemtools.completion.util.resolveUseClass
 import com.aemtools.lang.htl.psi.chain.RawChainUnit
-import com.aemtools.lang.htl.psi.util.byNormalizedName
-import com.aemtools.lang.htl.psi.util.resolveClassName
-import com.aemtools.lang.htl.psi.util.resolveReturnType
 import com.aemtools.lang.java.JavaSearch
 import com.intellij.lang.ASTNode
-import com.intellij.psi.JavaPsiFacade
-import com.intellij.psi.PsiClass
-import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiMember
-import com.intellij.psi.search.GlobalSearchScope
 import java.util.*
 
 /**

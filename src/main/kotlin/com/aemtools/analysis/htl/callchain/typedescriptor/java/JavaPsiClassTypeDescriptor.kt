@@ -16,13 +16,14 @@ import java.util.*
  * @author Dmytro_Troynikov
  */
 open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
+                                      // it's not possible to check if current [PsiClass] is an array.
                                       private val isArray: Boolean = false) : TypeDescriptor {
     override fun isArray(): Boolean = isArray
 
-    override fun isList(): Boolean {
-        val listClass = JavaSearch.findClass("java.util.List", psiClass.project) ?: return false
+    override fun isIterable(): Boolean {
+        val iterableInterface = JavaSearch.findClass("java.lang.Iterable", psiClass.project) ?: return false
 
-        return this.psiClass.isInheritor(listClass, true)
+        return this.psiClass.isInheritor(iterableInterface, true)
     }
 
     override fun isMap(): Boolean {
@@ -79,12 +80,11 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
         val psiType = psiMember.resolveReturnType()
                 ?: return TypeDescriptor.empty()
 
-        if (psiType is PsiClassReferenceType) {
-            return JavaPsiClassReferenceTypeDescriptor(psiType)
-        }
-
         val className = with(psiType) { when {
-            this is PsiClassReferenceType -> this.resolve()?.qualifiedName
+            this is PsiClassReferenceType -> {
+                this.resolve()?.qualifiedName
+                        ?: return JavaPsiClassReferenceTypeDescriptor(psiType, psiClass.project)
+            }
             this is PsiClassType -> this.className
             this is PsiPrimitiveType -> this.getBoxedType(
                     PsiManager.getInstance(psiClass.project),

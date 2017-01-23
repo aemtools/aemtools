@@ -18,7 +18,7 @@ interface TypeDescriptor {
 
     fun isArray(): Boolean
 
-    fun isList(): Boolean
+    fun isIterable(): Boolean
 
     fun isMap(): Boolean
 
@@ -40,7 +40,7 @@ open class NamedTypeDescriptor(private val myName: String) : EmptyTypeDescriptor
 
 open class EmptyTypeDescriptor : TypeDescriptor {
     override fun isArray(): Boolean = false
-    override fun isList(): Boolean = false
+    override fun isIterable(): Boolean = false
     override fun isMap(): Boolean = false
 
     override fun myVariants(): List<LookupElement> = listOf()
@@ -54,8 +54,8 @@ interface ArrayTypeDescriptor : TypeDescriptor {
     fun arrayType(): TypeDescriptor
 }
 
-interface ListTypeDescriptor : TypeDescriptor {
-    fun listType(): TypeDescriptor
+interface IterableTypeDescriptor : TypeDescriptor {
+    fun iterableType(): TypeDescriptor
 }
 
 interface MapTypeDescriptor : TypeDescriptor {

@@ -17,7 +17,7 @@ class PredefinedVariantsTypeDescriptor(val variants: List<LookupElement>) : Type
         throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun isList(): Boolean {
+    override fun isIterable(): Boolean {
         throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
