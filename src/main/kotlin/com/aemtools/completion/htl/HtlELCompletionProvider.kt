@@ -59,9 +59,10 @@ object HtlELCompletionProvider : CompletionProvider<CompletionParameters>() {
             }
 
             isAssignment(currentPosition) -> {
-                if (currentPosition.findParentByType(HtlContextExpression::class.java) != null) {
+                if (currentPosition.hasParent(HtlContextExpression::class.java)) {
                     // ${param @ opt='<caret>'}
-                    if (currentPosition.findParentByType(HtlAssignmentValue::class.java) != null) {
+                    if (currentPosition.hasParent(HtlAssignmentValue::class.java)
+                            and currentPosition.hasParent(HtlStringLiteral::class.java)) {
                         val sightlyAssignment = currentPosition.findParentByType(HtlAssignment::class.java) ?: return
                         val variableElement = sightlyAssignment.firstChild
                         if (variableElement.text == "context") {
@@ -69,26 +70,32 @@ object HtlELCompletionProvider : CompletionProvider<CompletionParameters>() {
                                 LookupElementBuilder.create(it.completionText)
                             })
                         }
+                    } else {
+                        completeVariables(currentPosition, parameters, result)
                     }
                 }
             }
             isOption(parameters) -> {
-                result.addAllElements(HtlContextCompletionProvider.contextParameters(parameters))
+                result.addAllElements(HtlOptionCompletionProvider.contextParameters(parameters))
             }
             isStringLiteralValue(parameters) -> {
                 val values = completeStringLiteralValue(parameters)
                 result.addAllElements(values)
             }
             isVariable(parameters) -> {
-                val contextObjects = PredefinedVariables.contextObjectsCompletion()
-                val fileCompletions = FileVariablesResolver
-                        .findForPosition(currentPosition, parameters)
-                result.addAllElements(contextObjects + fileCompletions)
+                completeVariables(currentPosition, parameters, result)
             }
 
             else -> return
         }
         result.stopHere()
+    }
+
+    private fun completeVariables(currentPosition: PsiElement, parameters: CompletionParameters, result: CompletionResultSet) {
+        val contextObjects = PredefinedVariables.contextObjectsCompletion()
+        val fileCompletions = FileVariablesResolver
+                .findForPosition(currentPosition, parameters)
+        result.addAllElements(contextObjects + fileCompletions)
     }
 
     fun completeStringLiteralValue(parameters: CompletionParameters): List<LookupElement> {

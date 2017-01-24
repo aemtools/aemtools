@@ -13,7 +13,7 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder
 /**
  * @author Dmytro Troynikov
  */
-object HtlContextCompletionProvider {
+object HtlOptionCompletionProvider {
 
     val CONTEXT_PARAMETERS = listOf("join",
             "i18n", "context", "format", "locale",
