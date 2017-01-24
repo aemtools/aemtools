@@ -1,5 +1,6 @@
 package com.aemtools.completion.htl
 
+import com.aemtools.analysis.htl.callchain.elements.resolveSelectedItem
 import com.aemtools.completion.htl.completionprovider.*
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.htl.predefined.HtlELPredefined
@@ -18,7 +19,6 @@ import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.lang.StdLanguages
-import com.intellij.openapi.components.StateStorageChooserEx
 import com.intellij.psi.PsiElement
 import com.intellij.psi.templateLanguages.OuterLanguageElement
 import com.intellij.psi.util.PsiTreeUtil
@@ -138,21 +138,9 @@ object HtlELCompletionProvider : CompletionProvider<CompletionParameters>() {
         val chain = propertyAccessElement.accessChain()
 
         val lastSegment = chain?.callChainSegments?.lastOrNull()
+                ?: return ResolutionResult()
 
-        val lastItem = lastSegment?.chainElements()?.lastOrNull()
-
-        if (lastItem != null && lastItem.name.contains(const.IDEA_STRING_CARET_PLACEHOLDER)) {
-            val prevItem = lastSegment?.chainElements()?.get(
-                    lastSegment?.chainElements()?.size - 2
-            )
-            if (prevItem != null) {
-                return prevItem.type.asResolutionResult()
-            }
-        } else if (lastItem != null) {
-            return lastItem.type.asResolutionResult()
-        }
-
-        return ResolutionResult()
+        return lastSegment.chainElements().resolveSelectedItem()
     }
 
     /**

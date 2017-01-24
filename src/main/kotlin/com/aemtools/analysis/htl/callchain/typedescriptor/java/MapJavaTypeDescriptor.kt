@@ -2,19 +2,30 @@ package com.aemtools.analysis.htl.callchain.typedescriptor.java
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.MapTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.lang.java.JavaSearch
 import com.intellij.psi.PsiClass
+import com.intellij.psi.impl.source.PsiClassReferenceType
 
 /**
  * @author Dmytro Troynikov
  */
-class MapJavaTypeDescriptor(psiClass: PsiClass) :
-        JavaPsiClassTypeDescriptor(psiClass), MapTypeDescriptor {
+class MapJavaTypeDescriptor(psiClass: PsiClass,
+                            override val originalType: PsiClassReferenceType? = null) :
+        JavaPsiClassTypeDescriptor(psiClass, originalType), MapTypeDescriptor {
     override fun keyType(): TypeDescriptor {
         throw UnsupportedOperationException("not implemented")
     }
 
     override fun valueType(): TypeDescriptor {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (originalType == null) {
+            return TypeDescriptor.empty()
+        }
+
+        val valueParam = originalType.parameters[1].canonicalText
+
+        val psiClass = JavaSearch.findClass(valueParam, psiClass.project)
+                ?: return TypeDescriptor.empty()
+        return JavaPsiClassTypeDescriptor.create(psiClass, null)
     }
 
 }

@@ -37,9 +37,13 @@ fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T? {
 /**
  * Check if current [PsiElement] has parent of specified class.
  */
-fun <T : PsiElement> PsiElement?.hasParent(type: Class<T>): Boolean {
-    return this.findParentByType(type) != null
-}
+fun <T : PsiElement> PsiElement?.hasParent(type: Class<T>): Boolean =
+    this.findParentByType(type) != null
+
+
+fun <T : PsiElement> PsiElement?.hasChild(type: Class<T>): Boolean =
+    this.findChildrenByType(type).isNotEmpty()
+
 
 /**
  * Extract Htl unique attributes as [Collection<String>] from given [XmlAttribute] collection.

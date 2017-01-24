@@ -16,20 +16,21 @@ import java.util.*
  * @author Dmytro_Troynikov
  */
 open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
-                                      // it's not possible to check if current [PsiClass] is an array.
-                                      private val isArray: Boolean = false) : TypeDescriptor {
-    override fun isArray(): Boolean = isArray
+                                      open val originalType: PsiType?) : TypeDescriptor {
+    override fun isArray(): Boolean = originalType is PsiArrayType
 
     override fun isIterable(): Boolean {
         val iterableInterface = JavaSearch.findClass("java.lang.Iterable", psiClass.project) ?: return false
 
         return this.psiClass.isInheritor(iterableInterface, true)
+            || this.psiClass.isEquivalentTo(iterableInterface)
     }
 
     override fun isMap(): Boolean {
         val mapClass = JavaSearch.findClass("java.util.Map", psiClass.project) ?: return false
 
         return this.psiClass.isInheritor(mapClass, true)
+            || this.psiClass.isEquivalentTo(mapClass)
     }
 
     override fun myVariants(): List<LookupElement> {
@@ -80,28 +81,64 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
         val psiType = psiMember.resolveReturnType()
                 ?: return TypeDescriptor.empty()
 
-        val className = with(psiType) { when {
-            this is PsiClassReferenceType -> {
-                this.resolve()?.qualifiedName
-                        ?: return JavaPsiClassReferenceTypeDescriptor(psiType, psiClass.project)
+        val className = with(psiType) {
+            when {
+                this is PsiClassReferenceType -> {
+                    this.rawType().canonicalText
+                }
+                this is PsiClassType -> this.className
+                this is PsiPrimitiveType -> this.getBoxedType(
+                        PsiManager.getInstance(psiClass.project),
+                        GlobalSearchScope.allScope(psiClass.project)
+                )?.className
+                this is PsiArrayType -> {
+                    this.componentType.canonicalText
+                }
+                else -> null
             }
-            this is PsiClassType -> this.className
-            this is PsiPrimitiveType -> this.getBoxedType(
-                    PsiManager.getInstance(psiClass.project),
-                    GlobalSearchScope.allScope(psiClass.project)
-            )?.className
-            this is PsiArrayType -> this.canonicalText
-            else -> null
-        } } ?: return TypeDescriptor.empty()
+        } ?: return TypeDescriptor.empty()
 
         val typeClass = JavaSearch.findClass(className, psiClass.project)
-            ?: return TypeDescriptor.named(className)
+                ?: return TypeDescriptor.named(className)
 
-        return JavaPsiClassTypeDescriptor(typeClass)
+        return JavaPsiClassTypeDescriptor.create(typeClass, psiType)
     }
 
     override fun asResolutionResult(): ResolutionResult {
         return ResolutionResult(psiClass, myVariants())
+    }
+
+    companion object {
+        fun create(psiClass: PsiClass, psiType: PsiType?) : JavaPsiClassTypeDescriptor {
+            return when (psiType) {
+                is PsiClassReferenceType -> {
+                    val iterable = JavaSearch.findClass("java.lang.Iterable", psiClass.project)
+                    val map = JavaSearch.findClass("java.util.Map", psiClass.project)
+
+                    if (iterable != null && map != null) {
+                        if (psiClass.isInheritor(iterable, true)
+                                || psiClass.isEquivalentTo(iterable)) {
+                            return IterableJavaTypeDescriptor(psiClass, psiType)
+                        }
+
+                        if (psiClass.isInheritor(map, true)
+                                || psiClass.isEquivalentTo(map)) {
+                            return MapJavaTypeDescriptor(psiClass, psiType)
+                        }
+
+                    }
+
+                    JavaPsiClassTypeDescriptor(psiClass, psiType)
+                }
+                is PsiClassType ->
+                        JavaPsiClassTypeDescriptor(psiClass, psiType)
+                is PsiPrimitiveType ->
+                        JavaPsiClassTypeDescriptor(psiClass, psiType)
+                is PsiArrayType ->
+                        ArrayJavaTypeDescriptor(psiClass, psiType)
+                else -> JavaPsiClassTypeDescriptor(psiClass, psiType)
+            }
+        }
     }
 
 }

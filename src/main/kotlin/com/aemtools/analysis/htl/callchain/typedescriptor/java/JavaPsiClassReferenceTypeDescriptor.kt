@@ -19,7 +19,7 @@ class JavaPsiClassReferenceTypeDescriptor(val psiType: PsiType, private val proj
         val className = psiType.canonicalText.substring(0, psiType.canonicalText.indexOf("[") - 1)
         val psiClass = JavaSearch.findClass(className, project)
         return if (psiClass != null) {
-            JavaPsiClassTypeDescriptor(psiClass)
+            JavaPsiClassTypeDescriptor(psiClass, null)
         } else {
             TypeDescriptor.empty()
         }
@@ -34,7 +34,7 @@ class JavaPsiClassReferenceTypeDescriptor(val psiType: PsiType, private val proj
         val psiClass = JavaSearch.findClass(parameterClassName, project)
 
         return if (psiClass != null) {
-            JavaPsiClassTypeDescriptor(psiClass)
+            JavaPsiClassTypeDescriptor(psiClass, null)
         } else {
             TypeDescriptor.empty()
         }
@@ -49,7 +49,7 @@ class JavaPsiClassReferenceTypeDescriptor(val psiType: PsiType, private val proj
         val psiClass = JavaSearch.findClass(keyClassName, project)
 
         return if (psiClass != null) {
-            JavaPsiClassTypeDescriptor(psiClass)
+            JavaPsiClassTypeDescriptor(psiClass, null)
         } else {
             TypeDescriptor.empty()
         }
@@ -64,7 +64,7 @@ class JavaPsiClassReferenceTypeDescriptor(val psiType: PsiType, private val proj
         val psiClass = JavaSearch.findClass(valueClassName, project)
 
         return if (psiClass != null) {
-            JavaPsiClassTypeDescriptor(psiClass)
+            JavaPsiClassTypeDescriptor(psiClass, null)
         } else {
             TypeDescriptor.empty()
         }

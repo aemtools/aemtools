@@ -4,12 +4,10 @@ import com.aemtools.analysis.htl.callchain.elements.*
 import com.aemtools.analysis.htl.callchain.elements.helper.chainSegment
 import com.aemtools.analysis.htl.callchain.typedescriptor.PredefinedVariantsTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.java.ListJavaTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.java.*
 import com.aemtools.completion.htl.completionprovider.FileVariablesResolver
 import com.aemtools.completion.htl.completionprovider.PredefinedVariables
+import com.aemtools.completion.util.hasChild
 import com.aemtools.completion.util.resolveUseClass
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
 import com.aemtools.lang.htl.psi.chain.RawChainUnit
@@ -92,7 +90,7 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
         }
 
         return if (psiClass != null) {
-            JavaPsiClassTypeDescriptor(psiClass)
+            JavaPsiClassTypeDescriptor(psiClass, null)
         } else {
             TypeDescriptor.empty()
         }
@@ -105,7 +103,7 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
             if (className != null) {
                 val psiClass = JavaSearch.findClass(className, xmlAttribute.project)
                 if (psiClass != null) {
-                    val typeDescriptor = JavaPsiClassTypeDescriptor(psiClass)
+                    val typeDescriptor = JavaPsiClassTypeDescriptor(psiClass, null)
                     return BaseCallChainSegment(typeDescriptor, typeDescriptor, listOf())
                 }
             }
@@ -135,16 +133,23 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
             val varName = extractElementName(nextRawElement)
 
             when {
-                currentType.isArray() and (nextRawElement is HtlArrayLikeAccess) -> {
+                currentType.isArray()
+                        && currentType is ArrayJavaTypeDescriptor
+                        && nextRawElement.hasChild(HtlArrayLikeAccess::class.java) -> {
                     callChainElement = ArrayAccessIdentifierElement(nextRawElement)
-//                    currentType = currentType.arrayType()
+                    currentType = currentType.arrayType()
                 }
-                currentType.isIterable() and (nextRawElement is HtlArrayLikeAccess) -> {
+                currentType.isIterable()
+                        && currentType is IterableJavaTypeDescriptor
+                        && nextRawElement.hasChild(HtlArrayLikeAccess::class.java) -> {
                     callChainElement = ArrayAccessIdentifierElement(nextRawElement)
-//                    currentType = currentType.iterableType()
+                    currentType = currentType.iterableType()
                 }
-                currentType.isMap() and (nextRawElement is HtlArrayLikeAccess) -> {
-
+                currentType.isMap()
+                        && currentType is MapJavaTypeDescriptor
+                        && nextRawElement.hasChild(HtlArrayLikeAccess::class.java) -> {
+                    callChainElement = ArrayAccessIdentifierElement(nextRawElement)
+                    currentType = currentType.valueType()
                 }
                 else -> {
                     val varName = extractElementName(nextRawElement)
