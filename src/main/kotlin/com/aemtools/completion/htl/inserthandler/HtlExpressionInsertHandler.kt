@@ -1,3 +1,3 @@
 package com.aemtools.completion.htl.inserthandler
 
-class HtlExpressionInsertHandler : HtlTextInsertHandler("=\"{}\"", 3)
+class HtlExpressionInsertHandler : HtlTextInsertHandler("=\"\${}\"", 4)
