@@ -1,7 +1,10 @@
 package com.aemtools.completion.htl.fixtures.classes;
 
+import com.aemtools.completion.htl.fixtures.classes.MyModel;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.Model;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Documentation of CustomSlingModel.
@@ -36,9 +39,9 @@ public class CustomSlingModel {
     private Map<String, String> stringMap;
     private boolean booleanField;
 
-    private List<Model> modelList;
+    private List<MyModel> modelList;
 
-    public List<Model> getModelList() {
+    public List<MyModel> getModelList() {
         return modelList;
     }
 
