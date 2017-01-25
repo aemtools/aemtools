@@ -21,6 +21,11 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
     : LightFixtureCompletionTestCase(), HtlTestCase {
 
     companion object {
+        /**
+         * Common [Object] variants
+         */
+        val OBJECT_VARIANTS = listOf("class", "hashCode", "toString")
+
         val DEFAULT_CONTEXT_OBJECTS = listOf("properties", "pageProperties",
                 "inheritedPageProperties", "component",
                 "componentContext", "currentDesign",
@@ -69,14 +74,13 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
                 "lastModifiedBy", "lastModified", "vanityUrl",
                 "tags", "locked", "lockOwner", "canUnlock",
                 "description", "template"
-        )
+        ) + OBJECT_VARIANTS
 
         val CUSTOM_MODEL_FIELDS = listOf("booleanField",
                 "isBooleanField", "publicBoolean", "publicString",
                 "publicStringArray", "publicStringList", "publicStringMap",
                 "stringArray", "stringField", "stringList", "stringMap", "modelList")
 
-        val OBJECT_VARIANTS = listOf("class", "hashCode", "toString")
     }
 
     override fun getTestDataPath(): String = "${HtlTestCase.testResourcesPath}/$dataPath"

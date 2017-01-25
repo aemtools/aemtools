@@ -38,7 +38,7 @@ object HtlELCompletionProvider : CompletionProvider<CompletionParameters>() {
         val currentPosition = parameters.position
         when {
             currentPosition is OuterLanguageElement -> return
-        // ${object.<caret>}
+            // ${object.<caret>}
             isMemberAccess(currentPosition) -> {
                 val resolutionResult = resolveClass(currentPosition, parameters, context)
 

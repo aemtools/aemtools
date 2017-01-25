@@ -13,7 +13,16 @@ class MapJavaTypeDescriptor(psiClass: PsiClass,
                             override val originalType: PsiClassReferenceType? = null) :
         JavaPsiClassTypeDescriptor(psiClass, originalType), MapTypeDescriptor {
     override fun keyType(): TypeDescriptor {
-        throw UnsupportedOperationException("not implemented")
+        if (originalType == null) {
+            return TypeDescriptor.empty()
+        }
+
+        val keyParam = originalType.parameters[0].canonicalText
+
+        val psiClass = JavaSearch.findClass(keyParam, psiClass.project)
+                ?: return TypeDescriptor.empty()
+
+        return JavaPsiClassTypeDescriptor.create(psiClass, null)
     }
 
     override fun valueType(): TypeDescriptor {
@@ -25,6 +34,7 @@ class MapJavaTypeDescriptor(psiClass: PsiClass,
 
         val psiClass = JavaSearch.findClass(valueParam, psiClass.project)
                 ?: return TypeDescriptor.empty()
+
         return JavaPsiClassTypeDescriptor.create(psiClass, null)
     }
 

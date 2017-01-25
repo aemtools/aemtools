@@ -5,6 +5,7 @@ import com.aemtools.analysis.htl.callchain.elements.CallChain
 import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.elements.CallChainSegment
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.completion.htl.model.HtlVariableDeclaration
 
 /**
  * @author Dmytro_Troynikov
@@ -20,6 +21,7 @@ class ChainSegmentBuilder() {
         return BaseCallChainSegment(
                 dataHolder.inputType,
                 dataHolder.outputType,
+                dataHolder.declarationType,
                 dataHolder.chain
         )
 
@@ -28,7 +30,10 @@ class ChainSegmentBuilder() {
 
     class SegmentDataHolder(var inputType: TypeDescriptor = TypeDescriptor.empty(),
                             var outputType: TypeDescriptor = TypeDescriptor.empty(),
-                            var chain: List<CallChainElement> = listOf())
+                            var declarationType: HtlVariableDeclaration? = null,
+                            var chain: List<CallChainElement> = listOf()) {
+
+    }
 }
 
 fun chainSegment(init: ChainSegmentBuilder.SegmentDataHolder.() -> Unit): CallChainSegment {

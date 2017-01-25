@@ -4,6 +4,7 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.IterableJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
+import com.aemtools.completion.htl.model.HtlVariableDeclaration
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.constant.const.IDEA_STRING_CARET_PLACEHOLDER
 
@@ -44,6 +45,7 @@ class EmptyCallChainSegment : CallChainSegment {
 class BaseCallChainSegment(
         private val input: TypeDescriptor,
         private val output: TypeDescriptor,
+        val declaration: HtlVariableDeclaration?,
         private val elements: List<CallChainElement>) : CallChainSegment {
     override fun inputType(): TypeDescriptor = input
 
@@ -54,11 +56,16 @@ class BaseCallChainSegment(
 
 fun List<CallChainElement>.resolveSelectedItem(): ResolutionResult {
 
+    if (this.isEmpty()) {
+        return ResolutionResult()
+    }
+
     val selectedItem = this.find { it.name.contains(IDEA_STRING_CARET_PLACEHOLDER) }
     val indexOfSelectedItem = this.indexOf(selectedItem)
 
     return when {
-        this[indexOfSelectedItem - 1] is ArrayAccessIdentifierElement ->
+        this.size > 2
+                && this[indexOfSelectedItem - 1] is ArrayAccessIdentifierElement ->
             with(this[indexOfSelectedItem - 2].type) {
                 when {
                     this is ArrayJavaTypeDescriptor ->

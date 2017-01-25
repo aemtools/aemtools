@@ -1,12 +1,12 @@
 package com.aemtools.completion.htl.completionprovider.lists
 
-import com.aemtools.completion.blocks.BaseVariantsCheckContributorTest
+import com.aemtools.completion.blocks.BaseVariantsWithJdkContributorTest
 
 /**
  * @author Dmytro_Troynikov
  */
 class HtlDataSlyRepeatCompletionTest
-    : BaseVariantsCheckContributorTest("com/aemtools/completion/htl/fixtures/noafter/data-sly-repeat") {
+    : BaseVariantsWithJdkContributorTest("com/aemtools/completion/htl/fixtures/noafter/data-sly-repeat") {
 
     fun testDataSlyRepeatDefaultVariables() =
             assertVariantsPresent(DEFAULT_LIST_VARIABLES)

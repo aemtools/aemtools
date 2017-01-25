@@ -113,11 +113,17 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
             return when (psiType) {
                 is PsiClassReferenceType -> {
                     val iterable = JavaSearch.findClass("java.lang.Iterable", psiClass.project)
+                    val iterator = JavaSearch.findClass("java.util.Iterator", psiClass.project)
                     val map = JavaSearch.findClass("java.util.Map", psiClass.project)
 
-                    if (iterable != null && map != null) {
+                    if (iterable != null && map != null && iterator != null) {
                         if (psiClass.isInheritor(iterable, true)
                                 || psiClass.isEquivalentTo(iterable)) {
+                            return IterableJavaTypeDescriptor(psiClass, psiType)
+                        }
+
+                        if (psiClass.isInheritor(iterator, true)
+                                || psiClass.isEquivalentTo(iterator)) {
                             return IterableJavaTypeDescriptor(psiClass, psiType)
                         }
 

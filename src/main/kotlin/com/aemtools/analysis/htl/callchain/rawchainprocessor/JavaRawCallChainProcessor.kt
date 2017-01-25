@@ -4,9 +4,14 @@ import com.aemtools.analysis.htl.callchain.elements.*
 import com.aemtools.analysis.htl.callchain.elements.helper.chainSegment
 import com.aemtools.analysis.htl.callchain.typedescriptor.PredefinedVariantsTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.java.*
+import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.java.IterableJavaTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
 import com.aemtools.completion.htl.completionprovider.FileVariablesResolver
 import com.aemtools.completion.htl.completionprovider.PredefinedVariables
+import com.aemtools.completion.htl.model.DeclarationType
+import com.aemtools.completion.htl.predefined.HtlELPredefined.DATA_SLY_LIST_REPEAT_LIST_FIELDS
 import com.aemtools.completion.util.hasChild
 import com.aemtools.completion.util.resolveUseClass
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
@@ -36,7 +41,9 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
         segments.add(firstSegment)
 
         while (rawChain.isNotEmpty() && firstSegment.outputType() is JavaPsiClassTypeDescriptor) {
-            val newSegment = constructJavaChainSegment(firstSegment.outputType() as JavaPsiClassTypeDescriptor, rawChain.pop())
+            val newSegment = constructJavaChainSegment(firstSegment.outputType() as JavaPsiClassTypeDescriptor,
+                    segments.lastOrNull() as BaseCallChainSegment?,
+                    rawChain.pop())
             segments.add(newSegment)
             firstSegment = newSegment
         }
@@ -62,7 +69,7 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
         }
 
         if (inputType is JavaPsiClassTypeDescriptor) {
-            return constructJavaChainSegment(inputType, rawChainUnit)
+            return constructJavaChainSegment(inputType, null, rawChainUnit)
         } else {
             return CallChainSegment.empty()
         }
@@ -104,7 +111,7 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
                 val psiClass = JavaSearch.findClass(className, xmlAttribute.project)
                 if (psiClass != null) {
                     val typeDescriptor = JavaPsiClassTypeDescriptor(psiClass, null)
-                    return BaseCallChainSegment(typeDescriptor, typeDescriptor, listOf())
+                    return BaseCallChainSegment(typeDescriptor, typeDescriptor, rawChainUnit.myDeclaration, listOf())
                 }
             }
         }
@@ -115,16 +122,33 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
      * Create java chain segment
      */
     private fun constructJavaChainSegment(inputType: JavaPsiClassTypeDescriptor,
+                                          previousSegment: BaseCallChainSegment?,
                                           rawChainUnit: RawChainUnit): CallChainSegment = chainSegment {
         this.inputType = inputType
-
+        this.declarationType = rawChainUnit.myDeclaration
         val rawElements = LinkedList(rawChainUnit.myCallChain)
         val result: ArrayList<CallChainElement> = ArrayList()
 
         var currentType: TypeDescriptor = inputType
         var currentElement = rawElements.pop()
 
-        var callChainElement = BaseChainElement(currentElement, extractElementName(currentElement), currentType)
+        var callChainElement = when {
+            rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE
+                    && extractElementName(currentElement).endsWith("List") ->
+                BaseChainElement(currentElement,
+                        extractElementName(currentElement),
+                        PredefinedVariantsTypeDescriptor(DATA_SLY_LIST_REPEAT_LIST_FIELDS))
+            rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE
+                    && inputType is ArrayJavaTypeDescriptor ->
+                BaseChainElement(currentElement, extractElementName(currentElement), inputType.arrayType())
+            rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE
+                    && inputType is IterableJavaTypeDescriptor ->
+                BaseChainElement(currentElement, extractElementName(currentElement), inputType.iterableType())
+            rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE
+                    && inputType is MapJavaTypeDescriptor ->
+                BaseChainElement(currentElement, extractElementName(currentElement), inputType.keyType())
+            else -> BaseChainElement(currentElement, extractElementName(currentElement), currentType)
+        }
 
         result.add(callChainElement)
 
@@ -185,7 +209,9 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
         // the predefined set of variants is the resulting set
         outputType = PredefinedVariantsTypeDescriptor(variants)
 
-        chain = listOf()
+        chain = rawChainUnit.myCallChain.map {
+            BaseChainElement(it, extractElementName(it), outputType)
+        }
     }
 
     private fun extractElementName(nextField: PsiElement?): String {
