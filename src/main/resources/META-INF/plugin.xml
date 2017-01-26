@@ -3,7 +3,7 @@
     <name>AEM Tools</name>
     <version>0.3.2</version>
     <category>Framework integration</category>
-    <vendor email="dmytrotroynikov@gmail.com" url="">Dmytro Troynikov</vendor>
+    <vendor email="dmytrotroynikov@gmail.com" url="https://github.com/DmytroTroynikov/aemtools">Dmytro Troynikov</vendor>
 
     <description><![CDATA[
         AEM Tools is a plugin which contains set of AEM related extensions and features
