@@ -1,4 +1,7 @@
 # AEM Tools
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3f9068782fb9457b9c4c7e535710b15e)](https://www.codacy.com/app/DmytroTroynikov/aemtools?utm_source=github.com&utm_medium=referral&utm_content=DmytroTroynikov/aemtools&utm_campaign=badger)
+
 Intellij IDEA plugin containing AEM related features. The goal of the plugin is to make the development of AEM projects faster and more convenient by leveraging features which IDE can provide.
 The project is in beta now, but it is already usable. 
 
