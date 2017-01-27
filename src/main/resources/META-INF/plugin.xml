@@ -78,6 +78,8 @@
                           implementationClass="com.aemtools.lang.htl.HtlLanguageSubstitutor"/>
         <fileTypeFactory implementation="com.aemtools.lang.htl.file.HtlFileTypeFactory"/>
 
+        <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>
+
         <lang.fileViewProviderFactory language="Htl"
                                       implementationClass="com.aemtools.lang.htl.file.HtlViewProviderFactory"/>
 

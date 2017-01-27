@@ -10,6 +10,7 @@ import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_USE
 import com.aemtools.constant.const.htl.HTL_ATTRIBUTES
 import com.aemtools.constant.const.htl.UNIQUE_HTL_ATTRIBUTES
+import com.aemtools.index.TemplateDefinition
 import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.HtlVariableName
@@ -38,11 +39,11 @@ fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T? {
  * Check if current [PsiElement] has parent of specified class.
  */
 fun <T : PsiElement> PsiElement?.hasParent(type: Class<T>): Boolean =
-    this.findParentByType(type) != null
+        this.findParentByType(type) != null
 
 
 fun <T : PsiElement> PsiElement?.hasChild(type: Class<T>): Boolean =
-    this.findChildrenByType(type).isNotEmpty()
+        this.findChildrenByType(type).isNotEmpty()
 
 
 /**
@@ -264,4 +265,20 @@ fun XmlAttribute.extractTemplateParameters(): List<String> {
 
     return htlHel.findChildrenByType(HtlVariableName::class.java)
             .filter(HtlVariableName::isOption).map { it.text }
+}
+
+/**
+ * Extract [TemplateDefinition] from current [XmlAttribute].
+ * @return template definition, _null_ in case if current tag isn't of `data-sly-template` type.
+ */
+fun XmlAttribute.extractTemplateDefinition(): TemplateDefinition? {
+    val name = if (name.contains(".")) {
+        name.substring(name.indexOf(".") + 1)
+    } else {
+        ""
+    }
+
+    val params = extractTemplateParameters()
+
+    return TemplateDefinition(containingFile.virtualFile?.path, name, params)
 }
