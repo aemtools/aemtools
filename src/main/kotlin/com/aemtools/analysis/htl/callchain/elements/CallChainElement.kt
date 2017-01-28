@@ -43,18 +43,3 @@ open class BaseChainElement(override val element: PsiElement,
  */
 class ArrayAccessIdentifierElement(override val element: PsiElement)
     : BaseChainElement(element, "", TypeDescriptor.empty())
-
-class ArrayChainElement(element: PsiElement,
-                        name: String,
-                        override val type: ArrayTypeDescriptor)
-    : BaseChainElement(element, name, type), IArrayChainElement
-
-class ListChainElement(element: PsiElement,
-                       name: String,
-                       override val type: IterableTypeDescriptor)
-    : BaseChainElement(element, name, type), IListChainElement
-
-class MapChainElement(element: PsiElement,
-                      name: String,
-                      override val type: MapTypeDescriptor)
-    : BaseChainElement(element, name, type), IMapChainElement
