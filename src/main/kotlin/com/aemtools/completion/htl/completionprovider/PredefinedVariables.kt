@@ -1,15 +1,14 @@
 package com.aemtools.completion.htl.completionprovider
 
-import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.htl.psi.util.elFields
 import com.aemtools.lang.htl.psi.util.elMethods
 import com.aemtools.lang.htl.psi.util.elName
+import com.aemtools.lang.java.JavaSearch
 import com.aemtools.service.ServiceFacade
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.psi.JavaPsiFacade
+import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiClass
-import com.intellij.psi.search.GlobalSearchScope
 import java.util.*
 
 /**
@@ -37,12 +36,10 @@ object PredefinedVariables {
      * @param variableName the name of variable
      * @return [PsiClass] instance or _null_ if no class was found
      */
-    fun resolveByIdentifier(variableName: String, variableNameMixin: VariableNameMixin): PsiClass? {
-        val project = variableNameMixin.project
+    fun resolveByIdentifier(variableName: String, project: Project): PsiClass? {
         val classInfo = repository.findContextObject(variableName) ?: return null
         val fullClassName = classInfo.className
-        return JavaPsiFacade.getInstance(project)
-                .findClass(fullClassName, GlobalSearchScope.allScope(project))
+        return JavaSearch.findClass(fullClassName, project)
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.aemtools.completion.htl
 
+import com.aemtools.analysis.htl.callchain.elements.resolveSelectedItem
+import com.aemtools.analysis.htl.callchain.elements.selectedElement
 import com.aemtools.completion.htl.completionprovider.*
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.htl.predefined.HtlELPredefined
@@ -141,9 +143,16 @@ object HtlELCompletionProvider : CompletionProvider<CompletionParameters>() {
         val propertyAccessElement = element.findParentByType(PropertyAccessMixin::class.java)
                 ?: return ResolutionResult()
 
-        val propertyAccessChain = propertyAccessElement.accessChain()
-        context.put("property-access-chain", propertyAccessChain)
-        return propertyAccessChain.last().resolutionResult
+        val chain = propertyAccessElement.accessChain()
+                ?: return ResolutionResult()
+        val lastSegment = chain.callChainSegments.lastOrNull()
+                ?: return ResolutionResult()
+        val selectedElement = lastSegment.selectedElement()
+                ?: return ResolutionResult()
+
+        val result = lastSegment.resolveSelectedItem()
+
+        return HtlELPredefined.addPredefined(chain, lastSegment, selectedElement, result)
     }
 
     /**

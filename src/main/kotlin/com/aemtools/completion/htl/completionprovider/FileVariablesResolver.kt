@@ -16,6 +16,7 @@ import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.htl.psi.util.isNotPartOf
 import com.aemtools.lang.htl.psi.util.isPartOf
 import com.aemtools.lang.htl.psi.util.isWithin
+import com.aemtools.lang.java.JavaSearch
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
@@ -23,11 +24,9 @@ import com.intellij.lang.StdLanguages
 import com.intellij.openapi.editor.impl.EditorImpl
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectUtil
-import com.intellij.psi.JavaPsiFacade
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
-import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
@@ -55,8 +54,7 @@ object FileVariablesResolver {
                 return resolveListVariable(foundVariable)
             }
         }
-
-        val psiClass = JavaPsiFacade.getInstance(project).findClass(foundVariable.type as String, GlobalSearchScope.allScope(project))
+        val psiClass = JavaSearch.findClass(foundVariable.type as String, project)
         return ResolutionResult(psiClass)
     }
 
@@ -99,7 +97,7 @@ object FileVariablesResolver {
             return null
         }
 
-        return JavaPsiFacade.getInstance(project).findClass(result.type, GlobalSearchScope.allScope(project))
+        return JavaSearch.findClass(result.type, project)
     }
 
     /**
@@ -150,7 +148,7 @@ object FileVariablesResolver {
                     }
                     startsWith(DATA_SLY_TEMPLATE) -> {
                         val tag = it.findParentByType(XmlTag::class.java)
-                            ?: return@forEach
+                                ?: return@forEach
 
                         if (position.isWithin(tag)) {
                             val templateParameters = it.extractTemplateParameters()

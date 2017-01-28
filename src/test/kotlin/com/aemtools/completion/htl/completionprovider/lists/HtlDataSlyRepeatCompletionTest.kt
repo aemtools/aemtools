@@ -1,12 +1,13 @@
 package com.aemtools.completion.htl.completionprovider.lists
 
-import com.aemtools.completion.blocks.BaseVariantsCheckContributorTest
+import com.aemtools.completion.blocks.BaseVariantsWithJdkContributorTest
+import com.aemtools.completion.htl.completionprovider.CollectionsTest.Companion.MY_MODEL_VARIANTS
 
 /**
  * @author Dmytro_Troynikov
  */
 class HtlDataSlyRepeatCompletionTest
-    : BaseVariantsCheckContributorTest("com/aemtools/completion/htl/fixtures/noafter/data-sly-repeat") {
+    : BaseVariantsWithJdkContributorTest("com/aemtools/completion/htl/fixtures/noafter/data-sly-repeat") {
 
     fun testDataSlyRepeatDefaultVariables() =
             assertVariantsPresent(DEFAULT_LIST_VARIABLES)
@@ -39,7 +40,7 @@ class HtlDataSlyRepeatCompletionTest
             assertVariants(LIST_VARIABLE_FIELDS)
 
     fun testDataSlyRepeatResolveItem() =
-            assertVariants(CUSTOM_MODEL_FIELDS)
+            assertVariants(MY_MODEL_VARIANTS)
 
     fun testDataSlyRepeatResolveOverridenItem() =
             assertVariants(PAGE_FIELDS)
