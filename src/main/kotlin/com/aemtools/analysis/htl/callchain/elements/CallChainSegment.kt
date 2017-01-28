@@ -54,19 +54,20 @@ class BaseCallChainSegment(
     override fun chainElements(): List<CallChainElement> = elements
 }
 
-fun List<CallChainElement>.resolveSelectedItem(): ResolutionResult {
-
-    if (this.isEmpty()) {
+fun CallChainSegment.resolveSelectedItem(): ResolutionResult {
+    val chainElements = this.chainElements()
+    if (chainElements.isEmpty()) {
         return ResolutionResult()
     }
 
-    val selectedItem = this.find { it.name.contains(IDEA_STRING_CARET_PLACEHOLDER) }
-    val indexOfSelectedItem = this.indexOf(selectedItem)
+    val selectedItem = selectedElement()
+            ?: return ResolutionResult()
+    val indexOfSelectedItem = chainElements.indexOf(selectedItem)
 
-    return when {
-        this.size > 2
-                && this[indexOfSelectedItem - 1] is ArrayAccessIdentifierElement ->
-            with(this[indexOfSelectedItem - 2].type) {
+    val resolutionResult = when {
+        chainElements.size > 2
+                && chainElements[indexOfSelectedItem - 1] is ArrayAccessIdentifierElement ->
+            with(chainElements[indexOfSelectedItem - 2].type) {
                 when {
                     this is ArrayJavaTypeDescriptor ->
                         this.arrayType().asResolutionResult()
@@ -77,7 +78,16 @@ fun List<CallChainElement>.resolveSelectedItem(): ResolutionResult {
                     else -> this.asResolutionResult()
                 }
             }
-        else -> this[indexOfSelectedItem - 1].type.asResolutionResult()
+        else -> chainElements[indexOfSelectedItem - 1].type.asResolutionResult()
     }
 
+    return resolutionResult
+}
+
+/**
+ * Find selected element in current [CallChainSegment].
+ * @return the element
+ */
+fun CallChainSegment.selectedElement(): CallChainElement? {
+    return chainElements().find { it.name.contains(IDEA_STRING_CARET_PLACEHOLDER) }
 }
