@@ -71,7 +71,8 @@
 
         <!-- Htl -->
         <lang.formatter language="Htl" implementationClass="com.aemtools.lang.htl.formatter.HtlFormattingModelBuilder"/>
-        <psi.referenceContributor language="HTML" implementation="com.aemtools.reference.html.HtmlReferenceContributor"/>
+        <psi.referenceContributor language="HTML"
+                                  implementation="com.aemtools.reference.html.HtmlReferenceContributor"/>
         <psi.referenceContributor language="Htl" implementation="com.aemtools.reference.htl.HtlReferenceContributor"/>
 
         <lang.substitutor language="HTML"
@@ -91,6 +92,7 @@
 
         <completion.contributor language="Htl"
                                 implementationClass="com.aemtools.completion.htl.HtlELCompletionContributor"/>
+        <lang.braceMatcher language="Htl" implementationClass="com.aemtools.lang.htl.editor.HtlBraceMatcher" />
 
         <lang.parserDefinition language="Htl"
                                implementationClass="com.aemtools.lang.htl.HtlParserDefinition"/>
