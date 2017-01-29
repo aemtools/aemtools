@@ -3,6 +3,7 @@ package com.aemtools.completion.util
 import com.aemtools.constant.const
 import com.aemtools.lang.htl.psi.*
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
+import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 
 /**
@@ -77,4 +78,14 @@ fun HtlHtlEl.isInsideOF(attributeName: String) : Boolean {
             .findParentByType(XmlAttribute::class.java) ?: return false
 
     return attribute.name.startsWith(attributeName)
+}
+
+/**
+ * Check if current [PsiElement] element resides within attribute with given name.
+ * @param attributeName the name of attribute
+ * @return __true__ if current element si the value of attribute with given name
+ */
+fun PsiElement.isInsideOf(attributeName: String): Boolean {
+    val htlHtlEl = findParentByType(HtlHtlEl::class.java) ?: return false
+    return htlHtlEl.isInsideOF(attributeName)
 }
