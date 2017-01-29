@@ -1,4 +1,4 @@
-package com.aemtools.reference.htl
+package com.aemtools.reference.htl.provider
 
 import com.aemtools.completion.util.isInsideOf
 import com.aemtools.completion.util.isMainString

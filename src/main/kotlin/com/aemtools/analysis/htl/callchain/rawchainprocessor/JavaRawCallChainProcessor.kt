@@ -97,7 +97,7 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
         }
 
         return if (psiClass != null) {
-            JavaPsiClassTypeDescriptor(psiClass, null)
+            JavaPsiClassTypeDescriptor(psiClass, null, null)
         } else {
             TypeDescriptor.empty()
         }
@@ -110,7 +110,7 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
             if (className != null) {
                 val psiClass = JavaSearch.findClass(className, xmlAttribute.project)
                 if (psiClass != null) {
-                    val typeDescriptor = JavaPsiClassTypeDescriptor(psiClass, null)
+                    val typeDescriptor = JavaPsiClassTypeDescriptor(psiClass, null, null)
                     return BaseCallChainSegment(typeDescriptor, typeDescriptor, rawChainUnit.myDeclaration, listOf())
                 }
             }

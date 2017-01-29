@@ -4,14 +4,16 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.MapTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.aemtools.lang.java.JavaSearch
 import com.intellij.psi.PsiClass
+import com.intellij.psi.PsiMember
 import com.intellij.psi.impl.source.PsiClassReferenceType
 
 /**
  * @author Dmytro Troynikov
  */
 class MapJavaTypeDescriptor(psiClass: PsiClass,
+                            psiMember: PsiMember?,
                             override val originalType: PsiClassReferenceType? = null) :
-        JavaPsiClassTypeDescriptor(psiClass, originalType), MapTypeDescriptor {
+        JavaPsiClassTypeDescriptor(psiClass, psiMember, originalType), MapTypeDescriptor {
     override fun keyType(): TypeDescriptor {
         if (originalType == null) {
             return TypeDescriptor.empty()
@@ -22,7 +24,7 @@ class MapJavaTypeDescriptor(psiClass: PsiClass,
         val psiClass = JavaSearch.findClass(keyParam, psiClass.project)
                 ?: return TypeDescriptor.empty()
 
-        return JavaPsiClassTypeDescriptor.create(psiClass, null)
+        return JavaPsiClassTypeDescriptor.create(psiClass, null, null)
     }
 
     override fun valueType(): TypeDescriptor {
@@ -35,7 +37,7 @@ class MapJavaTypeDescriptor(psiClass: PsiClass,
         val psiClass = JavaSearch.findClass(valueParam, psiClass.project)
                 ?: return TypeDescriptor.empty()
 
-        return JavaPsiClassTypeDescriptor.create(psiClass, null)
+        return JavaPsiClassTypeDescriptor.create(psiClass, null, null)
     }
 
 }

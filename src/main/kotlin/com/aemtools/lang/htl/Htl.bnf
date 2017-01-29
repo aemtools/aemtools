@@ -121,7 +121,7 @@ logical_operator ::= EQ
 
 unary_operator ::= EXCLAMATION | MINUS
 
-property_access ::= unary_operator? variable_name [access_identifier+]
+property_access ::= unary_operator? variable_name [access_identifier+] {implements="com.intellij.psi.ContributedReferenceHost"}
 
 variable_name ::= VAR_NAME
 

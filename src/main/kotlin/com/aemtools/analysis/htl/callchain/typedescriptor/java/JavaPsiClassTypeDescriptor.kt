@@ -16,6 +16,7 @@ import java.util.*
  * @author Dmytro_Troynikov
  */
 open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
+                                      open val psiMember: PsiMember?,
                                       open val originalType: PsiType?) : TypeDescriptor {
     override fun isArray(): Boolean = originalType is PsiArrayType
 
@@ -101,7 +102,7 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
         val typeClass = JavaSearch.findClass(className, psiClass.project)
                 ?: return TypeDescriptor.named(className)
 
-        return JavaPsiClassTypeDescriptor.create(typeClass, psiType)
+        return JavaPsiClassTypeDescriptor.create(typeClass, psiMember, psiType)
     }
 
     override fun asResolutionResult(): ResolutionResult {
@@ -109,7 +110,7 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
     }
 
     companion object {
-        fun create(psiClass: PsiClass, psiType: PsiType?) : JavaPsiClassTypeDescriptor {
+        fun create(psiClass: PsiClass, psiMember: PsiMember?, psiType: PsiType?) : JavaPsiClassTypeDescriptor {
             return when (psiType) {
                 is PsiClassReferenceType -> {
                     val iterable = JavaSearch.findClass("java.lang.Iterable", psiClass.project)
@@ -119,30 +120,30 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
                     if (iterable != null && map != null && iterator != null) {
                         if (psiClass.isInheritor(iterable, true)
                                 || psiClass.isEquivalentTo(iterable)) {
-                            return IterableJavaTypeDescriptor(psiClass, psiType)
+                            return IterableJavaTypeDescriptor(psiClass, psiMember, psiType)
                         }
 
                         if (psiClass.isInheritor(iterator, true)
                                 || psiClass.isEquivalentTo(iterator)) {
-                            return IterableJavaTypeDescriptor(psiClass, psiType)
+                            return IterableJavaTypeDescriptor(psiClass, psiMember, psiType)
                         }
 
                         if (psiClass.isInheritor(map, true)
                                 || psiClass.isEquivalentTo(map)) {
-                            return MapJavaTypeDescriptor(psiClass, psiType)
+                            return MapJavaTypeDescriptor(psiClass, psiMember, psiType)
                         }
 
                     }
 
-                    JavaPsiClassTypeDescriptor(psiClass, psiType)
+                    JavaPsiClassTypeDescriptor(psiClass, psiMember, psiType)
                 }
                 is PsiClassType ->
-                        JavaPsiClassTypeDescriptor(psiClass, psiType)
+                        JavaPsiClassTypeDescriptor(psiClass, psiMember, psiType)
                 is PsiPrimitiveType ->
-                        JavaPsiClassTypeDescriptor(psiClass, psiType)
+                        JavaPsiClassTypeDescriptor(psiClass, psiMember, psiType)
                 is PsiArrayType ->
-                        ArrayJavaTypeDescriptor(psiClass, psiType)
-                else -> JavaPsiClassTypeDescriptor(psiClass, psiType)
+                        ArrayJavaTypeDescriptor(psiClass, psiMember, psiType)
+                else -> JavaPsiClassTypeDescriptor(psiClass, psiMember, psiType)
             }
         }
     }
