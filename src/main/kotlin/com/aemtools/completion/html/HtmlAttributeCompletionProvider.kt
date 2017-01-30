@@ -1,15 +1,15 @@
 package com.aemtools.completion.html
 
 import com.aemtools.completion.htl.inserthandler.HtlExpressionInsertHandler
+import com.aemtools.completion.htl.inserthandler.HtlIdentifierInsertHandler
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.findParentByType
 import com.aemtools.completion.util.isSlyTag
 import com.aemtools.completion.util.isUniqueHtlAttribute
 import com.aemtools.constant.const
-import com.aemtools.constant.const.htl.DATA_SLY_LIST
-import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
-import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_UNWRAP
+import com.aemtools.constant.const.htl.DATA_SLY_USE
+import com.aemtools.constant.const.htl.HTL_ATTRIBUTES_WITH_EXPRESSION
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -71,10 +71,11 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
         val result = LookupElementBuilder.create(it)
                 .withTypeText("HTL Attribute")
         when (it) {
-            DATA_SLY_UNWRAP -> result
+            in HTL_ATTRIBUTES_WITH_EXPRESSION -> result.withInsertHandler(HtlExpressionInsertHandler())
 
-            DATA_SLY_TEST, DATA_SLY_LIST, DATA_SLY_REPEAT ->
-                result.withInsertHandler(HtlExpressionInsertHandler())
+            DATA_SLY_USE -> result.withInsertHandler(HtlIdentifierInsertHandler())
+
+            DATA_SLY_UNWRAP -> result
 
             else -> result.withInsertHandler(XmlAttributeInsertHandler())
         }

@@ -55,6 +55,19 @@ object const {
                 DATA_SLY_UNWRAP,
                 DATA_SLY_REPEAT
         )
+        // Attributes, which need expression after defining
+        // (For example: data-sly-include=${})
+        val HTL_ATTRIBUTES_WITH_EXPRESSION = listOf(
+                DATA_SLY_TEST,
+                DATA_SLY_LIST,
+                DATA_SLY_REPEAT,
+                DATA_SLY_TEXT,
+                DATA_SLY_ELEMENT,
+                DATA_SLY_CALL,
+                DATA_SLY_INCLUDE,
+                DATA_SLY_RESOURCE,
+                DATA_SLY_ATTRIBUTE
+        )
     }
 
     object js {
