@@ -222,10 +222,10 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
         }
     }
 
-    private fun extractElementName(nextField: PsiElement?): String {
-        return when (nextField) {
-            is AccessIdentifierMixin -> nextField.variableName()
-            is VariableNameMixin -> nextField.variableName()
+    private fun extractElementName(element: PsiElement?): String {
+        return when (element) {
+            is AccessIdentifierMixin -> element.variableName()
+            is VariableNameMixin -> element.variableName()
             else -> ""
         }
     }

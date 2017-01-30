@@ -135,7 +135,7 @@ literal ::= string_literal | boolean_literal | number_literal | array_literal
 
 array_literal ::= LSQRBRACKET array_statement [(COMMA array_statement)+] RSQRBRACKET
 
-string_literal ::= SINGLE_QUOTED_STRING | DOUBLE_QUOTED_STRING {implements="com.intellij.psi.ContributedReferenceHost"}
+string_literal ::= SINGLE_QUOTED_STRING | DOUBLE_QUOTED_STRING {implements="com.intellij.psi.ContributedReferenceHost" mixin="com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin"}
 
 boolean_literal ::= TRUE | FALSE
 
