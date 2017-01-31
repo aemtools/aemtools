@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.aemtools</id>
     <name>AEM Tools</name>
-    <version>0.3.2</version>
+    <version>0.4</version>
     <category>Framework integration</category>
     <vendor email="dmytrotroynikov@gmail.com" url="https://github.com/DmytroTroynikov/aemtools">Dmytro Troynikov</vendor>
 
@@ -10,10 +10,10 @@
        <ul>
         <li><b>HTL</b>(<b>Sightly</b>) support:
             <ul>
-                <li><b>Syntax Highlighting</b> - Done</li>
-                <li><b>Code Completion</b> - In progress</li>
-                <li><b>Code navigation</b> - Planned</li>
-                <li><b>Quick Documentation</b> (ctrl+q) - Planned</li>
+                <li><b>Syntax Highlighting</b></li>
+                <li><b>Code Completion</b></li>
+                <li><b>Code navigation</b></li>
+                <li><b>Quick Documentation</b> (ctrl+q)</li>
             </ul>
             <i>
             Note: to make the completion work, AEM dependencies should be present in
@@ -25,6 +25,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        0.4
+        <ul>
+            <li>Improved code completion</li>
+            <li>Added basic code navigation</li>
+        </ul>
+
         0.3.2
         <ul>
             <li>Fixed issue with broken HTML formatting</li>
