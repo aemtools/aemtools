@@ -2,8 +2,14 @@ package com.aemtools.lang.htl.psi
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement
 import com.intellij.lang.ASTNode
+import com.intellij.psi.PsiReference
+import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry
 
 /**
- * Created by Dmytro_Troynikov on 12/23/2016.
+ * @author Dmytro Troynikov
  */
-open class HtlPsiBaseElement(node: ASTNode) : ASTWrapperPsiElement(node)
+open class HtlPsiBaseElement(node: ASTNode) : ASTWrapperPsiElement(node) {
+    override fun getReferences(): Array<PsiReference> {
+        return ReferenceProvidersRegistry.getReferencesFromProviders(this);
+    }
+}

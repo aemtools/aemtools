@@ -1,5 +1,10 @@
 package com.aemtools.completion.htl.predefined
 
+import com.aemtools.analysis.htl.callchain.elements.CallChain
+import com.aemtools.analysis.htl.callchain.elements.CallChainElement
+import com.aemtools.analysis.htl.callchain.elements.CallChainSegment
+import com.aemtools.completion.htl.model.ResolutionResult
+import com.aemtools.constant.const.java.VALUE_MAP
 import com.google.gson.annotations.SerializedName
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
@@ -84,6 +89,44 @@ object HtlELPredefined {
             LookupElementBuilder.create("odd"),
             LookupElementBuilder.create("even")
     )
+
+    val DEFAULT_PROPERTIES = listOf(
+            pc("jcr:title"),
+            pc("jcr:description"),
+            pc("jcr:primaryType"),
+            pc("jcr:mixinTypes"),
+            pc("jcr:createdBy"),
+            pc("cq:lastReplicationAction"),
+            pc("cq:lastReplicatedBy"),
+            pc("jcr:lastModifiedBy"),
+            pc("jcr:lastModified"),
+            pc("cq:lastReplicated"),
+            pc("sling:resourceType")
+    )
+
+    fun addPredefined(callChain: CallChain,
+                      currentSegment: CallChainSegment,
+                      currentElement: CallChainElement,
+                      resolutionResult: ResolutionResult): ResolutionResult {
+        val psiClass = resolutionResult.psiClass
+        if (psiClass != null) {
+            if (psiClass.qualifiedName == VALUE_MAP) {
+                val currentChain = currentSegment.chainElements()
+                val previousElement = currentChain.getOrNull(
+                        currentChain.indexOf(currentElement) - 1
+                ) ?: return resolutionResult
+
+                if (previousElement.name == "properties"
+                        || previousElement.name == "pageProperties"
+                        || previousElement.name == "inheritedPageProperties") {
+                    return resolutionResult.add(DEFAULT_PROPERTIES.map { it.toLookupElement() })
+                }
+            }
+        }
+
+        return resolutionResult
+    }
+
 }
 
 private fun pc(completionText: String, documentation: String? = null) =
@@ -95,4 +138,26 @@ data class PredefinedCompletion(
         val type: String? = null,
         @SerializedName(value = "description")
         val documentation: String? = null
-)
+) {
+    fun toLookupElement(): LookupElement {
+        val result = LookupElementBuilder.create(completionText)
+        if (type != null) {
+            result.withTypeText(type, true)
+        }
+        return result
+    }
+}
+
+/**
+ * Add lookup elements from given list to current resolution result.
+ * @param completionVariants variants to add
+ * @return new [ResolutionResult] object
+ */
+fun ResolutionResult.add(completionVariants: List<LookupElement>): ResolutionResult {
+    val myVariants = this.predefined
+    if (myVariants == null) {
+        return ResolutionResult(this.psiClass, completionVariants)
+    } else {
+        return ResolutionResult(this.psiClass, myVariants + completionVariants)
+    }
+}

@@ -3,14 +3,13 @@ buildscript {
         mavenLocal()
         jcenter()
         mavenCentral()
-        maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
         classpath 'de.undercouch:gradle-download-task:3.1.2'
         classpath 'org.apache.ivy:ivy:2.3.0'
     }
-
+    apply from: file("config/buildscript.gradle"), to: buildscript
 }
 
 plugins {
@@ -35,7 +34,7 @@ allprojects {
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
 
-    tasks.withType(JavaCompile) {options.encoding = 'UTF-8'}
+    tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
 
     sourceSets {
         main.java.srcDirs += "src/main/gen"
@@ -78,6 +77,7 @@ allprojects {
 
         testCompile "junit:junit:$junit_version"
         testCompile "org.assertj:assertj-core:$assertj_version"
+        testCompile "org.mockito:mockito-core:2.6.4"
     }
 
 }

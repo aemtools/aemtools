@@ -17,10 +17,15 @@ data class HtlVariableDeclaration(
          */
         val variableName: String,
         /**
+         * The type of Htl declaration attribute.
+         */
+        val attributeType: DeclarationAttributeType,
+        /**
          * The [DeclarationType] of current variable.
          */
         val type: DeclarationType = DeclarationType.VARIABLE,
         /**
          * Certain declarations may have own [ResolutionResult]. By default the result is empty.
          */
+        @Deprecated("The resolution result will be removed")
         val resolutionResult: ResolutionResult = ResolutionResult())

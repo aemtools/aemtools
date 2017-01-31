@@ -1,5 +1,7 @@
 package com.aemtools.completion.htl
 
+import com.aemtools.analysis.htl.callchain.elements.resolveSelectedItem
+import com.aemtools.analysis.htl.callchain.elements.selectedElement
 import com.aemtools.completion.htl.completionprovider.*
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.htl.predefined.HtlELPredefined
@@ -59,9 +61,10 @@ object HtlELCompletionProvider : CompletionProvider<CompletionParameters>() {
             }
 
             isAssignment(currentPosition) -> {
-                if (currentPosition.findParentByType(HtlContextExpression::class.java) != null) {
+                if (currentPosition.hasParent(HtlContextExpression::class.java)) {
                     // ${param @ opt='<caret>'}
-                    if (currentPosition.findParentByType(HtlAssignmentValue::class.java) != null) {
+                    if (currentPosition.hasParent(HtlAssignmentValue::class.java)
+                            and currentPosition.hasParent(HtlStringLiteral::class.java)) {
                         val sightlyAssignment = currentPosition.findParentByType(HtlAssignment::class.java) ?: return
                         val variableElement = sightlyAssignment.firstChild
                         if (variableElement.text == "context") {
@@ -69,26 +72,32 @@ object HtlELCompletionProvider : CompletionProvider<CompletionParameters>() {
                                 LookupElementBuilder.create(it.completionText)
                             })
                         }
+                    } else {
+                        completeVariables(currentPosition, parameters, result)
                     }
                 }
             }
             isOption(parameters) -> {
-                result.addAllElements(HtlContextCompletionProvider.contextParameters(parameters))
+                result.addAllElements(HtlOptionCompletionProvider.contextParameters(parameters))
             }
             isStringLiteralValue(parameters) -> {
                 val values = completeStringLiteralValue(parameters)
                 result.addAllElements(values)
             }
             isVariable(parameters) -> {
-                val contextObjects = PredefinedVariables.contextObjectsCompletion()
-                val fileCompletions = FileVariablesResolver
-                        .findForPosition(currentPosition, parameters)
-                result.addAllElements(contextObjects + fileCompletions)
+                completeVariables(currentPosition, parameters, result)
             }
 
             else -> return
         }
         result.stopHere()
+    }
+
+    private fun completeVariables(currentPosition: PsiElement, parameters: CompletionParameters, result: CompletionResultSet) {
+        val contextObjects = PredefinedVariables.contextObjectsCompletion()
+        val fileCompletions = FileVariablesResolver
+                .findForPosition(currentPosition, parameters)
+        result.addAllElements(contextObjects + fileCompletions)
     }
 
     fun completeStringLiteralValue(parameters: CompletionParameters): List<LookupElement> {
@@ -134,9 +143,16 @@ object HtlELCompletionProvider : CompletionProvider<CompletionParameters>() {
         val propertyAccessElement = element.findParentByType(PropertyAccessMixin::class.java)
                 ?: return ResolutionResult()
 
-        val propertyAccessChain = propertyAccessElement.accessChain()
-        context.put("property-access-chain", propertyAccessChain)
-        return propertyAccessChain.last().resolutionResult
+        val chain = propertyAccessElement.accessChain()
+                ?: return ResolutionResult()
+        val lastSegment = chain.callChainSegments.lastOrNull()
+                ?: return ResolutionResult()
+        val selectedElement = lastSegment.selectedElement()
+                ?: return ResolutionResult()
+
+        val result = lastSegment.resolveSelectedItem()
+
+        return HtlELPredefined.addPredefined(chain, lastSegment, selectedElement, result)
     }
 
     /**

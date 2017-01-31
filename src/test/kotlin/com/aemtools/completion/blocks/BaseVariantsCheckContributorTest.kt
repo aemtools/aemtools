@@ -21,6 +21,11 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
     : LightFixtureCompletionTestCase(), HtlTestCase {
 
     companion object {
+        /**
+         * Common [Object] variants
+         */
+        val OBJECT_VARIANTS = listOf("class", "hashCode", "toString")
+
         val DEFAULT_CONTEXT_OBJECTS = listOf("properties", "pageProperties",
                 "inheritedPageProperties", "component",
                 "componentContext", "currentDesign",
@@ -69,12 +74,13 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
                 "lastModifiedBy", "lastModified", "vanityUrl",
                 "tags", "locked", "lockOwner", "canUnlock",
                 "description", "template"
-        )
+        ) + OBJECT_VARIANTS
 
         val CUSTOM_MODEL_FIELDS = listOf("booleanField",
                 "isBooleanField", "publicBoolean", "publicString",
                 "publicStringArray", "publicStringList", "publicStringMap",
                 "stringArray", "stringField", "stringList", "stringMap", "modelList")
+
     }
 
     override fun getTestDataPath(): String = "${HtlTestCase.testResourcesPath}/$dataPath"
@@ -117,6 +123,23 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
     private fun triggerCompletion(): List<LookupElement> {
         myFixture.configureByFile("${getTestName(true)}.html")
         return myFixture.completeBasic().toList()
+    }
+
+
+    /**
+     * Runs basic completion in caret position in fileBefore. Implies that there is only one
+     * completion variant and it was inserted automatically, and checks the result file text with fileAfter.
+     *
+     * User have to create file with input data and name have which corresponds to test method name (without test at start) and
+     * Output result file must have name same input file name and with end "Result"
+     *
+     * For example:
+     *  Test name: testHelloWorld;
+     *  Input file: helloWorld.html;
+     *  Output file: helloWorldResult.html;
+     */
+    protected fun checkAutoCompletion() {
+        myFixture.testCompletion("${getTestName(true)}.html", "${getTestName(true)}Result.html")
     }
 
     override fun setUp() {

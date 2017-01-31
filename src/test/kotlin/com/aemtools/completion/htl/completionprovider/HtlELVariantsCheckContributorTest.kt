@@ -7,8 +7,6 @@ import com.aemtools.completion.blocks.BaseVariantsCheckContributorTest
  */
 class HtlELVariantsCheckContributorTest : BaseVariantsCheckContributorTest("com/aemtools/completion/htl/fixtures/noafter") {
 
-    fun testContextValues() = assertVariants(CONTEXT_VALUES)
-
     fun testContextObjects() = defaultContextObjectTest()
 
     fun testContextWithinSecondEl() = defaultContextObjectTest()

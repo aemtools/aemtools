@@ -23,7 +23,10 @@ abstract class VariableNameMixin(node: ASTNode) : HtlELNavigableMixin(node) {
         var result = FileVariablesResolver.resolveVariable(this)
 
         if (result.isEmpty()) {
-            result = ResolutionResult(PredefinedVariables.resolveByIdentifier(this.variableName(), this))
+            result = ResolutionResult(
+                    PredefinedVariables
+                            .resolveByIdentifier(this.variableName(),
+                                    project))
         }
 
         return result
