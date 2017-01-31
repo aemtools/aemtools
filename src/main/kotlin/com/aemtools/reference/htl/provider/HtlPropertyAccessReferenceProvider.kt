@@ -23,15 +23,15 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
 
         val chain = propertyAccess.accessChain() ?: return arrayOf()
 
-        val chainSegment = chain.callChainSegments.lastOrNull() as BaseCallChainSegment ?: return arrayOf()
+        val chainSegment = chain.callChainSegments.lastOrNull() as? BaseCallChainSegment ?: return arrayOf()
 
         val elements = LinkedList<CallChainElement>(chainSegment.chainElements())
 
         val firstElement = elements.firstOrNull() ?: return arrayOf()
         elements.pop()
 
-        val firstReference = object : PsiReferenceBase<PsiElement>(firstElement.element,
-                TextRange(0, firstElement.element.textLength), true) {
+        val firstReference = object : PsiReferenceBase<PsiElement>(propertyAccess,
+                TextRange(firstElement.element.startOffsetInParent, firstElement.element.startOffsetInParent + firstElement.element.textLength), true) {
             override fun resolve(): PsiElement? {
                 return chainSegment.declaration?.xmlAttribute?.valueElement
             }

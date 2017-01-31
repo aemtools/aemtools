@@ -80,8 +80,11 @@
         <fileTypeFactory implementation="com.aemtools.lang.htl.file.HtlFileTypeFactory"/>
 
         <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>
+
         <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlStringLiteralManipulator"
                                  forClass="com.aemtools.lang.htl.psi.HtlStringLiteral"/>
+        <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlPropertyAccessManipulator"
+                                 forClass="com.aemtools.lang.htl.psi.HtlPropertyAccess"/>
 
         <lang.fileViewProviderFactory language="Htl"
                                       implementationClass="com.aemtools.lang.htl.file.HtlViewProviderFactory"/>
