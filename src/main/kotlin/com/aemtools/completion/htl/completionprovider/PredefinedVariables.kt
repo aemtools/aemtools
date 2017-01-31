@@ -22,7 +22,9 @@ object PredefinedVariables {
     fun contextObjectsCompletion(): List<LookupElement> {
         return repository.getContextObjects().map {
             LookupElementBuilder.create(it.name)
-                    .withTypeText(it.className)
+                    .withTailText("(${it.className})", true)
+                    .withTypeText("Context Object")
+                    .withIcon(it.elementIcon)
         }
     }
 

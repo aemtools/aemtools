@@ -123,8 +123,12 @@ object FileVariablesResolver {
                             || (startsWith(DATA_SLY_TEST) && length > DATA_SLY_TEST.length) -> {
                         val variableName = substring(lastIndexOf(".") + 1)
                         val varClass = it.resolveUseClass()
-                        result += LookupElementBuilder.create(variableName)
-                                .withTypeText(varClass)
+                        val element = LookupElementBuilder.create(variableName)
+                                .withTypeText("Sly Use Variable")
+                        if (!varClass.isNullOrEmpty()) {
+                            element.withTailText("($varClass)", true)
+                        }
+                        result.add(element)
                     }
                     startsWith(DATA_SLY_LIST) -> {
                         val (itemName, itemListName) = extractItemAndItemListNames(this)
@@ -132,8 +136,10 @@ object FileVariablesResolver {
                         val tag = it.findParentByType(XmlTag::class.java) ?: return result
 
                         if (position.isWithin(tag)) {
-                            result.add(LookupElementBuilder.create(itemName))
-                            result.add(LookupElementBuilder.create(itemListName))
+                            result.add(LookupElementBuilder.create(itemName)
+                                    .withTypeText("Data Sly List"))
+                            result.add(LookupElementBuilder.create(itemListName)
+                                    .withTypeText("Data Sly List"))
                         } else {
                         }
                     }
@@ -143,8 +149,10 @@ object FileVariablesResolver {
                         val tag = it.findParentByType(XmlTag::class.java) ?: return result
 
                         if (position.isPartOf(tag) && position.isNotPartOf(it)) {
-                            result.add(LookupElementBuilder.create(itemName))
-                            result.add(LookupElementBuilder.create(itemListName))
+                            result.add(LookupElementBuilder.create(itemName)
+                                    .withTypeText("Data Sly Repeat"))
+                            result.add(LookupElementBuilder.create(itemListName)
+                                    .withTypeText("Data Sly Repeat"))
                         } else {
 
                         }
@@ -158,7 +166,7 @@ object FileVariablesResolver {
 
                             templateParameters.forEach {
                                 result.add(LookupElementBuilder.create(it)
-                                        .withTypeText("Template parameter"))
+                                        .withTypeText("Template Parameter"))
                             }
                         } else {
                         }

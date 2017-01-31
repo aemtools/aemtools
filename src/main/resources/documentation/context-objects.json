@@ -2,6 +2,7 @@
   {
     "name": "properties",
     "className": "org.apache.sling.api.resource.ValueMap",
+    "icon": "interface",
     "predefinedMode": "merge",
     "predefined": [
       {
@@ -64,6 +65,7 @@
   {
     "name": "pageProperties",
     "className": "org.apache.sling.api.resource.ValueMap",
+    "icon": "interface",
     "predefinedMode": "merge",
     "predefined": [
       {
@@ -126,6 +128,7 @@
   {
     "name": "inheritedPageProperties",
     "className": "org.apache.sling.api.resource.ValueMap",
+    "icon": "interface",
     "predefinedMode": "merge",
     "predefined": [
       {
@@ -187,90 +190,112 @@
   },
   {
     "name": "component",
+    "icon": "interface",
     "className": "com.day.cq.wcm.api.components.Component"
   },
   {
     "name": "componentContext",
+    "icon": "interface",
     "className": "com.day.cq.wcm.api.components.ComponentContext"
   },
   {
     "name": "currentDesign",
+    "icon": "interface",
     "className": "com.day.cq.wcm.api.designer.Design"
   },
   {
     "name": "currentNode",
+    "icon": "interface",
     "className": "javax.jcr.Node"
   },
   {
     "name": "currentPage",
+    "icon": "interface",
     "className": "com.day.cq.wcm.api.Page"
   },
   {
     "name": "currentSession",
+    "icon": "interface",
     "className": "javax.servlet.http.HttpSession"
   },
   {
     "name": "currentStyle",
+    "icon": "interface",
     "className": "com.day.cq.wcm.api.designer.Style"
   },
   {
     "name": "designer",
+    "icon": "interface",
     "className": "com.day.cq.wcm.api.designer.Designer"
   },
   {
     "name": "editContext",
+    "icon": "interface",
     "className": "com.day.cq.wcm.api.components.EditContext"
   },
   {
     "name": "log",
+    "icon": "interface",
     "className": "org.slf4j.Logger"
   },
   {
     "name": "out",
+    "icon": "class",
     "className": "java.io.PrintWriter"
   },
   {
     "name": "pageManager",
+    "icon": "interface",
     "className": "com.day.cq.wcm.api.PageManager"
   },
   {
     "name": "reader",
+    "icon": "class",
     "className": "java.io.BufferedReader"
   },
   {
     "name": "request",
+    "icon": "interface",
     "className": "org.apache.sling.api.SlingHttpServletRequest"
   },
   {
     "name": "resource",
+    "icon": "interface",
     "className": "org.apache.sling.api.resource.Resource"
   },
   {
     "name": "resourceDesign",
+    "icon": "interface",
     "className": "com.day.cq.wcm.api.designer.Design"
   },
   {
     "name": "resourcePage",
+    "icon": "interface",
     "className": "com.day.cq.wcm.api.Page"
   },
   {
     "name": "response",
+    "icon": "interface",
     "className": "org.apache.sling.api.SlingHttpServletResponse"
   },
   {
     "name": "sling",
+    "icon": "interface",
     "className": "org.apache.sling.api.scripting.SlingScriptHelper"
   },
   {
     "name": "slyWcmHelper",
+    "icon": "class",
     "className": "com.adobe.cq.sightly.WCMScriptHelper"
   },
   {
     "name": "wcmmode",
+    "icon": "class",
     "className": "com.adobe.cq.sightly.SightlyWCMMode"
   },
   {
     "name": "xssAPI",
-    "className": "com.adobe.granite.xss.impl.XSSAPImpl"
+    "icon": "interface",
+    "className": "org.apache.sling.xss.XSSAPI"
   }
 ]
