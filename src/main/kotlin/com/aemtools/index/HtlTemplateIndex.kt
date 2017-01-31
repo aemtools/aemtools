@@ -47,7 +47,7 @@ class HtlTemplateIndex : XmlIndex<TemplateDefinition>() {
                 }
 
                 val path = inputData.file.path
-                templateDefinitions.forEach { path }
+                templateDefinitions.forEach { it.path = path }
 
                 return@DataIndexer mutableMapOf(*templateDefinitions.map {
                     "${path}.$${it.name}" to it
@@ -73,4 +73,19 @@ class HtlTemplateIndex : XmlIndex<TemplateDefinition>() {
 
 data class TemplateDefinition(var path: String?,
                               val name: String,
-                              val parameters: List<String>) : Serializable
+                              val parameters: List<String>) : Serializable {
+    val normalizedPath: String
+        get() {
+            val _path = path
+            return if (_path != null) {
+                return _path.substring(_path.indexOf("/apps"))
+            } else {
+                ""
+            }
+        }
+    val fileName: String
+        get() {
+            val _path = path
+            return _path?.substring(_path.lastIndexOf("/") + 1) ?: ""
+        }
+}
