@@ -3,14 +3,16 @@ package com.aemtools.analysis.htl.callchain.typedescriptor.java
 import com.aemtools.analysis.htl.callchain.typedescriptor.ArrayTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.intellij.psi.PsiClass
+import com.intellij.psi.PsiMember
 import com.intellij.psi.PsiType
 
 /**
  * @author Dmytro Troynikov
  */
 class ArrayJavaTypeDescriptor(psiClass: PsiClass,
+                              psiMember: PsiMember?,
                               originalType: PsiType? = null)
-    : JavaPsiClassTypeDescriptor(psiClass, originalType), ArrayTypeDescriptor {
+    : JavaPsiClassTypeDescriptor(psiClass, psiMember, originalType), ArrayTypeDescriptor {
 
     override fun isArray() = true
 

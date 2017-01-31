@@ -73,13 +73,18 @@
         <lang.formatter language="Htl" implementationClass="com.aemtools.lang.htl.formatter.HtlFormattingModelBuilder"/>
         <psi.referenceContributor language="HTML"
                                   implementation="com.aemtools.reference.html.HtmlReferenceContributor"/>
-        <psi.referenceContributor language="Htl" implementation="com.aemtools.reference.htl.HtlReferenceContributor"/>
+        <psi.referenceContributor language="Htl" implementation="com.aemtools.reference.htl.contributor.HtlReferenceContributor"/>
 
         <lang.substitutor language="HTML"
                           implementationClass="com.aemtools.lang.htl.HtlLanguageSubstitutor"/>
         <fileTypeFactory implementation="com.aemtools.lang.htl.file.HtlFileTypeFactory"/>
 
         <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>
+
+        <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlStringLiteralManipulator"
+                                 forClass="com.aemtools.lang.htl.psi.HtlStringLiteral"/>
+        <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlPropertyAccessManipulator"
+                                 forClass="com.aemtools.lang.htl.psi.HtlPropertyAccess"/>
 
         <lang.fileViewProviderFactory language="Htl"
                                       implementationClass="com.aemtools.lang.htl.file.HtlViewProviderFactory"/>

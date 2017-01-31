@@ -97,7 +97,7 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
         }
 
         return if (psiClass != null) {
-            JavaPsiClassTypeDescriptor(psiClass, null)
+            JavaPsiClassTypeDescriptor(psiClass, null, null)
         } else {
             TypeDescriptor.empty()
         }
@@ -110,7 +110,7 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
             if (className != null) {
                 val psiClass = JavaSearch.findClass(className, xmlAttribute.project)
                 if (psiClass != null) {
-                    val typeDescriptor = JavaPsiClassTypeDescriptor(psiClass, null)
+                    val typeDescriptor = JavaPsiClassTypeDescriptor(psiClass, null, null)
                     return BaseCallChainSegment(typeDescriptor, typeDescriptor, rawChainUnit.myDeclaration, listOf())
                 }
             }
@@ -222,10 +222,10 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
         }
     }
 
-    private fun extractElementName(nextField: PsiElement?): String {
-        return when (nextField) {
-            is AccessIdentifierMixin -> nextField.variableName()
-            is VariableNameMixin -> nextField.variableName()
+    private fun extractElementName(element: PsiElement?): String {
+        return when (element) {
+            is AccessIdentifierMixin -> element.variableName()
+            is VariableNameMixin -> element.variableName()
             else -> ""
         }
     }

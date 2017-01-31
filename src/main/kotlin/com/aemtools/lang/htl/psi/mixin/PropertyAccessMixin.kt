@@ -12,6 +12,8 @@ import com.aemtools.completion.util.resolveUseClass
 import com.aemtools.lang.htl.psi.chain.RawChainUnit
 import com.aemtools.lang.java.JavaSearch
 import com.intellij.lang.ASTNode
+import com.intellij.psi.PsiReference
+import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry
 import java.util.*
 
 /**
@@ -21,6 +23,10 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
 
     fun accessChain(): CallChain? {
         return HtlCallChainResolver.resolveCallChain(this)
+    }
+
+    override fun getReferences(): Array<PsiReference> {
+        return ReferenceProvidersRegistry.getReferencesFromProviders(this);
     }
 
     fun resolveIterable(): ResolutionResult {

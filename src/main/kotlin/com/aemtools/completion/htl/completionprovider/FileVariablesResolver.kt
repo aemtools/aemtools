@@ -54,8 +54,11 @@ object FileVariablesResolver {
                 return resolveListVariable(foundVariable)
             }
         }
-        val psiClass = JavaSearch.findClass(foundVariable.type as String, project)
-        return ResolutionResult(psiClass)
+        if (foundVariable.type != null) {
+            return ResolutionResult(JavaSearch.findClass(foundVariable.type, project))
+        } else {
+            return ResolutionResult()
+        }
     }
 
     private fun resolveListVariable(fileVariable: FileVariable): ResolutionResult {
