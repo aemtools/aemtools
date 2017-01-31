@@ -125,6 +125,23 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
         return myFixture.completeBasic().toList()
     }
 
+
+    /**
+     * Runs basic completion in caret position in fileBefore. Implies that there is only one
+     * completion variant and it was inserted automatically, and checks the result file text with fileAfter.
+     *
+     * User have to create file with input data and name have which corresponds to test method name (without test at start) and
+     * Output result file must have name same input file name and with end "Result"
+     *
+     * For example:
+     *  Test name: testHelloWorld;
+     *  Input file: helloWorld.html;
+     *  Output file: helloWorldResult.html;
+     */
+    protected fun checkAutoCompletion() {
+        myFixture.testCompletion("${getTestName(true)}.html", "${getTestName(true)}Result.html")
+    }
+
     override fun setUp() {
         super.setUp()
         VfsRootAccess.allowRootAccess(File("src/test").absolutePath)
