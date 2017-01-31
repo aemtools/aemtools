@@ -26,4 +26,6 @@ class HtlTextInsertHandlerTest : BaseVariantsCheckContributorTest("com/aemtools/
 
     fun testHtlAttributesInsertExpressionDataSlyUnwrap() = checkAutoCompletion()
 
+    fun testHtlAttributesInsertExpressionDataSlyTemplate() = checkAutoCompletion()
+
 }
