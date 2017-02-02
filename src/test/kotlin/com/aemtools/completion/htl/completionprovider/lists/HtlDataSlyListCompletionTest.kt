@@ -1,6 +1,7 @@
 package com.aemtools.completion.htl.completionprovider.lists
 
 import com.aemtools.completion.blocks.BaseVariantsWithJdkContributorTest
+import com.aemtools.completion.htl.completionprovider.CollectionsTest.Companion.MY_MODEL_VARIANTS
 
 /**
  * @author Dmytro_Troynikov
@@ -33,5 +34,11 @@ class HtlDataSlyListCompletionTest : BaseVariantsWithJdkContributorTest("com/aem
 
     fun testDataSlyListResolveItemRecursive() =
             assertVariants(PAGE_FIELDS)
+
+    fun testDataSlyListTwoLists() =
+            assertVariants(MY_MODEL_VARIANTS)
+
+    fun testDataSlyListTwoListsNested() =
+            assertVariants(MY_MODEL_VARIANTS)
 
 }

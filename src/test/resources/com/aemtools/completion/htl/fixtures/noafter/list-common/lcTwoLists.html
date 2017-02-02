@@ -1,0 +1,10 @@
+<div data-sly-use.bean="com.aemtools.completion.htl.fixtures.classes.IterableModel">
+</div>
+
+<div data-sly-list="${bean.fieldModelList}">
+
+</div>
+
+<div data-sly-repeat="${currentPage.listChildren}">
+    ${item.<caret>}
+</div>

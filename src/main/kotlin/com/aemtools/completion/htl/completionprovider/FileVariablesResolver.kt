@@ -21,10 +21,7 @@ import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.lang.StdLanguages
-import com.intellij.openapi.editor.impl.EditorImpl
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.project.ProjectUtil
-import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
@@ -78,29 +75,28 @@ object FileVariablesResolver {
     /**
      * Find declaration of variable in file.
      * @param variableName the name of variable
+     * @param element the element
      * @param file the file to look in
      * @return the declaration element
      */
-    fun findDeclaration(variableName: String, file: PsiFile): HtlVariableDeclaration? {
+    fun findDeclaration(variableName: String,
+                        element: PsiElement,
+                        file: PsiFile): HtlVariableDeclaration? {
         val htmlFile = file.getHtmlFile() ?: return null
         val xmlAttributes = htmlFile.findChildrenByType(XmlAttribute::class.java)
         val elements = xmlAttributes.htlAttributes()
 
-        // TODO: handle case when multiple variables with single name declared in single file
-        return elements.extractDeclarations().find { it.variableName == variableName }
-    }
+        val result = elements.extractDeclarations().filter { it.variableName == variableName }
 
-    fun findVariableClass(name: String, parameters: CompletionParameters): PsiClass? {
-        val canonicalFile = (parameters.editor as EditorImpl).virtualFile.canonicalFile ?: return null
-        val project = ProjectUtil.guessProjectForContentFile(canonicalFile) ?: return null
-
-        val variables = find(parameters.originalFile, project)
-        val result = variables.find { it.name == name } ?: return null
-        if (result.type == null) {
-            return null
+        return when {
+            result.isEmpty() -> null
+            result.size == 1 -> result.first()
+            else -> {
+                result.sortedWith(Comparator { left, right ->
+                    1 //todo pull up the best match
+                }).firstOrNull()
+            }
         }
-
-        return JavaSearch.findClass(result.type, project)
     }
 
     /**
