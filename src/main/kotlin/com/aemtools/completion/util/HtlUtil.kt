@@ -11,6 +11,7 @@ import com.aemtools.lang.htl.psi.util.isWithin
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
+import java.util.*
 
 /**
  * Htl related utility methods.
@@ -107,7 +108,7 @@ fun PsiElement.isInsideOf(attributeName: String): Boolean {
  * @return collection of applicable declarations
  */
 fun Collection<HtlVariableDeclaration>.filterForPosition(position: PsiElement): Collection<HtlVariableDeclaration> {
-    return this.filter {
+    val applicableDeclarations = this.filter {
         when (it.attributeType) {
             DeclarationAttributeType.DATA_SLY_USE ->
                 true
@@ -131,6 +132,50 @@ fun Collection<HtlVariableDeclaration>.filterForPosition(position: PsiElement): 
 
             else -> false
         }
-
     }
+
+    val groupedByName = applicableDeclarations.groupBy { it.variableName }
+    val result = if (groupedByName.values.find { it.size > 1 } != null) {
+
+        groupedByName.values.flatMap {
+            if (it.size == 1) {
+                it
+            } else {
+
+                val parentTags = position.run {
+                    val html = position.containingFile.getHtmlFile() ?: return@run listOf<XmlTag>()
+                    val parent = position.findParentByType(HtlHtlEl::class.java) ?: return@run listOf<XmlTag>()
+                    val offset = parent.textOffset - 1
+                    val htmlElement = html.findElementAt(offset)
+
+                    var currentElement = htmlElement.findParentByType(XmlTag::class.java)
+                    val result = ArrayList<XmlTag>()
+
+                    while (currentElement != null) {
+                        result.add(currentElement)
+                        currentElement = currentElement.prevSibling.findParentByType(XmlTag::class.java)
+                    }
+                    result
+                }
+
+                val closest = it.minBy {
+                    val myTag = it.xmlAttribute.findParentByType(XmlTag::class.java)
+                            ?: return@minBy 100
+
+                    val myIndex = parentTags.indexOf(myTag)
+                    return@minBy if (myIndex > -1) {
+                        myIndex
+                    } else {
+                        100
+                    }
+                } ?: return@flatMap listOf<HtlVariableDeclaration>()
+
+                listOf(closest)
+            }
+        }
+
+    } else {
+        applicableDeclarations
+    }
+    return result
 }

@@ -80,17 +80,11 @@ object FileVariablesResolver {
         val xmlAttributes = htmlFile.findChildrenByType(XmlAttribute::class.java)
         val elements = xmlAttributes.htlAttributes()
 
-        val result = elements.extractDeclarations().filter { it.variableName == variableName }
+        val result = elements.extractDeclarations()
+                .filterForPosition(element)
+                .find { it.variableName == variableName }
 
-        return when {
-            result.isEmpty() -> null
-            result.size == 1 -> result.first()
-            else -> {
-                result.sortedWith(Comparator { left, right ->
-                    1 //todo pull up the best match
-                }).firstOrNull()
-            }
-        }
+        return result
     }
 
     /**
