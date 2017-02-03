@@ -3,6 +3,10 @@ package com.aemtools.reference.htl.provider
 import com.aemtools.analysis.htl.callchain.elements.BaseCallChainSegment
 import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
+import com.aemtools.completion.util.findChildrenByType
+import com.aemtools.completion.util.hasChild
+import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
+import com.aemtools.lang.htl.psi.HtlStringLiteral
 import com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
@@ -69,7 +73,22 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
 
     private fun extractTextRange(element: PsiElement): TextRange {
         return when (element) {
-            is AccessIdentifierMixin -> TextRange(element.startOffsetInParent + 1, element.startOffsetInParent + element.variableName().length + 1)
+            is AccessIdentifierMixin ->
+                if (element.hasChild(HtlArrayLikeAccess::class.java)
+                        && element.hasChild(HtlStringLiteral::class.java)) {
+                    val stringLiteral: PsiElement = element.findChildrenByType(HtlStringLiteral::class.java).firstOrNull() as? PsiElement
+                            ?: return TextRange.EMPTY_RANGE
+
+                    val offset = element.startOffsetInParent + stringLiteral.startOffsetInParent + 1
+
+                    TextRange(offset, offset + stringLiteral.text.length - 2)
+
+                } else if (!element.hasChild(HtlArrayLikeAccess::class.java)) {
+                    TextRange(element.startOffsetInParent + 1, element.startOffsetInParent + element.variableName().length + 1)
+                } else {
+                    TextRange.EMPTY_RANGE
+                }
+
             is VariableNameMixin -> TextRange(element.startOffsetInParent + 1, element.startOffsetInParent + element.variableName().length + 1)
             else -> TextRange.EMPTY_RANGE
         }
