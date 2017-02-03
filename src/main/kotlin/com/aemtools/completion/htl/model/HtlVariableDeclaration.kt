@@ -38,22 +38,26 @@ data class HtlVariableDeclaration(
      * @return lookup element
      */
     fun toLookupElement(): LookupElement {
-        val result = LookupElementBuilder.create(variableName)
+        var result = LookupElementBuilder.create(variableName)
 
-        when (attributeType) {
+        result = when (attributeType) {
             DeclarationAttributeType.DATA_SLY_USE -> {
                 val varClass = xmlAttribute.resolveUseClass()
                 if (!varClass.isNullOrEmpty()) {
-                    result.withTypeText("($varClass)", true)
+                    result.withTailText("($varClass)", true)
+                            .withTypeText("Sly Use Variable")
+                } else {
+                    result.withTypeText("Sly Use Variable")
                 }
-                result.withTailText("Sly Use Variable")
             }
             DeclarationAttributeType.DATA_SLY_TEST -> {
                 val varClass = xmlAttribute.resolveUseClass()
                 if (!varClass.isNullOrEmpty()) {
-                    result.withTypeText("($varClass)", true)
+                    result.withTailText("($varClass)", true)
+                            .withTailText("Sly Test Variable)")
+                } else {
+                    result.withTypeText("Sly Test Variable")
                 }
-                result.withTailText("Sly Test Variable")
             }
             DeclarationAttributeType.DATA_SLY_LIST -> {
                 result.withTypeText("Data Sly List")
