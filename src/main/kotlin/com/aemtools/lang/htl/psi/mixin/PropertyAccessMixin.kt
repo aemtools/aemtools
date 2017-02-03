@@ -59,7 +59,7 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
         val firstElement = myChain.first() as VariableNameMixin
         val firstName = firstElement.variableName()
 
-        val declaration = FileVariablesResolver.findDeclaration(firstName, this.containingFile)
+        val declaration = FileVariablesResolver.findDeclaration(firstName, firstElement, this.containingFile)
 
         if (declaration != null
                 && declaration.resolutionResult.isEmpty()) {

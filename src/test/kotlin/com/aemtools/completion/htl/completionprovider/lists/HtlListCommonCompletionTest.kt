@@ -22,6 +22,10 @@ class HtlListCommonCompletionTest
 
     fun testLcResolveMapValue() = assertVariants(MAP_VALUE_FIELDS)
 
+    fun testLcTwoLists() = assertVariants(PAGE_FIELDS)
+
+    fun testLcTwoListsNested() = assertVariants(PAGE_FIELDS)
+
     companion object {
         val INNER_MODEL_FIELDS = listOf(
                 "modelFieldString",

@@ -71,9 +71,32 @@ class HtlTemplateIndex : XmlIndex<TemplateDefinition>() {
 
 }
 
-data class TemplateDefinition(var path: String?,
-                              val name: String,
-                              val parameters: List<String>) : Serializable {
+/**
+ *  Container of template definition data. (`data-sly-template.name="${@ param1, param2}"
+ */
+data class TemplateDefinition(
+        /**
+         * Full path
+         */
+        var path: String?,
+        /**
+         * The name of the template
+         */
+        val name: String,
+        /**
+         * List of parameters declared in template.
+         * e.g.
+         *
+         * ```
+         * <div data-sly-template.template="${@ param1, param2}> -> [param1, param2]
+         * ```
+         *
+         */
+        val parameters: List<String>) : Serializable {
+
+    /**
+     * Return path starting from "/apps"
+     */
     val normalizedPath: String
         get() {
             val _path = path
@@ -83,6 +106,10 @@ data class TemplateDefinition(var path: String?,
                 ""
             }
         }
+
+    /**
+     * The name of html file
+     */
     val fileName: String
         get() {
             val _path = path
