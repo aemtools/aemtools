@@ -1,10 +1,16 @@
 package com.aemtools.completion.util
 
+import com.aemtools.completion.htl.model.DeclarationAttributeType
+import com.aemtools.completion.htl.model.HtlVariableDeclaration
 import com.aemtools.constant.const
 import com.aemtools.lang.htl.psi.*
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
+import com.aemtools.lang.htl.psi.util.isNotPartOf
+import com.aemtools.lang.htl.psi.util.isPartOf
+import com.aemtools.lang.htl.psi.util.isWithin
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
+import com.intellij.psi.xml.XmlTag
 
 /**
  * Htl related utility methods.
@@ -49,10 +55,15 @@ fun HtlStringLiteral.isMainString(): Boolean {
 
 /**
  * Check if current variable is "option"
+ *
+ * ```
+ *  ${variable} -> false
+ *  ${@ variable} -> true
+ * ```
  */
-fun HtlVariableName.isOption() : Boolean {
+fun HtlVariableName.isOption(): Boolean {
     return this.hasParent(HtlContextExpression::class.java)
-        && !this.hasParent(HtlAssignment::class.java)
+            && !this.hasParent(HtlAssignment::class.java)
 }
 
 /**
@@ -71,7 +82,7 @@ fun HtlHtlEl.extractPropertyAccess(): PropertyAccessMixin? {
  * @param attributeName the name of attribute
  * @return __true__ if current element is the value of attribute with given name
  */
-fun HtlHtlEl.isInsideOF(attributeName: String) : Boolean {
+fun HtlHtlEl.isInsideOF(attributeName: String): Boolean {
     val html = this.containingFile.getHtmlFile()
             ?: return false
     val attribute = html.findElementAt(this.textOffset - 1)
@@ -88,4 +99,38 @@ fun HtlHtlEl.isInsideOF(attributeName: String) : Boolean {
 fun PsiElement.isInsideOf(attributeName: String): Boolean {
     val htlHtlEl = findParentByType(HtlHtlEl::class.java) ?: return false
     return htlHtlEl.isInsideOF(attributeName)
+}
+
+/**
+ * Collection [HtlVariableDeclaration] element which are applicable for given position
+ * @param position the starting position
+ * @return collection of applicable declarations
+ */
+fun Collection<HtlVariableDeclaration>.filterForPosition(position: PsiElement): Collection<HtlVariableDeclaration> {
+    return this.filter {
+        when (it.attributeType) {
+            DeclarationAttributeType.DATA_SLY_USE ->
+                true
+            DeclarationAttributeType.DATA_SLY_TEST ->
+                true
+            DeclarationAttributeType.DATA_SLY_LIST -> {
+                val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
+
+                return@filter position.isWithin(tag)
+            }
+            DeclarationAttributeType.DATA_SLY_REPEAT -> {
+                val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
+
+                return@filter position.isPartOf(tag) && position.isNotPartOf(it.xmlAttribute)
+            }
+            DeclarationAttributeType.DATA_SLY_TEMPLATE -> {
+                val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
+
+                return@filter position.isWithin(tag)
+            }
+
+            else -> false
+        }
+
+    }
 }

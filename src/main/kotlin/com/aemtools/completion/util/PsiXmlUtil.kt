@@ -176,6 +176,7 @@ fun XmlAttribute.isHtlDeclarationAttribute(): Boolean =
             when {
                 startsWith(DATA_SLY_USE) && length > DATA_SLY_USE.length -> true
                 startsWith(DATA_SLY_TEST) && length > DATA_SLY_TEST.length -> true
+                startsWith(DATA_SLY_TEMPLATE) -> true
                 startsWith(DATA_SLY_LIST) -> true
                 startsWith(DATA_SLY_REPEAT) -> true
                 else -> false
@@ -226,6 +227,16 @@ fun Collection<XmlAttribute>.extractDeclarations(): Collection<HtlVariableDeclar
                                             ResolutionResult(
                                                     predefined = HtlELPredefined.DATA_SLY_LIST_REPEAT_LIST_FIELDS))
                             )
+                        }
+
+                        startsWith(DATA_SLY_TEMPLATE) -> {
+                            val templateParameters = it.extractTemplateParameters()
+                            templateParameters.map { parameter ->
+                                HtlVariableDeclaration(it,
+                                        parameter,
+                                        DeclarationAttributeType.DATA_SLY_TEMPLATE,
+                                        DeclarationType.VARIABLE)
+                            }
                         }
                         else -> listOf()
                     }

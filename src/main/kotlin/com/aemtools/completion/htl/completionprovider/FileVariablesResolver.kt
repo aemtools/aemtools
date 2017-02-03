@@ -6,27 +6,21 @@ import com.aemtools.completion.htl.predefined.HtlELPredefined.DATA_SLY_LIST_REPE
 import com.aemtools.completion.util.*
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
-import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_USE
 import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
-import com.aemtools.lang.htl.psi.util.isNotPartOf
-import com.aemtools.lang.htl.psi.util.isPartOf
-import com.aemtools.lang.htl.psi.util.isWithin
 import com.aemtools.lang.java.JavaSearch
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.lang.StdLanguages
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.xml.XmlAttribute
-import com.intellij.psi.xml.XmlTag
 import java.util.*
 
 /**
@@ -111,70 +105,9 @@ object FileVariablesResolver {
         val htmlFile = htlFile.viewProvider.getPsi(StdLanguages.HTML)
 
         val attributes: Collection<XmlAttribute> = PsiTreeUtil.findChildrenOfType(htmlFile, XmlAttribute::class.java)
-        val result = ArrayList<LookupElement>()
-        attributes.forEach {
-            with(it.name) {
-                when {
-                    (startsWith(DATA_SLY_USE) && length > DATA_SLY_USE.length)
-                            || (startsWith(DATA_SLY_TEST) && length > DATA_SLY_TEST.length) -> {
-                        val variableName = substring(lastIndexOf(".") + 1)
-                        val varClass = it.resolveUseClass()
-                        val element = LookupElementBuilder.create(variableName)
-                                .withTypeText("Sly Use Variable")
-                        if (!varClass.isNullOrEmpty()) {
-                            element.withTailText("($varClass)", true)
-                        }
-                        result.add(element)
-                    }
-                    startsWith(DATA_SLY_LIST) -> {
-                        val (itemName, itemListName) = extractItemAndItemListNames(this)
-
-                        val tag = it.findParentByType(XmlTag::class.java) ?: return result
-
-                        if (position.isWithin(tag)) {
-                            result.add(LookupElementBuilder.create(itemName)
-                                    .withTypeText("Data Sly List"))
-                            result.add(LookupElementBuilder.create(itemListName)
-                                    .withTypeText("Data Sly List"))
-                        } else {
-                        }
-                    }
-                    startsWith(DATA_SLY_REPEAT) -> {
-                        val (itemName, itemListName) = extractItemAndItemListNames(this)
-
-                        val tag = it.findParentByType(XmlTag::class.java) ?: return result
-
-                        if (position.isPartOf(tag) && position.isNotPartOf(it)) {
-                            result.add(LookupElementBuilder.create(itemName)
-                                    .withTypeText("Data Sly Repeat"))
-                            result.add(LookupElementBuilder.create(itemListName)
-                                    .withTypeText("Data Sly Repeat"))
-                        } else {
-
-                        }
-                    }
-                    startsWith(DATA_SLY_TEMPLATE) -> {
-                        val tag = it.findParentByType(XmlTag::class.java)
-                                ?: return@forEach
-
-                        if (position.isWithin(tag)) {
-                            val templateParameters = it.extractTemplateParameters()
-
-                            templateParameters.forEach {
-                                result.add(LookupElementBuilder.create(it)
-                                        .withTypeText("Template Parameter"))
-                            }
-                        } else {
-                        }
-                    }
-                    else -> {
-                    }
-                }
-            }
-
-        }
-
-        return result
+        return attributes.extractDeclarations()
+                .filterForPosition(position)
+                .map(HtlVariableDeclaration::toLookupElement)
     }
 
     /**
