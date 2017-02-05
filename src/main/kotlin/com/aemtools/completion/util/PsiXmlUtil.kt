@@ -20,6 +20,7 @@ import com.intellij.psi.impl.source.xml.XmlTokenImpl
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
+import java.util.*
 
 /**
  * Searches for children by type (@see [PsiTreeUtil])
@@ -36,15 +37,49 @@ fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T? {
 }
 
 /**
+ * Search for parent which is of given type and satisfies given predicate.
+ * @param type the type of parent
+ * @param predicate the predicate
+ * @return the element
+ */
+fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>, predicate: (T) -> Boolean) : T? =
+        if (this != null) {
+            val elements = kotlin.run {
+                val result = ArrayList<T>()
+                var currentElement = this
+
+                while (currentElement != null) {
+                    if (type.isAssignableFrom(currentElement.javaClass)) {
+                        result.add(currentElement as T)
+                    }
+                    currentElement = currentElement.parent
+                }
+                result
+            }
+
+            elements.find {predicate.invoke(it) }
+        } else {
+            null
+        }
+
+
+
+
+
+
+/**
  * Check if current [PsiElement] has parent of specified class.
  */
 fun <T : PsiElement> PsiElement?.hasParent(type: Class<T>): Boolean =
         this.findParentByType(type) != null
 
-
+/**
+ * Check if current [PsiElement] has child of specified type.
+ * @param type type of child
+ * @return __true__ if current element has one or more children of specified type
+ */
 fun <T : PsiElement> PsiElement?.hasChild(type: Class<T>): Boolean =
         this.findChildrenByType(type).isNotEmpty()
-
 
 /**
  * Extract Htl unique attributes as [Collection<String>] from given [XmlAttribute] collection.
@@ -176,6 +211,7 @@ fun XmlAttribute.isHtlDeclarationAttribute(): Boolean =
             when {
                 startsWith(DATA_SLY_USE) && length > DATA_SLY_USE.length -> true
                 startsWith(DATA_SLY_TEST) && length > DATA_SLY_TEST.length -> true
+                startsWith(DATA_SLY_TEMPLATE) -> true
                 startsWith(DATA_SLY_LIST) -> true
                 startsWith(DATA_SLY_REPEAT) -> true
                 else -> false
@@ -226,6 +262,16 @@ fun Collection<XmlAttribute>.extractDeclarations(): Collection<HtlVariableDeclar
                                             ResolutionResult(
                                                     predefined = HtlELPredefined.DATA_SLY_LIST_REPEAT_LIST_FIELDS))
                             )
+                        }
+
+                        startsWith(DATA_SLY_TEMPLATE) -> {
+                            val templateParameters = it.extractTemplateParameters()
+                            templateParameters.map { parameter ->
+                                HtlVariableDeclaration(it,
+                                        parameter,
+                                        DeclarationAttributeType.DATA_SLY_TEMPLATE,
+                                        DeclarationType.VARIABLE)
+                            }
                         }
                         else -> listOf()
                     }

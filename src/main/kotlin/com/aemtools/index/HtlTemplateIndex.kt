@@ -47,7 +47,7 @@ class HtlTemplateIndex : XmlIndex<TemplateDefinition>() {
                 }
 
                 val path = inputData.file.path
-                templateDefinitions.forEach { path }
+                templateDefinitions.forEach { it.path = path }
 
                 return@DataIndexer mutableMapOf(*templateDefinitions.map {
                     "${path}.$${it.name}" to it
@@ -71,6 +71,48 @@ class HtlTemplateIndex : XmlIndex<TemplateDefinition>() {
 
 }
 
-data class TemplateDefinition(var path: String?,
-                              val name: String,
-                              val parameters: List<String>) : Serializable
+/**
+ *  Container of template definition data. (`data-sly-template.name="${@ param1, param2}"
+ */
+data class TemplateDefinition(
+        /**
+         * Full path
+         */
+        var path: String?,
+        /**
+         * The name of the template
+         */
+        val name: String,
+        /**
+         * List of parameters declared in template.
+         * e.g.
+         *
+         * ```
+         * <div data-sly-template.template="${@ param1, param2}> -> [param1, param2]
+         * ```
+         *
+         */
+        val parameters: List<String>) : Serializable {
+
+    /**
+     * Return path starting from "/apps"
+     */
+    val normalizedPath: String
+        get() {
+            val _path = path
+            return if (_path != null) {
+                return _path.substring(_path.indexOf("/apps"))
+            } else {
+                ""
+            }
+        }
+
+    /**
+     * The name of html file
+     */
+    val fileName: String
+        get() {
+            val _path = path
+            return _path?.substring(_path.lastIndexOf("/") + 1) ?: ""
+        }
+}

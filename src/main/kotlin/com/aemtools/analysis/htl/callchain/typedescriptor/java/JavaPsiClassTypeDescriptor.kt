@@ -100,7 +100,7 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
         } ?: return TypeDescriptor.empty()
 
         val typeClass = JavaSearch.findClass(className, psiClass.project)
-                ?: return TypeDescriptor.named(className)
+                ?: return TypeDescriptor.named(className, psiMember, psiType)
 
         return JavaPsiClassTypeDescriptor.create(typeClass, psiMember, psiType)
     }

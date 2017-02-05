@@ -6,6 +6,7 @@ package com.aemtools.completion.htl.model
  * ```
  *     data-sly-use.bean="com.package.BeanName" -> JAVA
  *     data-sly-use.bean="logic.js" -> JAVASCRIPT
+ *     data-sly-use.template="template.html" -> HTL_TEMPLATE
  *     data-sly-use="" -> UNKNOWN
  * ```
  *
@@ -14,5 +15,6 @@ package com.aemtools.completion.htl.model
 enum class DataSlyUseType {
     JAVA,
     JAVASCRIPT,
+    HTL_TEMPLATE,
     UNKNOWN
 }

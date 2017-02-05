@@ -141,19 +141,25 @@ object JavaRawCallChainProcessor : RawCallChainProcessor {
                         PredefinedVariantsTypeDescriptor(DATA_SLY_LIST_REPEAT_LIST_FIELDS))
 
             rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE
-                    && inputType is ArrayJavaTypeDescriptor ->
+                    && inputType is ArrayJavaTypeDescriptor -> {
 
-                BaseChainElement(currentElement, extractElementName(currentElement), inputType.arrayType())
-
-            rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE
-                    && inputType is IterableJavaTypeDescriptor ->
-
-                BaseChainElement(currentElement, extractElementName(currentElement), inputType.iterableType())
+                currentType = inputType.arrayType()
+                BaseChainElement(currentElement, extractElementName(currentElement), currentType)
+            }
 
             rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE
-                    && inputType is MapJavaTypeDescriptor ->
+                    && inputType is IterableJavaTypeDescriptor -> {
 
-                BaseChainElement(currentElement, extractElementName(currentElement), inputType.keyType())
+                currentType = inputType.iterableType()
+                BaseChainElement(currentElement, extractElementName(currentElement), currentType)
+            }
+
+            rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE
+                    && inputType is MapJavaTypeDescriptor -> {
+
+                currentType = inputType.keyType()
+                BaseChainElement(currentElement, extractElementName(currentElement), currentType)
+            }
 
             else -> BaseChainElement(currentElement, extractElementName(currentElement), currentType)
         }

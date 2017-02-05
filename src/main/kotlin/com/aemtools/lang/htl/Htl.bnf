@@ -129,7 +129,7 @@ access_identifier ::= dot_access | array_like_access
 
 dot_access ::= DOT variable_name
 
-array_like_access ::= LSQRBRACKET (SINGLE_QUOTED_STRING|DOUBLE_QUOTED_STRING|INTEGER|property_access) RSQRBRACKET
+array_like_access ::= LSQRBRACKET (string_literal|INTEGER|property_access) RSQRBRACKET
 
 literal ::= string_literal | boolean_literal | number_literal | array_literal
 

@@ -6,30 +6,21 @@ import com.aemtools.completion.htl.predefined.HtlELPredefined.DATA_SLY_LIST_REPE
 import com.aemtools.completion.util.*
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
-import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_USE
 import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
-import com.aemtools.lang.htl.psi.util.isNotPartOf
-import com.aemtools.lang.htl.psi.util.isPartOf
-import com.aemtools.lang.htl.psi.util.isWithin
 import com.aemtools.lang.java.JavaSearch
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.lang.StdLanguages
-import com.intellij.openapi.editor.impl.EditorImpl
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.project.ProjectUtil
-import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.xml.XmlAttribute
-import com.intellij.psi.xml.XmlTag
 import java.util.*
 
 /**
@@ -78,29 +69,22 @@ object FileVariablesResolver {
     /**
      * Find declaration of variable in file.
      * @param variableName the name of variable
+     * @param element the element
      * @param file the file to look in
      * @return the declaration element
      */
-    fun findDeclaration(variableName: String, file: PsiFile): HtlVariableDeclaration? {
+    fun findDeclaration(variableName: String,
+                        element: PsiElement,
+                        file: PsiFile): HtlVariableDeclaration? {
         val htmlFile = file.getHtmlFile() ?: return null
         val xmlAttributes = htmlFile.findChildrenByType(XmlAttribute::class.java)
         val elements = xmlAttributes.htlAttributes()
 
-        // TODO: handle case when multiple variables with single name declared in single file
-        return elements.extractDeclarations().find { it.variableName == variableName }
-    }
+        val result = elements.extractDeclarations()
+                .filterForPosition(element)
+                .find { it.variableName == variableName }
 
-    fun findVariableClass(name: String, parameters: CompletionParameters): PsiClass? {
-        val canonicalFile = (parameters.editor as EditorImpl).virtualFile.canonicalFile ?: return null
-        val project = ProjectUtil.guessProjectForContentFile(canonicalFile) ?: return null
-
-        val variables = find(parameters.originalFile, project)
-        val result = variables.find { it.name == name } ?: return null
-        if (result.type == null) {
-            return null
-        }
-
-        return JavaSearch.findClass(result.type, project)
+        return result
     }
 
     /**
@@ -115,62 +99,9 @@ object FileVariablesResolver {
         val htmlFile = htlFile.viewProvider.getPsi(StdLanguages.HTML)
 
         val attributes: Collection<XmlAttribute> = PsiTreeUtil.findChildrenOfType(htmlFile, XmlAttribute::class.java)
-        val result = ArrayList<LookupElement>()
-        attributes.forEach {
-            with(it.name) {
-                when {
-                    (startsWith(DATA_SLY_USE) && length > DATA_SLY_USE.length)
-                            || (startsWith(DATA_SLY_TEST) && length > DATA_SLY_TEST.length) -> {
-                        val variableName = substring(lastIndexOf(".") + 1)
-                        val varClass = it.resolveUseClass()
-                        result += LookupElementBuilder.create(variableName)
-                                .withTypeText(varClass)
-                    }
-                    startsWith(DATA_SLY_LIST) -> {
-                        val (itemName, itemListName) = extractItemAndItemListNames(this)
-
-                        val tag = it.findParentByType(XmlTag::class.java) ?: return result
-
-                        if (position.isWithin(tag)) {
-                            result.add(LookupElementBuilder.create(itemName))
-                            result.add(LookupElementBuilder.create(itemListName))
-                        } else {
-                        }
-                    }
-                    startsWith(DATA_SLY_REPEAT) -> {
-                        val (itemName, itemListName) = extractItemAndItemListNames(this)
-
-                        val tag = it.findParentByType(XmlTag::class.java) ?: return result
-
-                        if (position.isPartOf(tag) && position.isNotPartOf(it)) {
-                            result.add(LookupElementBuilder.create(itemName))
-                            result.add(LookupElementBuilder.create(itemListName))
-                        } else {
-
-                        }
-                    }
-                    startsWith(DATA_SLY_TEMPLATE) -> {
-                        val tag = it.findParentByType(XmlTag::class.java)
-                                ?: return@forEach
-
-                        if (position.isWithin(tag)) {
-                            val templateParameters = it.extractTemplateParameters()
-
-                            templateParameters.forEach {
-                                result.add(LookupElementBuilder.create(it)
-                                        .withTypeText("Template parameter"))
-                            }
-                        } else {
-                        }
-                    }
-                    else -> {
-                    }
-                }
-            }
-
-        }
-
-        return result
+        return attributes.extractDeclarations()
+                .filterForPosition(position)
+                .map(HtlVariableDeclaration::toLookupElement)
     }
 
     /**
