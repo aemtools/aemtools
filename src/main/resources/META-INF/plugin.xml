@@ -102,6 +102,8 @@
         <lang.parserDefinition language="Htl"
                                implementationClass="com.aemtools.lang.htl.HtlParserDefinition"/>
 
+        <lang.commenter language="Htl" implementationClass="com.aemtools.editor.comments.HtlCommenter"/>
+
         <applicationService serviceInterface="com.aemtools.service.repository.IRepositoryService"
                             serviceImplementation="com.aemtools.service.repository.impl.RepositoryService"
                             id="aemtools.repository-service"/>
