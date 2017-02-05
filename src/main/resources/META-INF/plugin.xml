@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.aemtools</id>
     <name>AEM Tools</name>
-    <version>0.4</version>
+    <version>0.4.1</version>
     <category>Framework integration</category>
     <vendor email="dmytrotroynikov@gmail.com" url="https://github.com/DmytroTroynikov/aemtools">Dmytro Troynikov</vendor>
 
@@ -25,25 +25,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
-        0.4
         <ul>
-            <li>Improved code completion</li>
-            <li>Added basic code navigation</li>
+            <li>fixes related to type resolution</li>
+            <li>improved references</li>
+            <li>added possibility to comment code</li>
+            <li>Htl files containing Htl templates will be proposed as data-sly-use variants</li>
         </ul>
-
-        0.3.2
-        <ul>
-            <li>Fixed issue with broken HTML formatting</li>
-            <li>Better completion for <i>data-sly-list</i> and <i>data-sly-repeat</i></li>
-        </ul>
-
-        0.3.1
-        <ul>
-            <li>Search is working now</li>
-            <li>Added completion for HTL attributes</li>
-        </ul>
-
-        0.3 - beta release
     ]]>
     </change-notes>
 
