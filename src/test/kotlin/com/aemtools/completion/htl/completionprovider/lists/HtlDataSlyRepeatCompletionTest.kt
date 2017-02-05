@@ -51,4 +51,16 @@ class HtlDataSlyRepeatCompletionTest
     fun testDataSlyRepeatListVariablesShouldNotBeAvailableInDeclaration() =
             assertVariantsAbsent(DEFAULT_LIST_VARIABLES)
 
+    fun testDataSlyRepeatTwoLists() =
+            assertVariants(MY_MODEL_VARIANTS)
+
+    fun testDataSlyRepeatTwoListsNested() =
+            assertVariants(MY_MODEL_VARIANTS)
+
+    fun testDataSlyRepeatTwoListsNested2() =
+            assertVariants(MY_MODEL_VARIANTS)
+
+    fun testDataSlyRepeatTwoListsBetween() =
+            assertVariants(PAGE_FIELDS)
+
 }

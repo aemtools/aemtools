@@ -2,6 +2,8 @@ package com.aemtools.analysis.htl.callchain.typedescriptor
 
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.intellij.codeInsight.lookup.LookupElement
+import com.intellij.psi.PsiMember
+import com.intellij.psi.PsiType
 
 /**
  * Base Type Descriptor.
@@ -27,14 +29,16 @@ interface TypeDescriptor {
 
         fun empty(): TypeDescriptor = EMPTY_DESCRIPTOR
 
-        fun named(name: String) = NamedTypeDescriptor(name)
+        fun named(name: String, psiMember: PsiMember, psiType: PsiType) = NamedTypeDescriptor(name, psiMember, psiType)
     }
 
     fun asResolutionResult(): ResolutionResult = ResolutionResult()
 
 }
 
-open class NamedTypeDescriptor(private val myName: String) : EmptyTypeDescriptor() {
+open class NamedTypeDescriptor(private val myName: String,
+                               val psiMember: PsiMember,
+                               val psiType: PsiType) : EmptyTypeDescriptor() {
     override fun name(): String = myName
 }
 
