@@ -2,6 +2,7 @@ package com.aemtools.reference.htl.provider
 
 import com.aemtools.analysis.htl.callchain.elements.BaseCallChainSegment
 import com.aemtools.analysis.htl.callchain.elements.CallChainElement
+import com.aemtools.analysis.htl.callchain.typedescriptor.NamedTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.hasChild
@@ -15,6 +16,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
 import com.intellij.psi.PsiReferenceBase
 import com.intellij.psi.PsiReferenceProvider
+import com.intellij.psi.xml.XmlAttribute
 import com.intellij.util.ProcessingContext
 import java.util.*
 
@@ -34,37 +36,23 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
         val firstElement = elements.firstOrNull() ?: return arrayOf()
         elements.pop()
 
-        val firstReference = object : PsiReferenceBase<PsiElement>(propertyAccess,
-                TextRange(firstElement.element.startOffsetInParent, firstElement.element.startOffsetInParent + firstElement.element.textLength), true) {
-            override fun resolve(): PsiElement? {
-                return chainSegment.declaration?.xmlAttribute?.valueElement
-            }
-
-            override fun getVariants(): Array<out Any> {
-                return arrayOf()
-            }
-        }
+        val firstReference = HtlDeclarationReference(chainSegment.declaration?.xmlAttribute, propertyAccess,
+                TextRange(firstElement.element.startOffsetInParent, firstElement.element.startOffsetInParent + firstElement.element.textLength))
 
         val references: List<PsiReference> = chainSegment.chainElements().flatMap {
             val type = it.type
-            if (type is JavaPsiClassTypeDescriptor) {
-                val member = type.psiMember ?: return@flatMap listOf<PsiReference>()
-
-                val reference =
-                        object : PsiReferenceBase<PsiElement>(propertyAccess, extractTextRange(it.element),
-                                true) {
-                            override fun getVariants(): Array<out Any> {
-                                return arrayOf()
-                            }
-
-                            override fun resolve(): PsiElement? {
-                                return member
-                            }
-                        }
-                return@flatMap listOf(reference)
+            val member = when (type) {
+                is JavaPsiClassTypeDescriptor -> type.psiMember
+                is NamedTypeDescriptor -> type.psiMember
+                else -> {
+                    return@flatMap listOf<PsiReference>()
+                }
             }
 
-            return@flatMap listOf<PsiReference>()
+            val reference = PsiReferenceBase.Immediate(propertyAccess, extractTextRange(it.element), true,
+                    member)
+
+            return@flatMap listOf(reference)
         }
         val refs = LinkedList(references)
         refs.addFirst(firstReference)
@@ -93,4 +81,24 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
             else -> TextRange.EMPTY_RANGE
         }
     }
+
+    class HtlDeclarationReference(val xmlAttribute: XmlAttribute?,
+                                  holder: PsiElement,
+                                  range: TextRange)
+        : PsiReferenceBase<PsiElement>(holder, range, true) {
+        override fun resolve(): PsiElement? {
+            return xmlAttribute?.valueElement
+        }
+
+        override fun getVariants(): Array<Any> {
+            return arrayOf()
+        }
+
+        override fun getRangeInElement(): TextRange {
+            return super.getRangeInElement()
+        }
+    }
+
+    class HtlPropertyReference()
+
 }
