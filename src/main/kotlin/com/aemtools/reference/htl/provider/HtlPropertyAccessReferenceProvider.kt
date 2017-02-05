@@ -39,7 +39,7 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
         val firstReference = HtlDeclarationReference(chainSegment.declaration?.xmlAttribute, propertyAccess,
                 TextRange(firstElement.element.startOffsetInParent, firstElement.element.startOffsetInParent + firstElement.element.textLength))
 
-        val references: List<PsiReference> = chainSegment.chainElements().flatMap {
+        val references: List<PsiReference> = elements.flatMap {
             val type = it.type
             val member = when (type) {
                 is JavaPsiClassTypeDescriptor -> type.psiMember
@@ -87,7 +87,7 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
                                   range: TextRange)
         : PsiReferenceBase<PsiElement>(holder, range, true) {
         override fun resolve(): PsiElement? {
-            return xmlAttribute?.valueElement
+            return xmlAttribute?.valueElement ?: xmlAttribute
         }
 
         override fun getVariants(): Array<Any> {

@@ -91,7 +91,7 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
                 this is PsiPrimitiveType -> this.getBoxedType(
                         PsiManager.getInstance(psiClass.project),
                         GlobalSearchScope.allScope(psiClass.project)
-                )?.className
+                )?.canonicalText
                 this is PsiArrayType -> {
                     this.componentType.canonicalText
                 }
