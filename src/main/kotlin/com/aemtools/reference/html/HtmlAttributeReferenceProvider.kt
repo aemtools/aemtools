@@ -1,6 +1,7 @@
 package com.aemtools.reference.html
 
 import com.aemtools.completion.util.isHtlAttribute
+import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
 import com.intellij.psi.PsiReferenceProvider
@@ -28,6 +29,10 @@ object HtmlAttributeReferenceProvider : PsiReferenceProvider() {
 
     class XmlAttributeReferenceWrapper(val xmlAttribute: XmlAttributeImpl) : XmlAttributeReference(xmlAttribute) {
         override fun resolve() = xmlAttribute
+
+        override fun getRangeInElement(): TextRange {
+            return TextRange(0, xmlAttribute.name.length)
+        }
     }
 }
 

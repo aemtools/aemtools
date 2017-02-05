@@ -1,5 +1,6 @@
 package com.aemtools.lang.htl.refactoring
 
+import com.aemtools.lang.java.JavaSearch
 import com.intellij.psi.impl.source.xml.XmlAttributeValueImpl
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 import junit.framework.TestCase
@@ -11,8 +12,6 @@ class ReferenceTest : LightCodeInsightFixtureTestCase() {
 
     override fun getTestDataPath(): String =
             "src/test/resources/refactoring/"
-
-    //TODO add tests
 
     fun testReferenceToField() {
         myFixture.configureByText("test.html", """
@@ -49,6 +48,20 @@ class ReferenceTest : LightCodeInsightFixtureTestCase() {
         assertTrue(element is XmlAttributeValueImpl)
 
         TestCase.assertEquals("\"com.test.TestClass\"", (element as XmlAttributeValueImpl).text)
+    }
+
+    fun testSlyUseClassReferencesToJava() {
+        myFixture.configureByText("test.html", """
+            <div data-sly-use.bean="${'$'}{'com.test.<caret>TestClass'}"></div>
+        """)
+        myFixture.addClass("package com.test; public class TestClass {}")
+
+        val element = myFixture.file.findReferenceAt(myFixture.editor.caretModel.offset)?.resolve()
+                ?: AssertionError("Unable to resolve reference")
+
+        val psiClass = JavaSearch.findClass("com.test.TestClass", project)
+
+        TestCase.assertEquals(psiClass, element)
     }
 
 }
