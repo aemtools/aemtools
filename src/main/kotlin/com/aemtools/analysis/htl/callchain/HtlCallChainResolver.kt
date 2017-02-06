@@ -1,7 +1,7 @@
 package com.aemtools.analysis.htl.callchain
 
 import com.aemtools.analysis.htl.callchain.elements.CallChain
-import com.aemtools.analysis.htl.callchain.rawchainprocessor.JavaRawCallChainProcessor
+import com.aemtools.analysis.htl.callchain.rawchainprocessor.RawCallChainProcessor
 import com.aemtools.lang.htl.psi.chain.RawChainUnit
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import java.util.*
@@ -18,7 +18,7 @@ object HtlCallChainResolver {
     private fun callChain(propertyAccessMixin: PropertyAccessMixin): CallChain? {
         val rawCallChain: LinkedList<RawChainUnit> = propertyAccessMixin.callChain()
 
-        return JavaRawCallChainProcessor.processChain(rawCallChain)
+        return RawCallChainProcessor.processChain(rawCallChain)
     }
 
 }

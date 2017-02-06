@@ -31,7 +31,14 @@ object HtmlAttributeReferenceProvider : PsiReferenceProvider() {
         override fun resolve() = xmlAttribute
 
         override fun getRangeInElement(): TextRange {
-            return TextRange(0, xmlAttribute.name.length)
+            val range = with(xmlAttribute.name) {
+                if (contains(".")) {
+                    TextRange(0, indexOf("."))
+                } else {
+                    TextRange(0, length)
+                }
+            }
+            return range
         }
     }
 }

@@ -29,16 +29,23 @@ interface TypeDescriptor {
 
         fun empty(): TypeDescriptor = EMPTY_DESCRIPTOR
 
-        fun named(name: String, psiMember: PsiMember, psiType: PsiType) = NamedTypeDescriptor(name, psiMember, psiType)
+        fun named(name: String, psiMember: PsiMember, psiType: PsiType) = JavaPsiUnresolvedTypeDescriptor(name, psiMember, psiType)
+
+        fun named(name: String) = NamedTypeDescriptor(name)
     }
 
     fun asResolutionResult(): ResolutionResult = ResolutionResult()
 
 }
 
-open class NamedTypeDescriptor(private val myName: String,
-                               val psiMember: PsiMember,
-                               val psiType: PsiType) : EmptyTypeDescriptor() {
+open class NamedTypeDescriptor(private val myName: String)
+    : EmptyTypeDescriptor() {
+    override fun name(): String = myName
+}
+
+open class JavaPsiUnresolvedTypeDescriptor(private val myName: String,
+                                           val psiMember: PsiMember,
+                                           val psiType: PsiType) : EmptyTypeDescriptor() {
     override fun name(): String = myName
 }
 

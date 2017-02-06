@@ -179,3 +179,4 @@ fun Collection<HtlVariableDeclaration>.filterForPosition(position: PsiElement): 
     }
     return result
 }
+

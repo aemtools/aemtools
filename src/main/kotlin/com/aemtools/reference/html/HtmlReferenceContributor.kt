@@ -12,11 +12,15 @@ import com.intellij.psi.PsiReferenceRegistrar
 class HtmlReferenceContributor : PsiReferenceContributor() {
 
     override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
-        registrar.registerReferenceProvider(XmlPatterns.xmlAttribute(),
+        registrar.registerReferenceProvider(
+                XmlPatterns.xmlAttribute(),
                 HtmlAttributeReferenceProvider)
         registrar.registerReferenceProvider(
                 XmlPatterns.xmlAttribute(),
                 DataSlyUseWithinAttributeValueReferenceProvider)
+        registrar.registerReferenceProvider(
+                XmlPatterns.xmlAttribute(),
+                HtmlAttributeVariableReferenceProvider)
     }
 
 }

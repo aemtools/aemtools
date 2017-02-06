@@ -64,4 +64,26 @@ class ReferenceTest : LightCodeInsightFixtureTestCase() {
         TestCase.assertEquals(psiClass, element)
     }
 
+    fun testReferenceToDataSlyTest() {
+        myFixture.configureByText("test.html", """
+            <div data-sly-use.bean="com.test.TestClass">
+                <sly data-sly-test.show="${'$'}{bean.show}">
+                    ${'$'}{<caret>show}
+                </sly>
+            </div>
+        """)
+        myFixture.addClass("""
+            package com.test;
+
+            public class TestClass {
+                public boolean show;
+            }
+        """)
+
+        val element = myFixture.file.findReferenceAt(myFixture.editor.caretModel.offset)?.resolve() as? XmlAttributeValueImpl
+                ?: AssertionError("Unable to resolve reference")
+
+        assertEquals("text", (element as XmlAttributeValueImpl).text)
+    }
+
 }

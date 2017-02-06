@@ -2,7 +2,7 @@ package com.aemtools.reference.htl.provider
 
 import com.aemtools.analysis.htl.callchain.elements.BaseCallChainSegment
 import com.aemtools.analysis.htl.callchain.elements.CallChainElement
-import com.aemtools.analysis.htl.callchain.typedescriptor.NamedTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.JavaPsiUnresolvedTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.hasChild
@@ -43,7 +43,7 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
             val type = it.type
             val member = when (type) {
                 is JavaPsiClassTypeDescriptor -> type.psiMember
-                is NamedTypeDescriptor -> type.psiMember
+                is JavaPsiUnresolvedTypeDescriptor -> type.psiMember
                 else -> {
                     return@flatMap listOf<PsiReference>()
                 }

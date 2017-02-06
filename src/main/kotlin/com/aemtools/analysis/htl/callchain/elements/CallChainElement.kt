@@ -16,18 +16,6 @@ interface CallChainElement {
     val type: TypeDescriptor
 }
 
-interface IArrayChainElement : CallChainElement {
-    override val type: ArrayTypeDescriptor
-}
-
-interface IListChainElement : CallChainElement {
-    override val type: IterableTypeDescriptor
-}
-
-interface IMapChainElement : CallChainElement {
-    override val type: MapTypeDescriptor
-}
-
 open class BaseChainElement(override val element: PsiElement,
                             override val name: String,
                             override val type: TypeDescriptor) : CallChainElement
