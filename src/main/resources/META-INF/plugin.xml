@@ -104,6 +104,9 @@
 
         <internalFileTemplate name="_rep_policy"/>
 
+        <annotator language="HTML"
+                   implementationClass="com.aemtools.lang.html.annotation.RedundantDataSlyUnwrapAnnotator"/>
+
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
     </extensions>
 
