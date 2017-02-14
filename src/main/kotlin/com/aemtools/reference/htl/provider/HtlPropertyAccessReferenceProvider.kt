@@ -99,6 +99,4 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
         }
     }
 
-    class HtlPropertyReference()
-
 }

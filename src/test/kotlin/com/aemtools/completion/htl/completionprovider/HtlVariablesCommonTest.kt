@@ -1,6 +1,6 @@
 package com.aemtools.completion.htl.completionprovider
 
-import com.aemtools.completion.blocks.BaseVariantsCheckContributorTest
+import com.aemtools.blocks.BaseVariantsCheckContributorTest
 
 /**
  * Tests for Htl variables resolution.

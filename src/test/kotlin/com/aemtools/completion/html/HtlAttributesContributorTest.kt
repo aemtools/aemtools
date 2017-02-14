@@ -1,6 +1,6 @@
 package com.aemtools.completion.html
 
-import com.aemtools.completion.blocks.BaseVariantsCheckContributorTest
+import com.aemtools.blocks.BaseVariantsCheckContributorTest
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.constant.const.htl.DATA_SLY_UNWRAP

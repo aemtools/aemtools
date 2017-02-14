@@ -11,8 +11,8 @@ import com.intellij.psi.impl.PsiFileEx
 import javax.swing.Icon
 
 /**
- * Created by Dmytro_Troynikov on 5/28/2016.
- */
+* @author Dmytro Troynikov
+*/
 class HtlPsiFile(fileViewProvider: FileViewProvider)
     : PsiFileBase(fileViewProvider, HtlLanguage), PsiFileEx {
 

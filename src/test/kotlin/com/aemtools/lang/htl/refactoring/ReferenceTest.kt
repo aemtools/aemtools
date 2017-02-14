@@ -1,26 +1,26 @@
 package com.aemtools.lang.htl.refactoring
 
-import com.aemtools.lang.java.JavaSearch
-import com.intellij.psi.impl.source.xml.XmlAttributeValueImpl
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
-import junit.framework.TestCase
+import com.aemtools.blocks.reference.BaseReferenceTest
+import com.intellij.psi.PsiClass
+import com.intellij.psi.PsiField
+import com.intellij.psi.PsiMethod
+import com.intellij.psi.xml.XmlAttributeValue
 
 /**
  * @author Dmytro_Troynikov
  */
-class ReferenceTest : LightCodeInsightFixtureTestCase() {
+class ReferenceTest : BaseReferenceTest() {
 
     override fun getTestDataPath(): String =
             "src/test/resources/refactoring/"
 
-    fun testReferenceToField() {
-        myFixture.configureByText("test.html", """
+    fun testReferenceToField() = testReference {
+        addHtml("test.html", """
             <div data-sly-use.bean="com.test.TestClass">
                 ${'$'}{bean.<caret>field}
             </div>
         """)
-
-        myFixture.addClass("""
+        addClass("TestClass", """
             package com.test;
 
             public class TestClass {
@@ -28,62 +28,135 @@ class ReferenceTest : LightCodeInsightFixtureTestCase() {
             }
         """)
 
-        val reference = myFixture.file.findReferenceAt(myFixture.editor.caretModel.offset)?.resolve()
-            ?: AssertionError("Unable to get reference")
-
-        TestCase.assertEquals("PsiField:field", reference.toString())
+        shouldResolveTo(PsiField::class.java)
+        shouldContainText("public String field;")
     }
 
-    fun testReferenceToDeclarationAttribute() {
-        myFixture.configureByText("test.html", """
+    fun testReferenceToPrimitiveField() = testReference {
+        addHtml("test.html", """
+            <div data-sly-use.bean="com.test.TestClass">
+                ${'$'}{bean.<caret>primitive}
+            </div>
+        """)
+        addClass("TestClass", """
+            package com.test;
+
+            public class TestClass {
+                public boolean primitive;
+            }
+        """)
+
+        shouldResolveTo(PsiField::class.java)
+        shouldContainText("public boolean primitive;")
+    }
+
+    fun testReferenceToGetter() = testReference {
+        addHtml("test.html", """
+            <div data-sly-use.bean="com.test.TestClass">
+                ${'$'}{bean.<caret>value}
+            </div>
+        """)
+        addClass("TestClass", """
+            package com.test;
+
+            public class TestClass {
+                public String getValue() { return ""; }
+            }
+        """)
+
+        shouldResolveTo(PsiMethod::class.java)
+        shouldContainText("public String getValue() { return \"\"; }")
+    }
+
+    fun testReferenceToGetterByNonNormalizedName() = testReference {
+        addHtml("test.html", """
+            <div data-sly-use.bean="com.test.TestClass">
+                ${'$'}{bean.<caret>getValue}
+            </div>
+        """)
+        addClass("TestClass", """
+            package com.test;
+
+            public class TestClass {
+                public String getValue() { return ""; }
+            }
+        """)
+
+        shouldResolveTo(PsiMethod::class.java)
+        shouldContainText("public String getValue() { return \"\"; }")
+    }
+
+    fun testReferenceToDeclarationAttribute() = testReference {
+        addHtml("test.html", """
             <div data-sly-use.bean="com.test.TestClass">
                 ${'$'}{<caret>bean}
             </div>
         """)
-        myFixture.addClass("package com.test; public class TestClass {}")
-
-        val element = myFixture.file.findReferenceAt(myFixture.editor.caretModel.offset)?.resolve()
-            ?: AssertionError("Unable to resolve reference")
-
-        assertTrue(element is XmlAttributeValueImpl)
-
-        TestCase.assertEquals("\"com.test.TestClass\"", (element as XmlAttributeValueImpl).text)
+        shouldResolveTo(XmlAttributeValue::class.java)
+        shouldContainText("\"com.test.TestClass\"")
     }
 
-    fun testSlyUseClassReferencesToJava() {
-        myFixture.configureByText("test.html", """
+    fun testSlyUseClassReferencesToPsiClass() = testReference {
+        addHtml("test.html", """
             <div data-sly-use.bean="${'$'}{'com.test.<caret>TestClass'}"></div>
         """)
-        myFixture.addClass("package com.test; public class TestClass {}")
+        addClass("TestClass", "package com.test; public class TestClass {}")
 
-        val element = myFixture.file.findReferenceAt(myFixture.editor.caretModel.offset)?.resolve()
-                ?: AssertionError("Unable to resolve reference")
-
-        val psiClass = JavaSearch.findClass("com.test.TestClass", project)
-
-        TestCase.assertEquals(psiClass, element)
+        shouldResolveTo(PsiClass::class.java)
+        shouldContainText("public class TestClass {}")
     }
 
-    fun testReferenceToDataSlyTest() {
-        myFixture.configureByText("test.html", """
+    fun testReferenceToDataSlyTest() = testReference {
+        addHtml("test.html", """
             <div data-sly-use.bean="com.test.TestClass">
                 <sly data-sly-test.show="${'$'}{bean.show}">
                     ${'$'}{<caret>show}
                 </sly>
             </div>
         """)
-        myFixture.addClass("""
-            package com.test;
 
-            public class TestClass {
-                public boolean show;
-            }
+        shouldResolveTo(XmlAttributeValue::class.java)
+        shouldContainText("\"${'$'}{bean.show}\"")
+    }
+
+    fun testReferenceItemToDataSlyList() = testReference {
+        addHtml("test.html", """
+            <div data-sly-list="iterable">
+                ${'$'}{<caret>item}
+            </div>
         """)
+        shouldResolveTo(XmlAttributeValue::class.java)
+        shouldContainText("\"iterable\"")
+    }
 
-        val element = myFixture.file.findReferenceAt(myFixture.editor.caretModel.offset)?.resolve() as? XmlAttributeValueImpl
-                ?: AssertionError("Unable to resolve reference")
+    fun testReferenceItemListToDataSlyList() = testReference {
+        addHtml("test.html", """
+            <div data-sly-list="iterable">
+                ${'$'}{<caret>itemList}
+            </div>
+        """)
+        shouldResolveTo(XmlAttributeValue::class.java)
+        shouldContainText("\"iterable\"")
+    }
 
-        assertEquals("text", (element as XmlAttributeValueImpl).text)
+    fun testReferenceItemToDataSlyRepeat() = testReference {
+        addHtml("test.html", """
+            <div data-sly-repeat="iterable">
+                ${'$'}{<caret>item}
+            </div>
+        """)
+        shouldResolveTo(XmlAttributeValue::class.java)
+        shouldContainText("\"iterable\"")
+    }
+
+    fun testReferenceItemListToDataSlyRepeat() = testReference {
+        addHtml("test.html", """
+            <div data-sly-repeat="iterable">
+                ${'$'}{<caret>itemList}
+            </div>
+        """)
+        shouldResolveTo(XmlAttributeValue::class.java)
+        shouldContainText("\"iterable\"")
     }
 
 }

@@ -1,6 +1,6 @@
 package com.aemtools.completion.html.inserthandler
 
-import com.aemtools.completion.blocks.BaseVariantsCheckContributorTest
+import com.aemtools.blocks.BaseVariantsCheckContributorTest
 
 class HtlTextInsertHandlerTest : BaseVariantsCheckContributorTest("com/aemtools/completion/html/inserthandler") {
 

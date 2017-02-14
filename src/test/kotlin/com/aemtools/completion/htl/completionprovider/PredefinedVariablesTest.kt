@@ -1,6 +1,6 @@
 package com.aemtools.completion.htl.completionprovider
 
-import com.aemtools.completion.blocks.BaseVariantsCheckContributorTest
+import com.aemtools.blocks.BaseVariantsCheckContributorTest
 import com.intellij.openapi.project.Project
 import com.intellij.testFramework.createHeavyProject
 import org.assertj.core.api.Assertions.assertThat

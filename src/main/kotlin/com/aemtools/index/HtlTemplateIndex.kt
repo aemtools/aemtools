@@ -50,7 +50,7 @@ class HtlTemplateIndex : XmlIndex<TemplateDefinition>() {
                 templateDefinitions.forEach { it.path = path }
 
                 return@DataIndexer mutableMapOf(*templateDefinitions.map {
-                    "${path}.$${it.name}" to it
+                    "$path.$${it.name}" to it
                 }.toTypedArray())
             }
             mutableMapOf()
