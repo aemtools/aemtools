@@ -62,12 +62,17 @@ fun PsiClass.elMembers(): List<PsiMember> {
     return this.elMethods() + this.elFields()
 }
 
+/**
+ * Find member (method or function) by name.
+ * @param name the name of member
+ * @return found [PsiMember] or _null_
+ */
 fun PsiClass.findElMemberByName(name: String) : PsiMember? = elMembers().find {
-    val normalizedName = when (it) {
-        is PsiMethod -> it.elName()
-        else -> it.name
+    if (it is PsiMethod) {
+        name == it.elName() || name == it.name
+    } else {
+        name == it.name
     }
-    normalizedName == name
 }
 
 /**

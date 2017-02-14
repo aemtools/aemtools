@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.aemtools</id>
     <name>AEM Tools</name>
-    <version>0.4.1</version>
+    <version>0.4.2</version>
     <category>Framework integration</category>
     <vendor email="dmytrotroynikov@gmail.com" url="https://github.com/DmytroTroynikov/aemtools">Dmytro Troynikov</vendor>
 
@@ -30,6 +30,7 @@
             <li>improved references</li>
             <li>added possibility to comment code</li>
             <li>Htl files containing Htl templates will be proposed as data-sly-use variants</li>
+            <li>Fixed wrong resolution of primitive types</li>
         </ul>
     ]]>
     </change-notes>
@@ -102,6 +103,9 @@
                             id="aemtools.repository-service"/>
 
         <internalFileTemplate name="_rep_policy"/>
+
+        <annotator language="HTML"
+                   implementationClass="com.aemtools.lang.html.annotation.RedundantDataSlyUnwrapAnnotator"/>
 
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
     </extensions>
