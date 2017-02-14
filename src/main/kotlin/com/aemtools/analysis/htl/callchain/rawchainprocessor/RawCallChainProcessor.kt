@@ -237,7 +237,7 @@ object RawCallChainProcessor {
             = chainSegment {
 
         inputType = TypeDescriptor.empty()
-
+        declarationType = rawChainUnit.myDeclaration
         val variants = rawChainUnit
                 .myDeclaration
                 ?.resolutionResult

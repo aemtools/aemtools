@@ -1,6 +1,5 @@
 package com.aemtools.blocks.reference.model
 
-import com.intellij.psi.PsiElement
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 
 /**
