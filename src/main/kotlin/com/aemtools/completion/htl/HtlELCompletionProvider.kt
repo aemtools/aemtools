@@ -2,28 +2,18 @@ package com.aemtools.completion.htl
 
 import com.aemtools.analysis.htl.callchain.elements.resolveSelectedItem
 import com.aemtools.analysis.htl.callchain.elements.selectedElement
-import com.aemtools.completion.htl.completionprovider.*
+import com.aemtools.completion.htl.completionprovider.PredefinedEL
+import com.aemtools.completion.htl.completionprovider.PredefinedVariables
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.htl.predefined.HtlELPredefined
 import com.aemtools.completion.util.findParentByType
-import com.aemtools.completion.util.hasParent
-import com.aemtools.completion.util.isMainString
-import com.aemtools.constant.const
-import com.aemtools.lang.htl.psi.HtlAssignment
-import com.aemtools.lang.htl.psi.HtlAssignmentValue
-import com.aemtools.lang.htl.psi.HtlContextExpression
-import com.aemtools.lang.htl.psi.HtlStringLiteral
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.lang.StdLanguages
 import com.intellij.psi.PsiElement
 import com.intellij.psi.templateLanguages.OuterLanguageElement
-import com.intellij.psi.util.PsiTreeUtil
-import com.intellij.psi.xml.XmlAttribute
 import com.intellij.util.ProcessingContext
 import generated.psi.impl.HtlPropertyAccessImpl
 
@@ -60,73 +50,9 @@ object HtlELCompletionProvider : CompletionProvider<CompletionParameters>() {
                 }
             }
 
-            isAssignment(currentPosition) -> {
-                if (currentPosition.hasParent(HtlContextExpression::class.java)) {
-                    // ${param @ opt='<caret>'}
-                    if (currentPosition.hasParent(HtlAssignmentValue::class.java)
-                            and currentPosition.hasParent(HtlStringLiteral::class.java)) {
-                        val sightlyAssignment = currentPosition.findParentByType(HtlAssignment::class.java) ?: return
-                        val variableElement = sightlyAssignment.firstChild
-                        if (variableElement.text == "context") {
-                            result.addAllElements(HtlELPredefined.CONTEXT_VALUES.map {
-                                LookupElementBuilder.create(it.completionText)
-                            })
-                        }
-                    } else {
-                        completeVariables(currentPosition, parameters, result)
-                    }
-                }
-            }
-            isOption(parameters) -> {
-                result.addAllElements(HtlOptionCompletionProvider.contextParameters(parameters))
-            }
-            isStringLiteralValue(parameters) -> {
-                val values = completeStringLiteralValue(parameters)
-                result.addAllElements(values)
-            }
-            isVariable(parameters) -> {
-                completeVariables(currentPosition, parameters, result)
-            }
-
             else -> return
         }
         result.stopHere()
-    }
-
-    private fun completeVariables(currentPosition: PsiElement, parameters: CompletionParameters, result: CompletionResultSet) {
-        val contextObjects = PredefinedVariables.contextObjectsCompletion()
-        val fileCompletions = FileVariablesResolver
-                .findForPosition(currentPosition, parameters)
-        result.addAllElements(contextObjects + fileCompletions)
-    }
-
-    fun completeStringLiteralValue(parameters: CompletionParameters): List<LookupElement> {
-        val currentPosition = parameters.position.findParentByType(HtlStringLiteral::class.java)
-                ?: return listOf()
-        val psi = currentPosition.containingFile.viewProvider.getPsi(StdLanguages.HTML)
-        val attributes = PsiTreeUtil.findChildrenOfType(psi, XmlAttribute::class.java)
-
-        // find the XmlAttribute which contains currentPosition
-        val containerAttribute = attributes.find { it ->
-            val valueElement = it.valueElement
-            if (valueElement == null) {
-                false
-            } else {
-                val valueOffset = valueElement.textOffset
-                val valueLength = valueElement.textLength
-
-                return@find valueOffset < currentPosition.textOffset
-                        && currentPosition.textOffset < valueOffset + valueLength
-            }
-        } ?: return listOf()
-
-        // data-sly-use.bean="${'<caret>'}"
-        if (containerAttribute.name.startsWith(const.htl.DATA_SLY_USE)
-                && currentPosition.isMainString()) {
-            return SlyUseCompletionProvider.useSuggestions(parameters)
-        }
-
-        return listOf()
     }
 
     private fun mergeCompletions(first: List<LookupElement>, second: List<LookupElement>, mode: String): List<LookupElement> {
@@ -161,29 +87,6 @@ object HtlELCompletionProvider : CompletionProvider<CompletionParameters>() {
     fun isMemberAccess(element: PsiElement): Boolean {
         val parent = element.findParentByType(HtlPropertyAccessImpl::class.java) ?: return false
         return parent.children.size != 1
-    }
-
-    /**
-     * Will return `true` for following structure:
-     *
-     * ${param @ option='<caret>'}
-     */
-    fun isAssignment(element: PsiElement): Boolean {
-        return element.hasParent(HtlAssignment::class.java)
-    }
-
-    fun isOption(parameters: CompletionParameters): Boolean {
-        return parameters.position.hasParent(HtlContextExpression::class.java)
-    }
-
-    /**
-     * Check if current position is value of literal ('<caret>')
-     */
-    fun isStringLiteralValue(parameters: CompletionParameters): Boolean
-            = parameters.position.hasParent(HtlStringLiteral::class.java)
-
-    fun isVariable(parameters: CompletionParameters): Boolean {
-        return true
     }
 
 }

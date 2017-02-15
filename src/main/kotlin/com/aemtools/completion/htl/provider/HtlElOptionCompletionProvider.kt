@@ -1,5 +1,7 @@
-package com.aemtools.completion.htl.completionprovider
+package com.aemtools.completion.htl.provider
 
+import com.aemtools.completion.htl.inserthandler.HtlElArrayOptionInsertHandler
+import com.aemtools.completion.htl.inserthandler.HtlElStringOptionInsertHandler
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.findParentByType
 import com.aemtools.completion.util.isInsideOF
@@ -7,13 +9,15 @@ import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.lang.htl.psi.HtlContextExpression
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.intellij.codeInsight.completion.CompletionParameters
-import com.intellij.codeInsight.lookup.LookupElement
+import com.intellij.codeInsight.completion.CompletionProvider
+import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.lookup.LookupElementBuilder
+import com.intellij.util.ProcessingContext
 
 /**
  * @author Dmytro Troynikov
  */
-object HtlOptionCompletionProvider {
+object HtlElOptionCompletionProvider : CompletionProvider<CompletionParameters>() {
 
     val CONTEXT_PARAMETERS = listOf("join",
             "i18n", "context", "format", "locale",
@@ -23,12 +27,14 @@ object HtlOptionCompletionProvider {
             "extension", "suffix", "prependSuffix", "appendSuffix",
             "query", "addQuery", "removeQuery", "fragment")
 
-    fun contextParameters(parameters: CompletionParameters): List<LookupElement> {
+    override fun addCompletions(parameters: CompletionParameters,
+                                context: ProcessingContext?,
+                                result: CompletionResultSet) {
         val currentPosition = parameters.position
         val hel = currentPosition.findParentByType(HtlHtlEl::class.java)
-                ?: return listOf()
+                ?: return
         if (hel.isInsideOF(DATA_SLY_TEMPLATE)) {
-            return listOf()
+            return
         }
         var children = hel.findChildrenByType(HtlContextExpression::class.java)
         if (children != null) {
@@ -37,7 +43,7 @@ object HtlOptionCompletionProvider {
                 children -= parent
             }
         }
-        return CONTEXT_PARAMETERS
+        val completionVariabts = CONTEXT_PARAMETERS
                 .filter {
                     if (children.isEmpty()) {
                         true
@@ -60,7 +66,17 @@ object HtlOptionCompletionProvider {
                         return@filter true
                     }
                 }
-                .map { LookupElementBuilder.create(it) }
+                .map {
+                    LookupElementBuilder.create(it)
+                            .withTypeText("HTL Option")
+                            .withInsertHandler(when (it) {
+                                "format" -> HtlElArrayOptionInsertHandler()
+                                "i18n" -> null
+                                else -> HtlElStringOptionInsertHandler()
+                            })
+                }
+
+        result.addAllElements(completionVariabts)
     }
 
 }

@@ -1,4 +1,4 @@
-package com.aemtools.blocks.reference.model
+package com.aemtools.blocks.base.model
 
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 

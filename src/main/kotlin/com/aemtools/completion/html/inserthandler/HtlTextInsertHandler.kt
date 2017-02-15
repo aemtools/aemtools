@@ -1,4 +1,4 @@
-package com.aemtools.completion.htl.inserthandler
+package com.aemtools.completion.html.inserthandler
 
 import com.aemtools.completion.util.hasText
 import com.intellij.codeInsight.completion.InsertHandler

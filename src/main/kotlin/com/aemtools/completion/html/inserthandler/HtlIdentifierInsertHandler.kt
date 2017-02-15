@@ -1,3 +1,3 @@
-package com.aemtools.completion.htl.inserthandler
+package com.aemtools.completion.html.inserthandler
 
 class HtlIdentifierInsertHandler : HtlTextInsertHandler(".=\"\"", 1)

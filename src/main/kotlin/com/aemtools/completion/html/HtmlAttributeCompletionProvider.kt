@@ -1,7 +1,7 @@
 package com.aemtools.completion.html
 
-import com.aemtools.completion.htl.inserthandler.HtlExpressionInsertHandler
-import com.aemtools.completion.htl.inserthandler.HtlIdentifierInsertHandler
+import com.aemtools.completion.html.inserthandler.HtlExpressionInsertHandler
+import com.aemtools.completion.html.inserthandler.HtlIdentifierInsertHandler
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.findParentByType
 import com.aemtools.completion.util.isSlyTag
