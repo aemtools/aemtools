@@ -90,7 +90,7 @@
                                 implementationClass="com.aemtools.completion.html.HtmlCompletionContributor"/>
 
         <completion.contributor language="Htl"
-                                implementationClass="com.aemtools.completion.htl.HtlELCompletionContributor"/>
+                                implementationClass="com.aemtools.completion.htl.HtlElCompletionContributor"/>
         <lang.braceMatcher language="Htl" implementationClass="com.aemtools.lang.htl.editor.HtlBraceMatcher" />
 
         <lang.parserDefinition language="Htl"

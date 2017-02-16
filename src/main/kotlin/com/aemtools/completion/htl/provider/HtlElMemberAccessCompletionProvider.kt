@@ -1,4 +1,4 @@
-package com.aemtools.completion.htl
+package com.aemtools.completion.htl.provider
 
 import com.aemtools.analysis.htl.callchain.elements.resolveSelectedItem
 import com.aemtools.analysis.htl.callchain.elements.selectedElement
@@ -13,44 +13,34 @@ import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.psi.PsiElement
-import com.intellij.psi.templateLanguages.OuterLanguageElement
 import com.intellij.util.ProcessingContext
-import generated.psi.impl.HtlPropertyAccessImpl
 
 /**
  * @author Dmytro_Troynikov
  */
-object HtlELCompletionProvider : CompletionProvider<CompletionParameters>() {
+object HtlElMemberAccessCompletionProvider : CompletionProvider<CompletionParameters>() {
     override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext, result: CompletionResultSet) {
         if (result.isStopped) {
             return
         }
 
         val currentPosition = parameters.position
+        val resolutionResult = resolveClass(currentPosition)
+
         when {
-            currentPosition is OuterLanguageElement -> return
-            // ${object.<caret>}
-            isMemberAccess(currentPosition) -> {
-                val resolutionResult = resolveClass(currentPosition, parameters, context)
-
-                when {
-                    resolutionResult.predefined != null -> {
-                        result.addAllElements(resolutionResult.predefined)
-                    }
-                    resolutionResult.psiClass != null -> {
-                        // TODO: add unit test for different merge modes ("merge", "override", "disabled")
-                        val predefined = PredefinedEL.predefinedCompletions(parameters, context, result)
-                        val completions = PredefinedVariables.extractSuggestions(resolutionResult.psiClass)
-                        val merged = mergeCompletions(completions, predefined.first, predefined.second)
-                        result.addAllElements(merged)
-                    }
-                    else -> {
-                        // unable to resolve current element, doing nothing
-                    }
-                }
+            resolutionResult.predefined != null -> {
+                result.addAllElements(resolutionResult.predefined)
             }
-
-            else -> return
+            resolutionResult.psiClass != null -> {
+                // TODO: add unit test for different merge modes ("merge", "override", "disabled")
+                val predefined = PredefinedEL.predefinedCompletions(parameters, context, result)
+                val completions = PredefinedVariables.extractSuggestions(resolutionResult.psiClass)
+                val merged = mergeCompletions(completions, predefined.first, predefined.second)
+                result.addAllElements(merged)
+            }
+            else -> {
+                // unable to resolve current element, doing nothing
+            }
         }
         result.stopHere()
     }
@@ -63,9 +53,7 @@ object HtlELCompletionProvider : CompletionProvider<CompletionParameters>() {
         }
     }
 
-    fun resolveClass(element: PsiElement,
-                     parameters: CompletionParameters,
-                     context: ProcessingContext): ResolutionResult {
+    fun resolveClass(element: PsiElement): ResolutionResult {
         val propertyAccessElement = element.findParentByType(PropertyAccessMixin::class.java)
                 ?: return ResolutionResult()
 
@@ -79,14 +67,6 @@ object HtlELCompletionProvider : CompletionProvider<CompletionParameters>() {
         val result = lastSegment.resolveSelectedItem()
 
         return HtlELPredefined.addPredefined(chain, lastSegment, selectedElement, result)
-    }
-
-    /**
-     * Will return __true__ if current user accesses to the element of some class.
-     */
-    fun isMemberAccess(element: PsiElement): Boolean {
-        val parent = element.findParentByType(HtlPropertyAccessImpl::class.java) ?: return false
-        return parent.children.size != 1
     }
 
 }

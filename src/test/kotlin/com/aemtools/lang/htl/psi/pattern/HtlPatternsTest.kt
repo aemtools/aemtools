@@ -3,6 +3,7 @@ package com.aemtools.lang.htl.psi.pattern
 import com.aemtools.blocks.base.BaseLightTest
 import com.aemtools.constant.const.IDEA_STRING_CARET_PLACEHOLDER
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.contextOptionAssignment
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.memberAccess
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.optionName
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.stringLiteralValue
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.variableName
@@ -91,6 +92,36 @@ class HtlPatternsTest : BaseLightTest() {
     fun testContextOptionAssignmentShouldTriggerOnUnknownOption() = testHtlPattern(
             contextOptionAssignment,
             "$DOLLAR{@ join='$CARET'}",
+            false
+    )
+
+    fun testMemberAccessMain() = testHtlPattern(
+            memberAccess,
+            "$DOLLAR{object.$CARET}",
+            true
+    )
+
+    fun testMemberAccessArrayLikeAccess() = testHtlPattern(
+            memberAccess,
+            "$DOLLAR{object['$CARET']}",
+            true
+    )
+
+    fun testMemberAccessInArrayLikeAccess() = testHtlPattern(
+            memberAccess,
+            "$DOLLAR{object[inner.$CARET]}",
+            true
+    )
+
+    fun testMemberAccessInOptions() = testHtlPattern(
+            memberAccess,
+            "$DOLLAR{@ option=object.$CARET}",
+            true
+    )
+
+    fun testMemberAccessShouldMatchVariable() = testHtlPattern(
+            memberAccess,
+            "$DOLLAR{$CARET}",
             false
     )
 

@@ -70,4 +70,18 @@ object HtlPatterns {
                     )
             )
 
+    /**
+     * Matches the following:
+     *
+     * ```
+     *    ${object.<caret>}
+     * ```
+     */
+    val memberAccess: ElementPattern<PsiElement> =
+            or(
+                    psiElement().inside(psiElement(STRING_LITERAL))
+                            .inside(psiElement(ARRAY_LIKE_ACCESS)),
+                    psiElement(VAR_NAME).inside(psiElement(ACCESS_IDENTIFIER))
+            )
+
 }
