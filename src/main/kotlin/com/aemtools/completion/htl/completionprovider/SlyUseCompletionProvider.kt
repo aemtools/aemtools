@@ -1,6 +1,6 @@
 package com.aemtools.completion.htl.completionprovider
 
-import com.aemtools.index.HtlTemplateIndex
+import com.aemtools.index.HtlIndexFacade.getTemplates
 import com.aemtools.lang.java.JavaSearch
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
@@ -10,9 +10,7 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiModifier
-import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.util.ProcessingContext
-import com.intellij.util.indexing.FileBasedIndex
 
 /**
  * Code completion for __data-sly-use.*__ attribute. (e.g. <div data-sly-use.bean="<caret>")
@@ -56,11 +54,7 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
     }
 
     private fun extractTemplates(parameters: CompletionParameters): List<LookupElement> {
-        val fbi = FileBasedIndex.getInstance()
-        val keys = fbi.getAllKeys(HtlTemplateIndex.HTL_TEMPLATE_ID, parameters.position.project)
-        val result = keys.flatMap {
-            fbi.getValues(HtlTemplateIndex.HTL_TEMPLATE_ID, it, GlobalSearchScope.allScope(parameters.position.project))
-        }
+        val result = getTemplates(parameters.position.project)
 
         return result.map {
             LookupElementBuilder.create(it.normalizedPath)

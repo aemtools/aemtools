@@ -25,7 +25,7 @@ class HtlTemplateIndex : XmlIndex<TemplateDefinition>() {
     }
 
     override fun getIndexer(): DataIndexer<String, TemplateDefinition, FileContent> {
-        return DataIndexer<String, TemplateDefinition, FileContent> { inputData ->
+        return DataIndexer { inputData ->
             val content = inputData.contentAsText
 
             if (content.contains(DATA_SLY_TEMPLATE)) {

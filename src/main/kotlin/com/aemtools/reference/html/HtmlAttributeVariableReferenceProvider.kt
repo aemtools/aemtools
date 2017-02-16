@@ -1,5 +1,6 @@
 package com.aemtools.reference.html
 
+import com.aemtools.analysis.htl.callchain.elements.BaseCallChainSegment
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.getHtlFile
 import com.aemtools.completion.util.isHtlAttribute
@@ -37,6 +38,16 @@ object HtmlAttributeVariableReferenceProvider : PsiReferenceProvider() {
                             ?: return@filter false
 
                     false
+
+                    it.callChainSegments.forEach {
+                        if (it is BaseCallChainSegment
+                             && it.declaration?.xmlAttribute?.isEquivalentTo(attribute)
+                                ?: false){
+                            return@filter true
+
+                        }
+                    }
+                    return@filter false
                 }
             }
         }
