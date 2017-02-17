@@ -15,12 +15,10 @@ class HtmlReferenceContributor : PsiReferenceContributor() {
         registrar.registerReferenceProvider(
                 XmlPatterns.xmlAttribute(),
                 HtmlAttributeReferenceProvider)
+
         registrar.registerReferenceProvider(
-                XmlPatterns.xmlAttribute(),
+                XmlPatterns.xmlAttributeValue(),
                 DataSlyUseWithinAttributeValueReferenceProvider)
-        registrar.registerReferenceProvider(
-                XmlPatterns.xmlAttribute(),
-                HtmlAttributeVariableReferenceProvider)
     }
 
 }
