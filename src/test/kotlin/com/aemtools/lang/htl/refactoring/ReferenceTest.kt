@@ -1,10 +1,11 @@
 package com.aemtools.lang.htl.refactoring
 
+import com.aemtools.blocks.base.BaseLightTest.Companion.DOLLAR
 import com.aemtools.blocks.reference.BaseReferenceTest
+import com.aemtools.reference.htl.provider.HtlPropertyAccessReferenceProvider
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiField
 import com.intellij.psi.PsiMethod
-import com.intellij.psi.xml.XmlAttributeValue
 
 /**
  * @author Dmytro_Troynikov
@@ -17,7 +18,7 @@ class ReferenceTest : BaseReferenceTest() {
     fun testReferenceToField() = testReference {
         addHtml("test.html", """
             <div data-sly-use.bean="com.test.TestClass">
-                ${'$'}{bean.<caret>field}
+                $DOLLAR{bean.<caret>field}
             </div>
         """)
         addClass("TestClass", """
@@ -35,7 +36,7 @@ class ReferenceTest : BaseReferenceTest() {
     fun testReferenceToPrimitiveField() = testReference {
         addHtml("test.html", """
             <div data-sly-use.bean="com.test.TestClass">
-                ${'$'}{bean.<caret>primitive}
+                $DOLLAR{bean.<caret>primitive}
             </div>
         """)
         addClass("TestClass", """
@@ -53,7 +54,7 @@ class ReferenceTest : BaseReferenceTest() {
     fun testReferenceToGetter() = testReference {
         addHtml("test.html", """
             <div data-sly-use.bean="com.test.TestClass">
-                ${'$'}{bean.<caret>value}
+                $DOLLAR{bean.<caret>value}
             </div>
         """)
         addClass("TestClass", """
@@ -71,7 +72,7 @@ class ReferenceTest : BaseReferenceTest() {
     fun testReferenceToGetterByNonNormalizedName() = testReference {
         addHtml("test.html", """
             <div data-sly-use.bean="com.test.TestClass">
-                ${'$'}{bean.<caret>getValue}
+                $DOLLAR{bean.<caret>getValue}
             </div>
         """)
         addClass("TestClass", """
@@ -89,16 +90,16 @@ class ReferenceTest : BaseReferenceTest() {
     fun testReferenceToDeclarationAttribute() = testReference {
         addHtml("test.html", """
             <div data-sly-use.bean="com.test.TestClass">
-                ${'$'}{<caret>bean}
+                $DOLLAR{<caret>bean}
             </div>
         """)
-        shouldResolveTo(XmlAttributeValue::class.java)
-        shouldContainText("\"com.test.TestClass\"")
+        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
+        shouldContainText("com.test.TestClass")
     }
 
     fun testSlyUseClassReferencesToPsiClass() = testReference {
         addHtml("test.html", """
-            <div data-sly-use.bean="${'$'}{'com.test.<caret>TestClass'}"></div>
+            <div data-sly-use.bean="$DOLLAR{'com.test.<caret>TestClass'}"></div>
         """)
         addClass("TestClass", "package com.test; public class TestClass {}")
 
@@ -109,54 +110,54 @@ class ReferenceTest : BaseReferenceTest() {
     fun testReferenceToDataSlyTest() = testReference {
         addHtml("test.html", """
             <div data-sly-use.bean="com.test.TestClass">
-                <sly data-sly-test.show="${'$'}{bean.show}">
-                    ${'$'}{<caret>show}
+                <sly data-sly-test.show="$DOLLAR{bean.show}">
+                    $DOLLAR{<caret>show}
                 </sly>
             </div>
         """)
 
-        shouldResolveTo(XmlAttributeValue::class.java)
-        shouldContainText("\"${'$'}{bean.show}\"")
+        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
+        shouldContainText("$DOLLAR{bean.show}")
     }
 
     fun testReferenceItemToDataSlyList() = testReference {
         addHtml("test.html", """
             <div data-sly-list="iterable">
-                ${'$'}{<caret>item}
+                $DOLLAR{<caret>item}
             </div>
         """)
-        shouldResolveTo(XmlAttributeValue::class.java)
-        shouldContainText("\"iterable\"")
+        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
+        shouldContainText("iterable")
     }
 
     fun testReferenceItemListToDataSlyList() = testReference {
         addHtml("test.html", """
             <div data-sly-list="iterable">
-                ${'$'}{<caret>itemList}
+                $DOLLAR{<caret>itemList}
             </div>
         """)
-        shouldResolveTo(XmlAttributeValue::class.java)
-        shouldContainText("\"iterable\"")
+        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
+        shouldContainText("iterable")
     }
 
     fun testReferenceItemToDataSlyRepeat() = testReference {
         addHtml("test.html", """
             <div data-sly-repeat="iterable">
-                ${'$'}{<caret>item}
+                $DOLLAR{<caret>item}
             </div>
         """)
-        shouldResolveTo(XmlAttributeValue::class.java)
-        shouldContainText("\"iterable\"")
+        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
+        shouldContainText("iterable")
     }
 
     fun testReferenceItemListToDataSlyRepeat() = testReference {
         addHtml("test.html", """
             <div data-sly-repeat="iterable">
-                ${'$'}{<caret>itemList}
+                $DOLLAR{<caret>itemList}
             </div>
         """)
-        shouldResolveTo(XmlAttributeValue::class.java)
-        shouldContainText("\"iterable\"")
+        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
+        shouldContainText("iterable")
     }
 
 }

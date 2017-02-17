@@ -82,12 +82,6 @@ fun <T : PsiElement> PsiElement?.hasChild(type: Class<T>): Boolean =
         this.findChildrenByType(type).isNotEmpty()
 
 /**
- * Extract Htl unique attributes as [Collection<String>] from given [XmlAttribute] collection.
- */
-fun Array<PsiElement>.uniqueHtlAttributes(): Collection<String> =
-        filter { it.isUniqueHtlAttribute() }.map { it.text }
-
-/**
  * Check if current [PsiElement] is unique. Unique attributes are
  *  `data-sly-unwrap`
  *  `data-sly-list`
@@ -158,7 +152,8 @@ private fun extractBeanNameFromEl(el: String): String? {
 /**
  * Check if current [XmlAttribute] is `data-sly-use` attribute.
  */
-fun XmlAttribute.isDataSlyUse(): Boolean = this.name.startsWith(DATA_SLY_USE)
+fun XmlAttribute.isDataSlyUse(): Boolean = this.name.startsWith("$DATA_SLY_USE.")
+        || this.name == DATA_SLY_USE
 
 /**
  * Resolve [DataSlyUseType]
@@ -186,7 +181,7 @@ fun XmlAttribute.dataSlyUseType(): DataSlyUseType? {
  */
 fun XmlAttribute.isHtlAttribute(): Boolean = with(this.name) {
     HTL_ATTRIBUTES.forEach {
-        if (startsWith(it)) {
+        if (startsWith("$it.") || equals(it)) {
             return true
         }
     }

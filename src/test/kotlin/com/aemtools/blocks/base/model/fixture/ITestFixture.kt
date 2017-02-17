@@ -22,6 +22,13 @@ interface ITestFixture {
     fun addClass(name: String,
                  @Language("Java") text: String)
 
+    /**
+     * Add XML file to the fixture.
+     * @param name the file name (path may be used)
+     * @param text the file content
+     */
+    fun addXml(name: String, @Language("XML") text: String)
+
     fun verify(verification: IAssertionContext.() -> Unit)
 
 }

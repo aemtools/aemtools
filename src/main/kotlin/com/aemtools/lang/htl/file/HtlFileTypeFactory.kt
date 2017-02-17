@@ -8,6 +8,6 @@ import com.intellij.openapi.fileTypes.FileTypeFactory
  */
 class HtlFileTypeFactory : FileTypeFactory() {
     override fun createFileTypes(consumer: FileTypeConsumer) {
-        consumer.consume(HtlFileType, "html")
+        consumer.consume(HtlFileType, HtlFileType.defaultExtension)
     }
 }

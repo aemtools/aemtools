@@ -1,5 +1,6 @@
 package com.aemtools.lang.htl.file
 
+import com.aemtools.lang.htl.HtlLanguage
 import com.intellij.lang.Language
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.FileViewProvider
@@ -15,10 +16,9 @@ class HtlViewProviderFactory : FileViewProviderFactory {
                                         language: Language?,
                                         manager: PsiManager,
                                         eventSystemEnabled: Boolean): FileViewProvider {
-        if (language == null) {
-            throw AssertionError()
+        if (language == null || !language.isKindOf(HtlLanguage)) {
+            throw AssertionError("Htl language expected")
         }
-
         return HtlFileViewProvider(manager, file, eventSystemEnabled, language)
     }
 

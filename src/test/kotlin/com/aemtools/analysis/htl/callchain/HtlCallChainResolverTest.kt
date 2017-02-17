@@ -1,5 +1,6 @@
 package com.aemtools.analysis.htl.callchain
 
+import com.aemtools.blocks.base.BaseLightTest.Companion.DOLLAR
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.getHtlFile
 import com.aemtools.lang.htl.psi.HtlHtlEl
@@ -15,8 +16,8 @@ class HtlCallChainResolverTest : LightCodeInsightFixtureTestCase() {
     fun testEmptyChain() {
         myFixture.configureByText("test.html", """
             <div data-sly-use.bean="com.test.UnknownModel">
-                <div data-sly-test.test="${'$'}{bean.unknownField}">
-                    ${'$'}{test}
+                <div data-sly-test.test="$DOLLAR{bean.unknownField}">
+                    $DOLLAR{test}
                 </div>
             </div>
         """)

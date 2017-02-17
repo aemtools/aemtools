@@ -20,16 +20,29 @@ class HtlHighlighter : SyntaxHighlighterBase() {
     override fun getHighlightingLexer(): Lexer = HtlHighlightingLexer()
 
     private fun map(tokenType: IElementType?) = when (tokenType) {
-        HtlTypes.TRUE -> HtlColors.BOOLEAN
+        HtlTypes.TRUE,
         HtlTypes.FALSE -> HtlColors.BOOLEAN
 
-        HtlTypes.SINGLE_QUOTED_STRING -> HtlColors.STRING
+        HtlTypes.SINGLE_QUOTED_STRING,
         HtlTypes.DOUBLE_QUOTED_STRING -> HtlColors.STRING
 
         HtlTypes.INTEGER -> HtlColors.INTEGER
 
         HtlTypes.VARIABLE_NAME -> HtlColors.VARIABLE
+        HtlTypes.AT -> HtlColors.DELIMITER
 
+        HtlTypes.LBRACE,
+        HtlTypes.EL_START,
+        HtlTypes.RBRACE -> HtlColors.BRACE
+        HtlTypes.LBRACKET, HtlTypes.RBRACKET -> HtlColors.PARENTHESES
+        HtlTypes.GT,
+        HtlTypes.LT,
+        HtlTypes.GTE,
+        HtlTypes.LTE,
+        HtlTypes.AND_AND,
+        HtlTypes.OR_OR -> HtlColors.OPERATOR
+        HtlTypes.VAR_NAME -> HtlColors.IDENTIFIER
+        HtlTypes.LSQRBRACKET, HtlTypes.RSQRBRACKET -> HtlColors.BRACKET
         else -> null
     }
 }

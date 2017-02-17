@@ -64,6 +64,8 @@
                                 implementationClass="com.aemtools.completion.reppolicy.RepPolicyCompletionContributor"/>
 
         <!-- Htl -->
+        <iconProvider implementation="com.aemtools.lang.htl.file.HtlFileIconProvider"/>
+
         <lang.formatter language="Htl" implementationClass="com.aemtools.lang.htl.formatter.HtlFormattingModelBuilder"/>
         <psi.referenceContributor language="HTML"
                                   implementation="com.aemtools.reference.html.HtmlReferenceContributor"/>

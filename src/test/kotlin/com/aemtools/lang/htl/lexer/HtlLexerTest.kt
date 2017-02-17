@@ -87,7 +87,7 @@ interface HtlTestCase {
 }
 
 fun HtlTestCase.pathToSourceTestFile(name: String): Path =
-        Paths.get("${HtlTestCase.testResourcesPath}/${getTestDataPath()}/$name.${HtlFileType.defaultExtension}")
+        Paths.get("${HtlTestCase.testResourcesPath}/${getTestDataPath()}/$name.html")
 
 fun HtlTestCase.pathToGoldTestFile(name: String): Path =
         Paths.get("${HtlTestCase.testResourcesPath}/${getTestDataPath()}/$name.txt")

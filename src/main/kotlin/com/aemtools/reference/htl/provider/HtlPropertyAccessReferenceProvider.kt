@@ -1,21 +1,22 @@
 package com.aemtools.reference.htl.provider
 
 import com.aemtools.analysis.htl.callchain.elements.BaseCallChainSegment
+import com.aemtools.analysis.htl.callchain.elements.BaseChainElement
 import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.typedescriptor.JavaPsiUnresolvedTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.hasChild
+import com.aemtools.completion.util.isUniqueHtlAttribute
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
 import com.aemtools.lang.htl.psi.HtlStringLiteral
 import com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
+import com.intellij.ide.util.PsiNavigationSupport
 import com.intellij.openapi.util.TextRange
-import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiReference
-import com.intellij.psi.PsiReferenceBase
-import com.intellij.psi.PsiReferenceProvider
+import com.intellij.psi.*
+import com.intellij.psi.impl.FakePsiElement
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.util.ProcessingContext
 import java.util.*
@@ -36,7 +37,7 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
         val firstElement = elements.firstOrNull() ?: return arrayOf()
         elements.pop()
 
-        val firstReference = HtlDeclarationReference(chainSegment.declaration?.xmlAttribute, propertyAccess,
+        val firstReference = HtlDeclarationReference(chainSegment.declaration?.xmlAttribute, firstElement as? BaseChainElement, propertyAccess,
                 TextRange(firstElement.element.startOffsetInParent, firstElement.element.startOffsetInParent + firstElement.element.textLength))
 
         val references: List<PsiReference> = elements.flatMap {
@@ -82,12 +83,22 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
         }
     }
 
-    class HtlDeclarationReference(val xmlAttribute: XmlAttribute?,
+    class HtlDeclarationReference(
+            val xmlAttribute: XmlAttribute?,
+            val callChainElement: BaseChainElement?,
                                   holder: PsiElement,
                                   range: TextRange)
         : PsiReferenceBase<PsiElement>(holder, range, true) {
         override fun resolve(): PsiElement? {
-            return xmlAttribute?.valueElement ?: xmlAttribute
+            val psiClass = callChainElement?.type?.asResolutionResult()?.psiClass
+            if (xmlAttribute != null) {
+                return HtlDeclarationIdentifier(xmlAttribute)
+            } else if (psiClass != null) {
+                return psiClass
+            } else {
+                return null
+
+            }
         }
 
         override fun getVariants(): Array<Any> {
@@ -97,6 +108,38 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
         override fun getRangeInElement(): TextRange {
             return super.getRangeInElement()
         }
+    }
+
+    class HtlDeclarationIdentifier(val xmlAttribute: XmlAttribute) : FakePsiElement() {
+        override fun navigate(requestFocus: Boolean) {
+            val project = xmlAttribute.project
+            val psiFile = xmlAttribute.containingFile
+            val virtualFile = xmlAttribute.containingFile.virtualFile
+
+            var offsetInFile = 0
+            var currentElement: PsiElement = xmlAttribute
+            while (currentElement != null
+                    && currentElement.parent !is PsiFile) {
+                offsetInFile += currentElement.startOffsetInParent
+                currentElement = currentElement.parent
+            }
+
+            offsetInFile += xmlAttribute.name.indexOf(".") + 1
+
+            val navSupport = PsiNavigationSupport.getInstance()
+            val navigatable = navSupport.createNavigatable(project, virtualFile, 1)
+            PsiNavigationSupport.getInstance().createNavigatable(project, virtualFile, offsetInFile)
+                    .navigate(requestFocus)
+        }
+
+        override fun getText(): String? {
+            return xmlAttribute.value
+        }
+
+        override fun getParent(): PsiElement {
+            return xmlAttribute
+        }
+
     }
 
 }

@@ -65,15 +65,6 @@ object const {
         val VALUE_MAP = "org.apache.sling.api.resource.ValueMap"
     }
 
-    object js {
-        object type {
-            val STRING : String = "String"
-            val BOOLEAN : String = "Boolean"
-            val ARRAY : String = "Array"
-            val FUNCTION : String = "Function"
-        }
-    }
-
     object xml {
         val XML_ATTRIBUTE_NAME : String = "XML_NAME"
         val XML_ATTRIBUTE_VALUE : String = "XML_ATTRIBUTE_VALUE_TOKEN"

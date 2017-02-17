@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentMap
 /**
  * @author Dmytro Troynikov
  */
-class HtlFileViewProvider(manager: PsiManager,
+class HtlFileViewProvider @JvmOverloads constructor(manager: PsiManager,
                               virtualFile: VirtualFile,
                               physical: Boolean,
                               val myBaseLanguage: Language,
@@ -50,10 +50,10 @@ class HtlFileViewProvider(manager: PsiManager,
 
     override fun getTemplateDataLanguage(): Language = myTemplateLanguage
 
-    override fun supportsIncrementalReparse(rootLanguage: Language): Boolean = true
+    override fun supportsIncrementalReparse(rootLanguage: Language): Boolean = false
 
     override fun getLanguages(): Set<Language> {
-        return THashSet<Language>(listOf(myBaseLanguage, templateDataLanguage))
+        return THashSet<Language>(listOf(myBaseLanguage, myTemplateLanguage))
     }
 
     override fun cloneInner(virtualFile: VirtualFile): MultiplePsiFilesPerDocumentFileViewProvider {

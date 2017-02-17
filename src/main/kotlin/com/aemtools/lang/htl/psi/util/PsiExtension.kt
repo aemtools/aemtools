@@ -76,88 +76,12 @@ fun PsiClass.findElMemberByName(name: String) : PsiMember? = elMembers().find {
 }
 
 /**
- * Find the field or method by Htl normalized name and find the corresponding [PsiClass]
- * @return the [PsiClass] of field type or of method's return type
- */
-fun PsiClass.byNormalizedName(normalizedName: String,
-                              project: Project,
-                              declarationType: DeclarationType = DeclarationType.VARIABLE): Pair<PsiMember, PsiClass?>? {
-    this.run {
-        val psiMember = elMembers().find {
-            val name = when {
-                it is PsiMethod -> it.elName()
-                else -> it.name
-            }
-
-            name == normalizedName
-        } ?: return null
-
-        val type = psiMember.resolveReturnType()
-                ?: return null
-
-        val className = type.resolveClassName(psiMember, declarationType, project)
-                ?: return null
-
-        val clazz = JavaSearch.findClass(className, project)
-        return psiMember to clazz
-    }
-}
-
-fun PsiType.resolveClassName(holder: PsiMember?,
-                             declarationType: DeclarationType,
-                             project: Project): String? = when (this) {
-    is PsiClassReferenceType -> resolveClassReferenceType(this, project, declarationType)
-    is PsiClassType -> this.className
-    is PsiPrimitiveType -> {
-        if (holder != null) {
-            this.getBoxedType(holder)?.className
-        } else {
-            this.getBoxedType(PsiManager.getInstance(project), GlobalSearchScope.allScope(project))
-                    ?.className
-        }
-    }
-    is PsiArrayType -> this.canonicalText.substring(0, this.canonicalText.indexOf("[]"))
-    else -> null
-}
-
-/**
  * Get return [PsiType] of current [PsiMember].
  */
 fun PsiMember.resolveReturnType(): PsiType? = when (this) {
     is PsiMethod -> this.returnType
     is PsiField -> this.type
     else -> null
-}
-
-/**
- * Extract class name from [PsiClassReferenceType].
- */
-private fun resolveClassReferenceType(type: PsiClassReferenceType,
-                                      project: Project,
-                                      declarationType: DeclarationType): String? {
-    val collectionClass = type.resolve() ?: return null
-
-    if (declarationType == DeclarationType.VARIABLE) {
-        return collectionClass.qualifiedName
-    }
-
-    val javaPsiFacade = JavaPsiFacade.getInstance(project)
-
-    val collectionInterface = javaPsiFacade
-            .findClass("java.util.Collection", GlobalSearchScope.allScope(project))
-            ?: return null
-    val mapInterface = javaPsiFacade
-            .findClass("java.util.Map", GlobalSearchScope.allScope(project))
-            ?: return null
-
-    return when {
-        collectionClass.isInheritor(collectionInterface, true)
-        || collectionClass.isEquivalentTo(collectionInterface)
-                || collectionClass.isInheritor(mapInterface, true)
-                || collectionClass.isEquivalentTo(mapInterface)->
-            type.reference.parameterList?.typeArguments?.get(0)?.canonicalText
-        else -> null
-    }
 }
 
 /**
