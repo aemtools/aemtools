@@ -1,4 +1,4 @@
-package com.aemtools.editor.comments
+package com.aemtools.lang.htl.editor.comments
 
 import com.intellij.lang.xml.XmlCommenter
 

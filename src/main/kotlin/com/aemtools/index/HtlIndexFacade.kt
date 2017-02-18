@@ -12,7 +12,7 @@ import com.intellij.util.indexing.FileBasedIndex
  */
 object HtlIndexFacade {
 
-    fun resolveSlyFile(name: String, psiFile: PsiFile): PsiFile? {
+    fun resolveFile(name: String, psiFile: PsiFile): PsiFile? {
 
         val extension = with(name) {
             if (contains(".") && length > lastIndexOf(".")) {
@@ -26,15 +26,25 @@ object HtlIndexFacade {
             return null
         }
 
-        val currentDirectory = psiFile.containingDirectory
+        val normalizedName = if (isAbsolutePath(name)) {
+            name
+        } else {
+            with (psiFile.virtualFile.path) {
+                substring(0, lastIndexOf('/')) + "/$name"
+            }
+        }
 
         val files = FilenameIndex
                 .getAllFilesByExt(psiFile.project, extension, GlobalSearchScope.projectScope(psiFile.project))
-        val file = files.find { it.name == name }
+        val file = files.find { it.path.endsWith(normalizedName) }
                 ?: return null
         return PsiManager.getInstance(psiFile.project).findFile(file)
     }
 
+    /**
+     * Collects all Htl files containing templates.
+     * @return list of [TemplateDefinition] objects
+     */
     fun getTemplates(project: Project): List<TemplateDefinition> {
         val fbi = FileBasedIndex.getInstance()
         val keys = fbi.getAllKeys(HtlTemplateIndex.HTL_TEMPLATE_ID, project)
@@ -44,5 +54,6 @@ object HtlIndexFacade {
         return result
     }
 
+    private fun isAbsolutePath(path: String) : Boolean = path.startsWith("/")
 
 }

@@ -16,7 +16,7 @@ import com.intellij.util.ProcessingContext
  * Provides available "data-sly-use" variants.
  * @author Dmytro_Troynikov
  */
-object htmlDataSlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
+object HtmlDataSlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
     override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext?,
                                 result: CompletionResultSet) {
         if (result.isStopped

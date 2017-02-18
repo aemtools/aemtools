@@ -13,7 +13,7 @@ import com.intellij.psi.xml.XmlTokenType
 class HtmlCompletionContributor : CompletionContributor() { init {
     extend(CompletionType.BASIC,
             psiElement(),
-            htmlDataSlyUseCompletionProvider)
+            HtmlDataSlyUseCompletionProvider)
     extend(CompletionType.BASIC,
             psiElement(XmlTokenType.XML_NAME).inside(xmlAttribute()),
             HtmlAttributeCompletionProvider)

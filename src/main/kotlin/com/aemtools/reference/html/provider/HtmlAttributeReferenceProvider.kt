@@ -1,4 +1,4 @@
-package com.aemtools.reference.html
+package com.aemtools.reference.html.provider
 
 import com.aemtools.completion.util.isHtlAttribute
 import com.intellij.openapi.util.TextRange
