@@ -1,4 +1,4 @@
-package com.aemtools.blocks.base.model
+package com.aemtools.blocks.base.model.file
 
 import com.intellij.psi.PsiClass
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture

@@ -3,6 +3,8 @@ package com.aemtools.lang.htl.psi.pattern
 import com.aemtools.blocks.base.BaseLightTest
 import com.aemtools.constant.const.IDEA_STRING_CARET_PLACEHOLDER
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.contextOptionAssignment
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyInludeNoEl
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseNoEl
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.memberAccess
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.optionName
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.stringLiteralValue
@@ -125,17 +127,35 @@ class HtlPatternsTest : BaseLightTest() {
             false
     )
 
+    fun testDataSlyUseNoElMain() = testHtlPattern(
+            dataSlyUseNoEl,
+            """<div data-sly-use="$CARET">""",
+            true
+    )
+
+    fun testDataSlyUseNoElMain2() = testHtlPattern(
+            dataSlyUseNoEl,
+            """<div data-sly-use.bean="$CARET">""",
+            true
+    )
+
+    fun testDataSlyIncludeNoElMain() = testHtlPattern(
+            dataSlyInludeNoEl,
+            """<div data-sly-include="$CARET">""",
+            true
+    )
+
     fun testHtlPattern(pattern: ElementPattern<PsiElement>,
                        text: String,
                        result: Boolean) = fileCase {
-                addHtml("test.html", text.addIdeaPlaceholder())
-                verify {
-                    assertEquals(
-                            "\nPattern:\n$pattern\nPSI:\n${DebugUtil.psiToString(file, true)}Text: $text",
-                            result,
-                            pattern.accepts(elementUnderCaret()))
-                }
-            }
+        addHtml("test.html", text.addIdeaPlaceholder())
+        verify {
+            assertEquals(
+                    "\nPattern:\n$pattern\nPSI:\n${DebugUtil.psiToString(file, true)}Text: $text",
+                    result,
+                    pattern.accepts(elementUnderCaret()))
+        }
+    }
 
     private fun String.addIdeaPlaceholder(): String {
         return StringBuilder(this)

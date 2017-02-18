@@ -1,11 +1,19 @@
 package com.aemtools.constant
 
+import java.io.File
+
 /**
  * @author Dmytro_Troynikov
  */
 object const {
 
     val AEMTOOLS: String = "aemtools"
+
+    val DOLLAR: String = "$"
+
+    val JCR_ROOT: String = "jcr_root"
+
+    val JCR_ROOT_SEPARATED: String = "${File.separator}$JCR_ROOT${File.separator}"
 
     val IDEA_STRING_CARET_PLACEHOLDER: String = "IntellijIdeaRulezzz"
 

@@ -1,8 +1,8 @@
 package com.aemtools.blocks.reference.model
 
-import com.aemtools.blocks.base.model.IFileFixtureDescriptor
-import com.aemtools.blocks.base.model.JavaClassFileFixtureDescriptor
-import com.aemtools.blocks.base.model.TextFileFixtureDescriptor
+import com.aemtools.blocks.base.model.file.IFileFixtureDescriptor
+import com.aemtools.blocks.base.model.file.JavaClassFileFixtureDescriptor
+import com.aemtools.blocks.base.model.file.TextFileFixtureDescriptor
 import com.aemtools.blocks.base.model.fixture.TestFixture
 import com.intellij.psi.PsiElement
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture

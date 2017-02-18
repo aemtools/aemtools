@@ -71,6 +71,8 @@ allprojects {
 
         compile "com.google.code.gson:gson:$gson_version"
 
+        compile "commons-lang:commons-lang:$apache_commons_version"
+
         gen files('lib/grammar-kit-2.jar')
 
         gen 'de.jflex:jflex:1.6.1'

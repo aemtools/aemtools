@@ -1,8 +1,11 @@
 package com.aemtools.lang.htl.psi.pattern
 
+import com.aemtools.constant.const.htl.DATA_SLY_INCLUDE
+import com.aemtools.constant.const.htl.DATA_SLY_USE
 import com.aemtools.lang.htl.psi.HtlTypes.*
 import com.intellij.patterns.ElementPattern
 import com.intellij.patterns.PlatformPatterns.*
+import com.intellij.patterns.XmlPatterns.xmlAttributeValue
 import com.intellij.psi.PsiElement
 
 /**
@@ -83,5 +86,35 @@ object HtlPatterns {
                             .inside(psiElement(ARRAY_LIKE_ACCESS)),
                     psiElement(VAR_NAME).inside(psiElement(ACCESS_IDENTIFIER))
             )
+
+    /**
+     * Matches the following:
+     *
+     * ```
+     *    data-sly-use="<caret>"
+     *    data-sly-use.bean="<caret>"
+     * ```
+     */
+    val dataSlyUseNoEl: ElementPattern<PsiElement> =
+            psiElement()
+                    .inside(xmlAttributeValue().withLocalName(
+                            or(string().equalTo(DATA_SLY_USE),
+                                    string().startsWith("$DATA_SLY_USE."))
+                    ))
+
+    /**
+     * Matches the following:
+     *
+     * ```
+     *    data-sly-include="<caret>"
+     * ```
+     */
+    val dataSlyInludeNoEl: ElementPattern<PsiElement> =
+            psiElement()
+                    .inside(
+                            xmlAttributeValue()
+                                    .withLocalName(
+                                            string()
+                                                    .equalTo(DATA_SLY_INCLUDE)))
 
 }

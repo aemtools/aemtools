@@ -7,7 +7,7 @@ import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 /**
  * @author Dmytro Troynikov
  */
-class AssertionContext(val fixture: JavaCodeInsightTestFixture)
+open class AssertionContext(val fixture: JavaCodeInsightTestFixture)
     : IAssertionContext {
     override fun elementUnderCaret(): PsiElement =
         fixture.file.findElementAt(fixture.editor.caretModel.offset)

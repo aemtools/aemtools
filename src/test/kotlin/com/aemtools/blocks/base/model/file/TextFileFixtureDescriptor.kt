@@ -1,23 +1,6 @@
-package com.aemtools.blocks.base.model
+package com.aemtools.blocks.base.model.file
 
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
-
-/**
- * @author Dmytro Troynikov
- */
-interface IFileFixtureDescriptor {
-
-    /**
-     * Check if current file contains [com.intellij.testFramework.fixtures.CodeInsightTestFixture.CARET_MARKER]
-     */
-    fun containsCaret(): Boolean
-
-    /**
-     * Add current file fixture to actual fixture.
-     */
-    fun initialize()
-
-}
 
 class TextFileFixtureDescriptor(name: String,
                                 text: String,
@@ -31,6 +14,13 @@ class TextFileFixtureDescriptor(name: String,
         } else {
             fixture.addFileToProject(_name, text)
         }
+
+//        val file = fixture.addFileToProject(_name, text)
+//                ?: throw AssertionError("Unable to add file to project:\nname: $_name\ntext: $text")
+//
+//        psiFile = file
+//        fixture.openFileInEditor(file.virtualFile)
+
     }
 
 }

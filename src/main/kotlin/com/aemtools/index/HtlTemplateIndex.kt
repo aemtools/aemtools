@@ -3,6 +3,7 @@ package com.aemtools.index
 import com.aemtools.completion.util.extractTemplateDefinition
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.getHtmlFile
+import com.aemtools.completion.util.normalizeToJcrRoot
 import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.index.dataexternalizer.TemplateDefinitionExternalizer
 import com.intellij.psi.xml.XmlAttribute
@@ -47,7 +48,7 @@ class HtlTemplateIndex : XmlIndex<TemplateDefinition>() {
                 }
 
                 val path = inputData.file.path
-                templateDefinitions.forEach { it.path = path }
+                templateDefinitions.forEach { it.fullName = path }
 
                 return@DataIndexer mutableMapOf(*templateDefinitions.map {
                     "$path.$${it.name}" to it
@@ -76,9 +77,9 @@ class HtlTemplateIndex : XmlIndex<TemplateDefinition>() {
  */
 data class TemplateDefinition(
         /**
-         * Full path
+         * Full name
          */
-        var path: String?,
+        var fullName: String?,
         /**
          * The name of the template
          */
@@ -94,14 +95,21 @@ data class TemplateDefinition(
          */
         val parameters: List<String>) : Serializable {
 
+    val containingDirectory: String
+        get() {
+            val _fullName = fullName
+                ?: return ""
+            return _fullName.substring(0, _fullName.lastIndexOf("/"))
+        }
+
     /**
      * Return path starting from "/apps"
      */
     val normalizedPath: String
         get() {
-            val _path = path
+            val _path = fullName
             return if (_path != null) {
-                return _path.substring(_path.indexOf("/apps"))
+                return _path.normalizeToJcrRoot()
             } else {
                 ""
             }
@@ -112,7 +120,7 @@ data class TemplateDefinition(
      */
     val fileName: String
         get() {
-            val _path = path
+            val _path = fullName
             return _path?.substring(_path.lastIndexOf("/") + 1) ?: ""
         }
 }

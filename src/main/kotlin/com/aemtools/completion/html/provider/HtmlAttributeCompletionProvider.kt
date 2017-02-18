@@ -1,7 +1,8 @@
-package com.aemtools.completion.html
+package com.aemtools.completion.html.provider
 
 import com.aemtools.completion.html.inserthandler.HtlExpressionInsertHandler
 import com.aemtools.completion.html.inserthandler.HtlIdentifierInsertHandler
+import com.aemtools.completion.html.inserthandler.HtlTemplateInsertHandler
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.findParentByType
 import com.aemtools.completion.util.isSlyTag
@@ -97,7 +98,8 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
         when (it) {
             in HTL_ATTRIBUTES_WITH_EXPRESSION -> result.withInsertHandler(HtlExpressionInsertHandler())
 
-            DATA_SLY_USE, DATA_SLY_TEMPLATE -> result.withInsertHandler(HtlIdentifierInsertHandler())
+            DATA_SLY_TEMPLATE -> result.withInsertHandler(HtlTemplateInsertHandler())
+            DATA_SLY_USE -> result.withInsertHandler(HtlIdentifierInsertHandler())
 
             DATA_SLY_UNWRAP -> result
 

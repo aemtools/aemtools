@@ -1,5 +1,8 @@
 package com.aemtools.completion.html
 
+import com.aemtools.completion.html.provider.HtmlAttributeCompletionProvider
+import com.aemtools.completion.html.provider.HtmlDataSlyUseCompletionProvider
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseNoEl
 import com.intellij.codeInsight.completion.CompletionContributor
 import com.intellij.codeInsight.completion.CompletionType
 import com.intellij.patterns.PlatformPatterns.psiElement
@@ -12,8 +15,12 @@ import com.intellij.psi.xml.XmlTokenType
  */
 class HtmlCompletionContributor : CompletionContributor() { init {
     extend(CompletionType.BASIC,
-            psiElement(),
+            dataSlyUseNoEl,
             HtmlDataSlyUseCompletionProvider)
+    extend(CompletionType.SMART,
+            dataSlyUseNoEl,
+            HtmlDataSlyUseCompletionProvider)
+
     extend(CompletionType.BASIC,
             psiElement(XmlTokenType.XML_NAME).inside(xmlAttribute()),
             HtmlAttributeCompletionProvider)
