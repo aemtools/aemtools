@@ -4,7 +4,6 @@ import com.aemtools.analysis.htl.callchain.HtlCallChainResolver
 import com.aemtools.analysis.htl.callchain.elements.CallChain
 import com.aemtools.completion.htl.completionprovider.FileVariablesResolver
 import com.aemtools.completion.htl.model.HtlVariableDeclaration
-import com.aemtools.completion.htl.model.PropertyAccessChainUnit
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.util.extractHtlHel
 import com.aemtools.completion.util.extractPropertyAccess
@@ -27,26 +26,6 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
 
     override fun getReferences(): Array<PsiReference> {
         return ReferenceProvidersRegistry.getReferencesFromProviders(this);
-    }
-
-    fun resolveIterable(): ResolutionResult {
-        val names = callChain()
-        val propertyAccessChain = LinkedList<PropertyAccessChainUnit>()
-
-        val accessChain = accessChain()
-
-        val firstElement = names.pop() as VariableNameMixin
-        val resolutionResult = firstElement.resolve()
-
-        if (resolutionResult.predefined != null) {
-            propertyAccessChain.add(PropertyAccessChainUnit(firstElement.variableName(),
-                    firstElement.variableName(), resolutionResult.psiClass?.qualifiedName, resolutionResult, null))
-        } else {
-            propertyAccessChain.add(PropertyAccessChainUnit(firstElement.variableName(),
-                    firstElement.variableName(), resolutionResult.psiClass?.qualifiedName, ResolutionResult(resolutionResult.psiClass), null))
-        }
-
-        return ResolutionResult()
     }
 
     /**

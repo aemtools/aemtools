@@ -8,9 +8,6 @@ import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_USE
-import com.aemtools.lang.htl.HtlLanguage
-import com.aemtools.lang.htl.psi.HtlHtlEl
-import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.java.JavaSearch
 import com.intellij.codeInsight.completion.CompletionParameters
@@ -38,32 +35,20 @@ object FileVariablesResolver {
             it.name == variable.variableName()
         } ?: return ResolutionResult()
 
-        if (foundVariable.declarationType == DATA_SLY_REPEAT || foundVariable.declarationType == DATA_SLY_LIST) {
+        if (foundVariable.declarationType == DATA_SLY_REPEAT
+                || foundVariable.declarationType == DATA_SLY_LIST) {
             if (foundVariable.name.endsWith("List")) {
                 return ResolutionResult(null, DATA_SLY_LIST_REPEAT_LIST_FIELDS)
             } else {
-                return resolveListVariable(foundVariable)
+                return ResolutionResult()
             }
         }
+
         if (foundVariable.type != null) {
             return ResolutionResult(JavaSearch.findClass(foundVariable.type, project))
         } else {
             return ResolutionResult()
         }
-    }
-
-    private fun resolveListVariable(fileVariable: FileVariable): ResolutionResult {
-        val element = fileVariable.holderElement as XmlAttribute
-        val valueElement = element.valueElement ?: return ResolutionResult()
-
-        val htlPsi = element.containingFile.viewProvider.getPsi(HtlLanguage)
-
-        val el = htlPsi.findElementAt(valueElement.textOffset)
-        val htlHtl = el.findParentByType(HtlHtlEl::class.java)
-
-        val propertyAccess = htlHtl.findChildrenByType(PropertyAccessMixin::class.java).first()
-
-        return propertyAccess.resolveIterable()
     }
 
     /**
