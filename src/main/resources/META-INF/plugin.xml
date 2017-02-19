@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.aemtools</id>
     <name>AEM Tools</name>
-    <version>0.4.2</version>
+    <version>0.5</version>
     <category>Framework integration</category>
     <vendor email="dmytrotroynikov@gmail.com" url="https://github.com/DmytroTroynikov/aemtools">Dmytro Troynikov</vendor>
 
@@ -26,11 +26,12 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li>Added Smart completion for data-sly-use</li>
+            <li>Added completion for data-sly-import</li>
+            <li>Files included in data-sly-use and data-sly-import ctrl-clickable</li>
+            <li>Htl is injected only under jcr_root folder</li>
             <li>fixes related to type resolution</li>
             <li>improved references</li>
-            <li>added possibility to comment code</li>
-            <li>Htl files containing Htl templates will be proposed as data-sly-use variants</li>
-            <li>Fixed wrong resolution of primitive types</li>
         </ul>
     ]]>
     </change-notes>
