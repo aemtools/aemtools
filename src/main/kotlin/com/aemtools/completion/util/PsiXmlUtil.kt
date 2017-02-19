@@ -62,11 +62,6 @@ fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>, predicate: (T)
             null
         }
 
-
-
-
-
-
 /**
  * Check if current [PsiElement] has parent of specified class.
  */
@@ -92,11 +87,6 @@ fun PsiElement.isUniqueHtlAttribute(): Boolean = UNIQUE_HTL_ATTRIBUTES.contains(
  * Check if current [XmlTag] is sly tag.
  */
 fun XmlTag.isSlyTag(): Boolean = this.name == SLY_TAG
-
-/**
- * Get element type String.
- */
-fun PsiElement?.elementType(): String? = (this as? XmlTokenImpl)?.elementType.toString() ?: null
 
 /**
  * Extract [HtlHtlEl] from current element.
@@ -154,25 +144,6 @@ private fun extractBeanNameFromEl(el: String): String? {
  */
 fun XmlAttribute.isDataSlyUse(): Boolean = this.name.startsWith("$DATA_SLY_USE.")
         || this.name == DATA_SLY_USE
-
-/**
- * Resolve [DataSlyUseType]
- * @return [DataSlyUseType], __null__ if current attribute is not [DATA_SLY_USE]
- */
-fun XmlAttribute.dataSlyUseType(): DataSlyUseType? {
-    if (!this.isDataSlyUse()) {
-        return null
-    }
-
-    val name = resolveUseClass() ?: return DataSlyUseType.UNKNOWN
-    return with(name) {
-        when {
-            endsWith(".js") -> DataSlyUseType.JAVASCRIPT
-            length > 0 -> DataSlyUseType.JAVA
-            else -> DataSlyUseType.UNKNOWN
-        }
-    }
-}
 
 /**
  * Check if current [XmlAttribute] is Htl attribute.

@@ -46,7 +46,6 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
         DATA_SLY_TEXT,
         DATA_SLY_ELEMENT,
         DATA_SLY_CALL,
-        DATA_SLY_INCLUDE,
         DATA_SLY_RESOURCE,
         DATA_SLY_ATTRIBUTE
     )

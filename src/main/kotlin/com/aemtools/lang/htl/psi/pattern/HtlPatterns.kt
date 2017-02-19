@@ -109,7 +109,7 @@ object HtlPatterns {
      *    data-sly-include="<caret>"
      * ```
      */
-    val dataSlyInludeNoEl: ElementPattern<PsiElement> =
+    val dataSlyIncludeNoEl: ElementPattern<PsiElement> =
             psiElement()
                     .inside(
                             xmlAttributeValue()

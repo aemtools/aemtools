@@ -33,8 +33,3 @@ object OpenApiUtil {
             = ApplicationManager.getApplication().isDispatchThread
 
 }
-
-/**
- * Check if current char is contained in given char set
- */
-fun Char.isWithin(vararg other: Char): Boolean = other.contains(this)

@@ -1,6 +1,7 @@
 package com.aemtools.completion.htl.completionprovider
 
 import com.aemtools.completion.util.normalizeToJcrRoot
+import com.aemtools.completion.util.relativeTo
 import com.aemtools.index.HtlIndexFacade.getTemplates
 import com.aemtools.lang.java.JavaSearch
 import com.intellij.codeInsight.completion.CompletionParameters
@@ -88,19 +89,11 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
                 }
 
         return result.map {
-            LookupElementBuilder.create(toRelative(it.normalizedPath, dirPath.normalizeToJcrRoot()))
+            LookupElementBuilder.create(it.normalizedPath.relativeTo(dirPath.normalizeToJcrRoot()))
                     .withTypeText("HTL Template")
                     .withTailText("(${it.normalizedPath})", true)
                     .withPresentableText(it.fileName)
                     .withIcon(AllIcons.FileTypes.Html)
-        }
-    }
-
-    private fun toRelative(path: String, relativeTo: String): String {
-        if (path.startsWith(relativeTo)) {
-            return path.substring(relativeTo.length + 1)
-        } else {
-            return path
         }
     }
 

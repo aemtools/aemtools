@@ -4,7 +4,10 @@ import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.HtlPsiFile
 import com.intellij.lang.Language
 import com.intellij.lang.StdLanguages
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiFile
+import com.intellij.psi.PsiManager
 
 /**
  * Psi utility & extension methods
@@ -27,3 +30,12 @@ fun PsiFile.getHtmlFile(): PsiFile? = getPsi(StdLanguages.HTML)
  * Get [HtlPsiFile] from current [PsiFile].
  */
 fun PsiFile.getHtlFile(): HtlPsiFile? = getPsi(HtlLanguage) as? HtlPsiFile
+
+/**
+ * Convert current [VirtualFile] to [PsiFile].
+ * @param project the project
+ * @return the psi file
+ */
+fun VirtualFile.toPsiFile(project: Project): PsiFile? =
+        PsiManager.getInstance(project)
+                .findFile(this)
