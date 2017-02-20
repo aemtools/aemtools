@@ -13,7 +13,7 @@ object const {
 
     val JCR_ROOT: String = "jcr_root"
 
-    val JCR_ROOT_SEPARATED: String = "${File.separator}$JCR_ROOT${File.separator}"
+    val JCR_ROOT_SEPARATED: String = "/$JCR_ROOT/"
 
     val IDEA_STRING_CARET_PLACEHOLDER: String = "IntellijIdeaRulezzz"
 
