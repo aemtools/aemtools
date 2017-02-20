@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.aemtools</id>
     <name>AEM Tools</name>
-    <version>0.5</version>
+    <version>0.5.1</version>
     <category>Framework integration</category>
     <vendor email="dmytrotroynikov@gmail.com" url="https://github.com/DmytroTroynikov/aemtools">Dmytro Troynikov</vendor>
 
@@ -32,6 +32,7 @@
             <li>Htl is injected only under jcr_root folder</li>
             <li>fixes related to type resolution</li>
             <li>improved references</li>
+            <li>Fixed issue with path on windows</li>
         </ul>
     ]]>
     </change-notes>
