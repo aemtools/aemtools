@@ -33,8 +33,9 @@ class HtlHighlighter : SyntaxHighlighterBase() {
 
         HtlTypes.LBRACE,
         HtlTypes.EL_START,
-        HtlTypes.RBRACE -> HtlColors.BRACE
-        HtlTypes.LBRACKET, HtlTypes.RBRACKET -> HtlColors.PARENTHESES
+        HtlTypes.RBRACE -> HtlColors.DELIMITER
+        HtlTypes.LBRACKET,
+        HtlTypes.RBRACKET -> HtlColors.PARENTHESES
         HtlTypes.GT,
         HtlTypes.LT,
         HtlTypes.GTE,
