@@ -79,13 +79,6 @@ fun <T : PsiElement> PsiElement?.hasChild(type: Class<T>): Boolean =
         this.findChildrenByType(type).isNotEmpty()
 
 /**
- * Check if current [PsiElement] is unique. Unique attributes are
- *  `data-sly-unwrap`
- *  `data-sly-list`
- */
-fun PsiElement.isUniqueHtlAttribute(): Boolean = UNIQUE_HTL_ATTRIBUTES.contains(this.text)
-
-/**
  * Check if current [XmlTag] is sly tag.
  */
 fun XmlTag.isSlyTag(): Boolean = this.name == SLY_TAG

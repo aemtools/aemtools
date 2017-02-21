@@ -41,36 +41,37 @@ data class HtlVariableDeclaration(
     fun toLookupElement(): LookupElement {
         var result = LookupElementBuilder.create(variableName)
 
-        result = when (attributeType) {
+        when (attributeType) {
             DeclarationAttributeType.DATA_SLY_USE -> {
                 val varClass = xmlAttribute.resolveUseClass()
+                result = result.withTypeText("Sly Use Variable")
+                        .withIcon(AllIcons.Nodes.Variable)
                 if (!varClass.isNullOrEmpty()) {
-                    result.withTailText("($varClass)", true)
-                            .withTypeText("Sly Use Variable")
-                } else {
-                    result.withTypeText("Sly Use Variable")
+                    result = result.withTailText("($varClass)", true)
                 }
             }
             DeclarationAttributeType.DATA_SLY_TEST -> {
                 val varClass = xmlAttribute.resolveUseClass()
+                result = result.withTypeText("Sly Test Variable")
+                        .withIcon(AllIcons.Nodes.Variable)
                 if (!varClass.isNullOrEmpty()) {
-                    result.withTailText("($varClass)", true)
-                            .withTailText("Sly Test Variable)")
-                } else {
-                    result.withTypeText("Sly Test Variable")
+                    result = result.withTailText("($varClass)")
                 }
             }
             DeclarationAttributeType.DATA_SLY_LIST -> {
-                result.withTypeText("Data Sly List")
+                result = result.withTypeText("Data Sly List")
+                        .withIcon(AllIcons.Nodes.Variable)
             }
             DeclarationAttributeType.DATA_SLY_REPEAT -> {
-                result.withTypeText("Data Sly Repeat")
+                result = result.withTypeText("Data Sly Repeat")
+                        .withIcon(AllIcons.Nodes.Variable)
             }
             DeclarationAttributeType.DATA_SLY_TEMPLATE -> {
-                result.withTypeText("Template Parameter")
+                result = result.withTypeText("Template Parameter")
+                        .withIcon(AllIcons.Nodes.Parameter)
             }
         }
-        return result.withIcon(AllIcons.Nodes.Variable)
+        return result
     }
 
 }

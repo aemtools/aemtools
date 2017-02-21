@@ -3,11 +3,10 @@ package com.aemtools.documentation.html
 import com.aemtools.completion.model.htl.HtlAttributeIdentifierDescription
 import com.aemtools.completion.model.htl.HtlAttributeMetaInfo
 import com.aemtools.completion.model.htl.HtlAttributeValueDescription
-import com.aemtools.completion.util.isHtlAttribute
+import com.aemtools.completion.util.htlAttributeName
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.htlAttribute
 import com.aemtools.service.ServiceFacade
 import com.intellij.lang.documentation.AbstractDocumentationProvider
-import com.intellij.patterns.XmlPatterns
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 
@@ -19,10 +18,10 @@ class HtlAttributesDocumentationProvider : AbstractDocumentationProvider() {
     override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {
         if (htlAttribute.accepts(originalElement)) {
             val parentAttribute = originalElement?.parent as? XmlAttribute
-                ?: return super.generateDoc(element, originalElement)
+                    ?: return super.generateDoc(element, originalElement)
 
             val name = parentAttribute.htlAttributeName()
-                ?: return super.generateDoc(element, originalElement)
+                    ?: return super.generateDoc(element, originalElement)
 
             return ServiceFacade.getHtlAttributesRepository()
                     .getAttributesData()
@@ -40,7 +39,7 @@ class HtlAttributesDocumentationProvider : AbstractDocumentationProvider() {
     }
 
     private fun generateDocumentation(info: HtlAttributeMetaInfo): String = with(info) {
-        val builder= StringBuilder()
+        val builder = StringBuilder()
         with(builder) {
             append("<h2>$name</h2>")
             append(descriptionBlock(general))
@@ -58,8 +57,8 @@ class HtlAttributesDocumentationProvider : AbstractDocumentationProvider() {
             val builder = StringBuilder()
             with(builder) {
                 append("<b>Attribute identifier:</b><br>")
-                append(renderBlock(value.required) {" - required: ${value.required}<br>"})
-                append(renderBlock(value.description) {" - description: ${value.description}<br>"})
+                append(renderBlock(value.required) { " - required: ${value.required}<br>" })
+                append(renderBlock(value.description) { " - description: ${value.description}<br>" })
             }
             builder.toString()
         } else {
@@ -109,15 +108,4 @@ class HtlAttributesDocumentationProvider : AbstractDocumentationProvider() {
         return "<b>Description:</b> $description<br> "
     }
 
-    private fun XmlAttribute.htlAttributeName(): String? {
-        if (!isHtlAttribute()) {
-            return null
-        }
-
-        return if (name.contains(".")) {
-            name.substring(0, name.indexOf("."))
-        } else {
-            name
-        }
-    }
 }

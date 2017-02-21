@@ -180,3 +180,32 @@ fun Collection<HtlVariableDeclaration>.filterForPosition(position: PsiElement): 
     return result
 }
 
+/**
+ * Extract Htl attribute name.
+ */
+fun XmlAttribute.htlAttributeName(): String? {
+    if (!isHtlAttribute()) {
+        return null
+    }
+
+    return if (name.contains(".")) {
+        name.substring(0, name.indexOf("."))
+    } else {
+        name
+    }
+}
+
+/**
+ * Extract name of Htl variable declared in current [XmlAttribute]
+ */
+fun XmlAttribute.htlVariableName(): String? {
+    if (!isHtlDeclarationAttribute()) {
+        return null
+    }
+
+    return if (name.contains(".")) {
+        name.substring(name.indexOf(".") + 1)
+    } else {
+        null
+    }
+}

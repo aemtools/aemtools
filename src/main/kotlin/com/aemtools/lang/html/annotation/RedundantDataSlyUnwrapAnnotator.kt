@@ -42,7 +42,7 @@ class RedundantDataSlyUnwrapAnnotator : Annotator {
                     ?: return
 
             val (start, end) = currentElement.textRange.startOffset to currentElement.textRange.endOffset
-                    document.replaceString(start,  end, "")
+            document.replaceString(start, end, "")
         }
     }
 

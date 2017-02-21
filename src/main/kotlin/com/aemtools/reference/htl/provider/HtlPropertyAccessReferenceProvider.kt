@@ -7,7 +7,6 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.JavaPsiUnresolvedTypeD
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.hasChild
-import com.aemtools.completion.util.isUniqueHtlAttribute
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
 import com.aemtools.lang.htl.psi.HtlStringLiteral
 import com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
@@ -113,7 +112,6 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
     class HtlDeclarationIdentifier(val xmlAttribute: XmlAttribute) : FakePsiElement() {
         override fun navigate(requestFocus: Boolean) {
             val project = xmlAttribute.project
-            val psiFile = xmlAttribute.containingFile
             val virtualFile = xmlAttribute.containingFile.virtualFile
 
             var offsetInFile = 0
@@ -126,9 +124,8 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
 
             offsetInFile += xmlAttribute.name.indexOf(".") + 1
 
-            val navSupport = PsiNavigationSupport.getInstance()
-            val navigatable = navSupport.createNavigatable(project, virtualFile, 1)
-            PsiNavigationSupport.getInstance().createNavigatable(project, virtualFile, offsetInFile)
+            PsiNavigationSupport.getInstance()
+                    .createNavigatable(project, virtualFile, offsetInFile)
                     .navigate(requestFocus)
         }
 

@@ -6,12 +6,10 @@ import com.aemtools.completion.html.inserthandler.HtlTemplateInsertHandler
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.findParentByType
 import com.aemtools.completion.util.isSlyTag
-import com.aemtools.completion.util.isUniqueHtlAttribute
 import com.aemtools.constant.const
 import com.aemtools.constant.const.htl.DATA_SLY_ATTRIBUTE
 import com.aemtools.constant.const.htl.DATA_SLY_CALL
 import com.aemtools.constant.const.htl.DATA_SLY_ELEMENT
-import com.aemtools.constant.const.htl.DATA_SLY_INCLUDE
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.constant.const.htl.DATA_SLY_RESOURCE
@@ -26,6 +24,7 @@ import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.completion.XmlAttributeInsertHandler
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
+import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
 import com.intellij.util.ProcessingContext
@@ -40,14 +39,14 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
     // Attributes, which need expression after defining
     // (For example: data-sly-include=${})
     val HTL_ATTRIBUTES_WITH_EXPRESSION = listOf(
-        DATA_SLY_TEST,
-        DATA_SLY_LIST,
-        DATA_SLY_REPEAT,
-        DATA_SLY_TEXT,
-        DATA_SLY_ELEMENT,
-        DATA_SLY_CALL,
-        DATA_SLY_RESOURCE,
-        DATA_SLY_ATTRIBUTE
+            DATA_SLY_TEST,
+            DATA_SLY_LIST,
+            DATA_SLY_REPEAT,
+            DATA_SLY_TEXT,
+            DATA_SLY_ELEMENT,
+            DATA_SLY_CALL,
+            DATA_SLY_RESOURCE,
+            DATA_SLY_ATTRIBUTE
     )
 
     override fun addCompletions(parameters: CompletionParameters,
@@ -88,7 +87,7 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
      */
     private fun getUniqueHtlAttributes(tag: XmlTag?): Collection<String> =
             tag.findChildrenByType(XmlAttribute::class.java)
-                    .filter(XmlAttribute::isUniqueHtlAttribute)
+                    .filter { it.isUniqueHtlAttribute() }
                     .map { it.name }
 
     private val vars: List<LookupElement> = const.htl.HTL_ATTRIBUTES.map {
@@ -105,5 +104,12 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
             else -> result.withInsertHandler(XmlAttributeInsertHandler())
         }
     }
+
+    /**
+     * Check if current [PsiElement] is unique. Unique attributes are
+     *  `data-sly-unwrap`
+     *  `data-sly-list`
+     */
+    private fun PsiElement.isUniqueHtlAttribute(): Boolean = const.htl.UNIQUE_HTL_ATTRIBUTES.contains(this.text)
 
 }
