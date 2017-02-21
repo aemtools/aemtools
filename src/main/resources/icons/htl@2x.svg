@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 32 32">
+  <title>html@2x</title>
+  <g xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="18" width="30" height="14" fill="#FEDD31" opacity="0.6"/>
+    <g>
+      <polygon points="12 0 4 8 12 8 12 0" fill="#9aa7b0" opacity="0.7" style="isolation: isolate"/>
+      <polygon points="14 0 14 8 14 10 12 10 4 10 4 16 26 16 26 0 14 0" fill="#9aa7b0" opacity="0.7" style="isolation: isolate"/>
+    </g>
+  </g>
+  <text x="3" y="30" font-family="Verdana" font-size="13"  fill="#231f20"  opacity="0.8">HTL</text>
+</svg>
