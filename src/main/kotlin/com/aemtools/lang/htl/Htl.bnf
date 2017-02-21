@@ -89,7 +89,7 @@ array_statement ::= ternary_operation
 operand ::= array_expression
     | unary_operator? property_access
     | unary_operator? literal
-    | braced_operand
+    | unary_operator? braced_operand
 
 braced_operand ::= LBRACKET statement RBRACKET
 
