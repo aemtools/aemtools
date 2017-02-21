@@ -111,6 +111,8 @@
 
         <annotator language="HTML"
                    implementationClass="com.aemtools.lang.html.annotation.RedundantDataSlyUnwrapAnnotator"/>
+        <annotator language="HTML"
+                   implementationClass="com.aemtools.lang.html.annotation.HtlVariablesAnnotator"/>
 
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
     </extensions>
