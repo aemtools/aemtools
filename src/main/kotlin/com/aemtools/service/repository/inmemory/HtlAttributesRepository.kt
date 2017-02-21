@@ -14,10 +14,10 @@ object HtlAttributesRepository {
     private val attributesData: MutableList<HtlAttributeMetaInfo> = arrayListOf()
     private val contextObjects: MutableList<ContextObject> = arrayListOf()
     init {
-        loadDataFromClasspath()
+        loadAttributesData()
         loadContextObjects()
     }
-    private fun loadDataFromClasspath() {
+    private fun loadAttributesData() {
         val jsonString = FileUtils.readFileAsString(const.file.SIGHTLY_ATTRIBUTES_DOCUMENTATION)
 
         val attributes : Array<HtlAttributeMetaInfo> =

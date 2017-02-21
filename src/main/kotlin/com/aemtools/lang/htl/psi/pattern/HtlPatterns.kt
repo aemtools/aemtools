@@ -1,12 +1,20 @@
 package com.aemtools.lang.htl.psi.pattern
 
 import com.aemtools.constant.const.htl.DATA_SLY_INCLUDE
+import com.aemtools.constant.const.htl.DATA_SLY_LIST
+import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
+import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
+import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_USE
+import com.aemtools.constant.const.htl.HTL_ATTRIBUTES
 import com.aemtools.lang.htl.psi.HtlTypes.*
 import com.intellij.patterns.ElementPattern
 import com.intellij.patterns.PlatformPatterns.*
+import com.intellij.patterns.StandardPatterns
+import com.intellij.patterns.XmlPatterns.xmlAttribute
 import com.intellij.patterns.XmlPatterns.xmlAttributeValue
 import com.intellij.psi.PsiElement
+import com.intellij.psi.xml.XmlTokenType.XML_NAME
 
 /**
  * @author Dmytro Troynikov
@@ -98,8 +106,10 @@ object HtlPatterns {
     val dataSlyUseNoEl: ElementPattern<PsiElement> =
             psiElement()
                     .inside(xmlAttributeValue().withLocalName(
-                            or(string().equalTo(DATA_SLY_USE),
-                                    string().startsWith("$DATA_SLY_USE."))
+                            or(
+                                    string().equalTo(DATA_SLY_USE),
+                                    string().startsWith("$DATA_SLY_USE.")
+                            )
                     ))
 
     /**
@@ -116,5 +126,20 @@ object HtlPatterns {
                                     .withLocalName(
                                             string()
                                                     .equalTo(DATA_SLY_INCLUDE)))
+
+    val htlAttribute: ElementPattern<PsiElement> =
+            psiElement(XML_NAME).withParent(xmlAttribute().withName(
+                    or(
+                            string().oneOfIgnoreCase(*HTL_ATTRIBUTES.toTypedArray()),
+                            string().startsWith("$DATA_SLY_USE."),
+                            string().startsWith("$DATA_SLY_TEST."),
+                            string().startsWith("$DATA_SLY_LIST."),
+                            string().startsWith("$DATA_SLY_REPEAT."),
+                            string().startsWith("$DATA_SLY_TEMPLATE.")
+                    )
+            ))
+
+    val htlAttributeName: ElementPattern<String>? =
+            or(StandardPatterns.string().oneOf(HTL_ATTRIBUTES))
 
 }

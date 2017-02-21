@@ -1,6 +1,9 @@
 package com.aemtools.completion.util
 
-import com.aemtools.completion.htl.model.*
+import com.aemtools.completion.htl.model.DeclarationAttributeType
+import com.aemtools.completion.htl.model.DeclarationType
+import com.aemtools.completion.htl.model.HtlVariableDeclaration
+import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.htl.predefined.HtlELPredefined
 import com.aemtools.constant.const.SLY_TAG
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
@@ -16,7 +19,6 @@ import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.HtlVariableName
 import com.intellij.openapi.util.Conditions
 import com.intellij.psi.PsiElement
-import com.intellij.psi.impl.source.xml.XmlTokenImpl
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
@@ -42,7 +44,7 @@ fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T? {
  * @param predicate the predicate
  * @return the element
  */
-fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>, predicate: (T) -> Boolean) : T? =
+fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>, predicate: (T) -> Boolean): T? =
         if (this != null) {
             val elements = kotlin.run {
                 val result = ArrayList<T>()
@@ -57,7 +59,7 @@ fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>, predicate: (T)
                 result
             }
 
-            elements.find {predicate.invoke(it) }
+            elements.find { predicate.invoke(it) }
         } else {
             null
         }
@@ -92,7 +94,8 @@ fun XmlTag.isSlyTag(): Boolean = this.name == SLY_TAG
  * Extract [HtlHtlEl] from current element.
  */
 fun XmlAttribute.extractHtlHel(): HtlHtlEl? {
-    val htlFile = containingFile.viewProvider.getPsi(HtlLanguage)
+    val htlFile = containingFile?.viewProvider?.getPsi(HtlLanguage)
+            ?: return null
     val valueElement = valueElement ?: return null
     val helStart = htlFile.findElementAt(valueElement.textOffset + 1)
     return helStart.findParentByType(HtlHtlEl::class.java)

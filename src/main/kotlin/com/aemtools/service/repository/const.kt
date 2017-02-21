@@ -1,8 +1,8 @@
 package com.aemtools.service.repository
 
 /**
- * Created by Dmytro_Troynikov on 3/22/2016.
- */
+* @author Dmytro Troynikov
+*/
 object const {
 
     private val DOCUMENTATION_DIR = "documentation"

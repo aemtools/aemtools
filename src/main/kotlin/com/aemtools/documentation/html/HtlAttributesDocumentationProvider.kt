@@ -1,19 +1,13 @@
 package com.aemtools.documentation.html
 
+import com.aemtools.completion.model.htl.HtlAttributeIdentifierDescription
+import com.aemtools.completion.model.htl.HtlAttributeMetaInfo
+import com.aemtools.completion.model.htl.HtlAttributeValueDescription
 import com.aemtools.completion.util.isHtlAttribute
-import com.aemtools.constant.const.htl.DATA_SLY_ATTRIBUTE
-import com.aemtools.constant.const.htl.DATA_SLY_CALL
-import com.aemtools.constant.const.htl.DATA_SLY_ELEMENT
-import com.aemtools.constant.const.htl.DATA_SLY_INCLUDE
-import com.aemtools.constant.const.htl.DATA_SLY_LIST
-import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
-import com.aemtools.constant.const.htl.DATA_SLY_RESOURCE
-import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
-import com.aemtools.constant.const.htl.DATA_SLY_TEST
-import com.aemtools.constant.const.htl.DATA_SLY_TEXT
-import com.aemtools.constant.const.htl.DATA_SLY_UNWRAP
-import com.aemtools.constant.const.htl.DATA_SLY_USE
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.htlAttribute
+import com.aemtools.service.ServiceFacade
 import com.intellij.lang.documentation.AbstractDocumentationProvider
+import com.intellij.patterns.XmlPatterns
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 
@@ -23,94 +17,107 @@ import com.intellij.psi.xml.XmlAttribute
 class HtlAttributesDocumentationProvider : AbstractDocumentationProvider() {
 
     override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {
-        val attribute = element as? XmlAttribute ?: return null
+        if (htlAttribute.accepts(originalElement)) {
+            val parentAttribute = originalElement?.parent as? XmlAttribute
+                ?: return super.generateDoc(element, originalElement)
 
-        if (!attribute.isHtlAttribute()) {
+            val name = parentAttribute.htlAttributeName()
+                ?: return super.generateDoc(element, originalElement)
+
+            return ServiceFacade.getHtlAttributesRepository()
+                    .getAttributesData()
+                    .find { it.name == name }
+                    .let {
+                        if (it == null) {
+                            super.generateDoc(element, originalElement)
+                        } else {
+                            generateDocumentation(it)
+                        }
+                    }
+        } else {
+            return super.generateDoc(element, originalElement)
+        }
+    }
+
+    private fun generateDocumentation(info: HtlAttributeMetaInfo): String = with(info) {
+        val builder= StringBuilder()
+        with(builder) {
+            append("<h2>$name</h2>")
+            append(descriptionBlock(general))
+            append(elementBlock(element))
+            append(elementContentBlock(elementContent))
+            append(attributeValueBlock(attributeValue))
+            append(attributeIdentifierBlock(attributeIdentifier))
+            append(footer(info))
+        }
+        builder.toString()
+    }
+
+    private fun attributeIdentifierBlock(value: HtlAttributeIdentifierDescription?): String {
+        return if (value != null && value.isNotEmpty()) {
+            val builder = StringBuilder()
+            with(builder) {
+                append("<b>Attribute identifier:</b><br>")
+                append(renderBlock(value.required) {" - required: ${value.required}<br>"})
+                append(renderBlock(value.description) {" - description: ${value.description}<br>"})
+            }
+            builder.toString()
+        } else {
+            ""
+        }
+    }
+
+    private fun attributeValueBlock(value: HtlAttributeValueDescription?): String {
+        val strBuilder = StringBuilder()
+        if (value != null && value.isNotEmpty()) {
+            with(strBuilder) {
+                append("<b>Attribute value:</b><br>")
+                append(renderBlock(value.required) { " - required: ${value.required}<br>" })
+                append(renderBlock(value.printType()) { " - type: ${value.printType()}<br>" })
+                append(renderBlock(value.description) { " - description: ${value.description}<br>" })
+            }
+
+        }
+        return strBuilder.toString()
+    }
+
+    private fun renderBlock(value: String?, unit: () -> String): String {
+        return if (value != null) {
+            unit.invoke()
+        } else {
+            ""
+        }
+    }
+
+    private fun elementContentBlock(value: String?): String = if (value != null) {
+        "<b>Content of element:</b> $value<br>"
+    } else {
+        ""
+    }
+
+    private fun elementBlock(value: String?): String = if (value != null) {
+        "<b>Element:</b> $value<br>"
+    } else {
+        ""
+    }
+
+    private fun footer(info: HtlAttributeMetaInfo): String {
+        return "<br><br>See also: <a href=\"${info.link}\">Htl Specification</a>"
+    }
+
+    private fun descriptionBlock(description: String): String {
+        return "<b>Description:</b> $description<br> "
+    }
+
+    private fun XmlAttribute.htlAttributeName(): String? {
+        if (!isHtlAttribute()) {
             return null
         }
 
-        return HtlAttributesDocumentation.documentation
-                .entries
-                .find {
-                    attribute.name.startsWith(it.key)
-                }
-                ?.value ?: return null
+        return if (name.contains(".")) {
+            name.substring(0, name.indexOf("."))
+        } else {
+            name
+        }
     }
-
-}
-
-object HtlAttributesDocumentation {
-    val documentation: Map<String, String> = mapOf(
-            DATA_SLY_USE to """
-                <b>data-sly-use:</b>
-                Initializes helper object (defined in Java or JavaScript) and exposes it through a variable.
-                <br/>
-            """,
-            DATA_SLY_TEST to """
-                <b>data-sly-test:</b>
-                Conditionally removes the host element and it's content. A value of <i>false</i> removes the element;
-                a value of <i>true</i> retains the element.
-            """,
-            DATA_SLY_UNWRAP to """
-                <b>data-sly-unwrap:</b>
-                Removes the host element from the generated markup while retaining its content. This allows the exclusion of elements that are required as part of HTL presentation logic but are not desired in the actual output.
-                <br/>
-                However, this statement should be used sparingly. In general it is better to keep the HTL markup as close as possible to the intended output markup. In other words, when adding HTL block statements, try as much as possible to simply annotate the existing HTML, without introducing new elements.
-            """.trim(),
-            DATA_SLY_TEXT to """
-                <b>$DATA_SLY_TEXT:</b>
-                Replaces the content of its host element with the specified text.
-            """,
-            DATA_SLY_ATTRIBUTE to """
-                <b>$DATA_SLY_ATTRIBUTE:</b>
-                Adds attributes to the host element.
-            """,
-            DATA_SLY_ELEMENT to """
-                <b>$DATA_SLY_ELEMENT:</b>
-                Replaces the element name of the host element.
-            """,
-            DATA_SLY_LIST to """
-                <b>$DATA_SLY_LIST:</b>
-                Repeats the content of the host element for each enumerable property in the provided object.
-            """,
-            DATA_SLY_REPEAT to """
-                <b>$DATA_SLY_REPEAT:</b>
-                Repeats host element for each enumerable property in the provided object.
-            """,
-            DATA_SLY_RESOURCE to """
-                <b>$DATA_SLY_RESOURCE:</b>
-                 Includes the result of rendering the indicated resource through the sling resolution and rendering process.
-            """,
-            DATA_SLY_INCLUDE to """
-                <b>$DATA_SLY_INCLUDE:</b>
-                Replaces the content of the host element with the markup generated by the indicated HTML
-                template file (HTL, JSP, ESP etc.) when it is processed by its corresponding template engine.
-                The rendering context of the included file will not include the current HTL context
-                (that of the including file); Consequently,
-                for inclusion of HTL files, the current <b>data-sly-use</b>
-                would have to be repeated in the included file
-                (In such a case it is usually better to use <b>data-sly-template</b> and <b>data-sly-call</b>)
-            """,
-            DATA_SLY_TEMPLATE to """
-                <b>$DATA_SLY_TEMPLATE:</b>
-                Defines a template. The host element and its content are not output by HTL
-            """,
-            DATA_SLY_CALL to """
-                <b>$DATA_SLY_CALL:</b>
-                Calls a template defined with <b>data-sly-template</b>. The content of the called
-                template (optionally parameterized) replaces the content of the host element of the call.
-            """
-    ).map { it.key to it.value + footer() }.toMap()
-
-
-    private fun footer() = """
-            <br/> <br/>
-            <hr/> See:
-            <a href="https://docs.adobe.com/docs/en/htl/docs/block-statements.html">
-                Adobe Documentation
-            </a> --
-            <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md">
-                Htl Specification
-            </a>
-        """
 }

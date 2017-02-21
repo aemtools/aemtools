@@ -1,16 +1,20 @@
 package com.aemtools.lang.htl.psi.pattern
 
 import com.aemtools.blocks.base.BaseLightTest
+import com.aemtools.completion.util.getHtlFile
+import com.aemtools.completion.util.getHtmlFile
 import com.aemtools.constant.const.IDEA_STRING_CARET_PLACEHOLDER
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.contextOptionAssignment
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyIncludeNoEl
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseNoEl
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.htlAttribute
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.memberAccess
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.optionName
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.stringLiteralValue
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.variableName
 import com.intellij.patterns.ElementPattern
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiFile
 import com.intellij.psi.impl.DebugUtil
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture.CARET_MARKER
 
@@ -145,16 +149,45 @@ class HtlPatternsTest : BaseLightTest() {
             true
     )
 
+    fun testHtlAttributeMain() = testHtlPattern(
+            htlAttribute,
+            "<div ${CARET}data-sly-use>",
+            true,
+            false
+    )
+
     fun testHtlPattern(pattern: ElementPattern<PsiElement>,
                        text: String,
-                       result: Boolean) = fileCase {
-        addHtml("test.html", text.addIdeaPlaceholder())
+                       result: Boolean,
+                       addCompletionPlaceholder: Boolean = true) = fileCase {
+        val textToAdd = if (addCompletionPlaceholder) {
+            text.addIdeaPlaceholder()
+        } else {
+            text
+        }
+        addHtml("test.html", textToAdd)
         verify {
             assertEquals(
-                    "\nPattern:\n$pattern\nPSI:\n${DebugUtil.psiToString(file, true)}Text: $text",
+                    assertionMessage(pattern, file, text),
                     result,
                     pattern.accepts(elementUnderCaret()))
         }
+    }
+
+    fun assertionMessage(pattern: ElementPattern<PsiElement>,
+                         file: PsiFile,
+                         text: String) : String{
+        val builder = StringBuilder()
+        with (builder) {
+            append("\nPattern:\n$pattern")
+            append("\nPSI:\n${DebugUtil.psiToString(file, true)}")
+            val htmlFile = file.getHtmlFile()
+            if (htmlFile != null) {
+                append("PSI Html:\n${DebugUtil.psiToString(htmlFile, true)}")
+            }
+            append("Text: $text")
+        }
+        return builder.toString()
     }
 
     private fun String.addIdeaPlaceholder(): String {
