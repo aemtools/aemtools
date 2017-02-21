@@ -7,6 +7,8 @@ import com.intellij.openapi.util.IconLoader
  */
 object HtlIcons {
 
-    val HTL_FILE = IconLoader.getIcon("/icons/htl.png", HtlIcons::class.java)
+    val HTL_FILE = icon("htl.png")
+
+    private fun icon(name :String) = IconLoader.getIcon("/icons/$name", HtlIcons::class.java)
 
 }

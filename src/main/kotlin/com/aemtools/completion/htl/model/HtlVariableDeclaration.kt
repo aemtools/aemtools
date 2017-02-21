@@ -3,6 +3,7 @@ package com.aemtools.completion.htl.model
 import com.aemtools.completion.util.resolveUseClass
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
+import com.intellij.icons.AllIcons
 import com.intellij.psi.xml.XmlAttribute
 
 /**
@@ -69,7 +70,7 @@ data class HtlVariableDeclaration(
                 result.withTypeText("Template Parameter")
             }
         }
-        return result
+        return result.withIcon(AllIcons.Nodes.Variable)
     }
 
 }

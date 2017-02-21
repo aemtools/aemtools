@@ -12,6 +12,7 @@ import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.lookup.LookupElementBuilder
+import com.intellij.icons.AllIcons
 import com.intellij.util.ProcessingContext
 
 /**
@@ -69,6 +70,7 @@ object HtlElOptionCompletionProvider : CompletionProvider<CompletionParameters>(
                 .map {
                     LookupElementBuilder.create(it)
                             .withTypeText("HTL Option")
+                            .withIcon(AllIcons.Nodes.Parameter)
                             .withInsertHandler(when (it) {
                                 "format" -> HtlElArrayOptionInsertHandler()
                                 "i18n" -> null
