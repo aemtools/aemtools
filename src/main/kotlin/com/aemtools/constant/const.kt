@@ -1,7 +1,5 @@
 package com.aemtools.constant
 
-import java.io.File
-
 /**
  * @author Dmytro_Troynikov
  */
@@ -17,15 +15,15 @@ object const {
 
     val IDEA_STRING_CARET_PLACEHOLDER: String = "IntellijIdeaRulezzz"
 
-    val XTYPE : String = "xtype"
+    val XTYPE: String = "xtype"
 
-    val JCR_PRIMARY_TYPE : String = "jcr:primaryType"
+    val JCR_PRIMARY_TYPE: String = "jcr:primaryType"
 
-    val DIALOG_XML : String = "dialog.xml"
+    val DIALOG_XML: String = "dialog.xml"
 
-    val CQ_EDITCONFIG_XML : String = "_cq_editConfig.xml"
+    val CQ_EDITCONFIG_XML: String = "_cq_editConfig.xml"
 
-    val  REP_POLICY: String = "_rep_policy.xml"
+    val REP_POLICY: String = "_rep_policy.xml"
 
     val SLY_TAG: String = "sly"
 
@@ -68,15 +66,17 @@ object const {
     object java {
         val USE_INTERFACE = "io.sightly.java.api.Use"
         val WCM_USE_CLASS = "com.adobe.cq.sightly.WCMUse"
+        val POJO_USE = "org.apache.sling.scripting.sightly.pojo.Use"
+
         val SLING_MODEL = "org.apache.sling.models.annotations.Model"
 
         val VALUE_MAP = "org.apache.sling.api.resource.ValueMap"
     }
 
     object xml {
-        val XML_ATTRIBUTE_NAME : String = "XML_NAME"
-        val XML_ATTRIBUTE_VALUE : String = "XML_ATTRIBUTE_VALUE_TOKEN"
-        val XML_TAG_NAME : String = "XML_TAG_NAME"
+        val XML_ATTRIBUTE_NAME: String = "XML_NAME"
+        val XML_ATTRIBUTE_VALUE: String = "XML_ATTRIBUTE_VALUE_TOKEN"
+        val XML_TAG_NAME: String = "XML_TAG_NAME"
     }
 
 }

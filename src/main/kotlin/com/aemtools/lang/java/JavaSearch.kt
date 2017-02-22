@@ -1,9 +1,13 @@
 package com.aemtools.lang.java
 
 import com.aemtools.constant.const
+import com.aemtools.constant.const.java.POJO_USE
+import com.aemtools.constant.const.java.USE_INTERFACE
+import com.aemtools.constant.const.java.WCM_USE_CLASS
 import com.intellij.openapi.project.Project
 import com.intellij.psi.JavaPsiFacade
 import com.intellij.psi.PsiClass
+import com.intellij.psi.PsiModifier
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.search.searches.AnnotatedElementsSearch
 import com.intellij.psi.search.searches.ClassInheritorsSearch
@@ -13,6 +17,8 @@ import com.intellij.psi.search.searches.ClassInheritorsSearch
  * @author Dmytro Troynikov
  */
 object JavaSearch {
+
+    val USE_CLASSES = listOf(USE_INTERFACE, WCM_USE_CLASS, POJO_USE)
 
     /**
      * Search for [PsiClass] by qualified name with predefined "allScope".
@@ -51,8 +57,8 @@ object JavaSearch {
      * @return list of annotated classes
      */
     fun findAnnotatedClasses(annotation: PsiClass, project: Project): List<PsiClass> =
-        AnnotatedElementsSearch.searchPsiClasses(annotation, searchScope(project))
-                .findAll().toList()
+            AnnotatedElementsSearch.searchPsiClasses(annotation, searchScope(project))
+                    .findAll().toList()
 
     /**
      * Find all sling models in the project.
@@ -60,13 +66,9 @@ object JavaSearch {
      * @return list of sling models
      */
     fun findSlingModels(project: Project): List<PsiClass> =
-        findClass(const.java.SLING_MODEL, project).let {
-            if (it != null) {
+            findClass(const.java.SLING_MODEL, project)?.let {
                 findAnnotatedClasses(it, project)
-            } else {
-                listOf()
-            }
-        }
+            }.orEmpty()
 
     /**
      * Find all __io.sightly.java.api.Use__ and __com.adobe.cq.sightly.WCMUse__
@@ -74,26 +76,12 @@ object JavaSearch {
      * @param project the project
      * @return list of inheritors
      */
-    fun findWcmUseClasses(project: Project): List<PsiClass> {
-        val useInheritors = findClass(const.java.USE_INTERFACE, project)
-                .let {
-                    if (it != null) {
-                        findInheritors(it, project)
-                    } else {
-                        listOf()
-                    }
-                }
-
-        val wcmUseInheritors = findClass(const.java.WCM_USE_CLASS, project)
-                .let {
-                    if (it != null) {
-                        findInheritors(it, project)
-                    } else {
-                        listOf()
-                    }
-                }
-        return (useInheritors + wcmUseInheritors).toSet().toList()
-    }
+    fun findWcmUseClasses(project: Project): List<PsiClass> = USE_CLASSES.map { findClass(it, project) }
+            .filterNotNull()
+            .flatMap { findInheritors(it, project) }
+            .filterNot { it.hasModifierProperty(PsiModifier.ABSTRACT) }
+            .toSet()
+            .toList()
 
     private fun searchScope(project: Project) = GlobalSearchScope.allScope(project)
 

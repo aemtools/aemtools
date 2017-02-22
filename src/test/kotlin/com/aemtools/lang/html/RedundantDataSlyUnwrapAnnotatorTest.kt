@@ -34,11 +34,4 @@ class RedundantDataSlyUnwrapAnnotatorTest : LightPlatformCodeInsightFixtureTestC
         myFixture.checkHighlighting()
     }
 
-    fun testDataSlyUseVariable() {
-        myFixture.configureByText("test.html", """
-            <div data-sly-use.bean="com.test.Bean">
-            </div>
-        """)
-        myFixture.checkHighlighting()
-    }
 }

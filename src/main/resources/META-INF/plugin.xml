@@ -33,6 +33,8 @@
     ]]>
     </change-notes>
 
+    <depends>com.intellij.modules.java</depends>
+
     <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
     <idea-version since-build="131"/>
 
