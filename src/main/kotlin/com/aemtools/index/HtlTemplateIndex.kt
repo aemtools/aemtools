@@ -6,6 +6,7 @@ import com.aemtools.completion.util.getHtmlFile
 import com.aemtools.completion.util.normalizeToJcrRoot
 import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.index.dataexternalizer.TemplateDefinitionExternalizer
+import com.aemtools.lang.htl.file.HtlFileType
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.util.indexing.DataIndexer
 import com.intellij.util.indexing.FileBasedIndex
@@ -59,7 +60,7 @@ class HtlTemplateIndex : XmlIndex<TemplateDefinition>() {
     }
 
     override fun getInputFilter(): FileBasedIndex.InputFilter {
-        return FileBasedIndex.InputFilter { it.extension?.endsWith("html") ?: false }
+        return FileBasedIndex.InputFilter { it.fileType == HtlFileType }
     }
 
     override fun getValueExternalizer(): DataExternalizer<TemplateDefinition> {
