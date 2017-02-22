@@ -40,16 +40,18 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
         val allClasses = if (parameters.completionType == CompletionType.BASIC) {
             useClassesVariants + slingModelVariants
         } else {
-            val currentFileName = parameters.originalFile.name.toLowerCase()
+            var currentFileName = parameters.originalFile.parent?.name?.toLowerCase()
+                        ?: parameters.originalFile.name.toLowerCase()
+            currentFileName = currentFileName.replace("-", "")
 
             (useClassesVariants + slingModelVariants)
                     .filter {
                         val normalizedClassName =
-                                it.lookupString.substring(it.lookupString.lastIndexOf("."))
+                                it.lookupString.substring(it.lookupString.lastIndexOf(".") + 1)
                                         .toLowerCase()
                         StringUtils.getLevenshteinDistance(
                                 normalizedClassName,
-                                currentFileName) < currentFileName.length / 2
+                                currentFileName) < (currentFileName.length / 2).inc()
                     }
         }
 
