@@ -12,6 +12,8 @@ The plugin is available in official JetBrains repository:
   * Syntax highlighting
   * Completion for standard context objects (e.g. `properties`)
   * Completion for HTL attributes (e.g. `data-sly-use`)
+  * Java Use & Sling Models support
+  * Code Navigation
 
 2. dialog.xml completion (Classic UI)
   * Provides the list of all available xtypes (taken from official documentation)
