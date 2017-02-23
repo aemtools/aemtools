@@ -123,7 +123,7 @@ unary_operator ::= EXCLAMATION | MINUS
 
 property_access ::= unary_operator? variable_name [access_identifier+] {implements="com.intellij.psi.ContributedReferenceHost"}
 
-variable_name ::= VAR_NAME
+variable_name ::= VAR_NAME {implements="com.intellij.psi.ContributedReferenceHost"}
 
 access_identifier ::= dot_access | array_like_access
 

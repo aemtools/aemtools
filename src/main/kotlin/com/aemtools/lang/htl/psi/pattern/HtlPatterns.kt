@@ -29,9 +29,15 @@ object HtlPatterns {
      * ```
      */
     val optionName: ElementPattern<PsiElement> =
-            psiElement()
-                    .withParent(psiElement(VARIABLE_NAME).withParent(psiElement(CONTEXT_EXPRESSION)))
-
+            or(
+                    psiElement()
+                            .withParent(psiElement(VARIABLE_NAME)
+                                    .withParent(psiElement(CONTEXT_EXPRESSION))),
+                    psiElement()
+                            .withParent(psiElement(VARIABLE_NAME)
+                                    .withParent(psiElement(ASSIGNMENT)
+                                            .withParent(psiElement(CONTEXT_EXPRESSION))))
+            )
     /**
      * Matches the following:
      *

@@ -1,7 +1,6 @@
 package com.aemtools.lang.htl.psi.pattern
 
 import com.aemtools.blocks.base.BaseLightTest
-import com.aemtools.completion.util.getHtlFile
 import com.aemtools.completion.util.getHtmlFile
 import com.aemtools.constant.const.IDEA_STRING_CARET_PLACEHOLDER
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.contextOptionAssignment
@@ -80,6 +79,12 @@ class HtlPatternsTest : BaseLightTest() {
     fun testOptionNameSecondOption() = testHtlPattern(
             optionName,
             "$DOLLAR{@ option='', $CARET}",
+            true
+    )
+
+    fun testOptionNameWithValue() = testHtlPattern(
+            optionName,
+            "$DOLLAR{@ $CARET=''",
             true
     )
 
@@ -176,9 +181,9 @@ class HtlPatternsTest : BaseLightTest() {
 
     fun assertionMessage(pattern: ElementPattern<PsiElement>,
                          file: PsiFile,
-                         text: String) : String{
+                         text: String): String {
         val builder = StringBuilder()
-        with (builder) {
+        with(builder) {
             append("\nPattern:\n$pattern")
             append("\nPSI:\n${DebugUtil.psiToString(file, true)}")
             val htmlFile = file.getHtmlFile()

@@ -24,7 +24,7 @@ allprojects {
         pluginName 'aemtools'
         version 'IC-2016.1'
 
-        updateSinceUntilBuild = true
+        updateSinceUntilBuild = false
         downloadSources = true
     }
 
