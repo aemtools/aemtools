@@ -5,13 +5,25 @@ import com.aemtools.completion.htl.completionprovider.PredefinedVariables
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiClass
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiNamedElement
 
 /**
  * @author Dmytro_Troynikov
  */
-abstract class VariableNameMixin(node: ASTNode) : HtlELNavigableMixin(node) {
+abstract class VariableNameMixin(node: ASTNode)
+    : HtlELNavigableMixin(node),
+        PsiNamedElement {
 
-    open fun variableName() = text
+    override fun getName(): String? {
+        return super.getName()
+    }
+
+    override fun setName(name: String): PsiElement {
+        return this
+    }
+
+    open fun variableName(): String = text
 
     /**
      * Resolve current element's PsiClass

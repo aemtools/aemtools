@@ -1,0 +1,68 @@
+[
+  {
+    "name": "html",
+    "description": "Use this in case you want to output HTML - Removes markup that may contain XSS risks."
+  },
+  {
+    "name": "text",
+    "description": "Use this for simple HTML content - Encodes all HTML."
+  },
+  {
+    "name": "elementName",
+    "description": "Allows only element names that are white-listed, outputs 'div' otherwise.",
+    "additionalDescription": "Allowed tags: section, nav, article, aside, h1, h2, h3, h4, h5, h6, header, footer, address, main, p, pre, blockquote, ol, li, dl, dt, dd, figure, figcaption, div, a, em, strong, small, s, cite, q, dfn, abbr, data, time, code, var, samp, kbd, sub, sup, i, b, u, mark, ruby, rt, rp, bdi, bdo, span, br, wbr, ins, del, table, caption, colgroup, col, tbody, thead, tfoot, tr, td, th"
+  },
+  {
+    "name": "attributeName",
+    "description": "Outputs nothing if the value doesn't correspond to the HTML attribute name syntax - doesn't allow 'style' and 'on*' attributes."
+  },
+  {
+    "name": "attribute",
+    "description": "Applies HTML attribute escaping"
+  },
+  {
+    "name": "uri",
+    "description": "Outputs nothing if the value contains XSS risks."
+  },
+  {
+    "name": "scriptToken",
+    "description": "Outputs nothing if the value doesn't correspond to the JavaScript token syntax."
+  },
+  {
+    "name": "scriptString",
+    "description": "Applies JavaScript string escaping."
+  },
+  {
+    "name": "scriptComment",
+    "description": "Context for JavaScript block comments. Outputs nothing if value is trying to break out of the comment context."
+  },
+  {
+    "name": "scriptRegExp",
+    "description": "Applies JavaScript regular expression escaping."
+  },
+  {
+    "name": "styleToken",
+    "description": "Outputs nothing if the value doesn't correspond to the CSS token syntax."
+  },
+  {
+    "name": "styleString",
+    "description": "Applies CSS string escaping."
+  },
+  {
+    "name": "styleComment",
+    "description": "Context for CSS comments. Outputs noting if value is trying to break out of the comment context."
+  },
+  {
+    "name": "comment",
+    "description": "Applies HTML comment escaping."
+  },
+  {
+    "name": "number",
+    "description": "Outputs zero if the value is not a number."
+  },
+  {
+    "name": "unsafe",
+    "description": "Use this at your own risk, this disables XSS protection completely."
+  }
+
+]

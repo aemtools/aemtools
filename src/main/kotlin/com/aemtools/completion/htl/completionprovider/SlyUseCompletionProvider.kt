@@ -40,16 +40,18 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
         val allClasses = if (parameters.completionType == CompletionType.BASIC) {
             useClassesVariants + slingModelVariants
         } else {
-            val currentFileName = parameters.originalFile.name.toLowerCase()
+            var currentFileName = parameters.originalFile.parent?.name?.toLowerCase()
+                        ?: parameters.originalFile.name.toLowerCase()
+            currentFileName = currentFileName.replace("-", "")
 
             (useClassesVariants + slingModelVariants)
                     .filter {
                         val normalizedClassName =
-                                it.lookupString.substring(it.lookupString.lastIndexOf("."))
+                                it.lookupString.substring(it.lookupString.lastIndexOf(".") + 1)
                                         .toLowerCase()
                         StringUtils.getLevenshteinDistance(
                                 normalizedClassName,
-                                currentFileName) < currentFileName.length / 2
+                                currentFileName) < (currentFileName.length / 2).inc()
                     }
         }
 
@@ -60,16 +62,21 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
 
     private fun extractCompletions(classes: List<PsiClass>, type: String): List<LookupElement> {
         return classes.filter { !it.hasModifierProperty(PsiModifier.ABSTRACT) }
-                .map {
-                    val qualifiedName = it.qualifiedName as String
-                    val name = it.name as String
+                .flatMap {
+                    // todo find better solution
+                    val qualifiedName = it.qualifiedName as? String
+                    val name = it.name as? String
+                    if (qualifiedName == null || name == null) {
+                        return@flatMap listOf<LookupElement>()
+                    }
+
                     val result = LookupElementBuilder.create(qualifiedName)
                             .withLookupString(name)
                             .withPresentableText(name)
                             .withIcon(it.getIcon(0))
                             .withTypeText(type)
                             .withTailText("(${qualifiedName.substring(0, qualifiedName.lastIndexOf("."))})", true)
-                    result
+                    return@flatMap listOf(result)
                 }
     }
 

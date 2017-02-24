@@ -48,7 +48,7 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
          */
         val CONTEXT_PARAMETERS = listOf("join",
                 "i18n", "context", "format", "locale",
-                "type", "timezone", "scheme", "domain",
+                "timezone", "scheme", "domain",
                 "path", "prependPath", "appendPath",
                 "selectors", "addSelectors", "removeSelectors",
                 "extension", "suffix", "prependSuffix", "appendSuffix",
