@@ -62,16 +62,21 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
 
     private fun extractCompletions(classes: List<PsiClass>, type: String): List<LookupElement> {
         return classes.filter { !it.hasModifierProperty(PsiModifier.ABSTRACT) }
-                .map {
-                    val qualifiedName = it.qualifiedName as String
-                    val name = it.name as String
+                .flatMap {
+                    // todo find better solution
+                    val qualifiedName = it.qualifiedName as? String
+                    val name = it.name as? String
+                    if (qualifiedName == null || name == null) {
+                        return@flatMap listOf<LookupElement>()
+                    }
+
                     val result = LookupElementBuilder.create(qualifiedName)
                             .withLookupString(name)
                             .withPresentableText(name)
                             .withIcon(it.getIcon(0))
                             .withTypeText(type)
                             .withTailText("(${qualifiedName.substring(0, qualifiedName.lastIndexOf("."))})", true)
-                    result
+                    return@flatMap listOf(result)
                 }
     }
 
