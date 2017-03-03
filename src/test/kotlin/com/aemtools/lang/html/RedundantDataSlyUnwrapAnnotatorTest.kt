@@ -1,12 +1,13 @@
 package com.aemtools.lang.html
 
 import com.aemtools.lang.html.annotation.RedundantDataSlyUnwrapAnnotator.Companion.REDUNDANT_DATA_SLY_UNWRAP_MESSAGE
+import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase
 
 /**
  * @author Dmytro Troynikov
  */
-class RedundantDataSlyUnwrapAnnotatorTest : LightPlatformCodeInsightFixtureTestCase() {
+class RedundantDataSlyUnwrapAnnotatorTest : LightCodeInsightFixtureTestCase() {
 
     fun testRedundantDataSlyUnwrap() {
         myFixture.configureByText("test.html", """
@@ -31,7 +32,8 @@ class RedundantDataSlyUnwrapAnnotatorTest : LightPlatformCodeInsightFixtureTestC
                 <div data-sly-unwrap></div>
             </sly>
         """)
-        myFixture.checkHighlighting()
+
+        myFixture.checkHighlighting(false, false, true, true)
     }
 
 }
