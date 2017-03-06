@@ -137,6 +137,13 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
             return xmlAttribute
         }
 
+        override fun getName(): String? {
+            return super.getName()
+        }
+        override fun toString(): String {
+            return xmlAttribute.text
+        }
+
     }
 
 }
