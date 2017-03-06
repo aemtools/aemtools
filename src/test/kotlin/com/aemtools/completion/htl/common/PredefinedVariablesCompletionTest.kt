@@ -1,4 +1,4 @@
-package com.aemtools.completion.htl.completionprovider
+package com.aemtools.completion.htl.common
 
 import com.aemtools.lang.htl.lexer.HtlTestCase
 import com.intellij.codeInsight.completion.LightFixtureCompletionTestCase

@@ -6,7 +6,7 @@ package com.aemtools.completion.htl.model
  */
 enum class UseType {
     /**
-     * Either `Use` implementor or `Sling` model.
+     * Implementor of `Use` interface or a `Sling` model.
      */
     BEAN,
     /**
@@ -16,5 +16,9 @@ enum class UseType {
     /**
      * The HTL file.
      */
-    HTL
+    HTL,
+    /**
+     * Unable to resolve data-sly-use.
+     */
+    UNKNOWN
 }

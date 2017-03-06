@@ -1,7 +1,7 @@
 package com.aemtools.lang.htl.psi.mixin
 
-import com.aemtools.completion.htl.completionprovider.FileVariablesResolver
-import com.aemtools.completion.htl.completionprovider.PredefinedVariables
+import com.aemtools.completion.htl.common.FileVariablesResolver
+import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiClass
@@ -10,7 +10,7 @@ import com.intellij.psi.PsiNamedElement
 
 /**
  * @author Dmytro_Troynikov
- */
+ */`
 abstract class VariableNameMixin(node: ASTNode)
     : HtlELNavigableMixin(node),
         PsiNamedElement {

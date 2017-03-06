@@ -8,9 +8,10 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDesc
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.IterableJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
-import com.aemtools.completion.htl.completionprovider.FileVariablesResolver
-import com.aemtools.completion.htl.completionprovider.PredefinedVariables
+import com.aemtools.completion.htl.common.FileVariablesResolver
+import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.htl.model.DeclarationType
+import com.aemtools.completion.htl.model.HtlUseVariableDeclaration
 import com.aemtools.completion.htl.predefined.HtlELPredefined.DATA_SLY_LIST_REPEAT_LIST_FIELDS
 import com.aemtools.completion.util.hasChild
 import com.aemtools.completion.util.resolveUseClass
@@ -100,6 +101,13 @@ object RawCallChainProcessor {
 
         if (psiClass == null && firstElement != null) {
             psiClass = PredefinedVariables.resolveByIdentifier(firstElement.variableName(), firstElement.project)
+        }
+
+        if (psiClass == null) {
+            val declaration = rawChainUnit.myDeclaration
+            if (declaration is HtlUseVariableDeclaration) {
+                return declaration.typeDescriptor()
+            }
         }
 
         return if (psiClass != null) {

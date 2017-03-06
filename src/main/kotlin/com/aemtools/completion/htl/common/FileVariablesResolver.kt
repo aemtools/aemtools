@@ -1,4 +1,4 @@
-package com.aemtools.completion.htl.completionprovider
+package com.aemtools.completion.htl.common
 
 import com.aemtools.completion.htl.model.HtlVariableDeclaration
 import com.aemtools.completion.htl.model.ResolutionResult

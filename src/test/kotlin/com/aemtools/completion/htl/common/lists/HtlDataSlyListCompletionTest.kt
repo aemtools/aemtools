@@ -1,7 +1,7 @@
-package com.aemtools.completion.htl.completionprovider.lists
+package com.aemtools.completion.htl.common.lists
 
 import com.aemtools.blocks.BaseVariantsWithJdkContributorTest
-import com.aemtools.completion.htl.completionprovider.CollectionsTest.Companion.MY_MODEL_VARIANTS
+import com.aemtools.completion.htl.common.CollectionsTest.Companion.MY_MODEL_VARIANTS
 
 /**
  * @author Dmytro_Troynikov

@@ -1,6 +1,6 @@
 package com.aemtools.completion.htl.provider
 
-import com.aemtools.completion.htl.completionprovider.SlyUseCompletionProvider
+import com.aemtools.completion.htl.provider.SlyUseCompletionProvider
 import com.aemtools.completion.util.findParentByType
 import com.aemtools.completion.util.isMainString
 import com.aemtools.constant.const

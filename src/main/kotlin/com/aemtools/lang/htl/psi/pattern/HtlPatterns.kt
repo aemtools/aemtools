@@ -10,7 +10,6 @@ import com.aemtools.constant.const.htl.HTL_ATTRIBUTES
 import com.aemtools.lang.htl.psi.HtlTypes.*
 import com.intellij.patterns.ElementPattern
 import com.intellij.patterns.PlatformPatterns.*
-import com.intellij.patterns.StandardPatterns
 import com.intellij.patterns.XmlPatterns.xmlAttribute
 import com.intellij.patterns.XmlPatterns.xmlAttributeValue
 import com.intellij.psi.PsiElement
@@ -144,8 +143,5 @@ object HtlPatterns {
                             string().startsWith("$DATA_SLY_TEMPLATE.")
                     )
             ))
-
-    val htlAttributeName: ElementPattern<String>? =
-            or(StandardPatterns.string().oneOf(HTL_ATTRIBUTES))
 
 }

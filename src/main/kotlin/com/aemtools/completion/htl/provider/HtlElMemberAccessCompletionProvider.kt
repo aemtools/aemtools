@@ -2,8 +2,8 @@ package com.aemtools.completion.htl.provider
 
 import com.aemtools.analysis.htl.callchain.elements.resolveSelectedItem
 import com.aemtools.analysis.htl.callchain.elements.selectedElement
-import com.aemtools.completion.htl.completionprovider.PredefinedEL
-import com.aemtools.completion.htl.completionprovider.PredefinedVariables
+import com.aemtools.completion.htl.common.PredefinedEL
+import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.htl.predefined.HtlELPredefined
 import com.aemtools.completion.util.findParentByType

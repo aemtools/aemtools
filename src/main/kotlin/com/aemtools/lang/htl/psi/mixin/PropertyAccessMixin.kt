@@ -2,7 +2,7 @@ package com.aemtools.lang.htl.psi.mixin
 
 import com.aemtools.analysis.htl.callchain.HtlCallChainResolver
 import com.aemtools.analysis.htl.callchain.elements.CallChain
-import com.aemtools.completion.htl.completionprovider.FileVariablesResolver
+import com.aemtools.completion.htl.common.FileVariablesResolver
 import com.aemtools.completion.htl.model.HtlVariableDeclaration
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.util.extractHtlHel
@@ -65,14 +65,8 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
     private fun createUseChainUnit(declaration: HtlVariableDeclaration, useClass: String): LinkedList<RawChainUnit> {
         val result = LinkedList<RawChainUnit>()
 
-        val clazz = JavaSearch.findClass(useClass, project)
-        result.add(RawChainUnit(LinkedList(), HtlVariableDeclaration(
-                declaration.xmlAttribute,
-                declaration.variableName,
-                declaration.attributeType,
-                declaration.type,
-                ResolutionResult(clazz)
-        )))
+//        val clazz = JavaSearch.findClass(useClass, project)
+        result.add(RawChainUnit(LinkedList(), declaration))
         return result
     }
 

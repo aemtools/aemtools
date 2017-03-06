@@ -1,9 +1,21 @@
 package com.aemtools.completion.htl.model
 
-import com.aemtools.completion.util.resolveUseClass
+import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
+import com.aemtools.completion.htl.predefined.HtlELPredefined
+import com.aemtools.completion.util.*
+import com.aemtools.constant.const.htl.DATA_SLY_LIST
+import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
+import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
+import com.aemtools.constant.const.htl.DATA_SLY_TEST
+import com.aemtools.constant.const.htl.DATA_SLY_USE
+import com.aemtools.index.TemplateDefinition
+import com.aemtools.index.search.HtlTemplateSearch
+import com.aemtools.lang.java.JavaSearch
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
+import com.intellij.psi.PsiClass
 import com.intellij.psi.xml.XmlAttribute
 
 /**
@@ -11,7 +23,7 @@ import com.intellij.psi.xml.XmlAttribute
  *
  * @author Dmytro_Troynikov
  */
-data class HtlVariableDeclaration(
+open class HtlVariableDeclaration internal constructor(
         /**
          * Declaration [XmlAttribute].
          */
@@ -73,5 +85,141 @@ data class HtlVariableDeclaration(
         }
         return result
     }
+
+    companion object {
+        fun create(attribute: XmlAttribute): List<HtlVariableDeclaration> {
+            val htlAttributeName = attribute.htlAttributeName()
+            val htlVariableName = attribute.htlVariableName()
+            return when {
+                htlAttributeName == DATA_SLY_USE
+                        && htlVariableName != null -> {
+                    listOf(
+                            HtlUseVariableDeclaration(
+                                    attribute,
+                                    htlVariableName,
+                                    DeclarationAttributeType.DATA_SLY_USE
+                            )
+                    )
+                }
+                htlAttributeName == DATA_SLY_TEST
+                        && htlVariableName != null -> {
+                    listOf(
+                            HtlVariableDeclaration(
+                                    attribute,
+                                    htlVariableName,
+                                    DeclarationAttributeType.DATA_SLY_TEST,
+                                    DeclarationType.VARIABLE
+                            )
+                    )
+                }
+                htlAttributeName == DATA_SLY_LIST -> {
+                    val (item, itemList) = extractItemAndItemListNames(attribute.name)
+
+                    listOf(
+                            HtlVariableDeclaration(
+                                    attribute,
+                                    item,
+                                    DeclarationAttributeType.DATA_SLY_LIST,
+                                    DeclarationType.ITERABLE
+                            ),
+                            HtlVariableDeclaration(
+                                    attribute,
+                                    itemList,
+                                    DeclarationAttributeType.DATA_SLY_LIST,
+                                    DeclarationType.VARIABLE,
+                                    ResolutionResult(
+                                            predefined = HtlELPredefined.DATA_SLY_LIST_REPEAT_LIST_FIELDS
+                                    )
+                            )
+                    )
+                }
+                htlAttributeName == DATA_SLY_REPEAT -> {
+                    val (item, itemList) = extractItemAndItemListNames(attribute.name)
+
+                    listOf(
+                            HtlVariableDeclaration(
+                                    attribute,
+                                    item,
+                                    DeclarationAttributeType.DATA_SLY_REPEAT,
+                                    DeclarationType.ITERABLE
+                            ),
+                            HtlVariableDeclaration(
+                                    attribute,
+                                    itemList,
+                                    DeclarationAttributeType.DATA_SLY_REPEAT,
+                                    DeclarationType.ITERABLE,
+                                    ResolutionResult(
+                                            predefined = HtlELPredefined.DATA_SLY_LIST_REPEAT_LIST_FIELDS
+                                    )
+                            )
+                    )
+                }
+
+                htlAttributeName == DATA_SLY_TEMPLATE -> {
+                    val templateParameters = attribute.extractTemplateParameters()
+                    templateParameters.map { parameter ->
+                        HtlVariableDeclaration(
+                                attribute,
+                                parameter,
+                                DeclarationAttributeType.DATA_SLY_TEMPLATE,
+                                DeclarationType.VARIABLE
+                        )
+                    }
+                }
+
+                else -> listOf()
+            }
+        }
+
+    }
+
+}
+
+class HtlUseVariableDeclaration(
+        xmlAttribute: XmlAttribute,
+        variableName: String,
+        attributeType: DeclarationAttributeType,
+        type: DeclarationType = DeclarationType.VARIABLE,
+        resolutionResult: ResolutionResult = ResolutionResult()
+) : HtlVariableDeclaration(
+        xmlAttribute,
+        variableName,
+        attributeType,
+        type,
+        resolutionResult
+) {
+
+    fun useClass(): PsiClass? {
+        val useClassName = xmlAttribute.resolveUseClass()
+                ?: return null
+        return JavaSearch.findClass(useClassName, xmlAttribute.project)
+    }
+
+    fun template(): TemplateDefinition? {
+        val name = xmlAttribute.value ?: return null
+        return HtlTemplateSearch.resolveUseTemplate(name, xmlAttribute.containingFile)
+    }
+
+    fun typeDescriptor(): TypeDescriptor {
+        val useClass = useClass()
+        if (useClass != null) {
+            return JavaPsiClassTypeDescriptor(useClass, null, null)
+        }
+
+        val template = template()
+        if (template != null) {
+
+        }
+
+        return TypeDescriptor.empty()
+    }
+
+    val slyUseType: UseType
+        get() {
+            return when {
+                useClass() != null -> UseType.BEAN
+                else -> UseType.UNKNOWN
+            }
+        }
 
 }

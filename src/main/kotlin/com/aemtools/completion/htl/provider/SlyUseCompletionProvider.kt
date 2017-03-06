@@ -1,4 +1,4 @@
-package com.aemtools.completion.htl.completionprovider
+package com.aemtools.completion.htl.provider
 
 import com.aemtools.completion.util.normalizeToJcrRoot
 import com.aemtools.completion.util.relativeTo
