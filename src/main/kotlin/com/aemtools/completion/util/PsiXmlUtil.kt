@@ -12,8 +12,7 @@ import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_USE
 import com.aemtools.constant.const.htl.HTL_ATTRIBUTES
-import com.aemtools.constant.const.htl.UNIQUE_HTL_ATTRIBUTES
-import com.aemtools.index.TemplateDefinition
+import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.HtlVariableName

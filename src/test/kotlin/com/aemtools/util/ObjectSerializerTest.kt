@@ -1,6 +1,6 @@
 package com.aemtools.util
 
-import com.aemtools.index.TemplateDefinition
+import com.aemtools.index.model.TemplateDefinition
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
