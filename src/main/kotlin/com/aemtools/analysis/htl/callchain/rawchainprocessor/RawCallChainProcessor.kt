@@ -3,6 +3,7 @@ package com.aemtools.analysis.htl.callchain.rawchainprocessor
 import com.aemtools.analysis.htl.callchain.elements.*
 import com.aemtools.analysis.htl.callchain.elements.helper.chainSegment
 import com.aemtools.analysis.htl.callchain.typedescriptor.PredefinedVariantsTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.TemplateTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.IterableJavaTypeDescriptor
@@ -10,8 +11,8 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeD
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
 import com.aemtools.completion.htl.common.FileVariablesResolver
 import com.aemtools.completion.htl.common.PredefinedVariables
-import com.aemtools.completion.htl.model.DeclarationType
-import com.aemtools.completion.htl.model.HtlUseVariableDeclaration
+import com.aemtools.completion.htl.model.declaration.DeclarationType
+import com.aemtools.completion.htl.model.declaration.HtlUseVariableDeclaration
 import com.aemtools.completion.htl.predefined.HtlELPredefined.DATA_SLY_LIST_REPEAT_LIST_FIELDS
 import com.aemtools.completion.util.hasChild
 import com.aemtools.completion.util.resolveUseClass
@@ -62,8 +63,19 @@ object RawCallChainProcessor {
             return constructPredefinedChainSegment(rawChainUnit)
         }
 
-        if (rawChainUnit.myDeclaration?.resolutionResult?.psiClass != null) {
-            return createAttributeChainElement(rawChainUnit)
+        val declaration = rawChainUnit.myDeclaration
+
+        if (declaration is HtlUseVariableDeclaration) {
+            val psiClass = declaration.useClass()
+            if (psiClass != null) {
+                val typeDescriptor = JavaPsiClassTypeDescriptor(psiClass, null, null)
+                return BaseCallChainSegment(typeDescriptor, typeDescriptor, rawChainUnit.myDeclaration, listOf())
+            }
+            val template = declaration.template()
+            if (template != null) {
+                val typeDescriptor = TemplateTypeDescriptor(template)
+                return BaseCallChainSegment(typeDescriptor, typeDescriptor, rawChainUnit.myDeclaration, listOf())
+            }
         }
 
         val inputType = resolveFirstType(rawChainUnit)
@@ -142,7 +154,7 @@ object RawCallChainProcessor {
         val rawElements = LinkedList(rawChainUnit.myCallChain)
         val result: ArrayList<CallChainElement> = ArrayList()
         while (rawElements.isNotEmpty()) {
-            val nextElement= rawElements.pop()
+            val nextElement = rawElements.pop()
             val elementName = extractElementName(nextElement)
 
             result.add(BaseChainElement(nextElement, elementName, TypeDescriptor.Companion.named(elementName)))

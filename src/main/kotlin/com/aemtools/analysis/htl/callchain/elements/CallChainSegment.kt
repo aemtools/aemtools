@@ -4,7 +4,7 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.IterableJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
-import com.aemtools.completion.htl.model.HtlVariableDeclaration
+import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.constant.const.IDEA_STRING_CARET_PLACEHOLDER
 

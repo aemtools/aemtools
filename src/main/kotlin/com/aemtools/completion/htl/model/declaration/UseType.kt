@@ -1,4 +1,4 @@
-package com.aemtools.completion.htl.model
+package com.aemtools.completion.htl.model.declaration
 
 /**
  * Types of `data-sly-use` declaration.

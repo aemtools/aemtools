@@ -1,6 +1,6 @@
 package com.aemtools.lang.htl.psi.chain
 
-import com.aemtools.completion.htl.model.HtlVariableDeclaration
+import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 import com.intellij.psi.PsiElement
 import java.util.*
 

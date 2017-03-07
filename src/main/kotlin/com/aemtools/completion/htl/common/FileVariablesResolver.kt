@@ -1,7 +1,7 @@
 package com.aemtools.completion.htl.common
 
-import com.aemtools.completion.htl.model.HtlVariableDeclaration
 import com.aemtools.completion.htl.model.ResolutionResult
+import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 import com.aemtools.completion.htl.predefined.HtlELPredefined.DATA_SLY_LIST_REPEAT_LIST_FIELDS
 import com.aemtools.completion.util.*
 import com.aemtools.constant.const.htl.DATA_SLY_LIST

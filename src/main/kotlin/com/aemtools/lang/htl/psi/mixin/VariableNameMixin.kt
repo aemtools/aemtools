@@ -10,7 +10,7 @@ import com.intellij.psi.PsiNamedElement
 
 /**
  * @author Dmytro_Troynikov
- */`
+ */
 abstract class VariableNameMixin(node: ASTNode)
     : HtlELNavigableMixin(node),
         PsiNamedElement {

@@ -1,7 +1,11 @@
-package com.aemtools.completion.htl.model
+package com.aemtools.completion.htl.model.declaration
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
+import com.aemtools.completion.htl.model.declaration.DeclarationAttributeType
+import com.aemtools.completion.htl.model.declaration.DeclarationType
+import com.aemtools.completion.htl.model.ResolutionResult
+import com.aemtools.completion.htl.model.declaration.UseType
 import com.aemtools.completion.htl.predefined.HtlELPredefined
 import com.aemtools.completion.util.*
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
@@ -172,54 +176,5 @@ open class HtlVariableDeclaration internal constructor(
         }
 
     }
-
-}
-
-class HtlUseVariableDeclaration(
-        xmlAttribute: XmlAttribute,
-        variableName: String,
-        attributeType: DeclarationAttributeType,
-        type: DeclarationType = DeclarationType.VARIABLE,
-        resolutionResult: ResolutionResult = ResolutionResult()
-) : HtlVariableDeclaration(
-        xmlAttribute,
-        variableName,
-        attributeType,
-        type,
-        resolutionResult
-) {
-
-    fun useClass(): PsiClass? {
-        val useClassName = xmlAttribute.resolveUseClass()
-                ?: return null
-        return JavaSearch.findClass(useClassName, xmlAttribute.project)
-    }
-
-    fun template(): TemplateDefinition? {
-        val name = xmlAttribute.value ?: return null
-        return HtlTemplateSearch.resolveUseTemplate(name, xmlAttribute.containingFile)
-    }
-
-    fun typeDescriptor(): TypeDescriptor {
-        val useClass = useClass()
-        if (useClass != null) {
-            return JavaPsiClassTypeDescriptor(useClass, null, null)
-        }
-
-        val template = template()
-        if (template != null) {
-
-        }
-
-        return TypeDescriptor.empty()
-    }
-
-    val slyUseType: UseType
-        get() {
-            return when {
-                useClass() != null -> UseType.BEAN
-                else -> UseType.UNKNOWN
-            }
-        }
 
 }

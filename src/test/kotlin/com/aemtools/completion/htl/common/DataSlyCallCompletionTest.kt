@@ -1,6 +1,7 @@
 package com.aemtools.completion.htl.common
 
 import com.aemtools.blocks.completion.CompletionBaseLightTest
+import com.aemtools.constant.const.JCR_ROOT
 
 /**
  * @author Dmytro Troynikov
@@ -8,13 +9,13 @@ import com.aemtools.blocks.completion.CompletionBaseLightTest
 class DataSlyCallCompletionTest : CompletionBaseLightTest() {
 
     fun testMain() = completionTest {
-        addHtml("test.html", """
+        addHtml("$JCR_ROOT/test.html", """
             <div data-sly-use.template="template.html">
                 $DOLLAR{template.$CARET}
             </div>
             """.trimIndent()
         )
-        addHtml("template.html", """
+        addHtml("$JCR_ROOT/template.html", """
             <div data-sly-template.first="$DOLLAR{@ param1, param2}">
 
             </div>
@@ -24,7 +25,5 @@ class DataSlyCallCompletionTest : CompletionBaseLightTest() {
 
         shouldContain(listOf("first", "second"))
     }
-
-
 
 }

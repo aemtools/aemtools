@@ -1,8 +1,8 @@
 package com.aemtools.completion.util
 
-import com.aemtools.completion.htl.model.DeclarationAttributeType
-import com.aemtools.completion.htl.model.DeclarationType
-import com.aemtools.completion.htl.model.HtlVariableDeclaration
+import com.aemtools.completion.htl.model.declaration.DeclarationAttributeType
+import com.aemtools.completion.htl.model.declaration.DeclarationType
+import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.htl.predefined.HtlELPredefined
 import com.aemtools.constant.const.SLY_TAG

@@ -1,19 +1,14 @@
 package com.aemtools.lang.htl.psi.util
 
-import com.aemtools.completion.htl.model.DeclarationType
-import com.aemtools.lang.java.JavaSearch
-import com.intellij.openapi.project.Project
 import com.intellij.psi.*
-import com.intellij.psi.impl.source.PsiClassReferenceType
 import com.intellij.psi.impl.source.tree.CompositeElement
-import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlElement
 import com.intellij.psi.xml.XmlTag
 import com.intellij.psi.xml.XmlTokenType
 
 /**
-* @author Dmytro Troynikov
-*/
+ * @author Dmytro Troynikov
+ */
 
 /**
  * Find all methods which may used from EL
@@ -67,7 +62,7 @@ fun PsiClass.elMembers(): List<PsiMember> {
  * @param name the name of member
  * @return found [PsiMember] or _null_
  */
-fun PsiClass.findElMemberByName(name: String) : PsiMember? = elMembers().find {
+fun PsiClass.findElMemberByName(name: String): PsiMember? = elMembers().find {
     if (it is PsiMethod) {
         name == it.elName() || name == it.name
     } else {

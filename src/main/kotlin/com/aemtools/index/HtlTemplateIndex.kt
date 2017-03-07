@@ -7,6 +7,7 @@ import com.aemtools.completion.util.normalizeToJcrRoot
 import com.aemtools.constant.const.JCR_ROOT_SEPARATED
 import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.index.dataexternalizer.TemplateDefinitionExternalizer
+import com.aemtools.util.OpenApiUtil
 import com.intellij.ide.highlighter.HtmlFileType
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.util.indexing.DataIndexer
@@ -61,7 +62,12 @@ class HtlTemplateIndex : XmlIndex<TemplateDefinition>() {
     }
 
     override fun getInputFilter(): FileBasedIndex.InputFilter {
-        return FileBasedIndex.InputFilter { it.fileType == HtmlFileType.INSTANCE && it.path.contains(JCR_ROOT_SEPARATED) }
+        val isInTest = OpenApiUtil.iAmTest()
+        return FileBasedIndex.InputFilter {
+            it.fileType == HtmlFileType.INSTANCE
+                    && (it.path.contains(JCR_ROOT_SEPARATED)
+                    || isInTest)
+        }
     }
 
     override fun getValueExternalizer(): DataExternalizer<TemplateDefinition> {

@@ -1,7 +1,7 @@
 package com.aemtools.completion.util
 
-import com.aemtools.completion.htl.model.DeclarationAttributeType
-import com.aemtools.completion.htl.model.HtlVariableDeclaration
+import com.aemtools.completion.htl.model.declaration.DeclarationAttributeType
+import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 import com.aemtools.constant.const
 import com.aemtools.lang.htl.psi.*
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
