@@ -44,12 +44,14 @@ object RawCallChainProcessor {
 
         while (rawChain.isNotEmpty()) {
             val outputType = firstSegment.outputType()
-            val newSegment = if (outputType is JavaPsiClassTypeDescriptor) {
-                constructJavaChainSegment(outputType, segments.lastOrNull() as BaseCallChainSegment?,
-                        rawChain.pop())
-            } else {
-                constructEmptyChainSegment(outputType, segments.lastOrNull(),
-                        rawChain.pop())
+            val newSegment = when (outputType) {
+                is JavaPsiClassTypeDescriptor ->
+                        constructJavaChainSegment(outputType, segments.lastOrNull() as BaseCallChainSegment,
+                                rawChain.pop())
+                is TemplateTypeDescriptor ->
+                        constructJavaChainSegment(outputType, segments.lastOrNull() as BaseCallChainSegment,
+                                rawChain.pop())
+                else -> constructEmptyChainSegment(outputType, segments.lastOrNull(), rawChain.pop())
             }
 
             segments.add(newSegment)
@@ -72,7 +74,7 @@ object RawCallChainProcessor {
                 return BaseCallChainSegment(typeDescriptor, typeDescriptor, rawChainUnit.myDeclaration, listOf())
             }
             val template = declaration.template()
-            if (template != null) {
+            if (template.isNotEmpty()) {
                 val typeDescriptor = TemplateTypeDescriptor(template)
                 return BaseCallChainSegment(typeDescriptor, typeDescriptor, rawChainUnit.myDeclaration, listOf())
             }
@@ -168,7 +170,7 @@ object RawCallChainProcessor {
     /**
      * Create java chain segment
      */
-    private fun constructJavaChainSegment(inputType: JavaPsiClassTypeDescriptor,
+    private fun constructJavaChainSegment(inputType: TypeDescriptor,
                                           previousSegment: BaseCallChainSegment?,
                                           rawChainUnit: RawChainUnit): CallChainSegment = chainSegment {
         this.inputType = inputType

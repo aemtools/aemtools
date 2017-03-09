@@ -18,4 +18,7 @@ class HtlVariablesCommonTest : BaseVariantsCheckContributorTest("com/aemtools/co
     fun testDataSlyUseSecondLevelVariableDeclaredInEl() =
             assertVariants(CUSTOM_MODEL_FIELDS)
 
+    fun testDataSlyUseSecondLevelVariableDeclaredInElWithOption() =
+            assertVariants(CUSTOM_MODEL_FIELDS)
+
 }

@@ -4,7 +4,7 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.util.resolveUseClass
-import com.aemtools.index.TemplateDefinition
+import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.index.search.HtlTemplateSearch
 import com.aemtools.lang.java.JavaSearch
 import com.intellij.psi.PsiClass
@@ -33,8 +33,8 @@ class HtlUseVariableDeclaration(
         return JavaSearch.findClass(useClassName, xmlAttribute.project)
     }
 
-    fun template(): TemplateDefinition? {
-        val name = xmlAttribute.value ?: return null
+    fun template(): List<TemplateDefinition> {
+        val name = xmlAttribute.value ?: return listOf()
         return HtlTemplateSearch.resolveUseTemplate(name, xmlAttribute.containingFile)
     }
 
@@ -45,7 +45,7 @@ class HtlUseVariableDeclaration(
         }
 
         val template = template()
-        if (template != null) {
+        if (template.isNotEmpty()) {
 
         }
 

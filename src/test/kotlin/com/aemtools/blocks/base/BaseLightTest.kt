@@ -2,6 +2,7 @@ package com.aemtools.blocks.base
 
 import com.aemtools.blocks.base.model.fixture.ITestFixture
 import com.aemtools.blocks.base.model.fixture.TestFixture
+import com.aemtools.lang.htl.lexer.HtlTestCase
 import com.intellij.testFramework.PsiTestUtil
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture.CARET_MARKER
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase

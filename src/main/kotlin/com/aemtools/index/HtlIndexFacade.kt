@@ -1,11 +1,9 @@
 package com.aemtools.index
 
 import com.aemtools.completion.util.toPsiFile
-import com.intellij.ide.highlighter.HtmlFileType
-import com.intellij.lang.html.HTMLLanguage
+import com.aemtools.index.model.TemplateDefinition
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiFile
-import com.intellij.psi.PsiManager
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.util.PathUtil
@@ -48,7 +46,7 @@ object HtlIndexFacade {
         return file.toPsiFile(psiFile.project)
     }
 
-    fun importableFiles(relativeToFile: PsiFile) : List<PsiFile> {
+    fun importableFiles(relativeToFile: PsiFile): List<PsiFile> {
         val htmlFiles = FilenameIndex
                 .getAllFilesByExt(relativeToFile.project, "html", GlobalSearchScope.projectScope(relativeToFile.project))
 

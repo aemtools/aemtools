@@ -1,11 +1,6 @@
 package com.aemtools.completion.htl.model.declaration
 
-import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
-import com.aemtools.completion.htl.model.declaration.DeclarationAttributeType
-import com.aemtools.completion.htl.model.declaration.DeclarationType
 import com.aemtools.completion.htl.model.ResolutionResult
-import com.aemtools.completion.htl.model.declaration.UseType
 import com.aemtools.completion.htl.predefined.HtlELPredefined
 import com.aemtools.completion.util.*
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
@@ -13,13 +8,9 @@ import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_USE
-import com.aemtools.index.TemplateDefinition
-import com.aemtools.index.search.HtlTemplateSearch
-import com.aemtools.lang.java.JavaSearch
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
-import com.intellij.psi.PsiClass
 import com.intellij.psi.xml.XmlAttribute
 
 /**

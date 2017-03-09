@@ -1,7 +1,7 @@
 package com.aemtools.index.dataexternalizer
 
-import com.aemtools.index.TemplateDefinition
 import com.aemtools.index.dataexternalizer.TemplateDefinitionExternalizer.MARKER_BYTES
+import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.util.serializeToByteArray
 import org.junit.Assert
 import org.junit.Test

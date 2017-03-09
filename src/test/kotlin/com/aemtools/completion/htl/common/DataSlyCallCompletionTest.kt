@@ -8,7 +8,7 @@ import com.aemtools.constant.const.JCR_ROOT
  */
 class DataSlyCallCompletionTest : CompletionBaseLightTest() {
 
-    fun testMain() = completionTest {
+    fun testDataSlyCallTemplateDeclaredInSameDirectory() = completionTest {
         addHtml("$JCR_ROOT/test.html", """
             <div data-sly-use.template="template.html">
                 $DOLLAR{template.$CARET}

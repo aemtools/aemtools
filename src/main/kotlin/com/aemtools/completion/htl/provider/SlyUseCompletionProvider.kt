@@ -3,6 +3,7 @@ package com.aemtools.completion.htl.provider
 import com.aemtools.completion.util.normalizeToJcrRoot
 import com.aemtools.completion.util.relativeTo
 import com.aemtools.index.HtlIndexFacade.getTemplates
+import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.lang.java.JavaSearch
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
@@ -41,7 +42,7 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
             useClassesVariants + slingModelVariants
         } else {
             var currentFileName = parameters.originalFile.parent?.name?.toLowerCase()
-                        ?: parameters.originalFile.name.toLowerCase()
+                    ?: parameters.originalFile.name.toLowerCase()
             currentFileName = currentFileName.replace("-", "")
 
             (useClassesVariants + slingModelVariants)
@@ -84,7 +85,7 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
     private fun extractTemplates(parameters: CompletionParameters): List<LookupElement> {
         val dir = parameters.originalFile.containingDirectory.virtualFile
         val dirPath = dir.path
-        val result = if (parameters.completionType == CompletionType.BASIC) {
+        val result: List<TemplateDefinition> = if (parameters.completionType == CompletionType.BASIC) {
             getTemplates(parameters.position.project)
         } else {
             val allTemplates = getTemplates(parameters.position.project)

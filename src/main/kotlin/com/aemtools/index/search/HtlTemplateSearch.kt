@@ -1,7 +1,7 @@
 package com.aemtools.index.search
 
 import com.aemtools.index.HtlTemplateIndex
-import com.aemtools.index.TemplateDefinition
+import com.aemtools.index.model.TemplateDefinition
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiFile
 import com.intellij.psi.search.GlobalSearchScope
@@ -23,17 +23,18 @@ object HtlTemplateSearch {
         return values
     }
 
-    fun resolveUseTemplate(name: String, file: PsiFile): TemplateDefinition? {
+    fun resolveUseTemplate(name: String, file: PsiFile): List<TemplateDefinition> {
         val templates = all(file.project)
-
-        val filePath = file.virtualFile.path
-
-        if (name.isAbsolutePath()) {
-//            return templates.find {
-//
-//            }
+        return if (name.isAbsolutePath()) {
+            templates.filter {
+                it.normalizedPath == name
+            }
+        } else {
+            val fileDir = file.originalFile.containingDirectory.virtualFile.path
+            templates.filter {
+                it.containingDirectory.startsWith(fileDir)
+            }
         }
-        return null
     }
 
     private fun String.isAbsolutePath(): Boolean = this.startsWith("/")
