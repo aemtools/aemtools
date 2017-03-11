@@ -79,14 +79,24 @@ object FileVariablesResolver {
      * @return list of lookup elements
      */
     fun findForPosition(position: PsiElement, completionParameters: CompletionParameters)
-            : List<LookupElement> {
+            : List<LookupElement> =
+            declarationsForPosition(position, completionParameters)
+                    .map(HtlVariableDeclaration::toLookupElement)
+
+    /**
+     * Collect [HtlVariableDeclaration] objects suitable for given position.
+     * @param position location against which variables should be filtered
+     * @param completionParameters the completion parameters
+     * @return list of htl variable declarations
+     */
+    fun declarationsForPosition(position: PsiElement, completionParameters: CompletionParameters)
+            : List<HtlVariableDeclaration> {
         val htlFile = completionParameters.originalFile
         val htmlFile = htlFile.viewProvider.getPsi(StdLanguages.HTML)
 
         val attributes: Collection<XmlAttribute> = PsiTreeUtil.findChildrenOfType(htmlFile, XmlAttribute::class.java)
         return attributes.extractDeclarations()
-                .filterForPosition(position)
-                .map(HtlVariableDeclaration::toLookupElement)
+                .filterForPosition(position).toList()
     }
 
     /**

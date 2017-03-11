@@ -30,9 +30,10 @@ object HtlTemplateSearch {
                 it.normalizedPath == name
             }
         } else {
-            val fileDir = file.originalFile.containingDirectory.virtualFile.path
+            val path = file.originalFile.containingDirectory.virtualFile.path
+            val fileName = "$path/$name"
             templates.filter {
-                it.containingDirectory.startsWith(fileDir)
+                it.fullName == fileName
             }
         }
     }

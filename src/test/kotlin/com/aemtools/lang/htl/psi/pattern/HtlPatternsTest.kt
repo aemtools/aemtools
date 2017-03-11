@@ -7,6 +7,7 @@ import com.aemtools.lang.htl.psi.pattern.HtlPatterns.contextOptionAssignment
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyIncludeNoEl
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseNoEl
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.htlAttribute
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.mainVariableInsideOfDataSlyCall
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.memberAccess
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.optionName
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.stringLiteralValue
@@ -158,6 +159,30 @@ class HtlPatternsTest : BaseLightTest() {
             htlAttribute,
             "<div ${CARET}data-sly-use>",
             true,
+            false
+    )
+
+    fun testMainVariableInsideOFDataSlyCallMain() = testHtlPattern(
+            mainVariableInsideOfDataSlyCall,
+            """
+                <div data-sly-call="$DOLLAR{$CARET}"></div>
+            """,
+            true
+    )
+
+    fun testMainVariableInsideOfDataSlyCallShouldNotMatchInOption() = testHtlPattern(
+            mainVariableInsideOfDataSlyCall,
+            """
+                <div data-sly-call="$DOLLAR{@ $CARET}"></div>
+            """,
+            false
+    )
+
+    fun testMainVariableInsideOfDataSlyCallShouldNotMatchInOption2() = testHtlPattern(
+            mainVariableInsideOfDataSlyCall,
+            """
+                <div data-sly-call="$DOLLAR{@ option=$CARET}"></div
+            """,
             false
     )
 

@@ -5,9 +5,11 @@ import com.aemtools.completion.htl.inserthandler.HtlElStringOptionInsertHandler
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.findParentByType
 import com.aemtools.completion.util.isInsideOF
+import com.aemtools.constant.const.htl.DATA_SLY_CALL
 import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.lang.htl.psi.HtlContextExpression
 import com.aemtools.lang.htl.psi.HtlHtlEl
+import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -37,6 +39,14 @@ object HtlElOptionCompletionProvider : CompletionProvider<CompletionParameters>(
         if (hel.isInsideOF(DATA_SLY_TEMPLATE)) {
             return
         }
+
+        if (hel.isInsideOF(DATA_SLY_CALL)) {
+            val myPropertyChain = hel.findChildrenByType(PropertyAccessMixin::class.java)
+                    .firstOrNull() ?: return
+
+            val accessChain = myPropertyChain.accessChain()
+        }
+
         var children = hel.findChildrenByType(HtlContextExpression::class.java)
         if (children != null) {
             val parent = currentPosition.findParentByType(HtlContextExpression::class.java)

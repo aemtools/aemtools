@@ -124,10 +124,19 @@ fun Collection<HtlVariableDeclaration>.filterForPosition(position: PsiElement): 
 
                 return@filter position.isPartOf(tag) && position.isNotPartOf(it.xmlAttribute)
             }
-            DeclarationAttributeType.DATA_SLY_TEMPLATE -> {
+            DeclarationAttributeType.DATA_SLY_TEMPLATE_PARAMETER -> {
                 val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
 
                 return@filter position.isWithin(tag)
+            }
+
+            DeclarationAttributeType.DATA_SLY_TEMPLATE -> {
+                val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
+                if (position.isPartOf(tag)) {
+                    return@filter false
+                }
+
+                true
             }
 
             else -> false

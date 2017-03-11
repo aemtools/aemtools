@@ -8,6 +8,8 @@ import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_USE
+import com.aemtools.lang.htl.icons.HtlIcons
+import com.aemtools.lang.htl.psi.HtlVariableName
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
@@ -43,7 +45,7 @@ open class HtlVariableDeclaration internal constructor(
 
     /**
      * Convert current [HtlVariableDeclaration] into [LookupElement].
-     * @return lookup element
+     * @return lookup xmlAttribute
      */
     fun toLookupElement(): LookupElement {
         var result = LookupElementBuilder.create(variableName)
@@ -73,9 +75,13 @@ open class HtlVariableDeclaration internal constructor(
                 result = result.withTypeText("Data Sly Repeat")
                         .withIcon(AllIcons.Nodes.Variable)
             }
-            DeclarationAttributeType.DATA_SLY_TEMPLATE -> {
+            DeclarationAttributeType.DATA_SLY_TEMPLATE_PARAMETER -> {
                 result = result.withTypeText("Template Parameter")
                         .withIcon(AllIcons.Nodes.Parameter)
+            }
+            DeclarationAttributeType.DATA_SLY_TEMPLATE -> {
+                result = result.withTypeText("HTL Template")
+                        .withIcon(HtlIcons.HTL_FILE) // todo find more appropriate icon
             }
         }
         return result
@@ -151,20 +157,32 @@ open class HtlVariableDeclaration internal constructor(
                 }
 
                 htlAttributeName == DATA_SLY_TEMPLATE -> {
-                    val templateParameters = attribute.extractTemplateParameters()
-                    templateParameters.map { parameter ->
-                        HtlVariableDeclaration(
+                    val templateParameters = extractTemplateParams(attribute)
+
+                    val templateName = attribute.htlVariableName()
+                    if (templateName != null) {
+                        templateParameters + HtlVariableDeclaration(
                                 attribute,
-                                parameter,
-                                DeclarationAttributeType.DATA_SLY_TEMPLATE,
-                                DeclarationType.VARIABLE
+                                templateName,
+                                DeclarationAttributeType.DATA_SLY_TEMPLATE
                         )
+                    } else {
+                        templateParameters
                     }
                 }
 
                 else -> listOf()
             }
         }
+
+        private fun extractTemplateParams(attribute: XmlAttribute): List<HtlVariableDeclaration> =
+                attribute.extractHtlHel().findChildrenByType(HtlVariableName::class.java)
+                        .filter(HtlVariableName::isOption)
+                        .map {
+                            HtlTemplateParameterDeclaration(it,
+                                    attribute,
+                                    it.text)
+                        }
 
     }
 

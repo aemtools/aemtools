@@ -56,6 +56,7 @@ class HtlUseVariableDeclaration(
         get() {
             return when {
                 useClass() != null -> UseType.BEAN
+                template().isNotEmpty() -> UseType.HTL
                 else -> UseType.UNKNOWN
             }
         }
