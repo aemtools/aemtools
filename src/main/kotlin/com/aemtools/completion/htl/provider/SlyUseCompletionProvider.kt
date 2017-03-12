@@ -81,7 +81,6 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
                 }
     }
 
-
     private fun extractTemplates(parameters: CompletionParameters): List<LookupElement> {
         val dir = parameters.originalFile.containingDirectory.virtualFile
         val dirPath = dir.path

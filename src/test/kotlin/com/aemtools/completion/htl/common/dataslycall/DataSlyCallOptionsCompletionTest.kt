@@ -29,4 +29,12 @@ class DataSlyCallOptionsCompletionTest : CompletionBaseLightTest() {
         shouldContain(listOf("param1", "param2"))
     }
 
+    fun testDataSlyCallNoDuplicates() = completionTest {
+        addHtml("test.html", """
+            <div data-sly-template.template='$DOLLAR{@ param1, param2}'></div>
+            <div data-sly-call='$DOLLAR{template @ param1, $CARET}'></div>
+        """)
+        shouldContain(listOf("param2"))
+    }
+
 }

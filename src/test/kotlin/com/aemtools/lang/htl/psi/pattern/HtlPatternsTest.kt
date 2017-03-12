@@ -4,7 +4,9 @@ import com.aemtools.blocks.base.BaseLightTest
 import com.aemtools.completion.util.getHtmlFile
 import com.aemtools.constant.const.IDEA_STRING_CARET_PLACEHOLDER
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.contextOptionAssignment
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyCallOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyIncludeNoEl
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyTemplateOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseNoEl
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.htlAttribute
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.mainVariableInsideOfDataSlyCall
@@ -92,6 +94,36 @@ class HtlPatternsTest : BaseLightTest() {
     fun testOptionNameOptionValueShouldNotMatch() = testHtlPattern(
             optionName,
             "$DOLLAR{@ option=$CARET}",
+            false
+    )
+
+    fun testDataSlyCallOptionMain() = testHtlPattern(
+            dataSlyCallOption,
+            """
+                <div data-sly-call="$DOLLAR{template @ $CARET}"></div>
+            """,
+            true
+    )
+
+    fun testDataSlyCallOptionShouldMatchOrdinaryOption() = testHtlPattern(
+            dataSlyCallOption,
+            """
+                $DOLLAR{@ $CARET}
+            """,
+            false
+    )
+
+    fun testDataSlyTemplateOptionMain() = testHtlPattern(
+            dataSlyTemplateOption,
+            """
+                <div data-sly-template.template="$DOLLAR{@ $CARET}"></div>
+            """,
+            true
+    )
+
+    fun testDataSlyTemplateOptionShouldMatchOrdinaryOption() = testHtlPattern(
+            dataSlyTemplateOption,
+            "$DOLLAR{@ $CARET}",
             false
     )
 

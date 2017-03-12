@@ -1,4 +1,4 @@
-package com.aemtools.completion.htl.provider
+package com.aemtools.completion.htl.provider.option
 
 import com.aemtools.completion.htl.predefined.HtlELPredefined
 import com.intellij.codeInsight.completion.CompletionParameters

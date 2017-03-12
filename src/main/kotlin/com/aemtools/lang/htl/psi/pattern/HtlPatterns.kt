@@ -11,7 +11,7 @@ import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_USE
 import com.aemtools.constant.const.htl.HTL_ATTRIBUTES
 import com.aemtools.lang.htl.psi.HtlExpression
-import com.aemtools.lang.htl.psi.HtlHel
+import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.HtlTypes.*
 import com.intellij.patterns.ElementPattern
 import com.intellij.patterns.PatternCondition
@@ -45,6 +45,37 @@ object HtlPatterns {
                                     .withParent(psiElement(ASSIGNMENT)
                                             .withParent(psiElement(CONTEXT_EXPRESSION))))
             )
+
+    /**
+     * Matches option inside of data-sly-call, e.g.:
+     *
+     * ```
+     *  <div data-sly-call="${@ <caret>}"
+     * ```
+     */
+    val dataSlyCallOption: ElementPattern<PsiElement> =
+            and(
+                    optionName,
+                    psiElement()
+                            .inside(psiElement()
+                                    .with(HtlTemplatePattern(DATA_SLY_CALL)))
+            )
+
+    /**
+     * Matches option inside of data-sly-template, e.g.:
+     *
+     * ```
+     *  <div data-sly-template="${@ <caret>}"
+     * ```
+     */
+    val dataSlyTemplateOption: ElementPattern<PsiElement> =
+            and(
+                    optionName,
+                    psiElement()
+                            .inside(psiElement()
+                                    .with(HtlTemplatePattern(DATA_SLY_TEMPLATE)))
+            )
+
     /**
      * Matches the following:
      *
@@ -140,6 +171,9 @@ object HtlPatterns {
                                             string()
                                                     .equalTo(DATA_SLY_INCLUDE)))
 
+    /**
+     * Matches Htl xml attribute
+     */
     val htlAttribute: ElementPattern<PsiElement> =
             psiElement(XML_NAME).withParent(xmlAttribute().withName(
                     or(
@@ -160,15 +194,18 @@ object HtlPatterns {
      * ```
      */
     val mainVariableInsideOfDataSlyCall: ElementPattern<PsiElement> =
-            psiElement().inside(psiElement(HtlExpression::class.java)).afterLeafSkipping(
-                    psiElement(TokenType.WHITE_SPACE),
-                    psiElement(EL_START))
-                    .inside(psiElement().with(object : PatternCondition<PsiElement?>("name") {
-                        override fun accepts(t: PsiElement, context: ProcessingContext?): Boolean {
-                            return t.findParentByType(HtlHel::class.java)
-                                    ?.isInsideOf(DATA_SLY_CALL)
-                                    ?: false
-                        }
-                    }))
+            psiElement().inside(psiElement(HtlExpression::class.java))
+                    .afterLeafSkipping(
+                            psiElement(TokenType.WHITE_SPACE),
+                            psiElement(EL_START))
+                    .inside(psiElement().with(HtlTemplatePattern(DATA_SLY_CALL)))
 
+}
+
+class HtlTemplatePattern(val name: String) : PatternCondition<PsiElement?>(name) {
+    override fun accepts(element: PsiElement, context: ProcessingContext?): Boolean {
+        return element.findParentByType(HtlHtlEl::class.java)
+                ?.isInsideOf(name)
+                ?: false
+    }
 }
