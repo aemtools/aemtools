@@ -1,6 +1,7 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor
 
 import com.aemtools.completion.htl.model.ResolutionResult
+import com.aemtools.completion.htl.model.declaration.HtlTemplateParameterDeclaration
 import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.lang.htl.icons.HtlIcons
 import com.intellij.codeInsight.lookup.LookupElement
@@ -55,4 +56,19 @@ class TemplateTypeDescriptor(val template: TemplateDefinition) : TypeDescriptor 
 
     override fun isIterable(): Boolean = false
     override fun isMap(): Boolean = false
+}
+
+class TemplateParameterTypeDescriptor(
+        val declaration: HtlTemplateParameterDeclaration) : TypeDescriptor {
+
+    override fun myVariants(): List<LookupElement> = emptyList()
+
+    override fun subtype(identifier: String): TypeDescriptor =
+        TypeDescriptor.empty()
+
+    override fun name(): String = declaration.variableName
+    override fun isArray(): Boolean = false
+    override fun isIterable(): Boolean = false
+    override fun isMap(): Boolean = false
+
 }

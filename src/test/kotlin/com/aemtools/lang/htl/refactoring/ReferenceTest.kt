@@ -1,5 +1,6 @@
 package com.aemtools.lang.htl.refactoring
 
+import com.aemtools.blocks.base.BaseLightTest.Companion.CARET
 import com.aemtools.blocks.base.BaseLightTest.Companion.DOLLAR
 import com.aemtools.blocks.reference.BaseReferenceTest
 import com.aemtools.reference.htl.provider.HtlPropertyAccessReferenceProvider
@@ -158,6 +159,15 @@ class ReferenceTest : BaseReferenceTest() {
         """)
         shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
         shouldContainText("iterable")
+    }
+
+    fun testReferenceTemplateParameter() = testReference {
+        addHtml("test.html", """
+            <div data-sly-template.template='$DOLLAR{@ param}'>
+                $DOLLAR{${CARET}param}
+            </div>
+        """)
+        shouldContainText("param")
     }
 
 }

@@ -2,10 +2,7 @@ package com.aemtools.analysis.htl.callchain.rawchainprocessor
 
 import com.aemtools.analysis.htl.callchain.elements.*
 import com.aemtools.analysis.htl.callchain.elements.helper.chainSegment
-import com.aemtools.analysis.htl.callchain.typedescriptor.PredefinedVariantsTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.TemplateHolderTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.TemplateTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.*
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.IterableJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
@@ -14,6 +11,7 @@ import com.aemtools.completion.htl.common.FileVariablesResolver
 import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.htl.model.declaration.DeclarationType
 import com.aemtools.completion.htl.model.declaration.HtlTemplateDeclaration
+import com.aemtools.completion.htl.model.declaration.HtlTemplateParameterDeclaration
 import com.aemtools.completion.htl.model.declaration.HtlUseVariableDeclaration
 import com.aemtools.completion.htl.predefined.HtlELPredefined.DATA_SLY_LIST_REPEAT_LIST_FIELDS
 import com.aemtools.completion.util.hasChild
@@ -85,6 +83,9 @@ object RawCallChainProcessor {
             }
             is HtlTemplateDeclaration -> {
                 TemplateTypeDescriptor(declaration.templateDefinition)
+            }
+            is HtlTemplateParameterDeclaration -> {
+                TemplateParameterTypeDescriptor(declaration)
             }
             else -> null
         }
