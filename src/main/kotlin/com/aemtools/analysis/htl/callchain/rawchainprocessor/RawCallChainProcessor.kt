@@ -3,6 +3,7 @@ package com.aemtools.analysis.htl.callchain.rawchainprocessor
 import com.aemtools.analysis.htl.callchain.elements.*
 import com.aemtools.analysis.htl.callchain.elements.helper.chainSegment
 import com.aemtools.analysis.htl.callchain.typedescriptor.PredefinedVariantsTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.TemplateHolderTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.TemplateTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDescriptor
@@ -12,6 +13,7 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescri
 import com.aemtools.completion.htl.common.FileVariablesResolver
 import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.htl.model.declaration.DeclarationType
+import com.aemtools.completion.htl.model.declaration.HtlTemplateDeclaration
 import com.aemtools.completion.htl.model.declaration.HtlUseVariableDeclaration
 import com.aemtools.completion.htl.predefined.HtlELPredefined.DATA_SLY_LIST_REPEAT_LIST_FIELDS
 import com.aemtools.completion.util.hasChild
@@ -46,11 +48,11 @@ object RawCallChainProcessor {
             val outputType = firstSegment.outputType()
             val newSegment = when (outputType) {
                 is JavaPsiClassTypeDescriptor ->
-                        constructTypedChainSegment(outputType, segments.lastOrNull() as BaseCallChainSegment,
-                                rawChain.pop())
-                is TemplateTypeDescriptor ->
-                        constructTypedChainSegment(outputType, segments.lastOrNull() as BaseCallChainSegment,
-                                rawChain.pop())
+                    constructTypedChainSegment(outputType, segments.lastOrNull() as BaseCallChainSegment,
+                            rawChain.pop())
+                is TemplateHolderTypeDescriptor ->
+                    constructTypedChainSegment(outputType, segments.lastOrNull() as BaseCallChainSegment,
+                            rawChain.pop())
                 else -> constructEmptyChainSegment(outputType, segments.lastOrNull(), rawChain.pop())
             }
 
@@ -67,25 +69,32 @@ object RawCallChainProcessor {
 
         val declaration = rawChainUnit.myDeclaration
 
-        if (declaration is HtlUseVariableDeclaration) {
-            val typeDescriptor = declaration.useClass()?.let {
-                JavaPsiClassTypeDescriptor(it, null, null)
-            }
-            ?: declaration.template().let {
-                if (it.isNotEmpty()) {
-                    TemplateTypeDescriptor(it)
+        val type: TypeDescriptor? = when (declaration) {
+            is HtlUseVariableDeclaration -> {
+                val useClass = declaration.useClass()
+                if (useClass != null) {
+                    JavaPsiClassTypeDescriptor(useClass)
+                }
+
+                val templates = declaration.template()
+                if (templates.isNotEmpty()) {
+                    TemplateHolderTypeDescriptor(templates)
                 } else {
                     null
                 }
             }
-
-            typeDescriptor?.let {
-                if (rawChainUnit.myCallChain.isNotEmpty()) {
-                    return constructTypedChainSegment(typeDescriptor, null, rawChainUnit)
-                }
-
-                return BaseCallChainSegment(typeDescriptor, typeDescriptor, rawChainUnit.myDeclaration, listOf())
+            is HtlTemplateDeclaration -> {
+                TemplateTypeDescriptor(declaration.templateDefinition)
             }
+            else -> null
+        }
+
+        if (type != null) {
+            if (rawChainUnit.myCallChain.isNotEmpty()) {
+                return constructTypedChainSegment(type, null, rawChainUnit)
+            }
+
+            return BaseCallChainSegment(type, type, rawChainUnit.myDeclaration, listOf())
         }
 
         val inputType = resolveFirstType(rawChainUnit)
@@ -95,7 +104,10 @@ object RawCallChainProcessor {
         }
 
         if (inputType is JavaPsiClassTypeDescriptor) {
-            return constructTypedChainSegment(inputType, null, rawChainUnit)
+            if (rawChainUnit.myCallChain.isNotEmpty()) {
+                return constructTypedChainSegment(inputType, null, rawChainUnit)
+            }
+            return BaseCallChainSegment(inputType, inputType, rawChainUnit.myDeclaration, emptyList())
         } else {
             return CallChainSegment.empty()
         }

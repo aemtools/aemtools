@@ -1,6 +1,8 @@
 package com.aemtools.completion.htl.provider
 
+import com.aemtools.analysis.htl.callchain.typedescriptor.TemplateTypeDescriptor
 import com.aemtools.completion.htl.inserthandler.HtlElArrayOptionInsertHandler
+import com.aemtools.completion.htl.inserthandler.HtlElAssignmentInsertHandler
 import com.aemtools.completion.htl.inserthandler.HtlElStringOptionInsertHandler
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.findParentByType
@@ -45,6 +47,19 @@ object HtlElOptionCompletionProvider : CompletionProvider<CompletionParameters>(
                     .firstOrNull() ?: return
 
             val accessChain = myPropertyChain.accessChain()
+                    ?: return
+            val outputType = accessChain.callChainSegments
+                    .lastOrNull()?.outputType() as? TemplateTypeDescriptor
+                    ?: return
+            val templateParameters = outputType.parameters()
+            result.addAllElements(templateParameters.map {
+                LookupElementBuilder.create(it)
+                        .withIcon(AllIcons.Nodes.Parameter)
+                        .withTypeText("HTL Template Parameter")
+                        .withInsertHandler(HtlElAssignmentInsertHandler())
+            })
+            result.stopHere()
+            return
         }
 
         var children = hel.findChildrenByType(HtlContextExpression::class.java)
@@ -54,7 +69,7 @@ object HtlElOptionCompletionProvider : CompletionProvider<CompletionParameters>(
                 children -= parent
             }
         }
-        val completionVariabts = CONTEXT_PARAMETERS
+        val completionVariants = CONTEXT_PARAMETERS
                 .filter {
                     if (children.isEmpty()) {
                         true
@@ -88,7 +103,7 @@ object HtlElOptionCompletionProvider : CompletionProvider<CompletionParameters>(
                             })
                 }
 
-        result.addAllElements(completionVariabts)
+        result.addAllElements(completionVariants)
     }
 
 }

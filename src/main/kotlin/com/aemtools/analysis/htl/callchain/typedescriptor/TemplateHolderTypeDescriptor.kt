@@ -9,10 +9,10 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder
 /**
  * @author Dmytro Troynikov
  */
-class TemplateTypeDescriptor(val template: List<TemplateDefinition>)
+class TemplateHolderTypeDescriptor(val templates: List<TemplateDefinition>)
     : TypeDescriptor {
     override fun myVariants(): List<LookupElement> {
-        return template.map {
+        return templates.map {
             LookupElementBuilder.create(it.name)
                     .withTypeText("HTL Template")
                     .withIcon(HtlIcons.HTL_FILE)
@@ -20,7 +20,8 @@ class TemplateTypeDescriptor(val template: List<TemplateDefinition>)
     }
 
     override fun subtype(identifier: String): TypeDescriptor {
-        return TypeDescriptor.empty()
+        return templates.find { it.name == identifier }
+                .toTypeDescriptor()
     }
 
     override fun name(): String = "name"
@@ -34,4 +35,24 @@ class TemplateTypeDescriptor(val template: List<TemplateDefinition>)
     override fun asResolutionResult(): ResolutionResult =
             ResolutionResult(null, myVariants())
 
+    private fun TemplateDefinition?.toTypeDescriptor(): TypeDescriptor =
+            if (this != null) {
+                TemplateTypeDescriptor(this)
+            } else {
+                TypeDescriptor.empty()
+            }
+}
+
+class TemplateTypeDescriptor(val template: TemplateDefinition) : TypeDescriptor {
+    fun parameters() = template.parameters
+
+    override fun myVariants(): List<LookupElement> = emptyList()
+    override fun subtype(identifier: String): TypeDescriptor = TypeDescriptor.empty()
+
+    override fun name(): String = template.name
+
+    override fun isArray(): Boolean = false
+
+    override fun isIterable(): Boolean = false
+    override fun isMap(): Boolean = false
 }

@@ -1,4 +1,4 @@
-package com.aemtools.completion.htl.common
+package com.aemtools.completion.htl.common.dataslycall
 
 import com.aemtools.blocks.completion.CompletionBaseLightTest
 import com.aemtools.constant.const.JCR_ROOT
@@ -47,27 +47,6 @@ class DataSlyCallCompletionTest : CompletionBaseLightTest() {
         """)
 
         shouldContain(listOf("template1", "template2"))
-    }
-
-    fun testDataSlyCallParameters() = completionTest {
-        addHtml("test.html", """
-            <div data-sly-template.template="$DOLLAR{@ param1, param2}"></div>
-
-            <div data-sly-call="$DOLLAR{template @ $CARET }"></div>
-        """)
-        shouldContain(listOf("param1", "param2"))
-    }
-
-    fun testDataSlyCallParametersFromAnotherFile() = completionTest {
-        addHtml("$JCR_ROOT/apps/components/comp/comp.html", """
-            <div data-sly-use.template="template.html">
-                <div data-sly-call="$DOLLAR{template.template @ $CARET}"></div>
-            </div>
-        """)
-        addHtml("$JCR_ROOT/apps/components/comp/template.html", """
-            <div data-sly-template.template="$DOLLAR{@ param1, param2}"></div>
-        """)
-        shouldContain(listOf("param1", "param2"))
     }
 
     fun testDataSlyCallTemplateShouldBeProposedForDataSlyCall() = completionTest {

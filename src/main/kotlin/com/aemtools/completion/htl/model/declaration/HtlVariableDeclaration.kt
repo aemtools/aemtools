@@ -160,11 +160,13 @@ open class HtlVariableDeclaration internal constructor(
                     val templateParameters = extractTemplateParams(attribute)
 
                     val templateName = attribute.htlVariableName()
-                    if (templateName != null) {
-                        templateParameters + HtlVariableDeclaration(
+                    val templateDefinition = attribute.extractTemplateDefinition()
+                    if (templateName != null && templateDefinition != null) {
+                        templateParameters + HtlTemplateDeclaration(
+                                templateDefinition,
+                                templateParameters,
                                 attribute,
-                                templateName,
-                                DeclarationAttributeType.DATA_SLY_TEMPLATE
+                                templateName
                         )
                     } else {
                         templateParameters
@@ -175,7 +177,7 @@ open class HtlVariableDeclaration internal constructor(
             }
         }
 
-        private fun extractTemplateParams(attribute: XmlAttribute): List<HtlVariableDeclaration> =
+        private fun extractTemplateParams(attribute: XmlAttribute): List<HtlTemplateParameterDeclaration> =
                 attribute.extractHtlHel().findChildrenByType(HtlVariableName::class.java)
                         .filter(HtlVariableName::isOption)
                         .map {
