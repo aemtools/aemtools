@@ -1,10 +1,6 @@
 package com.aemtools.completion.util
 
-import com.aemtools.completion.htl.model.DeclarationAttributeType
-import com.aemtools.completion.htl.model.DeclarationType
-import com.aemtools.completion.htl.model.HtlVariableDeclaration
-import com.aemtools.completion.htl.model.ResolutionResult
-import com.aemtools.completion.htl.predefined.HtlELPredefined
+import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 import com.aemtools.constant.const.SLY_TAG
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
@@ -186,69 +182,10 @@ fun XmlAttribute.isHtlDeclarationAttribute(): Boolean =
 fun Collection<XmlAttribute>.extractDeclarations(): Collection<HtlVariableDeclaration> {
     return filter { it.isHtlDeclarationAttribute() }
             .flatMap {
-                with(it.name) {
-                    when {
-                        startsWith(DATA_SLY_USE) ->
-                            listOf(HtlVariableDeclaration(it, extractUseVariableName(this), DeclarationAttributeType.DATA_SLY_USE))
-
-                        startsWith(DATA_SLY_TEST) ->
-                            listOf(HtlVariableDeclaration(it, extractUseVariableName(this), DeclarationAttributeType.DATA_SLY_TEST))
-
-                        startsWith(DATA_SLY_LIST) -> {
-                            val (item, itemList) = extractItemAndItemListNames(this)
-
-                            listOf(
-                                    HtlVariableDeclaration(it, item,
-                                            DeclarationAttributeType.DATA_SLY_LIST,
-                                            DeclarationType.ITERABLE),
-                                    HtlVariableDeclaration(it, itemList,
-                                            DeclarationAttributeType.DATA_SLY_LIST,
-                                            DeclarationType.VARIABLE,
-                                            ResolutionResult(
-                                                    predefined = HtlELPredefined.DATA_SLY_LIST_REPEAT_LIST_FIELDS))
-                            )
-                        }
-
-                        startsWith(DATA_SLY_REPEAT) -> {
-                            val (item, itemList) = extractItemAndItemListNames(this)
-
-                            listOf(
-                                    HtlVariableDeclaration(it, item,
-                                            DeclarationAttributeType.DATA_SLY_REPEAT,
-                                            DeclarationType.ITERABLE),
-                                    HtlVariableDeclaration(it,
-                                            itemList,
-                                            DeclarationAttributeType.DATA_SLY_REPEAT,
-                                            DeclarationType.VARIABLE,
-                                            ResolutionResult(
-                                                    predefined = HtlELPredefined.DATA_SLY_LIST_REPEAT_LIST_FIELDS))
-                            )
-                        }
-
-                        startsWith(DATA_SLY_TEMPLATE) -> {
-                            val templateParameters = it.extractTemplateParameters()
-                            templateParameters.map { parameter ->
-                                HtlVariableDeclaration(it,
-                                        parameter,
-                                        DeclarationAttributeType.DATA_SLY_TEMPLATE,
-                                        DeclarationType.VARIABLE)
-                            }
-                        }
-                        else -> listOf()
-                    }
-                }
+                HtlVariableDeclaration.create(it)
             }
 }
 
-/**
- * Extract variable name from `data-sly-use` attribute.
- * @return the name of `data-sly-use` variable. Empty String in case if no name present in attribute name
- */
-private fun extractUseVariableName(name: String): String = if (name.lastIndexOf(".") != 1) {
-    name.substring(name.lastIndexOf(".") + 1)
-} else {
-    ""
-}
 
 /**
  * Extract template parameters from current [XmlAttribute]

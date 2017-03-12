@@ -1,8 +1,5 @@
 package com.aemtools.analysis.htl.callchain.elements
 
-import com.aemtools.analysis.htl.callchain.typedescriptor.ArrayTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.IterableTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.MapTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.intellij.psi.PsiElement
 

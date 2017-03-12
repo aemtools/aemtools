@@ -16,8 +16,8 @@ import java.util.*
  * @author Dmytro_Troynikov
  */
 open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
-                                      open val psiMember: PsiMember?,
-                                      open val originalType: PsiType?) : TypeDescriptor {
+                                      open val psiMember: PsiMember? = null,
+                                      open val originalType: PsiType? = null) : TypeDescriptor {
     override fun isArray(): Boolean = originalType is PsiArrayType
 
     override fun isIterable(): Boolean {

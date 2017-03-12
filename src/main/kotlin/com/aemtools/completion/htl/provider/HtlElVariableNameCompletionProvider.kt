@@ -1,7 +1,9 @@
 package com.aemtools.completion.htl.provider
 
-import com.aemtools.completion.htl.completionprovider.FileVariablesResolver
-import com.aemtools.completion.htl.completionprovider.PredefinedVariables
+import com.aemtools.completion.htl.common.FileVariablesResolver
+import com.aemtools.completion.htl.common.PredefinedVariables
+import com.aemtools.completion.htl.model.declaration.DeclarationAttributeType
+import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -19,8 +21,10 @@ object HtlElVariableNameCompletionProvider : CompletionProvider<CompletionParame
         }
 
         val contextObjects = PredefinedVariables.contextObjectsCompletion()
-        val fileVariables = FileVariablesResolver.findForPosition(parameters.position, parameters)
-        result.addAllElements(contextObjects + fileVariables)
+        val fileVariables = FileVariablesResolver.declarationsForPosition(parameters.position, parameters)
+                .filter { it.attributeType != DeclarationAttributeType.DATA_SLY_TEMPLATE }
+                .map(HtlVariableDeclaration::toLookupElement)
+        result.addAllElements(fileVariables + contextObjects)
         result.stopHere()
     }
 
