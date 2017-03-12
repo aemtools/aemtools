@@ -113,17 +113,6 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
 
         override fun getVariants(): Array<Any> = emptyArray()
 
-        override fun getCanonicalText(): String {
-            return "Canonical Text"
-        }
-
-        override fun getValue(): String {
-            return "My Value"
-        }
-
-        override fun toString(): String {
-            return "Overriden toString"
-        }
     }
 
     class HtlDeclarationReference(
