@@ -15,7 +15,7 @@ class IterableJavaTypeDescriptor(psiClass: PsiClass,
                                  override val originalType: PsiClassReferenceType? = null)
     : JavaPsiClassTypeDescriptor(psiClass, psiMember, originalType), IterableTypeDescriptor {
     override fun iterableType(): TypeDescriptor {
-        val className = originalType?.parameters?.get(0)?.canonicalText
+        val className = originalType?.parameters?.getOrNull(0)?.canonicalText
                 ?: return TypeDescriptor.empty()
 
         val psiClass = JavaSearch.findClass(className, psiClass.project)
