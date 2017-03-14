@@ -106,6 +106,8 @@
 
         <internalFileTemplate name="_rep_policy"/>
 
+        <customPropertyScopeProvider implementation="com.aemtools.findusages.HtlPropertyScopeProvider"/>
+
         <annotator language="HTML"
                    implementationClass="com.aemtools.lang.html.annotation.RedundantDataSlyUnwrapAnnotator"/>
         <annotator language="HTML"
