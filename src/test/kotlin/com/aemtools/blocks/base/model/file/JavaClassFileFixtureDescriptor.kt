@@ -16,9 +16,13 @@ class JavaClassFileFixtureDescriptor(
 
     override fun initialize() {
         this.psiClass = fixture.addClass(text)
-
-        this.psiFile = psiClass?.containingFile
+        val file = psiClass?.containingFile
                 ?: throw AssertionError("Unable to get PsiFile from $psiClass")
+
+        this.psiFile = file
+        if (this.containsCaret()) {
+            fixture.configureFromExistingVirtualFile(file.virtualFile)
+        }
         initialized = true
     }
 

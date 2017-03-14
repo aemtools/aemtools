@@ -8,7 +8,6 @@ class TextFileFixtureDescriptor(name: String,
     : BaseFileFixtureDescriptor(name, text, fixture) {
 
     override fun initialize() {
-        this.initialized = true
         val file = fixture.addFileToProject(_name, text)
                 ?: throw AssertionError("Unable to add file to project:\nname: $_name\ntext: $text")
 
@@ -16,6 +15,7 @@ class TextFileFixtureDescriptor(name: String,
         if (this.containsCaret()) {
             fixture.configureFromExistingVirtualFile(file.virtualFile)
         }
+        this.initialized = true
     }
 
 }
