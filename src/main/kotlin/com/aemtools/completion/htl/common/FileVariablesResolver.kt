@@ -11,7 +11,6 @@ import com.aemtools.constant.const.htl.DATA_SLY_USE
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.java.JavaSearch
 import com.intellij.codeInsight.completion.CompletionParameters
-import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.lang.StdLanguages
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
@@ -71,17 +70,6 @@ object FileVariablesResolver {
 
         return result
     }
-
-    /**
-     * Collect [LookupElement] list from elements which applicable for given position.
-     * @param position location against which lookup elements should be filtered
-     * @param completionParameters the completion parameters
-     * @return list of lookup elements
-     */
-    fun findForPosition(position: PsiElement, completionParameters: CompletionParameters)
-            : List<LookupElement> =
-            declarationsForPosition(position, completionParameters)
-                    .map(HtlVariableDeclaration::toLookupElement)
 
     /**
      * Collect [HtlVariableDeclaration] objects suitable for given position.

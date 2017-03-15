@@ -34,7 +34,7 @@ interface TypeDescriptor {
         fun named(name: String) = NamedTypeDescriptor(name)
     }
 
-    fun asResolutionResult(): ResolutionResult = ResolutionResult()
+    fun asResolutionResult(): ResolutionResult = ResolutionResult(predefined = myVariants())
 
 }
 

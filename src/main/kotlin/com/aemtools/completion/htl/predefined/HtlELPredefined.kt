@@ -8,6 +8,7 @@ import com.aemtools.constant.const.java.VALUE_MAP
 import com.google.gson.annotations.SerializedName
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
+import com.intellij.icons.AllIcons
 
 /**
  * @author Dmytro Troynikov
@@ -140,9 +141,10 @@ data class PredefinedCompletion(
         val documentation: String? = null
 ) {
     fun toLookupElement(): LookupElement {
-        val result = LookupElementBuilder.create(completionText)
+        var result = LookupElementBuilder.create(completionText)
+                .withIcon(AllIcons.Nodes.Parameter)
         if (type != null) {
-            result.withTypeText(type, true)
+            result = result.withTypeText(type, true)
         }
         return result
     }

@@ -2,7 +2,9 @@ package com.aemtools.analysis.htl.callchain.typedescriptor
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor.Companion.empty
 import com.aemtools.completion.htl.model.ResolutionResult
+import com.aemtools.completion.htl.predefined.PredefinedCompletion
 import com.intellij.codeInsight.lookup.LookupElement
+import org.apache.commons.lang.StringUtils
 
 /**
  * Type Descriptor with predefined set of variants.
@@ -10,21 +12,13 @@ import com.intellij.codeInsight.lookup.LookupElement
  * @author Dmytro_Troynikov
  */
 class PredefinedVariantsTypeDescriptor(val variants: List<LookupElement>) : TypeDescriptor {
-    override fun name(): String {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun name(): String = StringUtils.EMPTY
 
-    override fun isArray(): Boolean {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun isArray(): Boolean = false
 
-    override fun isIterable(): Boolean {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun isIterable(): Boolean = false
 
-    override fun isMap(): Boolean {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun isMap(): Boolean = false
 
     override fun myVariants(): List<LookupElement> = variants
 
@@ -32,4 +26,24 @@ class PredefinedVariantsTypeDescriptor(val variants: List<LookupElement>) : Type
 
     override fun asResolutionResult(): ResolutionResult =
             ResolutionResult(null, variants)
+
+}
+
+/**
+ * Type Descriptor backed by list of [PredefinedCompletion] objects.
+ */
+class PredefinedTypeDescriptor(val predefined: List<PredefinedCompletion>) : TypeDescriptor {
+    override fun myVariants(): List<LookupElement> {
+        return predefined.map(PredefinedCompletion::toLookupElement)
+    }
+
+    override fun subtype(identifier: String): TypeDescriptor = empty()
+
+    override fun name(): String = ""
+
+    override fun isArray(): Boolean = false
+
+    override fun isIterable(): Boolean = false
+
+    override fun isMap(): Boolean = false
 }

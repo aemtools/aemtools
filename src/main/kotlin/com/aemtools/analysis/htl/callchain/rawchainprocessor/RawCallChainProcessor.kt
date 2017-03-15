@@ -104,7 +104,8 @@ object RawCallChainProcessor {
             return createAttributeChainElement(rawChainUnit)
         }
 
-        if (inputType is JavaPsiClassTypeDescriptor) {
+        if (inputType is JavaPsiClassTypeDescriptor
+                || inputType is MergedTypeDescriptor) {
             if (rawChainUnit.myCallChain.isNotEmpty()) {
                 return constructTypedChainSegment(inputType, null, rawChainUnit)
             }
@@ -132,7 +133,10 @@ object RawCallChainProcessor {
         }
 
         if (psiClass == null && firstElement != null) {
-            psiClass = PredefinedVariables.resolveByIdentifier(firstElement.variableName(), firstElement.project)
+            val type = PredefinedVariables.typeDescriptorByIdentifier(firstElement.variableName(), firstElement.project)
+            if (type !is EmptyTypeDescriptor) {
+                return type
+            }
         }
 
         if (psiClass == null) {
