@@ -9,11 +9,8 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeD
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
 import com.aemtools.completion.htl.common.FileVariablesResolver
 import com.aemtools.completion.htl.common.PredefinedVariables
-import com.aemtools.completion.htl.model.declaration.DeclarationType
-import com.aemtools.completion.htl.model.declaration.HtlTemplateDeclaration
-import com.aemtools.completion.htl.model.declaration.HtlTemplateParameterDeclaration
-import com.aemtools.completion.htl.model.declaration.HtlUseVariableDeclaration
-import com.aemtools.completion.htl.predefined.HtlELPredefined.DATA_SLY_LIST_REPEAT_LIST_FIELDS
+import com.aemtools.completion.htl.model.declaration.*
+import com.aemtools.completion.htl.predefined.HtlELPredefined.LIST_AND_REPEAT_HELPER_OBJECT
 import com.aemtools.completion.util.hasChild
 import com.aemtools.completion.util.resolveUseClass
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
@@ -204,12 +201,12 @@ object RawCallChainProcessor {
         var currentElement = rawElements.pop()
 
         var callChainElement = when {
-            rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE
-                    && extractElementName(currentElement).endsWith("List") ->
+            rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.LIST_HELPER
+                    || rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.REPEAT_HELPER ->
 
                 BaseChainElement(currentElement,
                         extractElementName(currentElement),
-                        PredefinedVariantsTypeDescriptor(DATA_SLY_LIST_REPEAT_LIST_FIELDS))
+                        PredefinedTypeDescriptor(LIST_AND_REPEAT_HELPER_OBJECT))
 
             rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE
                     && inputType is ArrayJavaTypeDescriptor -> {

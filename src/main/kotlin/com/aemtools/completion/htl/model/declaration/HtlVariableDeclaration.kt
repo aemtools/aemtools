@@ -1,7 +1,6 @@
 package com.aemtools.completion.htl.model.declaration
 
 import com.aemtools.completion.htl.model.ResolutionResult
-import com.aemtools.completion.htl.predefined.HtlELPredefined
 import com.aemtools.completion.util.*
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
@@ -83,6 +82,14 @@ open class HtlVariableDeclaration internal constructor(
                 result = result.withTypeText("HTL Template")
                         .withIcon(HtlIcons.HTL_FILE) // todo find more appropriate icon
             }
+            DeclarationAttributeType.LIST_HELPER -> {
+                result = result.withTypeText("List Helper")
+                        .withIcon(AllIcons.Nodes.Advice)
+            }
+            DeclarationAttributeType.REPEAT_HELPER -> {
+                result = result.withTypeText("Repeat Helper")
+                        .withIcon(AllIcons.Nodes.Advice)
+            }
         }
         return result
     }
@@ -126,11 +133,8 @@ open class HtlVariableDeclaration internal constructor(
                             HtlVariableDeclaration(
                                     attribute,
                                     itemList,
-                                    DeclarationAttributeType.DATA_SLY_LIST,
-                                    DeclarationType.VARIABLE,
-                                    ResolutionResult(
-                                            predefined = HtlELPredefined.DATA_SLY_LIST_REPEAT_LIST_FIELDS
-                                    )
+                                    DeclarationAttributeType.LIST_HELPER,
+                                    DeclarationType.VARIABLE
                             )
                     )
                 }
@@ -147,11 +151,8 @@ open class HtlVariableDeclaration internal constructor(
                             HtlVariableDeclaration(
                                     attribute,
                                     itemList,
-                                    DeclarationAttributeType.DATA_SLY_REPEAT,
-                                    DeclarationType.ITERABLE,
-                                    ResolutionResult(
-                                            predefined = HtlELPredefined.DATA_SLY_LIST_REPEAT_LIST_FIELDS
-                                    )
+                                    DeclarationAttributeType.REPEAT_HELPER,
+                                    DeclarationType.ITERABLE
                             )
                     )
                 }

@@ -37,7 +37,9 @@ class PredefinedTypeDescriptor(val predefined: List<PredefinedCompletion>) : Typ
         return predefined.map(PredefinedCompletion::toLookupElement)
     }
 
-    override fun subtype(identifier: String): TypeDescriptor = empty()
+    override fun subtype(identifier: String): TypeDescriptor =
+        predefined.find { it.completionText == identifier }?.asTypeDescriptor()
+        ?: empty()
 
     override fun name(): String = ""
 
@@ -46,4 +48,21 @@ class PredefinedTypeDescriptor(val predefined: List<PredefinedCompletion>) : Typ
     override fun isIterable(): Boolean = false
 
     override fun isMap(): Boolean = false
+}
+
+class PredefinedDescriptionTypeDescriptor(val predefined: PredefinedCompletion) : TypeDescriptor {
+    override fun myVariants(): List<LookupElement> = emptyList()
+
+    override fun subtype(identifier: String): TypeDescriptor = empty()
+
+    override fun name(): String = predefined.type ?: ""
+
+    override fun isArray(): Boolean = false
+
+    override fun isIterable(): Boolean = false
+
+    override fun isMap(): Boolean = false
+
+    override fun documentation(): String? = predefined.documentation
+
 }

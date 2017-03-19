@@ -44,4 +44,21 @@ abstract class VariableNameMixin(node: ASTNode)
         return result
     }
 
+    override fun isEquivalentTo(another: PsiElement?): Boolean {
+        val other = another as? VariableNameMixin
+                ?: return false
+
+        return variableName() == other.variableName()
+    }
+
+    override fun equals(another: Any?): Boolean {
+        val other = another as? VariableNameMixin
+                ?: return false
+
+        return variableName() == other.variableName()
+    }
+
+    override fun hashCode(): Int {
+        return variableName().hashCode()
+    }
 }

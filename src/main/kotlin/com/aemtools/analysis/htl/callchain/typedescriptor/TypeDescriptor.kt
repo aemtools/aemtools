@@ -10,19 +10,45 @@ import com.intellij.psi.PsiType
  */
 interface TypeDescriptor {
 
+    /**
+     * Return list of available [LookupElement] objects.
+     */
     fun myVariants(): List<LookupElement>
 
+    /**
+     * Resolve subtype by identifier.
+     */
     fun subtype(identifier: String): TypeDescriptor
 
+    /**
+     * The name of current type.
+     */
     fun name(): String
 
+    /**
+     * Check if current type doesn't have variants.
+     */
     fun isEmpty() = myVariants().isEmpty()
 
+    /**
+     * Check if the type is array type.
+     */
     fun isArray(): Boolean
 
+    /**
+     * Check if the type is iterable (i.e. may be used within *data-sly-list* or *data-sly-repeat*).
+     */
     fun isIterable(): Boolean
 
+    /**
+     * Check if the type is a map.
+     */
     fun isMap(): Boolean
+
+    /**
+     * Get description of the type.
+     */
+    fun documentation(): String? = null
 
     companion object {
         private val EMPTY_DESCRIPTOR = EmptyTypeDescriptor()

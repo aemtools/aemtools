@@ -3,12 +3,14 @@ package com.aemtools.completion.htl.predefined
 import com.aemtools.analysis.htl.callchain.elements.CallChain
 import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.elements.CallChainSegment
+import com.aemtools.analysis.htl.callchain.typedescriptor.PredefinedDescriptionTypeDescriptor
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.constant.const.java.VALUE_MAP
 import com.google.gson.annotations.SerializedName
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
+import javax.swing.Icon
 
 /**
  * @author Dmytro Troynikov
@@ -77,19 +79,16 @@ object HtlELPredefined {
             """)
     )
 
-    /**
-     * List of [LookupElement] objects to be suggested as variants for additional
-     * "List" variable spawned by `data-sly-list` and `data-sly-repeat` attributes.
-     */
-    val DATA_SLY_LIST_REPEAT_LIST_FIELDS: List<LookupElement> = listOf(
-            LookupElementBuilder.create("index"),
-            LookupElementBuilder.create("count"),
-            LookupElementBuilder.create("first"),
-            LookupElementBuilder.create("middle"),
-            LookupElementBuilder.create("last"),
-            LookupElementBuilder.create("odd"),
-            LookupElementBuilder.create("even")
-    )
+    val LIST_AND_REPEAT_HELPER_OBJECT = listOf(
+            pc("index", "int", "zero-based counter (0..length-1)"),
+            pc("count", "int", "one-based counter (1..length)"),
+            pc("count", "boolean", "<b>true</b> for the first element being iterated"),
+            pc("middle", "boolean", "<b>true</b> if element being iterated is neither the first nor the last"),
+            pc("first", "boolean", "<b>true</b> for the first element being iterated"),
+            pc("last", "boolean", "<b>true</b> for the last element being iterated"),
+            pc("odd", "boolean", "<b>true</b> if index is odd"),
+            pc("even", "boolean", "<b>true</b> if index is even")
+    ).map { it.copy(typeText = "List Helper") }
 
     val DEFAULT_PROPERTIES = listOf(
             pc("jcr:title"),
@@ -130,24 +129,32 @@ object HtlELPredefined {
 
 }
 
-private fun pc(completionText: String, documentation: String? = null) =
-        PredefinedCompletion(completionText, documentation)
+private fun pc(completionText: String,
+               type: String? = null,
+               documentation: String? = null) =
+        PredefinedCompletion(completionText, type, documentation)
 
 data class PredefinedCompletion(
         @SerializedName(value = "name")
         val completionText: String,
         val type: String? = null,
         @SerializedName(value = "description")
-        val documentation: String? = null
+        val documentation: String? = null,
+        val typeText: String = "Page Property",
+        val icon: Icon = AllIcons.Nodes.Parameter
 ) {
     fun toLookupElement(): LookupElement {
         var result = LookupElementBuilder.create(completionText)
                 .withIcon(AllIcons.Nodes.Parameter)
+                .withTypeText(typeText)
         if (type != null) {
-            result = result.withTypeText(type, true)
+            result = result.withTailText("($type)", true)
         }
         return result
     }
+
+    fun asTypeDescriptor(): PredefinedDescriptionTypeDescriptor =
+            PredefinedDescriptionTypeDescriptor(this)
 }
 
 /**

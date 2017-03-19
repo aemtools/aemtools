@@ -2,9 +2,9 @@ package com.aemtools.analysis.htl.callchain.typedescriptor
 
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.intellij.codeInsight.lookup.LookupElement
-import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
 
 /**
+ * Type descriptor compounded from the type descriptors.
  * @author Dmytro Troynikov
  */
 class MergedTypeDescriptor(val type1: TypeDescriptor,
