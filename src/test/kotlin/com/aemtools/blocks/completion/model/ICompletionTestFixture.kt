@@ -19,4 +19,6 @@ interface ICompletionTestFixture : ITestFixture {
     fun smart()
 
     fun shouldContain(variants: List<String>, strict: Boolean = true)
+
+    fun shouldNotContain(variants: List<String>)
 }

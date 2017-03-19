@@ -4,9 +4,12 @@ import com.aemtools.blocks.base.BaseLightTest
 import com.aemtools.completion.util.getHtmlFile
 import com.aemtools.constant.const.IDEA_STRING_CARET_PLACEHOLDER
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.contextOptionAssignment
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyCallOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyIncludeNoEl
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyTemplateOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseNoEl
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.htlAttribute
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.mainVariableInsideOfDataSlyCall
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.memberAccess
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.optionName
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.stringLiteralValue
@@ -94,6 +97,36 @@ class HtlPatternsTest : BaseLightTest() {
             false
     )
 
+    fun testDataSlyCallOptionMain() = testHtlPattern(
+            dataSlyCallOption,
+            """
+                <div data-sly-call="$DOLLAR{template @ $CARET}"></div>
+            """,
+            true
+    )
+
+    fun testDataSlyCallOptionShouldMatchOrdinaryOption() = testHtlPattern(
+            dataSlyCallOption,
+            """
+                $DOLLAR{@ $CARET}
+            """,
+            false
+    )
+
+    fun testDataSlyTemplateOptionMain() = testHtlPattern(
+            dataSlyTemplateOption,
+            """
+                <div data-sly-template.template="$DOLLAR{@ $CARET}"></div>
+            """,
+            true
+    )
+
+    fun testDataSlyTemplateOptionShouldMatchOrdinaryOption() = testHtlPattern(
+            dataSlyTemplateOption,
+            "$DOLLAR{@ $CARET}",
+            false
+    )
+
     fun testContextOptionAssignmentMain() = testHtlPattern(
             contextOptionAssignment,
             "$DOLLAR{@ context='$CARET'}",
@@ -158,6 +191,30 @@ class HtlPatternsTest : BaseLightTest() {
             htlAttribute,
             "<div ${CARET}data-sly-use>",
             true,
+            false
+    )
+
+    fun testMainVariableInsideOFDataSlyCallMain() = testHtlPattern(
+            mainVariableInsideOfDataSlyCall,
+            """
+                <div data-sly-call="$DOLLAR{$CARET}"></div>
+            """,
+            true
+    )
+
+    fun testMainVariableInsideOfDataSlyCallShouldNotMatchInOption() = testHtlPattern(
+            mainVariableInsideOfDataSlyCall,
+            """
+                <div data-sly-call="$DOLLAR{@ $CARET}"></div>
+            """,
+            false
+    )
+
+    fun testMainVariableInsideOfDataSlyCallShouldNotMatchInOption2() = testHtlPattern(
+            mainVariableInsideOfDataSlyCall,
+            """
+                <div data-sly-call="$DOLLAR{@ option=$CARET}"></div
+            """,
             false
     )
 

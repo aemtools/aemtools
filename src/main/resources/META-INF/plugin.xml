@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.aemtools</id>
     <name>AEM Tools</name>
-    <version>0.5.3</version>
+    <version>0.6</version>
     <category>Framework integration</category>
     <vendor email="dmytrotroynikov@gmail.com" url="https://github.com/DmytroTroynikov/aemtools">Dmytro Troynikov</vendor>
 
@@ -26,8 +26,22 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li>Added documentation for standard options</li>
-            <li>fixed issue with sly use completion on multi module projects</li>
+            <li>Added completion for data-sly-call
+             <ul>
+                <li>
+                list of available templates in current scope
+                will be proposed as template identifier (data-sly-call="${&lt;caret&gt;}")
+                </li>
+                <li>
+                list of parameters declared in used template
+                will be proposed as options (data-sly-call="${template @ &lt;caret&gt;}")
+                </li>
+             </ul>
+            </li>
+            <li>
+            Fixed issue when "Find Usages" action didn't find Java method usages in HTL by short name
+            (e.g. Java method name - "getProperty", reference in HTL - "property")
+            </li>
         </ul>
     ]]>
     </change-notes>
@@ -105,6 +119,8 @@
                             id="aemtools.repository-service"/>
 
         <internalFileTemplate name="_rep_policy"/>
+
+        <customPropertyScopeProvider implementation="com.aemtools.findusages.HtlPropertyScopeProvider"/>
 
         <annotator language="HTML"
                    implementationClass="com.aemtools.lang.html.annotation.RedundantDataSlyUnwrapAnnotator"/>

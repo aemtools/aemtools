@@ -1,6 +1,6 @@
 package com.aemtools.completion.html.provider
 
-import com.aemtools.completion.htl.completionprovider.SlyUseCompletionProvider
+import com.aemtools.completion.htl.provider.SlyUseCompletionProvider
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet

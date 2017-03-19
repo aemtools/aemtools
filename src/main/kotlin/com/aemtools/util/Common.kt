@@ -32,4 +32,6 @@ object OpenApiUtil {
     fun isCurrentThreadIsDispatch(): Boolean
             = ApplicationManager.getApplication().isDispatchThread
 
+    fun iAmTest(): Boolean = ApplicationManager.getApplication().isUnitTestMode
+
 }

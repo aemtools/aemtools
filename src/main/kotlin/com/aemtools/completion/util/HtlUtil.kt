@@ -1,7 +1,7 @@
 package com.aemtools.completion.util
 
-import com.aemtools.completion.htl.model.DeclarationAttributeType
-import com.aemtools.completion.htl.model.HtlVariableDeclaration
+import com.aemtools.completion.htl.model.declaration.DeclarationAttributeType
+import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 import com.aemtools.constant.const
 import com.aemtools.lang.htl.psi.*
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
@@ -114,20 +114,31 @@ fun Collection<HtlVariableDeclaration>.filterForPosition(position: PsiElement): 
                 true
             DeclarationAttributeType.DATA_SLY_TEST ->
                 true
-            DeclarationAttributeType.DATA_SLY_LIST -> {
+            DeclarationAttributeType.DATA_SLY_LIST,
+            DeclarationAttributeType.LIST_HELPER -> {
                 val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
 
                 return@filter position.isWithin(tag)
             }
-            DeclarationAttributeType.DATA_SLY_REPEAT -> {
+            DeclarationAttributeType.DATA_SLY_REPEAT,
+            DeclarationAttributeType.REPEAT_HELPER -> {
                 val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
 
                 return@filter position.isPartOf(tag) && position.isNotPartOf(it.xmlAttribute)
             }
-            DeclarationAttributeType.DATA_SLY_TEMPLATE -> {
+            DeclarationAttributeType.DATA_SLY_TEMPLATE_PARAMETER -> {
                 val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
 
                 return@filter position.isWithin(tag)
+            }
+
+            DeclarationAttributeType.DATA_SLY_TEMPLATE -> {
+                val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
+                if (position.isPartOf(tag)) {
+                    return@filter false
+                }
+
+                true
             }
 
             else -> false

@@ -1,7 +1,7 @@
 package com.aemtools.lang.htl.psi.mixin
 
-import com.aemtools.completion.htl.completionprovider.FileVariablesResolver
-import com.aemtools.completion.htl.completionprovider.PredefinedVariables
+import com.aemtools.completion.htl.common.FileVariablesResolver
+import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiClass
@@ -44,4 +44,21 @@ abstract class VariableNameMixin(node: ASTNode)
         return result
     }
 
+    override fun isEquivalentTo(another: PsiElement?): Boolean {
+        val other = another as? VariableNameMixin
+                ?: return false
+
+        return variableName() == other.variableName()
+    }
+
+    override fun equals(another: Any?): Boolean {
+        val other = another as? VariableNameMixin
+                ?: return false
+
+        return variableName() == other.variableName()
+    }
+
+    override fun hashCode(): Int {
+        return variableName().hashCode()
+    }
 }

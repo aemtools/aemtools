@@ -16,8 +16,8 @@ import java.util.*
  * @author Dmytro_Troynikov
  */
 open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
-                                      open val psiMember: PsiMember?,
-                                      open val originalType: PsiType?) : TypeDescriptor {
+                                      open val psiMember: PsiMember? = null,
+                                      open val originalType: PsiType? = null) : TypeDescriptor {
     override fun isArray(): Boolean = originalType is PsiArrayType
 
     override fun isIterable(): Boolean {
@@ -110,7 +110,9 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
     }
 
     companion object {
-        fun create(psiClass: PsiClass, psiMember: PsiMember?, psiType: PsiType?) : JavaPsiClassTypeDescriptor {
+        fun create(psiClass: PsiClass,
+                   psiMember: PsiMember? = null,
+                   psiType: PsiType? = null) : JavaPsiClassTypeDescriptor {
             return when (psiType) {
                 is PsiClassReferenceType -> {
                     val iterable = JavaSearch.findClass("java.lang.Iterable", psiClass.project)

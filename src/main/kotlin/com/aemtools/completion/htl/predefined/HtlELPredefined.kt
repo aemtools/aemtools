@@ -3,11 +3,14 @@ package com.aemtools.completion.htl.predefined
 import com.aemtools.analysis.htl.callchain.elements.CallChain
 import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.elements.CallChainSegment
+import com.aemtools.analysis.htl.callchain.typedescriptor.PredefinedDescriptionTypeDescriptor
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.constant.const.java.VALUE_MAP
 import com.google.gson.annotations.SerializedName
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
+import com.intellij.icons.AllIcons
+import javax.swing.Icon
 
 /**
  * @author Dmytro Troynikov
@@ -76,32 +79,50 @@ object HtlELPredefined {
             """)
     )
 
-    /**
-     * List of [LookupElement] objects to be suggested as variants for additional
-     * "List" variable spawned by `data-sly-list` and `data-sly-repeat` attributes.
-     */
-    val DATA_SLY_LIST_REPEAT_LIST_FIELDS: List<LookupElement> = listOf(
-            LookupElementBuilder.create("index"),
-            LookupElementBuilder.create("count"),
-            LookupElementBuilder.create("first"),
-            LookupElementBuilder.create("middle"),
-            LookupElementBuilder.create("last"),
-            LookupElementBuilder.create("odd"),
-            LookupElementBuilder.create("even")
+    val LIST_AND_REPEAT_HELPER_OBJECT = listOf(
+            pc("index", "int", "zero-based counter (0..length-1)"),
+            pc("count", "int", "one-based counter (1..length)"),
+            pc("count", "boolean", "<b>true</b> for the first element being iterated"),
+            pc("middle", "boolean", "<b>true</b> if element being iterated is neither the first nor the last"),
+            pc("first", "boolean", "<b>true</b> for the first element being iterated"),
+            pc("last", "boolean", "<b>true</b> for the last element being iterated"),
+            pc("odd", "boolean", "<b>true</b> if index is odd"),
+            pc("even", "boolean", "<b>true</b> if index is even")
     )
 
     val DEFAULT_PROPERTIES = listOf(
-            pc("jcr:title"),
-            pc("jcr:description"),
-            pc("jcr:primaryType"),
-            pc("jcr:mixinTypes"),
-            pc("jcr:createdBy"),
-            pc("cq:lastReplicationAction"),
-            pc("cq:lastReplicatedBy"),
-            pc("jcr:lastModifiedBy"),
-            pc("jcr:lastModified"),
-            pc("cq:lastReplicated"),
-            pc("sling:resourceType")
+            pc("jcr:title",
+                    "java.lang.String",
+                    "String value of <b>jcr:title</b> property, or empty String if such property does not exist."),
+            pc("jcr:description", "java.lang.String",
+                    "String value of <b>jcr:description</b> property, or empty String if such property does not exist."),
+            pc("jcr:primaryType",
+                    "java.lang.String",
+                    "String defines primary type of the component."),
+            pc("jcr:mixinTypes",
+                    "java.lang.String[]",
+                    "String array of mixin types"),
+            pc("jcr:createdBy",
+                    "java.lang.String",
+                    "ID of user, created the component or page."),
+            pc("cq:lastReplicationAction",
+                    "java.lang.String",
+                    "Last replication action performed on this node."),
+            pc("cq:lastReplicatedBy",
+                    "java.lang.String",
+                    "ID of user, which replicated current node the last time."),
+            pc("jcr:lastModifiedBy",
+                    "java.lang.String",
+                    "ID of user, which modified current node the last time."),
+            pc("jcr:lastModified",
+                    "java.util.Calendar",
+                    "Date and time of last modified action."),
+            pc("cq:lastReplicated",
+                    "java.util.Calendar",
+                    "Date and time of last replication action."),
+            pc("sling:resourceType",
+                    "java.lang.String",
+                    "String defines the resource type of the component or page.")
     )
 
     fun addPredefined(callChain: CallChain,
@@ -129,23 +150,31 @@ object HtlELPredefined {
 
 }
 
-private fun pc(completionText: String, documentation: String? = null) =
-        PredefinedCompletion(completionText, documentation)
+private fun pc(completionText: String,
+               type: String? = null,
+               documentation: String? = null) =
+        PredefinedCompletion(completionText, type, documentation)
 
 data class PredefinedCompletion(
         @SerializedName(value = "name")
         val completionText: String,
         val type: String? = null,
         @SerializedName(value = "description")
-        val documentation: String? = null
+        val documentation: String? = null,
+        val typeText: String? = null,
+        val icon: Icon? = AllIcons.Nodes.Parameter
 ) {
     fun toLookupElement(): LookupElement {
-        val result = LookupElementBuilder.create(completionText)
+        var result = LookupElementBuilder.create(completionText)
+                .withIcon(icon ?: AllIcons.Nodes.Parameter)
         if (type != null) {
-            result.withTypeText(type, true)
+            result = result.withTypeText(type)
         }
         return result
     }
+
+    fun asTypeDescriptor(): PredefinedDescriptionTypeDescriptor =
+            PredefinedDescriptionTypeDescriptor(this)
 }
 
 /**

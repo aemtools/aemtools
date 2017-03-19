@@ -20,4 +20,12 @@ data class ResolutionResult(val psiClass: PsiClass? = null,
      */
     fun isNotEmpty() = !isEmpty()
 
+    operator fun plus(other: ResolutionResult) : ResolutionResult {
+        val myPredefined = predefined ?: emptyList()
+        val otherPredefined = other.predefined ?: emptyList()
+        return ResolutionResult(
+                other.psiClass ?: this.psiClass,
+                myPredefined + otherPredefined
+        )
+    }
 }

@@ -1,7 +1,9 @@
 package com.aemtools.lang.htl.refactoring
 
+import com.aemtools.blocks.base.BaseLightTest.Companion.CARET
 import com.aemtools.blocks.base.BaseLightTest.Companion.DOLLAR
 import com.aemtools.blocks.reference.BaseReferenceTest
+import com.aemtools.lang.htl.psi.HtlVariableName
 import com.aemtools.reference.htl.provider.HtlPropertyAccessReferenceProvider
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiField
@@ -158,6 +160,16 @@ class ReferenceTest : BaseReferenceTest() {
         """)
         shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
         shouldContainText("iterable")
+    }
+
+    fun testReferenceTemplateParameter() = testReference {
+        addHtml("test.html", """
+            <div data-sly-template.template='$DOLLAR{@ param}'>
+                $DOLLAR{${CARET}param}
+            </div>
+        """)
+        shouldResolveTo(HtlVariableName::class.java)
+        shouldContainText("param")
     }
 
 }

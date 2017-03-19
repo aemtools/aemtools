@@ -2,6 +2,7 @@ package com.aemtools.blocks.base
 
 import com.aemtools.blocks.base.model.fixture.ITestFixture
 import com.aemtools.blocks.base.model.fixture.TestFixture
+import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess
 import com.intellij.testFramework.PsiTestUtil
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture.CARET_MARKER
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
@@ -24,6 +25,7 @@ abstract class BaseLightTest(val withAemUberJar: Boolean = false) : LightCodeIns
 
     override fun setUp() {
         super.setUp()
+        VfsRootAccess.allowRootAccess(File("src/test").absolutePath)
         if (withAemUberJar) {
             PsiTestUtil.addLibrary(myModule,
                     "aem-api",
@@ -32,8 +34,13 @@ abstract class BaseLightTest(val withAemUberJar: Boolean = false) : LightCodeIns
         }
     }
 
+    override fun tearDown() {
+        super.tearDown()
+        VfsRootAccess.disallowRootAccess(File("src/test").absolutePath)
+    }
+
     companion object {
-        val DOLLAR : String = "$"
+        val DOLLAR: String = "$"
         val CARET: String = CARET_MARKER
     }
 

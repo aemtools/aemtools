@@ -1,12 +1,12 @@
 package com.aemtools.lang.html
 
 import com.aemtools.lang.html.annotation.RedundantDataSlyUnwrapAnnotator.Companion.REDUNDANT_DATA_SLY_UNWRAP_MESSAGE
-import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase
+import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 
 /**
  * @author Dmytro Troynikov
  */
-class RedundantDataSlyUnwrapAnnotatorTest : LightPlatformCodeInsightFixtureTestCase() {
+class RedundantDataSlyUnwrapAnnotatorTest : LightCodeInsightFixtureTestCase() {
 
     fun testRedundantDataSlyUnwrap() {
         myFixture.configureByText("test.html", """
