@@ -88,7 +88,7 @@ object HtlELPredefined {
             pc("last", "boolean", "<b>true</b> for the last element being iterated"),
             pc("odd", "boolean", "<b>true</b> if index is odd"),
             pc("even", "boolean", "<b>true</b> if index is even")
-    ).map { it.copy(typeText = "List Helper") }
+    )
 
     val DEFAULT_PROPERTIES = listOf(
             pc("jcr:title"),
@@ -140,15 +140,14 @@ data class PredefinedCompletion(
         val type: String? = null,
         @SerializedName(value = "description")
         val documentation: String? = null,
-        val typeText: String = "Page Property",
+        val typeText: String? = null,
         val icon: Icon = AllIcons.Nodes.Parameter
 ) {
     fun toLookupElement(): LookupElement {
         var result = LookupElementBuilder.create(completionText)
-                .withIcon(AllIcons.Nodes.Parameter)
-                .withTypeText(typeText)
+                .withIcon(icon)
         if (type != null) {
-            result = result.withTailText("($type)", true)
+            result = result.withTypeText(type)
         }
         return result
     }

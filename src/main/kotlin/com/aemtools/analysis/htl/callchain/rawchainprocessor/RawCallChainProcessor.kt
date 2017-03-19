@@ -58,10 +58,6 @@ object RawCallChainProcessor {
     }
 
     private fun extractFirstSegment(rawChainUnit: RawChainUnit): CallChainSegment {
-        if (rawChainUnit.hasPredefinedVariants()) {
-            return constructPredefinedChainSegment(rawChainUnit)
-        }
-
         val declaration = rawChainUnit.myDeclaration
 
         val type: TypeDescriptor? = when (declaration) {
@@ -83,6 +79,9 @@ object RawCallChainProcessor {
             }
             is HtlTemplateParameterDeclaration -> {
                 TemplateParameterTypeDescriptor(declaration)
+            }
+            is HtlListHelperDeclaration -> {
+                PredefinedTypeDescriptor(LIST_AND_REPEAT_HELPER_OBJECT)
             }
             else -> null
         }
@@ -123,9 +122,9 @@ object RawCallChainProcessor {
             null
         }
 
-        var psiClass: PsiClass? = rawChainUnit.myDeclaration?.resolutionResult?.psiClass
+        var psiClass: PsiClass? = null
 
-        if (psiClass == null && firstElement != null) {
+        if (firstElement != null) {
             psiClass = FileVariablesResolver.resolveVariable(firstElement).psiClass
         }
 
@@ -268,30 +267,6 @@ object RawCallChainProcessor {
         chain = result
 
         outputType = result.last().type
-    }
-
-    /**
-     * Current implementation resolves only one level of predefined
-     * completion variants.
-     */
-    private fun constructPredefinedChainSegment(rawChainUnit: RawChainUnit): CallChainSegment
-            = chainSegment {
-
-        inputType = TypeDescriptor.empty()
-        declarationType = rawChainUnit.myDeclaration
-        val variants = rawChainUnit
-                .myDeclaration
-                ?.resolutionResult
-                ?.predefined
-                ?: listOf()
-
-        // we do not try to resolve current chain
-        // the predefined set of variants is the resulting set
-        outputType = PredefinedVariantsTypeDescriptor(variants)
-
-        chain = rawChainUnit.myCallChain.map {
-            BaseChainElement(it, extractElementName(it), outputType)
-        }
     }
 
     private fun extractElementName(element: PsiElement?): String {

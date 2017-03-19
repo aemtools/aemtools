@@ -3,6 +3,7 @@ package com.aemtools.lang.htl.psi.mixin
 import com.aemtools.analysis.htl.callchain.HtlCallChainResolver
 import com.aemtools.analysis.htl.callchain.elements.CallChain
 import com.aemtools.completion.htl.common.FileVariablesResolver
+import com.aemtools.completion.htl.model.declaration.DeclarationAttributeType
 import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 import com.aemtools.completion.util.extractHtlHel
 import com.aemtools.completion.util.extractPropertyAccess
@@ -39,7 +40,7 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
         val declaration = FileVariablesResolver.findDeclaration(firstName, firstElement, this.containingFile)
 
         if (declaration != null
-                && declaration.resolutionResult.isEmpty()) {
+                && declaration.attributeType !in listOf(DeclarationAttributeType.LIST_HELPER, DeclarationAttributeType.REPEAT_HELPER)) {
             val propertyAccessMixin = declaration.xmlAttribute.extractHtlHel()?.extractPropertyAccess()
 
             // if property access mixin is available recursively obtain it's call chain

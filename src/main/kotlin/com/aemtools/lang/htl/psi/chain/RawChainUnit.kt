@@ -23,18 +23,6 @@ open class RawChainUnit(val myCallChain: LinkedList<PsiElement>,
      */
     fun hasDeclaration(): Boolean = myDeclaration != null
 
-    /**
-     * Check if current unit has [com.aemtools.completion.htl.model.ResolutionResult].
-     * The presence of resolution result would mean that the chain unit was resolved
-     * during raw chain construction.
-     */
-    fun hasResolution(): Boolean = myDeclaration?.resolutionResult != null
-
-    /**
-     * Check if current unit has predefined completion variants.
-     */
-    fun hasPredefinedVariants(): Boolean = myDeclaration?.resolutionResult?.predefined != null
-
     override fun toString(): String {
         return "RawChainUnit(myCallChain=$myCallChain, myDeclaration=$myDeclaration)"
     }

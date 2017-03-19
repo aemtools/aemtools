@@ -17,14 +17,12 @@ class HtlUseVariableDeclaration(
         xmlAttribute: XmlAttribute,
         variableName: String,
         attributeType: DeclarationAttributeType,
-        type: DeclarationType = DeclarationType.VARIABLE,
-        resolutionResult: ResolutionResult = ResolutionResult()
+        type: DeclarationType = DeclarationType.VARIABLE
 ) : HtlVariableDeclaration(
         xmlAttribute,
         variableName,
         attributeType,
-        type,
-        resolutionResult
+        type
 ) {
 
     fun useClass(): PsiClass? {

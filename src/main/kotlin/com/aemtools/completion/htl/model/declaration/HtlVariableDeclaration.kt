@@ -35,12 +35,7 @@ open class HtlVariableDeclaration internal constructor(
         /**
          * The [DeclarationType] of current variable.
          */
-        val type: DeclarationType = DeclarationType.VARIABLE,
-        /**
-         * Certain declarations may have own [ResolutionResult]. By default the result is empty.
-         */
-        @Deprecated("The resolution result will be removed")
-        val resolutionResult: ResolutionResult = ResolutionResult()) {
+        val type: DeclarationType = DeclarationType.VARIABLE) {
 
     /**
      * Convert current [HtlVariableDeclaration] into [LookupElement].
@@ -84,11 +79,11 @@ open class HtlVariableDeclaration internal constructor(
             }
             DeclarationAttributeType.LIST_HELPER -> {
                 result = result.withTypeText("List Helper")
-                        .withIcon(AllIcons.Nodes.Advice)
+                        .withIcon(AllIcons.Nodes.Variable)
             }
             DeclarationAttributeType.REPEAT_HELPER -> {
                 result = result.withTypeText("Repeat Helper")
-                        .withIcon(AllIcons.Nodes.Advice)
+                        .withIcon(AllIcons.Nodes.Variable)
             }
         }
         return result
@@ -130,11 +125,9 @@ open class HtlVariableDeclaration internal constructor(
                                     DeclarationAttributeType.DATA_SLY_LIST,
                                     DeclarationType.ITERABLE
                             ),
-                            HtlVariableDeclaration(
+                            HtlListHelperDeclaration.createForList(
                                     attribute,
-                                    itemList,
-                                    DeclarationAttributeType.LIST_HELPER,
-                                    DeclarationType.VARIABLE
+                                    itemList
                             )
                     )
                 }
@@ -148,11 +141,8 @@ open class HtlVariableDeclaration internal constructor(
                                     DeclarationAttributeType.DATA_SLY_REPEAT,
                                     DeclarationType.ITERABLE
                             ),
-                            HtlVariableDeclaration(
-                                    attribute,
-                                    itemList,
-                                    DeclarationAttributeType.REPEAT_HELPER,
-                                    DeclarationType.ITERABLE
+                            HtlListHelperDeclaration.createForRepeat(
+                                    attribute, itemList
                             )
                     )
                 }
