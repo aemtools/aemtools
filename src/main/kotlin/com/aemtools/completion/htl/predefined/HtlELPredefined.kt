@@ -91,17 +91,38 @@ object HtlELPredefined {
     )
 
     val DEFAULT_PROPERTIES = listOf(
-            pc("jcr:title"),
-            pc("jcr:description"),
-            pc("jcr:primaryType"),
-            pc("jcr:mixinTypes"),
-            pc("jcr:createdBy"),
-            pc("cq:lastReplicationAction"),
-            pc("cq:lastReplicatedBy"),
-            pc("jcr:lastModifiedBy"),
-            pc("jcr:lastModified"),
-            pc("cq:lastReplicated"),
-            pc("sling:resourceType")
+            pc("jcr:title",
+                    "java.lang.String",
+                    "String value of <b>jcr:title</b> property, or empty String if such property does not exist."),
+            pc("jcr:description", "java.lang.String",
+                    "String value of <b>jcr:description</b> property, or empty String if such property does not exist."),
+            pc("jcr:primaryType",
+                    "java.lang.String",
+                    "String defines primary type of the component."),
+            pc("jcr:mixinTypes",
+                    "java.lang.String[]",
+                    "String array of mixin types"),
+            pc("jcr:createdBy",
+                    "java.lang.String",
+                    "ID of user, created the component or page."),
+            pc("cq:lastReplicationAction",
+                    "java.lang.String",
+                    "Last replication action performed on this node."),
+            pc("cq:lastReplicatedBy",
+                    "java.lang.String",
+                    "ID of user, which replicated current node the last time."),
+            pc("jcr:lastModifiedBy",
+                    "java.lang.String",
+                    "ID of user, which modified current node the last time."),
+            pc("jcr:lastModified",
+                    "java.util.Calendar",
+                    "Date and time of last modified action."),
+            pc("cq:lastReplicated",
+                    "java.util.Calendar",
+                    "Date and time of last replication action."),
+            pc("sling:resourceType",
+                    "java.lang.String",
+                    "String defines the resource type of the component or page.")
     )
 
     fun addPredefined(callChain: CallChain,
@@ -141,11 +162,11 @@ data class PredefinedCompletion(
         @SerializedName(value = "description")
         val documentation: String? = null,
         val typeText: String? = null,
-        val icon: Icon = AllIcons.Nodes.Parameter
+        val icon: Icon? = AllIcons.Nodes.Parameter
 ) {
     fun toLookupElement(): LookupElement {
         var result = LookupElementBuilder.create(completionText)
-                .withIcon(icon)
+                .withIcon(icon ?: AllIcons.Nodes.Parameter)
         if (type != null) {
             result = result.withTypeText(type)
         }
