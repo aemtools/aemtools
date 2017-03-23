@@ -94,7 +94,8 @@ operand ::= array_expression
 
 braced_operand ::= LBRACKET statement RBRACKET
 
-ternary_operation ::= operand [logical_operator operand] QUESTION operand COLON operand
+ternary_operation ::= operand (logical_operator operand)+ QUESTION operand COLON operand
+    | operand QUESTION operand COLON operand
 
 operator ::= PLUS
     | MINUS
