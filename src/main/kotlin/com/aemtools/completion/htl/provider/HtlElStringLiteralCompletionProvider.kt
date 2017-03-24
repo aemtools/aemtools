@@ -46,9 +46,9 @@ object HtlElStringLiteralCompletionProvider : CompletionProvider<CompletionParam
         if (containerAttribute.name.startsWith(const.htl.DATA_SLY_USE)
                 && currentPosition.isMainString()) {
             result.addAllElements(SlyUseCompletionProvider.useSuggestions(parameters))
+            result.stopHere()
         }
 
-        result.stopHere()
     }
 
 }
