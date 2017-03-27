@@ -200,6 +200,39 @@ object HtlPatterns {
                             psiElement(EL_START))
                     .inside(psiElement().with(HtlTemplatePattern(DATA_SLY_CALL)))
 
+    /**
+     * Matches the following:
+     *
+     * ```
+     *    data-sly-include="${'<caret>'}"
+     * ```
+     */
+    val dataSlyIncludeMainString: ElementPattern<PsiElement> =
+            and(
+                    stringLiteralValue,
+                    psiElement().afterLeafSkipping(
+                            psiElement(TokenType.WHITE_SPACE),
+                            psiElement(EL_START))
+                            .inside(psiElement().with(HtlTemplatePattern(DATA_SLY_INCLUDE)))
+            )
+
+    /**
+     * Matches the following:
+     *
+     * ```
+     *    data-sly-use="${'<caret>'}"
+     *    data-sly-use.bean="${'<caret>'}"
+     * ```
+     */
+    val dataSlyUseMainString: ElementPattern<PsiElement> =
+            and(
+                    stringLiteralValue,
+                    psiElement().afterLeafSkipping(
+                            psiElement(TokenType.WHITE_SPACE),
+                            psiElement(EL_START))
+                            .inside(psiElement().with(HtlTemplatePattern(DATA_SLY_USE)))
+            )
+
 }
 
 class HtlTemplatePattern(val name: String) : PatternCondition<PsiElement?>(name) {

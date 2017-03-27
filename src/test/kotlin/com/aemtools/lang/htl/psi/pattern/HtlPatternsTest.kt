@@ -5,8 +5,10 @@ import com.aemtools.completion.util.getHtmlFile
 import com.aemtools.constant.const.IDEA_STRING_CARET_PLACEHOLDER
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.contextOptionAssignment
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyCallOption
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyIncludeMainString
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyIncludeNoEl
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyTemplateOption
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseMainString
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseNoEl
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.htlAttribute
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.mainVariableInsideOfDataSlyCall
@@ -214,6 +216,38 @@ class HtlPatternsTest : BaseLightTest() {
             mainVariableInsideOfDataSlyCall,
             """
                 <div data-sly-call="$DOLLAR{@ option=$CARET}"></div
+            """,
+            false
+    )
+
+    fun testSlyIncludeMainStringMain() = testHtlPattern(
+            dataSlyIncludeMainString,
+            """
+                <div data-sly-include="$DOLLAR{'$CARET'}"></div>
+            """,
+            true
+    )
+
+    fun testSlyIncludeMainStringShouldNotMatchOtherAttribute() = testHtlPattern(
+            dataSlyIncludeMainString,
+            """
+                <div data-sly-use="$DOLLAR{'$CARET'}"></div>
+            """,
+            false
+    )
+
+    fun testDataSlyUseMainStringMain() = testHtlPattern(
+            dataSlyUseMainString,
+            """
+                <div data-sly-use="$DOLLAR{'$CARET'}"></div>
+            """,
+            true
+    )
+
+    fun testDataSlyUseMainStringShouldNotMatchOtherAttribute() = testHtlPattern(
+            dataSlyUseMainString,
+            """
+                <div data-sly-include="$DOLLAR{'$CARET'}></div>
             """,
             false
     )

@@ -17,7 +17,7 @@ import com.intellij.util.ProcessingContext
  *
  * @author Dmytro_Troynikov
  */
-object DataSlyUseWithinAttributeValueReferenceProvider : JavaClassReferenceProvider() {
+object HtmlDataSlyUseWithinAttributeValueReferenceProvider : JavaClassReferenceProvider() {
     override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<out PsiReference> {
         val attr = element.findParentByType(XmlAttribute::class.java) ?: return arrayOf()
         val valueElement = attr.valueElement ?: return arrayOf()
