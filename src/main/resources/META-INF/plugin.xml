@@ -30,6 +30,7 @@
             <li>Fixed regression bug with context values completion didn't work within attributes</li>
             <li>Resolve file reference in data-sly-use with EL (e.g. data-sly-use="${'file.html'}"</li>
             <li>Resolve file reference in data-sly-include with EL (e.g. data-sly-include="${'file.html'}"</li>
+            <li>New code inspection will detect unnecessary expression in data-sly-use & data-sly-include</li>
         </ul>
     ]]>
     </change-notes>
@@ -114,7 +115,8 @@
                    implementationClass="com.aemtools.lang.html.annotation.RedundantDataSlyUnwrapAnnotator"/>
         <annotator language="HTML"
                    implementationClass="com.aemtools.lang.html.annotation.HtlVariablesAnnotator"/>
-
+        <annotator language="Htl"
+                   implementationClass="com.aemtools.lang.html.annotation.RedundantELAnnotator"/>
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
     </extensions>
 
