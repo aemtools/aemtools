@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.aemtools</id>
     <name>AEM Tools</name>
-    <version>0.6</version>
+    <version>0.6.1</version>
     <category>Framework integration</category>
     <vendor email="dmytrotroynikov@gmail.com" url="https://github.com/DmytroTroynikov/aemtools">Dmytro Troynikov</vendor>
 
@@ -14,6 +14,7 @@
                 <li><b>Code Completion</b></li>
                 <li><b>Code navigation</b></li>
                 <li><b>Quick Documentation</b> (ctrl+q)</li>
+                <li><b>Java Use API support (Sling Models & Use Classes)</b></li>
             </ul>
             <i>
             Note: to make the completion work, AEM dependencies should be present in
@@ -26,22 +27,10 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li>Added completion for data-sly-call
-             <ul>
-                <li>
-                list of available templates in current scope
-                will be proposed as template identifier (data-sly-call="${&lt;caret&gt;}")
-                </li>
-                <li>
-                list of parameters declared in used template
-                will be proposed as options (data-sly-call="${template @ &lt;caret&gt;}")
-                </li>
-             </ul>
-            </li>
-            <li>
-            Fixed issue when "Find Usages" action didn't find Java method usages in HTL by short name
-            (e.g. Java method name - "getProperty", reference in HTL - "property")
-            </li>
+            <li>Fixed regression bug with context values completion didn't work within attributes</li>
+            <li>Resolve file reference in data-sly-use with EL (e.g. data-sly-use="${'file.html'}"</li>
+            <li>Resolve file reference in data-sly-include with EL (e.g. data-sly-include="${'file.html'}"</li>
+            <li>New code inspection will detect unnecessary expression in data-sly-use & data-sly-include</li>
         </ul>
     ]]>
     </change-notes>
@@ -126,7 +115,8 @@
                    implementationClass="com.aemtools.lang.html.annotation.RedundantDataSlyUnwrapAnnotator"/>
         <annotator language="HTML"
                    implementationClass="com.aemtools.lang.html.annotation.HtlVariablesAnnotator"/>
-
+        <annotator language="Htl"
+                   implementationClass="com.aemtools.lang.html.annotation.RedundantELAnnotator"/>
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
     </extensions>
 

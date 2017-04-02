@@ -3,6 +3,8 @@ package com.aemtools.lang.htl.refactoring
 import com.aemtools.blocks.base.BaseLightTest.Companion.CARET
 import com.aemtools.blocks.base.BaseLightTest.Companion.DOLLAR
 import com.aemtools.blocks.reference.BaseReferenceTest
+import com.aemtools.constant.const.JCR_ROOT
+import com.aemtools.lang.htl.psi.HtlPsiFile
 import com.aemtools.lang.htl.psi.HtlVariableName
 import com.aemtools.reference.htl.provider.HtlPropertyAccessReferenceProvider
 import com.intellij.psi.PsiClass
@@ -20,7 +22,7 @@ class ReferenceTest : BaseReferenceTest() {
     fun testReferenceToField() = testReference {
         addHtml("test.html", """
             <div data-sly-use.bean="com.test.TestClass">
-                $DOLLAR{bean.<caret>field}
+                $DOLLAR{bean.${CARET}field}
             </div>
         """)
         addClass("TestClass", """
@@ -38,7 +40,7 @@ class ReferenceTest : BaseReferenceTest() {
     fun testReferenceToPrimitiveField() = testReference {
         addHtml("test.html", """
             <div data-sly-use.bean="com.test.TestClass">
-                $DOLLAR{bean.<caret>primitive}
+                $DOLLAR{bean.${CARET}primitive}
             </div>
         """)
         addClass("TestClass", """
@@ -56,7 +58,7 @@ class ReferenceTest : BaseReferenceTest() {
     fun testReferenceToGetter() = testReference {
         addHtml("test.html", """
             <div data-sly-use.bean="com.test.TestClass">
-                $DOLLAR{bean.<caret>value}
+                $DOLLAR{bean.${CARET}value}
             </div>
         """)
         addClass("TestClass", """
@@ -74,7 +76,7 @@ class ReferenceTest : BaseReferenceTest() {
     fun testReferenceToGetterByNonNormalizedName() = testReference {
         addHtml("test.html", """
             <div data-sly-use.bean="com.test.TestClass">
-                $DOLLAR{bean.<caret>getValue}
+                $DOLLAR{bean.${CARET}getValue}
             </div>
         """)
         addClass("TestClass", """
@@ -92,7 +94,7 @@ class ReferenceTest : BaseReferenceTest() {
     fun testReferenceToDeclarationAttribute() = testReference {
         addHtml("test.html", """
             <div data-sly-use.bean="com.test.TestClass">
-                $DOLLAR{<caret>bean}
+                $DOLLAR{${CARET}bean}
             </div>
         """)
         shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
@@ -101,7 +103,7 @@ class ReferenceTest : BaseReferenceTest() {
 
     fun testSlyUseClassReferencesToPsiClass() = testReference {
         addHtml("test.html", """
-            <div data-sly-use.bean="$DOLLAR{'com.test.<caret>TestClass'}"></div>
+            <div data-sly-use.bean="$DOLLAR{'com.test.${CARET}TestClass'}"></div>
         """)
         addClass("TestClass", "package com.test; public class TestClass {}")
 
@@ -113,7 +115,7 @@ class ReferenceTest : BaseReferenceTest() {
         addHtml("test.html", """
             <div data-sly-use.bean="com.test.TestClass">
                 <sly data-sly-test.show="$DOLLAR{bean.show}">
-                    $DOLLAR{<caret>show}
+                    $DOLLAR{${CARET}show}
                 </sly>
             </div>
         """)
@@ -125,7 +127,7 @@ class ReferenceTest : BaseReferenceTest() {
     fun testReferenceItemToDataSlyList() = testReference {
         addHtml("test.html", """
             <div data-sly-list="iterable">
-                $DOLLAR{<caret>item}
+                $DOLLAR{${CARET}item}
             </div>
         """)
         shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
@@ -135,7 +137,7 @@ class ReferenceTest : BaseReferenceTest() {
     fun testReferenceItemListToDataSlyList() = testReference {
         addHtml("test.html", """
             <div data-sly-list="iterable">
-                $DOLLAR{<caret>itemList}
+                $DOLLAR{${CARET}itemList}
             </div>
         """)
         shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
@@ -145,7 +147,7 @@ class ReferenceTest : BaseReferenceTest() {
     fun testReferenceItemToDataSlyRepeat() = testReference {
         addHtml("test.html", """
             <div data-sly-repeat="iterable">
-                $DOLLAR{<caret>item}
+                $DOLLAR{${CARET}item}
             </div>
         """)
         shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
@@ -155,7 +157,7 @@ class ReferenceTest : BaseReferenceTest() {
     fun testReferenceItemListToDataSlyRepeat() = testReference {
         addHtml("test.html", """
             <div data-sly-repeat="iterable">
-                $DOLLAR{<caret>itemList}
+                $DOLLAR{${CARET}itemList}
             </div>
         """)
         shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
@@ -170,6 +172,36 @@ class ReferenceTest : BaseReferenceTest() {
         """)
         shouldResolveTo(HtlVariableName::class.java)
         shouldContainText("param")
+    }
+
+    fun testReferenceToIncludeFile() = testReference {
+        addHtml("$JCR_ROOT/apps/components/comp/comp.html", """
+            <div data-sly-include='${CARET}file.html'></div>
+        """)
+        addHtml("$JCR_ROOT/apps/components/comp/file.html", "included")
+
+        shouldResolveTo(HtlPsiFile::class.java)
+        shouldContainText("included")
+    }
+
+    fun testReferenceToIncludedFileFromEl() = testReference {
+        addHtml("$JCR_ROOT/apps/components/comp/comp.html", """
+            <div data-sly-include="$DOLLAR{'${CARET}file.html'}"></div>
+        """)
+        addHtml("$JCR_ROOT/apps/components/comp/file.html", "included")
+
+        shouldResolveTo(HtlPsiFile::class.java)
+        shouldContainText("included")
+    }
+
+    fun testReferenceToUseFileFromEl() = testReference {
+        addHtml("$JCR_ROOT/apps/components/comp/comp.html", """
+            <div data-sly-use.template="$DOLLAR{'${CARET}file.html'}"></div>
+        """)
+        addHtml("$JCR_ROOT/apps/components/comp/file.html", "included")
+
+        shouldResolveTo(HtlPsiFile::class.java)
+        shouldContainText("included")
     }
 
 }

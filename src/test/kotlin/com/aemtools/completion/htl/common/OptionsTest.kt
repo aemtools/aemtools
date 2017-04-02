@@ -8,6 +8,7 @@ import com.aemtools.blocks.BaseVariantsCheckContributorTest
 class OptionsTest : BaseVariantsCheckContributorTest("com/aemtools/completion/htl/fixtures/noafter/options") {
 
     fun testOptionsContextValues() = assertVariants(CONTEXT_VALUES)
+    fun testOptionsContextValuesInAttribute() = assertVariants(CONTEXT_VALUES)
     fun testOptionsContextValuesAbsentWithoutString() = assertVariantsAbsent(CONTEXT_VALUES)
 
     fun testOptionsDefaultContextParameters() = assertVariants(CONTEXT_PARAMETERS)

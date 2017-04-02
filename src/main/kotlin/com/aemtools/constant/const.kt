@@ -79,4 +79,10 @@ object const {
         val XML_TAG_NAME: String = "XML_TAG_NAME"
     }
 
+    object message {
+        object annotator {
+            val SIMPLIFY_EXPRESSION = "Unnecessary expression."
+        }
+    }
+
 }

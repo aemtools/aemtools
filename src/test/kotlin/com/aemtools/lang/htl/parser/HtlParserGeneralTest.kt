@@ -27,8 +27,8 @@ class HtlParserGeneralTest
 
     fun testCorruptedEl() = doTest()
 
-    // TODO: Add test for ternary operator as a part of operation
     fun testContextWithTernaryOperator() = doTest()
 
     fun testTernaryOperator() = doTest()
+    fun testTernaryOperatorWithThreeElements() = doTest()
 }
