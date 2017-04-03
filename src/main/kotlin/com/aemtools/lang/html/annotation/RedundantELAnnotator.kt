@@ -51,7 +51,7 @@ class RedundantELAnnotator : Annotator {
     class ELSimplifyAction(val element: HtlHtlEl) : IntentionAction {
         override fun startInWriteAction(): Boolean = true
 
-        override fun getFamilyName(): String = "HTL"
+        override fun getFamilyName(): String = "HTL Intentions"
 
         override fun isAvailable(project: Project, editor: Editor?, file: PsiFile?):
                 Boolean = true
@@ -66,8 +66,6 @@ class RedundantELAnnotator : Annotator {
             val document = PsiDocumentManager.getInstance(project).getDocument(file)
                     ?: return
             document.replaceString(start, end, newValue)
-            PsiDocumentManager.getInstance(project).commitDocument(document)
-
         }
     }
 }
