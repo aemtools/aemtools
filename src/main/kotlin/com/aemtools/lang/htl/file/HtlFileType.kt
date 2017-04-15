@@ -14,7 +14,7 @@ import javax.swing.Icon
 object HtlFileType : LanguageFileType(HtlLanguage), TemplateLanguageFileType {
     init {
         FileTypeEditorHighlighterProviders.INSTANCE.addExplicitExtension(this)
-        { project, fileType, virtualFile, colors -> HtlTemplateHighlighter(project, virtualFile, colors) }
+        { project, _, virtualFile, colors -> HtlTemplateHighlighter(project, virtualFile, colors) }
     }
 
     override fun getIcon(): Icon = AllIcons.FileTypes.Json
