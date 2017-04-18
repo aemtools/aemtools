@@ -2,6 +2,6 @@ CdFile:relativeInclude2.in
   CdIncludeImpl([Cd] INCLUDE)
     CdRelativeIncludeImpl([Cd] RELATIVE_INCLUDE)
       PsiElement([Cd] ..)('..')
-      PsiElement([Cd] \)('/')
+      PsiElement([Cd] SEPARATOR)('/')
       CdSimpleIncludeImpl([Cd] SIMPLE_INCLUDE)
         PsiElement([Cd] WORD)('file.js')

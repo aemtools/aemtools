@@ -26,7 +26,7 @@ EOL=\R
 WHITE_SPACE=\s+
 
 SEPARATOR=\\|"/"
-WORD=[\w\d_.]+
+WORD=[\w\d_.-]+
 COMMENT_TOKEN=(#[ \t\n\x0B\f\r].*)|(##.*)
 
 %%

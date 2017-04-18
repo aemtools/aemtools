@@ -18,7 +18,7 @@
         DD               = '..'
         SEPARATOR        = 'regexp:\\|/'
         PREFIX_TOKEN     = '#base='
-        WORD             = 'regexp:[\w\d_.]+'
+        WORD             = 'regexp:[\w\d_.-]+'
         COMMENT_TOKEN    = 'regexp:(#\s.*)|(##.*)'
     ]
 }
@@ -33,8 +33,8 @@ simple_include ::= (WORD SEPARATOR)+ WORD
 relative_include ::= DOT SEPARATOR simple_include
     | (DD SEPARATOR)+ simple_include
 
-base_path ::= prefix
+base_path ::= prefix include?
 
-prefix ::= PREFIX_TOKEN include
+private prefix ::= PREFIX_TOKEN
 
 comment ::= COMMENT_TOKEN

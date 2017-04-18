@@ -16,10 +16,12 @@ class CdParserTest
     fun testInclude() = doTest()
     fun testComplex1() = doTest()
     fun testCommentBaseInclude() = doTest()
+    fun testBaseEmpty() = doTest()
     fun testBaseInclude() = doTest()
     fun testBaseCommentInclude() = doTest()
 
     fun testRelativeInclude1() = doTest()
     fun testRelativeInclude2() = doTest()
     fun testRelativeInclude3() = doTest()
+
 }
