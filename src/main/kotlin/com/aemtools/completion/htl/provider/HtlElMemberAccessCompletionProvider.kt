@@ -32,7 +32,6 @@ object HtlElMemberAccessCompletionProvider : CompletionProvider<CompletionParame
                 result.addAllElements(resolutionResult.predefined)
             }
             resolutionResult.psiClass != null -> {
-                // TODO: add unit test for different merge modes ("merge", "override", "disabled")
                 val predefined = PredefinedEL.predefinedCompletions(parameters, context, result)
                 val completions = PredefinedVariables.extractSuggestions(resolutionResult.psiClass)
                 val merged = mergeCompletions(completions, predefined.first, predefined.second)
