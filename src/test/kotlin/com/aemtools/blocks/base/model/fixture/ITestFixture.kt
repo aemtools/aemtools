@@ -29,6 +29,13 @@ interface ITestFixture {
      */
     fun addXml(name: String, @Language("XML") text: String)
 
+    /**
+     * Add arbitrary file to the fixture.
+     * @param name the name of the file (path may be used)
+     * @param text the content of the file
+     */
+    fun addFile(name: String, text: String)
+
     fun verify(verification: IAssertionContext.() -> Unit)
 
 }
