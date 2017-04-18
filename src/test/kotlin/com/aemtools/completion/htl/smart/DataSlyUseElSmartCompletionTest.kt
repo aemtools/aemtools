@@ -1,4 +1,4 @@
-package com.aemtools.completion.html.smart
+package com.aemtools.completion.htl.smart
 
 import com.aemtools.blocks.completion.CompletionBaseLightTest
 import com.aemtools.constant.const.JCR_ROOT
@@ -6,11 +6,11 @@ import com.aemtools.constant.const.JCR_ROOT
 /**
  * @author Dmytro Troynikov
  */
-class DataSlyUseSmartCompletionTest : CompletionBaseLightTest() {
+class DataSlyUseElSmartCompletionTest : CompletionBaseLightTest() {
 
     fun testSmartCompletion() = completionTest {
         addHtml("$JCR_ROOT/apps/component/component.html", """
-            <div data-sly-use="$CARET"></div>
+            <div data-sly-use="$DOLLAR{'$CARET'}"></div>
         """)
         addHtml("$JCR_ROOT/apps/component/partials/piece1.html", """
             <div data-sly-template.template="$DOLLAR{@ param}"></div>

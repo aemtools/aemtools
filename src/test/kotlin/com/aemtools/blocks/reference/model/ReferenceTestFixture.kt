@@ -1,13 +1,9 @@
 package com.aemtools.blocks.reference.model
 
-import com.aemtools.blocks.base.model.file.IFileFixtureDescriptor
-import com.aemtools.blocks.base.model.file.JavaClassFileFixtureDescriptor
-import com.aemtools.blocks.base.model.file.TextFileFixtureDescriptor
 import com.aemtools.blocks.base.model.fixture.TestFixture
 import com.intellij.psi.PsiElement
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 import junit.framework.TestCase
-import java.util.*
 
 /**
  * @author Dmytro Troynikov
@@ -51,8 +47,6 @@ class ReferenceTestFixture(fixture: JavaCodeInsightTestFixture)
             TestCase.assertEquals(shouldContainText, resolvedReference?.text)
         }
     }
-
-
 
 }
 
