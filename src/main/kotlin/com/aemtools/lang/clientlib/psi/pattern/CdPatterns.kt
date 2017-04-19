@@ -20,4 +20,13 @@ object CdPatterns {
     val basePath: ElementPattern<PsiElement> =
             psiElement().inside(psiElement(CdTypes.INCLUDE).inside(psiElement(CdTypes.BASE_PATH)))
 
+    /**
+     * Will match;
+     * ```
+     * <caret>
+     * ```
+     */
+    val include: ElementPattern<PsiElement> =
+            psiElement().inside(psiElement(CdTypes.INCLUDE))
+
 }

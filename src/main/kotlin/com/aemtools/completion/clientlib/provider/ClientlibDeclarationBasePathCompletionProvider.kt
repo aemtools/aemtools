@@ -37,7 +37,7 @@ object ClientlibDeclarationBasePathCompletionProvider : CompletionProvider<Compl
                     cssTxtSuitableFileMatcher(it.name)
                 }
             }) {
-                result.add(dir.name.relativeTo(containingDirectory.name))
+                result.add(dir.virtualFile.path.relativeTo(containingDirectory.virtualFile.path))
             }
 
             dir.subdirectories
