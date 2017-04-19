@@ -12,14 +12,20 @@ import com.intellij.util.indexing.FileBasedIndex
 object OSGiConfigSearch {
 
     fun findConfigsForClass(fqn: String, project: Project): List<OSGiConfiguration> {
+        val configs = getAllConfigs(project)
+
+        return configs.filter { it.fullQualifiedName == fqn }
+    }
+
+    fun getAllConfigs(project: Project): List<OSGiConfiguration> {
         val fbi = FileBasedIndex.getInstance()
         val keys = fbi.getAllKeys(OSGiConfigIndex.OSGI_INDEX_ID, project)
 
         val values = keys.flatMap {
-            fbi.getValues(OSGiConfigIndex.OSGI_INDEX_ID, it, GlobalSearchScope.projectScope(project))
+            fbi.getValues(OSGiConfigIndex.OSGI_INDEX_ID, it, GlobalSearchScope.allScope(project))
         }.filterNotNull()
 
-        return values.filter { it.fullQualifiedName == fqn }
+        return values
     }
 
 }

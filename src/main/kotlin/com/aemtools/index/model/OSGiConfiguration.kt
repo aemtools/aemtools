@@ -11,7 +11,7 @@ data class OSGiConfiguration(val path: String,
     val fullQualifiedName: String
             get() {
                 return path.substring(path.lastIndexOf("/") + 1,
-                        path.lastIndexOf(".") - 1)
+                        path.lastIndexOf("."))
             }
 
 }
