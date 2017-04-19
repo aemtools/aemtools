@@ -77,6 +77,8 @@ object const {
         val XML_ATTRIBUTE_NAME: String = "XML_NAME"
         val XML_ATTRIBUTE_VALUE: String = "XML_ATTRIBUTE_VALUE_TOKEN"
         val XML_TAG_NAME: String = "XML_TAG_NAME"
+
+        val JCR_PRIMARY_TYPE_OSGI_CONFIG: String = "$JCR_PRIMARY_TYPE=\"sling:OsgiConfig\""
     }
 
     object message {

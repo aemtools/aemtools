@@ -79,6 +79,8 @@
 
         <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>
 
+        <fileBasedIndex implementation="com.aemtools.index.OSGiConfigIndex"/>
+
         <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlStringLiteralManipulator"
                                  forClass="com.aemtools.lang.htl.psi.HtlStringLiteral"/>
         <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlPropertyAccessManipulator"

@@ -2,7 +2,7 @@ package com.aemtools.index
 
 import com.aemtools.constant.const.JCR_ROOT_SEPARATED
 import com.aemtools.index.dataexternalizer.TemplateDefinitionExternalizer
-import com.aemtools.index.indexed.HtlTemplateIndexer
+import com.aemtools.index.indexer.HtlTemplateIndexer
 import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.util.OpenApiUtil
 import com.intellij.ide.highlighter.HtmlFileType
@@ -29,6 +29,7 @@ class HtlTemplateIndex : XmlIndex<TemplateDefinition>() {
     override fun getInputFilter(): FileBasedIndex.InputFilter
             = FileBasedIndex.InputFilter {
         it.fileType == HtmlFileType.INSTANCE
+                // index all html files in tests
                 && (OpenApiUtil.iAmTest() ||
                 it.path.contains(JCR_ROOT_SEPARATED)) }
 
