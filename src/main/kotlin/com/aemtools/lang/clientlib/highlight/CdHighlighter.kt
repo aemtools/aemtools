@@ -20,7 +20,6 @@ class CdHighlighter : SyntaxHighlighterBase() {
 
     private fun map(tokenType: IElementType?) = when (tokenType) {
         CdTypes.COMMENT_TOKEN -> CdColors.COMMENT
-        CdTypes.PREFIX,
         CdTypes.PREFIX_TOKEN -> CdColors.PREFIX
         CdTypes.DD, CdTypes.DOT -> CdColors.DOT
         CdTypes.SEPARATOR,

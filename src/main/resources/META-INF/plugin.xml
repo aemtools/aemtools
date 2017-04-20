@@ -31,6 +31,7 @@
     <change-notes><![CDATA[
         <ul>
             <li>added standard HTML structure view for HTL files</li>
+            <li>added support for js.txt&css.txt files</li>
         </ul>
     ]]>
     </change-notes>
