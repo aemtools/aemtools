@@ -37,6 +37,8 @@
 
     <depends>com.intellij.modules.java</depends>
 
+    <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
+
     <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
     <idea-version since-build="131"/>
 
@@ -77,11 +79,7 @@
         <lang.substitutor language="HTML"
                           implementationClass="com.aemtools.lang.htl.HtlLanguageSubstitutor"/>
 
-        <lang.substitutor language="TEXT"
-                          implementationClass="com.aemtools.lang.clientlib.CdLanguageSubstitutor"/>
-
         <fileTypeFactory implementation="com.aemtools.lang.htl.file.HtlFileTypeFactory"/>
-        <fileTypeFactory implementation="com.aemtools.lang.clientlib.file.CdFileTypeFactory"/>
 
         <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>
 
@@ -105,10 +103,6 @@
 
         <lang.parserDefinition language="Htl"
                                implementationClass="com.aemtools.lang.htl.HtlParserDefinition"/>
-        <lang.parserDefinition language="Cd"
-                               implementationClass="com.aemtools.lang.clientlib.CdParserDefinition"/>
-        <completion.contributor language="Cd"
-                                implementationClass="com.aemtools.completion.clientlib.CdCompletionContributor"/>
         <lang.commenter language="Htl" implementationClass="com.aemtools.lang.htl.editor.comments.HtlCommenter"/>
         <lang.quoteHandler language="Htl" implementationClass="com.aemtools.lang.htl.editor.HtlQuoteHandler"/>
 
