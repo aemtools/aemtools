@@ -1,7 +1,6 @@
 package com.aemtools.lang.htl.highlight
 
 import com.aemtools.lang.htl.HtlLanguage
-import com.aemtools.lang.htl.psi.HtlTokenType
 import com.aemtools.lang.htl.psi.HtlTypes
 import com.intellij.openapi.editor.colors.EditorColorsScheme
 import com.intellij.openapi.editor.ex.util.LayerDescriptor
@@ -17,8 +16,8 @@ import com.intellij.psi.templateLanguages.TemplateDataLanguageMappings
  * @author Dmytro Troynikov
  */
 class HtlTemplateHighlighter(val project: Project?,
-                                 val virtualFile: VirtualFile?,
-                                 scheme: EditorColorsScheme                                 ) :
+                             val virtualFile: VirtualFile?,
+                             scheme: EditorColorsScheme) :
         LayeredLexerEditorHighlighter(HtlHighlighter(), scheme) {
     init {
         var type: FileType = if (project == null || virtualFile == null) {

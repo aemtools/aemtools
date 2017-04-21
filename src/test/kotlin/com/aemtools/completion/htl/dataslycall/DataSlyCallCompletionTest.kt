@@ -1,4 +1,4 @@
-package com.aemtools.completion.htl.common.dataslycall
+package com.aemtools.completion.htl.dataslycall
 
 import com.aemtools.blocks.completion.CompletionBaseLightTest
 import com.aemtools.constant.const.JCR_ROOT

@@ -37,7 +37,7 @@ object HtlElDataSlyCallVariableCompletionProvider : CompletionProvider<Completio
                     value.map {
                         LookupElementBuilder
                                 .create("${key.variableName}.${it.name}")
-                                .withIcon(HtlIcons.HTL_FILE)
+                                .withIcon(HtlIcons.HTL_FILE_ICON)
                                 .withTypeText("HTL Template")
                                 .withPresentableText(it.name)
                                 .withTailText("(${key.xmlAttribute.value})", true)

@@ -104,7 +104,6 @@ fun Collection<XmlAttribute>.htlAttributes(): Collection<XmlAttribute> =
  * data-sly-use.bean="com.my.package.BeanClass" -> "com.my.package.BeanClass
  * data-sly-use.bean="${'com.my.package.BeanClass' @ param1='value'}" -> "com.my.package.BeanClass"
  *
- * TODO: find solution for:
  * data-sly-use.bean="javascript-file.js"
  * ->
  * ???
@@ -112,6 +111,7 @@ fun Collection<XmlAttribute>.htlAttributes(): Collection<XmlAttribute> =
  *
  * @return full qualified class name, or _null_ in case if resolution is not possible
  */
+@Deprecated("To be removed")
 fun XmlAttribute.resolveUseClass(): String? {
     val attributeValue = valueElement?.value ?: return null
     return when {

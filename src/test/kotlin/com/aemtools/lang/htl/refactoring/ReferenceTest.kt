@@ -16,9 +16,6 @@ import com.intellij.psi.PsiMethod
  */
 class ReferenceTest : BaseReferenceTest() {
 
-    override fun getTestDataPath(): String =
-            "src/test/resources/refactoring/"
-
     fun testReferenceToField() = testReference {
         addHtml("test.html", """
             <div data-sly-use.bean="com.test.TestClass">

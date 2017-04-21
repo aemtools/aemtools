@@ -17,16 +17,15 @@ import com.intellij.util.ProcessingContext
  */
 class WidgetVariantsProvider {
 
-    private val DEFAULT_FOR_NAME = listOf("jcr:primaryType", const.XTYPE)
-
-    private val JCR_PRIMARY_TYPE_VALUE = listOf("nt:unstructured",
-            "cq:Widget",
-            "cq:WidgetCollection",
-            "cq:Dialog",
-            "cq:TabPanel",
-            "cq:Panel")
-
     companion object {
+        val DEFAULT_ATTRIBUTES = listOf("jcr:primaryType", const.XTYPE)
+        val JCR_PRIMARY_TYPE_VALUES = listOf("nt:unstructured",
+                "cq:Widget",
+                "cq:WidgetCollection",
+                "cq:Dialog",
+                "cq:TabPanel",
+                "cq:Panel")
+
         private val instance = WidgetVariantsProvider()
         fun INSTANCE(): WidgetVariantsProvider = instance
     }
@@ -54,7 +53,7 @@ class WidgetVariantsProvider {
                 const.xml.XML_ATTRIBUTE_VALUE -> {
                     when (PsiXmlUtil.nameOfAttribute(currentElement)) {
                         const.XTYPE -> return variantsForXTypeValue(currentElement)
-                        const.JCR_PRIMARY_TYPE -> return variantsForJcrPrimaryType(currentElement)
+                        const.JCR_PRIMARY_TYPE -> return variantsForJcrPrimaryType()
                         else -> return variantsForValue(parameters, widgetDefinition as PsiWidgetDefinition)
                     }
                 }
@@ -70,7 +69,7 @@ class WidgetVariantsProvider {
             const.xml.XML_ATTRIBUTE_VALUE -> {
                 when (PsiXmlUtil.nameOfAttribute(currentElement)) {
                     const.XTYPE -> return variantsForXTypeValue(currentElement)
-                    const.JCR_PRIMARY_TYPE -> return variantsForJcrPrimaryType(currentElement)
+                    const.JCR_PRIMARY_TYPE -> return variantsForJcrPrimaryType()
                     else -> return variantsForValue(parameters, widgetDefinition as PsiWidgetDefinition)
                 }
             }
@@ -82,7 +81,7 @@ class WidgetVariantsProvider {
             = widgetDefinition == null || widgetDefinition.getFieldValue(const.XTYPE) == null
 
     fun genericForName(): Collection<LookupElement> {
-        return DEFAULT_FOR_NAME.map { it ->
+        return DEFAULT_ATTRIBUTES.map { it ->
             LookupElementBuilder.create(it)
                     .withInsertHandler(XmlAttributeInsertHandler())
         }
@@ -95,8 +94,8 @@ class WidgetVariantsProvider {
         return xtypes.map { it -> LookupElementBuilder.create(it) }
     }
 
-    fun variantsForJcrPrimaryType(element: XmlToken): Collection<LookupElement> =
-        JCR_PRIMARY_TYPE_VALUE.map { it -> LookupElementBuilder.create(it) }
+    fun variantsForJcrPrimaryType(): Collection<LookupElement> =
+        JCR_PRIMARY_TYPE_VALUES.map { it -> LookupElementBuilder.create(it) }
 
     /**
      * Give variants for attribute name

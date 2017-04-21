@@ -6,6 +6,7 @@ import com.aemtools.constant.const.java.USE_INTERFACE
 import com.aemtools.constant.const.java.WCM_USE_CLASS
 import com.intellij.openapi.project.Project
 import com.intellij.psi.JavaPsiFacade
+import com.intellij.psi.PsiAnonymousClass
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiModifier
 import com.intellij.psi.search.GlobalSearchScope
@@ -68,6 +69,8 @@ object JavaSearch {
     fun findSlingModels(project: Project): List<PsiClass> =
             findClass(const.java.SLING_MODEL, project)?.let {
                 findAnnotatedClasses(it, project)
+                        .filterNot { it is PsiAnonymousClass }
+                        .filterNot { it.hasModifierProperty(PsiModifier.ABSTRACT) }
             }.orEmpty()
 
     /**
@@ -79,6 +82,7 @@ object JavaSearch {
     fun findWcmUseClasses(project: Project): List<PsiClass> = USE_CLASSES.map { findClass(it, project) }
             .filterNotNull()
             .flatMap { findInheritors(it, project) }
+            .filterNot { it is PsiAnonymousClass }
             .filterNot { it.hasModifierProperty(PsiModifier.ABSTRACT) }
             .toSet()
             .toList()

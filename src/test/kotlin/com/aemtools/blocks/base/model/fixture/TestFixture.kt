@@ -37,15 +37,15 @@ open class TestFixture(val fixture: JavaCodeInsightTestFixture)
         files.forEach { it.initialize() }
     }
 
-    override fun addHtml(name: String, text: String) {
-        files.add(TextFileFixtureDescriptor(name, text, fixture))
-    }
+    override fun addHtml(name: String, text: String) = addFile(name, text)
 
     override fun addClass(name: String, text: String) {
         files.add(JavaClassFileFixtureDescriptor(name, text, fixture))
     }
 
-    override fun addXml(name: String, text: String) {
+    override fun addXml(name: String, text: String) = addFile(name, text)
+
+    override fun addFile(name: String, text: String) {
         files.add(TextFileFixtureDescriptor(name, text, fixture))
     }
 
