@@ -1,0 +1,3 @@
+CdFile:baseEmpty.in
+  CdBasePathImpl([Cd] BASE_PATH)
+    PsiElement([Cd] #base=)('#base=')

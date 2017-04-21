@@ -1,0 +1,4 @@
+CdFile:include.in
+  CdIncludeImpl([Cd] INCLUDE)
+    CdSimpleIncludeImpl([Cd] SIMPLE_INCLUDE)
+      PsiElement([Cd] WORD)('file.js')

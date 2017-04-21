@@ -1,4 +1,4 @@
-package com.aemtools.completion.htl.common.lists
+package com.aemtools.completion.htl.lists
 
 import com.aemtools.blocks.BaseVariantsWithJdkContributorTest
 

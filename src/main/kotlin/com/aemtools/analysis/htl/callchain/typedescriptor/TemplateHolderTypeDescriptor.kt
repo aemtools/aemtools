@@ -16,7 +16,7 @@ class TemplateHolderTypeDescriptor(val templates: List<TemplateDefinition>)
         return templates.map {
             LookupElementBuilder.create(it.name)
                     .withTypeText("HTL Template")
-                    .withIcon(HtlIcons.HTL_FILE)
+                    .withIcon(HtlIcons.HTL_FILE_ICON)
         }
     }
 

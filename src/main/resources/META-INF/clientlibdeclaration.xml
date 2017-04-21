@@ -1,0 +1,23 @@
+<idea-plugin url="https://www.jetbrains.com/idea">
+    <extensions defaultExtensionNs="com.intellij">
+        <fileTypeFactory
+                implementation="com.aemtools.lang.clientlib.file.CdFileTypeFactory"/>
+        <lang.parserDefinition
+                language="Cd"
+                implementationClass="com.aemtools.lang.clientlib.CdParserDefinition"/>
+        <completion.contributor
+                language="Cd"
+                implementationClass="com.aemtools.completion.clientlib.CdCompletionContributor"/>
+
+        <lang.substitutor
+                language="TEXT"
+                implementationClass="com.aemtools.lang.clientlib.CdLanguageSubstitutor"/>
+
+        <lang.commenter
+                language="Cd"
+                implementationClass="com.aemtools.lang.clientlib.editor.CdCommenter"/>
+        <lang.syntaxHighlighterFactory
+                language="Cd"
+                implementationClass="com.aemtools.lang.clientlib.highlight.CdHighlighterFactory"/>
+    </extensions>
+</idea-plugin>

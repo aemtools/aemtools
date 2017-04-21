@@ -15,8 +15,11 @@ import com.intellij.codeInsight.completion.CompletionType
 class HtlElCompletionContributor : CompletionContributor() {init {
     extend(CompletionType.BASIC, HtlPatterns.memberAccess, HtlElMemberAccessCompletionProvider)
     extend(CompletionType.BASIC, HtlPatterns.mainVariableInsideOfDataSlyCall, HtlElDataSlyCallVariableCompletionProvider)
+
+    extend(CompletionType.BASIC, HtlPatterns.dataSlyUseMainString, HtlDataSlyUseCompletionProvider)
+    extend(CompletionType.SMART, HtlPatterns.dataSlyUseMainString, HtlDataSlyUseCompletionProvider)
+
     extend(CompletionType.BASIC, HtlPatterns.variableName, HtlElVariableNameCompletionProvider)
-    extend(CompletionType.BASIC, HtlPatterns.stringLiteralValue, HtlElStringLiteralCompletionProvider)
 
     extend(CompletionType.BASIC, HtlPatterns.dataSlyTemplateOption, HtlDataSlyTemplateOptionCompletionProvider)
     extend(CompletionType.BASIC, HtlPatterns.dataSlyCallOption, HtlDataSlyCallOptionCompletionProvider)

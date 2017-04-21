@@ -1,24 +1,37 @@
 package com.aemtools.completion.html.smart
 
 import com.aemtools.blocks.completion.CompletionBaseLightTest
+import com.aemtools.constant.const.JCR_ROOT
 
 /**
  * @author Dmytro Troynikov
  */
-abstract class DataSlyUseSmartCompletionTest : CompletionBaseLightTest() {
+class DataSlyUseSmartCompletionTest : CompletionBaseLightTest() {
 
-    // todo implement tests for smart completion
-//    fun testSmartCompletion() = completionTest {
-//        addHtml("/component/component.html", """
-//            <div data-sly-use="$CARET"
-//        """)
-//        addHtml("/component/partials/piece1.html", """
-//            <div data-sly-template.template="$DOLLAR{@ param}"
-//            </div>
-//        """)
-//        smart()
-//        shouldContain(listOf("partials/piece1.html"))
-//    }
+    fun testSmartCompletion() = completionTest {
+        addHtml("$JCR_ROOT/apps/component/component.html", """
+            <div data-sly-use="$CARET"></div>
+        """)
+        addHtml("$JCR_ROOT/apps/component/partials/piece1.html", """
+            <div data-sly-template.template="$DOLLAR{@ param}"></div>
+        """)
+        addHtml("$JCR_ROOT/apps/component/piece2.html", """
+            <div data-sly-template.template="$DOLLAR{@ param}"></div>
+        """)
+        addClass("ComponentModel.java", """
+            package com.test;
+
+            import com.adobe.cq.sightly.WCMUse;
+
+            public class ComponentUse extends WCMUse {}
+        """)
+        smart()
+        shouldContain(listOf(
+                "partials/piece1.html",
+                "piece2.html",
+                "com.test.ComponentUse"
+        ))
+    }
 
 }
 
