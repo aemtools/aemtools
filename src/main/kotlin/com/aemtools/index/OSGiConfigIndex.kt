@@ -26,7 +26,7 @@ class OSGiConfigIndex : XmlIndex<OSGiConfiguration>() {
 
     override fun getInputFilter(): FileBasedIndex.InputFilter
         = FileBasedIndex.InputFilter {
-        it.fileType == XmlFileType.INSTANCE
+        it.fileType == XmlFileType.INSTANCE && it.path.contains("config")
     }
 
     override fun getValueExternalizer(): DataExternalizer<OSGiConfiguration>
