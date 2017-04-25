@@ -71,6 +71,10 @@ object const {
         val SLING_MODEL = "org.apache.sling.models.annotations.Model"
 
         val VALUE_MAP = "org.apache.sling.api.resource.ValueMap"
+
+        val FELIX_SERVICE_ANNOTATION = "org.apache.felix.scr.annotations.Service"
+        val SLING_SERVLET_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingServlet"
+        val SLING_FILTER_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingFilter"
     }
 
     object xml {
