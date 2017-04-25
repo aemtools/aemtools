@@ -39,15 +39,9 @@
     <depends>com.intellij.modules.java</depends>
 
     <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
+    <depends optional="true" config-file="java.xml">com.intellij.modules.java</depends>
 
-    <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
     <idea-version since-build="131"/>
-
-    <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
 
     <extensions defaultExtensionNs="com.intellij">
         <lang.documentationProvider language="HTML" order="first"
@@ -79,12 +73,9 @@
 
         <lang.substitutor language="HTML"
                           implementationClass="com.aemtools.lang.htl.HtlLanguageSubstitutor"/>
-
         <fileTypeFactory implementation="com.aemtools.lang.htl.file.HtlFileTypeFactory"/>
 
         <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>
-
-        <fileBasedIndex implementation="com.aemtools.index.OSGiConfigIndex"/>
 
         <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlStringLiteralManipulator"
                                  forClass="com.aemtools.lang.htl.psi.HtlStringLiteral"/>
@@ -106,6 +97,7 @@
 
         <lang.parserDefinition language="Htl"
                                implementationClass="com.aemtools.lang.htl.HtlParserDefinition"/>
+
         <lang.commenter language="Htl" implementationClass="com.aemtools.lang.htl.editor.comments.HtlCommenter"/>
         <lang.quoteHandler language="Htl" implementationClass="com.aemtools.lang.htl.editor.HtlQuoteHandler"/>
 

@@ -14,4 +14,22 @@ data class OSGiConfiguration(val path: String,
                         path.lastIndexOf("."))
             }
 
+    val fileName: String
+            get() {
+                return path.substring(path.lastIndexOf("/") + 1)
+            }
+
+
+    val mods: List<String>
+        get() {
+            return path.split("/").find { it.startsWith("config") }
+                    ?.split(".")
+                    .orEmpty()
+        }
+
+    companion object {
+        @JvmStatic
+        val serialVersionUID: Long = 1L
+    }
+
 }
