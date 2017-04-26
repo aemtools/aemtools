@@ -5,6 +5,7 @@ import com.intellij.codeInsight.daemon.impl.PsiElementListNavigator
 import com.intellij.ide.util.PsiElementListCellRenderer
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
+import com.intellij.psi.PsiIdentifier
 import java.awt.event.MouseEvent
 
 /**
@@ -12,14 +13,17 @@ import java.awt.event.MouseEvent
  */
 class OSGiGutterIconNavigationHandler(
         val myReferences: List<PsiFile>,
+        val classIdentifier: PsiIdentifier,
         val myTitle: String
 ) : GutterIconNavigationHandler<PsiElement> {
     override fun equals(other: Any?): Boolean {
-        return super.equals(other)
+        val otherGutter = other as? OSGiGutterIconNavigationHandler
+            ?: return false
+        return classIdentifier.text == otherGutter.classIdentifier.text
     }
 
     override fun hashCode(): Int {
-        return super.hashCode()
+        return classIdentifier.text.hashCode()
     }
 
     private val messages: Map<String, String> = myReferences.map {

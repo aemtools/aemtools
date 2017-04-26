@@ -11,12 +11,29 @@ import com.intellij.util.indexing.FileBasedIndex
  */
 object OSGiConfigSearch {
 
-    fun findConfigsForClass(fqn: String, project: Project): List<OSGiConfiguration> {
+    /**
+     * Collect all available OSGi configurations for given class.
+     *
+     * @param fqn the full qualified name of class to look for
+     * @param project the project
+     * @param fillXmlFile (_default false_) defines if the [OSGiConfiguration.xmlFile] should be filled
+     *
+     *
+     * @return list of all available OSGi configurations,
+     * empty list will be returned if no OSGi configuration was found
+     */
+    fun findConfigsForClass(fqn: String, project: Project, fillXmlFile: Boolean = false): List<OSGiConfiguration> {
         val configs = getAllConfigs(project)
 
         return configs.filter { it.fullQualifiedName == fqn }
     }
 
+    /**
+     * Collect all OSGi configurations present in the project.
+     *
+     * @param project the project
+     * @return list of all available OSGi configurations
+     */
     fun getAllConfigs(project: Project): List<OSGiConfiguration> {
         val fbi = FileBasedIndex.getInstance()
         val keys = fbi.getAllKeys(OSGiConfigIndex.OSGI_INDEX_ID, project)

@@ -1,5 +1,7 @@
 package com.aemtools.blocks.fixture
 
+import com.aemtools.blocks.base.model.fixture.ITestFixture
+
 /**
  * @author Dmytro_Troynikov
  */
@@ -16,9 +18,9 @@ interface OSGiConfigFixtureMixin {
      * Wrap current String into OSGi config therefore,
      * the String should contain OSGi parameters in form of
      *
-     *
      * _parameter="value"_
      *
+     * @receiver [String]
      * @return current string wrapped into OSGi config tag
      */
     fun String.wrapInOSGiConfig(): String = """
@@ -27,5 +29,13 @@ interface OSGiConfigFixtureMixin {
             $this
             />
     """
+
+    /**
+     * Add list of empty OSGi config files to current fixture.
+     * @receiver [ITestFixture]
+     */
+    fun ITestFixture.addEmptyOSGiConfigs(vararg names: String): Unit = names.forEach {
+        this.addXml(it, emptyOSGiConfig())
+    }
 
 }

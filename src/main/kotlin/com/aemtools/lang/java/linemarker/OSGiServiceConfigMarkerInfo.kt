@@ -23,7 +23,7 @@ class OSGiServiceConfigMarkerInfo(
         AllIcons.FileTypes.Config,
         Pass.UPDATE_ALL,
         Function { "OSGi configs found" },
-        OSGiGutterIconNavigationHandler(files, "OSGi Config"),
+        OSGiGutterIconNavigationHandler(files, classIdentifier, "OSGi Config"),
         GutterIconRenderer.Alignment.CENTER) {
     override fun equals(other: Any?): Boolean {
         val otherMarker = other as? OSGiServiceConfigMarkerInfo
@@ -35,4 +35,5 @@ class OSGiServiceConfigMarkerInfo(
     override fun hashCode(): Int {
         return this.classIdentifier.text.hashCode()
     }
+
 }

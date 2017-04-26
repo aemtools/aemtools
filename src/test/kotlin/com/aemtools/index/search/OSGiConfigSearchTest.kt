@@ -13,9 +13,9 @@ class OSGiConfigSearchTest : BaseLightTest(),
         addXml("/config/com.test.Service.xml", emptyOSGiConfig())
 
         verify {
-             OSGiConfigSearch.findConfigsForClass("com.test.Service", project)
+            OSGiConfigSearch.findConfigsForClass("com.test.Service", project)
                     .firstOrNull()
-                ?: throw AssertionError("Unable to find configuration")
+                    ?: throw AssertionError("Unable to find configuration")
         }
     }
 
@@ -26,7 +26,7 @@ class OSGiConfigSearchTest : BaseLightTest(),
         verify {
             val configs = OSGiConfigSearch.findConfigsForClass("com.test.Service", project)
 
-            // todo add assertion
+            assertEquals(2, configs.size)
         }
     }
 }
