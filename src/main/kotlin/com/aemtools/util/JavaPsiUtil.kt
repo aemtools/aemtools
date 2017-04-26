@@ -13,8 +13,8 @@ import com.intellij.psi.PsiClass
 /**
  * Check if current [PsiClass] is an OSGi service.
  *
- * @return *true* if class is marked with corresponding
- * OSGi annotations, *false* otherwise
+ * @receiver [PsiClass]
+ * @return *true* if class is marked with corresponding OSGi annotations, *false* otherwise
  */
 fun PsiClass.isOSGiService(): Boolean {
     val annotations = this.modifierList?.children?.map {

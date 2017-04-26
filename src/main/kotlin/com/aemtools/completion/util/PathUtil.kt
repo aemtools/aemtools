@@ -18,6 +18,9 @@ fun String.normalizeToJcrRoot(): String =
  * path = /some/path/under/file.html
  * result = under/file.html
  * ```
+ *
+ * @receiver [String]
+ * @return new relative path
  */
 fun String.relativeTo(path: String) : String =
         if (startsWith(path)) {

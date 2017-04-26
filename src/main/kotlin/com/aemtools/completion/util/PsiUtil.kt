@@ -40,6 +40,7 @@ fun PsiFile.getHtlFile(): HtlPsiFile? = getPsi(HtlLanguage) as? HtlPsiFile
 /**
  * Convert current [VirtualFile] to [PsiFile].
  * @param project the project
+ * @receiver [VirtualFile]
  * @return the psi file
  */
 fun VirtualFile.toPsiFile(project: Project): PsiFile? =

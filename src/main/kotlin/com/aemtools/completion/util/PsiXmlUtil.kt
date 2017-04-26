@@ -20,14 +20,20 @@ import com.intellij.psi.xml.XmlTag
 import java.util.*
 
 /**
- * Searches for children by type (@see [PsiTreeUtil])
+ * Searches for children by type.
+ *
+ * @receiver [PsiElement]
+ * @see [PsiTreeUtil.findChildrenOfType]
  */
 fun <T : PsiElement> PsiElement?.findChildrenByType(type: Class<T>): Collection<T> {
     return PsiTreeUtil.findChildrenOfType(this, type)
 }
 
 /**
- * Searches for parent PSI element of specified class
+ * Searches for parent PSI element of specified class.
+ *
+ * @receiver [PsiElement]
+ * @see [PsiTreeUtil.findFirstParent]
  */
 fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T? {
     return PsiTreeUtil.findFirstParent(this, Conditions.instanceOf(type)) as T?
@@ -37,6 +43,7 @@ fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T? {
  * Search for parent which is of given type and satisfies given predicate.
  * @param type the type of parent
  * @param predicate the predicate
+ * @receiver [PsiElement]
  * @return the element
  */
 fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>, predicate: (T) -> Boolean): T? =
@@ -61,6 +68,9 @@ fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>, predicate: (T)
 
 /**
  * Check if current [PsiElement] has parent of specified class.
+ *
+ * @receiver [PsiElement]
+ * @return *true* if current element has parent of specified type, *false* otherwise
  */
 fun <T : PsiElement> PsiElement?.hasParent(type: Class<T>): Boolean =
         this.findParentByType(type) != null
@@ -68,18 +78,23 @@ fun <T : PsiElement> PsiElement?.hasParent(type: Class<T>): Boolean =
 /**
  * Check if current [PsiElement] has child of specified type.
  * @param type type of child
- * @return __true__ if current element has one or more children of specified type
+ * @receiver nullable [PsiElement]
+ * @return *true* if current element has one or more children of specified type
  */
 fun <T : PsiElement> PsiElement?.hasChild(type: Class<T>): Boolean =
         this.findChildrenByType(type).isNotEmpty()
 
 /**
  * Check if current [XmlTag] is sly tag.
+ * @receiver [XmlTag]
+ * @return *true* if current tag is "sly" tag, *false* otherwise
  */
 fun XmlTag.isSlyTag(): Boolean = this.name == SLY_TAG
 
 /**
- * Extract [HtlHtlEl] from current element.
+ * Extract [HtlHtlEl] from current attribute.
+ * @receiver [XmlAttribute]
+ * @return first [HtlHtlEl] element from current attribute, *null* if no such element found
  */
 fun XmlAttribute.extractHtlHel(): HtlHtlEl? {
     val htlFile = containingFile?.viewProvider?.getPsi(HtlLanguage)
@@ -91,6 +106,9 @@ fun XmlAttribute.extractHtlHel(): HtlHtlEl? {
 
 /**
  * Extract Htl attributes from given [XmlAttribute] collection.
+ *
+ * @receiver [Collection] of [XmlAttribute] objects
+ * @return new collection with only Htl attributes
  */
 fun Collection<XmlAttribute>.htlAttributes(): Collection<XmlAttribute> =
         filter { it.isHtlAttribute() }
@@ -109,6 +127,7 @@ fun Collection<XmlAttribute>.htlAttributes(): Collection<XmlAttribute> =
  * ???
  * ```
  *
+ * @receiver [XmlAttribute]
  * @return full qualified class name, or _null_ in case if resolution is not possible
  */
 @Deprecated("To be removed")
@@ -121,6 +140,7 @@ fun XmlAttribute.resolveUseClass(): String? {
     }
 }
 
+@Deprecated("To be removed")
 private fun extractBeanNameFromEl(el: String): String? {
     val start = el.indexOf("'") + 1
     val end = el.indexOf("'", start + 1)
@@ -132,6 +152,9 @@ private fun extractBeanNameFromEl(el: String): String? {
 
 /**
  * Check if current [XmlAttribute] is `data-sly-use` attribute.
+ *
+ * @receiver [XmlAttribute]
+ * @return *true* if current attribute is data-sly-use, *false* otherwise
  */
 fun XmlAttribute.isDataSlyUse(): Boolean = this.name.startsWith("$DATA_SLY_USE.")
         || this.name == DATA_SLY_USE
@@ -161,7 +184,9 @@ fun XmlAttribute.isHtlAttribute(): Boolean = with(this.name) {
  * data-sly-use -> false
  * data-sly-list -> true
  * ```
- * @return __true__ if current element declares some variable
+ *
+ * @receiver [XmlAttribute]
+ * @return *true* if current element declares some variable
  */
 fun XmlAttribute.isHtlDeclarationAttribute(): Boolean =
         with(this.name) {
@@ -177,6 +202,7 @@ fun XmlAttribute.isHtlDeclarationAttribute(): Boolean =
 
 /**
  * Extract list of Htl variable declarations from current [XmlAttribute] collection.
+ * @receiver [Collection] of [XmlAttribute] objects
  * @return collection of [HtlVariableDeclaration] elements
  */
 fun Collection<XmlAttribute>.extractDeclarations(): Collection<HtlVariableDeclaration> {
@@ -197,6 +223,7 @@ fun Collection<XmlAttribute>.extractDeclarations(): Collection<HtlVariableDeclar
  *
  * will return list of "param1" and "param2".
  *
+ * @receiver [XmlAttribute]
  * @return list of parameter names, empty list if no parameters were declared
  * or in case if the attribute is not `data-sly-template`
  */
@@ -213,6 +240,8 @@ fun XmlAttribute.extractTemplateParameters(): List<String> {
 
 /**
  * Extract [TemplateDefinition] from current [XmlAttribute].
+ *
+ * @receiver [XmlAttribute]
  * @return template definition, _null_ in case if current tag isn't of `data-sly-template` type.
  */
 fun XmlAttribute.extractTemplateDefinition(): TemplateDefinition? {
