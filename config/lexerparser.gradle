@@ -37,7 +37,7 @@ task generateHtlPsiAndParser(type: JavaExec) {
 }
 
 task generateCdLexer(type: JavaExec) {
-    group = "lexerparser"
+    group = "grammar"
 
     def src = "$project.projectDir/src/main/kotlin/com/aemtools/lang/clientlib/_ClientlibDeclarationLexer.flex"
     def dst = "$project.projectDir/src/main/gen/com/aemtools/lang/clientlib/"
