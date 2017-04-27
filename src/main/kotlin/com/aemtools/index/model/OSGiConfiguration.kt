@@ -19,12 +19,10 @@ data class OSGiConfiguration(val path: String,
                     fileName.substring(0, fileName.lastIndexOf(".")))
         }
 
-    private fun removeSuffixIfPresent(fqn: String): String {
-        return if (fqn.indexOf("-") != -1) {
-            fqn.substring(0, fqn.lastIndexOf("-"))
-        } else {
-            fqn
-        }
+    private fun removeSuffixIfPresent(fqn: String): String = if (fqn.indexOf("-") != -1) {
+        fqn.substring(0, fqn.lastIndexOf("-"))
+    } else {
+        fqn
     }
 
     /**
@@ -53,12 +51,27 @@ data class OSGiConfiguration(val path: String,
         get() {
             return path.split("/").find { it.startsWith("config") }
                     ?.split(".")
-                    .orEmpty()
+                    ?.filterNot { it == "config" }
+                    ?: listOf("default")
         }
 
     companion object {
         @JvmStatic
         val serialVersionUID: Long = 1L
     }
-
 }
+
+/**
+ * Sort current [OSGiConfiguration] collection by mods.
+ *
+ * @return collection sorted by mods
+ */
+fun List<OSGiConfiguration>.sortByMods(): List<OSGiConfiguration> =
+        this.sortedWith(kotlin.Comparator<OSGiConfiguration> { o1, o2 ->
+            if (o1.mods.joinToString(separator = "") { it } == "default") {
+                -1
+            } else {
+                o1.mods.joinToString(separator = "") { it }
+                        .compareTo(o2.mods.joinToString(separator = "") { it })
+            }
+        })

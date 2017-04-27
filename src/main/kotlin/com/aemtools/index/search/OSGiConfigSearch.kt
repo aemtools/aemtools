@@ -3,7 +3,9 @@ package com.aemtools.index.search
 import com.aemtools.index.OSGiConfigIndex
 import com.aemtools.index.model.OSGiConfiguration
 import com.intellij.openapi.project.Project
+import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
+import com.intellij.psi.xml.XmlFile
 import com.intellij.util.indexing.FileBasedIndex
 
 /**
@@ -25,7 +27,28 @@ object OSGiConfigSearch {
     fun findConfigsForClass(fqn: String, project: Project, fillXmlFile: Boolean = false): List<OSGiConfiguration> {
         val configs = getAllConfigs(project)
 
-        return configs.filter { it.fullQualifiedName == fqn }
+        val filteredConfigs = configs.filter { it.fullQualifiedName == fqn }
+
+        return if (!fillXmlFile) {
+            filteredConfigs
+        } else {
+            val fileNames = filteredConfigs.map { it.fileName }
+                    .toSet()
+
+            val files = fileNames.flatMap {
+                FilenameIndex.getFilesByName(project, it, GlobalSearchScope.projectScope(project))
+                        ?.toList()
+                        .orEmpty()
+            }
+
+            filteredConfigs.forEach { config ->
+                val matchedFile = files.find { file ->
+                    file.virtualFile.path == config.path
+                } as? XmlFile
+                config.xmlFile = matchedFile
+            }
+            filteredConfigs
+        }
     }
 
     /**

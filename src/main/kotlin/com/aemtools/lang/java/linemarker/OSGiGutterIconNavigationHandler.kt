@@ -1,5 +1,6 @@
 package com.aemtools.lang.java.linemarker
 
+import com.aemtools.index.model.OSGiConfiguration
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler
 import com.intellij.codeInsight.daemon.impl.PsiElementListNavigator
 import com.intellij.ide.util.PsiElementListCellRenderer
@@ -12,13 +13,13 @@ import java.awt.event.MouseEvent
  * @author Dmytro_Troynikov
  */
 class OSGiGutterIconNavigationHandler(
-        val myReferences: List<PsiFile>,
+        val configs: List<OSGiConfiguration>,
         val classIdentifier: PsiIdentifier,
         val myTitle: String
 ) : GutterIconNavigationHandler<PsiElement> {
     override fun equals(other: Any?): Boolean {
         val otherGutter = other as? OSGiGutterIconNavigationHandler
-            ?: return false
+                ?: return false
         return classIdentifier.text == otherGutter.classIdentifier.text
     }
 
@@ -26,25 +27,18 @@ class OSGiGutterIconNavigationHandler(
         return classIdentifier.text.hashCode()
     }
 
-    private val messages: Map<String, String> = myReferences.map {
-        it.virtualFile.path to extractModes(it)
-    }.toMap()
-
-    private fun extractModes(file: PsiFile): String {
-        val path = file.containingDirectory.virtualFile.path
-        val configPart = path.substring(path.lastIndexOf("config"))
-        val mods = configPart.split(".")
-        return if (mods.size == 1) {
-            "default"
+    private val messages: Map<String, String> = configs.flatMap {
+        val path = it.xmlFile?.virtualFile?.path
+        if (path != null) {
+            listOf(path to it.mods.joinToString { it })
         } else {
-            mods.subList(1, mods.size)
-                    .joinToString { it }
+            listOf()
         }
-    }
+    }.toMap()
 
     override fun navigate(e: MouseEvent?, elt: PsiElement?) {
         PsiElementListNavigator.openTargets(e,
-                myReferences.toTypedArray(),
+                configs.map { it.xmlFile }.toTypedArray(),
                 myTitle, null, createListCellRenderer())
     }
 
