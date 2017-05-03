@@ -3,4 +3,4 @@ jdk:
  - oraclejdk8
 
 script:
- - gradle downloadTestDependencies build
+ - ./gradlew downloadTestDependencies generateGrammar build
