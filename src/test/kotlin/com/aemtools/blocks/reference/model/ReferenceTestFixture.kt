@@ -28,7 +28,7 @@ class ReferenceTestFixture(fixture: JavaCodeInsightTestFixture)
         super.test()
 
         val referenceUnderCaret = fixture.file.findReferenceAt(fixture.editor.caretModel.offset)
-                ?: throw AssertionError("Unable to find reference in: ${fixture.file.text}")
+                ?: throw AssertionError("Unable to find reference in:\n${fixture.file.text}")
 
         val resolvedReference = referenceUnderCaret.resolve()
 

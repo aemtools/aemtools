@@ -14,7 +14,7 @@ object CdFileType : LanguageFileType(CdLanguage) {
 
     override fun getName() = "Clientlib definition"
 
-    override fun getDefaultExtension(): String = "txt"
+    override fun getDefaultExtension(): String = "cd"
 
     override fun getDescription(): String = "Clientlib definition"
 

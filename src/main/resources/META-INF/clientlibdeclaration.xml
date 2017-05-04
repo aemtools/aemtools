@@ -12,7 +12,9 @@
         <lang.substitutor
                 language="TEXT"
                 implementationClass="com.aemtools.lang.clientlib.CdLanguageSubstitutor"/>
-
+        <psi.referenceContributor
+                language="Cd"
+                implementation="com.aemtools.reference.clientlib.CdReferenceContributor"/>
         <lang.commenter
                 language="Cd"
                 implementationClass="com.aemtools.lang.clientlib.editor.CdCommenter"/>
