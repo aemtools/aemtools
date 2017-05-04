@@ -1,9 +1,6 @@
 package com.aemtools.completion.clientlib.provider
 
-import com.aemtools.completion.util.findParentByType
-import com.aemtools.completion.util.getPsi
-import com.aemtools.completion.util.relativeTo
-import com.aemtools.completion.util.toPsiFile
+import com.aemtools.completion.util.*
 import com.aemtools.lang.clientlib.CdLanguage
 import com.aemtools.lang.clientlib.psi.CdBasePath
 import com.aemtools.lang.clientlib.psi.CdInclude
@@ -27,7 +24,8 @@ object ClientlibDeclarationIncludeCompletionProvider : CompletionProvider<Comple
             return
         }
 
-        val currentElement = parameters.position
+        val currentElement = parameters.position.findParentByType(CdInclude::class.java)
+                ?: return
         val basePath = currentElement.basePathElement()?.include?.text
         val startDir = findStartDirectory(parameters.originalFile.containingDirectory, basePath)
                 ?: return
@@ -64,7 +62,7 @@ object ClientlibDeclarationIncludeCompletionProvider : CompletionProvider<Comple
         var currentBasePath: String? = null
         elements.forEach {
             if (it is CdBasePath) {
-                currentBasePath = it.basePathElement()?.text
+                currentBasePath = it.text
             } else if (it is CdInclude) {
                 if (currentBasePath == null) {
                     result.add(CdImport(
@@ -130,20 +128,6 @@ object ClientlibDeclarationIncludeCompletionProvider : CompletionProvider<Comple
         fileToCheck.endsWith(".js")
     } else {
         fileToCheck.endsWith(".css") || fileToCheck.endsWith(".less")
-    }
-
-    private fun PsiElement.basePathElement(): CdBasePath? {
-        val myInclude = this.findParentByType(com.aemtools.lang.clientlib.psi.CdInclude::class.java)
-                ?: return null
-
-        var prevSibling: PsiElement? = myInclude
-        while (prevSibling != null && prevSibling.prevSibling != null) {
-            prevSibling = prevSibling.prevSibling
-            if (prevSibling is CdBasePath) {
-                return prevSibling
-            }
-        }
-        return null
     }
 
     /**

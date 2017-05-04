@@ -4,7 +4,7 @@ import com.aemtools.completion.util.findParentByType
 import com.aemtools.completion.util.isDataSlyUse
 import com.aemtools.index.HtlIndexFacade
 import com.aemtools.lang.java.JavaSearch
-import com.aemtools.reference.html.reference.HtlFileReference
+import com.aemtools.reference.common.reference.PsiFileReference
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
@@ -25,7 +25,7 @@ object HtmlDataSlyUseWithinAttributeValueReferenceProvider : JavaClassReferenceP
             val psiFile = HtlIndexFacade.resolveFile(valueElement.value, attr.containingFile)
 
             if (psiFile != null) {
-                val fileReference = HtlFileReference(psiFile,
+                val fileReference = PsiFileReference(psiFile,
                         valueElement,
                         TextRange(1, valueElement.textLength - 1))
                 return arrayOf(fileReference)

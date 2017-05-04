@@ -1,4 +1,4 @@
-package com.aemtools.reference.html.reference
+package com.aemtools.reference.common.reference
 
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
@@ -7,11 +7,13 @@ import com.intellij.psi.ResolveResult
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.PsiFileReference
 
 /**
+ * Reference to PsiFile.
+ *
  * @author Dmytro Troynikov
  */
-class HtlFileReference(val psiFile: PsiElement?,
-                    holder: PsiElement,
-                    range: TextRange) : PsiReferenceBase<PsiElement>(holder, range, true),
+class PsiFileReference(val psiFile: PsiElement?,
+                       holder: PsiElement,
+                       range: TextRange) : PsiReferenceBase<PsiElement>(holder, range, true),
         PsiFileReference {
 
     override fun multiResolve(incompleteCode: Boolean): Array<out ResolveResult> {

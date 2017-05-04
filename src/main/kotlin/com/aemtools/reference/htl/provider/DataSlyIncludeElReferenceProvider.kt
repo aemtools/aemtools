@@ -2,7 +2,7 @@ package com.aemtools.reference.htl.provider
 
 import com.aemtools.index.HtlIndexFacade
 import com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin
-import com.aemtools.reference.html.reference.HtlFileReference
+import com.aemtools.reference.common.reference.PsiFileReference
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
@@ -18,7 +18,7 @@ object DataSlyIncludeElReferenceProvider : PsiReferenceProvider() {
         val psiFile = HtlIndexFacade.resolveFile(value.name, value.containingFile)
 
         return if (psiFile != null) {
-            arrayOf(HtlFileReference(psiFile, value, TextRange(1, value.textLength - 1)))
+            arrayOf(PsiFileReference(psiFile, value, TextRange(1, value.textLength - 1)))
         } else {
             arrayOf()
         }
