@@ -49,10 +49,15 @@ data class OSGiConfiguration(val path: String,
      */
     val mods: List<String>
         get() {
-            return path.split("/").find { it.startsWith("config") }
+            val result = path.split("/").find { it.startsWith("config") }
                     ?.split(".")
                     ?.filterNot { it == "config" }
-                    ?: listOf("default")
+
+            return if (result == null || result.isEmpty()) {
+                listOf("default")
+            } else {
+                result
+            }
         }
 
     companion object {
@@ -68,10 +73,10 @@ data class OSGiConfiguration(val path: String,
  */
 fun List<OSGiConfiguration>.sortByMods(): List<OSGiConfiguration> =
         this.sortedWith(kotlin.Comparator<OSGiConfiguration> { o1, o2 ->
-            if (o1.mods.joinToString(separator = "") { it } == "default") {
-                -1
-            } else {
-                o1.mods.joinToString(separator = "") { it }
+            when {
+                o1.mods.joinToString(separator = "") { it } == "default" -> -1
+                o2.mods.joinToString(separator = "") { it } == "default" -> 1
+                else -> o1.mods.joinToString(separator = "") { it }
                         .compareTo(o2.mods.joinToString(separator = "") { it })
             }
         })

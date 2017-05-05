@@ -47,40 +47,4 @@ class OSGiConfigLineMarkerTest : BaseLightTest(),
         }
     }
 
-    fun testFastMarkerShouldReturnTheSameResultAsTheSlowOne() = fileCase {
-        addFelixServiceAnnotation()
-        addClass("MyService.java", """
-            package com.test;
-
-            import $FELIX_SERVICE_ANNOTATION;
-
-            @Service
-            public class MyService {}
-        """)
-        addEmptyOSGiConfigs("/config/com.test.MyService.xml")
-
-        verify {
-            val psiClass = JavaSearch.findClass("com.test.MyService", project)
-                    ?: throw AssertionError("Unable to find fixture class!")
-            val classIdentifier = psiClass.nameIdentifier
-                    ?: throw AssertionError("Unable to get class identifier!")
-
-            val marker = tested.getLineMarkerInfo(classIdentifier)
-
-            assertNotNull("Marker should be created for given identifier", marker)
-
-            val mutableCollection: ArrayList<LineMarkerInfo<PsiElement>> = ArrayList()
-
-            tested.collectSlowLineMarkers(mutableListOf(*psiClass.children), mutableCollection)
-
-            assertEquals("Single marker should be added", 1, mutableCollection.size)
-
-            assertEquals("Markers should be equal", marker, mutableCollection.firstOrNull())
-
-            assertEquals("Navigation handlers should be equal",
-                    marker?.navigationHandler,
-                    mutableCollection.firstOrNull()?.navigationHandler)
-        }
-    }
-
 }

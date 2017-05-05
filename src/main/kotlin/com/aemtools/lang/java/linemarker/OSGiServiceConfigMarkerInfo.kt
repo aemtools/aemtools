@@ -14,12 +14,12 @@ import com.intellij.util.Function
  */
 class OSGiServiceConfigMarkerInfo(
         val classIdentifier: PsiIdentifier,
-        val configs: List<OSGiConfiguration>
+        configs: List<OSGiConfiguration>
 ) : LineMarkerInfo<PsiElement>(
         classIdentifier,
         classIdentifier.textRange,
         AllIcons.FileTypes.Config,
-        Pass.UPDATE_ALL,
+        Pass.LINE_MARKERS,
         Function { "OSGi configs found" },
         OSGiGutterIconNavigationHandler(configs, classIdentifier, "OSGi Config"),
         GutterIconRenderer.Alignment.CENTER) {

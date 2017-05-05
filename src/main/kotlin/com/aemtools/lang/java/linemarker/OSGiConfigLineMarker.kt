@@ -31,14 +31,7 @@ class OSGiConfigLineMarker : LineMarkerProvider {
         return null
     }
 
-    override fun collectSlowLineMarkers(elements: MutableList<PsiElement>, result: MutableCollection<LineMarkerInfo<PsiElement>>) {
-        val classIdentifier = elements.map { it as? PsiIdentifier }
-                .filterNotNull()
-                .find {
-                    it.parent is PsiClass
-                } ?: return
-        val marker = getLineMarkerInfo(classIdentifier)
-                ?: return
-        result.add(marker)
+    override fun collectSlowLineMarkers(elements: MutableList<PsiElement>,
+                                        result: MutableCollection<LineMarkerInfo<PsiElement>>) {
     }
 }
