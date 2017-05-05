@@ -6,7 +6,7 @@ import com.aemtools.constant.const.JCR_ROOT
 /**
  * @author Dmytro_Troynikov
  */
-class ClientlibJsTxtCompletionTest : CompletionBaseLightTest() {
+class ClientlibJsTxtCompletionTest : CompletionBaseLightTest(false) {
     fun testBaseCompletionJs() = completionTest {
         addFile("$JCR_ROOT/apps/components/comp/clientlibs/js.txt", """
             $CARET

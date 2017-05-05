@@ -6,7 +6,7 @@ import com.aemtools.constant.const.JCR_ROOT
 /**
  * @author Dmytro_Troynikov
  */
-class ClientlibCssTxtCompletionTest : CompletionBaseLightTest() {
+class ClientlibCssTxtCompletionTest : CompletionBaseLightTest(false) {
 
     fun testBaseCompletionCss() = completionTest {
         addFile("$JCR_ROOT/apps/components/comp/clientlibs/css.txt", """

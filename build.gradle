@@ -3,89 +3,76 @@ buildscript {
         mavenLocal()
         jcenter()
         mavenCentral()
-        maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service'}
+        maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
-        classpath 'de.undercouch:gradle-download-task:3.1.2'
-        classpath 'org.apache.ivy:ivy:2.3.0'
     }
 }
 
 plugins {
     id "org.jetbrains.intellij" version "0.2.5"
-    id "de.undercouch.download" version "3.1.2"
 }
 
-allprojects {
-    apply plugin: 'org.jetbrains.intellij'
+apply plugin: 'org.jetbrains.intellij'
 
-    intellij {
-        pluginName 'aemtools'
-        version 'IC-2016.1'
+intellij {
+    pluginName 'aemtools'
+    version 'IC-2017.1.2'
 
-        updateSinceUntilBuild = false
-        downloadSources = true
+    updateSinceUntilBuild = false
+    downloadSources = true
+}
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+
+tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
+
+sourceSets {
+    main.java.srcDirs += "src/main/gen"
+    main.kotlin.srcDirs += "src/main/kotlin"
+    main.resources.srcDir "src/main/resources"
+
+    test.kotlin.srcDir 'src/test/kotlin'
+    test.resources.srcDirs += "src/main/resources"
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat = 'full'
     }
+}
 
-    apply plugin: 'java'
-    apply plugin: 'kotlin'
+configurations {
+    gen
+}
 
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
+repositories {
+    mavenLocal()
+    jcenter()
+    mavenCentral()
+}
 
-    tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-runtime:$kotlin_version"
 
-    sourceSets {
-        main.java.srcDirs += "src/main/gen"
-        main.kotlin.srcDirs += "src/main/kotlin"
-        main.resources.srcDir "src/main/resources"
+    compile "com.google.code.gson:gson:$gson_version"
 
-        test.kotlin.srcDir 'src/test/kotlin'
-        test.resources.srcDirs += "src/main/resources"
-    }
+    compile "commons-lang:commons-lang:$apache_commons_version"
 
-    test {
-        apply from: "config/download-test-dependencies.gradle"
-        dependsOn downloadTestDependencies
+    gen files('lib/grammar-kit-2.jar')
 
-        testLogging {
-            events "passed", "skipped", "failed"
-            exceptionFormat = 'full'
-        }
-    }
+    gen 'de.jflex:jflex:1.6.1'
 
-    task wrapper(type: Wrapper) {
-        gradleVersion = '3.5'
-    }
-
-    configurations {
-        gen
-    }
-
-    repositories {
-        mavenLocal()
-        jcenter()
-        mavenCentral()
-    }
-
-    dependencies {
-        compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-        compile "org.jetbrains.kotlin:kotlin-runtime:$kotlin_version"
-
-        compile "com.google.code.gson:gson:$gson_version"
-
-        compile "commons-lang:commons-lang:$apache_commons_version"
-
-        gen files('lib/grammar-kit-2.jar')
-
-        gen 'de.jflex:jflex:1.6.1'
-
-        testCompile "junit:junit:$junit_version"
-        testCompile "org.assertj:assertj-core:$assertj_version"
-        testCompile "org.mockito:mockito-core:2.6.4"
-    }
-
+    testCompile "junit:junit:$junit_version"
+    testCompile "org.assertj:assertj-core:$assertj_version"
+    testCompile "org.mockito:mockito-core:2.6.4"
 }
 
 apply from: "config/idea.gradle"
@@ -94,3 +81,7 @@ apply from: "config/idea.gradle"
  * Import Lexer Parser Related tasks.
  */
 apply from: "config/lexerparser.gradle"
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.5'
+}
