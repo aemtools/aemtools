@@ -8,6 +8,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
+import com.intellij.psi.xml.XmlFile
 
 /**
  * Psi utility & extension methods
@@ -27,6 +28,11 @@ fun PsiFile.getPsi(language: Language): PsiFile? = viewProvider.getPsi(language)
 fun PsiFile.getHtmlFile(): PsiFile? = getPsi(StdLanguages.HTML)
 
 /**
+ * Get [XmlFile] from current [PsiFile].
+ */
+fun PsiFile.getXmlFile(): XmlFile? = getPsi(StdLanguages.XML) as? XmlFile
+
+/**
  * Get [HtlPsiFile] from current [PsiFile].
  */
 fun PsiFile.getHtlFile(): HtlPsiFile? = getPsi(HtlLanguage) as? HtlPsiFile
@@ -34,6 +40,7 @@ fun PsiFile.getHtlFile(): HtlPsiFile? = getPsi(HtlLanguage) as? HtlPsiFile
 /**
  * Convert current [VirtualFile] to [PsiFile].
  * @param project the project
+ * @receiver [VirtualFile]
  * @return the psi file
  */
 fun VirtualFile.toPsiFile(project: Project): PsiFile? =

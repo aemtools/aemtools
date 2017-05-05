@@ -3,7 +3,7 @@ jdk:
   - oraclejdk8
 
 install:
-  - ./gradlew downloadTestDependencies
+  - ./gradlew generateGrammar
 
 script:
-  - ./gradlew generateGrammar build
+  - ./gradlew build

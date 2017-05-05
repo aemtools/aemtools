@@ -71,12 +71,18 @@ object const {
         val SLING_MODEL = "org.apache.sling.models.annotations.Model"
 
         val VALUE_MAP = "org.apache.sling.api.resource.ValueMap"
+
+        val FELIX_SERVICE_ANNOTATION = "org.apache.felix.scr.annotations.Service"
+        val SLING_SERVLET_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingServlet"
+        val SLING_FILTER_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingFilter"
     }
 
     object xml {
         val XML_ATTRIBUTE_NAME: String = "XML_NAME"
         val XML_ATTRIBUTE_VALUE: String = "XML_ATTRIBUTE_VALUE_TOKEN"
         val XML_TAG_NAME: String = "XML_TAG_NAME"
+
+        val JCR_PRIMARY_TYPE_OSGI_CONFIG: String = "$JCR_PRIMARY_TYPE=\"sling:OsgiConfig\""
     }
 
     object message {

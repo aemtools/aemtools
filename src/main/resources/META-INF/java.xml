@@ -1,0 +1,9 @@
+<idea-plugin url="https://www.jetbrains.com/idea">
+    <extensions defaultExtensionNs="com.intellij">
+        <fileBasedIndex implementation="com.aemtools.index.OSGiConfigIndex"/>
+
+        <codeInsight.lineMarkerProvider
+                language="JAVA"
+                implementationClass="com.aemtools.lang.java.linemarker.OSGiConfigLineMarker"/>
+    </extensions>
+</idea-plugin>

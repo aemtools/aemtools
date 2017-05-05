@@ -1,4 +1,4 @@
-package com.aemtools.index.indexed
+package com.aemtools.index.indexer
 
 import com.aemtools.completion.util.extractTemplateDefinition
 import com.aemtools.completion.util.findChildrenByType

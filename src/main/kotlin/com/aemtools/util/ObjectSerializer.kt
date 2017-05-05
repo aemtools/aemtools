@@ -69,6 +69,7 @@ object ObjectSerializer {
 /**
  * Serialize current [Serializable].
  * The shortcut for [ObjectSerializer.serialize] method.
+ * @receiver [Serializable]
  * @see ObjectSerializer.serialize
  */
 fun Serializable.serialize(): String = ObjectSerializer.serialize(this)
@@ -76,6 +77,7 @@ fun Serializable.serialize(): String = ObjectSerializer.serialize(this)
 /**
  * Serialize current [Serializable] into [ByteArray].
  * The shortcut for [ObjectSerializer.serializeToByteArray] method.
+ * @receiver [Serializable]
  * @see ObjectSerializer.serializeToByteArray
  */
 fun Serializable.serializeToByteArray(): ByteArray = ObjectSerializer.serializeToByteArray(this)
