@@ -32,6 +32,7 @@
         <ul>
             <li>added standard HTML structure view for HTL files</li>
             <li>added support for js.txt&css.txt files</li>
+            <li>OSGi services have list of corresponding OSGi configs available via gutter icon</li>
         </ul>
     ]]>
     </change-notes>
