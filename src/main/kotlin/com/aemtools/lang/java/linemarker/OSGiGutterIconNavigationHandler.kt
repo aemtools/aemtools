@@ -27,10 +27,12 @@ class OSGiGutterIconNavigationHandler(
         return classIdentifier.text.hashCode()
     }
 
-    private val messages: Map<String, String> = configs.flatMap {
+    private val messages: Map<String, CellDescriptor> = configs.flatMap {
         val path = it.xmlFile?.virtualFile?.path
         if (path != null) {
-            listOf(path to it.mods.joinToString { it })
+            listOf(path to CellDescriptor(
+                    it.mods.joinToString { it },
+                    it.suffix()))
         } else {
             listOf()
         }
@@ -51,15 +53,22 @@ class OSGiGutterIconNavigationHandler(
             override fun getElementText(element: PsiFile?): String {
                 val path = element?.virtualFile?.path
                         ?: return "Unknown"
-                return messages[path]
+                return messages[path]?.elementText
                         ?: return "Unknown"
             }
 
             override fun getContainerText(element: PsiFile?, name: String?): String? {
-                return ""
+                val path = element?.virtualFile?.path
+                        ?: return ""
+                return messages[path]?.containerText
+                        ?: ""
             }
 
         }
     }
 
+    data class CellDescriptor(
+            val elementText: String,
+            val containerText: String
+    )
 }

@@ -48,4 +48,20 @@ class OSGiConfigSearchTest : BaseLightTest(),
             )
         }
     }
+
+    fun testSearchForOSGiServiceFactoryConfigs() = fileCase {
+        val fileNames = listOf(
+                "/config/com.test.Service-second.xml",
+                "/config/com.test.Service-first.xml"
+        )
+        addEmptyOSGiConfigs(*fileNames.toTypedArray())
+        verify {
+            val configs = OSGiConfigSearch.findConfigsForClass("com.test.Service", project, true)
+            assertEquals(2, configs.size)
+            assertEquals(
+                    fileNames.map { "/src$it" },
+                    configs.map { it.xmlFile?.virtualFile?.path }
+            )
+        }
+    }
 }

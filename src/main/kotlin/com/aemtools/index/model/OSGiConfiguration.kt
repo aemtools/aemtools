@@ -29,11 +29,14 @@ data class OSGiConfiguration(val path: String,
      * Return name suffix.
      *
      * com.test.MyService-first.xml -> "first"
-     * com.test.MyService.xml -> null
+     * com.test.MyService.xml -> ""
      *
+     * @return the suffix or empty string
      */
-    fun suffix(): String? {
-        return null
+    fun suffix(): String = if (fileName.contains("-")) {
+        fileName.substring(fileName.indexOf("-") + 1, fileName.lastIndexOf("."))
+    } else {
+        ""
     }
 
     /**
@@ -74,9 +77,16 @@ data class OSGiConfiguration(val path: String,
 fun List<OSGiConfiguration>.sortByMods(): List<OSGiConfiguration> =
         this.sortedWith(kotlin.Comparator<OSGiConfiguration> { o1, o2 ->
             when {
-                o1.mods.joinToString(separator = "") { it } == "default" -> -1
-                o2.mods.joinToString(separator = "") { it } == "default" -> 1
-                else -> o1.mods.joinToString(separator = "") { it }
-                        .compareTo(o2.mods.joinToString(separator = "") { it })
+                o1.mods.size != o2.mods.size ->
+                    o1.mods.size - o2.mods.size
+                o1.modsConcatenated() == o2.modsConcatenated() ->
+                    o1.suffix().compareTo(o2.suffix())
+                o1.modsConcatenated() == "default" -> -1
+                o2.modsConcatenated() == "default" -> 1
+                else -> o1.modsConcatenated()
+                        .compareTo(o2.modsConcatenated())
             }
         })
+
+fun OSGiConfiguration.modsConcatenated(): String =
+        mods.joinToString(separator = "") { it }
