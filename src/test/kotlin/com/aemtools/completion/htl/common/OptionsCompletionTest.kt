@@ -71,4 +71,21 @@ class OptionsCompletionTest : CompletionBaseLightTest(true) {
         shouldContain(listOf("resourceType") + CONTEXT_PARAMETERS)
     }
 
+    fun testOptionsResourceTypeVariants() = completionTest {
+        addHtml("test.html", """
+            <div data-sly-resource='$DOLLAR{@ resourceType="$CARET"'></div>
+        """)
+        addXml("/jcr_root/apps/components/component1/.content.xml", text = """
+            <jcr:root jcr:primaryType="cq:Component" jcr:title='my title' componentGroup='group'/>
+        """)
+        addXml("/jcr_root/apps/components/component2/.content.xml", text = """
+            <jcr:root jcr:primaryType="cq:Component" jcr:title='my title' componentGroup='group'/>
+        """)
+
+        shouldContain(
+                "/apps/components/component1",
+                "/apps/components/component2"
+        )
+    }
+
 }

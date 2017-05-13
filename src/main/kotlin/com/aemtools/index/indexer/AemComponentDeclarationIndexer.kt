@@ -22,6 +22,7 @@ object AemComponentDeclarationIndexer : DataIndexer<String, AemComponentDefiniti
 
             val key = inputData.file.path
             val aemComponentDefinition = AemComponentDefinition.fromTag(mainTag, key)
+                ?: return mutableMapOf()
 
             return mutableMapOf(key to aemComponentDefinition)
         }

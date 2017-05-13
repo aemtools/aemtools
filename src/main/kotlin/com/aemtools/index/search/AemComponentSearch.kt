@@ -28,7 +28,7 @@ object AemComponentSearch {
                     AemComponentDeclarationIndex.AEM_COMPONENT_DECLARATION_INDEX_ID,
                     it,
                     GlobalSearchScope.projectScope(project))
-        }
+        }.filterNotNull()
     }
 
 }
