@@ -12,15 +12,11 @@ import com.intellij.util.ProcessingContext
 /**
  * @author Dmytro Troynikov
  */
-object HtlDataSlyResourceOptionCompletionProvider : CompletionProvider<CompletionParameters>() {
-    override fun addCompletions(
-            parameters: CompletionParameters,
-            context: ProcessingContext?,
-            result: CompletionResultSet) {
-        if (result.isStopped) {
-            return
-        }
+object HtlOptionCompletionProvider : CompletionProvider<CompletionParameters>() {
 
+    override fun addCompletions(parameters: CompletionParameters,
+                                context: ProcessingContext?,
+                                result: CompletionResultSet) {
         val currentPosition = parameters.position
         val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
                 ?: return
@@ -32,10 +28,7 @@ object HtlDataSlyResourceOptionCompletionProvider : CompletionProvider<Completio
                 .filterNot { names.contains(it.name) }
                 .map(HtlOption::toLookupElement)
 
-        // todo temporary solution
-        val resourceType = HtlOption("resourceType", "string", "", emptyList(), "")
-                .toLookupElement()
-        result.addAllElements(listOf(resourceType, *completionVariants.toTypedArray()))
+        result.addAllElements(completionVariants)
         result.stopHere()
     }
 

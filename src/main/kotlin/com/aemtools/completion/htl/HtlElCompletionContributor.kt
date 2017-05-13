@@ -1,10 +1,7 @@
 package com.aemtools.completion.htl
 
 import com.aemtools.completion.htl.provider.*
-import com.aemtools.completion.htl.provider.option.HtlDataSlyCallOptionCompletionProvider
-import com.aemtools.completion.htl.provider.option.HtlDataSlyTemplateOptionCompletionProvider
-import com.aemtools.completion.htl.provider.option.HtlElContextOptionAssignmentCompletionProvider
-import com.aemtools.completion.htl.provider.option.HtlElOptionCompletionProvider
+import com.aemtools.completion.htl.provider.option.*
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns
 import com.intellij.codeInsight.completion.CompletionContributor
 import com.intellij.codeInsight.completion.CompletionType
@@ -23,8 +20,9 @@ class HtlElCompletionContributor : CompletionContributor() {init {
 
     extend(CompletionType.BASIC, HtlPatterns.dataSlyTemplateOption, HtlDataSlyTemplateOptionCompletionProvider)
     extend(CompletionType.BASIC, HtlPatterns.dataSlyCallOption, HtlDataSlyCallOptionCompletionProvider)
-    extend(CompletionType.BASIC, HtlPatterns.optionName, HtlElOptionCompletionProvider)
+    extend(CompletionType.BASIC, HtlPatterns.dataSlyResourceOption, HtlDataSlyResourceOptionCompletionProvider)
+    extend(CompletionType.BASIC, HtlPatterns.optionName, HtlOptionCompletionProvider)
 
-    extend(CompletionType.BASIC, HtlPatterns.contextOptionAssignment, HtlElContextOptionAssignmentCompletionProvider)
+    extend(CompletionType.BASIC, HtlPatterns.contextOptionAssignment, HtlContextOptionAssignmentCompletionProvider)
 }
 }
