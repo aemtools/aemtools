@@ -18,6 +18,9 @@ object const {
     val XTYPE: String = "xtype"
 
     val JCR_PRIMARY_TYPE: String = "jcr:primaryType"
+    val JCR_TITLE: String = "jcr:title"
+    val JCR_DESCRIPTION: String = "jcr:description"
+    val SLING_RESOURCE_SUPER_TYPE: String = "sling:resourceSuperType"
 
     val DIALOG_XML: String = "dialog.xml"
 
@@ -26,6 +29,18 @@ object const {
     val REP_POLICY: String = "_rep_policy.xml"
 
     val SLY_TAG: String = "sly"
+
+    /**
+     * Constants specific for `.content.xml` files of `cq:Component` type.
+     */
+    object aem_component_declaration {
+
+        val COMPONENT_GROUP: String = "componentGroup"
+
+        val IS_CONTAINER: String = "isContainer"
+
+        val CQ_ICON: String = "cq:icon"
+    }
 
     object htl {
         val HTL_PREFIX = "data-sly-"
@@ -82,7 +97,10 @@ object const {
         val XML_ATTRIBUTE_VALUE: String = "XML_ATTRIBUTE_VALUE_TOKEN"
         val XML_TAG_NAME: String = "XML_TAG_NAME"
 
-        val JCR_PRIMARY_TYPE_OSGI_CONFIG: String = "$JCR_PRIMARY_TYPE=\"sling:OsgiConfig\""
+        val SLING_OSGI_CONFIG: String = "sling:OsgiConfig"
+        val CQ_COMPONENT: String = "cq:Component"
+        val JCR_PRIMARY_TYPE_OSGI_CONFIG: String = "$JCR_PRIMARY_TYPE=\"$SLING_OSGI_CONFIG\""
+        val JCR_PRIMARY_TYPE_CQ_COMPONENT: String = "$JCR_PRIMARY_TYPE=\"$CQ_COMPONENT\""
     }
 
     object message {
