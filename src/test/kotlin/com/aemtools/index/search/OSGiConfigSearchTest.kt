@@ -34,8 +34,8 @@ class OSGiConfigSearchTest : BaseLightTest(),
 
     fun testBasicSearchForOSGiServiceWithFile() = fileCase {
         val filesNames = listOf(
-                "/config/com.test.Service.xml",
-                "/config.author/com.test.Service.xml"
+                "/config.author/com.test.Service.xml",
+                "/config/com.test.Service.xml"
         )
         addEmptyOSGiConfigs(*filesNames.toTypedArray())
 
