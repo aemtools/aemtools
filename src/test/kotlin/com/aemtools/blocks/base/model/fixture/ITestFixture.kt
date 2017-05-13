@@ -7,6 +7,7 @@ import org.intellij.lang.annotations.Language
  * @author Dmytro Troynikov
  */
 interface ITestFixture {
+
     /**
      * Add html file to the fixture.
      * @param name name of the file
@@ -36,6 +37,12 @@ interface ITestFixture {
      */
     fun addFile(name: String, text: String)
 
+    /**
+     * Pass lambda with case specific assertions.
+     *
+     * @param verification lambda with custom assertions
+     * @receiver [IAssertionContext]
+     */
     fun verify(verification: IAssertionContext.() -> Unit)
 
 }

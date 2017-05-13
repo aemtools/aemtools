@@ -11,6 +11,6 @@ interface ITestFixtureInternal {
 
     fun test()
 
-    fun  assertionContext() : IAssertionContext
+    fun assertionContext() : IAssertionContext
 
 }
