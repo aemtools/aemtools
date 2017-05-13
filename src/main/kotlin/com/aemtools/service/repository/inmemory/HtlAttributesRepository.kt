@@ -2,6 +2,7 @@ package com.aemtools.service.repository.inmemory
 
 import com.aemtools.completion.model.htl.ContextObject
 import com.aemtools.completion.model.htl.HtlAttributeMetaInfo
+import com.aemtools.completion.model.htl.HtlOption
 import com.aemtools.service.repository.const
 import com.aemtools.service.repository.inmemory.util.readJson
 
@@ -9,12 +10,6 @@ import com.aemtools.service.repository.inmemory.util.readJson
  * @author Dmytro_Troynikov
  */
 object HtlAttributesRepository {
-
-    data class HtlOption(val name: String,
-                         val type: String,
-                         val description: String,
-                         val examples: List<String>,
-                         val link: String)
 
     data class HtlContextValue(val name: String,
                                val description: String,

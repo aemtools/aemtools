@@ -6,6 +6,7 @@ import com.aemtools.constant.const.htl.DATA_SLY_CALL
 import com.aemtools.constant.const.htl.DATA_SLY_INCLUDE
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
+import com.aemtools.constant.const.htl.DATA_SLY_RESOURCE
 import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_USE
@@ -77,6 +78,21 @@ object HtlPatterns {
             )
 
     /**
+     * Matches option inside of data-sly-resource, e.g.:
+     *
+     * ```
+     *  <div data-sly-resource="${@ <caret>}"
+     * ```
+     */
+    val dataSlyResourceOption: ElementPattern<PsiElement> =
+            and(
+                    optionName,
+                    psiElement()
+                            .inside(psiElement()
+                                    .with(HtlTemplatePattern(DATA_SLY_RESOURCE)))
+            )
+
+    /**
      * Matches the following:
      *
      * ```
@@ -122,6 +138,23 @@ object HtlPatterns {
                     psiElement().inside(
                             psiElement(ASSIGNMENT_VALUE)
                                     .afterSibling(psiElement(VARIABLE_NAME).withText("context"))
+                    )
+            )
+
+    /**
+     * Matches the following:
+     *
+     * ```
+     *    ${@ resourceType='<caret>'}
+     * ```
+     */
+    val resourceTypeOptionAssignment: ElementPattern<PsiElement> =
+            and(
+                    stringLiteralValue,
+                    psiElement().inside(psiElement(CONTEXT_EXPRESSION)),
+                    psiElement().inside(
+                            psiElement(ASSIGNMENT_VALUE)
+                                    .afterSibling(psiElement(VARIABLE_NAME).withText("resourceType"))
                     )
             )
 

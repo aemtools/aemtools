@@ -1,5 +1,6 @@
 package com.aemtools.documentation.htl
 
+import com.aemtools.completion.model.htl.HtlOption
 import com.aemtools.completion.util.findParentByType
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
@@ -23,7 +24,7 @@ open class HtlELDocumentationProvider : AbstractDocumentationProvider() {
             optionName.accepts(originalElement) -> {
                 HtlAttributesRepository.getHtlOptions().find {
                     it.name == text
-                }?.let(HtlAttributesRepository.HtlOption::description)
+                }?.let(HtlOption::description)
                         ?: super.generateDoc(element, originalElement)
 
             }
@@ -40,14 +41,14 @@ open class HtlELDocumentationProvider : AbstractDocumentationProvider() {
             memberAccess.accepts(originalElement) -> {
                 super.generateDoc(element, originalElement)
                 val propertyAccessMixin = originalElement.findParentByType(PropertyAccessMixin::class.java)
-                    ?: return super.generateDoc(element, originalElement)
+                        ?: return super.generateDoc(element, originalElement)
                 val variableNameMixin = originalElement.findParentByType(VariableNameMixin::class.java)
-                    ?: return super.generateDoc(element, originalElement)
+                        ?: return super.generateDoc(element, originalElement)
                 val currentChainElement = propertyAccessMixin.accessChain()?.findChainElement(variableNameMixin)
-                    ?: return super.generateDoc(element, originalElement)
+                        ?: return super.generateDoc(element, originalElement)
 
                 currentChainElement.type.documentation()
-                    ?: super.generateDoc(element, originalElement)
+                        ?: super.generateDoc(element, originalElement)
             }
             else -> super.generateDoc(element, originalElement)
         }

@@ -5,6 +5,7 @@ import com.aemtools.lang.htl.psi.pattern.HtlPatterns.contextOptionAssignment
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyCallOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyIncludeMainString
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyIncludeNoEl
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyResourceOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyTemplateOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseMainString
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseNoEl
@@ -12,6 +13,7 @@ import com.aemtools.lang.htl.psi.pattern.HtlPatterns.htlAttribute
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.mainVariableInsideOfDataSlyCall
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.memberAccess
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.optionName
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.resourceTypeOptionAssignment
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.stringLiteralValue
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.variableName
 import com.intellij.patterns.ElementPattern
@@ -118,8 +120,22 @@ class HtlPatternsTest : BasePatternsTest() {
             true
     )
 
-    fun testDataSlyTemplateOptionShouldMatchOrdinaryOption() = testHtlPattern(
+    fun testDataSlyTemplateOptionShouldNotMatchOrdinaryOption() = testHtlPattern(
             dataSlyTemplateOption,
+            "$DOLLAR{@ $CARET}",
+            false
+    )
+
+    fun testDataSlyResourceOptionMain() = testHtlPattern(
+            dataSlyResourceOption,
+            """
+                <div data-sly-resource="$DOLLAR{@ $CARET}"></div>
+            """,
+            true
+    )
+
+    fun testDataSlyResourceOptionShouldNotMatchOrdinaryOption() = testHtlPattern(
+            dataSlyResourceOption,
             "$DOLLAR{@ $CARET}",
             false
     )
@@ -130,9 +146,21 @@ class HtlPatternsTest : BasePatternsTest() {
             true
     )
 
-    fun testContextOptionAssignmentShouldTriggerOnUnknownOption() = testHtlPattern(
+    fun testContextOptionAssignmentShouldNotTriggerOnUnknownOption() = testHtlPattern(
             contextOptionAssignment,
             "$DOLLAR{@ join='$CARET'}",
+            false
+    )
+
+    fun testResourceTypeOptionAssignmentMain() = testHtlPattern(
+            resourceTypeOptionAssignment,
+            "$DOLLAR{@ resourceType='$CARET'}",
+            true
+    )
+
+    fun testResourceTypeOptionAssignmentShouldNotTriggerOnUnknownOption() = testHtlPattern(
+            resourceTypeOptionAssignment,
+            "$DOLLAR{@ context='$CARET'}",
             false
     )
 

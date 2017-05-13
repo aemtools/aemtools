@@ -5,6 +5,17 @@ import com.aemtools.constant.const.JCR_ROOT_SEPARATED
 /**
  * @author Dmytro Troynikov
  */
+
+/**
+ * Normalize given path to *jcr_root* folder.
+ * e.g.:
+ *
+ * ```
+ *  .../src/jcr_root/apps/components -> /apps/components
+ * ```
+ * @receiver [String]
+ * @return path normalized to jcr_root
+ */
 fun String.normalizeToJcrRoot(): String =
     substring(indexOf(JCR_ROOT_SEPARATED) + JCR_ROOT_SEPARATED.length - 1)
 

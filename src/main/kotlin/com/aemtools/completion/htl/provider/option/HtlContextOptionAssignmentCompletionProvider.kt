@@ -10,7 +10,7 @@ import com.intellij.util.ProcessingContext
 /**
  * @author Dmytro Troynikov
  */
-object HtlElContextOptionAssignmentCompletionProvider : CompletionProvider<CompletionParameters>() {
+object HtlContextOptionAssignmentCompletionProvider : CompletionProvider<CompletionParameters>() {
     override fun addCompletions(parameters: CompletionParameters,
                                 context: ProcessingContext?,
                                 result: CompletionResultSet) {

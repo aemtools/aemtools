@@ -5,10 +5,7 @@ import com.aemtools.completion.util.relativeTo
 import com.aemtools.index.HtlIndexFacade.getTemplates
 import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.lang.java.JavaSearch
-import com.intellij.codeInsight.completion.CompletionParameters
-import com.intellij.codeInsight.completion.CompletionProvider
-import com.intellij.codeInsight.completion.CompletionResultSet
-import com.intellij.codeInsight.completion.CompletionType
+import com.intellij.codeInsight.completion.*
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
@@ -30,20 +27,17 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
 
     fun useSuggestions(parameters: CompletionParameters): List<LookupElement> {
         val project = parameters.position.project
+        val currentFileName = normalizedFileName(parameters)
 
         val useClasses = JavaSearch.findWcmUseClasses(project)
         val slingModelClasses = JavaSearch.findSlingModels(project)
 
-        val useClassesVariants = extractCompletions(useClasses, "Use Class")
-        val slingModelVariants = extractCompletions(slingModelClasses, "Sling Model")
+        val useClassesVariants = extractCompletions(useClasses, currentFileName, "Use Class")
+        val slingModelVariants = extractCompletions(slingModelClasses, currentFileName, "Sling Model")
 
         val allClasses = if (parameters.completionType == CompletionType.BASIC) {
             useClassesVariants + slingModelVariants
         } else {
-            var currentFileName = parameters.originalFile.parent?.name?.toLowerCase()
-                    ?: parameters.originalFile.name.toLowerCase()
-            currentFileName = currentFileName.replace("-", "")
-
             (useClassesVariants + slingModelVariants)
                     .filter {
                         val normalizedClassName =
@@ -60,7 +54,12 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
         return allClasses + templates
     }
 
-    private fun extractCompletions(classes: List<PsiClass>, type: String): List<LookupElement> {
+    private fun normalizedFileName(parameters: CompletionParameters): String =
+            parameters.originalFile.parent?.name?.toLowerCase()
+                    ?: parameters.originalFile.name.toLowerCase()
+                    .let { it.replace("-", "") }
+
+    private fun extractCompletions(classes: List<PsiClass>, currentFileName: String, type: String): List<LookupElement> {
         return classes.flatMap {
             val qualifiedName = it.qualifiedName as? String
             val name = it.name as? String
@@ -74,7 +73,10 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
                     .withIcon(it.getIcon(0))
                     .withTypeText(type)
                     .withTailText("(${qualifiedName.substring(0, qualifiedName.lastIndexOf("."))})", true)
-            return@flatMap listOf(result)
+
+            val prioritized = PrioritizedLookupElement.withPriority(result,
+                    (1F - StringUtils.getLevenshteinDistance(currentFileName, name) / 100F).toDouble())
+            return@flatMap listOf(prioritized)
         }
     }
 
