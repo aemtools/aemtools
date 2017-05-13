@@ -13,6 +13,7 @@ import com.aemtools.lang.htl.psi.pattern.HtlPatterns.htlAttribute
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.mainVariableInsideOfDataSlyCall
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.memberAccess
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.optionName
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.resourceTypeOptionAssignment
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.stringLiteralValue
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.variableName
 import com.intellij.patterns.ElementPattern
@@ -145,9 +146,21 @@ class HtlPatternsTest : BasePatternsTest() {
             true
     )
 
-    fun testContextOptionAssignmentShouldTriggerOnUnknownOption() = testHtlPattern(
+    fun testContextOptionAssignmentShouldNotTriggerOnUnknownOption() = testHtlPattern(
             contextOptionAssignment,
             "$DOLLAR{@ join='$CARET'}",
+            false
+    )
+
+    fun testResourceTypeOptionAssignmentMain() = testHtlPattern(
+            resourceTypeOptionAssignment,
+            "$DOLLAR{@ resourceType='$CARET'}",
+            true
+    )
+
+    fun testResourceTypeOptionAssignmentShouldNotTriggerOnUnknownOption() = testHtlPattern(
+            resourceTypeOptionAssignment,
+            "$DOLLAR{@ context='$CARET'}",
             false
     )
 

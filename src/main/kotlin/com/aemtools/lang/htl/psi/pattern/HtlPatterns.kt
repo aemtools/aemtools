@@ -145,6 +145,23 @@ object HtlPatterns {
      * Matches the following:
      *
      * ```
+     *    ${@ resourceType='<caret>'}
+     * ```
+     */
+    val resourceTypeOptionAssignment: ElementPattern<PsiElement> =
+            and(
+                    stringLiteralValue,
+                    psiElement().inside(psiElement(CONTEXT_EXPRESSION)),
+                    psiElement().inside(
+                            psiElement(ASSIGNMENT_VALUE)
+                                    .afterSibling(psiElement(VARIABLE_NAME).withText("resourceType"))
+                    )
+            )
+
+    /**
+     * Matches the following:
+     *
+     * ```
      *    ${object.<caret>}
      * ```
      */
