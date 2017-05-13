@@ -3,8 +3,7 @@ package com.aemtools.service.repository.inmemory
 import com.aemtools.completion.model.htl.ContextObject
 import com.aemtools.completion.model.htl.HtlAttributeMetaInfo
 import com.aemtools.service.repository.const
-import com.aemtools.service.repository.inmemory.util.FileUtils
-import com.google.gson.Gson
+import com.aemtools.service.repository.inmemory.util.readJson
 
 /**
  * @author Dmytro_Troynikov
@@ -26,11 +25,6 @@ object HtlAttributesRepository {
     private val htlOptions: List<HtlOption> = readJson(const.file.HTL_OPTIONS)
     private val htlContextValues: List<HtlContextValue> = readJson(const.file.HTL_CONTEXT_VALUES)
 
-    private inline fun <reified T> readJson(file: String): List<T> {
-        val jsonString = FileUtils.readFileAsString(file)
-        return Gson().fromJson(jsonString, emptyArray<T>().javaClass).toList()
-    }
-
     fun getAttributesData(): List<HtlAttributeMetaInfo> = attributesData
 
     fun getContextObjects(): List<ContextObject> = contextObjects
@@ -39,7 +33,7 @@ object HtlAttributesRepository {
 
     fun getContextValues(): List<HtlContextValue> = htlContextValues
 
-    fun  findContextObject(name: String): ContextObject? {
-        return contextObjects.find {it.name == name}
-    }
+    fun findContextObject(name: String): ContextObject? =
+            contextObjects.find { it.name == name }
+
 }

@@ -18,7 +18,21 @@ interface ICompletionTestFixture : ITestFixture {
      */
     fun smart()
 
+    /**
+     * List the completion variants that should be presented within current fixture.
+     *
+     * @param variants the list of variants
+     * @param strict if *true* the completion should contain *only* listed variants if *false*
+     * it may contain some additional variants. true is default.
+     */
     fun shouldContain(variants: List<String>, strict: Boolean = true)
 
+    /**
+     * Vararg version of [shouldContain].
+     */
+    fun shouldContain(vararg variants: String) = shouldContain(listOf(*variants), true)
+
     fun shouldNotContain(variants: List<String>)
+
+    fun shouldNotContain(vararg variants: String) = shouldNotContain(listOf(*variants))
 }
