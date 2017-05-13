@@ -5,6 +5,7 @@ import com.aemtools.lang.htl.psi.pattern.HtlPatterns.contextOptionAssignment
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyCallOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyIncludeMainString
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyIncludeNoEl
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyResourceOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyTemplateOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseMainString
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseNoEl
@@ -118,8 +119,22 @@ class HtlPatternsTest : BasePatternsTest() {
             true
     )
 
-    fun testDataSlyTemplateOptionShouldMatchOrdinaryOption() = testHtlPattern(
+    fun testDataSlyTemplateOptionShouldNotMatchOrdinaryOption() = testHtlPattern(
             dataSlyTemplateOption,
+            "$DOLLAR{@ $CARET}",
+            false
+    )
+
+    fun testDataSlyResourceOptionMain() = testHtlPattern(
+            dataSlyResourceOption,
+            """
+                <div data-sly-resource="$DOLLAR{@ $CARET}"></div>
+            """,
+            true
+    )
+
+    fun testDataSlyResourceOptionShouldNotMatchOrdinaryOption() = testHtlPattern(
+            dataSlyResourceOption,
             "$DOLLAR{@ $CARET}",
             false
     )
