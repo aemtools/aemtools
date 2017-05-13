@@ -37,7 +37,7 @@ object const {
 
         val COMPONENT_GROUP: String = "componentGroup"
 
-        val IS_CONTAINER: String = "isContainer"
+        val IS_CONTAINER: String = "cq:isContainer"
 
         val CQ_ICON: String = "cq:icon"
     }
