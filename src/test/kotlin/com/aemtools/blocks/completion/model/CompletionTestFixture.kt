@@ -18,7 +18,9 @@ class CompletionTestFixture(fixture: JavaCodeInsightTestFixture)
 
     override fun test() {
         super.test()
-        val completionVariants = fixture.complete(completionType).toList()
+        val completionVariants = fixture.complete(completionType)
+                ?.toList()
+                .orEmpty()
                 .map { it.lookupString }
 
         if (shouldContain.isNotEmpty()) {

@@ -5,7 +5,7 @@ import com.aemtools.util.writeCommand
 import com.intellij.testFramework.InspectionFixtureTestCase
 
 /**
- * @autor Dmytro Troynikov
+ * @author Dmytro Troynikov
  */
 class RedundantELQuickFixTest : InspectionFixtureTestCase() {
 

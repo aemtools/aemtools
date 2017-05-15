@@ -3,7 +3,7 @@ package com.aemtools.reference.htl.provider
 import com.aemtools.index.HtlIndexFacade
 import com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin
 import com.aemtools.lang.java.JavaSearch
-import com.aemtools.reference.html.reference.HtlFileReference
+import com.aemtools.reference.common.reference.PsiFileReference
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
@@ -21,7 +21,7 @@ object DataSlyUseElReferenceProvider : JavaClassReferenceProvider() {
         val psiFile = HtlIndexFacade.resolveFile(literal.name, element.containingFile)
 
         if (psiFile != null) {
-            val fileReference = HtlFileReference(psiFile,
+            val fileReference = PsiFileReference(psiFile,
                     literal,
                     TextRange(1, literal.textLength - 1))
             return arrayOf(fileReference)

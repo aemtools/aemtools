@@ -1,0 +1,5 @@
+[Cd] .. ('..')
+[Cd] SEPARATOR ('/')
+[Cd] .. ('..')
+[Cd] SEPARATOR ('/')
+[Cd] WORD ('file.js')

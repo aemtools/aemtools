@@ -18,7 +18,7 @@ import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
 
 /**
- * Created by Dmytro_Troynikov on 3/22/2016.
+ * @author Dmytro_Troynikov
  */
 class HtlParserDefinition : ParserDefinition {
 
@@ -36,9 +36,9 @@ class HtlParserDefinition : ParserDefinition {
 
     override fun getStringLiteralElements(): TokenSet
             = TokenSet.create(
-                HtlTypes.SINGLE_QUOTED_STRING,
-                HtlTypes.DOUBLE_QUOTED_STRING
-            )
+            HtlTypes.SINGLE_QUOTED_STRING,
+            HtlTypes.DOUBLE_QUOTED_STRING
+    )
 
     override fun getWhitespaceTokens(): TokenSet
             = TokenSet.create(TokenType.WHITE_SPACE)

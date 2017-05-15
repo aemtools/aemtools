@@ -7,8 +7,8 @@ import com.intellij.lang.PsiParser
 import com.intellij.psi.tree.IElementType
 
 /**
- * Created by Dmytro_Troynikov on 12/21/2016.
- */
+* @author Dmytro_Troynikov
+*/
 class HtlParser : PsiParser {
     override fun parse(root: IElementType, builder: PsiBuilder): ASTNode {
         val parser = HtlParser()

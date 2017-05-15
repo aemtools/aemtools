@@ -70,18 +70,6 @@
       {
         "name": "jcr:primaryType",
         "type": "String",
-        "values": ["nt:unstructured"],
-        "autoinsert": "true"
-      }
-    ]
-  },
-  {
-    "nodeName": "cq:dropTargets",
-    "childNodes": ["cq:DropTargetConfig"],
-    "attributes": [
-      {
-        "name": "jcr:primaryType",
-        "type": "String",
         "values": ["cq:DropTargetConfig"],
         "autoinsert": "true"
       },

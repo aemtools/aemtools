@@ -8,6 +8,8 @@ import com.intellij.util.text.CharArrayUtil
  *
  * @param text Input text
  * @param offset Position for searching
+ *
+ * @receiver [Document]
  * @return true when text was found on this position and false otherwise
  */
 fun Document.hasText(text: String, offset: Int): Boolean =

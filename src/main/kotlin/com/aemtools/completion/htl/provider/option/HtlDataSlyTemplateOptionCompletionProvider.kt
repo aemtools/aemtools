@@ -7,6 +7,7 @@ import com.intellij.util.ProcessingContext
 
 /**
  * Ends completion for options inside of data-sly-template.
+ *
  * @author Dmytro Troynikov
  */
 object HtlDataSlyTemplateOptionCompletionProvider : CompletionProvider<CompletionParameters>() {

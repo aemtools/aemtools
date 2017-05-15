@@ -1,0 +1,13 @@
+CdFile:baseCommentInclude.in
+  CdBasePathImpl([Cd] BASE_PATH)
+    PsiElement([Cd] #base=)('#base=')
+    CdIncludeImpl([Cd] INCLUDE)
+      CdSimpleIncludeImpl([Cd] SIMPLE_INCLUDE)
+        PsiElement([Cd] WORD)('dir')
+  PsiWhiteSpace('\n')
+  CdCommentImpl([Cd] COMMENT)
+    PsiElement([Cd] COMMENT_TOKEN)('# comment')
+  PsiWhiteSpace('\n')
+  CdIncludeImpl([Cd] INCLUDE)
+    CdSimpleIncludeImpl([Cd] SIMPLE_INCLUDE)
+      PsiElement([Cd] WORD)('file.js')

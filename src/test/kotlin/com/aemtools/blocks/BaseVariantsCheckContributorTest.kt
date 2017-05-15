@@ -1,5 +1,6 @@
 package com.aemtools.blocks
 
+import com.aemtools.blocks.fixture.UberJarFixtureMixin
 import com.aemtools.lang.htl.lexer.HtlTestCase
 import com.intellij.codeInsight.completion.LightFixtureCompletionTestCase
 import com.intellij.codeInsight.lookup.LookupElement
@@ -18,7 +19,9 @@ import java.io.File
  * @author Dmytro Troynikov.
  */
 abstract class BaseVariantsCheckContributorTest(val dataPath: String)
-    : LightFixtureCompletionTestCase(), HtlTestCase {
+    : LightFixtureCompletionTestCase(),
+        HtlTestCase,
+        UberJarFixtureMixin {
 
     companion object {
         /**
@@ -145,11 +148,7 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
     override fun setUp() {
         super.setUp()
         VfsRootAccess.allowRootAccess(File("src/test").absolutePath)
-        PsiTestUtil.addLibrary(myModule,
-                "aem-api",
-                File("src/test/resources/testLibs/").absolutePath,
-                "aem-api-6.0.0.1.jar")
-
+        myFixture.addUberJar()
         val lfs = LocalFileSystem.getInstance()
 
         File("src/test/resources/com/aemtools/completion/htl/fixtures/classes").walkTopDown()

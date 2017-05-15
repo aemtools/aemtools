@@ -58,4 +58,10 @@ data class TemplateDefinition(
             val _path = fullName
             return _path?.substring(_path.lastIndexOf("/") + 1) ?: ""
         }
+
+    companion object {
+        @JvmStatic
+        val serialVersionUID: Long = 1L
+    }
+
 }

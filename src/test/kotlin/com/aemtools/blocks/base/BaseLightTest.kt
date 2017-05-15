@@ -2,8 +2,8 @@ package com.aemtools.blocks.base
 
 import com.aemtools.blocks.base.model.fixture.ITestFixture
 import com.aemtools.blocks.base.model.fixture.TestFixture
+import com.aemtools.blocks.fixture.UberJarFixtureMixin
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess
-import com.intellij.testFramework.PsiTestUtil
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture.CARET_MARKER
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 import java.io.File
@@ -11,7 +11,9 @@ import java.io.File
 /**
  * @author Dmytro Troynikov
  */
-abstract class BaseLightTest(val withAemUberJar: Boolean = false) : LightCodeInsightFixtureTestCase() {
+abstract class BaseLightTest(val withAemUberJar: Boolean = false)
+    : LightCodeInsightFixtureTestCase(),
+        UberJarFixtureMixin {
 
     fun fileCase(case: ITestFixture.() -> Unit) {
         val fixture = TestFixture(myFixture)
@@ -27,10 +29,7 @@ abstract class BaseLightTest(val withAemUberJar: Boolean = false) : LightCodeIns
         super.setUp()
         VfsRootAccess.allowRootAccess(File("src/test").absolutePath)
         if (withAemUberJar) {
-            PsiTestUtil.addLibrary(myModule,
-                    "aem-api",
-                    File("src/test/resources/testLibs/").absolutePath,
-                    "aem-api-6.0.0.1.jar")
+            myFixture.addUberJar()
         }
     }
 

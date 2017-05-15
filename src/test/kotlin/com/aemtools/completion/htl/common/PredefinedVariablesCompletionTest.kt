@@ -1,10 +1,10 @@
 package com.aemtools.completion.htl.common
 
+import com.aemtools.blocks.fixture.UberJarFixtureMixin
 import com.aemtools.lang.htl.lexer.HtlTestCase
 import com.intellij.codeInsight.completion.LightFixtureCompletionTestCase
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess
 import com.intellij.testFramework.LightProjectDescriptor
-import com.intellij.testFramework.PsiTestUtil
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 import java.io.File
@@ -12,7 +12,8 @@ import java.io.File
 /**
  * @author Dmytro Troynikov.
  */
-class PredefinedVariablesCompletionTest : LightFixtureCompletionTestCase() {
+class PredefinedVariablesCompletionTest : LightFixtureCompletionTestCase(),
+        UberJarFixtureMixin {
 
     fun testCompleteStartedVariable() = doTest()
 
@@ -61,10 +62,7 @@ class PredefinedVariablesCompletionTest : LightFixtureCompletionTestCase() {
     override fun setUp() {
         super.setUp()
         VfsRootAccess.allowRootAccess(File("src/test").absolutePath)
-        PsiTestUtil.addLibrary(myModule,
-                "aem-api",
-                File("src/test/resources/testLibs/").absolutePath,
-                "aem-api-6.0.0.1.jar")
+        myFixture.addUberJar()
     }
 
     override fun tearDown() {
