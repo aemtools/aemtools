@@ -79,6 +79,8 @@
         <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>
 
         <fileBasedIndex implementation="com.aemtools.index.AemComponentDeclarationIndex"/>
+        
+        <extendWordSelectionHandler implementation="com.aemtools.ide.htl.HtlStringLiteralWordSelectioner"/>
 
         <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlStringLiteralManipulator"
                                  forClass="com.aemtools.lang.htl.psi.HtlStringLiteral"/>
