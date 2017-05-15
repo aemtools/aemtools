@@ -72,8 +72,8 @@ class OptionsCompletionTest : CompletionBaseLightTest(true) {
     }
 
     fun testOptionsResourceTypeVariants() = completionTest {
-        addHtml("test.html", """
-            <div data-sly-resource='$DOLLAR{@ resourceType="$CARET"'></div>
+        addHtml("/jcr_root/apps/components/component/test.html", """
+            <div data-sly-resource='$DOLLAR{@ resourceType="$CARET"}'></div>
         """)
         addXml("/jcr_root/apps/components/component1/.content.xml", text = """
             <jcr:root jcr:primaryType="cq:Component" jcr:title='my title' componentGroup='group'/>
@@ -85,6 +85,25 @@ class OptionsCompletionTest : CompletionBaseLightTest(true) {
         shouldContain(
                 "/apps/components/component1",
                 "/apps/components/component2"
+        )
+    }
+
+    fun testOptionsResourceTypeVariantsFilterOutCurrentComponent() = completionTest {
+        addHtml("/jcr_root/apps/myapp/components/comp1/comp1.html", """
+            <div data-sly-resource='$DOLLAR{@ resourceType="$CARET"}'></div>
+        """)
+        addXml("/jcr_root/apps/myapp/components/comp1/.content.xml","""
+            <jcr:root jcr:primaryType="cq:Component" jcr:title="Component1" componentGroup="group"/>
+        """)
+        addXml("/jcr_root/apps/myapp/components/comp2/.content.xml","""
+            <jcr:root jcr:primaryType="cq:Component" jcr:title="Component2" componentGroup="group"/>
+        """)
+
+        shouldContain(
+                "/apps/myapp/components/comp2"
+        )
+        shouldNotContain(
+                "/apps/myapp/components/comp1"
         )
     }
 

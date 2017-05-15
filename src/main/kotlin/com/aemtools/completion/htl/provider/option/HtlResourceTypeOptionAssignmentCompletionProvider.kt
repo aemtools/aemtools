@@ -1,5 +1,6 @@
 package com.aemtools.completion.htl.provider.option
 
+import com.aemtools.completion.util.normalizeToJcrRoot
 import com.aemtools.index.model.AemComponentDefinition.Companion.toLookupElement
 import com.aemtools.index.search.AemComponentSearch
 import com.intellij.codeInsight.completion.CompletionParameters
@@ -26,13 +27,19 @@ object HtlResourceTypeOptionAssignmentCompletionProvider
         val myDirectory = parameters.position.containingFile.originalFile.containingDirectory.virtualFile
                 .path
 
+        val myNormalizedDirectory = myDirectory.normalizeToJcrRoot()
+
         val declarations = AemComponentSearch
                 .allComponentDeclarations(parameters.position.project)
+                .filterNot {
+                    myNormalizedDirectory == it.resourceType()
+                            || myNormalizedDirectory.startsWith(it.resourceType())
+                }
                 .map {
                     val lookupElement = it.toLookupElement()
 
                     PrioritizedLookupElement
-                            .withPriority(lookupElement, calcPriority(lookupElement, myDirectory))
+                            .withPriority(lookupElement, calcPriority(lookupElement, myNormalizedDirectory))
                 }
         result.addAllElements(declarations)
         result.stopHere()
