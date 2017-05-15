@@ -31,4 +31,13 @@ object AemComponentSearch {
         }.filterNotNull()
     }
 
+    /**
+     * Find component by resource type.
+     * @param resourceType the resource type string
+     * @param project the project
+     * @return component definition or *null* if no component was found
+     */
+    fun findByResourceType(resourceType: String, project: Project): AemComponentDefinition?
+        = allComponentDeclarations(project).find { it.resourceType() == resourceType }
+
 }

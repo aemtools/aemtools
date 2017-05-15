@@ -60,12 +60,12 @@ data class AemComponentDefinition(
 ) : Serializable {
 
     /**
-     * Normalize path to *jcr_root*
+     * Resource type of current component.
      *
      * @see [normalizeToJcrRoot]
-     * @return path normalized to jcr_root
+     * @return resource type
      */
-    fun pathNormalizedToJcrRoot(): String
+    fun resourceType(): String
             = fullPath.normalizeToJcrRoot().substringBeforeLast("/")
 
 
@@ -113,7 +113,7 @@ data class AemComponentDefinition(
          * @return lookup element
          */
         fun AemComponentDefinition.toLookupElement(): LookupElement =
-                LookupElementBuilder.create(pathNormalizedToJcrRoot())
+                LookupElementBuilder.create(resourceType())
                         .withTypeText("AEM Component")
                         .withPresentableText(componentName())
                         .withTailText("($title)", true)

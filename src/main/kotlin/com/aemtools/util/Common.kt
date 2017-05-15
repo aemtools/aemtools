@@ -5,6 +5,8 @@ import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.openapi.vfs.impl.local.LocalFileSystemBase
 import com.intellij.psi.PsiElement
 
 /**
@@ -34,7 +36,22 @@ object OpenApiUtil {
     fun isCurrentThreadIsDispatch(): Boolean
             = ApplicationManager.getApplication().isDispatchThread
 
+    /**
+     * Check if current IDEA process is executed within a test.
+     *
+     * @return *true* is current app is running in test
+     */
     fun iAmTest(): Boolean = ApplicationManager.getApplication().isUnitTestMode
+
+    /**
+     * Find [VirtualFile] by full file path.
+     *
+     * @param path path to file
+     * @return instance of VirtualFile, *null* if no file was found by given path
+     */
+    fun findFileByPath(path: String): VirtualFile? {
+        return LocalFileSystemBase.getInstance().findFileByPath(path)
+    }
 
 }
 

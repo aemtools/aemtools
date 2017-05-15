@@ -6,6 +6,7 @@ import com.intellij.lang.Language
 import com.intellij.lang.StdLanguages
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 import com.intellij.psi.xml.XmlFile
@@ -46,3 +47,13 @@ fun PsiFile.getHtlFile(): HtlPsiFile? = getPsi(HtlLanguage) as? HtlPsiFile
 fun VirtualFile.toPsiFile(project: Project): PsiFile? =
         PsiManager.getInstance(project)
                 .findFile(this)
+
+/**
+ * Convert current [VirtualFile] to [PsiDirectory].
+ * @param project the project
+ * @receiver [VirtualFile]
+ * @return the psi directory]
+ */
+fun VirtualFile.toPsiDirectory(project: Project): PsiDirectory? =
+        PsiManager.getInstance(project)
+                .findDirectory(this)
