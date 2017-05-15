@@ -1,4 +1,4 @@
-package com.aemtools.lang.htl.refactoring
+package com.aemtools.reference
 
 import com.aemtools.blocks.base.BaseLightTest.Companion.CARET
 import com.aemtools.blocks.base.BaseLightTest.Companion.DOLLAR

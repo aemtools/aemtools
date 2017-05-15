@@ -15,7 +15,9 @@ import org.apache.commons.lang.BooleanUtils
 import java.io.Serializable
 
 /**
- * Represents content of AEM component descriptor (`.content.xml
+ * Represents content of AEM component descriptor
+ * (`.content.xml`).
+ *
  * @author Dmytro Troynikov
  */
 data class AemComponentDefinition(
@@ -68,7 +70,13 @@ data class AemComponentDefinition(
     fun resourceType(): String
             = fullPath.normalizeToJcrRoot().substringBeforeLast("/")
 
-
+    /**
+     * Get component name.
+     *
+     * `/apps/components/mycomponent/.content.xml -> mycomponent`
+     *
+     * @return component's name
+     */
     fun componentName(): String
             = fullPath
             .substringBeforeLast("/")
