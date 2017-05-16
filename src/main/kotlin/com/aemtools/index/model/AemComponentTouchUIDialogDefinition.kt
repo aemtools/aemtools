@@ -6,11 +6,11 @@ import com.intellij.icons.AllIcons
 import java.io.Serializable
 
 /**
- * @author Dmytro Troynikov
+ * @autor Dmytro Troynikov
  */
-data class AemComponentClassicDialogDefinition(
+data class AemComponentTouchUIDialogDefinition(
         /**
-         * Full path to current `dialog.xml` file.
+         * Full path to current `.content.xml` file.
          */
         val fullPath: String,
 
@@ -19,27 +19,25 @@ data class AemComponentClassicDialogDefinition(
          */
         val resourceType: String,
 
-        /**
-         * List of parameters declared in current dialog.
-         */
-        val myParameters: List<ClassicDialogParameterDeclaration>
-)
-    : Serializable {
+        val myParameters: List<TouchUIDialogParameterDeclaration>
+) : Serializable {
 
     companion object {
         @JvmStatic
         val serialVersionUID: Long = 1L
     }
 
-    data class ClassicDialogParameterDeclaration(
+    data class TouchUIDialogParameterDeclaration(
             /**
-             * Xtype of ext component.
+             * `sling:resourceType` value of current parameter.
              */
-            val xtype: String,
+            val slingResourceType: String,
+
             /**
-             * The name of the component.
+             * Name of current parameter.
              */
             val name: String
+
     ) : Serializable {
 
         companion object {
@@ -47,10 +45,10 @@ data class AemComponentClassicDialogDefinition(
             val serialVersionUID: Long = 1L
         }
 
-        fun toLookupElement(): LookupElement =
+        fun toLookupElement() : LookupElement =
                 LookupElementBuilder.create(name.normalize())
                         .withIcon(AllIcons.Nodes.Parameter)
-                        .withTypeText(xtype)
+                        .withTypeText(slingResourceType)
 
         private fun String.normalize() = if (this.startsWith("./")) {
             this.substringAfter("./")
@@ -59,5 +57,4 @@ data class AemComponentClassicDialogDefinition(
         }
 
     }
-
 }

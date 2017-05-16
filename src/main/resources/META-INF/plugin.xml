@@ -83,7 +83,9 @@
         <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>
 
         <fileBasedIndex implementation="com.aemtools.index.AemComponentDeclarationIndex"/>
-        
+        <fileBasedIndex implementation="com.aemtools.index.AemComponentClassicDialogIndex"/>
+        <fileBasedIndex implementation="com.aemtools.index.AemComponentTouchUIDialogIndex"/>
+
         <extendWordSelectionHandler implementation="com.aemtools.ide.htl.HtlStringLiteralWordSelectioner"/>
 
         <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlStringLiteralManipulator"
