@@ -7,6 +7,7 @@ import com.aemtools.constant.const.SLING_RESOURCE_SUPER_TYPE
 import com.aemtools.constant.const.aem_component_declaration.COMPONENT_GROUP
 import com.aemtools.constant.const.aem_component_declaration.CQ_ICON
 import com.aemtools.constant.const.aem_component_declaration.IS_CONTAINER
+import com.aemtools.lang.htl.icons.HtlIcons
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
@@ -123,10 +124,15 @@ data class AemComponentDefinition(
         fun AemComponentDefinition.toLookupElement(): LookupElement =
                 LookupElementBuilder.create(resourceType())
                         .withTypeText("AEM Component")
-                        .withPresentableText(componentName())
-                        .withTailText("($title)", true)
-                        // todo find appropriate icon
-                        .withIcon(AllIcons.Nodes.Jsf.Component)
+                        .withPresentableText(title ?: componentName())
+                        .withIcon(HtlIcons.AEM_COMPONENT)
+                        .let {
+                            if (title != null) {
+                                it.withTailText("(${componentName()})", true)
+                            } else {
+                                it
+                            }
+                        }
 
     }
 
