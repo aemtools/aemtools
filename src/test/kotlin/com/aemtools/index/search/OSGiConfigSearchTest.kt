@@ -2,6 +2,7 @@ package com.aemtools.index.search
 
 import com.aemtools.blocks.base.BaseLightTest
 import com.aemtools.blocks.fixture.OSGiConfigFixtureMixin
+import com.aemtools.index.model.sortByMods
 
 /**
  * @author Dmytro Troynikov
@@ -60,7 +61,7 @@ class OSGiConfigSearchTest : BaseLightTest(),
             assertEquals(2, configs.size)
             assertEquals(
                     fileNames.map { "/src$it" },
-                    configs.map { it.xmlFile?.virtualFile?.path }
+                    configs.sortByMods().map { it.xmlFile?.virtualFile?.path }
             )
         }
     }
