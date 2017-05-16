@@ -12,6 +12,11 @@ import com.intellij.util.indexing.FileBasedIndex
  */
 object HtlTemplateSearch {
 
+    /**
+     * Find all template definitions available in opened project.
+     *
+     * @return list of template definitions
+     */
     fun all(project: Project): List<TemplateDefinition> {
         val fbi = FileBasedIndex.getInstance()
         val keys = fbi.getAllKeys(HtlTemplateIndex.HTL_TEMPLATE_ID, project)
@@ -23,6 +28,11 @@ object HtlTemplateSearch {
         return values
     }
 
+    /**
+     * Resolve use template by name.
+     *
+     * @return list of available templates
+     */
     fun resolveUseTemplate(name: String, file: PsiFile): List<TemplateDefinition> {
         val templates = all(file.project)
         return if (name.isAbsolutePath()) {
