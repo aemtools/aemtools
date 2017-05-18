@@ -151,10 +151,14 @@ object HtlELPredefined {
                 }
 
                 if (previousElement.name == "properties") {
-                    val result = resolutionResult.add(DEFAULT_PROPERTIES.map {
-                        it.toLookupElement()
-                                .withPriority(0.9)
-                    })
+                    val result = if (resolutionResult.predefined != null) {
+                        resolutionResult
+                    } else {
+                        resolutionResult.add(DEFAULT_PROPERTIES.map {
+                            it.toLookupElement()
+                                    .withPriority(0.9)
+                        })
+                    }
                     val myResourceType = element.containingFile.originalFile.virtualFile.resourceType()
                             ?: return result
 
@@ -177,7 +181,7 @@ object HtlELPredefined {
                                 }
                         )
                     }
-
+                    return result
                 }
             }
         }
