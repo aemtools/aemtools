@@ -65,7 +65,7 @@ object HtlElMemberAccessCompletionProvider : CompletionProvider<CompletionParame
 
         val result = lastSegment.resolveSelectedItem()
 
-        return HtlELPredefined.addPredefined(chain, lastSegment, selectedElement, result)
+        return HtlELPredefined.addPredefined(chain, element, lastSegment, selectedElement, result)
     }
 
 }

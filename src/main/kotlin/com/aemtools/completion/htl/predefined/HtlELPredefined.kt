@@ -5,11 +5,15 @@ import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.elements.CallChainSegment
 import com.aemtools.analysis.htl.callchain.typedescriptor.PredefinedDescriptionTypeDescriptor
 import com.aemtools.completion.htl.model.ResolutionResult
+import com.aemtools.completion.util.resourceType
 import com.aemtools.constant.const.java.VALUE_MAP
+import com.aemtools.index.search.AemComponentSearch
+import com.aemtools.util.withPriority
 import com.google.gson.annotations.SerializedName
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
+import com.intellij.psi.PsiElement
 import javax.swing.Icon
 
 /**
@@ -126,6 +130,7 @@ object HtlELPredefined {
     )
 
     fun addPredefined(callChain: CallChain,
+                      element: PsiElement,
                       currentSegment: CallChainSegment,
                       currentElement: CallChainElement,
                       resolutionResult: ResolutionResult): ResolutionResult {
@@ -137,10 +142,46 @@ object HtlELPredefined {
                         currentChain.indexOf(currentElement) - 1
                 ) ?: return resolutionResult
 
-                if (previousElement.name == "properties"
-                        || previousElement.name == "pageProperties"
+                if (previousElement.name == "pageProperties"
                         || previousElement.name == "inheritedPageProperties") {
-                    return resolutionResult.add(DEFAULT_PROPERTIES.map { it.toLookupElement() })
+                    return resolutionResult.add(DEFAULT_PROPERTIES.map {
+                        it.toLookupElement()
+                                .withPriority(0.9)
+                    })
+                }
+
+                if (previousElement.name == "properties") {
+                    val result = if (resolutionResult.predefined != null) {
+                        resolutionResult
+                    } else {
+                        resolutionResult.add(DEFAULT_PROPERTIES.map {
+                            it.toLookupElement()
+                                    .withPriority(0.9)
+                        })
+                    }
+                    val myResourceType = element.containingFile.originalFile.virtualFile.resourceType()
+                            ?: return result
+
+                    val touchUiDialog = AemComponentSearch.findTouchUIDialogByResourceType(myResourceType, element.project)
+                    if (touchUiDialog != null) {
+                        return result.add(
+                                touchUiDialog.myParameters.map {
+                                    it.toLookupElement()
+                                            .withPriority(1.toDouble())
+                                }
+                        )
+                    }
+
+                    val classicDialog = AemComponentSearch.findClassicDialogByResourceType(myResourceType, element.project)
+                    if (classicDialog != null) {
+                        return result.add(
+                                classicDialog.myParameters.map {
+                                    it.toLookupElement()
+                                            .withPriority(1.toDouble())
+                                }
+                        )
+                    }
+                    return result
                 }
             }
         }

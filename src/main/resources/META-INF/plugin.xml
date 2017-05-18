@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.aemtools</id>
     <name>AEM Tools</name>
-    <version>0.6.2</version>
+    <version>0.7</version>
     <category>Framework integration</category>
     <vendor email="dmytrotroynikov@gmail.com"
             url="https://github.com/DmytroTroynikov/aemtools">
@@ -30,6 +30,15 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li>
+                completion for data-sly-resource: all AEM components declared in project will be proposed
+                as <b>resourceType</b> variants.
+            </li>
+            <li>
+                Parameters declared in Classic dialog (dialog.xml) and in Touch UI (_cq_dialog/.content.xml)
+                will be proposed as variants for <b>properties</b> context object.
+                <i>Note:<i> if both Touch UI and Classic UI dialogs are present Touch UI properties will be used.
+            </li>
             <li>added standard HTML structure view for HTL files</li>
             <li>added support for js.txt&css.txt files</li>
             <li>OSGi services have list of corresponding OSGi configs available via gutter icon</li>
@@ -79,7 +88,9 @@
         <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>
 
         <fileBasedIndex implementation="com.aemtools.index.AemComponentDeclarationIndex"/>
-        
+        <fileBasedIndex implementation="com.aemtools.index.AemComponentClassicDialogIndex"/>
+        <fileBasedIndex implementation="com.aemtools.index.AemComponentTouchUIDialogIndex"/>
+
         <extendWordSelectionHandler implementation="com.aemtools.ide.htl.HtlStringLiteralWordSelectioner"/>
 
         <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlStringLiteralManipulator"

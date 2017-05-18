@@ -1,5 +1,7 @@
 package com.aemtools.util
 
+import com.intellij.codeInsight.completion.PrioritizedLookupElement
+import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.editor.Editor
@@ -88,3 +90,14 @@ fun writeCommand(project: Project, lambda: () -> Unit): Unit {
 
     }.execute().resultObject
 }
+
+/**
+ * Add priority to current [LookupElement].
+ *
+ * @param priority the priority
+ *
+ * @receiver [LookupElement]
+ * @return [PrioritizedLookupElement] with given priority
+ */
+fun LookupElement.withPriority(priority: Double): LookupElement =
+    PrioritizedLookupElement.withPriority(this, priority)

@@ -99,8 +99,10 @@ object const {
 
         val SLING_OSGI_CONFIG: String = "sling:OsgiConfig"
         val CQ_COMPONENT: String = "cq:Component"
+        val CQ_DIALOG: String = "cq:Dialog"
         val JCR_PRIMARY_TYPE_OSGI_CONFIG: String = "$JCR_PRIMARY_TYPE=\"$SLING_OSGI_CONFIG\""
         val JCR_PRIMARY_TYPE_CQ_COMPONENT: String = "$JCR_PRIMARY_TYPE=\"$CQ_COMPONENT\""
+        val JCR_PRIMARY_TYPE_CQ_DIALOG: String = "$JCR_PRIMARY_TYPE=\"$CQ_DIALOG\""
     }
 
     object message {

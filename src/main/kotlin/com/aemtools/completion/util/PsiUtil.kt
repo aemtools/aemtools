@@ -57,3 +57,17 @@ fun VirtualFile.toPsiFile(project: Project): PsiFile? =
 fun VirtualFile.toPsiDirectory(project: Project): PsiDirectory? =
         PsiManager.getInstance(project)
                 .findDirectory(this)
+
+/**
+ * Get resource type from current [VirtualFile].
+ */
+fun VirtualFile.resourceType(): String? {
+    var currentDir: VirtualFile? = this
+    while (currentDir != null) {
+        if (currentDir.findChild(".content.xml") != null) {
+            return currentDir.path.normalizeToJcrRoot()
+        }
+        currentDir = currentDir.parent
+    }
+    return null
+}
