@@ -25,13 +25,12 @@ object ResourceTypeReferenceProvider : PsiReferenceProvider() {
         val component = AemComponentSearch.findByResourceType(resourceType, literal.project)
                 ?: return emptyArray()
 
-        val virtualFile = OpenApiUtil.findFileByPath(component.fullPath)
+        val componentFile = OpenApiUtil.findFileByRelativePath(component.fullPath, literal.project)
                 ?: return emptyArray()
 
-        val parentDir = virtualFile.parent.toPsiDirectory(literal.project)
+        val parentDir = componentFile.parent.toPsiDirectory(literal.project)
                 ?: return emptyArray()
 
-        // todo double check if reference to directory is more convenient than reference to .content.xml file
         return arrayOf(PsiDirectoryReference(
                 parentDir,
                 literal,

@@ -21,7 +21,6 @@ class ResourceTypeReferenceProviderTest : BaseReferenceTest() {
                 jcr:title="My Component"/>
         """)
         shouldResolveTo(PsiDirectory::class.java)
-        shouldContainText("component")
     }
 
 }

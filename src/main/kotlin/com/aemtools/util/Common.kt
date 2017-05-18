@@ -8,6 +8,8 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.impl.local.LocalFileSystemBase
 import com.intellij.psi.PsiElement
+import com.intellij.psi.search.FilenameIndex
+import com.intellij.psi.search.GlobalSearchScope
 
 /**
  * Some common IDEA Open API methods
@@ -51,6 +53,22 @@ object OpenApiUtil {
      */
     fun findFileByPath(path: String): VirtualFile? {
         return LocalFileSystemBase.getInstance().findFileByPath(path)
+    }
+
+    /**
+     * Find [VirtualFile] by project relative path.
+     *
+     * @param project the project
+     * @param relativePath the path
+     * @return instance of VirtualFile, *null* if no file was found by given path
+     */
+    fun findFileByRelativePath(relativePath: String, project: Project): VirtualFile? {
+        val files = FilenameIndex.getFilesByName(
+                project,
+                relativePath.substringAfterLast("/"),
+                GlobalSearchScope.projectScope(project))
+        return files.find { it.virtualFile.path.endsWith(relativePath) }
+                ?.virtualFile
     }
 
 }
