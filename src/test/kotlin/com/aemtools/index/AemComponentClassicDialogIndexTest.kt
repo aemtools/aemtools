@@ -7,7 +7,7 @@ import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.util.indexing.FileBasedIndex
 
 /**
- * @autor Dmytro Troynikov
+ * @author Dmytro Troynikov
  */
 class AemComponentClassicDialogIndexTest : BaseLightTest() {
 
@@ -27,17 +27,9 @@ class AemComponentClassicDialogIndexTest : BaseLightTest() {
         verify {
             val fbi = FileBasedIndex.getInstance()
 
-            val keys = fbi.getAllKeys(AemComponentClassicDialogIndex.AEM_COMPONENT_CLASSIC_DIALOG_INDEX_ID, project)
-
-            assertEquals("One key should be present", 1, keys.size)
-
-            val keyValue = keys.first()
-
-            assertEquals("/apps/components/comp", keyValue)
-
             val value = fbi.getValues(
                     AemComponentClassicDialogIndex.AEM_COMPONENT_CLASSIC_DIALOG_INDEX_ID,
-                    keyValue,
+                    "/apps/components/comp",
                     GlobalSearchScope.projectScope(project))
                     .first()
 

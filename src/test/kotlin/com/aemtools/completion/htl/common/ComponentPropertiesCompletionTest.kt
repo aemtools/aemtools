@@ -4,7 +4,7 @@ import com.aemtools.blocks.completion.CompletionBaseLightTest
 import com.aemtools.constant.const.JCR_ROOT
 
 /**
- * @autor Dmytro Troynikov
+ * @author Dmytro Troynikov
  */
 class ComponentPropertiesCompletionTest : CompletionBaseLightTest(true) {
 

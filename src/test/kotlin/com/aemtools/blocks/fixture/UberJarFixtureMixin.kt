@@ -3,7 +3,7 @@ package com.aemtools.blocks.fixture
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 
 /**
- * @autor Dmytro Troynikov
+ * @author Dmytro Troynikov
  */
 interface UberJarFixtureMixin : OSGiFelixAnnotationsMixin {
 

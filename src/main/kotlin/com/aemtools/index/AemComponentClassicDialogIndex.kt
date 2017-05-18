@@ -11,7 +11,7 @@ import com.intellij.util.io.DataExternalizer
 import com.intellij.xml.index.XmlIndex
 
 /**
- * @autor Dmytro Troynikov
+ * @author Dmytro Troynikov
  */
 class AemComponentClassicDialogIndex : XmlIndex<AemComponentClassicDialogDefinition>() {
 

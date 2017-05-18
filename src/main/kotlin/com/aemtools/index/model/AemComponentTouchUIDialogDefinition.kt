@@ -6,7 +6,7 @@ import com.intellij.icons.AllIcons
 import java.io.Serializable
 
 /**
- * @autor Dmytro Troynikov
+ * @author Dmytro Troynikov
  */
 data class AemComponentTouchUIDialogDefinition(
         /**

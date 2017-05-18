@@ -7,7 +7,7 @@ import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.util.indexing.FileBasedIndex
 
 /**
- * @autor Dmytro Troynikov
+ * @author Dmytro Troynikov
  */
 class AemComponentTouchUIDialogIndexTest : BaseLightTest() {
 
