@@ -139,8 +139,7 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
 
                     JavaPsiClassTypeDescriptor(psiClass, psiMember, psiType)
                 }
-                is PsiClassType ->
-                        JavaPsiClassTypeDescriptor(psiClass, psiMember, psiType)
+                is PsiClassType,
                 is PsiPrimitiveType ->
                         JavaPsiClassTypeDescriptor(psiClass, psiMember, psiType)
                 is PsiArrayType ->

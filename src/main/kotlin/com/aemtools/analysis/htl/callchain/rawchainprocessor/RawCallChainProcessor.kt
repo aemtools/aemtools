@@ -7,7 +7,9 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDesc
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.IterableJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
-import com.aemtools.completion.htl.common.FileVariablesResolver
+import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateHolderTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateParameterTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
 import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.htl.model.declaration.*
 import com.aemtools.completion.htl.predefined.HtlELPredefined.LIST_AND_REPEAT_HELPER_OBJECT
@@ -124,12 +126,8 @@ object RawCallChainProcessor {
 
         var psiClass: PsiClass? = null
 
-        if (firstElement != null) {
-            psiClass = FileVariablesResolver.resolveVariable(firstElement).psiClass
-        }
-
         if (psiClass == null && firstElement != null) {
-            val type = PredefinedVariables.typeDescriptorByIdentifier(firstElement.variableName(), firstElement.project)
+            val type = PredefinedVariables.typeDescriptorByIdentifier(firstElement, firstElement.project)
             if (type !is EmptyTypeDescriptor) {
                 return type
             }
@@ -201,11 +199,11 @@ object RawCallChainProcessor {
 
         var callChainElement = when {
             rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.LIST_HELPER
-                    || rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.REPEAT_HELPER ->
-
+                    || rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.REPEAT_HELPER -> {
                 BaseChainElement(currentElement,
                         extractElementName(currentElement),
                         PredefinedTypeDescriptor(LIST_AND_REPEAT_HELPER_OBJECT))
+            }
 
             rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE
                     && inputType is ArrayJavaTypeDescriptor -> {

@@ -1,19 +1,11 @@
 package com.aemtools.completion.htl.predefined
 
-import com.aemtools.analysis.htl.callchain.elements.CallChain
-import com.aemtools.analysis.htl.callchain.elements.CallChainElement
-import com.aemtools.analysis.htl.callchain.elements.CallChainSegment
 import com.aemtools.analysis.htl.callchain.typedescriptor.PredefinedDescriptionTypeDescriptor
 import com.aemtools.completion.htl.model.ResolutionResult
-import com.aemtools.completion.util.resourceType
-import com.aemtools.constant.const.java.VALUE_MAP
-import com.aemtools.index.search.AemComponentSearch
-import com.aemtools.util.withPriority
 import com.google.gson.annotations.SerializedName
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
-import com.intellij.psi.PsiElement
 import javax.swing.Icon
 
 /**
@@ -93,101 +85,6 @@ object HtlELPredefined {
             pc("odd", "boolean", "<b>true</b> if index is odd"),
             pc("even", "boolean", "<b>true</b> if index is even")
     )
-
-    val DEFAULT_PROPERTIES = listOf(
-            pc("jcr:title",
-                    "java.lang.String",
-                    "String value of <b>jcr:title</b> property, or empty String if such property does not exist."),
-            pc("jcr:description", "java.lang.String",
-                    "String value of <b>jcr:description</b> property, or empty String if such property does not exist."),
-            pc("jcr:primaryType",
-                    "java.lang.String",
-                    "String defines primary type of the component."),
-            pc("jcr:mixinTypes",
-                    "java.lang.String[]",
-                    "String array of mixin types"),
-            pc("jcr:createdBy",
-                    "java.lang.String",
-                    "ID of user, created the component or page."),
-            pc("cq:lastReplicationAction",
-                    "java.lang.String",
-                    "Last replication action performed on this node."),
-            pc("cq:lastReplicatedBy",
-                    "java.lang.String",
-                    "ID of user, which replicated current node the last time."),
-            pc("jcr:lastModifiedBy",
-                    "java.lang.String",
-                    "ID of user, which modified current node the last time."),
-            pc("jcr:lastModified",
-                    "java.util.Calendar",
-                    "Date and time of last modified action."),
-            pc("cq:lastReplicated",
-                    "java.util.Calendar",
-                    "Date and time of last replication action."),
-            pc("sling:resourceType",
-                    "java.lang.String",
-                    "String defines the resource type of the component or page.")
-    )
-
-    fun addPredefined(callChain: CallChain,
-                      element: PsiElement,
-                      currentSegment: CallChainSegment,
-                      currentElement: CallChainElement,
-                      resolutionResult: ResolutionResult): ResolutionResult {
-        val psiClass = resolutionResult.psiClass
-        if (psiClass != null) {
-            if (psiClass.qualifiedName == VALUE_MAP) {
-                val currentChain = currentSegment.chainElements()
-                val previousElement = currentChain.getOrNull(
-                        currentChain.indexOf(currentElement) - 1
-                ) ?: return resolutionResult
-
-                if (previousElement.name == "pageProperties"
-                        || previousElement.name == "inheritedPageProperties") {
-                    return resolutionResult.add(DEFAULT_PROPERTIES.map {
-                        it.toLookupElement()
-                                .withPriority(0.9)
-                    })
-                }
-
-                if (previousElement.name == "properties") {
-                    val result = if (resolutionResult.predefined != null) {
-                        resolutionResult
-                    } else {
-                        resolutionResult.add(DEFAULT_PROPERTIES.map {
-                            it.toLookupElement()
-                                    .withPriority(0.9)
-                        })
-                    }
-                    val myResourceType = element.containingFile.originalFile.virtualFile.resourceType()
-                            ?: return result
-
-                    val touchUiDialog = AemComponentSearch.findTouchUIDialogByResourceType(myResourceType, element.project)
-                    if (touchUiDialog != null) {
-                        return result.add(
-                                touchUiDialog.myParameters.map {
-                                    it.toLookupElement()
-                                            .withPriority(1.toDouble())
-                                }
-                        )
-                    }
-
-                    val classicDialog = AemComponentSearch.findClassicDialogByResourceType(myResourceType, element.project)
-                    if (classicDialog != null) {
-                        return result.add(
-                                classicDialog.myParameters.map {
-                                    it.toLookupElement()
-                                            .withPriority(1.toDouble())
-                                }
-                        )
-                    }
-                    return result
-                }
-            }
-        }
-
-        return resolutionResult
-    }
 
 }
 
