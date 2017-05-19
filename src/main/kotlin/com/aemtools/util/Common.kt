@@ -101,3 +101,11 @@ fun writeCommand(project: Project, lambda: () -> Unit): Unit {
  */
 fun LookupElement.withPriority(priority: Double): LookupElement =
     PrioritizedLookupElement.withPriority(this, priority)
+
+/**
+ * Convert current [String] to [StringBuilder].
+ *
+ * @receiver [String]
+ * @return new string builder instance that contains current string
+ */
+fun String.toStringBuilder() = StringBuilder(this)

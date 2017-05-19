@@ -8,9 +8,9 @@ import com.aemtools.constant.const.aem_component_declaration.COMPONENT_GROUP
 import com.aemtools.constant.const.aem_component_declaration.CQ_ICON
 import com.aemtools.constant.const.aem_component_declaration.IS_CONTAINER
 import com.aemtools.lang.htl.icons.HtlIcons
+import com.aemtools.util.toStringBuilder
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.icons.AllIcons
 import com.intellij.psi.xml.XmlTag
 import org.apache.commons.lang.BooleanUtils
 import java.io.Serializable
@@ -133,6 +133,27 @@ data class AemComponentDefinition(
                                 it
                             }
                         }
+
+        /**
+         * Create IDEA doc compliable string from current [AemComponentDefinition].
+         *
+         * @receiver [AemComponentDefinition]
+         * @return documentation string
+         */
+        fun AemComponentDefinition.generateDoc(): String {
+            val result = """AEM Component:<br/>""".toStringBuilder()
+            with(result) {
+                append("<b>Name</b>: ${componentName()}<br/>")
+                append("<b>Group</b>: $componentGroup<br/>")
+                title?.let { append("<b>jcr:title</b>: $it<br/>") }
+                description?.let { append("<b>jcr:description</b>: $it<br/>") }
+                resourceSuperType?.let { append("<b>sling:resourceSuperType</b>: $it<br/>") }
+
+                append("<b>Container</b>: $isContainer<br/>")
+                cqIcon?.let { append("<b>cq:icon</b>: $it") }
+            }
+            return result.toString()
+        }
 
     }
 

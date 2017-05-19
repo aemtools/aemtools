@@ -45,7 +45,7 @@ class OSGiConfigSearchTest : BaseLightTest(),
 
             assertEquals(
                     filesNames.map { "/src$it" },
-                    configs.map { it.xmlFile?.virtualFile?.path }
+                    configs.sortByMods().map { it.xmlFile?.virtualFile?.path }
             )
         }
     }
