@@ -52,9 +52,11 @@ data class OSGiConfiguration(val path: String,
      */
     val mods: List<String>
         get() {
-            val result = path.split("/").find { it.startsWith("config") }
-                    ?.split(".")
-                    ?.filterNot { it == "config" }
+            val result = path
+                    .substringBeforeLast("/")
+                    .substringAfterLast("/")
+                    .split(".")
+                    .filterNot { it == "config" }
 
             return if (result == null || result.isEmpty()) {
                 listOf("default")
