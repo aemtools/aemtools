@@ -2,7 +2,10 @@ package com.aemtools.analysis.htl.callchain.rawchainprocessor
 
 import com.aemtools.analysis.htl.callchain.elements.*
 import com.aemtools.analysis.htl.callchain.elements.helper.chainSegment
-import com.aemtools.analysis.htl.callchain.typedescriptor.*
+import com.aemtools.analysis.htl.callchain.typedescriptor.EmptyTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.MergedTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.PredefinedTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.IterableJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
@@ -71,13 +74,16 @@ object RawCallChainProcessor {
 
                 val templates = declaration.template()
                 if (templates.isNotEmpty()) {
-                    TemplateHolderTypeDescriptor(templates)
+                    TemplateHolderTypeDescriptor(templates,
+                            declaration.xmlAttribute.project)
                 } else {
                     null
                 }
             }
             is HtlTemplateDeclaration -> {
-                TemplateTypeDescriptor(declaration.templateDefinition)
+                TemplateTypeDescriptor(
+                        declaration.templateDefinition,
+                        rawChainUnit.myDeclaration.xmlAttribute.project)
             }
             is HtlTemplateParameterDeclaration -> {
                 TemplateParameterTypeDescriptor(declaration)

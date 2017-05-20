@@ -6,13 +6,16 @@ import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.lang.htl.icons.HtlIcons
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
+import com.intellij.openapi.project.Project
 
 /**
  * Descriptor of type spawned in `data-sly-use` which included some Htl template containing file.
  *
  * @author Dmytro Troynikov
  */
-class TemplateHolderTypeDescriptor(val templates: List<TemplateDefinition>)
+class TemplateHolderTypeDescriptor(
+        val templates: List<TemplateDefinition>,
+        val project: Project)
     : TypeDescriptor {
     override fun myVariants(): List<LookupElement> {
         return templates.map {
@@ -40,7 +43,7 @@ class TemplateHolderTypeDescriptor(val templates: List<TemplateDefinition>)
 
     private fun TemplateDefinition?.toTypeDescriptor(): TypeDescriptor =
             if (this != null) {
-                TemplateTypeDescriptor(this)
+                TemplateTypeDescriptor(this, project)
             } else {
                 TypeDescriptor.empty()
             }

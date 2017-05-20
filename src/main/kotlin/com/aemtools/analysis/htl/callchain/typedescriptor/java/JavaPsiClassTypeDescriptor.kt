@@ -105,9 +105,11 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
         return JavaPsiClassTypeDescriptor.create(typeClass, psiMember, psiType)
     }
 
-    override fun asResolutionResult(): ResolutionResult {
-        return ResolutionResult(psiClass, myVariants())
-    }
+    override fun referencedElement(): PsiElement? =
+        psiMember
+
+    override fun asResolutionResult(): ResolutionResult =
+        ResolutionResult(psiClass, myVariants())
 
     companion object {
         fun create(psiClass: PsiClass,

@@ -2,8 +2,8 @@ package com.aemtools.analysis.htl.callchain.typedescriptor
 
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.intellij.codeInsight.lookup.LookupElement
+import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiMember
-import com.intellij.psi.PsiReference
 import com.intellij.psi.PsiType
 
 /**
@@ -52,9 +52,9 @@ interface TypeDescriptor {
     fun documentation(): String? = null
 
     /**
-     * Get reference to declaration of current type descriptor.
+     * Get declaration element.
      */
-    fun reference(): PsiReference? = null
+    fun referencedElement(): PsiElement? = null
 
     companion object {
         private val EMPTY_DESCRIPTOR = EmptyTypeDescriptor()
@@ -78,7 +78,11 @@ open class NamedTypeDescriptor(private val myName: String)
 open class JavaPsiUnresolvedTypeDescriptor(private val myName: String,
                                            val psiMember: PsiMember,
                                            val psiType: PsiType) : EmptyTypeDescriptor() {
+
     override fun name(): String = myName
+
+    override fun referencedElement(): PsiElement? = psiMember
+
 }
 
 open class EmptyTypeDescriptor : TypeDescriptor {
