@@ -1,15 +1,13 @@
 package com.aemtools.reference.htl
 
-import com.aemtools.blocks.base.BaseLightTest.Companion.CARET
 import com.aemtools.blocks.reference.BaseReferenceTest
-import com.aemtools.constant.const.DOLLAR
 import com.aemtools.constant.const.JCR_ROOT
 import com.intellij.psi.xml.XmlTag
 
 /**
  * @author Dmytro Troynikov
  */
-class DialogPropertiesReferenceTest : BaseReferenceTest() {
+class DialogPropertiesReferenceTest : BaseReferenceTest(true) {
 
     fun testReferenceToPropertyFromClassicDialog() = testReference {
         addHtml("/$JCR_ROOT/apps/myapp/component/component.html", """
@@ -20,6 +18,7 @@ class DialogPropertiesReferenceTest : BaseReferenceTest() {
                 <item xtype="pathfield" name="./property"/>
             </jcr:root>
         """)
+        addXml("/$JCR_ROOT/apps/myapp/component/.content.xml", "")
 
         shouldResolveTo(XmlTag::class.java)
         shouldContainText("""<item xtype="pathfield" name="./property"/>""")
@@ -35,9 +34,11 @@ class DialogPropertiesReferenceTest : BaseReferenceTest() {
                 name="./property"/>
             </jcr:root>
         """)
+        addXml("/$JCR_ROOT/apps/myapp/component/.content.xml", "")
 
         shouldResolveTo(XmlTag::class.java)
-        shouldContainText("""<item sling:resourceType="granite/ui/components/foundation/form/textfield" name="./property"/>""")
+        shouldContainText("""<item sling:resourceType="granite/ui/components/foundation/form/textfield"
+                name="./property"/>""")
 
     }
 
