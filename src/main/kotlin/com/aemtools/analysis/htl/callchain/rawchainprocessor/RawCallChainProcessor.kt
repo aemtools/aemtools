@@ -2,12 +2,17 @@ package com.aemtools.analysis.htl.callchain.rawchainprocessor
 
 import com.aemtools.analysis.htl.callchain.elements.*
 import com.aemtools.analysis.htl.callchain.elements.helper.chainSegment
-import com.aemtools.analysis.htl.callchain.typedescriptor.*
+import com.aemtools.analysis.htl.callchain.typedescriptor.EmptyTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.MergedTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.PredefinedTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.IterableJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
-import com.aemtools.completion.htl.common.FileVariablesResolver
+import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateHolderTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateParameterTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
 import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.htl.model.declaration.*
 import com.aemtools.completion.htl.predefined.HtlELPredefined.LIST_AND_REPEAT_HELPER_OBJECT
@@ -69,13 +74,16 @@ object RawCallChainProcessor {
 
                 val templates = declaration.template()
                 if (templates.isNotEmpty()) {
-                    TemplateHolderTypeDescriptor(templates)
+                    TemplateHolderTypeDescriptor(templates,
+                            declaration.xmlAttribute.project)
                 } else {
                     null
                 }
             }
             is HtlTemplateDeclaration -> {
-                TemplateTypeDescriptor(declaration.templateDefinition)
+                TemplateTypeDescriptor(
+                        declaration.templateDefinition,
+                        rawChainUnit.myDeclaration.xmlAttribute.project)
             }
             is HtlTemplateParameterDeclaration -> {
                 TemplateParameterTypeDescriptor(declaration)
@@ -124,12 +132,8 @@ object RawCallChainProcessor {
 
         var psiClass: PsiClass? = null
 
-        if (firstElement != null) {
-            psiClass = FileVariablesResolver.resolveVariable(firstElement).psiClass
-        }
-
         if (psiClass == null && firstElement != null) {
-            val type = PredefinedVariables.typeDescriptorByIdentifier(firstElement.variableName(), firstElement.project)
+            val type = PredefinedVariables.typeDescriptorByIdentifier(firstElement, firstElement.project)
             if (type !is EmptyTypeDescriptor) {
                 return type
             }
@@ -201,11 +205,11 @@ object RawCallChainProcessor {
 
         var callChainElement = when {
             rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.LIST_HELPER
-                    || rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.REPEAT_HELPER ->
-
+                    || rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.REPEAT_HELPER -> {
                 BaseChainElement(currentElement,
                         extractElementName(currentElement),
                         PredefinedTypeDescriptor(LIST_AND_REPEAT_HELPER_OBJECT))
+            }
 
             rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE
                     && inputType is ArrayJavaTypeDescriptor -> {

@@ -1,6 +1,11 @@
 package com.aemtools.index.model
 
-import com.aemtools.completion.util.normalizeToJcrRoot
+import com.aemtools.completion.util.*
+import com.aemtools.lang.htl.psi.HtlPsiFile
+import com.aemtools.util.OpenApiUtil
+import com.intellij.openapi.project.Project
+import com.intellij.psi.PsiElement
+import com.intellij.psi.xml.XmlAttribute
 import java.io.Serializable
 
 /**
@@ -29,6 +34,16 @@ data class TemplateDefinition(
          *
          */
         val parameters: List<String>) : Serializable {
+
+    fun declarationElement(project: Project): PsiElement? {
+        val file = OpenApiUtil.findFileByRelativePath(normalizedPath, project)
+                ?.toPsiFile(project) as? HtlPsiFile
+                ?: return null
+        val htmlFile = file.getHtmlFile() ?: return null
+        return htmlFile.findChildrenByType(XmlAttribute::class.java).find {
+            it.htlVariableName() == name
+        }
+    }
 
     val containingDirectory: String
         get() {

@@ -1,6 +1,6 @@
 package com.aemtools.completion.htl.provider.option
 
-import com.aemtools.analysis.htl.callchain.typedescriptor.TemplateTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
 import com.aemtools.completion.htl.inserthandler.HtlElAssignmentInsertHandler
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.findParentByType

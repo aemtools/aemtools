@@ -2,10 +2,11 @@ package com.aemtools.completion.htl.common
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.MergedTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.PredefinedTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.PredefinedVariantsTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.PropertiesTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor.Companion.empty
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
+import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.htl.psi.util.elFields
 import com.aemtools.lang.htl.psi.util.elMethods
 import com.aemtools.lang.htl.psi.util.elName
@@ -15,7 +16,6 @@ import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiClass
-import com.intellij.util.containers.isNullOrEmpty
 import java.util.*
 
 /**
@@ -35,28 +35,21 @@ object PredefinedVariables {
         }
     }
 
-    /**
-     * Lookups for PsiClass by variable name e.g.
-     * ```
-     *  resolveByIdentifier("request")
-     *  ->
-     *  "SlingHttpServletRequest"
-     * ```
-     * @param variableName the name of variable
-     * @return [PsiClass] instance or _null_ if no class was found
-     */
-    fun resolveByIdentifier(variableName: String, project: Project): PsiClass? {
-        val classInfo = repository.findContextObject(variableName) ?: return null
-        val fullClassName = classInfo.className
-        return JavaSearch.findClass(fullClassName, project)
-    }
-
-    fun typeDescriptorByIdentifier(variableName: String, project: Project): TypeDescriptor {
-        val classInfo = repository.findContextObject(variableName) ?: return TypeDescriptor.empty()
+    fun typeDescriptorByIdentifier(variableName: VariableNameMixin, project: Project): TypeDescriptor {
+        val name = variableName.variableName()
+        val classInfo = repository.findContextObject(name) ?: return TypeDescriptor.empty()
+        val originalElement = variableName.originalElement
         val fullClassName = classInfo.className
         val psiClass = JavaSearch.findClass(fullClassName, project)
         val predefined = classInfo.predefined
         return when {
+            name == "properties" && psiClass != null && predefined != null && predefined .isNotEmpty() -> {
+                MergedTypeDescriptor(
+                        PropertiesTypeDescriptor(originalElement),
+                        PredefinedTypeDescriptor(predefined),
+                        JavaPsiClassTypeDescriptor.create(psiClass)
+                )
+            }
             psiClass != null && predefined != null && predefined.isNotEmpty() -> {
                 MergedTypeDescriptor(
                         PredefinedTypeDescriptor(predefined),
