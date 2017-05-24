@@ -1,8 +1,7 @@
 package com.aemtools.reference.htl
 
-import com.aemtools.blocks.base.BaseLightTest.Companion.CARET
-import com.aemtools.blocks.base.BaseLightTest.Companion.DOLLAR
 import com.aemtools.blocks.reference.BaseReferenceTest
+import com.aemtools.constant.const.JCR_ROOT
 import com.intellij.psi.PsiDirectory
 
 /**
@@ -11,15 +10,30 @@ import com.intellij.psi.PsiDirectory
 class ResourceTypeReferenceProviderTest : BaseReferenceTest() {
 
     fun testResourceTypeReference() = testReference {
-        addHtml("/jcr_root/apps/component1/test.html", """
+        addHtml("/$JCR_ROOT/apps/component1/test.html", """
             <div data-sly-resource="$DOLLAR{'name' @ resourceType='$CARET/apps/component'}"
         """)
-        addXml("/jcr_root/apps/component/.content.xml", """
+        addXml("/$JCR_ROOT/apps/component/.content.xml", """
             <jcr:root
                 jcr:primaryType="cq:Component"
                 componentGroup="My group"
                 jcr:title="My Component"/>
         """)
+        shouldResolveTo(PsiDirectory::class.java)
+    }
+
+    fun testResourceTypeNotFullReference() = testReference {
+        addHtml("/$JCR_ROOT/apps/myapp/components/test/test.html", """
+            <div data-sly-resource="$DOLLAR{'name' @ resourceType='${CARET}myapp/components/included'}"></div>
+        """)
+
+        addXml("/$JCR_ROOT/apps/myapp/components/included/.content.xml", """
+            <jcr:root
+                jcr:primaryType="cq:Component"
+                componentGroup="My group"
+                jcr:title="My Component" />
+        """)
+
         shouldResolveTo(PsiDirectory::class.java)
     }
 
