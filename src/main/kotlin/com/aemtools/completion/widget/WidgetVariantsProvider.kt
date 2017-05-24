@@ -10,7 +10,6 @@ import com.intellij.codeInsight.completion.XmlAttributeInsertHandler
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.psi.xml.XmlToken
-import com.intellij.util.ProcessingContext
 
 /**
  * @author Dmytro_Troynikov.
@@ -31,7 +30,7 @@ class WidgetVariantsProvider {
     }
 
     fun generateVariants(parameters: CompletionParameters,
-                         widgetDefinition: PsiWidgetDefinition?, context: ProcessingContext)
+                         widgetDefinition: PsiWidgetDefinition?)
             : Collection<LookupElement> {
 
         val currentElement = parameters.position as XmlToken
@@ -62,8 +61,7 @@ class WidgetVariantsProvider {
         }
 
         when (currentPositionType) {
-            const.xml.XML_ATTRIBUTE_NAME -> return variantsForName(parameters,
-                    widgetDefinition as PsiWidgetDefinition).filter { it ->
+            const.xml.XML_ATTRIBUTE_NAME -> return variantsForName(widgetDefinition as PsiWidgetDefinition).filter { it ->
                 widgetDefinition.getFieldValue(it.lookupString) == null
             }
             const.xml.XML_ATTRIBUTE_VALUE -> {
@@ -100,8 +98,7 @@ class WidgetVariantsProvider {
     /**
      * Give variants for attribute name
      */
-    fun variantsForName(parameters: CompletionParameters,
-                        widgetDefinition: PsiWidgetDefinition): Collection<LookupElement> {
+    fun variantsForName(widgetDefinition: PsiWidgetDefinition): Collection<LookupElement> {
         val widgetDocRepository = ServiceFacade.getWidgetRepository()
 
         val xtype = widgetDefinition.getFieldValue("xtype") ?: return listOf()

@@ -32,7 +32,7 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
      */
     fun callChain(): LinkedList<RawChainUnit> {
         var result = LinkedList<RawChainUnit>()
-        var myChain = LinkedList(listOf(*this.children))
+        val myChain = LinkedList(listOf(*this.children))
 
         val firstElement = myChain.first() as VariableNameMixin
         val firstName = firstElement.variableName()

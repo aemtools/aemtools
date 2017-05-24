@@ -43,7 +43,7 @@ private class RepPolicyCompletionProvider : CompletionProvider<CompletionParamet
     }
 
     private val variantsForName: (CompletionParameters, XmlToken) -> List<LookupElement> = {
-        parameters, token ->
+        _, token ->
         val tag = token.findParentByType(XmlTag::class.java)
 
         val tagDefinition = repPolicyRepository.getTagDefinitionByName((tag as XmlTagImpl).name)
@@ -58,7 +58,7 @@ private class RepPolicyCompletionProvider : CompletionProvider<CompletionParamet
     }
 
     private val variantsForValue: (CompletionParameters, XmlToken) -> List<LookupElement> = {
-        parameters, token ->
+        _, token ->
         val tag = token.findParentByType(XmlTag::class.java)
         val tagDefinition = repPolicyRepository.getTagDefinitionByName((tag as XmlTagImpl).name)
         val attributeName = (token.findParentByType(XmlAttribute::class.java) as XmlAttribute).name
@@ -68,7 +68,7 @@ private class RepPolicyCompletionProvider : CompletionProvider<CompletionParamet
     }
 
     private val variantsForTagName: (CompletionParameters, XmlToken) -> List<LookupElement> = {
-        parameters, token ->
+        _, token ->
         val parentTag = token.findParentByType(XmlTag::class.java)
                 ?.findParentByType(XmlTag::class.java)
 
