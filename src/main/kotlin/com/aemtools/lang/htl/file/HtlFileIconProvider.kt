@@ -12,7 +12,7 @@ import javax.swing.Icon
 class HtlFileIconProvider : IconProvider() {
     override fun getIcon(element: PsiElement, flags: Int): Icon? {
         return if (element is HtlPsiFile) {
-            HtlIcons.HTL_FILE
+            HtlIcons.HTL_FILE_ICON
         } else {
             null
         }

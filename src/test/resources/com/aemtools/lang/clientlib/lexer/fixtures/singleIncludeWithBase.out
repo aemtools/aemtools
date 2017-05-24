@@ -1,0 +1,4 @@
+[Cd] #base= ('#base=')
+[Cd] WORD ('dir')
+WHITE_SPACE ('\n\n')
+[Cd] WORD ('file.js')

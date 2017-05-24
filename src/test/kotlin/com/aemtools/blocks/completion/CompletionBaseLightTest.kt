@@ -9,7 +9,7 @@ import com.intellij.testFramework.LightProjectDescriptor
 /**
  * @author Dmytro Troynikov
  */
-abstract class CompletionBaseLightTest : BaseLightTest(true) {
+abstract class CompletionBaseLightTest(withUberJar: Boolean = true) : BaseLightTest(withUberJar) {
 
     fun completionTest(fixture: ICompletionTestFixture.() -> Unit) {
         val completionTestFixture = CompletionTestFixture(myFixture).apply { fixture() }

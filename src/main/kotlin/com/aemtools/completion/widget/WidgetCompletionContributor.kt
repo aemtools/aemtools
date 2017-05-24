@@ -28,7 +28,7 @@ private class WidgetCompletionProvider : CompletionProvider<CompletionParameters
         val widgetDefinition = WidgetDefinitionUtil.extract(parameters.position)
 
         val suggestions = WidgetVariantsProvider.Companion.INSTANCE()
-                .generateVariants(parameters, widgetDefinition, context)
+                .generateVariants(parameters, widgetDefinition)
 
         result.addAllElements(suggestions)
         result.stopHere()

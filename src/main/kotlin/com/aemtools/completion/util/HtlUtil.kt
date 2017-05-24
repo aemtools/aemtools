@@ -47,6 +47,9 @@ fun extractItemAndItemListNames(value: String): Pair<String, String> {
 /**
  * Check if current string literal is the main EL's string
  * (e.g. ${'main string' @ param='not main string'})
+ *
+ * @receiver [HtlStringLiteral]
+ * @return *true* if current string is main EL string, *false* otherwise
  */
 fun HtlStringLiteral.isMainString(): Boolean {
     val expression = this.findParentByType(HtlExpression::class.java) ?: return false
@@ -61,6 +64,9 @@ fun HtlStringLiteral.isMainString(): Boolean {
  *  ${variable} -> false
  *  ${@ variable} -> true
  * ```
+ *
+ * @receiver [HtlVariableName]
+ * @return *true* if current variable name is "option", *false* otherwise
  */
 fun HtlVariableName.isOption(): Boolean {
     return this.hasParent(HtlContextExpression::class.java)
@@ -69,6 +75,9 @@ fun HtlVariableName.isOption(): Boolean {
 
 /**
  * Extract first (top level) [PropertyAccessMixin].
+ *
+ * @receiver [HtlHtlEl]
+ * @return first [PropertyAccessMixin] in current [HtlHtlEl], *null* if no property access mixin present
  */
 fun HtlHtlEl.extractPropertyAccess(): PropertyAccessMixin? {
     val propertyAccessItems = findChildrenByType(PropertyAccessMixin::class.java)
@@ -81,6 +90,7 @@ fun HtlHtlEl.extractPropertyAccess(): PropertyAccessMixin? {
 /**
  * Check if current [HtlHtlEl] element resides within attribute with given name.
  * @param attributeName the name of attribute
+ * @receiver [HtlHtlEl]
  * @return __true__ if current element is the value of attribute with given name
  */
 fun HtlHtlEl.isInsideOF(attributeName: String): Boolean {
@@ -105,6 +115,7 @@ fun PsiElement.isInsideOf(attributeName: String): Boolean {
 /**
  * Collection [HtlVariableDeclaration] element which are applicable for given position
  * @param position the starting position
+ * @receiver [Collection] of [HtlVariableDeclaration] objects
  * @return collection of applicable declarations
  */
 fun Collection<HtlVariableDeclaration>.filterForPosition(position: PsiElement): Collection<HtlVariableDeclaration> {
@@ -193,6 +204,15 @@ fun Collection<HtlVariableDeclaration>.filterForPosition(position: PsiElement): 
 
 /**
  * Extract Htl attribute name.
+ *
+ * ```
+ * data-sly-use.bean -> "data-sly-use"
+ * data-sly-test -> "data-sly-test"
+ * class -> null
+ * ```
+ *
+ * @receiver [XmlAttribute]
+ * @return the name of Htl attribute, _null_ if current attribute is not Htl one
  */
 fun XmlAttribute.htlAttributeName(): String? {
     if (!isHtlAttribute()) {
@@ -208,6 +228,14 @@ fun XmlAttribute.htlAttributeName(): String? {
 
 /**
  * Extract name of Htl variable declared in current [XmlAttribute]
+ *
+ * ```
+ * data-sly-use.bean -> "bean"
+ * data-sly-use -> null
+ * ```
+ *
+ * @receiver [XmlAttribute]
+ * @return the name of Htl variable declared in current Htl attribute
  */
 fun XmlAttribute.htlVariableName(): String? {
     if (!isHtlDeclarationAttribute()) {

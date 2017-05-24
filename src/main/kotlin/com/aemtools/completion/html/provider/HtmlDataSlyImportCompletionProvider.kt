@@ -3,11 +3,11 @@ package com.aemtools.completion.html.provider
 import com.aemtools.completion.util.normalizeToJcrRoot
 import com.aemtools.completion.util.relativeTo
 import com.aemtools.index.HtlIndexFacade
+import com.aemtools.lang.htl.icons.HtlIcons
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.icons.AllIcons
 import com.intellij.util.ProcessingContext
 
 /**
@@ -30,7 +30,7 @@ object HtmlDataSlyImportCompletionProvider : CompletionProvider<CompletionParame
                             .relativeTo(dirName))
                     .withTypeText("HTL File")
                     .withTailText("(${it.virtualFile.path.normalizeToJcrRoot()})", true)
-                    .withIcon(AllIcons.FileTypes.Html) // todo change to Htl icon
+                    .withIcon(HtlIcons.HTL_FILE_ICON)
         }
         result.addAllElements(variants)
     }

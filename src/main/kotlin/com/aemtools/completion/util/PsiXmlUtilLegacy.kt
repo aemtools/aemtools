@@ -64,9 +64,9 @@ object PsiXmlUtil {
             return null
         }
 
-        var attr: PsiElement? = element.findParentByType(XmlAttribute::class.java) ?: return null
+        val attr: PsiElement? = element.findParentByType(XmlAttribute::class.java) ?: return null
 
-        return (attr as XmlAttribute).name
+        return (attr as? XmlAttribute)?.name
     }
 
 }

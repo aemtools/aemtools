@@ -105,7 +105,7 @@ class HtlAttributesDocumentationProvider : AbstractDocumentationProvider() {
     }
 
     private fun descriptionBlock(description: String): String {
-        return "<b>Description:</b> $description<br> "
+        return "<b>Description:</b> $description<br>"
     }
 
 }

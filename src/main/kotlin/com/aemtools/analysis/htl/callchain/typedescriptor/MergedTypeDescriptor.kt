@@ -2,43 +2,45 @@ package com.aemtools.analysis.htl.callchain.typedescriptor
 
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.intellij.codeInsight.lookup.LookupElement
+import com.intellij.psi.PsiElement
 
 /**
  * Type descriptor compounded from the type descriptors.
  * @author Dmytro Troynikov
  */
-class MergedTypeDescriptor(val type1: TypeDescriptor,
-                           val type2: TypeDescriptor) : TypeDescriptor {
+class MergedTypeDescriptor(vararg val types: TypeDescriptor) : TypeDescriptor {
     override fun myVariants(): List<LookupElement> =
-            type1.myVariants() + type2.myVariants()
+            types.flatMap { it.myVariants() }
 
-    override fun subtype(identifier: String): TypeDescriptor {
-        val subtype1 = type1.subtype(identifier)
-        return if (subtype1 !is EmptyTypeDescriptor) {
-            subtype1
-        } else {
-            type2.subtype(identifier)
-        }
-    }
+    override fun documentation(): String? =
+            types.map { it.documentation() }
+                    .filterNotNull()
+                    .firstOrNull()
 
-    override fun name(): String {
-        val name1 = type1.name()
-        return if (name1.isNotBlank()) {
-            name1
-        } else {
-            type2.name()
-        }
-    }
+    override fun referencedElement(): PsiElement? =
+            types.map { it.referencedElement() }
+                    .filterNotNull()
+                    .firstOrNull()
 
-    override fun isArray(): Boolean =
-            type1.isArray() or type2.isArray()
+    override fun subtype(identifier: String): TypeDescriptor =
+            types.map { it.subtype(identifier) }
+                    .find { it !is EmptyTypeDescriptor }
+                    ?: EmptyTypeDescriptor()
 
-    override fun isIterable(): Boolean =
-            type1.isIterable() or type2.isIterable()
+    override fun name(): String = types.map { it.name() }
+            .find { it.isNotBlank() }
+            ?: ""
 
-    override fun isMap(): Boolean =
-            type1.isMap() or type2.isMap()
+    override fun isArray(): Boolean = types.any { it.isArray() }
 
-    override fun asResolutionResult(): ResolutionResult =
-            type1.asResolutionResult() + type2.asResolutionResult()
+    override fun isIterable(): Boolean = types.any { it.isIterable() }
+    override fun isMap(): Boolean = types.any { it.isMap() }
+
+    override fun asResolutionResult(): ResolutionResult = types
+            .map { it.asResolutionResult() }
+            .reduce { acc, next -> acc + next }
+
+    operator fun plus(other: TypeDescriptor): TypeDescriptor =
+            MergedTypeDescriptor(*this.types, other)
+
 }

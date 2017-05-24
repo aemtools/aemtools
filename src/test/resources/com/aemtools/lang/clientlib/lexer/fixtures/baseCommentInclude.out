@@ -1,0 +1,6 @@
+[Cd] #base= ('#base=')
+[Cd] WORD ('dir')
+WHITE_SPACE ('\n')
+[Cd] COMMENT_TOKEN ('# this is comment')
+WHITE_SPACE ('\n')
+[Cd] WORD ('file.js')

@@ -2,12 +2,17 @@ package com.aemtools.analysis.htl.callchain.rawchainprocessor
 
 import com.aemtools.analysis.htl.callchain.elements.*
 import com.aemtools.analysis.htl.callchain.elements.helper.chainSegment
-import com.aemtools.analysis.htl.callchain.typedescriptor.*
+import com.aemtools.analysis.htl.callchain.typedescriptor.EmptyTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.MergedTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.PredefinedTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.IterableJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
-import com.aemtools.completion.htl.common.FileVariablesResolver
+import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateHolderTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateParameterTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
 import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.htl.model.declaration.*
 import com.aemtools.completion.htl.predefined.HtlELPredefined.LIST_AND_REPEAT_HELPER_OBJECT
@@ -43,12 +48,12 @@ object RawCallChainProcessor {
             val outputType = firstSegment.outputType()
             val newSegment = when (outputType) {
                 is JavaPsiClassTypeDescriptor ->
-                    constructTypedChainSegment(outputType, segments.lastOrNull() as BaseCallChainSegment,
+                    constructTypedChainSegment(outputType,
                             rawChain.pop())
                 is TemplateHolderTypeDescriptor ->
-                    constructTypedChainSegment(outputType, segments.lastOrNull() as BaseCallChainSegment,
+                    constructTypedChainSegment(outputType,
                             rawChain.pop())
-                else -> constructEmptyChainSegment(outputType, segments.lastOrNull(), rawChain.pop())
+                else -> constructEmptyChainSegment(rawChain.pop())
             }
 
             segments.add(newSegment)
@@ -69,13 +74,16 @@ object RawCallChainProcessor {
 
                 val templates = declaration.template()
                 if (templates.isNotEmpty()) {
-                    TemplateHolderTypeDescriptor(templates)
+                    TemplateHolderTypeDescriptor(templates,
+                            declaration.xmlAttribute.project)
                 } else {
                     null
                 }
             }
             is HtlTemplateDeclaration -> {
-                TemplateTypeDescriptor(declaration.templateDefinition)
+                TemplateTypeDescriptor(
+                        declaration.templateDefinition,
+                        rawChainUnit.myDeclaration.xmlAttribute.project)
             }
             is HtlTemplateParameterDeclaration -> {
                 TemplateParameterTypeDescriptor(declaration)
@@ -88,7 +96,7 @@ object RawCallChainProcessor {
 
         if (type != null) {
             if (rawChainUnit.myCallChain.isNotEmpty()) {
-                return constructTypedChainSegment(type, null, rawChainUnit)
+                return constructTypedChainSegment(type, rawChainUnit)
             }
 
             return BaseCallChainSegment(type, type, rawChainUnit.myDeclaration, listOf())
@@ -103,7 +111,7 @@ object RawCallChainProcessor {
         if (inputType is JavaPsiClassTypeDescriptor
                 || inputType is MergedTypeDescriptor) {
             if (rawChainUnit.myCallChain.isNotEmpty()) {
-                return constructTypedChainSegment(inputType, null, rawChainUnit)
+                return constructTypedChainSegment(inputType, rawChainUnit)
             }
             return BaseCallChainSegment(inputType, inputType, rawChainUnit.myDeclaration, emptyList())
         } else {
@@ -124,12 +132,8 @@ object RawCallChainProcessor {
 
         var psiClass: PsiClass? = null
 
-        if (firstElement != null) {
-            psiClass = FileVariablesResolver.resolveVariable(firstElement).psiClass
-        }
-
         if (psiClass == null && firstElement != null) {
-            val type = PredefinedVariables.typeDescriptorByIdentifier(firstElement.variableName(), firstElement.project)
+            val type = PredefinedVariables.typeDescriptorByIdentifier(firstElement, firstElement.project)
             if (type !is EmptyTypeDescriptor) {
                 return type
             }
@@ -164,9 +168,7 @@ object RawCallChainProcessor {
         return CallChainSegment.empty()
     }
 
-    private fun constructEmptyChainSegment(outputType: TypeDescriptor,
-                                           baseCallChainSegment: CallChainSegment?,
-                                           rawChainUnit: RawChainUnit)
+    private fun constructEmptyChainSegment(rawChainUnit: RawChainUnit)
             : CallChainSegment = chainSegment {
         this.inputType = inputType
         this.declarationType = rawChainUnit.myDeclaration
@@ -189,7 +191,6 @@ object RawCallChainProcessor {
      * Create typed chain segment.
      */
     private fun constructTypedChainSegment(inputType: TypeDescriptor,
-                                           previousSegment: BaseCallChainSegment?,
                                            rawChainUnit: RawChainUnit): CallChainSegment = chainSegment {
         this.inputType = inputType
         this.declarationType = rawChainUnit.myDeclaration
@@ -201,11 +202,11 @@ object RawCallChainProcessor {
 
         var callChainElement = when {
             rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.LIST_HELPER
-                    || rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.REPEAT_HELPER ->
-
+                    || rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.REPEAT_HELPER -> {
                 BaseChainElement(currentElement,
                         extractElementName(currentElement),
                         PredefinedTypeDescriptor(LIST_AND_REPEAT_HELPER_OBJECT))
+            }
 
             rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE
                     && inputType is ArrayJavaTypeDescriptor -> {

@@ -10,29 +10,27 @@ import com.intellij.codeInsight.completion.XmlAttributeInsertHandler
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.psi.xml.XmlToken
-import com.intellij.util.ProcessingContext
 
 /**
  * @author Dmytro_Troynikov.
  */
 class WidgetVariantsProvider {
 
-    private val DEFAULT_FOR_NAME = listOf("jcr:primaryType", const.XTYPE)
-
-    private val JCR_PRIMARY_TYPE_VALUE = listOf("nt:unstructured",
-            "cq:Widget",
-            "cq:WidgetCollection",
-            "cq:Dialog",
-            "cq:TabPanel",
-            "cq:Panel")
-
     companion object {
+        val DEFAULT_ATTRIBUTES = listOf("jcr:primaryType", const.XTYPE)
+        val JCR_PRIMARY_TYPE_VALUES = listOf("nt:unstructured",
+                "cq:Widget",
+                "cq:WidgetCollection",
+                "cq:Dialog",
+                "cq:TabPanel",
+                "cq:Panel")
+
         private val instance = WidgetVariantsProvider()
         fun INSTANCE(): WidgetVariantsProvider = instance
     }
 
     fun generateVariants(parameters: CompletionParameters,
-                         widgetDefinition: PsiWidgetDefinition?, context: ProcessingContext)
+                         widgetDefinition: PsiWidgetDefinition?)
             : Collection<LookupElement> {
 
         val currentElement = parameters.position as XmlToken
@@ -54,7 +52,7 @@ class WidgetVariantsProvider {
                 const.xml.XML_ATTRIBUTE_VALUE -> {
                     when (PsiXmlUtil.nameOfAttribute(currentElement)) {
                         const.XTYPE -> return variantsForXTypeValue(currentElement)
-                        const.JCR_PRIMARY_TYPE -> return variantsForJcrPrimaryType(currentElement)
+                        const.JCR_PRIMARY_TYPE -> return variantsForJcrPrimaryType()
                         else -> return variantsForValue(parameters, widgetDefinition as PsiWidgetDefinition)
                     }
                 }
@@ -63,14 +61,13 @@ class WidgetVariantsProvider {
         }
 
         when (currentPositionType) {
-            const.xml.XML_ATTRIBUTE_NAME -> return variantsForName(parameters,
-                    widgetDefinition as PsiWidgetDefinition).filter { it ->
+            const.xml.XML_ATTRIBUTE_NAME -> return variantsForName(widgetDefinition as PsiWidgetDefinition).filter { it ->
                 widgetDefinition.getFieldValue(it.lookupString) == null
             }
             const.xml.XML_ATTRIBUTE_VALUE -> {
                 when (PsiXmlUtil.nameOfAttribute(currentElement)) {
                     const.XTYPE -> return variantsForXTypeValue(currentElement)
-                    const.JCR_PRIMARY_TYPE -> return variantsForJcrPrimaryType(currentElement)
+                    const.JCR_PRIMARY_TYPE -> return variantsForJcrPrimaryType()
                     else -> return variantsForValue(parameters, widgetDefinition as PsiWidgetDefinition)
                 }
             }
@@ -82,7 +79,7 @@ class WidgetVariantsProvider {
             = widgetDefinition == null || widgetDefinition.getFieldValue(const.XTYPE) == null
 
     fun genericForName(): Collection<LookupElement> {
-        return DEFAULT_FOR_NAME.map { it ->
+        return DEFAULT_ATTRIBUTES.map { it ->
             LookupElementBuilder.create(it)
                     .withInsertHandler(XmlAttributeInsertHandler())
         }
@@ -95,14 +92,13 @@ class WidgetVariantsProvider {
         return xtypes.map { it -> LookupElementBuilder.create(it) }
     }
 
-    fun variantsForJcrPrimaryType(element: XmlToken): Collection<LookupElement> =
-        JCR_PRIMARY_TYPE_VALUE.map { it -> LookupElementBuilder.create(it) }
+    fun variantsForJcrPrimaryType(): Collection<LookupElement> =
+        JCR_PRIMARY_TYPE_VALUES.map { it -> LookupElementBuilder.create(it) }
 
     /**
      * Give variants for attribute name
      */
-    fun variantsForName(parameters: CompletionParameters,
-                        widgetDefinition: PsiWidgetDefinition): Collection<LookupElement> {
+    fun variantsForName(widgetDefinition: PsiWidgetDefinition): Collection<LookupElement> {
         val widgetDocRepository = ServiceFacade.getWidgetRepository()
 
         val xtype = widgetDefinition.getFieldValue("xtype") ?: return listOf()

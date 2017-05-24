@@ -44,7 +44,7 @@ private class EditConfigCompletionProvider : CompletionProvider<CompletionParame
     }
 
     private val variantsForName: (CompletionParameters, XmlToken) -> List<LookupElement> = {
-        parameters, token ->
+        _, token ->
         val tag = token.findParentByType(XmlTag::class.java)
 
         val tagDefinition = editConfigRepository.getTagDefinitionByName((tag as XmlTagImpl).name)
@@ -59,7 +59,7 @@ private class EditConfigCompletionProvider : CompletionProvider<CompletionParame
     }
 
     private val variantsForValue: (CompletionParameters, XmlToken) -> List<LookupElement> = {
-        parameters, token ->
+        _, token ->
         val tag = token.findParentByType(XmlTag::class.java)
         val tagDefinition = editConfigRepository.getTagDefinitionByName((tag as XmlTagImpl).name)
         val attributeName = (token.findParentByType(XmlAttribute::class.java) as XmlAttribute).name
@@ -69,7 +69,7 @@ private class EditConfigCompletionProvider : CompletionProvider<CompletionParame
     }
 
     private val variantsForTagName: (CompletionParameters, XmlToken) -> List<LookupElement> = {
-        parameters, token ->
+        _, token ->
         val parentTag = token.findParentByType(XmlTag::class.java)
                 ?.findParentByType(XmlTag::class.java)
 

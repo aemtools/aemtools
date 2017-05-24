@@ -1,9 +1,12 @@
-<idea-plugin version="2">
+<idea-plugin>
     <id>com.aemtools</id>
     <name>AEM Tools</name>
-    <version>0.6.1</version>
+    <version>0.7</version>
     <category>Framework integration</category>
-    <vendor email="dmytrotroynikov@gmail.com" url="https://github.com/DmytroTroynikov/aemtools">Dmytro Troynikov</vendor>
+    <vendor email="dmytrotroynikov@gmail.com"
+            url="https://github.com/DmytroTroynikov/aemtools">
+        Dmytro Troynikov
+    </vendor>
 
     <description><![CDATA[
         AEM Tools is a plugin which contains set of AEM related extensions and features
@@ -21,30 +24,40 @@
             project's POM, the project should be indexed
             </i>
         </li>
+
+        <li><b>OSGi</b>
+            <ul>
+                <li><b>Resolve OSGi configs for OSGi services (Felix only)</b> (configs presented via gutter icon)</li>
+            </ul>
+        </li>
         <li>dialog.xml completion for <b>Classic UI</b></li>
        </ul>
     ]]></description>
 
     <change-notes><![CDATA[
         <ul>
-            <li>Fixed regression bug with context values completion didn't work within attributes</li>
-            <li>Resolve file reference in data-sly-use with EL (e.g. data-sly-use="${'file.html'}"</li>
-            <li>Resolve file reference in data-sly-include with EL (e.g. data-sly-include="${'file.html'}"</li>
-            <li>New code inspection will detect unnecessary expression in data-sly-use & data-sly-include</li>
+            <li>
+                completion for data-sly-resource: all AEM components declared in project will be proposed
+                as <b>resourceType</b> variants.
+            </li>
+            <li>
+                Parameters declared in Classic dialog (dialog.xml) and in Touch UI (_cq_dialog/.content.xml)
+                will be proposed as variants for <b>properties</b> context object.
+                <i>Note:<i> if both Touch UI and Classic UI dialogs are present Touch UI properties will be used.
+            </li>
+            <li>added standard HTML structure view for HTL files</li>
+            <li>added support for js.txt&css.txt files</li>
+            <li>OSGi services have list of corresponding OSGi configs available via gutter icon</li>
         </ul>
     ]]>
     </change-notes>
 
     <depends>com.intellij.modules.java</depends>
 
-    <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
-    <idea-version since-build="131"/>
+    <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
+    <depends optional="true" config-file="java.xml">com.intellij.modules.java</depends>
 
-    <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
+    <idea-version since-build="131"/>
 
     <extensions defaultExtensionNs="com.intellij">
         <lang.documentationProvider language="HTML" order="first"
@@ -71,13 +84,20 @@
         <lang.formatter language="Htl" implementationClass="com.aemtools.lang.htl.formatter.HtlFormattingModelBuilder"/>
         <psi.referenceContributor language="HTML"
                                   implementation="com.aemtools.reference.html.HtmlReferenceContributor"/>
-        <psi.referenceContributor language="Htl" implementation="com.aemtools.reference.htl.contributor.HtlReferenceContributor"/>
+        <psi.referenceContributor language="Htl"
+                                  implementation="com.aemtools.reference.htl.contributor.HtlReferenceContributor"/>
 
         <lang.substitutor language="HTML"
                           implementationClass="com.aemtools.lang.htl.HtlLanguageSubstitutor"/>
         <fileTypeFactory implementation="com.aemtools.lang.htl.file.HtlFileTypeFactory"/>
 
         <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>
+
+        <fileBasedIndex implementation="com.aemtools.index.AemComponentDeclarationIndex"/>
+        <fileBasedIndex implementation="com.aemtools.index.AemComponentClassicDialogIndex"/>
+        <fileBasedIndex implementation="com.aemtools.index.AemComponentTouchUIDialogIndex"/>
+
+        <extendWordSelectionHandler implementation="com.aemtools.ide.htl.HtlStringLiteralWordSelectioner"/>
 
         <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlStringLiteralManipulator"
                                  forClass="com.aemtools.lang.htl.psi.HtlStringLiteral"/>
@@ -95,13 +115,13 @@
 
         <completion.contributor language="Htl"
                                 implementationClass="com.aemtools.completion.htl.HtlElCompletionContributor"/>
-        <lang.braceMatcher language="Htl" implementationClass="com.aemtools.lang.htl.editor.HtlBraceMatcher" />
+        <lang.braceMatcher language="Htl" implementationClass="com.aemtools.lang.htl.editor.HtlBraceMatcher"/>
 
         <lang.parserDefinition language="Htl"
                                implementationClass="com.aemtools.lang.htl.HtlParserDefinition"/>
 
         <lang.commenter language="Htl" implementationClass="com.aemtools.lang.htl.editor.comments.HtlCommenter"/>
-        <lang.quoteHandler language="Htl" implementationClass="com.aemtools.lang.htl.editor.HtlQuoteHandler" />
+        <lang.quoteHandler language="Htl" implementationClass="com.aemtools.lang.htl.editor.HtlQuoteHandler"/>
 
         <applicationService serviceInterface="com.aemtools.service.repository.IRepositoryService"
                             serviceImplementation="com.aemtools.service.repository.impl.RepositoryService"
@@ -116,7 +136,10 @@
         <annotator language="HTML"
                    implementationClass="com.aemtools.lang.html.annotation.HtlVariablesAnnotator"/>
         <annotator language="Htl"
-                   implementationClass="com.aemtools.lang.html.annotation.RedundantELAnnotator"/>
+                   implementationClass="com.aemtools.lang.html.inspection.RedundantELAnnotator"/>
+
+        <lang.psiStructureViewFactory language="Htl"
+                                      implementationClass="com.aemtools.ide.HtlStructureViewProvider"/>
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
     </extensions>
 

@@ -1,0 +1,40 @@
+{
+    parserClass="com.aemtools.lang.clientlib.ClientlibDeclarationParser"
+    psiPackage="com.aemtools.lang.clientlib.psi"
+
+    extends="com.aemtools.lang.clientlib.psi.ClientlibPsiBaseElement"
+
+    psiClassPrefix="Cd"
+    psiPackage="com.aemtools.lang.clientlib.psi"
+
+    elementTypeHolderClass="com.aemtools.lang.clientlib.psi.CdTypes"
+    elementTypeClass="com.aemtools.lang.clientlib.psi.CdElement"
+    tokenTypeClass="com.aemtools.lang.clientlib.psi.CdToken"
+
+    parserImports="static com.aemtools.lang.clientlib.psi.CdTypes.*"
+
+    tokens = [
+        DOT              = '.'
+        DD               = '..'
+        SEPARATOR        = 'regexp:\\|/'
+        PREFIX_TOKEN     = '#base='
+        WORD             = 'regexp:[\w\d_.-]+'
+        COMMENT_TOKEN    = 'regexp:(#\s.*)|(##.*)'
+    ]
+}
+
+root ::= ( include | base_path | comment )*
+
+include ::= simple_include | relative_include {implements="com.intellij.psi.ContributedReferenceHost"}
+
+simple_include ::= (WORD SEPARATOR)+ WORD
+    | WORD
+
+relative_include ::= DOT SEPARATOR simple_include
+    | (DD SEPARATOR)+ simple_include
+
+base_path ::= prefix include?
+
+private prefix ::= PREFIX_TOKEN
+
+comment ::= COMMENT_TOKEN

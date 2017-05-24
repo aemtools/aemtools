@@ -1,17 +1,22 @@
 package com.aemtools.completion.htl.model.declaration
 
-import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.util.*
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_USE
-import com.aemtools.lang.htl.icons.HtlIcons
+import com.aemtools.lang.htl.icons.HtlIcons.DATA_SLY_LIST_ICON
+import com.aemtools.lang.htl.icons.HtlIcons.DATA_SLY_REPEAT_ICON
+import com.aemtools.lang.htl.icons.HtlIcons.HTL_FILE_ICON
+import com.aemtools.lang.htl.icons.HtlIcons.LIST_HELPER_ICON
+import com.aemtools.lang.htl.icons.HtlIcons.REPEAT_HELPER_ICON
+import com.aemtools.lang.htl.icons.HtlIcons.SLY_TEST_VARIABLE_ICON
+import com.aemtools.lang.htl.icons.HtlIcons.SLY_USE_VARIABLE_ICON
+import com.aemtools.lang.htl.icons.HtlIcons.TEMPLATE_PARAMETER_ICON
 import com.aemtools.lang.htl.psi.HtlVariableName
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.icons.AllIcons
 import com.intellij.psi.xml.XmlAttribute
 
 /**
@@ -48,7 +53,7 @@ open class HtlVariableDeclaration internal constructor(
             DeclarationAttributeType.DATA_SLY_USE -> {
                 val varClass = xmlAttribute.resolveUseClass()
                 result = result.withTypeText("Sly Use Variable")
-                        .withIcon(AllIcons.Nodes.Variable)
+                        .withIcon(SLY_USE_VARIABLE_ICON)
                 if (!varClass.isNullOrEmpty()) {
                     result = result.withTailText("($varClass)", true)
                 }
@@ -56,34 +61,34 @@ open class HtlVariableDeclaration internal constructor(
             DeclarationAttributeType.DATA_SLY_TEST -> {
                 val varClass = xmlAttribute.resolveUseClass()
                 result = result.withTypeText("Sly Test Variable")
-                        .withIcon(AllIcons.Nodes.Variable)
+                        .withIcon(SLY_TEST_VARIABLE_ICON)
                 if (!varClass.isNullOrEmpty()) {
                     result = result.withTailText("($varClass)")
                 }
             }
             DeclarationAttributeType.DATA_SLY_LIST -> {
                 result = result.withTypeText("Data Sly List")
-                        .withIcon(AllIcons.Nodes.Variable)
+                        .withIcon(DATA_SLY_LIST_ICON)
             }
             DeclarationAttributeType.DATA_SLY_REPEAT -> {
                 result = result.withTypeText("Data Sly Repeat")
-                        .withIcon(AllIcons.Nodes.Variable)
+                        .withIcon(DATA_SLY_REPEAT_ICON)
             }
             DeclarationAttributeType.DATA_SLY_TEMPLATE_PARAMETER -> {
                 result = result.withTypeText("Template Parameter")
-                        .withIcon(AllIcons.Nodes.Parameter)
+                        .withIcon(TEMPLATE_PARAMETER_ICON)
             }
             DeclarationAttributeType.DATA_SLY_TEMPLATE -> {
                 result = result.withTypeText("HTL Template")
-                        .withIcon(HtlIcons.HTL_FILE) // todo find more appropriate icon
+                        .withIcon(HTL_FILE_ICON) // todo find more appropriate icon
             }
             DeclarationAttributeType.LIST_HELPER -> {
                 result = result.withTypeText("List Helper")
-                        .withIcon(AllIcons.Nodes.Variable)
+                        .withIcon(LIST_HELPER_ICON)
             }
             DeclarationAttributeType.REPEAT_HELPER -> {
                 result = result.withTypeText("Repeat Helper")
-                        .withIcon(AllIcons.Nodes.Variable)
+                        .withIcon(REPEAT_HELPER_ICON)
             }
         }
         return result

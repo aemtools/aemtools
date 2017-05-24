@@ -133,5 +133,17 @@
     "type": "String",
     "description": "Set the fragment segment of a URI.",
     "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
+  },
+  {
+    "name": "timezone",
+    "type": "String",
+    "description": "",
+    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#1222-dates"
+  },
+  {
+    "name": "locale",
+    "type": "String",
+    "description": "Explicitly specify locale for i18n.",
+    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#1221-strings"
   }
 ]

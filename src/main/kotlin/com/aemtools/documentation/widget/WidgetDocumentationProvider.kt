@@ -32,7 +32,7 @@ open class WidgetDocumentationProvider : AbstractDocumentationProvider() {
             return null
         }
 
-        val widgetDefinition = WidgetDefinitionUtil.extract(originalElement as PsiElement) ?: return null
+        val widgetDefinition = WidgetDefinitionUtil.extract(originalElement) ?: return null
 
         val widgetXType = widgetDefinition.getFieldValue(const.XTYPE) ?: return null
 

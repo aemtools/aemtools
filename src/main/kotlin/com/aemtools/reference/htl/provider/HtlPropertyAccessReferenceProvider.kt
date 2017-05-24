@@ -3,9 +3,7 @@ package com.aemtools.reference.htl.provider
 import com.aemtools.analysis.htl.callchain.elements.BaseCallChainSegment
 import com.aemtools.analysis.htl.callchain.elements.BaseChainElement
 import com.aemtools.analysis.htl.callchain.elements.CallChainElement
-import com.aemtools.analysis.htl.callchain.typedescriptor.JavaPsiUnresolvedTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.TemplateParameterTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateParameterTypeDescriptor
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.hasChild
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
@@ -41,19 +39,13 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
 
         val references: List<PsiReference> = elements.flatMap {
             val type = it.type
-            val member = when (type) {
-                is JavaPsiClassTypeDescriptor -> type.psiMember
-                is JavaPsiUnresolvedTypeDescriptor -> type.psiMember
-                else -> {
-                    return@flatMap listOf<PsiReference>()
-                }
-            }
+            val referencedElement = type.referencedElement()
 
             val reference = PsiReferenceBase.Immediate(
                     propertyAccess,
                     extractTextRange(it.element),
                     true,
-                    member)
+                    referencedElement)
 
             return@flatMap listOf(reference)
         }
@@ -109,7 +101,7 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
             range: TextRange
     ) : PsiReferenceBase<PsiElement>(holder, range, true) {
         override fun resolve(): PsiElement? =
-            type.declaration.htlVariableNameElement
+                type.declaration.htlVariableNameElement
 
         override fun getVariants(): Array<Any> = emptyArray()
 
@@ -142,8 +134,7 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
 
             var offsetInFile = 0
             var currentElement: PsiElement = xmlAttribute
-            while (currentElement != null
-                    && currentElement.parent !is PsiFile) {
+            while (currentElement.parent !is PsiFile) {
                 offsetInFile += currentElement.startOffsetInParent
                 currentElement = currentElement.parent
             }

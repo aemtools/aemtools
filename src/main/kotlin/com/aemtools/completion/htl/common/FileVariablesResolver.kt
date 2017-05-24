@@ -1,18 +1,13 @@
 package com.aemtools.completion.htl.common
 
-import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
-import com.aemtools.completion.htl.predefined.HtlELPredefined.LIST_AND_REPEAT_HELPER_OBJECT
 import com.aemtools.completion.util.*
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_USE
-import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
-import com.aemtools.lang.java.JavaSearch
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.lang.StdLanguages
-import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
@@ -24,31 +19,6 @@ import java.util.*
  * @author Dmytro Troynikov
  */
 object FileVariablesResolver {
-
-    fun resolveVariable(variable: VariableNameMixin): ResolutionResult {
-        val project = variable.project
-
-        val variables: List<FileVariable> = find(variable.containingFile, project)
-
-        val foundVariable = variables.find {
-            it.name == variable.variableName()
-        } ?: return ResolutionResult()
-
-        if (foundVariable.declarationType == DATA_SLY_REPEAT
-                || foundVariable.declarationType == DATA_SLY_LIST) {
-            if (foundVariable.name.endsWith("List")) {
-                return ResolutionResult(null, LIST_AND_REPEAT_HELPER_OBJECT.map { it.toLookupElement() })
-            } else {
-                return ResolutionResult()
-            }
-        }
-
-        if (foundVariable.type != null) {
-            return ResolutionResult(JavaSearch.findClass(foundVariable.type, project))
-        } else {
-            return ResolutionResult()
-        }
-    }
 
     /**
      * Find declaration of variable in file.
@@ -90,7 +60,7 @@ object FileVariablesResolver {
     /**
      * Find file variables from current file.
      */
-    fun find(psiFile: PsiFile, project: Project): List<FileVariable> {
+    fun find(psiFile: PsiFile): List<FileVariable> {
         val htmlFile = psiFile.viewProvider.getPsi(StdLanguages.HTML)
         val attributes = PsiTreeUtil.findChildrenOfType(htmlFile, XmlAttribute::class.java)
 
