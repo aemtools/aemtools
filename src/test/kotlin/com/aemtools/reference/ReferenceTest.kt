@@ -1,7 +1,5 @@
 package com.aemtools.reference
 
-import com.aemtools.blocks.base.BaseLightTest.Companion.CARET
-import com.aemtools.blocks.base.BaseLightTest.Companion.DOLLAR
 import com.aemtools.blocks.reference.BaseReferenceTest
 import com.aemtools.constant.const.JCR_ROOT
 import com.aemtools.lang.htl.psi.HtlPsiFile

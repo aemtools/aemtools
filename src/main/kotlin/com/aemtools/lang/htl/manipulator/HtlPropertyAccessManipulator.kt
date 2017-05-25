@@ -1,11 +1,10 @@
 package com.aemtools.lang.htl.manipulator
 
+import com.aemtools.lang.htl.psi.HtlElementFactory
 import com.aemtools.lang.htl.psi.HtlPropertyAccess
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.AbstractElementManipulator
-import com.intellij.psi.JavaPsiFacade
-import com.intellij.psi.PsiManager
 import com.intellij.util.IncorrectOperationException
 
 /**
@@ -22,10 +21,15 @@ class HtlPropertyAccessManipulator : AbstractElementManipulator<HtlPropertyAcces
 
         val oldText = propertyAccessMixin.text
         val newText = "${oldText.substring(0, range.startOffset)}$newName${oldText.substring(range.endOffset)}"
-        val newElement = JavaPsiFacade.getInstance(propertyAccessMixin.project)
-                .elementFactory.createExpressionFromText(newText, null)
+        val newElement = HtlElementFactory.createPropertyAccess(newText, propertyAccessMixin.project)
+                ?: return element
 
-        val psiManager = PsiManager.getInstance(propertyAccessMixin.project)
+        val oldNode = propertyAccessMixin.node.firstChildNode
+        val newNode = newElement.node.firstChildNode
+
+        propertyAccessMixin.node
+                .replaceChild(oldNode,
+                        newNode)
 
         return element
     }

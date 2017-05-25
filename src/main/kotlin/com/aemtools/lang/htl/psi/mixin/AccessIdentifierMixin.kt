@@ -1,11 +1,19 @@
 package com.aemtools.lang.htl.psi.mixin
 
 import com.intellij.lang.ASTNode
+import com.intellij.psi.PsiElement
 
 /**
 * @author Dmytro_Troynikov
 */
 abstract class AccessIdentifierMixin(node: ASTNode) : VariableNameMixin(node) {
+
+    override fun getName(): String? =
+        variableName()
+
+    override fun setName(name: String): PsiElement {
+        return super.setName(name)
+    }
 
     /**
      * Extracts the name of the variable
