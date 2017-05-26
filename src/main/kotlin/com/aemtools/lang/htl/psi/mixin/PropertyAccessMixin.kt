@@ -24,7 +24,7 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
     }
 
     override fun getReferences(): Array<PsiReference> {
-        return ReferenceProvidersRegistry.getReferencesFromProviders(this);
+        return ReferenceProvidersRegistry.getReferencesFromProviders(this)
     }
 
     /**
@@ -32,7 +32,7 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
      */
     fun callChain(): LinkedList<RawChainUnit> {
         var result = LinkedList<RawChainUnit>()
-        var myChain = LinkedList(listOf(*this.children))
+        val myChain = LinkedList(listOf(*this.children))
 
         val firstElement = myChain.first() as VariableNameMixin
         val firstName = firstElement.variableName()
@@ -51,7 +51,7 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
             if (propertyAccessMixin == null) {
                 val useClass = declaration.xmlAttribute.resolveUseClass()
                 if (useClass != null) {
-                    result = createUseChainUnit(declaration, useClass)
+                    result = createUseChainUnit(declaration)
                 }
             }
         }
@@ -61,7 +61,7 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
         return LinkedList(listOf(*result.toTypedArray(), myChainUnit))
     }
 
-    private fun createUseChainUnit(declaration: HtlVariableDeclaration, useClass: String): LinkedList<RawChainUnit> {
+    private fun createUseChainUnit(declaration: HtlVariableDeclaration): LinkedList<RawChainUnit> {
         val result = LinkedList<RawChainUnit>()
 
         result.add(RawChainUnit(LinkedList(), declaration))

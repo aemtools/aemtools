@@ -13,7 +13,6 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
 import java.util.*
-import java.util.Collection
 
 /**
  * Htl related utility methods.
@@ -129,10 +128,10 @@ fun PsiElement.isInsideOf(attributeName: String): Boolean {
 /**
  * Collection [HtlVariableDeclaration] element which are applicable for given position
  * @param position the starting position
- * @receiver [Collection] of [HtlVariableDeclaration] objects
+ * @receiver [List] of [HtlVariableDeclaration] objects
  * @return collection of applicable declarations
  */
-fun Collection<HtlVariableDeclaration>.filterForPosition(position: PsiElement): Collection<HtlVariableDeclaration> {
+fun List<HtlVariableDeclaration>.filterForPosition(position: PsiElement): List<HtlVariableDeclaration> {
     val applicableDeclarations = this.filter {
         when (it.attributeType) {
             DeclarationAttributeType.DATA_SLY_USE ->

@@ -11,7 +11,7 @@ abstract class HtlTextInsertHandler(private val expression: String,
 
     override fun handleInsert(context: InsertionContext?, item: LookupElement?) {
         val document = context?.document ?: return
-        val editor = context?.editor ?: return
+        val editor = context.editor
         val position = editor.caretModel.offset
 
         if (!tagHasExpression(document, position)) {

@@ -12,7 +12,7 @@ class RepositoryService : IRepositoryService {
     private val widgetRepository = FileDocRepository
 
     override fun getWidgetDocRepository() : WidgetDocRepository {
-        return widgetRepository;
+        return widgetRepository
     }
 
 }

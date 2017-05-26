@@ -3,7 +3,6 @@ package com.aemtools.completion.model.psi
 import com.aemtools.completion.util.findParentByType
 import com.aemtools.constant.const
 import com.aemtools.util.OpenApiUtil
-import com.intellij.openapi.application.Application
 import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.xml.XmlAttributeValueImpl
 import com.intellij.psi.xml.XmlAttribute
@@ -14,7 +13,7 @@ import java.util.LinkedList
 /**
  * @author Dmytro_Troynikov
  */
-data class PsiWidgetDefinition private constructor(
+data class PsiWidgetDefinition constructor(
         val fields: LinkedHashMap<String, String?>,
         val originalAttributes: LinkedList<XmlAttribute>,
         val selectedAttribute: SelectedAttribute?
@@ -38,8 +37,7 @@ data class PsiWidgetDefinition private constructor(
         }
 
         private fun tryExtractSelectedAttribute(element: XmlElement): SelectedAttribute? {
-            val selectedXmlAttribute = element.findParentByType(XmlAttribute::class.java)
-                    as XmlAttribute? ?: return null
+            val selectedXmlAttribute = element.findParentByType(XmlAttribute::class.java) ?: return null
 
             val attrName = SelectedString(selectedXmlAttribute.name) as SelectedString
             val attrValue = SelectedString(selectedXmlAttribute.value)

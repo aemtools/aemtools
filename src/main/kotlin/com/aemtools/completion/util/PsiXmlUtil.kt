@@ -107,10 +107,10 @@ fun XmlAttribute.extractHtlHel(): HtlHtlEl? {
 /**
  * Extract Htl attributes from given [XmlAttribute] collection.
  *
- * @receiver [Collection] of [XmlAttribute] objects
+ * @receiver [List] of [XmlAttribute] objects
  * @return new collection with only Htl attributes
  */
-fun Collection<XmlAttribute>.htlAttributes(): Collection<XmlAttribute> =
+fun List<XmlAttribute>.htlAttributes(): List<XmlAttribute> =
         filter { it.isHtlAttribute() }
 
 /**
@@ -205,7 +205,7 @@ fun XmlAttribute.isHtlDeclarationAttribute(): Boolean =
  * @receiver [Collection] of [XmlAttribute] objects
  * @return collection of [HtlVariableDeclaration] elements
  */
-fun Collection<XmlAttribute>.extractDeclarations(): Collection<HtlVariableDeclaration> {
+fun List<XmlAttribute>.extractDeclarations(): List<HtlVariableDeclaration> {
     return filter { it.isHtlDeclarationAttribute() }
             .flatMap {
                 HtlVariableDeclaration.create(it)
