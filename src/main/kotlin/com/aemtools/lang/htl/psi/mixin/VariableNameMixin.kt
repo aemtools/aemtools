@@ -5,6 +5,7 @@ import com.aemtools.lang.htl.psi.HtlElementFactory
 import com.intellij.lang.ASTNode
 import com.intellij.navigation.ItemPresentation
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiNameIdentifierOwner
 import com.intellij.psi.PsiNamedElement
 import javax.swing.Icon
 
