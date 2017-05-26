@@ -134,8 +134,7 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
 
             var offsetInFile = 0
             var currentElement: PsiElement = xmlAttribute
-            while (currentElement != null
-                    && currentElement.parent !is PsiFile) {
+            while (currentElement.parent !is PsiFile) {
                 offsetInFile += currentElement.startOffsetInParent
                 currentElement = currentElement.parent
             }

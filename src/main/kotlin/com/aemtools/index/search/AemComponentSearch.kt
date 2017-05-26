@@ -37,12 +37,33 @@ object AemComponentSearch {
 
     /**
      * Find component by resource type.
+     * Resource type string may be of full path e.g.
+     *
+     * `/app/myapp/components/component`
+     *
+     * or of "not full" path e.g.
+     *
+     * `myapp/components/component`
+     *
      * @param resourceType the resource type string
      * @param project the project
      * @return component definition or *null* if no component was found
      */
     fun findByResourceType(resourceType: String, project: Project): AemComponentDefinition?
-            = allComponentDeclarations(project).find { it.resourceType() == resourceType }
+            = allComponentDeclarations(project).find(
+            resourceType.let { typeToFind ->
+                if (typeToFind.startsWith("/apps/")) {
+                    { definition: AemComponentDefinition ->
+                        definition.resourceType() == typeToFind
+                    }
+                } else {
+                    { definition: AemComponentDefinition ->
+                        definition.resourceType()
+                                .substringAfter("/apps/") == typeToFind
+                    }
+                }
+            }
+    )
 
     /**
      * Find classic dialog definition by resource type.

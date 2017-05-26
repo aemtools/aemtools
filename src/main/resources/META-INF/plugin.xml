@@ -24,6 +24,12 @@
             project's POM, the project should be indexed
             </i>
         </li>
+
+        <li><b>OSGi</b>
+            <ul>
+                <li><b>Resolve OSGi configs for OSGi services (Felix only)</b> (configs presented via gutter icon)</li>
+            </ul>
+        </li>
         <li>dialog.xml completion for <b>Classic UI</b></li>
        </ul>
     ]]></description>

@@ -9,8 +9,8 @@ import com.intellij.openapi.editor.Document
 abstract class HtlTextInsertHandler(private val expression: String,
                                     private val offset: Int) : InsertHandler<LookupElement> {
 
-    override fun handleInsert(context: InsertionContext?, item: LookupElement?) {
-        val document = context?.document ?: return
+    override fun handleInsert(context: InsertionContext, item: LookupElement?) {
+        val document = context.document
         val editor = context.editor
         val position = editor.caretModel.offset
 

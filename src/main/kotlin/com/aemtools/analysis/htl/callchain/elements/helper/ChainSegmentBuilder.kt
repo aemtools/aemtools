@@ -23,8 +23,6 @@ class ChainSegmentBuilder() {
                 dataHolder.declarationType,
                 dataHolder.chain
         )
-
-        return CallChainSegment.empty()
     }
 
     class SegmentDataHolder(var inputType: TypeDescriptor = TypeDescriptor.empty(),

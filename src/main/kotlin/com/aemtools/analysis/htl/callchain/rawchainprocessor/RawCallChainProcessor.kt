@@ -48,12 +48,12 @@ object RawCallChainProcessor {
             val outputType = firstSegment.outputType()
             val newSegment = when (outputType) {
                 is JavaPsiClassTypeDescriptor ->
-                    constructTypedChainSegment(outputType, segments.lastOrNull() as BaseCallChainSegment,
+                    constructTypedChainSegment(outputType,
                             rawChain.pop())
                 is TemplateHolderTypeDescriptor ->
-                    constructTypedChainSegment(outputType, segments.lastOrNull() as BaseCallChainSegment,
+                    constructTypedChainSegment(outputType,
                             rawChain.pop())
-                else -> constructEmptyChainSegment(outputType, segments.lastOrNull(), rawChain.pop())
+                else -> constructEmptyChainSegment(rawChain.pop())
             }
 
             segments.add(newSegment)
@@ -96,7 +96,7 @@ object RawCallChainProcessor {
 
         if (type != null) {
             if (rawChainUnit.myCallChain.isNotEmpty()) {
-                return constructTypedChainSegment(type, null, rawChainUnit)
+                return constructTypedChainSegment(type, rawChainUnit)
             }
 
             return BaseCallChainSegment(type, type, rawChainUnit.myDeclaration, listOf())
@@ -111,7 +111,7 @@ object RawCallChainProcessor {
         if (inputType is JavaPsiClassTypeDescriptor
                 || inputType is MergedTypeDescriptor) {
             if (rawChainUnit.myCallChain.isNotEmpty()) {
-                return constructTypedChainSegment(inputType, null, rawChainUnit)
+                return constructTypedChainSegment(inputType, rawChainUnit)
             }
             return BaseCallChainSegment(inputType, inputType, rawChainUnit.myDeclaration, emptyList())
         } else {
@@ -168,9 +168,7 @@ object RawCallChainProcessor {
         return CallChainSegment.empty()
     }
 
-    private fun constructEmptyChainSegment(outputType: TypeDescriptor,
-                                           baseCallChainSegment: CallChainSegment?,
-                                           rawChainUnit: RawChainUnit)
+    private fun constructEmptyChainSegment(rawChainUnit: RawChainUnit)
             : CallChainSegment = chainSegment {
         this.inputType = inputType
         this.declarationType = rawChainUnit.myDeclaration
@@ -193,7 +191,6 @@ object RawCallChainProcessor {
      * Create typed chain segment.
      */
     private fun constructTypedChainSegment(inputType: TypeDescriptor,
-                                           previousSegment: BaseCallChainSegment?,
                                            rawChainUnit: RawChainUnit): CallChainSegment = chainSegment {
         this.inputType = inputType
         this.declarationType = rawChainUnit.myDeclaration
