@@ -11,6 +11,7 @@ class HtlElDocumentationListHelperTest :
 
     fun testIndexDocumentation() = docCase {
         listField("index")
+
         documentation("""
             zero-based counter (0..length-1)
         """)
@@ -64,8 +65,44 @@ class HtlElDocumentationListHelperTest :
         """)
     }
 
+    fun testDocForDataSlyRepeat() = docCase {
+        addHtml("test.html", """
+            <div data-sly-repeat="$DOLLAR{}">
+                $DOLLAR{itemList.${CARET}index}
+            </div>
+        """)
+
+        documentation("""
+            zero-based counter (0..length-1)
+        """)
+    }
+
+    fun testDocRenamedItemListInDataSlyList() = docCase {
+        addHtml("test.html", """
+            <div data-sly-list.renamed="$DOLLAR{}">
+                $DOLLAR{renamedList.${CARET}index}
+            </div>
+        """)
+
+        documentation("""
+            zero-based counter (0..length-1)
+        """)
+    }
+
+    fun testDocRenamedItemListInDataSlyRepeat() = docCase {
+        addHtml("test.html", """
+            <div data-sly-repeat.renamed="$DOLLAR{}">
+                $DOLLAR{renamedList.${CARET}index}
+            </div>
+        """)
+
+        documentation("""
+            zero-based counter (0..length-1)
+        """)
+    }
+
     private fun IDocTestFixture.listField(field: String) =
-            this.addHtml("test.html", """
+            addHtml("test.html", """
                 <div data-sly-list="$DOLLAR{}">$DOLLAR{itemList.$CARET$field}</div>
             """)
 
