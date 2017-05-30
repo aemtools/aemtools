@@ -6,9 +6,6 @@ import com.intellij.psi.PsiElement
 /**
  * @author Dmytro Troynikov
  */
-/**
- * @author Dmytro Troynikov
- */
 interface IReferenceTestFixture : ITestFixture {
 
     /**

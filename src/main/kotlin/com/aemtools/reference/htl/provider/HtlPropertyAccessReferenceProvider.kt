@@ -11,6 +11,7 @@ import com.aemtools.lang.htl.psi.HtlStringLiteral
 import com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
+import com.aemtools.reference.common.reference.HtlPropertyAccessReference
 import com.intellij.ide.util.PsiNavigationSupport
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
@@ -38,14 +39,17 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
         val firstReference = extractFirstReference(chainSegment, firstElement, propertyAccess)
 
         val references: List<PsiReference> = elements.flatMap {
+            val actualReferenceHolder = it.element
             val type = it.type
             val referencedElement = type.referencedElement()
+                    ?: return@flatMap emptyList<PsiReference>()
 
-            val reference = PsiReferenceBase.Immediate(
+            val reference = HtlPropertyAccessReference(
                     propertyAccess,
-                    extractTextRange(it.element),
-                    true,
-                    referencedElement)
+                    actualReferenceHolder,
+                    extractTextRange(actualReferenceHolder),
+                    referencedElement
+            )
 
             return@flatMap listOf(reference)
         }

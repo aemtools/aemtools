@@ -10,6 +10,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.impl.local.LocalFileSystemBase
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiFileFactory
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
 
@@ -100,7 +101,7 @@ fun writeCommand(project: Project, lambda: () -> Unit): Unit {
  * @return [PrioritizedLookupElement] with given priority
  */
 fun LookupElement.withPriority(priority: Double): LookupElement =
-    PrioritizedLookupElement.withPriority(this, priority)
+        PrioritizedLookupElement.withPriority(this, priority)
 
 /**
  * Convert current [String] to [StringBuilder].
@@ -109,3 +110,11 @@ fun LookupElement.withPriority(priority: Double): LookupElement =
  * @return new string builder instance that contains current string
  */
 fun String.toStringBuilder() = StringBuilder(this)
+
+/**
+ * Get [PsiFileFactory] associated with current project.
+ *
+ * @receiver [Project]
+ * @return instance of psi file factory
+ */
+fun Project.psiFileFactory(): PsiFileFactory = PsiFileFactory.getInstance(this)
