@@ -1,6 +1,7 @@
 package com.aemtools.reference.common.reference
 
 import com.aemtools.analysis.htl.callchain.elements.CallChainElement
+import com.aemtools.analysis.htl.callchain.typedescriptor.JavaPsiUnresolvedTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
@@ -44,6 +45,13 @@ class HtlPropertyAccessReference(
                                actualElement: AccessIdentifierMixin,
                                typeDescriptor: TypeDescriptor): String {
         if (typeDescriptor is JavaPsiClassTypeDescriptor) {
+            val psiMember = typeDescriptor.psiMember
+            if (psiMember is PsiMethod) {
+                return persistNameConventionForMethod(actualElement.variableName(), newName)
+            }
+        }
+
+        if (typeDescriptor is JavaPsiUnresolvedTypeDescriptor) {
             val psiMember = typeDescriptor.psiMember
             if (psiMember is PsiMethod) {
                 return persistNameConventionForMethod(actualElement.variableName(), newName)

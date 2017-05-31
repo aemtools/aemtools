@@ -1,5 +1,8 @@
 package com.aemtools.lang.htl.psi.mixin
 
+import com.aemtools.completion.util.findChildrenByType
+import com.aemtools.completion.util.hasChild
+import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
 import com.aemtools.lang.htl.psi.HtlElementFactory
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
@@ -13,8 +16,20 @@ abstract class AccessIdentifierMixin(node: ASTNode) : VariableNameMixin(node) {
             variableName()
 
     override fun setName(name: String): PsiElement {
-        val newElement = HtlElementFactory.createDotAccessIdentifier(name, project)
+        val newElement = when {
+            this.hasChild(HtlArrayLikeAccess::class.java) -> {
+                val stringLiteral = this.findChildrenByType(com.aemtools.lang.htl.psi.HtlStringLiteral::class.java)
+                        .firstOrNull() ?: return this
 
+                if (stringLiteral.doubleQuotedString != null) {
+                    HtlElementFactory.createArrayLikeAccessDoublequoted(name, project)
+                } else {
+                    HtlElementFactory.createArrayLikeAccessSingleQuoted(name, project)
+                }
+            }
+
+            else -> HtlElementFactory.createDotAccessIdentifier(name, project)
+        }
         newElement?.let {
             node.replaceChild(node.firstChildNode, it)
         }

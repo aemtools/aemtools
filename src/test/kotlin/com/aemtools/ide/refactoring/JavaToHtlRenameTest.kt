@@ -45,9 +45,9 @@ class JavaToHtlRenameTest : BaseRenameTest() {
                 public class Bean { public String ${CARET}getField() { return ""; } }
             """)
             addHtml("test.html", """
-                    <div data-sly-use.bean="com.test.Bean">
-                        $DOLLAR{bean.getField}
-                    </div>
+                <div data-sly-use.bean="com.test.Bean">
+                    $DOLLAR{bean.getField}
+                </div>
             """)
         }
         renameTo("getRenamed")
