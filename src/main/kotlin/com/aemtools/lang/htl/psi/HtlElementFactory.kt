@@ -91,6 +91,25 @@ object HtlElementFactory {
                     ?.node
                     ?.findChildByType(HtlTypes.ARRAY_LIKE_ACCESS)
 
+    /**
+     * Create [HtlStringLiteral] with given value.
+     *
+     * @param value the value of new string literal
+     * @param project the project
+     * @param doublequoted *true* for doublequoted literal (*false* by default)
+     *
+     * @return instance of htl string literal
+     */
+    fun createStringLiteral(value: String, project: Project, doublequoted: Boolean = false): HtlStringLiteral? =
+            project.psiFileFactory()
+                    .file(if (doublequoted) {
+                        "$DOLLAR{\"$value\"}"
+                    } else {
+                        "$DOLLAR{'$value'}"
+                    })
+                    .findChildrenByType(HtlStringLiteral::class.java)
+                    .firstOrNull()
+
     private fun PsiFileFactory.file(text: String): PsiFile
             = createFileFromText("dummy.html", HtlFileType, text)
 

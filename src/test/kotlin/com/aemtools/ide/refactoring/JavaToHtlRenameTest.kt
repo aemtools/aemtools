@@ -178,4 +178,24 @@ class JavaToHtlRenameTest : BaseRenameTest() {
         }
     }
 
+    fun testRenameClassReferencedViaElDoublequoted() = renameCase {
+        before {
+            addClass("com/test/Bean.java", """
+                package com.test; public class ${CARET}Bean {}
+            """)
+            addHtml("test.html", """
+                <div data-sly-use.bean="$DOLLAR{"com.test.Bean"}"></div>
+            """)
+        }
+        renameTo("Renamed")
+        after {
+            addClass("com/test/Renamed.java", """
+                package com.test; public class Renamed {}
+            """)
+            addHtml("test.html", """
+                <div data-sly-use.bean="$DOLLAR{"com.test.Renamed"}"></div>
+            """)
+        }
+    }
+
 }
