@@ -13,8 +13,7 @@ abstract class AccessIdentifierMixin(node: ASTNode) : VariableNameMixin(node) {
             variableName()
 
     override fun setName(name: String): PsiElement {
-        val newText = text.replace(variableName(), name)
-        val newElement = HtlElementFactory.createDotAccessIdentifier(newText, project)
+        val newElement = HtlElementFactory.createDotAccessIdentifier(name, project)
 
         newElement?.let {
             node.replaceChild(node.firstChildNode, it)

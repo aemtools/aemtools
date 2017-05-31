@@ -46,7 +46,7 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
 
             val reference = HtlPropertyAccessReference(
                     propertyAccess,
-                    actualReferenceHolder,
+                    it,
                     extractTextRange(actualReferenceHolder),
                     referencedElement
             )

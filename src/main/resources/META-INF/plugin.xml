@@ -138,10 +138,6 @@
         <annotator language="Htl"
                    implementationClass="com.aemtools.lang.html.inspection.RedundantELAnnotator"/>
 
-        <renamePsiElementProcessor
-                order="first"
-                implementation="com.aemtools.refactoring.JavaBeanFieldRenameProcessor"/>
-
         <lang.psiStructureViewFactory language="Htl"
                                       implementationClass="com.aemtools.ide.HtlStructureViewProvider"/>
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>

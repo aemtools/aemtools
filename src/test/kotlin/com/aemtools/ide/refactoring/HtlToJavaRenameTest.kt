@@ -5,24 +5,23 @@ import com.aemtools.blocks.rename.BaseRenameTest
 /**
  * @author Dmytro Troynikov
  */
-class JavaToHtlRenameTest : BaseRenameTest() {
+class HtlToJavaRenameTest : BaseRenameTest() {
 
-    fun testMethodRenameFromJava() = renameCase {
+    fun testMethodRenameFromHtl() = renameCase {
         before {
             addClass("com/test/Bean.java", """
                 package com.test;
                 public class Bean {
-                    public String ${CARET}getField() { return ""; }
+                    public String getField() { return ""; }
                 }
             """)
-
             addHtml("test.html", """
                 <div data-sly-use.bean="com.test.Bean">
-                    $DOLLAR{bean.field}
+                    $DOLLAR{bean.${CARET}field}
                 </div>
             """)
         }
-        renameTo("getRenamed")
+        renameTo("renamed")
         after {
             addClass("com/test/Bean.java", """
                 package com.test;
@@ -38,23 +37,27 @@ class JavaToHtlRenameTest : BaseRenameTest() {
         }
     }
 
-    fun testMethodRenameFromJavaReferencedByFullName() = renameCase {
+    fun testMethodRenameFromHtlByFullName() = renameCase {
         before {
             addClass("com/test/Bean.java", """
                 package com.test;
-                public class Bean { public String ${CARET}getField() { return ""; } }
+                public class Bean {
+                    public String getField() { return ""; }
+                }
             """)
             addHtml("test.html", """
-                    <div data-sly-use.bean="com.test.Bean">
-                        $DOLLAR{bean.getField}
-                    </div>
+                <div data-sly-use.bean="com.test.Bean">
+                    $DOLLAR{bean.${CARET}getField}
+                </div>
             """)
         }
         renameTo("getRenamed")
         after {
             addClass("com/test/Bean.java", """
                 package com.test;
-                public class Bean { public String getRenamed() { return ""; } }
+                public class Bean {
+                    public String getRenamed() { return ""; }
+                }
             """)
             addHtml("test.html", """
                 <div data-sly-use.bean="com.test.Bean">
@@ -64,19 +67,19 @@ class JavaToHtlRenameTest : BaseRenameTest() {
         }
     }
 
-    fun testMethodRenameFromJavaReferencedByArrayLikeSinglequoted() = renameCase {
+    fun testMethodRenameFromHtlArrayLikeSinglequoted() = renameCase {
         before {
             addClass("com/test/Bean.java", """
                 package com.test;
-                public class Bean { public String ${CARET}getField() { return ""; } }
+                public class Bean { public String getField() { return ""; } }
             """)
             addHtml("test.html", """
                 <div data-sly-use.bean="com.test.Bean">
-                    $DOLLAR{bean['field']}
+                    $DOLLAR{bean['${CARET}field']}
                 </div>
             """)
         }
-        renameTo("getRenamed")
+        renameTo("renamed")
         after {
             addClass("com/test/Bean.java", """
                 package com.test;
@@ -90,19 +93,19 @@ class JavaToHtlRenameTest : BaseRenameTest() {
         }
     }
 
-    fun testMethodRenameFromJavaReferencedByArrayLikeDoublequoted() = renameCase {
+    fun testMethodRenameFromHtlArrayLikeDoublequoted() = renameCase {
         before {
             addClass("com/test/Bean.java", """
                 package com.test;
-                public class Bean { public String ${CARET}getField() { return ""; } }
+                public class Bean { public String getField() { return ""; } }
             """)
             addHtml("test.html", """
                 <div data-sly-use.bean="com.test.Bean">
-                    $DOLLAR{bean["field"]}
+                    $DOLLAR{bean["${CARET}field"]}
                 </div>
             """)
         }
-        renameTo("getRenamed")
+        renameTo("renamed")
         after {
             addClass("com/test/Bean.java", """
                 package com.test;
@@ -116,15 +119,15 @@ class JavaToHtlRenameTest : BaseRenameTest() {
         }
     }
 
-    fun testFieldRenameFromJava() = renameCase {
+    fun testFieldRenameFromHtl() = renameCase {
         before {
             addClass("com/test/Bean.java", """
                 package com.test;
-                public class Bean { public String ${CARET}field; }
+                public class Bean { public String field; }
             """)
             addHtml("test.html", """
                 <div data-sly-use.bean="com.test.Bean">
-                    $DOLLAR{bean.field}
+                    $DOLLAR{bean.${CARET}field}
                 </div>
             """)
         }
@@ -142,29 +145,33 @@ class JavaToHtlRenameTest : BaseRenameTest() {
         }
     }
 
-    fun testRenameClassReferencedViaAttribute() = renameCase {
+    fun testRenameUseClassViaAttribute() = renameCase {
         before {
             addClass("com/test/Bean.java", """
-                package com.test; public class ${CARET}Bean {}
+                package com.test; public class Bean {}
             """)
-            addHtml("test.html", "<div data-sly-use.bean='com.test.Bean'></div>")
+            addHtml("test.html", """
+                <div data-sly-use.bean="com.test.${CARET}Bean"></div>
+            """)
         }
         renameTo("Renamed")
         after {
             addClass("com/test/Renamed.java", """
                 package com.test; public class Renamed {}
             """)
-            addHtml("test.html", "<div data-sly-use.bean='com.test.Renamed'></div>")
+            addHtml("test.html", """
+                <div data-sly-use.bean="com.test.Renamed"></div>
+            """)
         }
     }
 
-    fun testRenameClassReferencedViaEl() = renameCase {
+    fun testRenameUseClassViaEl() = renameCase {
         before {
             addClass("com/test/Bean.java", """
-                package com.test; public class ${CARET}Bean {}
+                package com.test; public class Bean {}
             """)
             addHtml("test.html", """
-                <div data-sly-use.bean="$DOLLAR{'com.test.Bean'}"></div>
+                <div data-sly-use.bean="$DOLLAR{'com.test.${CARET}Bean'}"></div>
             """)
         }
         renameTo("Renamed")
