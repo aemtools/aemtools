@@ -147,7 +147,13 @@
                 order="first"
                 implementation="com.aemtools.refactoring.HtlVariableRenameProcessor"/>
 
-        <!--<renamePsiElementProcessor implementation="com.aemtools.refactoring.HtlDeclarationAttributeRenameProcessor"/>-->
+        <referencesSearch
+                order="first"
+                implementation="com.aemtools.reference.html.HtlAttributeReferencesSearch" />
+
+        <renamePsiElementProcessor
+                order="first"
+                implementation="com.aemtools.refactoring.HtlDeclarationAttributeRenameProcessor"/>
         <lang.refactoringSupport
                 language="HTML"
                 implementationClass="com.aemtools.refactoring.HtlVariableRefactoringSupport"/>

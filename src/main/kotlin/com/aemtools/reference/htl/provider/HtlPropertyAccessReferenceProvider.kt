@@ -135,10 +135,9 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
             return super.handleElementRename(newElementName)
         }
 
-//        override fun isReferenceTo(element: PsiElement?): Boolean {
-//            return xmlAttribute?.manager?.areElementsEquivalent(xmlAttribute, element)
-//                    ?: false
-//        }
+        override fun isReferenceTo(element: PsiElement?): Boolean {
+            return super.isReferenceTo(element) || xmlAttribute?.isEquivalentTo(element) ?: false
+        }
 
         override fun getVariants(): Array<Any> = emptyArray()
     }

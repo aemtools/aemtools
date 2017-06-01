@@ -64,7 +64,7 @@ class HtlVariablesRenameTest : BaseRenameTest() {
     fun testRenameDataSlyTestFromAttribute() = renameCase {
         before {
             addHtml("test.html", """
-                <div data-sly-test.${CARET}test="$DOLLAR{properties}">
+                <div ${CARET}data-sly-test.test="$DOLLAR{properties}">
                     $DOLLAR{test}
                 </div>
             """)
