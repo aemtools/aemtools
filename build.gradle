@@ -73,6 +73,9 @@ dependencies {
 
     gen 'de.jflex:jflex:1.6.1'
 
+    // https://mvnrepository.com/artifact/com.github.markusbernhardt/proxy-vole
+    testCompile group: 'com.github.markusbernhardt', name: 'proxy-vole', version: '1.0.3'
+
     testCompile "junit:junit:$junit_version"
     testCompile "org.assertj:assertj-core:$assertj_version"
     testCompile "org.mockito:mockito-core:$mockito_version"
