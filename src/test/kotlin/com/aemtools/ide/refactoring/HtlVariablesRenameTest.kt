@@ -10,7 +10,7 @@ class HtlVariablesRenameTest : BaseRenameTest() {
     fun testRenameDataSlyUseVariable() = renameCase {
         before {
             addHtml("test.html", """
-                <div data-sly-use.bean='111'>
+                <div data-sly-use.bean="">
                     $DOLLAR{${CARET}bean}
                 </div>
             """)
@@ -18,7 +18,7 @@ class HtlVariablesRenameTest : BaseRenameTest() {
         renameTo("renamed")
         after {
             addHtml("test.html", """
-                <div data-sly-use.renamed='111'>
+                <div data-sly-use.renamed="">
                     $DOLLAR{renamed}
                 </div>
             """)
@@ -28,7 +28,7 @@ class HtlVariablesRenameTest : BaseRenameTest() {
     fun testRenameDataSlyUseVariableFromAttribute() = renameCase {
         before {
             addHtml("test.html", """
-                <div data-sly-use.${CARET}bean='111'>
+                <div data-sly-use.${CARET}bean="">
                     $DOLLAR{bean}
                 </div>
             """)
@@ -36,7 +36,7 @@ class HtlVariablesRenameTest : BaseRenameTest() {
         renameTo("renamed")
         after {
             addHtml("test.html", """
-                <div data-sly-use.renamed='111'>
+                <div data-sly-use.renamed="">
                     $DOLLAR{renamed}
                 </div>
             """)
@@ -65,7 +65,7 @@ class HtlVariablesRenameTest : BaseRenameTest() {
         before {
             addHtml("test.html", """
                 <div data-sly-test.${CARET}test="$DOLLAR{properties}">
-                    $DOLLAR{${CARET}test}
+                    $DOLLAR{test}
                 </div>
             """)
         }
@@ -74,6 +74,118 @@ class HtlVariablesRenameTest : BaseRenameTest() {
             addHtml("test.html", """
                 <div data-sly-test.renamed="$DOLLAR{properties}">
                     $DOLLAR{renamed}
+                </div>
+            """)
+        }
+    }
+
+    fun testRenameDataSlyListMainVariableFromEl() = renameCase {
+        before {
+            addHtml("test.html", """
+                <div data-sly-list="">
+                    $DOLLAR{${CARET}item}
+                    $DOLLAR{itemList}
+                </div>
+            """)
+        }
+        renameTo("renamed")
+        after {
+            addHtml("test.html", """
+                <div data-sly-list.renamed="">
+                    $DOLLAR{renamed}
+                    $DOLLAR{renamedList}
+                </div>
+            """)
+        }
+    }
+
+    fun testRenameDataSlyListHelperVariable() = renameCase {
+        before {
+            addHtml("test.html", """
+                <div data-sly-list="">
+                    $DOLLAR{item}
+                    $DOLLAR{${CARET}itemList}
+                </div>
+            """)
+        }
+        renameTo("renamed")
+        after {
+            addHtml("test.html", """
+                <div data-sly-list.renamed="">
+                    $DOLLAR{renamed}
+                    $DOLLAR{renamedList}
+                </div>
+            """)
+        }
+    }
+
+    fun testRenameDataSlyListFromAttribute() = renameCase {
+        before {
+            addHtml("test.html", """
+                <div ${CARET}data-sly-list="">
+                    $DOLLAR{item} $DOLLAR{itemList}
+                </div>
+            """)
+        }
+        renameTo("rename")
+        after {
+            addHtml("test.html", """
+                <div data-sly-list.renamed="">
+                    $DOLLAR{renamed} $DOLLAR{renamedList}
+                </div>
+            """)
+        }
+    }
+
+    fun testRenameDataSlyRepeatMainVariableFromEl() = renameCase {
+        before {
+            addHtml("test.html", """
+                <div data-sly-repeat="">
+                    $DOLLAR{${CARET}item} $DOLLAR{itemList}
+                </div>
+            """)
+        }
+        renameTo("renamed")
+        after {
+            addHtml("test.html", """
+                <div data-sly-repeat.renamed="">
+                    $DOLLAR{renamed} $DOLLAR{renamedList}
+                </div>
+            """)
+        }
+    }
+
+    fun testRenameDataSlyRepeatHelperFromEl() = renameCase {
+        before {
+            addHtml("test.html", """
+                <div data-sly-repeat="">
+                    $DOLLAR{item} $DOLLAR{${CARET}itemList}
+                </div>
+            """)
+        }
+        renameTo("renamed")
+        after {
+            addHtml("test.html", """
+                <div data-sly-repeat.renamed="">
+                    $DOLLAR{renamed} $DOLLAR{renamedList}
+                </div>
+            """)
+        }
+    }
+
+    fun testRenameDataSlyRepeatFromAttribute() = renameCase {
+        before {
+            addHtml("test.html", """
+                <div ${CARET}data-sly-repeat="">
+                    $DOLLAR{item} $DOLLAR{itemList}
+                </div>
+            """)
+        }
+        renameTo("renamed")
+        after {
+            addHtml("test.html", """
+                <div data-sly-repeat.renamed="">
+                    $DOLLAR{renamed} $DOLLAR{renamedList}
                 </div>
             """)
         }
