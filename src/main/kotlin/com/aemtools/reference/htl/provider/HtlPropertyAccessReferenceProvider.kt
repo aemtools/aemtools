@@ -6,19 +6,22 @@ import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateParameterTypeDescriptor
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.hasChild
+import com.aemtools.lang.htl.HtlLanguage
+import com.aemtools.lang.htl.icons.HtlIcons
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
 import com.aemtools.lang.htl.psi.HtlStringLiteral
 import com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.reference.common.reference.HtlPropertyAccessReference
-import com.intellij.ide.util.PsiNavigationSupport
+import com.intellij.lang.Language
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
 import com.intellij.psi.impl.FakePsiElement
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.util.ProcessingContext
 import java.util.*
+import javax.swing.Icon
 
 /**
  * @author Dmytro Troynikov
@@ -128,30 +131,23 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
             }
         }
 
+        override fun handleElementRename(newElementName: String?): PsiElement {
+            return super.handleElementRename(newElementName)
+        }
+
+//        override fun isReferenceTo(element: PsiElement?): Boolean {
+//            return xmlAttribute?.manager?.areElementsEquivalent(xmlAttribute, element)
+//                    ?: false
+//        }
+
         override fun getVariants(): Array<Any> = emptyArray()
     }
 
-    class HtlDeclarationIdentifier(val xmlAttribute: XmlAttribute) : FakePsiElement() {
-        override fun navigate(requestFocus: Boolean) {
-            val project = xmlAttribute.project
-            val virtualFile = xmlAttribute.containingFile.virtualFile
-
-            var offsetInFile = 0
-            var currentElement: PsiElement = xmlAttribute
-            while (currentElement.parent !is PsiFile) {
-                offsetInFile += currentElement.startOffsetInParent
-                currentElement = currentElement.parent
-            }
-
-            offsetInFile += xmlAttribute.name.indexOf(".") + 1
-
-            PsiNavigationSupport.getInstance()
-                    .createNavigatable(project, virtualFile, offsetInFile)
-                    .navigate(requestFocus)
-        }
+    class HtlDeclarationIdentifier(val xmlAttribute: XmlAttribute)
+        : FakePsiElement(), PsiNamedElement {
 
         override fun getText(): String? {
-            return xmlAttribute.value
+            return xmlAttribute.name.substringAfter(".", "item")
         }
 
         override fun getParent(): PsiElement {
@@ -159,13 +155,97 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
         }
 
         override fun getName(): String? {
-            return super.getName()
+            val variableName = if (xmlAttribute.name.contains(".")) {
+                xmlAttribute.name.substringAfter(".")
+            } else {
+                xmlAttribute.name
+            }
+
+            return variableName
+        }
+
+        override fun setName(name: String): PsiElement {
+            val attributeName = if (xmlAttribute.name.contains(".")) {
+                xmlAttribute.name.substringBefore(".")
+            } else {
+                xmlAttribute.name
+            }
+
+            return xmlAttribute.setName("$attributeName.$name")
         }
 
         override fun toString(): String {
             return xmlAttribute.text
         }
 
+        override fun getTextRange(): TextRange? {
+            return if (xmlAttribute.name.contains(".")) {
+                val start = xmlAttribute.textRange.startOffset + xmlAttribute.name.indexOf(".") + 1
+                TextRange(start, start + (name?.length ?: xmlAttribute.nameElement.textLength))
+            } else {
+                xmlAttribute.nameElement.textRange
+            }
+        }
+
+        override fun getTextOffset(): Int {
+            return if (xmlAttribute.name.contains(".")) {
+                xmlAttribute.nameElement.textOffset + xmlAttribute.name.indexOf(".") + 1
+            } else {
+                xmlAttribute.nameElement.textOffset
+            }
+        }
+
+        override fun getStartOffsetInParent(): Int {
+            return if (xmlAttribute.name.contains(".")) {
+                xmlAttribute.startOffsetInParent + xmlAttribute.name.indexOf(".") + 1
+            } else {
+                xmlAttribute.startOffsetInParent
+            }
+        }
+
+        override fun getTextLength(): Int {
+            return name?.length ?: 0
+        }
+
+        override fun textToCharArray(): CharArray {
+            return text?.toCharArray() ?: kotlin.CharArray(0)
+        }
+
+        override fun textContains(c: Char): Boolean {
+            return textToCharArray().contains(c)
+        }
+
+        override fun getPresentableText(): String? {
+            return "HTL Variable"
+        }
+
+        override fun getLocationString(): String? {
+            return xmlAttribute.containingFile.name
+        }
+
+        override fun getIcon(open: Boolean): Icon? {
+            return HtlIcons.SLY_USE_VARIABLE_ICON
+        }
+
+        override fun isPhysical(): Boolean = true
+
+        override fun getLanguage(): Language = HtlLanguage
+
+        override fun getContainingFile(): PsiFile {
+            return xmlAttribute.containingFile
+        }
+
+        override fun equals(other: Any?): Boolean {
+            return when (other) {
+                is HtlDeclarationIdentifier -> other.xmlAttribute == xmlAttribute
+                is XmlAttribute -> xmlAttribute == other
+                else -> false
+            }
+        }
+
+        override fun hashCode(): Int {
+            return toString().hashCode()
+        }
     }
 
 }

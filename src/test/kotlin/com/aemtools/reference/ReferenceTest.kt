@@ -93,7 +93,7 @@ class ReferenceTest : BaseReferenceTest() {
             </div>
         """)
         shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
-        shouldContainText("com.test.TestClass")
+        shouldContainText("bean")
     }
 
     fun testSlyUseClassReferencesToPsiClass() = testReference {
@@ -116,7 +116,7 @@ class ReferenceTest : BaseReferenceTest() {
         """)
 
         shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
-        shouldContainText("$DOLLAR{bean.show}")
+        shouldContainText("show")
     }
 
     fun testReferenceItemToDataSlyList() = testReference {
@@ -126,7 +126,7 @@ class ReferenceTest : BaseReferenceTest() {
             </div>
         """)
         shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
-        shouldContainText("iterable")
+        shouldContainText("item")
     }
 
     fun testReferenceItemListToDataSlyList() = testReference {
@@ -136,7 +136,7 @@ class ReferenceTest : BaseReferenceTest() {
             </div>
         """)
         shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
-        shouldContainText("iterable")
+        shouldContainText("itemList")
     }
 
     fun testReferenceItemToDataSlyRepeat() = testReference {
@@ -146,7 +146,7 @@ class ReferenceTest : BaseReferenceTest() {
             </div>
         """)
         shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
-        shouldContainText("iterable")
+        shouldContainText("item")
     }
 
     fun testReferenceItemListToDataSlyRepeat() = testReference {
@@ -156,7 +156,7 @@ class ReferenceTest : BaseReferenceTest() {
             </div>
         """)
         shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
-        shouldContainText("iterable")
+        shouldContainText("itemList")
     }
 
     fun testReferenceTemplateParameter() = testReference {

@@ -138,6 +138,20 @@
         <annotator language="Htl"
                    implementationClass="com.aemtools.lang.html.inspection.RedundantELAnnotator"/>
 
+        <!--<lang.findUsagesProvider-->
+                <!--order="first"-->
+                <!--language="Htl"-->
+                <!--implementationClass="com.aemtools.findusages.HtlVariableUsagesProvider"/>-->
+
+        <renamePsiElementProcessor
+                order="first"
+                implementation="com.aemtools.refactoring.HtlVariableRenameProcessor"/>
+
+        <!--<renamePsiElementProcessor implementation="com.aemtools.refactoring.HtlDeclarationAttributeRenameProcessor"/>-->
+        <lang.refactoringSupport
+                language="HTML"
+                implementationClass="com.aemtools.refactoring.HtlVariableRefactoringSupport"/>
+
         <lang.psiStructureViewFactory language="Htl"
                                       implementationClass="com.aemtools.ide.HtlStructureViewProvider"/>
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
