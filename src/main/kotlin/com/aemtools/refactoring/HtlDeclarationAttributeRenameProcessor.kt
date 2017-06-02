@@ -5,9 +5,12 @@ import com.aemtools.completion.util.isHtlDeclarationAttribute
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.reference.htl.provider.HtlPropertyAccessReferenceProvider
+import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.refactoring.listeners.RefactoringElementListener
+import com.intellij.refactoring.rename.RenameDialog
 import com.intellij.refactoring.rename.RenamePsiElementProcessor
 import com.intellij.usageView.UsageInfo
 
@@ -48,6 +51,14 @@ class HtlDeclarationAttributeRenameProcessor : RenamePsiElementProcessor() {
                     }
                 }
         listener?.elementRenamed(attribute)
+    }
+
+    override fun isInplaceRenameSupported(): Boolean {
+        return true
+    }
+
+    override fun createRenameDialog(project: Project?, element: PsiElement?, nameSuggestionContext: PsiElement?, editor: Editor?): RenameDialog {
+        return super.createRenameDialog(project, element, nameSuggestionContext, editor)
     }
 
 }

@@ -154,6 +154,9 @@
         <renamePsiElementProcessor
                 order="first"
                 implementation="com.aemtools.refactoring.HtlDeclarationAttributeRenameProcessor"/>
+        <useScopeEnlarger implementation="com.aemtools.refactoring.searchscope.HtlDeclarationSearchScopeEnlarger"/>
+        <useScopeOptimizer implementation="com.aemtools.refactoring.searchscope.HtlDeclarationSearchScopeOptimizer"/>
+
         <lang.refactoringSupport
                 language="HTML"
                 implementationClass="com.aemtools.refactoring.HtlVariableRefactoringSupport"/>
