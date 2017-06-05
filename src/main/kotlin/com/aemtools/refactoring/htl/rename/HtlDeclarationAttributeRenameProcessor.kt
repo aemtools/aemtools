@@ -1,10 +1,10 @@
-package com.aemtools.refactoring
+package com.aemtools.refactoring.htl.rename
 
 import com.aemtools.completion.util.htlAttributeName
 import com.aemtools.completion.util.isHtlDeclarationAttribute
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
-import com.aemtools.reference.htl.provider.HtlPropertyAccessReferenceProvider
+import com.aemtools.reference.htl.reference.HtlDeclarationReference
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
@@ -37,7 +37,7 @@ class HtlDeclarationAttributeRenameProcessor : RenamePsiElementProcessor() {
         val newAttributeName = "$htlAttributeName.$newName"
         attribute.setName(newAttributeName)
 
-        usages?.filter { it.reference is HtlPropertyAccessReferenceProvider.HtlDeclarationReference }
+        usages?.filter { it.reference is HtlDeclarationReference }
                 ?.filterNotNull()
                 ?.forEach {
                     if (htlAttributeName in listOf(DATA_SLY_LIST, DATA_SLY_REPEAT)) {
@@ -56,6 +56,7 @@ class HtlDeclarationAttributeRenameProcessor : RenamePsiElementProcessor() {
     override fun isInplaceRenameSupported(): Boolean {
         return true
     }
+
 
     override fun createRenameDialog(project: Project?, element: PsiElement?, nameSuggestionContext: PsiElement?, editor: Editor?): RenameDialog {
         return super.createRenameDialog(project, element, nameSuggestionContext, editor)

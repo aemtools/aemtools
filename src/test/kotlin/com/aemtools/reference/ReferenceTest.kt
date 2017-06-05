@@ -4,7 +4,7 @@ import com.aemtools.blocks.reference.BaseReferenceTest
 import com.aemtools.constant.const.JCR_ROOT
 import com.aemtools.lang.htl.psi.HtlPsiFile
 import com.aemtools.lang.htl.psi.HtlVariableName
-import com.aemtools.reference.htl.provider.HtlPropertyAccessReferenceProvider
+import com.aemtools.reference.htl.HtlDeclarationIdentifier
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiField
 import com.intellij.psi.PsiMethod
@@ -92,7 +92,7 @@ class ReferenceTest : BaseReferenceTest() {
                 $DOLLAR{${CARET}bean}
             </div>
         """)
-        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
+        shouldResolveTo(HtlDeclarationIdentifier::class.java)
         shouldContainText("bean")
     }
 
@@ -115,7 +115,7 @@ class ReferenceTest : BaseReferenceTest() {
             </div>
         """)
 
-        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
+        shouldResolveTo(HtlDeclarationIdentifier::class.java)
         shouldContainText("show")
     }
 
@@ -125,7 +125,7 @@ class ReferenceTest : BaseReferenceTest() {
                 $DOLLAR{${CARET}item}
             </div>
         """)
-        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
+        shouldResolveTo(HtlDeclarationIdentifier::class.java)
         shouldContainText("item")
     }
 
@@ -135,7 +135,7 @@ class ReferenceTest : BaseReferenceTest() {
                 $DOLLAR{${CARET}itemList}
             </div>
         """)
-        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
+        shouldResolveTo(HtlDeclarationIdentifier::class.java)
         shouldContainText("itemList")
     }
 
@@ -145,7 +145,7 @@ class ReferenceTest : BaseReferenceTest() {
                 $DOLLAR{${CARET}item}
             </div>
         """)
-        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
+        shouldResolveTo(HtlDeclarationIdentifier::class.java)
         shouldContainText("item")
     }
 
@@ -155,7 +155,7 @@ class ReferenceTest : BaseReferenceTest() {
                 $DOLLAR{${CARET}itemList}
             </div>
         """)
-        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
+        shouldResolveTo(HtlDeclarationIdentifier::class.java)
         shouldContainText("itemList")
     }
 

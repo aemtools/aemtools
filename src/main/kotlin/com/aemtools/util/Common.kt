@@ -16,6 +16,7 @@ import com.intellij.psi.search.GlobalSearchScope
 
 /**
  * Some common IDEA Open API methods
+ *
  * @author Dmytro_Troynikov
  */
 object OpenApiUtil {

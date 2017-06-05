@@ -50,9 +50,13 @@ object RawCallChainProcessor {
                 is JavaPsiClassTypeDescriptor ->
                     constructTypedChainSegment(outputType,
                             rawChain.pop())
+                is TemplateTypeDescriptor ->
+                    constructTypedChainSegment(outputType,
+                            rawChain.pop())
                 is TemplateHolderTypeDescriptor ->
                     constructTypedChainSegment(outputType,
                             rawChain.pop())
+
                 else -> constructEmptyChainSegment(rawChain.pop())
             }
 
@@ -95,7 +99,7 @@ object RawCallChainProcessor {
         }
 
         if (type != null) {
-            if (rawChainUnit.myCallChain.isNotEmpty()) {
+            if (rawChainUnit.myCallChain.isNotEmpty() && type !is TemplateTypeDescriptor) {
                 return constructTypedChainSegment(type, rawChainUnit)
             }
 

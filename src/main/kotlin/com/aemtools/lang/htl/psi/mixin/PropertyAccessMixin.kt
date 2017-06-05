@@ -7,7 +7,6 @@ import com.aemtools.completion.htl.model.declaration.DeclarationAttributeType
 import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 import com.aemtools.completion.util.extractHtlHel
 import com.aemtools.completion.util.extractPropertyAccess
-import com.aemtools.completion.util.resolveUseClass
 import com.aemtools.lang.htl.psi.chain.RawChainUnit
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiReference
@@ -49,10 +48,7 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
             }
 
             if (propertyAccessMixin == null) {
-                val useClass = declaration.xmlAttribute.resolveUseClass()
-                if (useClass != null) {
-                    result = createUseChainUnit(declaration)
-                }
+                createDeclarationChainUnit(declaration)
             }
         }
 
@@ -61,7 +57,7 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
         return LinkedList(listOf(*result.toTypedArray(), myChainUnit))
     }
 
-    private fun createUseChainUnit(declaration: HtlVariableDeclaration): LinkedList<RawChainUnit> {
+    private fun createDeclarationChainUnit(declaration: HtlVariableDeclaration): LinkedList<RawChainUnit> {
         val result = LinkedList<RawChainUnit>()
 
         result.add(RawChainUnit(LinkedList(), declaration))

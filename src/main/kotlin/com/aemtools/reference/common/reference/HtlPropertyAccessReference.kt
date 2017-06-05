@@ -26,6 +26,15 @@ class HtlPropertyAccessReference(
 
     override fun getVariants(): Array<Any> = emptyArray()
 
+    override fun getValue(): String {
+        return if (referencedElement.text.startsWith("get")) {
+            referencedElement.text.substringAfter("get")
+                    .decapitalize()
+        } else {
+            referencedElement.text
+        }
+    }
+
     override fun handleElementRename(newElementName: String?): PsiElement {
         if (newElementName == null) {
             return propertyAccess

@@ -143,6 +143,9 @@
                 <!--language="Htl"-->
                 <!--implementationClass="com.aemtools.findusages.HtlVariableUsagesProvider"/>-->
 
+        <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
+                       order="before xmlAttribute"/>
+
         <renamePsiElementProcessor
                 order="first"
                 implementation="com.aemtools.refactoring.HtlVariableRenameProcessor"/>
@@ -153,7 +156,7 @@
 
         <renamePsiElementProcessor
                 order="first"
-                implementation="com.aemtools.refactoring.HtlDeclarationAttributeRenameProcessor"/>
+                implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameProcessor"/>
         <useScopeEnlarger implementation="com.aemtools.refactoring.searchscope.HtlDeclarationSearchScopeEnlarger"/>
         <useScopeOptimizer implementation="com.aemtools.refactoring.searchscope.HtlDeclarationSearchScopeOptimizer"/>
 
