@@ -33,6 +33,25 @@ class OSGiConfigSearchTest : BaseLightTest(),
         }
     }
 
+    fun testSearchForOSGiConfigurationFactory() = fileCase {
+        addEmptyOSGiConfigs(
+                "/config/com.test.Service-my-long-name.xml",
+                "/config/com.test.Service-my-very-long-name-2.xml"
+        )
+
+        verify {
+            val configs = OSGiConfigSearch.findConfigsForClass("com.test.Service", project)
+
+            assertEquals(2, configs.size)
+            assertEquals(listOf(
+                    "my-long-name",
+                    "my-very-long-name-2"
+            ),
+                    configs.map { it.suffix() }
+            )
+        }
+    }
+
     fun testBasicSearchForOSGiServiceWithFile() = fileCase {
         val filesNames = listOf(
                 "/config/com.test.Service.xml",

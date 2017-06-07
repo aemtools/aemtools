@@ -15,37 +15,30 @@ data class OSGiConfiguration(val path: String,
      */
     val fullQualifiedName: String
         get() {
-            return removeSuffixIfPresent(
-                    fileName.substring(0, fileName.lastIndexOf(".")))
+            return if (fileName.contains("-")) {
+                fileName.substringBefore("-")
+            } else {
+                fileName.substringBeforeLast(".")
+            }
         }
-
-    private fun removeSuffixIfPresent(fqn: String): String = if (fqn.indexOf("-") != -1) {
-        fqn.substring(0, fqn.lastIndexOf("-"))
-    } else {
-        fqn
-    }
 
     /**
      * Return name suffix.
      *
      * com.test.MyService-first.xml -> "first"
+     * com.test.MyService-long-suffix -> "long-suffix"
      * com.test.MyService.xml -> ""
      *
      * @return the suffix or empty string
      */
-    fun suffix(): String = if (fileName.contains("-")) {
-        fileName.substring(fileName.indexOf("-") + 1, fileName.lastIndexOf("."))
-    } else {
-        ""
-    }
+    fun suffix(): String = fileName.substringAfter("-", "")
+            .substringBefore(".", "")
 
     /**
      * File name of current OSGi Configuration.
      */
     val fileName: String
-        get() {
-            return path.substring(path.lastIndexOf("/") + 1)
-        }
+        get() = path.substringAfterLast("/", "")
 
     /**
      * List of run modes.
