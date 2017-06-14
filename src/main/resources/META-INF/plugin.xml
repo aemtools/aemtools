@@ -103,6 +103,8 @@
                                  forClass="com.aemtools.lang.htl.psi.HtlStringLiteral"/>
         <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlPropertyAccessManipulator"
                                  forClass="com.aemtools.lang.htl.psi.HtlPropertyAccess"/>
+        <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlVariableNameManipulator"
+                                 forClass="com.aemtools.lang.htl.psi.HtlVariableName"/>
 
         <lang.fileViewProviderFactory language="Htl"
                                       implementationClass="com.aemtools.lang.htl.file.HtlViewProviderFactory"/>
@@ -141,6 +143,8 @@
         <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
                        order="before xmlAttribute"/>
 
+        <renamePsiElementProcessor
+                implementation="com.aemtools.refactoring.htl.rename.HtlVariableNameRenameProcessor"/>
         <referencesSearch
                 order="first"
                 implementation="com.aemtools.reference.html.HtlAttributeReferencesSearch"/>

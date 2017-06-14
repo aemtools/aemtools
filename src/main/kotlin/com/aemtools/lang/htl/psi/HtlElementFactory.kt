@@ -110,6 +110,20 @@ object HtlElementFactory {
                     .findChildrenByType(HtlStringLiteral::class.java)
                     .firstOrNull()
 
+    /**
+     * Create option [HtlVariableName] with given name.
+     *
+     * @param value the name of option
+     * @param project the project
+     *
+     * @return new option object
+     */
+    fun createOption(value: String, project: Project): HtlVariableName? =
+            project.psiFileFactory()
+                    .file("$DOLLAR{@ ${value}}")
+                    .findChildrenByType(HtlVariableName::class.java)
+                    .firstOrNull()
+
     private fun PsiFileFactory.file(text: String): PsiFile
             = createFileFromText("dummy.html", HtlFileType, text)
 

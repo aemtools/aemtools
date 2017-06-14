@@ -21,10 +21,10 @@ abstract class VariableNameMixin(node: ASTNode)
     }
 
     override fun setName(name: String): PsiElement {
-        val newElement = HtlElementFactory.createVarName(name, project)
+        val newElement = HtlElementFactory.createOption(name, project)
 
         newElement?.let {
-            node.replaceChild(node.firstChildNode, it)
+            node.replaceChild(node.firstChildNode, it.node.firstChildNode)
         }
 
         return this

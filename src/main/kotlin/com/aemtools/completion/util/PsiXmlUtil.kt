@@ -12,6 +12,7 @@ import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.HtlVariableName
+import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.intellij.openapi.util.Conditions
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
@@ -35,8 +36,9 @@ fun <T : PsiElement> PsiElement?.findChildrenByType(type: Class<T>): Collection<
  * @receiver [PsiElement]
  * @see [PsiTreeUtil.findFirstParent]
  */
+@Suppress("UNCHECKED_CAST")
 fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T? {
-    return PsiTreeUtil.findFirstParent(this, Conditions.instanceOf(type)) as T?
+    return PsiTreeUtil.findFirstParent(this, Conditions.instanceOf(type)) as? T?
 }
 
 /**

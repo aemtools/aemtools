@@ -28,4 +28,11 @@ class HtlElementFactoryTest : BaseLightTest() {
         assertEquals(HtlTypes.ARRAY_LIKE_ACCESS, accessIdentifier?.elementType)
     }
 
+    fun testOption() {
+        val option = HtlElementFactory.createOption("name", project)
+
+        assertEquals("name", option?.text)
+        assertTrue(HtlVariableName::class.java.isAssignableFrom(option?.javaClass))
+    }
+
 }
