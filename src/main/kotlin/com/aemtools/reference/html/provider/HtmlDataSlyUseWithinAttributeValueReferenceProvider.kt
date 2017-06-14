@@ -8,7 +8,7 @@ import com.aemtools.reference.common.reference.PsiFileReference
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.JavaClassReferenceProvider
+import com.intellij.psi.impl.source.resolve.reference.impl.providers.JavaClassListReferenceProvider
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.util.ProcessingContext
 
@@ -17,7 +17,7 @@ import com.intellij.util.ProcessingContext
  *
  * @author Dmytro_Troynikov
  */
-object HtmlDataSlyUseWithinAttributeValueReferenceProvider : JavaClassReferenceProvider() {
+object HtmlDataSlyUseWithinAttributeValueReferenceProvider : JavaClassListReferenceProvider() {
     override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<out PsiReference> {
         val attr = element.findParentByType(XmlAttribute::class.java) ?: return arrayOf()
         val valueElement = attr.valueElement ?: return arrayOf()
