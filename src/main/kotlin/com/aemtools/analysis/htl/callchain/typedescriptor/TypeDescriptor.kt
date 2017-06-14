@@ -32,6 +32,11 @@ interface TypeDescriptor {
     fun isEmpty() = myVariants().isEmpty()
 
     /**
+     * Check if current type is not empty.
+     */
+    fun isNotEmpty() = !isEmpty()
+
+    /**
      * Check if the type is array type.
      */
     fun isArray(): Boolean

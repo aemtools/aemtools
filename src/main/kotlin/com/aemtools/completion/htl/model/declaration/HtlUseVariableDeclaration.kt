@@ -2,7 +2,7 @@ package com.aemtools.completion.htl.model.declaration
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
-import com.aemtools.completion.htl.model.ResolutionResult
+import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateHolderTypeDescriptor
 import com.aemtools.completion.util.resolveUseClass
 import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.index.search.HtlTemplateSearch
@@ -44,7 +44,8 @@ class HtlUseVariableDeclaration(
 
         val template = template()
         if (template.isNotEmpty()) {
-
+            return TemplateHolderTypeDescriptor(template,
+                    xmlAttribute.project)
         }
 
         return TypeDescriptor.empty()

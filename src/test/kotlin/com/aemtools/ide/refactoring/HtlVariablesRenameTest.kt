@@ -127,7 +127,7 @@ class HtlVariablesRenameTest : BaseRenameTest() {
                 </div>
             """)
         }
-        renameTo("rename")
+        renameTo("renamed")
         after {
             addHtml("test.html", """
                 <div data-sly-list.renamed="">

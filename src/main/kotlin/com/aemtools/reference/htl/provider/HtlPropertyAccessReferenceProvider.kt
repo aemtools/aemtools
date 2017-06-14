@@ -4,6 +4,8 @@ import com.aemtools.analysis.htl.callchain.elements.BaseCallChainSegment
 import com.aemtools.analysis.htl.callchain.elements.BaseChainElement
 import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateParameterTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
+import com.aemtools.completion.htl.model.declaration.HtlListHelperDeclaration
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.hasChild
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
@@ -13,6 +15,7 @@ import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.reference.common.reference.HtlPropertyAccessReference
 import com.aemtools.reference.htl.reference.HtlDeclarationReference
+import com.aemtools.reference.htl.reference.HtlListHelperReference
 import com.aemtools.reference.htl.reference.HtlTemplateParameterReference
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
@@ -63,20 +66,37 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
     private fun extractFirstReference(chainSegment: BaseCallChainSegment,
                                       firstElement: CallChainElement,
                                       propertyAccess: PropertyAccessMixin): PsiReferenceBase<PsiElement> {
+        val _type = firstElement.type
+        val _declaration = chainSegment.declaration
         return when {
-            firstElement.type is TemplateParameterTypeDescriptor -> {
-                HtlTemplateParameterReference(firstElement.type as TemplateParameterTypeDescriptor,
+            _type is TemplateParameterTypeDescriptor -> {
+                HtlTemplateParameterReference(_type,
                         propertyAccess,
-                        TextRange(firstElement.element.startOffsetInParent, firstElement.element.startOffsetInParent + firstElement.element.textLength))
+                        firstElementTextRange(firstElement))
+            }
+            _type is TemplateTypeDescriptor -> {
+                HtlDeclarationReference(_declaration?.xmlAttribute,
+                        firstElement as? BaseChainElement,
+                        propertyAccess,
+                        firstElementTextRange(firstElement))
+            }
+            _declaration is HtlListHelperDeclaration -> {
+                HtlListHelperReference(_declaration.xmlAttribute,
+                        propertyAccess,
+                        firstElementTextRange(firstElement))
             }
             else -> {
                 HtlDeclarationReference(chainSegment.declaration?.xmlAttribute,
                         firstElement as? BaseChainElement,
                         propertyAccess,
-                        TextRange(firstElement.element.startOffsetInParent, firstElement.element.startOffsetInParent + firstElement.element.textLength))
+                        firstElementTextRange(firstElement))
             }
         }
     }
+
+    private fun firstElementTextRange(firstElement: CallChainElement) =
+            TextRange(firstElement.element.startOffsetInParent,
+                    firstElement.element.startOffsetInParent + firstElement.element.textLength)
 
     private fun extractTextRange(element: PsiElement): TextRange {
         return when (element) {

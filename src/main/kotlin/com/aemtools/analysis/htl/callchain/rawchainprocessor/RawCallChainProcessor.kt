@@ -71,18 +71,7 @@ object RawCallChainProcessor {
 
         val type: TypeDescriptor? = when (declaration) {
             is HtlUseVariableDeclaration -> {
-                val useClass = declaration.useClass()
-                if (useClass != null) {
-                    JavaPsiClassTypeDescriptor(useClass)
-                }
-
-                val templates = declaration.template()
-                if (templates.isNotEmpty()) {
-                    TemplateHolderTypeDescriptor(templates,
-                            declaration.xmlAttribute.project)
-                } else {
-                    null
-                }
+                declaration.typeDescriptor()
             }
             is HtlTemplateDeclaration -> {
                 TemplateTypeDescriptor(
@@ -95,15 +84,14 @@ object RawCallChainProcessor {
             is HtlListHelperDeclaration -> {
                 PredefinedTypeDescriptor(LIST_AND_REPEAT_HELPER_OBJECT)
             }
+            is HtlVariableDeclaration -> {
+                TypeDescriptor.empty()
+            }
             else -> null
         }
 
         if (type != null) {
-            if (rawChainUnit.myCallChain.isNotEmpty() && type !is TemplateTypeDescriptor) {
-                return constructTypedChainSegment(type, rawChainUnit)
-            }
-
-            return BaseCallChainSegment(type, type, rawChainUnit.myDeclaration, listOf())
+            return constructTypedChainSegment(type, rawChainUnit)
         }
 
         val inputType = resolveFirstType(rawChainUnit)

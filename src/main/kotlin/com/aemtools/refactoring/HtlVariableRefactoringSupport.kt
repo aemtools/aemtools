@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement
  */
 class HtlVariableRefactoringSupport : RefactoringSupportProvider() {
     override fun isInplaceRenameAvailable(element: PsiElement, context: PsiElement?): Boolean {
-        return true
+        return false
     }
 }

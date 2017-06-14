@@ -18,6 +18,7 @@ class HtlDeclarationReference(
         holder: PsiElement,
         range: TextRange)
     : PsiReferenceBase<PsiElement>(holder, range, true) {
+
     override fun resolve(): PsiElement? {
         val psiClass = callChainElement?.type?.asResolutionResult()?.psiClass
         if (xmlAttribute != null) {

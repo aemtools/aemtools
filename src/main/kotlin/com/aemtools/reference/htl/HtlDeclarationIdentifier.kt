@@ -16,12 +16,11 @@ import javax.swing.Icon
  *
  * @author Dmytro Troynikov
  */
-class HtlDeclarationIdentifier(val xmlAttribute: XmlAttribute)
+open class HtlDeclarationIdentifier(val xmlAttribute: XmlAttribute)
     : FakePsiElement(), PsiNamedElement {
 
     override fun getText(): String? {
-        return super.getText()
-//        return xmlAttribute.name.substringAfter(".", "item")
+        return xmlAttribute.name.substringAfter(".", "item")
     }
 
     override fun getParent(): PsiElement {
@@ -32,7 +31,7 @@ class HtlDeclarationIdentifier(val xmlAttribute: XmlAttribute)
         val variableName = if (xmlAttribute.name.contains(".")) {
             xmlAttribute.name.substringAfter(".")
         } else {
-            xmlAttribute.name
+            "item"
         }
 
         return variableName
@@ -112,6 +111,7 @@ class HtlDeclarationIdentifier(val xmlAttribute: XmlAttribute)
     override fun equals(other: Any?): Boolean {
         return when (other) {
             is HtlDeclarationIdentifier -> other.xmlAttribute == xmlAttribute
+            is HtlListHelperDeclarationIdentifier -> other.attribute == xmlAttribute
             is XmlAttribute -> xmlAttribute == other
             else -> false
         }

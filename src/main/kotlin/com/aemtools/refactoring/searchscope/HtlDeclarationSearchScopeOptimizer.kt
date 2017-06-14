@@ -32,9 +32,6 @@ class HtlDeclarationSearchScopeOptimizer : ScopeOptimizer {
             val htlFile = originalFile.getHtlFile()
                     ?: return null
 
-//            return GlobalSearchScope.allScope(element.project)
-//                    .union(ScratchFileServiceImpl.buildScratchesSearchScope())
-
             return GlobalSearchScope.notScope(GlobalSearchScope.filesScope(
                     element.project,
                     mutableListOf(originalFile.virtualFile, htlFile.virtualFile)))

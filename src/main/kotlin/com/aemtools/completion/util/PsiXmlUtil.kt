@@ -201,6 +201,31 @@ fun XmlAttribute.isHtlDeclarationAttribute(): Boolean =
         }
 
 /**
+ * Check if current attribute is "local" declaration attribute
+ * (i.e. may be referenced only from current file).
+ *
+ * @receiver [XmlAttribute]
+ * @return *true* if current attribute is local declaration attribute
+ */
+fun XmlAttribute.isHtlLocalDeclarationAttribute(): Boolean =
+        isHtlDeclarationAttribute() && !isHtlGlobalDeclarationAttribute()
+
+/**
+ * Check if current attribute is "global" declaration attribute
+ * (i.e. may be referenced from outside current file).
+ *
+ * @receiver [XmlAttribute]
+ * @return *true* if current element is global declaration attribute
+ */
+fun XmlAttribute.isHtlGlobalDeclarationAttribute(): Boolean =
+        with(this.name) {
+            when {
+                startsWith(DATA_SLY_TEMPLATE) -> true
+                else -> false
+            }
+        }
+
+/**
  * Extract list of Htl variable declarations from current [XmlAttribute] collection.
  * @receiver [Collection] of [XmlAttribute] objects
  * @return collection of [HtlVariableDeclaration] elements

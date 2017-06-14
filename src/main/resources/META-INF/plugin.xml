@@ -138,11 +138,6 @@
         <annotator language="Htl"
                    implementationClass="com.aemtools.lang.html.inspection.RedundantELAnnotator"/>
 
-        <!--<lang.findUsagesProvider-->
-                <!--order="first"-->
-                <!--language="Htl"-->
-                <!--implementationClass="com.aemtools.findusages.HtlVariableUsagesProvider"/>-->
-
         <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
                        order="before xmlAttribute"/>
 
@@ -154,10 +149,9 @@
                 implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameProcessor"/>
         <useScopeEnlarger implementation="com.aemtools.refactoring.searchscope.HtlDeclarationSearchScopeEnlarger"/>
         <useScopeOptimizer implementation="com.aemtools.refactoring.searchscope.HtlDeclarationSearchScopeOptimizer"/>
-
-        <lang.refactoringSupport
-                language="HTML"
-                implementationClass="com.aemtools.refactoring.HtlVariableRefactoringSupport"/>
+        <targetElementEvaluator
+                implementationClass="com.aemtools.refactoring.htl.rename.HtlAttributeTargetElementEvaluator"
+                language="Htl"/>
 
         <lang.psiStructureViewFactory language="Htl"
                                       implementationClass="com.aemtools.ide.HtlStructureViewProvider"/>
