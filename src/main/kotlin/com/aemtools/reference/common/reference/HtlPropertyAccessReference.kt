@@ -10,6 +10,7 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiReferenceBase
+import com.intellij.psi.impl.FakePsiElement
 
 /**
  * @author Dmytro Troynikov
@@ -23,6 +24,10 @@ class HtlPropertyAccessReference(
 ) : PsiReferenceBase<PropertyAccessMixin>(propertyAccess, textRange, soft) {
 
     override fun resolve(): PsiElement? = referencedElement
+
+    override fun isReferenceTo(element: PsiElement?): Boolean {
+        return referencedElement == element
+    }
 
     override fun getVariants(): Array<Any> = emptyArray()
 

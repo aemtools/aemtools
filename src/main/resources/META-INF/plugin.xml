@@ -146,14 +146,9 @@
         <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
                        order="before xmlAttribute"/>
 
-        <renamePsiElementProcessor
-                order="first"
-                implementation="com.aemtools.refactoring.HtlVariableRenameProcessor"/>
-
         <referencesSearch
                 order="first"
-                implementation="com.aemtools.reference.html.HtlAttributeReferencesSearch" />
-
+                implementation="com.aemtools.reference.html.HtlAttributeReferencesSearch"/>
         <renamePsiElementProcessor
                 order="first"
                 implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameProcessor"/>

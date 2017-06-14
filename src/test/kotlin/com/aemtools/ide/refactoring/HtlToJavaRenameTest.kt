@@ -21,7 +21,7 @@ class HtlToJavaRenameTest : BaseRenameTest() {
                 </div>
             """)
         }
-        renameTo("renamed")
+        renameTo("getRenamed")
         after {
             addClass("com/test/Bean.java", """
                 package com.test;
@@ -79,7 +79,7 @@ class HtlToJavaRenameTest : BaseRenameTest() {
                 </div>
             """)
         }
-        renameTo("renamed")
+        renameTo("getRenamed")
         after {
             addClass("com/test/Bean.java", """
                 package com.test;
@@ -105,7 +105,7 @@ class HtlToJavaRenameTest : BaseRenameTest() {
                 </div>
             """)
         }
-        renameTo("renamed")
+        renameTo("getRenamed")
         after {
             addClass("com/test/Bean.java", """
                 package com.test;
