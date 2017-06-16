@@ -5,6 +5,7 @@ import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 import com.aemtools.constant.const
 import com.aemtools.lang.htl.psi.*
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
+import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.htl.psi.util.isNotPartOf
 import com.aemtools.lang.htl.psi.util.isPartOf
 import com.aemtools.lang.htl.psi.util.isWithin
@@ -70,8 +71,20 @@ fun HtlStringLiteral.isMainString(): Boolean {
  */
 fun HtlVariableName.isOption(): Boolean {
     return this.hasParent(HtlContextExpression::class.java)
-            && !this.hasParent(HtlAssignment::class.java)
+            && !this.hasParent(HtlAssignmentValue::class.java)
 }
+
+/**
+ * Check if current variable is "option".
+ *
+ * @receiver [VariableNameMixin]
+ * @see [isOption]
+ * @return *true* if current variable is "option", *false* otherwise
+ */
+fun VariableNameMixin.isOption(): Boolean =
+        (this as? HtlVariableName)
+                ?.isOption()
+                ?: false
 
 /**
  * Extract first (top level) [PropertyAccessMixin].
@@ -115,10 +128,10 @@ fun PsiElement.isInsideOf(attributeName: String): Boolean {
 /**
  * Collection [HtlVariableDeclaration] element which are applicable for given position
  * @param position the starting position
- * @receiver [Collection] of [HtlVariableDeclaration] objects
+ * @receiver [List] of [HtlVariableDeclaration] objects
  * @return collection of applicable declarations
  */
-fun Collection<HtlVariableDeclaration>.filterForPosition(position: PsiElement): Collection<HtlVariableDeclaration> {
+fun List<HtlVariableDeclaration>.filterForPosition(position: PsiElement): List<HtlVariableDeclaration> {
     val applicableDeclarations = this.filter {
         when (it.attributeType) {
             DeclarationAttributeType.DATA_SLY_USE ->

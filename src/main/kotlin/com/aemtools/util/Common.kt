@@ -10,11 +10,16 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.impl.local.LocalFileSystemBase
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiFileFactory
+import com.intellij.psi.PsiManager
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
+import com.intellij.refactoring.RefactoringBundle
+import com.intellij.refactoring.util.CommonRefactoringUtil
 
 /**
  * Some common IDEA Open API methods
+ *
  * @author Dmytro_Troynikov
  */
 object OpenApiUtil {
@@ -100,7 +105,7 @@ fun writeCommand(project: Project, lambda: () -> Unit): Unit {
  * @return [PrioritizedLookupElement] with given priority
  */
 fun LookupElement.withPriority(priority: Double): LookupElement =
-    PrioritizedLookupElement.withPriority(this, priority)
+        PrioritizedLookupElement.withPriority(this, priority)
 
 /**
  * Convert current [String] to [StringBuilder].
@@ -109,3 +114,36 @@ fun LookupElement.withPriority(priority: Double): LookupElement =
  * @return new string builder instance that contains current string
  */
 fun String.toStringBuilder() = StringBuilder(this)
+
+/**
+ * Get [PsiFileFactory] associated with current project.
+ *
+ * @receiver [Project]
+ * @return instance of psi file factory
+ */
+fun Project.psiFileFactory(): PsiFileFactory = PsiFileFactory.getInstance(this)
+
+/**
+ * Get [PsiManager] associated with current project.
+ *
+ * @receiver [Project]
+ * @return instance of psi manager
+ */
+fun Project.psiManager(): PsiManager = PsiManager.getInstance(this)
+
+/**
+ * Show error message popup.
+ *
+ * @param project the project
+ * @param editor the editor
+ * @param message the message
+ */
+fun showErrorMessage(project: Project, editor: Editor?, message: String) {
+    CommonRefactoringUtil.showErrorHint(
+            project,
+            editor,
+            message,
+            RefactoringBundle.message("rename.title"),
+            null
+    )
+}

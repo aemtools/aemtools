@@ -4,6 +4,8 @@ import com.aemtools.analysis.htl.callchain.elements.BaseCallChainSegment
 import com.aemtools.analysis.htl.callchain.elements.BaseChainElement
 import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateParameterTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
+import com.aemtools.completion.htl.model.declaration.HtlListHelperDeclaration
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.hasChild
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
@@ -11,11 +13,15 @@ import com.aemtools.lang.htl.psi.HtlStringLiteral
 import com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
-import com.intellij.ide.util.PsiNavigationSupport
+import com.aemtools.reference.common.reference.HtlPropertyAccessReference
+import com.aemtools.reference.htl.reference.HtlDeclarationReference
+import com.aemtools.reference.htl.reference.HtlListHelperReference
+import com.aemtools.reference.htl.reference.HtlTemplateParameterReference
 import com.intellij.openapi.util.TextRange
-import com.intellij.psi.*
-import com.intellij.psi.impl.FakePsiElement
-import com.intellij.psi.xml.XmlAttribute
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiReference
+import com.intellij.psi.PsiReferenceBase
+import com.intellij.psi.PsiReferenceProvider
 import com.intellij.util.ProcessingContext
 import java.util.*
 
@@ -38,14 +44,17 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
         val firstReference = extractFirstReference(chainSegment, firstElement, propertyAccess)
 
         val references: List<PsiReference> = elements.flatMap {
+            val actualReferenceHolder = it.element
             val type = it.type
             val referencedElement = type.referencedElement()
+                    ?: return@flatMap emptyList<PsiReference>()
 
-            val reference = PsiReferenceBase.Immediate(
+            val reference = HtlPropertyAccessReference(
                     propertyAccess,
-                    extractTextRange(it.element),
-                    true,
-                    referencedElement)
+                    it,
+                    extractTextRange(actualReferenceHolder),
+                    referencedElement
+            )
 
             return@flatMap listOf(reference)
         }
@@ -57,20 +66,37 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
     private fun extractFirstReference(chainSegment: BaseCallChainSegment,
                                       firstElement: CallChainElement,
                                       propertyAccess: PropertyAccessMixin): PsiReferenceBase<PsiElement> {
+        val _type = firstElement.type
+        val _declaration = chainSegment.declaration
         return when {
-            firstElement.type is TemplateParameterTypeDescriptor -> {
-                HtlTemplateParameterReference(firstElement.type as TemplateParameterTypeDescriptor,
+            _type is TemplateParameterTypeDescriptor -> {
+                HtlTemplateParameterReference(_type,
                         propertyAccess,
-                        TextRange(firstElement.element.startOffsetInParent, firstElement.element.startOffsetInParent + firstElement.element.textLength))
+                        firstElementTextRange(firstElement))
+            }
+            _type is TemplateTypeDescriptor -> {
+                HtlDeclarationReference(_declaration?.xmlAttribute,
+                        firstElement as? BaseChainElement,
+                        propertyAccess,
+                        firstElementTextRange(firstElement))
+            }
+            _declaration is HtlListHelperDeclaration -> {
+                HtlListHelperReference(_declaration.xmlAttribute,
+                        propertyAccess,
+                        firstElementTextRange(firstElement))
             }
             else -> {
                 HtlDeclarationReference(chainSegment.declaration?.xmlAttribute,
                         firstElement as? BaseChainElement,
                         propertyAccess,
-                        TextRange(firstElement.element.startOffsetInParent, firstElement.element.startOffsetInParent + firstElement.element.textLength))
+                        firstElementTextRange(firstElement))
             }
         }
     }
+
+    private fun firstElementTextRange(firstElement: CallChainElement) =
+            TextRange(firstElement.element.startOffsetInParent,
+                    firstElement.element.startOffsetInParent + firstElement.element.textLength)
 
     private fun extractTextRange(element: PsiElement): TextRange {
         return when (element) {
@@ -90,78 +116,12 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
                     TextRange.EMPTY_RANGE
                 }
 
-            is VariableNameMixin -> TextRange(element.startOffsetInParent + 1, element.startOffsetInParent + element.variableName().length + 1)
+            is VariableNameMixin -> TextRange(
+                    element.startOffsetInParent + 1,
+                    element.startOffsetInParent + element.variableName().length + 1)
+
             else -> TextRange.EMPTY_RANGE
         }
-    }
-
-    class HtlTemplateParameterReference(
-            val type: TemplateParameterTypeDescriptor,
-            holder: PsiElement,
-            range: TextRange
-    ) : PsiReferenceBase<PsiElement>(holder, range, true) {
-        override fun resolve(): PsiElement? =
-                type.declaration.htlVariableNameElement
-
-        override fun getVariants(): Array<Any> = emptyArray()
-
-    }
-
-    class HtlDeclarationReference(
-            val xmlAttribute: XmlAttribute?,
-            val callChainElement: BaseChainElement?,
-            holder: PsiElement,
-            range: TextRange)
-        : PsiReferenceBase<PsiElement>(holder, range, true) {
-        override fun resolve(): PsiElement? {
-            val psiClass = callChainElement?.type?.asResolutionResult()?.psiClass
-            if (xmlAttribute != null) {
-                return HtlDeclarationIdentifier(xmlAttribute)
-            } else if (psiClass != null) {
-                return psiClass
-            } else {
-                return null
-            }
-        }
-
-        override fun getVariants(): Array<Any> = emptyArray()
-    }
-
-    class HtlDeclarationIdentifier(val xmlAttribute: XmlAttribute) : FakePsiElement() {
-        override fun navigate(requestFocus: Boolean) {
-            val project = xmlAttribute.project
-            val virtualFile = xmlAttribute.containingFile.virtualFile
-
-            var offsetInFile = 0
-            var currentElement: PsiElement = xmlAttribute
-            while (currentElement.parent !is PsiFile) {
-                offsetInFile += currentElement.startOffsetInParent
-                currentElement = currentElement.parent
-            }
-
-            offsetInFile += xmlAttribute.name.indexOf(".") + 1
-
-            PsiNavigationSupport.getInstance()
-                    .createNavigatable(project, virtualFile, offsetInFile)
-                    .navigate(requestFocus)
-        }
-
-        override fun getText(): String? {
-            return xmlAttribute.value
-        }
-
-        override fun getParent(): PsiElement {
-            return xmlAttribute
-        }
-
-        override fun getName(): String? {
-            return super.getName()
-        }
-
-        override fun toString(): String {
-            return xmlAttribute.text
-        }
-
     }
 
 }

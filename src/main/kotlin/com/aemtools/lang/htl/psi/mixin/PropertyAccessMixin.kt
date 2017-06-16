@@ -7,7 +7,6 @@ import com.aemtools.completion.htl.model.declaration.DeclarationAttributeType
 import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 import com.aemtools.completion.util.extractHtlHel
 import com.aemtools.completion.util.extractPropertyAccess
-import com.aemtools.completion.util.resolveUseClass
 import com.aemtools.lang.htl.psi.chain.RawChainUnit
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiReference
@@ -24,7 +23,7 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
     }
 
     override fun getReferences(): Array<PsiReference> {
-        return ReferenceProvidersRegistry.getReferencesFromProviders(this);
+        return ReferenceProvidersRegistry.getReferencesFromProviders(this)
     }
 
     /**
@@ -41,7 +40,8 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
 
         if (declaration != null
                 && declaration.attributeType !in listOf(DeclarationAttributeType.LIST_HELPER, DeclarationAttributeType.REPEAT_HELPER)) {
-            val propertyAccessMixin = declaration.xmlAttribute.extractHtlHel()?.extractPropertyAccess()
+            val propertyAccessMixin = declaration.xmlAttribute
+                    .extractHtlHel()?.extractPropertyAccess()
 
             // if property access mixin is available recursively obtain it's call chain
             if (propertyAccessMixin != null) {
@@ -49,10 +49,7 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
             }
 
             if (propertyAccessMixin == null) {
-                val useClass = declaration.xmlAttribute.resolveUseClass()
-                if (useClass != null) {
-                    result = createUseChainUnit(declaration, useClass)
-                }
+                createDeclarationChainUnit(declaration)
             }
         }
 
@@ -61,7 +58,7 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
         return LinkedList(listOf(*result.toTypedArray(), myChainUnit))
     }
 
-    private fun createUseChainUnit(declaration: HtlVariableDeclaration, useClass: String): LinkedList<RawChainUnit> {
+    private fun createDeclarationChainUnit(declaration: HtlVariableDeclaration): LinkedList<RawChainUnit> {
         val result = LinkedList<RawChainUnit>()
 
         result.add(RawChainUnit(LinkedList(), declaration))

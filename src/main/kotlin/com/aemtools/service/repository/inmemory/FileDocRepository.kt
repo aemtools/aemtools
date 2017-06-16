@@ -17,10 +17,10 @@ object FileDocRepository : WidgetDocRepository {
     var xtypes: MutableList<String> = Lists.newArrayList()
 
     init {
-        var bytes: ByteArray? = getDocumentationFromClasspath()
+        val bytes: ByteArray? = getDocumentationFromClasspath()
 
-        var jsonString = java.lang.String(bytes as ByteArray, "UTF-8");
-        var docs: Array<WidgetDoc> = Gson().fromJson(jsonString.toString(), emptyArray<WidgetDoc>().javaClass)
+        val jsonString = java.lang.String(bytes as ByteArray, "UTF-8")
+        val docs: Array<WidgetDoc> = Gson().fromJson(jsonString.toString(), emptyArray<WidgetDoc>().javaClass)
         documents += docs
         documents.filterNot { it.xtype.isNullOrBlank() }
                 .forEach({

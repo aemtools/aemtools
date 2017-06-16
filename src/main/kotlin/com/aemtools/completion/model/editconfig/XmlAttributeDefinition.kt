@@ -13,4 +13,4 @@ data class XmlAttributeDefinition(
         val type: JsTypeInfo,
         val values: List<String>,
         val delimiter: String
-){}
+)

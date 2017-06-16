@@ -32,6 +32,8 @@ object FileVariablesResolver {
                         file: PsiFile): HtlVariableDeclaration? {
         val htmlFile = file.getHtmlFile() ?: return null
         val xmlAttributes = htmlFile.findChildrenByType(XmlAttribute::class.java)
+                .toList()
+
         val elements = xmlAttributes.htlAttributes()
 
         val result = elements.extractDeclarations()
@@ -52,7 +54,9 @@ object FileVariablesResolver {
         val htlFile = completionParameters.originalFile
         val htmlFile = htlFile.viewProvider.getPsi(StdLanguages.HTML)
 
-        val attributes: Collection<XmlAttribute> = PsiTreeUtil.findChildrenOfType(htmlFile, XmlAttribute::class.java)
+        val attributes: List<XmlAttribute> = PsiTreeUtil.findChildrenOfType(htmlFile, XmlAttribute::class.java)
+                .toList()
+
         return attributes.extractDeclarations()
                 .filterForPosition(position).toList()
     }

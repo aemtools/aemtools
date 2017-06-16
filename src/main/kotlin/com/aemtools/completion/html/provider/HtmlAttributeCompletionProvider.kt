@@ -58,7 +58,7 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
 
         val tag = parameters.position.findParentByType(XmlTag::class.java)
 
-        var resultVariants = vars;
+        var resultVariants = vars
         if (tag != null) {
             resultVariants = filterLookupElementsForTag(tag, vars)
         }

@@ -103,6 +103,8 @@
                                  forClass="com.aemtools.lang.htl.psi.HtlStringLiteral"/>
         <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlPropertyAccessManipulator"
                                  forClass="com.aemtools.lang.htl.psi.HtlPropertyAccess"/>
+        <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlVariableNameManipulator"
+                                 forClass="com.aemtools.lang.htl.psi.HtlVariableName"/>
 
         <lang.fileViewProviderFactory language="Htl"
                                       implementationClass="com.aemtools.lang.htl.file.HtlViewProviderFactory"/>
@@ -137,6 +139,23 @@
                    implementationClass="com.aemtools.lang.html.annotation.HtlVariablesAnnotator"/>
         <annotator language="Htl"
                    implementationClass="com.aemtools.lang.html.inspection.RedundantELAnnotator"/>
+
+        <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
+                       order="before xmlAttribute"/>
+
+        <renamePsiElementProcessor
+                implementation="com.aemtools.refactoring.htl.rename.HtlVariableNameRenameProcessor"/>
+        <referencesSearch
+                order="first"
+                implementation="com.aemtools.reference.html.HtlAttributeReferencesSearch"/>
+        <renamePsiElementProcessor
+                order="first"
+                implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameProcessor"/>
+        <useScopeEnlarger implementation="com.aemtools.refactoring.searchscope.HtlDeclarationSearchScopeEnlarger"/>
+        <useScopeOptimizer implementation="com.aemtools.refactoring.searchscope.HtlDeclarationSearchScopeOptimizer"/>
+        <targetElementEvaluator
+                implementationClass="com.aemtools.refactoring.htl.rename.HtlAttributeTargetElementEvaluator"
+                language="Htl"/>
 
         <lang.psiStructureViewFactory language="Htl"
                                       implementationClass="com.aemtools.ide.HtlStructureViewProvider"/>

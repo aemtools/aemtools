@@ -7,8 +7,10 @@ import com.intellij.lang.StdLanguages
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
+import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
+import com.intellij.psi.util.PsiUtilCore
 import com.intellij.psi.xml.XmlFile
 
 /**
@@ -71,3 +73,13 @@ fun VirtualFile.resourceType(): String? {
     }
     return null
 }
+
+/**
+ * Get [VirtualFile] instance that contain current [PsiElement].
+ *
+ * @receiver [PsiElement]
+ * @return instance of virtual file
+ * @see [PsiUtilCore.getVirtualFile]
+ */
+fun PsiElement.virtualFile(): VirtualFile? =
+        PsiUtilCore.getVirtualFile(this)

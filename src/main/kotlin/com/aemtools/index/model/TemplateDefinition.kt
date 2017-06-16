@@ -2,9 +2,10 @@ package com.aemtools.index.model
 
 import com.aemtools.completion.util.*
 import com.aemtools.lang.htl.psi.HtlPsiFile
+import com.aemtools.lang.htl.psi.HtlVariableName
+import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.aemtools.util.OpenApiUtil
 import com.intellij.openapi.project.Project
-import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 import java.io.Serializable
 
@@ -35,7 +36,13 @@ data class TemplateDefinition(
          */
         val parameters: List<String>) : Serializable {
 
-    fun declarationElement(project: Project): PsiElement? {
+    /**
+     * Get [XmlAttribute] in which current template was declared.
+     *
+     * @param project the project
+     * @return declaration xml attribute
+     */
+    fun declarationElement(project: Project): XmlAttribute? {
         val file = OpenApiUtil.findFileByRelativePath(normalizedPath, project)
                 ?.toPsiFile(project) as? HtlPsiFile
                 ?: return null
@@ -43,6 +50,19 @@ data class TemplateDefinition(
         return htmlFile.findChildrenByType(XmlAttribute::class.java).find {
             it.htlVariableName() == name
         }
+    }
+
+    fun parameterDeclarationElement(project: Project, parameter: String): HtlVariableName? {
+        val declarationElement = declarationElement(project) as? XmlAttribute
+                ?: return null
+
+        val hel = declarationElement.extractHtlHel() as? HtlElExpressionMixin
+
+        return hel?.getOptions()
+                ?.find {
+                    it.name() == parameter
+                }
+                ?.contextExpression?.variableName
     }
 
     val containingDirectory: String

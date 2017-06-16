@@ -29,7 +29,7 @@ tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
 
 intellij {
     pluginName 'aemtools'
-    version 'IC-2017.1.2'
+    version 'IC-2017.1.4'
 
     updateSinceUntilBuild = false
     downloadSources = true
@@ -73,6 +73,9 @@ dependencies {
 
     gen 'de.jflex:jflex:1.6.1'
 
+    // https://mvnrepository.com/artifact/com.github.markusbernhardt/proxy-vole
+    testCompile group: 'com.github.markusbernhardt', name: 'proxy-vole', version: '1.0.3'
+
     testCompile "junit:junit:$junit_version"
     testCompile "org.assertj:assertj-core:$assertj_version"
     testCompile "org.mockito:mockito-core:$mockito_version"
@@ -86,5 +89,5 @@ apply from: rootProject.file("config/idea.gradle")
 apply from: rootProject.file("config/lexerparser.gradle")
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.5'
+    gradleVersion = '4.0'
 }

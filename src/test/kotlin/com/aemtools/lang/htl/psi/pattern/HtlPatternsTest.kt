@@ -104,12 +104,30 @@ class HtlPatternsTest : BasePatternsTest() {
             true
     )
 
+    fun testDataSlyCallOptionMain2() = testHtlPattern(
+            dataSlyCallOption,
+            """
+                <div data-sly-call="$DOLLAR{template @ ${CARET}option=''}"></div>
+            """,
+            result = true,
+            addCompletionPlaceholder = false
+    )
+
     fun testDataSlyCallOptionShouldMatchOrdinaryOption() = testHtlPattern(
             dataSlyCallOption,
             """
                 $DOLLAR{@ $CARET}
             """,
             false
+    )
+
+    fun testDataSlyCallOptionShouldNotMatchTemplateOption() = testHtlPattern(
+            dataSlyCallOption,
+            """
+                <div data-sly-template.template="$DOLLAR{@ ${CARET}param}"></div>
+            """,
+            result = false,
+            addCompletionPlaceholder = false
     )
 
     fun testDataSlyTemplateOptionMain() = testHtlPattern(
