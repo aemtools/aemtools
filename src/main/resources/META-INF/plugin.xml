@@ -38,7 +38,8 @@
     <change-notes><![CDATA[
         <ul>
             <li>Added rename refactoring</li>
-            <li>bug fixes</li>
+            <li>Unused & Unresolved variables will be highlighted</li>
+            <li>Bug fixes</li>
         </ul>
     ]]>
     </change-notes>
