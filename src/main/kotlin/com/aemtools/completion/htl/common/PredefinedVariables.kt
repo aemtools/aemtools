@@ -21,6 +21,18 @@ object PredefinedVariables {
 
     private val repository = ServiceFacade.getHtlAttributesRepository()
 
+    /**
+     * Get all global context objects.
+     *
+     * @return list of context objects
+     */
+    fun allContextObjects() = repository.getContextObjects()
+
+    /**
+     * Create lookup elements for global context objects.
+     *
+     * @return list of lookup elements
+     */
     fun contextObjectsCompletion(): List<LookupElement> {
         return repository.getContextObjects().map {
             LookupElementBuilder.create(it.name)
@@ -30,6 +42,13 @@ object PredefinedVariables {
         }
     }
 
+    /**
+     * Create type descriptor for context object by it's identifier.
+     *
+     * @param variableName context's object identifier
+     * @param project the project
+     * @return context object's type descriptor
+     */
     fun typeDescriptorByIdentifier(variableName: VariableNameMixin, project: Project): TypeDescriptor {
         val name = variableName.variableName()
         val classInfo = repository.findContextObject(name) ?: return TypeDescriptor.empty()

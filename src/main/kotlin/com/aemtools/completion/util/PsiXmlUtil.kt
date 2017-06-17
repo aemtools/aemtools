@@ -12,8 +12,8 @@ import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.HtlVariableName
-import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.intellij.openapi.util.Conditions
+import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.xml.XmlAttribute
@@ -282,3 +282,19 @@ fun XmlAttribute.extractTemplateDefinition(): TemplateDefinition? {
 
     return TemplateDefinition(containingFile.virtualFile?.path, name, params)
 }
+
+/**
+ * Extract text range of name element.
+ *
+ * @receiver [XmlAttribute]
+ * @return text range of name element
+ */
+fun XmlAttribute.nameRange(): TextRange = this.nameElement.textRange
+
+/**
+ * Extract text range of value element.
+ *
+ * @receiver [XmlAttribute]
+ * @return text range of value element
+ */
+fun XmlAttribute.valueRange(): TextRange? = this.valueElement?.textRange

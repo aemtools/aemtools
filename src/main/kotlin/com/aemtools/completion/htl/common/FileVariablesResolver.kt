@@ -16,6 +16,7 @@ import java.util.*
 
 /**
  * Resolves variables declared within htl (html) file.
+ *
  * @author Dmytro Troynikov
  */
 object FileVariablesResolver {
@@ -24,13 +25,11 @@ object FileVariablesResolver {
      * Find declaration of variable in file.
      * @param variableName the name of variable
      * @param element the element
-     * @param file the file to look in
      * @return the declaration element
      */
     fun findDeclaration(variableName: String,
-                        element: PsiElement,
-                        file: PsiFile): HtlVariableDeclaration? {
-        val htmlFile = file.getHtmlFile() ?: return null
+                        element: PsiElement): HtlVariableDeclaration? {
+        val htmlFile = element.containingFile.getHtmlFile() ?: return null
         val xmlAttributes = htmlFile.findChildrenByType(XmlAttribute::class.java)
                 .toList()
 
@@ -42,6 +41,17 @@ object FileVariablesResolver {
 
         return result
     }
+
+    /**
+     * Check if given variable is valid in given position.
+     *
+     * @param variableName variable name
+     * @param position position to start variable lookup
+     * @return *true* if variable with given name is valid in given context
+     */
+    fun validVariable(variableName: String,
+                      position: PsiElement): Boolean =
+            findDeclaration(variableName, position) != null
 
     /**
      * Collect [HtlVariableDeclaration] objects suitable for given position.

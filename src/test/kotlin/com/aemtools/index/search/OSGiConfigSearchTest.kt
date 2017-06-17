@@ -47,7 +47,7 @@ class OSGiConfigSearchTest : BaseLightTest(),
                     "my-long-name",
                     "my-very-long-name-2"
             ),
-                    configs.map { it.suffix() }
+                    configs.sortByMods().map { it.suffix() }
             )
         }
     }

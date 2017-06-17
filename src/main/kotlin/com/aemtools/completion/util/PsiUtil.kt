@@ -4,14 +4,13 @@ import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.HtlPsiFile
 import com.intellij.lang.Language
 import com.intellij.lang.StdLanguages
+import com.intellij.openapi.application.runReadAction
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.psi.PsiDirectory
-import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiFile
-import com.intellij.psi.PsiManager
+import com.intellij.psi.*
 import com.intellij.psi.util.PsiUtilCore
 import com.intellij.psi.xml.XmlFile
+import com.intellij.refactoring.rename.RenamePsiElementProcessor
 
 /**
  * Psi utility & extension methods
@@ -83,3 +82,14 @@ fun VirtualFile.resourceType(): String? {
  */
 fun PsiElement.virtualFile(): VirtualFile? =
         PsiUtilCore.getVirtualFile(this)
+
+/**
+ * Find incoming references (usages) for current element.
+ *
+ * @receiver [PsiElement]
+ * @return list of incoming references
+ */
+fun PsiElement.incomingReferences(): List<PsiReference> = runReadAction {
+        RenamePsiElementProcessor.forElement(this).findReferences(this)
+                .toList()
+}
