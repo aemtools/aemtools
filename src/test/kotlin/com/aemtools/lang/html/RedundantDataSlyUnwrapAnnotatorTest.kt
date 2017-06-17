@@ -18,7 +18,7 @@ class RedundantDataSlyUnwrapAnnotatorTest : LightCodeInsightFixtureTestCase() {
     fun testRedundantDataSlyUnwrap2() {
         myFixture.configureByText("test.html", """
             <sly class="test"
-                 data-sly-use.bean="com.test.Bean"
+                 data-sly-use.<warning descr="null">bean</warning>="com.test.Bean"
                  <warning descr="$REDUNDANT_DATA_SLY_UNWRAP_MESSAGE">data-sly-unwrap</warning>>
             </sly>
         """)

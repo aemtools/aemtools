@@ -78,17 +78,17 @@ class HtlAttributesAnnotator : Annotator {
                                  holder: AnnotationHolder) {
         val references = attribute.incomingReferences()
 
-        val annotation = holder.createInfoAnnotation(range, null)
         if (references.any {
             it is HtlDeclarationReference
                     || it is HtlListHelperReference
         }) {
+            holder.highlight(range, HTL_VARIABLE_DECLARATION)
+        } else {
+            val annotation = holder.createWarningAnnotation(range, null)
             annotation.textAttributes = HTL_VARIABLE_UNUSED
             annotation.highlightType = ProblemHighlightType.LIKE_UNUSED_SYMBOL
             annotation.tooltip = "Variable '$variableName' is never used."
             annotation.registerFix(RemoveUnusedVariableFix(range))
-        } else {
-            holder.highlight(range, HTL_VARIABLE_DECLARATION)
         }
     }
 
@@ -99,13 +99,13 @@ class HtlAttributesAnnotator : Annotator {
         val references = attribute.incomingReferences()
 
         if (references.any { it is HtlDeclarationReference }) {
-            val annotation = holder.createInfoAnnotation(range, null)
+            holder.highlight(range, HTL_VARIABLE_DECLARATION)
+        } else {
+            val annotation = holder.createWarningAnnotation(range, null)
             annotation.textAttributes = HTL_VARIABLE_UNUSED
             annotation.highlightType = ProblemHighlightType.LIKE_UNUSED_SYMBOL
             annotation.tooltip = "Variable '$variableName' is never used."
             annotation.registerFix(RemoveUnusedVariableFix(range))
-        } else {
-            holder.highlight(range, HTL_VARIABLE_DECLARATION)
         }
     }
 
