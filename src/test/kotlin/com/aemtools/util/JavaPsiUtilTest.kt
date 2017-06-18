@@ -7,6 +7,7 @@ import com.aemtools.constant.const.java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.constant.const.java.SLING_FILTER_ANNOTATION
 import com.aemtools.constant.const.java.SLING_SERVLET_ANNOTATION
 import com.aemtools.lang.java.JavaSearch
+import junit.framework.TestCase
 
 /**
  * @author Dmytro_Troynikov
@@ -72,5 +73,33 @@ class JavaPsiUtilTest : BaseLightTest(),
     }
 
     // todo add test for declarative OSGi service declaration
+
+
+    fun testMethodsSortedByClass() = fileCase {
+        addClass("Model.java", """
+            package com.test;
+
+            public class Model extends BaseModel {
+                public String getModelField() { return ""; }
+            }
+        """)
+        addClass("BaseModel.java", """
+            package com.test;
+
+            public class BaseModel {
+                public String getBaseModelField() { return ""; }
+            }
+        """)
+
+        verify {
+            val modelClass = JavaSearch.findClass("com.test.Model",project)
+            ?: throw AssertionError("Unable to find fixture class!")
+
+            val methods = modelClass.methodsSortedByClass()
+
+            TestCase.assertEquals(2, methods.size)
+        }
+    }
+
 
 }
