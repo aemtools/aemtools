@@ -36,47 +36,45 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
     }
 
     override fun myVariants(): List<LookupElement> {
-        val methods = psiClass.methodsSortedByClass()
-        val fields = psiClass.fieldsSortedByClass()
+        val methods = psiClass.elMethods()
+        val fields = psiClass.elFields()
 
         val methodNames = ArrayList<String>()
         val result = ArrayList<LookupElement>()
 
-        var currentMethodPriority: Double = 1.0
         methods.forEach {
-            it.value.forEach {
-                var name = it.elName()
-                if (methodNames.contains(name)) {
-                    name = it.name
-                } else {
-                    methodNames.add(name)
-                }
-                var lookupElement = LookupElementBuilder.create(name)
-                        .withIcon(it.getIcon(0))
-                        .withTailText(" ${it.name}()", true)
-
-                val returnType = it.returnType
-                if (returnType != null) {
-                    lookupElement = lookupElement.withTypeText(returnType.presentableText, true)
-                }
-
-                result.add(lookupElement.withPriority(currentMethodPriority))
+            var name = it.elName()
+            if (methodNames.contains(name)) {
+                name = it.name
+            } else {
+                methodNames.add(name)
             }
-            currentMethodPriority -= 0.1
+            var lookupElement = LookupElementBuilder.create(name)
+                    .withIcon(it.getIcon(0))
+                    .withTailText(" ${it.name}()", true)
+
+            val returnType = it.returnType
+            if (returnType != null) {
+                lookupElement = lookupElement.withTypeText(returnType.presentableText, true)
+            }
+
+            result.add(lookupElement.withPriority(extractPriority(it, psiClass)))
         }
-        var currentFieldPriority: Double = 1.0
         fields.forEach {
-            it.value.forEach {
-                val lookupElement = LookupElementBuilder.create(it.name.toString())
-                        .withIcon(it.getIcon(0))
-                        .withTypeText(it.type.presentableText, true)
+            val lookupElement = LookupElementBuilder.create(it.name.toString())
+                    .withIcon(it.getIcon(0))
+                    .withTypeText(it.type.presentableText, true)
 
-                result.add(lookupElement.withPriority(currentFieldPriority))
-            }
-            currentFieldPriority -= 0.1
+            result.add(lookupElement.withPriority(extractPriority(it, psiClass)))
         }
 
         return result
+    }
+
+    private fun extractPriority(member: PsiMember, clazz: PsiMember) = when {
+        member.containingClass == clazz -> 1.0
+        member.containingClass?.qualifiedName == "java.lang.Object" -> 0.0
+        else -> 0.5
     }
 
     override fun name(): String = psiClass.qualifiedName
