@@ -53,6 +53,7 @@ class CompletionTestFixture(fixture: JavaCodeInsightTestFixture)
                                ordered: Boolean) {
         this.shouldContain = variants
         this.shouldContainStrict = strict
+        this.shouldContainOrdered = ordered
     }
 
     override fun shouldNotContain(variants: List<String>) {
