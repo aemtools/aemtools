@@ -74,32 +74,4 @@ class JavaPsiUtilTest : BaseLightTest(),
 
     // todo add test for declarative OSGi service declaration
 
-
-    fun testMethodsSortedByClass() = fileCase {
-        addClass("Model.java", """
-            package com.test;
-
-            public class Model extends BaseModel {
-                public String getModelField() { return ""; }
-            }
-        """)
-        addClass("BaseModel.java", """
-            package com.test;
-
-            public class BaseModel {
-                public String getBaseModelField() { return ""; }
-            }
-        """)
-
-        verify {
-            val modelClass = JavaSearch.findClass("com.test.Model",project)
-            ?: throw AssertionError("Unable to find fixture class!")
-
-            val methods = modelClass.methodsSortedByClass()
-
-            TestCase.assertEquals(2, methods.size)
-        }
-    }
-
-
 }

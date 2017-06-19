@@ -14,6 +14,8 @@ class CompletionTestFixture(fixture: JavaCodeInsightTestFixture)
     var completionType = CompletionType.BASIC
     var shouldContain: List<String> = listOf()
     var shouldContainStrict: Boolean = true
+    var shouldContainOrdered: Boolean = false
+
     var shouldNotContain: List<String> = listOf()
 
     override fun test() {
@@ -24,12 +26,19 @@ class CompletionTestFixture(fixture: JavaCodeInsightTestFixture)
                 .map { it.lookupString }
 
         if (shouldContain.isNotEmpty()) {
-            if (shouldContainStrict) {
-                assertThat(completionVariants)
-                        .containsOnly(*shouldContain.toTypedArray())
-            } else {
-                assertThat(completionVariants)
-                        .contains(*shouldContain.toTypedArray())
+            when {
+                shouldContainOrdered -> {
+                    assertThat(completionVariants)
+                            .containsExactly(*shouldContain.toTypedArray())
+                }
+                shouldContainStrict -> {
+                    assertThat(completionVariants)
+                            .containsOnly(*shouldContain.toTypedArray())
+                }
+                else -> {
+                    assertThat(completionVariants)
+                            .contains(*shouldContain.toTypedArray())
+                }
             }
         }
 
@@ -39,7 +48,9 @@ class CompletionTestFixture(fixture: JavaCodeInsightTestFixture)
         }
     }
 
-    override fun shouldContain(variants: List<String>, strict: Boolean) {
+    override fun shouldContain(variants: List<String>,
+                               strict: Boolean,
+                               ordered: Boolean) {
         this.shouldContain = variants
         this.shouldContainStrict = strict
     }

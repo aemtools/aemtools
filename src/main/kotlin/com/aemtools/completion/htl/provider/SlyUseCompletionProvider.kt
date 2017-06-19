@@ -5,6 +5,7 @@ import com.aemtools.completion.util.relativeTo
 import com.aemtools.index.HtlIndexFacade.getTemplates
 import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.lang.java.JavaSearch
+import com.aemtools.util.withPriority
 import com.intellij.codeInsight.completion.*
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
@@ -73,10 +74,9 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
                     .withIcon(it.getIcon(0))
                     .withTypeText(type)
                     .withTailText("(${qualifiedName.substring(0, qualifiedName.lastIndexOf("."))})", true)
+                    .withPriority((1F - StringUtils.getLevenshteinDistance(currentFileName, name) / 100F).toDouble())
 
-            val prioritized = PrioritizedLookupElement.withPriority(result,
-                    (1F - StringUtils.getLevenshteinDistance(currentFileName, name) / 100F).toDouble())
-            return@flatMap listOf(prioritized)
+            return@flatMap listOf(result)
         }
     }
 
