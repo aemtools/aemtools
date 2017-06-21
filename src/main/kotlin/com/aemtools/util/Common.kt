@@ -1,5 +1,7 @@
 package com.aemtools.util
 
+import com.aemtools.constant.const.htl.DECLARATION_ATTRIBUTES
+import com.aemtools.constant.const.htl.SINGLE_ATTRIBUTES
 import com.intellij.codeInsight.completion.PrioritizedLookupElement
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.openapi.application.ApplicationManager
@@ -94,6 +96,22 @@ fun writeCommand(project: Project, lambda: () -> Unit): Unit {
         }
 
     }.execute().resultObject
+}
+
+/**
+ * Check if current string is valid htl attribute name.
+ *
+ * @receiver [String]
+ * @return *true* if current string is valid htl attribute name, *false* otherwise
+ */
+fun String.isHtlAttributeName(): Boolean = when (this) {
+    in DECLARATION_ATTRIBUTES -> {
+        DECLARATION_ATTRIBUTES.any { it == this || it.startsWith("$this.") }
+    }
+    in SINGLE_ATTRIBUTES -> {
+        SINGLE_ATTRIBUTES.any { it == this }
+    }
+    else -> false
 }
 
 /**
