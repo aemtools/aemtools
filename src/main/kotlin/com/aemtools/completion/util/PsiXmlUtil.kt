@@ -7,11 +7,11 @@ import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_USE
-import com.aemtools.constant.const.htl.HTL_ATTRIBUTES
 import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.HtlVariableName
+import com.aemtools.util.isHtlAttributeName
 import com.intellij.openapi.util.Conditions
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
@@ -166,15 +166,7 @@ fun XmlAttribute.isDataSlyUse(): Boolean = this.name.startsWith("$DATA_SLY_USE."
  *
  * @return __true__ if current element is Htl attribute
  */
-fun XmlAttribute.isHtlAttribute(): Boolean = with(this.name) {
-    HTL_ATTRIBUTES.forEach {
-        if (startsWith("$it.") || equals(it)) {
-            return true
-        }
-    }
-
-    return false
-}
+fun XmlAttribute.isHtlAttribute(): Boolean = this.name.isHtlAttributeName()
 
 /**
  * Check if current element is Htl attribute which declares some variable.

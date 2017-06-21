@@ -70,6 +70,17 @@ object const {
                 DATA_SLY_TEXT,
                 DATA_SLY_RESOURCE
         )
+
+        val DECLARATION_ATTRIBUTES = HTL_ATTRIBUTES - listOf(
+                DATA_SLY_UNWRAP,
+                DATA_SLY_CALL,
+                DATA_SLY_TEXT,
+                DATA_SLY_RESOURCE,
+                DATA_SLY_INCLUDE
+        )
+
+        val SINGLE_ATTRIBUTES = HTL_ATTRIBUTES - DECLARATION_ATTRIBUTES
+
         // Attributes, which can meet in tag only one time
         val UNIQUE_HTL_ATTRIBUTES = listOf(
                 DATA_SLY_LIST,
