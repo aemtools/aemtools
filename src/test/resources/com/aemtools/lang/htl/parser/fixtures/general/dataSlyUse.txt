@@ -1,5 +1,6 @@
 HtlFile:dataSlyUse.html
-  PsiElement([Htl] OUTER_LANGUAGE)('<sly data-sly-use.bean="')
+  HtlOuterLangImpl([Htl] OUTER_LANG)
+    PsiElement([Htl] OUTER_LANGUAGE)('<sly data-sly-use.bean="')
   HtlHtlElImpl([Htl] HTL_EL)
     HtlHelStartImpl([Htl] HEL_START)
       PsiElement([Htl] ${)('${')
@@ -29,4 +30,5 @@ HtlFile:dataSlyUse.html
                   PsiElement([Htl] VAR_NAME)('param')
     HtlHelEndImpl([Htl] HEL_END)
       PsiElement([Htl] })('}')
-  PsiElement([Htl] OUTER_LANGUAGE)('">\n\n</sly>')
+  HtlOuterLangImpl([Htl] OUTER_LANG)
+    PsiElement([Htl] OUTER_LANGUAGE)('">\n\n</sly>')
