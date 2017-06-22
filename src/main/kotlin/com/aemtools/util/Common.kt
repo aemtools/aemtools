@@ -104,9 +104,9 @@ fun writeCommand(project: Project, lambda: () -> Unit): Unit {
  * @receiver [String]
  * @return *true* if current string is valid htl attribute name, *false* otherwise
  */
-fun String.isHtlAttributeName(): Boolean = when (this) {
+fun String.isHtlAttributeName(): Boolean = when (this.substringBefore(".")) {
     in DECLARATION_ATTRIBUTES -> {
-        DECLARATION_ATTRIBUTES.any { it == this || it.startsWith("$this.") }
+        DECLARATION_ATTRIBUTES.any { it == this || this.startsWith("$it.") }
     }
     in SINGLE_ATTRIBUTES -> {
         SINGLE_ATTRIBUTES.any { it == this }

@@ -3,8 +3,11 @@ package com.aemtools.reference.html
 import com.aemtools.completion.util.*
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
+import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
+import com.intellij.ide.highlighter.HtmlFileType
 import com.intellij.openapi.application.QueryExecutorBase
 import com.intellij.psi.PsiReference
+import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.search.searches.ReferencesSearch
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.util.Processor
@@ -23,18 +26,30 @@ class HtlAttributeReferencesSearch : QueryExecutorBase<PsiReference, ReferencesS
 
         val htlAttributeName = attribute.htlAttributeName()
 
-        if (htlAttributeName in listOf(DATA_SLY_LIST, DATA_SLY_REPEAT)) {
-            val (item, itemList) = extractItemAndItemListNames(attribute.name)
-            val scope = queryParameters.effectiveSearchScope
-            val optimizer = queryParameters.optimizer
-            optimizer.searchWord(item, scope, false, attribute)
-            optimizer.searchWord(itemList, scope, false, attribute)
-        } else {
-            val name = attribute.htlVariableName()
-                    ?: return
-            val scope = queryParameters.effectiveSearchScope
-            val optimizer = queryParameters.optimizer
-            optimizer.searchWord(name, scope, false, attribute)
+        when (htlAttributeName) {
+            in listOf(DATA_SLY_LIST, DATA_SLY_REPEAT) -> {
+                val (item, itemList) = extractItemAndItemListNames(attribute.name)
+                val scope = queryParameters.effectiveSearchScope
+                val optimizer = queryParameters.optimizer
+                optimizer.searchWord(item, scope, true, attribute)
+                optimizer.searchWord(itemList, scope, true, attribute)
+            }
+            DATA_SLY_TEMPLATE -> {
+                val name = attribute.htlVariableName()
+                        ?: return
+
+                val scope = GlobalSearchScope.getScopeRestrictedByFileTypes(
+                        GlobalSearchScope.projectScope(attribute.project), HtmlFileType.INSTANCE)
+                val optimizer = queryParameters.optimizer
+                optimizer.searchWord(name, scope, true, attribute)
+            }
+            else -> {
+                val name = attribute.htlVariableName()
+                        ?: return
+                val scope = queryParameters.effectiveSearchScope
+                val optimizer = queryParameters.optimizer
+                optimizer.searchWord(name, scope, true, attribute)
+            }
         }
     }
 }

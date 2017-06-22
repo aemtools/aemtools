@@ -152,7 +152,12 @@
         <targetElementEvaluator
                 implementationClass="com.aemtools.refactoring.htl.rename.HtlAttributeTargetElementEvaluator"
                 language="Htl"/>
-
+        <findUsagesHandlerFactory implementation="com.aemtools.findusages.HtmlAttributeUsagesProvider" />
+        
+        <xml.attributeDescriptorsProvider
+                order="first"
+                implementation="com.aemtools.findusages.HtlAttributesDescriptorsProvider" />
+        
         <lang.psiStructureViewFactory language="Htl"
                                       implementationClass="com.aemtools.ide.HtlStructureViewProvider"/>
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
