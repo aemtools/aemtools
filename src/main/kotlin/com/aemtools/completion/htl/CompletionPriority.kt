@@ -12,7 +12,10 @@ object CompletionPriority {
 
     val RESOURCE_TYPE: Double = 1.0
 
-    val CLOSE_TEMPLATE: Double = 0.9
+    val CLOSE_CLASS: Double = 1.0
+    val FAR_CLASS: Double = 0.9
+
+    val CLOSE_TEMPLATE: Double = 0.8
     val FAR_TEMPLATE: Double = 0.5
 
 }

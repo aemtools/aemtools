@@ -12,16 +12,16 @@ import com.aemtools.constant.const.java.SLING_MODEL
 class CompletionRelevanceTest : CompletionBaseLightTest(true) {
 
     fun testDataSlyUseCompletion() = completionTest {
-        addHtml("$JCR_ROOT/apps/myapp/component/component.html", """
+        addHtml("/$JCR_ROOT/apps/myapp/component/component.html", """
             <div data-sly-use.bean="$CARET"></div>
         """)
         emptySlingModel("com.test.ComponentModel.java")
         emptySlingModel("com.test.SomeOtherModel.java")
 
-        addHtml("$JCR_ROOT/apps/myapp/component/template.html", """
+        addHtml("/$JCR_ROOT/apps/myapp/component/template.html", """
             <div data-sly-template.template="$DOLLAR{@ param}"></div>
         """)
-        addHtml("$JCR_ROOT/apps/myapp/component2/template.html", """
+        addHtml("/$JCR_ROOT/apps/myapp/component2/template.html", """
             <div data-sly-template.template="$DOLLAR{@ param}"></div>
         """)
 
