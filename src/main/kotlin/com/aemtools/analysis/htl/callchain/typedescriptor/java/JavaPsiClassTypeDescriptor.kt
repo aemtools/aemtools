@@ -4,6 +4,8 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.lang.htl.psi.util.*
 import com.aemtools.lang.java.JavaSearch
+import com.aemtools.util.allScope
+import com.aemtools.util.psiManager
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.psi.*
@@ -89,8 +91,8 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
                 }
                 this is PsiClassType -> this.className
                 this is PsiPrimitiveType -> this.getBoxedType(
-                        PsiManager.getInstance(psiClass.project),
-                        GlobalSearchScope.allScope(psiClass.project)
+                        psiClass.project.psiManager(),
+                        psiClass.project.allScope()
                 )?.canonicalText
                 this is PsiArrayType -> {
                     this.componentType.canonicalText

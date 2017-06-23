@@ -132,6 +132,14 @@ fun Project.psiFileFactory(): PsiFileFactory = PsiFileFactory.getInstance(this)
 fun Project.psiManager(): PsiManager = PsiManager.getInstance(this)
 
 /**
+ * Get [GlobalSearchScope] associated with current project.
+ *
+ * @receiver [Project]
+ * @return instance of GlobalSearchScope
+ */
+fun Project.allScope(): GlobalSearchScope = GlobalSearchScope.allScope(this)
+
+/**
  * Show error message popup.
  *
  * @param project the project
