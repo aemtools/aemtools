@@ -126,6 +126,16 @@ fun LookupElement.withPriority(priority: Double): LookupElement =
         PrioritizedLookupElement.withPriority(this, priority)
 
 /**
+ * Add proximity to current [LookupElement].
+ *
+ * @param proximity the proximity
+ * @receiver [LookupElement]
+ * @return [PrioritizedLookupElement] with given proximity
+ */
+fun LookupElement.withProximity(proximity: Int) =
+        PrioritizedLookupElement.withExplicitProximity(this, proximity)
+
+/**
  * Convert current [String] to [StringBuilder].
  *
  * @receiver [String]
