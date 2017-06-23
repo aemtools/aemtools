@@ -17,7 +17,6 @@ import com.intellij.codeInsight.completion.CompletionType
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
-import com.intellij.openapi.diagnostic.Logger
 import com.intellij.psi.PsiClass
 import com.intellij.util.ProcessingContext
 import org.apache.commons.lang.StringUtils
@@ -28,8 +27,6 @@ import org.apache.commons.lang.StringUtils
  * @author Dmytro Troynikov.
  */
 object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
-
-    val log = Logger.getInstance(SlyUseCompletionProvider::class.java)
 
     override fun addCompletions(parameters: CompletionParameters,
                                 context: ProcessingContext?,

@@ -26,7 +26,7 @@ object HtlElVariableNameCompletionProvider : CompletionProvider<CompletionParame
 
         val fileVariables = FileVariablesResolver.declarationsForPosition(parameters.position, parameters)
                 .filter { it.attributeType != DeclarationAttributeType.DATA_SLY_TEMPLATE }
-                .map { it.toLookupElement().withPriority(100000.0 - currentPosition.textOffset - it.xmlAttribute.textOffset) }
+                .map { it.toLookupElement().withPriority(100000.0 - (currentPosition.textOffset - it.xmlAttribute.textOffset)) }
         result.addAllElements(fileVariables + contextObjects)
         result.stopHere()
     }
