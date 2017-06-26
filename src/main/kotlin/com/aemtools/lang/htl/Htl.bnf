@@ -62,7 +62,7 @@ root ::= ( htl_el | outer_lang )*
 
 private recover_rule ::= !(OUTER_LANGUAGE | EL_START)
 
-private outer_lang ::= OUTER_LANGUAGE+
+outer_lang ::= OUTER_LANGUAGE+ { implements="com.intellij.psi.templateLanguages.OuterLanguageElement"}
 
 htl_el ::= ( hel_start hel? context? hel_end?) {
 recoverWhile="recover_rule" pin=1 mixin="com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin"}

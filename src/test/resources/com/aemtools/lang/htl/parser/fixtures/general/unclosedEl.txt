@@ -1,9 +1,11 @@
 HtlFile:unclosedEl.html
-  PsiElement([Htl] OUTER_LANGUAGE)('<div>\n    ')
+  HtlOuterLangImpl([Htl] OUTER_LANG)
+    PsiElement([Htl] OUTER_LANGUAGE)('<div>\n    ')
   HtlHtlElImpl([Htl] HTL_EL)
     HtlHelStartImpl([Htl] HEL_START)
       PsiElement([Htl] ${)('${')
     PsiWhiteSpace('\n')
     PsiErrorElement:<hel>, '[Htl] @' or '[Htl] }' expected, got '<'
       PsiElement([Htl] <)('<')
-  PsiElement([Htl] OUTER_LANGUAGE)('/div>')
+  HtlOuterLangImpl([Htl] OUTER_LANG)
+    PsiElement([Htl] OUTER_LANGUAGE)('/div>')

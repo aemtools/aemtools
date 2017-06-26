@@ -1,8 +1,10 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor.Companion.empty
+import com.aemtools.completion.htl.CompletionPriority.PREDEFINED_PARAMETER
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.htl.predefined.PredefinedCompletion
+import com.aemtools.util.withPriority
 import com.intellij.codeInsight.lookup.LookupElement
 import org.apache.commons.lang.StringUtils
 
@@ -35,11 +37,12 @@ class PredefinedVariantsTypeDescriptor(val variants: List<LookupElement>) : Type
 class PredefinedTypeDescriptor(val predefined: List<PredefinedCompletion>) : TypeDescriptor {
     override fun myVariants(): List<LookupElement> {
         return predefined.map(PredefinedCompletion::toLookupElement)
+                .map { it.withPriority(PREDEFINED_PARAMETER) }
     }
 
     override fun subtype(identifier: String): TypeDescriptor =
-        predefined.find { it.completionText == identifier }?.asTypeDescriptor()
-        ?: empty()
+            predefined.find { it.completionText == identifier }?.asTypeDescriptor()
+                    ?: empty()
 
     override fun name(): String = ""
 

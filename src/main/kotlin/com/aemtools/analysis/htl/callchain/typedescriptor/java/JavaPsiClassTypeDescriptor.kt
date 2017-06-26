@@ -2,8 +2,8 @@ package com.aemtools.analysis.htl.callchain.typedescriptor.java
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.aemtools.completion.htl.model.ResolutionResult
-import com.aemtools.lang.htl.psi.util.*
 import com.aemtools.lang.java.JavaSearch
+import com.aemtools.util.*
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.psi.*
@@ -13,6 +13,7 @@ import java.util.*
 
 /**
  * Type descriptor which uses given [PsiClass] to provide type information.
+ *
  * @author Dmytro_Troynikov
  */
 open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
@@ -24,14 +25,14 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
         val iterableInterface = JavaSearch.findClass("java.lang.Iterable", psiClass.project) ?: return false
 
         return this.psiClass.isInheritor(iterableInterface, true)
-            || this.psiClass.isEquivalentTo(iterableInterface)
+                || this.psiClass.isEquivalentTo(iterableInterface)
     }
 
     override fun isMap(): Boolean {
         val mapClass = JavaSearch.findClass("java.util.Map", psiClass.project) ?: return false
 
         return this.psiClass.isInheritor(mapClass, true)
-            || this.psiClass.isEquivalentTo(mapClass)
+                || this.psiClass.isEquivalentTo(mapClass)
     }
 
     override fun myVariants(): List<LookupElement> {
@@ -57,18 +58,23 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
                 lookupElement = lookupElement.withTypeText(returnType.presentableText, true)
             }
 
-            result.add(lookupElement)
+            result.add(lookupElement.withPriority(extractPriority(it, psiClass)))
         }
-
         fields.forEach {
             val lookupElement = LookupElementBuilder.create(it.name.toString())
                     .withIcon(it.getIcon(0))
                     .withTypeText(it.type.presentableText, true)
 
-            result.add(lookupElement)
+            result.add(lookupElement.withPriority(extractPriority(it, psiClass)))
         }
 
         return result
+    }
+
+    private fun extractPriority(member: PsiMember, clazz: PsiMember) = when {
+        member.containingClass == clazz -> 1.0
+        member.containingClass?.qualifiedName == "java.lang.Object" -> 0.0
+        else -> 0.5
     }
 
     override fun name(): String = psiClass.qualifiedName
@@ -106,15 +112,15 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
     }
 
     override fun referencedElement(): PsiElement? =
-        psiMember
+            psiMember
 
     override fun asResolutionResult(): ResolutionResult =
-        ResolutionResult(psiClass, myVariants())
+            ResolutionResult(psiClass, myVariants())
 
     companion object {
         fun create(psiClass: PsiClass,
                    psiMember: PsiMember? = null,
-                   psiType: PsiType? = null) : JavaPsiClassTypeDescriptor {
+                   psiType: PsiType? = null): JavaPsiClassTypeDescriptor {
             return when (psiType) {
                 is PsiClassReferenceType -> {
                     val iterable = JavaSearch.findClass("java.lang.Iterable", psiClass.project)
@@ -143,9 +149,9 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
                 }
                 is PsiClassType,
                 is PsiPrimitiveType ->
-                        JavaPsiClassTypeDescriptor(psiClass, psiMember, psiType)
+                    JavaPsiClassTypeDescriptor(psiClass, psiMember, psiType)
                 is PsiArrayType ->
-                        ArrayJavaTypeDescriptor(psiClass, psiMember, psiType)
+                    ArrayJavaTypeDescriptor(psiClass, psiMember, psiType)
                 else -> JavaPsiClassTypeDescriptor(psiClass, psiMember, psiType)
             }
         }
