@@ -33,8 +33,9 @@ class HtmlAttributeUsagesProvider : FindUsagesHandlerFactory() {
     }
 
     class HtlAttributesFindUsagesHandler(xmlAttribute: XmlAttribute) : FindUsagesHandler(xmlAttribute) {
-        override fun isSearchForTextOccurrencesAvailable(psiElement: PsiElement, isSingleFile: Boolean): Boolean {
-            return super.isSearchForTextOccurrencesAvailable(psiElement, isSingleFile)
+        override fun isSearchForTextOccurrencesAvailable(psiElement: PsiElement,
+                                                         isSingleFile: Boolean): Boolean {
+            return false
         }
 
         override fun processElementUsages(element: PsiElement, processor: Processor<UsageInfo>, options: FindUsagesOptions): Boolean {

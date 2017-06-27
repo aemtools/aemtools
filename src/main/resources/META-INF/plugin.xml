@@ -138,6 +138,8 @@
 
         <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
                        order="before xmlAttribute"/>
+        <renameHandler implementation="com.aemtools.refactoring.htl.rename.inplace.HtlDeclarationAttributeInplaceRenameHandler"
+                       order="before xmlAttribute"/>
 
         <renamePsiElementProcessor
                 implementation="com.aemtools.refactoring.htl.rename.HtlVariableNameRenameProcessor"/>

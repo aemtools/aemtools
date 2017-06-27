@@ -42,8 +42,7 @@ class HtlDeclarationAttributeRenameHandler : RenameHandler {
         return attribute.isHtlGlobalDeclarationAttribute()
     }
 
-    override fun invoke(project: Project, editor: Editor?, file: PsiFile?, dataContext: DataContext?) {
-        val element = getElement(dataContext)
+    override fun invoke(project: Project, editor: Editor?, file: PsiFile?, dataContext: DataContext?) { val element = getElement(dataContext)
                 ?: BaseRefactoringAction.getElementAtCaret(editor, file)
                 ?: return
         if (dataContext == null || editor == null || file == null) {
@@ -64,6 +63,6 @@ class HtlDeclarationAttributeRenameHandler : RenameHandler {
     }
 
     override fun invoke(project: Project, elements: Array<out PsiElement>, dataContext: DataContext?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
 }

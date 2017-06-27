@@ -44,5 +44,5 @@ class FindUsagesTest : BaseLightTest() {
         }
     }
 
-    //todo add test for nested call e.g. bean.model.field
+    //todo: add test for nested call e.g. bean.model.field
 }
