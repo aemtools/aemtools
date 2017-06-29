@@ -2,6 +2,7 @@ package com.aemtools.index
 
 import com.aemtools.completion.util.toPsiFile
 import com.aemtools.index.model.TemplateDefinition
+import com.aemtools.util.allScope
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiFile
 import com.intellij.psi.search.FilenameIndex
@@ -66,7 +67,7 @@ object HtlIndexFacade {
         val fbi = FileBasedIndex.getInstance()
         val keys = fbi.getAllKeys(HtlTemplateIndex.HTL_TEMPLATE_ID, project)
         val result = keys.flatMap {
-            fbi.getValues(HtlTemplateIndex.HTL_TEMPLATE_ID, it, GlobalSearchScope.allScope(project))
+            fbi.getValues(HtlTemplateIndex.HTL_TEMPLATE_ID, it, project.allScope())
         }
         return result
     }

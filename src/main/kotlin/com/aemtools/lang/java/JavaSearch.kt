@@ -4,6 +4,7 @@ import com.aemtools.constant.const
 import com.aemtools.constant.const.java.POJO_USE
 import com.aemtools.constant.const.java.USE_INTERFACE
 import com.aemtools.constant.const.java.WCM_USE_CLASS
+import com.aemtools.util.allScope
 import com.intellij.openapi.project.Project
 import com.intellij.psi.JavaPsiFacade
 import com.intellij.psi.PsiAnonymousClass
@@ -33,7 +34,7 @@ object JavaSearch {
     fun findClass(qualifiedName: String, project: Project)
             : PsiClass? =
             JavaPsiFacade.getInstance(project)
-                    .findClass(qualifiedName, searchScope(project))
+                    .findClass(qualifiedName, project.allScope())
 
     /**
      * Search for inheritors of given [PsiClass].
@@ -45,7 +46,7 @@ object JavaSearch {
      * @return list of inheritors of given class
      */
     fun findInheritors(psiClass: PsiClass, project: Project): List<PsiClass> =
-            ClassInheritorsSearch.search(psiClass, searchScope(project), true)
+            ClassInheritorsSearch.search(psiClass, project.allScope(), true)
                     .findAll().toList()
 
     /**
@@ -58,7 +59,7 @@ object JavaSearch {
      * @return list of annotated classes
      */
     fun findAnnotatedClasses(annotation: PsiClass, project: Project): List<PsiClass> =
-            AnnotatedElementsSearch.searchPsiClasses(annotation, searchScope(project))
+            AnnotatedElementsSearch.searchPsiClasses(annotation, project.allScope())
                     .findAll().toList()
 
     /**
@@ -86,7 +87,4 @@ object JavaSearch {
             .filterNot { it.hasModifierProperty(PsiModifier.ABSTRACT) }
             .toSet()
             .toList()
-
-    private fun searchScope(project: Project) = GlobalSearchScope.allScope(project)
-
 }

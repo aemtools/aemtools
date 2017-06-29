@@ -2,6 +2,7 @@ package com.aemtools.completion.util
 
 import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.HtlPsiFile
+import com.aemtools.util.psiManager
 import com.intellij.lang.Language
 import com.intellij.lang.StdLanguages
 import com.intellij.openapi.application.runReadAction
@@ -45,9 +46,7 @@ fun PsiFile.getHtlFile(): HtlPsiFile? = getPsi(HtlLanguage) as? HtlPsiFile
  * @receiver [VirtualFile]
  * @return the psi file
  */
-fun VirtualFile.toPsiFile(project: Project): PsiFile? =
-        PsiManager.getInstance(project)
-                .findFile(this)
+fun VirtualFile.toPsiFile(project: Project): PsiFile? = project.psiManager().findFile(this)
 
 /**
  * Convert current [VirtualFile] to [PsiDirectory].
@@ -55,9 +54,7 @@ fun VirtualFile.toPsiFile(project: Project): PsiFile? =
  * @receiver [VirtualFile]
  * @return the psi directory]
  */
-fun VirtualFile.toPsiDirectory(project: Project): PsiDirectory? =
-        PsiManager.getInstance(project)
-                .findDirectory(this)
+fun VirtualFile.toPsiDirectory(project: Project): PsiDirectory? = project.psiManager().findDirectory(this)
 
 /**
  * Get resource type from current [VirtualFile].
