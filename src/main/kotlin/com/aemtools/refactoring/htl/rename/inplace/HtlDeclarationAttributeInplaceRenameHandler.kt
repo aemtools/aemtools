@@ -8,11 +8,12 @@ import com.intellij.openapi.util.Pair
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
+import com.intellij.psi.PsiNameIdentifierOwner
+import com.intellij.psi.impl.FakePsiElement
 import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.refactoring.rename.PsiElementRenameHandler
 import com.intellij.refactoring.rename.RenameHandler
-import com.intellij.refactoring.rename.inplace.InplaceRefactoring
 import com.intellij.refactoring.rename.inplace.MemberInplaceRenamer
 import com.intellij.refactoring.util.CommonRefactoringUtil
 import java.util.ArrayList
@@ -57,9 +58,9 @@ class HtlDeclarationAttributeInplaceRenameHandler : RenameHandler {
 
 class HtlVariableInplaceRenamer(val attribute: XmlAttribute,
                                 val editor: Editor)
-    : MemberInplaceRenamer(attribute, attribute, editor) {
+    : MemberInplaceRenamer(XmlAttributeForInplaceRename(attribute), attribute, editor) {
 
-    override fun performInplaceRefactoring(nameSuggestions: LinkedHashSet<String>?) : Boolean {
+    override fun performInplaceRefactoring(nameSuggestions: LinkedHashSet<String>?): Boolean {
         myNameSuggestions = nameSuggestions
         if (InjectedLanguageUtil.isInInjectedLanguagePrefixSuffix(myElementToRename)) {
             return false
@@ -87,4 +88,27 @@ class HtlVariableInplaceRenamer(val attribute: XmlAttribute,
         collectAdditionalElementsToRename(stringUsages)
         return buildTemplateAndStart(refs, stringUsages, scope, containingFile)
     }
+
+    override fun getNameIdentifier(): PsiElement {
+        return FakeXmlAttributeNameIdentifier(attribute)
+    }
+}
+
+class XmlAttributeForInplaceRename(
+        val originalAttribute: XmlAttribute
+) : XmlAttribute by originalAttribute, PsiNameIdentifierOwner {
+
+    override fun getNameIdentifier() = FakeXmlAttributeNameIdentifier(originalAttribute)
+
+}
+
+class FakeXmlAttributeNameIdentifier(val attribute: XmlAttribute) : FakePsiElement() {
+    override fun getParent(): PsiElement = attribute
+
+    override fun getTextRange(): TextRange? {
+        return TextRange(
+                attribute.textRange.startOffset + attribute.name.indexOf(".") + 1,
+                attribute.textRange.endOffset)
+    }
+
 }
