@@ -1,5 +1,6 @@
 HtlFile:nestedBraces.html
-  PsiElement([Htl] OUTER_LANGUAGE)('<div>')
+  HtlOuterLangImpl([Htl] OUTER_LANG)
+    PsiElement([Htl] OUTER_LANGUAGE)('<div>')
   HtlHtlElImpl([Htl] HTL_EL)
     HtlHelStartImpl([Htl] HEL_START)
       PsiElement([Htl] ${)('${')
@@ -38,4 +39,5 @@ HtlFile:nestedBraces.html
               PsiElement([Htl] ))(')')
     HtlHelEndImpl([Htl] HEL_END)
       PsiElement([Htl] })('}')
-  PsiElement([Htl] OUTER_LANGUAGE)('\n</div>')
+  HtlOuterLangImpl([Htl] OUTER_LANG)
+    PsiElement([Htl] OUTER_LANGUAGE)('\n</div>')

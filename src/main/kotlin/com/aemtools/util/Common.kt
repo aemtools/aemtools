@@ -1,5 +1,7 @@
 package com.aemtools.util
 
+import com.aemtools.constant.const.htl.DECLARATION_ATTRIBUTES
+import com.aemtools.constant.const.htl.SINGLE_ATTRIBUTES
 import com.intellij.codeInsight.completion.PrioritizedLookupElement
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.openapi.application.ApplicationManager
@@ -97,6 +99,22 @@ fun writeCommand(project: Project, lambda: () -> Unit): Unit {
 }
 
 /**
+ * Check if current string is valid htl attribute name.
+ *
+ * @receiver [String]
+ * @return *true* if current string is valid htl attribute name, *false* otherwise
+ */
+fun String.isHtlAttributeName(): Boolean = when (this.substringBefore(".")) {
+    in DECLARATION_ATTRIBUTES -> {
+        DECLARATION_ATTRIBUTES.any { it == this || this.startsWith("$it.") }
+    }
+    in SINGLE_ATTRIBUTES -> {
+        SINGLE_ATTRIBUTES.any { it == this }
+    }
+    else -> false
+}
+
+/**
  * Add priority to current [LookupElement].
  *
  * @param priority the priority
@@ -106,6 +124,16 @@ fun writeCommand(project: Project, lambda: () -> Unit): Unit {
  */
 fun LookupElement.withPriority(priority: Double): LookupElement =
         PrioritizedLookupElement.withPriority(this, priority)
+
+/**
+ * Add proximity to current [LookupElement].
+ *
+ * @param proximity the proximity
+ * @receiver [LookupElement]
+ * @return [PrioritizedLookupElement] with given proximity
+ */
+fun LookupElement.withProximity(proximity: Int) =
+        PrioritizedLookupElement.withExplicitProximity(this, proximity)
 
 /**
  * Convert current [String] to [StringBuilder].

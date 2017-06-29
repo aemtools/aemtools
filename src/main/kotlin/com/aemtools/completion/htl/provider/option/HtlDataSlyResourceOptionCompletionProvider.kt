@@ -1,5 +1,6 @@
 package com.aemtools.completion.htl.provider.option
 
+import com.aemtools.completion.htl.CompletionPriority.RESOURCE_TYPE
 import com.aemtools.completion.model.htl.HtlOption
 import com.aemtools.completion.util.findParentByType
 import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
@@ -38,7 +39,7 @@ object HtlDataSlyResourceOptionCompletionProvider : CompletionProvider<Completio
                 .map(HtlOption::toLookupElement)
                 .map {
                     if (it.lookupString == "resourceType") {
-                        PrioritizedLookupElement.withPriority(it, 1.toDouble())
+                        PrioritizedLookupElement.withPriority(it, RESOURCE_TYPE)
                     } else {
                         it
                     }

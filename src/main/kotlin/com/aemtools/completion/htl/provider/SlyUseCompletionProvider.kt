@@ -1,11 +1,19 @@
 package com.aemtools.completion.htl.provider
 
+import com.aemtools.completion.htl.CompletionPriority.CLOSE_CLASS
+import com.aemtools.completion.htl.CompletionPriority.CLOSE_TEMPLATE
+import com.aemtools.completion.htl.CompletionPriority.FAR_CLASS
+import com.aemtools.completion.htl.CompletionPriority.FAR_TEMPLATE
 import com.aemtools.completion.util.normalizeToJcrRoot
 import com.aemtools.completion.util.relativeTo
 import com.aemtools.index.HtlIndexFacade.getTemplates
 import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.lang.java.JavaSearch
-import com.intellij.codeInsight.completion.*
+import com.aemtools.util.withPriority
+import com.intellij.codeInsight.completion.CompletionParameters
+import com.intellij.codeInsight.completion.CompletionProvider
+import com.intellij.codeInsight.completion.CompletionResultSet
+import com.intellij.codeInsight.completion.CompletionType
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
@@ -15,6 +23,7 @@ import org.apache.commons.lang.StringUtils
 
 /**
  * Code completion for __data-sly-use.*__ attribute. (e.g. <div data-sly-use.bean="<caret>")
+ *
  * @author Dmytro Troynikov.
  */
 object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
@@ -40,12 +49,7 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
         } else {
             (useClassesVariants + slingModelVariants)
                     .filter {
-                        val normalizedClassName =
-                                it.lookupString.substring(it.lookupString.lastIndexOf(".") + 1)
-                                        .toLowerCase()
-                        StringUtils.getLevenshteinDistance(
-                                normalizedClassName,
-                                currentFileName) < (currentFileName.length / 2).inc()
+                        closeName(normalizedClassName(it.lookupString), currentFileName)
                     }
         }
 
@@ -53,6 +57,15 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
 
         return allClasses + templates
     }
+
+    private fun closeName(normalizedClassName: String, currentFileName: String): Boolean {
+        return StringUtils.getLevenshteinDistance(
+                normalizedClassName,
+                currentFileName) < (currentFileName.length / 2).inc()
+    }
+
+    private fun normalizedClassName(fqn: String): String =
+            fqn.substringAfterLast(".").toLowerCase()
 
     private fun normalizedFileName(parameters: CompletionParameters): String =
             parameters.originalFile.parent?.name?.toLowerCase()
@@ -73,11 +86,19 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
                     .withIcon(it.getIcon(0))
                     .withTypeText(type)
                     .withTailText("(${qualifiedName.substring(0, qualifiedName.lastIndexOf("."))})", true)
+                    .withPriority(classCompletionPriority(currentFileName, name))
 
-            val prioritized = PrioritizedLookupElement.withPriority(result,
-                    (1F - StringUtils.getLevenshteinDistance(currentFileName, name) / 100F).toDouble())
-            return@flatMap listOf(prioritized)
+            return@flatMap listOf(result)
         }
+    }
+
+    private fun classCompletionPriority(fileName: String, className: String): Double =
+            base(fileName, className) - StringUtils.getLevenshteinDistance(fileName, className) / 100.0
+
+    private fun base(name1: String, name2: String): Double = if (closeName(name1, name2)) {
+        CLOSE_CLASS
+    } else {
+        FAR_CLASS
     }
 
     private fun extractTemplates(parameters: CompletionParameters): List<LookupElement> {
@@ -87,7 +108,7 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
             getTemplates(parameters.position.project)
         } else {
             val allTemplates = getTemplates(parameters.position.project)
-            allTemplates.filter { it.containingDirectory.startsWith(dirPath) }
+            allTemplates.filter { "${it.containingDirectory}/".startsWith("${dir.path}/") }
         }.groupBy { it.normalizedPath }
                 .flatMap { it.value }
                 .filter {
@@ -100,6 +121,11 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
                     .withTailText("(${it.normalizedPath})", true)
                     .withPresentableText(it.fileName)
                     .withIcon(AllIcons.FileTypes.Html)
+                    .withPriority(if ("${it.containingDirectory}/".startsWith("${dir.path}/")) {
+                        CLOSE_TEMPLATE
+                    } else {
+                        FAR_TEMPLATE
+                    })
         }
     }
 

@@ -29,15 +29,33 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
          */
         val OBJECT_VARIANTS = listOf("class", "hashCode", "toString")
 
-        val DEFAULT_CONTEXT_OBJECTS = listOf("properties", "pageProperties",
-                "inheritedPageProperties", "component",
-                "componentContext", "currentDesign",
-                "currentNode", "currentPage", "currentSession",
-                "currentStyle", "designer", "editContext",
-                "log", "out", "pageManager", "reader",
-                "request", "resource", "resourceDesign",
-                "resourcePage", "response", "sling",
-                "slyWcmHelper", "wcmmode", "xssAPI")
+        val DEFAULT_CONTEXT_OBJECTS = listOf(
+                "component",
+                "componentContext",
+                "currentDesign",
+                "currentNode",
+                "currentPage",
+                "currentSession",
+                "currentStyle",
+                "properties",
+                "pageProperties",
+                "inheritedPageProperties",
+                "designer",
+                "editContext",
+                "log",
+                "out",
+                "pageManager",
+                "reader",
+                "request",
+                "resource",
+                "resourceDesign",
+                "resourcePage",
+                "response",
+                "sling",
+                "slyWcmHelper",
+                "wcmmode",
+                "xssAPI"
+        ).sorted()
         /**
          * Values available as the 'context' option value (${@ context='<caret>'})
          */
