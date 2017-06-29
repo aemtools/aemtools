@@ -2,6 +2,7 @@ package com.aemtools.index.search
 
 import com.aemtools.index.OSGiConfigIndex
 import com.aemtools.index.model.OSGiConfiguration
+import com.aemtools.util.allScope
 import com.intellij.openapi.project.Project
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
@@ -62,7 +63,7 @@ object OSGiConfigSearch {
         val keys = fbi.getAllKeys(OSGiConfigIndex.OSGI_INDEX_ID, project)
 
         val values = keys.flatMap {
-            fbi.getValues(OSGiConfigIndex.OSGI_INDEX_ID, it, GlobalSearchScope.allScope(project))
+            fbi.getValues(OSGiConfigIndex.OSGI_INDEX_ID, it, project.allScope())
         }.filterNotNull()
 
         return values
