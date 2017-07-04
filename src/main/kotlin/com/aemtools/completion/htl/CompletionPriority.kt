@@ -18,4 +18,8 @@ object CompletionPriority {
     val CLOSE_TEMPLATE: Double = 1.0
     val FAR_TEMPLATE: Double = 0.5
 
+    val VARIABLE_OUTSIDER: Double = -1.0
+    val VARIABLE_BASE: Double = 1.0
+    val CONTEXT_OBJECT: Double = 0.0
+
 }

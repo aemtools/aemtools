@@ -98,6 +98,21 @@ class CompletionRelevanceTest : CompletionBaseLightTest(true) {
         )
     }
 
+    fun testVariableCompletion2() = completionTest {
+        addHtml("test.html", """
+            <div data-sly-use.bean=""></div>
+            $DOLLAR{$CARET}
+            <div data-sly-test.test=""></div>
+            <div data-sly-list.list=""></div>
+            <div data-sly-repeat.repeat=""></div>
+        """)
+        shouldContain(listOf(
+                "bean",
+                *DEFAULT_CONTEXT_OBJECTS.toTypedArray(),
+                "test"
+        ))
+    }
+
     private fun ITestFixture.emptySlingModel(name: String) =
             addClass(name, """
                 package ${name.substringBeforeLast(".").substringBeforeLast(".")};
