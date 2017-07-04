@@ -75,6 +75,7 @@ VAR_NAME=[\w\d:]+
      "'"                         { return SQUOT; }
      "true"                      { return TRUE; }
      "false"                     { return FALSE; }
+     "null"                      { return NULL_LITERAL_TOKEN; }
      "DIVIDE"                    { return DIVIDE; }
 
      {DOUBLE_QUOTED_STRING}      { return DOUBLE_QUOTED_STRING; }

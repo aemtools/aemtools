@@ -6,9 +6,10 @@ package com.aemtools.lang.htl.parser
 class HtlParserLiteralsTest
 : HtlParserBaseTest("com/aemtools/lang/htl/parser/fixtures/literal") {
 
-    fun testBooleanLiteralFalse() = doTest(true)
-    fun testBooleanLiteralTrue() = doTest(true)
+    fun testBooleanLiteralFalse() = doTest()
+    fun testBooleanLiteralTrue() = doTest()
     fun testInteger() = doTest()
+    fun testNullLiteral() = doTest()
 
     fun testSingleQuotedString() = doTest()
     fun testDoubleQuotedString() = doTest()
@@ -21,9 +22,5 @@ class HtlParserLiteralsTest
     fun testArrayWithExpression() = doTest()
     fun testArrayWithNestedArray() = doTest()
     fun testArrayWithTernaryOperation() = doTest()
-
-    override fun setUp() {
-        super.setUp()
-    }
 
 }

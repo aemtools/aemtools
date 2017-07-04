@@ -133,7 +133,11 @@ dot_access ::= DOT variable_name
 
 array_like_access ::= LSQRBRACKET (string_literal|INTEGER|property_access) RSQRBRACKET
 
-literal ::= string_literal | boolean_literal | number_literal | array_literal
+literal ::= string_literal
+    | boolean_literal
+    | number_literal
+    | array_literal
+    | null_literal
 
 array_literal ::= LSQRBRACKET array_statement [(COMMA array_statement)+] RSQRBRACKET
 
@@ -142,6 +146,8 @@ string_literal ::= SINGLE_QUOTED_STRING | DOUBLE_QUOTED_STRING {implements="com.
 boolean_literal ::= TRUE | FALSE
 
 number_literal ::= INTEGER
+
+null_literal ::= NULL_LITERAL_TOKEN
 
 private context ::= AT context_expression (COMMA context_expression)+
     | AT context_expression

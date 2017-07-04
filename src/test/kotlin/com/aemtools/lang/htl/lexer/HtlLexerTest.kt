@@ -17,6 +17,7 @@ class HtlLexerTest : LexerBaseTest(), HtlTestCase {
 
     fun testNumberLiteral() = doTest()
     fun testBooleanLiteral() = doTest()
+    fun testNullLiteral() = doTest()
     fun testLogicalAnd() = doTest()
     fun testLogicalOr() = doTest()
     fun testComparison() = doTest()

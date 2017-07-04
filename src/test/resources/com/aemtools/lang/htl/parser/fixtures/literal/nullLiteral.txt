@@ -1,0 +1,13 @@
+HtlFile:nullLiteral.html
+  HtlHtlElImpl([Htl] HTL_EL)
+    HtlHelStartImpl([Htl] HEL_START)
+      PsiElement([Htl] ${)('${')
+    HtlHelImpl([Htl] HEL)
+      HtlExpressionImpl([Htl] EXPRESSION)
+        HtlStatementImpl([Htl] STATEMENT)
+          HtlOperandImpl([Htl] OPERAND)
+            HtlLiteralImpl([Htl] LITERAL)
+              HtlNullLiteralImpl([Htl] NULL_LITERAL)
+                PsiElement([Htl] NULL_LITERAL_TOKEN)('null')
+    HtlHelEndImpl([Htl] HEL_END)
+      PsiElement([Htl] })('}')
