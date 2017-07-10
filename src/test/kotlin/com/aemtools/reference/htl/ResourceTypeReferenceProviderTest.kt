@@ -37,4 +37,19 @@ class ResourceTypeReferenceProviderTest : BaseReferenceTest() {
         shouldResolveTo(PsiDirectory::class.java)
     }
 
+    fun testResourceTypeProjectRelativeReference() = testReference {
+        addHtml("/$JCR_ROOT/apps/myapp/components/test/test.html", """
+            <div data-sly-resource="$DOLLAR{'name' @ resourceType='${CARET}components/included'}"></div>
+        """)
+
+        addXml("/$JCR_ROOT/apps/myapp/components/included/.content.xml", """
+            <jcr:root
+                jcr:primaryType="cq:Component"
+                componentGroup="My Group"
+                jcr:title="My component" />
+        """)
+
+        shouldResolveTo(PsiDirectory::class.java)
+    }
+
 }
