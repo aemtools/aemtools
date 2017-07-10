@@ -25,7 +25,7 @@ object HtmlDataSlyUseWithinAttributeValueReferenceProvider : JavaClassReferenceP
         val attr = element.findParentByType(XmlAttribute::class.java) ?: return arrayOf()
         val valueElement = attr.valueElement ?: return arrayOf()
         if (attr.isDataSlyUse()) {
-            val psiFile = HtlIndexFacade.resolveFile(valueElement.value, attr.containingFile)
+            val psiFile = HtlIndexFacade.resolveUseFile(valueElement.value, attr.containingFile)
 
             if (psiFile != null) {
                 val fileReference = PsiFileReference(psiFile,

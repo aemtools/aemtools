@@ -15,19 +15,19 @@ import com.intellij.util.indexing.FileBasedIndex
  */
 object HtlIndexFacade {
 
-    private val SLY_USE_EXTENSIONS = listOf("js", "html")
+    private val SLY_USE_EXTENSIONS = listOf("js", "html", "jsp")
+    private val SLY_INCLUDE_EXTENSIONS = listOf("html", "jsp")
 
     /**
-     * Find file for sly use
+     * Resolve file for *data-sly-use*.
+     *
      * @param name the name of file
      * @param psiFile the "relative" file
-     * @return resolved file
+     * @return resolved file, _null_ if no file was found
      */
-    fun resolveFile(name: String, psiFile: PsiFile): PsiFile? {
-
+    fun resolveUseFile(name: String, psiFile: PsiFile): PsiFile? {
         val extension = PathUtil.getFileExtension(name)
                 ?: return null
-
         if (extension !in SLY_USE_EXTENSIONS) {
             return null
         }
@@ -41,19 +41,64 @@ object HtlIndexFacade {
         }
 
         val files = FilenameIndex
-                .getAllFilesByExt(psiFile.project, extension, GlobalSearchScope.projectScope(psiFile.project))
+                .getAllFilesByExt(psiFile.project,
+                        extension,
+                        GlobalSearchScope.projectScope(psiFile.project))
         val file = files.find { it.path.endsWith(normalizedName) }
                 ?: return null
+
         return file.toPsiFile(psiFile.project)
     }
 
-    fun importableFiles(relativeToFile: PsiFile): List<PsiFile> {
-        val htmlFiles = FilenameIndex
-                .getAllFilesByExt(relativeToFile.project, "html", GlobalSearchScope.projectScope(relativeToFile.project))
+    /**
+     * Resolve file for *data-sly-include*.
+     *
+     * @param name the name of file
+     * @param psiFile the "relative" file
+     * @return rresolved file, _null_ if no file was found
+     */
+    fun resolveIncludeFile(name: String, psiFile: PsiFile): PsiFile? {
+        val extension = PathUtil.getFileExtension(name)
+                ?: return null
+
+        if (extension !in SLY_INCLUDE_EXTENSIONS) {
+            return null
+        }
+
+        val normalizedName = if (isAbsolutePath(name)) {
+            name
+        } else {
+            with(psiFile.virtualFile.path) {
+                substring(0, lastIndexOf('/')) + "/$name"
+            }
+        }
+
+        val files = FilenameIndex
+                .getAllFilesByExt(psiFile.project,
+                        extension,
+                        GlobalSearchScope.projectScope(psiFile.project))
+        val file = files.find { it.path.endsWith(normalizedName) }
+                ?: return null
+
+        return file.toPsiFile(psiFile.project)
+    }
+
+    /**
+     * Find files which may be included into given file via *data-sly-include*
+     * (`html` and `jsp` files are allowed).
+     *
+     * @param relativeToFile the file to look includables against
+     * @return list of files which may be included into given file
+     */
+    fun includableFiles(relativeToFile: PsiFile): List<PsiFile> {
+        val files = SLY_INCLUDE_EXTENSIONS.flatMap { extension ->
+            FilenameIndex
+                    .getAllFilesByExt(relativeToFile.project, extension, GlobalSearchScope.projectScope(relativeToFile.project))
+        }
 
         val relativeToDir = relativeToFile.containingDirectory.virtualFile.path
 
-        return htmlFiles.filter { it.path.startsWith(relativeToDir) }
+        return files.filter { it.path.startsWith(relativeToDir) }
                 .map { it.toPsiFile(relativeToFile.project) }
                 .filterNotNull()
                 .filterNot { it.name == relativeToFile.name }

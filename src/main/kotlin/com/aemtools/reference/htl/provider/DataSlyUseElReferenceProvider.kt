@@ -21,7 +21,7 @@ object DataSlyUseElReferenceProvider : JavaClassReferenceProvider() {
     override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<out PsiReference> {
         val literal = element as? HtlStringLiteralMixin ?: return arrayOf()
 
-        val psiFile = HtlIndexFacade.resolveFile(literal.name, element.containingFile)
+        val psiFile = HtlIndexFacade.resolveUseFile(literal.name, element.containingFile)
 
         if (psiFile != null) {
             val fileReference = PsiFileReference(psiFile,

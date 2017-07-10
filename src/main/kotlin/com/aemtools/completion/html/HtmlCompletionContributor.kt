@@ -1,7 +1,7 @@
 package com.aemtools.completion.html
 
 import com.aemtools.completion.html.provider.HtmlAttributeCompletionProvider
-import com.aemtools.completion.html.provider.HtmlDataSlyImportCompletionProvider
+import com.aemtools.completion.html.provider.HtmlDataSlyIncludeCompletionProvider
 import com.aemtools.completion.html.provider.HtmlDataSlyUseCompletionProvider
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyIncludeNoEl
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseNoEl
@@ -29,6 +29,6 @@ class HtmlCompletionContributor : CompletionContributor() { init {
 
     extend(CompletionType.BASIC,
             dataSlyIncludeNoEl,
-            HtmlDataSlyImportCompletionProvider)
+            HtmlDataSlyIncludeCompletionProvider)
 }
 }

@@ -3,7 +3,6 @@ package com.aemtools.completion.html.provider
 import com.aemtools.completion.util.normalizeToJcrRoot
 import com.aemtools.completion.util.relativeTo
 import com.aemtools.index.HtlIndexFacade
-import com.aemtools.lang.htl.icons.HtlIcons
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -13,13 +12,13 @@ import com.intellij.util.ProcessingContext
 /**
  * @author Dmytro Troynikov
  */
-object HtmlDataSlyImportCompletionProvider : CompletionProvider<CompletionParameters>() {
+object HtmlDataSlyIncludeCompletionProvider : CompletionProvider<CompletionParameters>() {
     override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext?, result: CompletionResultSet) {
         if (result.isStopped) {
             return
         }
 
-        val files = HtlIndexFacade.importableFiles(parameters.originalFile)
+        val files = HtlIndexFacade.includableFiles(parameters.originalFile)
 
         val dirName = parameters.originalFile.containingDirectory.virtualFile.path
                 .normalizeToJcrRoot()
@@ -28,9 +27,9 @@ object HtmlDataSlyImportCompletionProvider : CompletionProvider<CompletionParame
             LookupElementBuilder.create(
                     it.virtualFile.path.normalizeToJcrRoot()
                             .relativeTo(dirName))
-                    .withTypeText("HTL File")
+                    .withTypeText(it.fileType.name)
                     .withTailText("(${it.virtualFile.path.normalizeToJcrRoot()})", true)
-                    .withIcon(HtlIcons.HTL_FILE_ICON)
+                    .withIcon(it.getIcon(0))
         }
         result.addAllElements(variants)
     }
