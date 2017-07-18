@@ -1,6 +1,7 @@
-package com.aemtools.lang.java.linemarker
+package com.aemtools.lang.java.linemarker.markerinfo
 
 import com.aemtools.index.model.OSGiConfiguration
+import com.aemtools.lang.java.linemarker.navigationhandler.OSGiGutterIconNavigationHandler
 import com.intellij.codeHighlighting.Pass
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.icons.AllIcons

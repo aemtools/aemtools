@@ -18,6 +18,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
+import com.intellij.xml.util.IncludedXmlAttribute
 import java.util.*
 
 /**
@@ -299,3 +300,13 @@ fun XmlAttribute.nameRange(): TextRange = this.nameElement.textRange
  * @return text range of value element
  */
 fun XmlAttribute.valueRange(): TextRange? = this.valueElement?.textRange
+
+/**
+ * Convert current xml attribute to navigable element.
+ *
+ * @receiver [XmlAttribute]
+ * @return navigable element
+ */
+fun XmlAttribute.toNavigatable(): IncludedXmlAttribute {
+    return IncludedXmlAttribute(this, this.parent)
+}

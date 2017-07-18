@@ -17,5 +17,10 @@
         <applicationService
                 serviceInterface="com.aemtools.service.IJavaSearchService"
                 serviceImplementation="com.aemtools.service.JavaSearchService"/>
+
+        <codeInsight.lineMarkerProvider
+                language="JAVA"
+                implementationClass="com.aemtools.lang.java.linemarker.FelixOSGiPropertyLineMarker"/>
+
     </extensions>
 </idea-plugin>

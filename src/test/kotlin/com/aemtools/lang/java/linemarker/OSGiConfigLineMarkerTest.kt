@@ -5,6 +5,7 @@ import com.aemtools.blocks.fixture.OSGiConfigFixtureMixin
 import com.aemtools.blocks.fixture.OSGiFelixAnnotationsMixin
 import com.aemtools.constant.const.java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.lang.java.JavaSearch
+import com.aemtools.lang.java.linemarker.navigationhandler.OSGiGutterIconNavigationHandler
 import org.junit.Rule
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
