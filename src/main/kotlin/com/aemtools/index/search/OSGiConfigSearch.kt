@@ -10,6 +10,8 @@ import com.intellij.psi.xml.XmlFile
 import com.intellij.util.indexing.FileBasedIndex
 
 /**
+ * Search of OSGi configuration files.
+ *
  * @author Dmytro_Troynikov
  */
 object OSGiConfigSearch {
@@ -20,7 +22,6 @@ object OSGiConfigSearch {
      * @param fqn the full qualified name of class to look for
      * @param project the project
      * @param fillXmlFile (_default false_) defines if the [OSGiConfiguration.xmlFile] should be filled
-     *
      *
      * @return list of all available OSGi configurations,
      * empty list will be returned if no OSGi configuration was found

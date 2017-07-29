@@ -5,6 +5,7 @@ import com.intellij.psi.PsiClass
 
 /**
  * The result of type resolution.
+ *
  * @author Dmytro_Troynikov
  */
 data class ResolutionResult(val psiClass: PsiClass? = null,

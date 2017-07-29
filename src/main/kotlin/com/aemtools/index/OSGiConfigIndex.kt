@@ -12,6 +12,8 @@ import com.intellij.util.indexing.ID
 import com.intellij.util.io.DataExternalizer
 
 /**
+ * Indexes OSGi configuration files.
+ *
  * @author Dmytro_Troynikov
  */
 class OSGiConfigIndex : XmlIndex<OSGiConfiguration>() {

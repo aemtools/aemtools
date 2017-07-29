@@ -3,7 +3,6 @@ package com.aemtools.findusages
 import com.aemtools.util.isHtlAttributeName
 import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.xml.XmlAttributeDeclImpl
-import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlElement
 import com.intellij.psi.xml.XmlTag
 import com.intellij.xml.XmlAttributeDescriptor
@@ -76,9 +75,5 @@ class HtlAttributeDescriptor(val attributeName: String, val parentTag: XmlTag)
         parentTag.getAttribute(attributeName)?.name = newTargetName
         return newTargetName
     }
-
-}
-
-class HtlAttributeNameDeclaration(val attribute: XmlAttribute) : XmlAttributeDeclImpl() {
 
 }

@@ -55,7 +55,7 @@ object HtlIndexFacade {
      *
      * @param name the name of file
      * @param psiFile the "relative" file
-     * @return rresolved file, _null_ if no file was found
+     * @return resolved file, _null_ if no file was found
      */
     fun resolveIncludeFile(name: String, psiFile: PsiFile): PsiFile? {
         val extension = PathUtil.getFileExtension(name)
@@ -106,6 +106,8 @@ object HtlIndexFacade {
 
     /**
      * Collects all Htl files containing templates.
+     *
+     * @param project the project
      * @return list of [TemplateDefinition] objects
      */
     fun getTemplates(project: Project): List<TemplateDefinition> {

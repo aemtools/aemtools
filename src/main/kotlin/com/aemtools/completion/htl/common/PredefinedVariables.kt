@@ -14,7 +14,8 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.project.Project
 
 /**
- * Provides completion on Htl context object (e.g. 'properties')
+ * Provides completion on Htl context object (e.g. 'properties').
+ *
  * @author Dmytro_Troynikov
  */
 object PredefinedVariables {

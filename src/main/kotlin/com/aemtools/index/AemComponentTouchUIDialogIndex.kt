@@ -11,6 +11,8 @@ import com.intellij.util.io.DataExternalizer
 import com.intellij.xml.index.XmlIndex
 
 /**
+ * Indexes touch ui dialogs (_cq_dialog/.content.xml).
+ *
  * @author Dmytro Troynikov
  */
 class AemComponentTouchUIDialogIndex : XmlIndex<AemComponentTouchUIDialogDefinition>() {
