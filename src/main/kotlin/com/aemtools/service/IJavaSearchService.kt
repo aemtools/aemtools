@@ -1,24 +1,24 @@
-package com.aemtools.lang.java
+package com.aemtools.service
 
-import com.aemtools.constant.const.java.POJO_USE
-import com.aemtools.constant.const.java.USE_INTERFACE
-import com.aemtools.constant.const.java.WCM_USE_CLASS
-import com.aemtools.service.IJavaSearchService
-import com.intellij.openapi.components.ServiceManager
+import com.aemtools.constant.const
+import com.aemtools.lang.java.JavaSearch
+import com.aemtools.util.allScope
 import com.intellij.openapi.project.Project
 import com.intellij.psi.JavaPsiFacade
+import com.intellij.psi.PsiAnonymousClass
 import com.intellij.psi.PsiClass
+import com.intellij.psi.PsiModifier
 import com.intellij.psi.search.searches.AnnotatedElementsSearch
 import com.intellij.psi.search.searches.ClassInheritorsSearch
 
 /**
- * Utility object for java search.
- *
  * @author Dmytro Troynikov
  */
-object JavaSearch {
+interface IJavaSearchService {
 
-    val USE_CLASSES = listOf(USE_INTERFACE, WCM_USE_CLASS, POJO_USE)
+    companion object {
+        val USE_CLASSES = listOf(const.java.USE_INTERFACE, const.java.WCM_USE_CLASS, const.java.POJO_USE)
+    }
 
     /**
      * Search for [PsiClass] by qualified name with predefined "allScope".
@@ -31,8 +31,8 @@ object JavaSearch {
      */
     fun findClass(qualifiedName: String, project: Project)
             : PsiClass? =
-            service()
-                    ?.findClass(qualifiedName, project)
+            JavaPsiFacade.getInstance(project)
+                    .findClass(qualifiedName, project.allScope())
 
     /**
      * Search for inheritors of given [PsiClass].
@@ -44,9 +44,8 @@ object JavaSearch {
      * @return list of inheritors of given class
      */
     fun findInheritors(psiClass: PsiClass, project: Project): List<PsiClass> =
-            service()
-                    ?.findInheritors(psiClass, project)
-                    ?: emptyList()
+            ClassInheritorsSearch.search(psiClass, project.allScope(), true)
+                    .findAll().toList()
 
     /**
      * Search classes annotated by given annotation.
@@ -58,9 +57,8 @@ object JavaSearch {
      * @return list of annotated classes
      */
     fun findAnnotatedClasses(annotation: PsiClass, project: Project): List<PsiClass> =
-            service()
-                    ?.findAnnotatedClasses(annotation, project)
-                    ?: emptyList()
+            AnnotatedElementsSearch.searchPsiClasses(annotation, project.allScope())
+                    .findAll().toList()
 
     /**
      * Find all sling models in the project.
@@ -68,9 +66,12 @@ object JavaSearch {
      * @return list of sling models
      */
     fun findSlingModels(project: Project): List<PsiClass> =
-            service()
-                    ?.findSlingModels(project)
-                    ?: emptyList()
+            JavaSearch.findClass(const.java.SLING_MODEL, project)?.let {
+                findAnnotatedClasses(it, project).asSequence()
+                        .filterNot { it is PsiAnonymousClass }
+                        .filterNot { it.hasModifierProperty(PsiModifier.ABSTRACT) }
+                        .toList()
+            }.orEmpty()
 
     /**
      * Find all __io.sightly.java.api.Use__ and __com.adobe.cq.sightly.WCMUse__
@@ -78,11 +79,13 @@ object JavaSearch {
      * @param project the project
      * @return list of inheritors
      */
-    fun findWcmUseClasses(project: Project): List<PsiClass> =
-            service()
-                    ?.findWcmUseClasses(project)
-                    ?: emptyList()
-
-    private fun service(): IJavaSearchService? = ServiceManager.getService(IJavaSearchService::class.java)
+    fun findWcmUseClasses(project: Project): List<PsiClass> = JavaSearch.USE_CLASSES.map { JavaSearch.findClass(it, project) }
+            .asSequence()
+            .filterNotNull()
+            .flatMap { JavaSearch.findInheritors(it, project).asSequence() }
+            .filterNot { it is PsiAnonymousClass }
+            .filterNot { it.hasModifierProperty(PsiModifier.ABSTRACT) }
+            .toSet()
+            .toList()
 
 }

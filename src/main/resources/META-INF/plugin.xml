@@ -44,7 +44,7 @@
     ]]>
     </change-notes>
 
-    <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.modules.lang</depends>
 
     <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
     <depends optional="true" config-file="java.xml">com.intellij.modules.java</depends>
@@ -58,6 +58,7 @@
                                     implementationClass="com.aemtools.documentation.htl.HtlELDocumentationProvider"/>
         <lang.documentationProvider language="XML" order="first"
                                     implementationClass="com.aemtools.documentation.widget.WidgetDocumentationProvider"/>
+
         <!-- widget.xml completion -->
         <completion.contributor language="XML"
                                 implementationClass="com.aemtools.completion.widget.WidgetCompletionContributor"/>
@@ -103,6 +104,7 @@
 
         <lang.syntaxHighlighterFactory language="Htl"
                                        implementationClass="com.aemtools.lang.htl.highlight.HtlHighlighterFactory"/>
+
         <!-- Htl Completion Contributor  -->
         <completion.contributor language="HTML"
                                 implementationClass="com.aemtools.completion.html.HtmlCompletionContributor"/>
@@ -160,6 +162,7 @@
         
         <lang.psiStructureViewFactory language="Htl"
                                       implementationClass="com.aemtools.ide.HtlStructureViewProvider"/>
+
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
     </extensions>
 

@@ -2,8 +2,20 @@
     <extensions defaultExtensionNs="com.intellij">
         <fileBasedIndex implementation="com.aemtools.index.OSGiConfigIndex"/>
 
+        <psi.referenceContributor
+                language="HTML"
+                implementation="com.aemtools.reference.html.HtmlToJavaReferenceContributor"/>
+
+        <psi.referenceContributor
+                language="Htl"
+                implementation="com.aemtools.reference.htl.contributor.HtlToJavaReferenceContributor"/>
+
         <codeInsight.lineMarkerProvider
                 language="JAVA"
                 implementationClass="com.aemtools.lang.java.linemarker.OSGiConfigLineMarker"/>
+
+        <applicationService
+                serviceInterface="com.aemtools.service.IJavaSearchService"
+                serviceImplementation="com.aemtools.service.JavaSearchService"/>
     </extensions>
 </idea-plugin>

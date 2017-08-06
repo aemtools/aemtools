@@ -1,8 +1,8 @@
 package com.aemtools.reference.html
 
 import com.aemtools.reference.html.provider.DataSlyIncludeReferenceProvider
+import com.aemtools.reference.html.provider.DataSlyUseReferenceProvider
 import com.aemtools.reference.html.provider.HtmlAttributeReferenceProvider
-import com.aemtools.reference.html.provider.HtmlDataSlyUseWithinAttributeValueReferenceProvider
 import com.intellij.patterns.XmlPatterns
 import com.intellij.psi.PsiReferenceContributor
 import com.intellij.psi.PsiReferenceRegistrar
@@ -21,7 +21,7 @@ class HtmlReferenceContributor : PsiReferenceContributor() {
 
         registrar.registerReferenceProvider(
                 XmlPatterns.xmlAttributeValue(),
-                HtmlDataSlyUseWithinAttributeValueReferenceProvider)
+                DataSlyUseReferenceProvider)
 
         registrar.registerReferenceProvider(
                 XmlPatterns.xmlAttributeValue()

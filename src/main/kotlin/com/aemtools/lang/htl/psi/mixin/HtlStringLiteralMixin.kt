@@ -4,14 +4,13 @@ import com.aemtools.lang.htl.psi.HtlPsiBaseElement
 import com.aemtools.lang.htl.psi.HtlStringLiteral
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiLiteral
 import com.intellij.psi.PsiNamedElement
 
 /**
  * @author Dmytro_Troynikov
  */
 abstract class HtlStringLiteralMixin(node: ASTNode)
-    : HtlPsiBaseElement(node), HtlStringLiteral, PsiNamedElement, PsiLiteral {
+    : HtlPsiBaseElement(node), HtlStringLiteral, PsiNamedElement {
 
     override fun setName(name: String): PsiElement {
         return this
@@ -24,7 +23,5 @@ abstract class HtlStringLiteralMixin(node: ASTNode)
             this.text.substring(1, this.text.length - 1)
         }
     }
-
-    override fun getValue(): Any? = name
 
 }

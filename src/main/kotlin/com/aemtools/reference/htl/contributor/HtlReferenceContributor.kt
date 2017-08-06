@@ -12,6 +12,7 @@ import com.intellij.psi.PsiReferenceRegistrar
 
 /**
  * Htl reference contributor.
+ *
  * @author Dmytro_Troynikov
  */
 class HtlReferenceContributor : PsiReferenceContributor() {

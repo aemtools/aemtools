@@ -57,7 +57,7 @@ open class WidgetDocumentationProvider : AbstractDocumentationProvider() {
             <p>
                 ${widgetDoc.description}
             </p>
-        """
+        """.trimIndent().replace("\n", "")
     }
 
     fun fieldDocumentation(widgetDoc: WidgetDoc, widgetMember: WidgetMember): String {
@@ -72,7 +72,7 @@ open class WidgetDocumentationProvider : AbstractDocumentationProvider() {
             <p>
                 ${widgetMember.description}
             </p>
-        """
+        """.trimIndent().replace("\n", "")
     }
 
 }
