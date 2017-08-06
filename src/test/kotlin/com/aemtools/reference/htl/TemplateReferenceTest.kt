@@ -1,8 +1,6 @@
 package com.aemtools.reference.htl
 
-import com.aemtools.blocks.base.BaseLightTest.Companion.CARET
 import com.aemtools.blocks.reference.BaseReferenceTest
-import com.aemtools.constant.const.DOLLAR
 import com.aemtools.constant.const.JCR_ROOT
 import com.intellij.psi.xml.XmlAttribute
 

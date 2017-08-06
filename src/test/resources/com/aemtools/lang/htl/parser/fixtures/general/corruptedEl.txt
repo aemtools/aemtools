@@ -1,5 +1,6 @@
 HtlFile:corruptedEl.html
-  PsiElement([Htl] OUTER_LANGUAGE)('<div>\n    ')
+  HtlOuterLangImpl([Htl] OUTER_LANG)
+    PsiElement([Htl] OUTER_LANGUAGE)('<div>\n    ')
   HtlHtlElImpl([Htl] HTL_EL)
     HtlHelStartImpl([Htl] HEL_START)
       PsiElement([Htl] ${)('${')
@@ -14,7 +15,8 @@ HtlFile:corruptedEl.html
     PsiErrorElement:<access identifier>, <logical operator>, <operator>, '[Htl] ?', '[Htl] @' or '[Htl] }' expected, got '""'
       PsiElement([Htl] DOUBLE_QUOTED_STRING)('""')
     PsiElement([Htl] })('}')
-  PsiElement([Htl] OUTER_LANGUAGE)('\n    ')
+  HtlOuterLangImpl([Htl] OUTER_LANG)
+    PsiElement([Htl] OUTER_LANGUAGE)('\n    ')
   HtlHtlElImpl([Htl] HTL_EL)
     HtlHelStartImpl([Htl] HEL_START)
       PsiElement([Htl] ${)('${')
@@ -33,4 +35,5 @@ HtlFile:corruptedEl.html
         PsiElement([Htl] VAR_NAME)('param')
     HtlHelEndImpl([Htl] HEL_END)
       PsiElement([Htl] })('}')
-  PsiElement([Htl] OUTER_LANGUAGE)('\n</div>')
+  HtlOuterLangImpl([Htl] OUTER_LANG)
+    PsiElement([Htl] OUTER_LANGUAGE)('\n</div>')

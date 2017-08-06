@@ -9,4 +9,4 @@ data class SelectedAttribute (
     val value : String?,
     val nameSelected : Boolean,
     val valueSelected : Boolean
-) {}
+)

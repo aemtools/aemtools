@@ -10,3 +10,5 @@ gen
 
 src/test/resources/testLibs/**
 
+/gradle/wrapper/gradle-wrapper.jar
+/gradle/wrapper/gradle-wrapper.properties

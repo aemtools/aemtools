@@ -1,5 +1,7 @@
 package com.aemtools.util
 
+import com.aemtools.constant.const.htl.DECLARATION_ATTRIBUTES
+import com.aemtools.constant.const.htl.SINGLE_ATTRIBUTES
 import com.intellij.codeInsight.completion.PrioritizedLookupElement
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.openapi.application.ApplicationManager
@@ -10,11 +12,16 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.impl.local.LocalFileSystemBase
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiFileFactory
+import com.intellij.psi.PsiManager
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
+import com.intellij.refactoring.RefactoringBundle
+import com.intellij.refactoring.util.CommonRefactoringUtil
 
 /**
  * Some common IDEA Open API methods
+ *
  * @author Dmytro_Troynikov
  */
 object OpenApiUtil {
@@ -92,6 +99,22 @@ fun writeCommand(project: Project, lambda: () -> Unit): Unit {
 }
 
 /**
+ * Check if current string is valid htl attribute name.
+ *
+ * @receiver [String]
+ * @return *true* if current string is valid htl attribute name, *false* otherwise
+ */
+fun String.isHtlAttributeName(): Boolean = when (this.substringBefore(".")) {
+    in DECLARATION_ATTRIBUTES -> {
+        DECLARATION_ATTRIBUTES.any { it == this || this.startsWith("$it.") }
+    }
+    in SINGLE_ATTRIBUTES -> {
+        SINGLE_ATTRIBUTES.any { it == this }
+    }
+    else -> false
+}
+
+/**
  * Add priority to current [LookupElement].
  *
  * @param priority the priority
@@ -100,7 +123,31 @@ fun writeCommand(project: Project, lambda: () -> Unit): Unit {
  * @return [PrioritizedLookupElement] with given priority
  */
 fun LookupElement.withPriority(priority: Double): LookupElement =
-    PrioritizedLookupElement.withPriority(this, priority)
+        PrioritizedLookupElement.withPriority(this, priority)
+
+/**
+ * Get priority of current lookup element if available.
+ *
+ * @receiver [LookupElement]
+ * @see [PrioritizedLookupElement]
+ * @return priority of current lookup element,
+ * _null_ if current element is not instance of [PrioritizedLookupElement]
+ */
+fun LookupElement.priority(): Double? = if (this is PrioritizedLookupElement<*>) {
+    this.priority
+} else {
+    null
+}
+
+/**
+ * Add proximity to current [LookupElement].
+ *
+ * @param proximity the proximity
+ * @receiver [LookupElement]
+ * @return [PrioritizedLookupElement] with given proximity
+ */
+fun LookupElement.withProximity(proximity: Int) =
+        PrioritizedLookupElement.withExplicitProximity(this, proximity)
 
 /**
  * Convert current [String] to [StringBuilder].
@@ -109,3 +156,44 @@ fun LookupElement.withPriority(priority: Double): LookupElement =
  * @return new string builder instance that contains current string
  */
 fun String.toStringBuilder() = StringBuilder(this)
+
+/**
+ * Get [PsiFileFactory] associated with current project.
+ *
+ * @receiver [Project]
+ * @return instance of psi file factory
+ */
+fun Project.psiFileFactory(): PsiFileFactory = PsiFileFactory.getInstance(this)
+
+/**
+ * Get [PsiManager] associated with current project.
+ *
+ * @receiver [Project]
+ * @return instance of psi manager
+ */
+fun Project.psiManager(): PsiManager = PsiManager.getInstance(this)
+
+/**
+ * Get [GlobalSearchScope] associated with current project.
+ *
+ * @receiver [Project]
+ * @return instance of GlobalSearchScope
+ */
+fun Project.allScope(): GlobalSearchScope = GlobalSearchScope.allScope(this)
+
+/**
+ * Show error message popup.
+ *
+ * @param project the project
+ * @param editor the editor
+ * @param message the message
+ */
+fun showErrorMessage(project: Project, editor: Editor?, message: String) {
+    CommonRefactoringUtil.showErrorHint(
+            project,
+            editor,
+            message,
+            RefactoringBundle.message("rename.title"),
+            null
+    )
+}

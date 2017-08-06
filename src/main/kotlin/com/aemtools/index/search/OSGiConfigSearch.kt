@@ -2,6 +2,7 @@ package com.aemtools.index.search
 
 import com.aemtools.index.OSGiConfigIndex
 import com.aemtools.index.model.OSGiConfiguration
+import com.aemtools.util.allScope
 import com.intellij.openapi.project.Project
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
@@ -9,6 +10,8 @@ import com.intellij.psi.xml.XmlFile
 import com.intellij.util.indexing.FileBasedIndex
 
 /**
+ * Search of OSGi configuration files.
+ *
  * @author Dmytro_Troynikov
  */
 object OSGiConfigSearch {
@@ -19,7 +22,6 @@ object OSGiConfigSearch {
      * @param fqn the full qualified name of class to look for
      * @param project the project
      * @param fillXmlFile (_default false_) defines if the [OSGiConfiguration.xmlFile] should be filled
-     *
      *
      * @return list of all available OSGi configurations,
      * empty list will be returned if no OSGi configuration was found
@@ -62,7 +64,7 @@ object OSGiConfigSearch {
         val keys = fbi.getAllKeys(OSGiConfigIndex.OSGI_INDEX_ID, project)
 
         val values = keys.flatMap {
-            fbi.getValues(OSGiConfigIndex.OSGI_INDEX_ID, it, GlobalSearchScope.allScope(project))
+            fbi.getValues(OSGiConfigIndex.OSGI_INDEX_ID, it, project.allScope())
         }.filterNotNull()
 
         return values

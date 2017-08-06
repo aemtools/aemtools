@@ -15,7 +15,7 @@ import com.intellij.util.ProcessingContext
 object DataSlyIncludeElReferenceProvider : PsiReferenceProvider() {
     override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<out PsiReference> {
         val value = element as HtlStringLiteralMixin
-        val psiFile = HtlIndexFacade.resolveFile(value.name, value.containingFile)
+        val psiFile = HtlIndexFacade.resolveIncludeFile(value.name, value.containingFile)
 
         return if (psiFile != null) {
             arrayOf(PsiFileReference(psiFile, value, TextRange(1, value.textLength - 1)))

@@ -7,25 +7,33 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor.Companion.empty
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
-import com.aemtools.lang.htl.psi.util.elFields
-import com.aemtools.lang.htl.psi.util.elMethods
-import com.aemtools.lang.htl.psi.util.elName
 import com.aemtools.lang.java.JavaSearch
 import com.aemtools.service.ServiceFacade
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.project.Project
-import com.intellij.psi.PsiClass
-import java.util.*
 
 /**
- * Provides completion on Htl context object (e.g. 'properties')
+ * Provides completion on Htl context object (e.g. 'properties').
+ *
  * @author Dmytro_Troynikov
  */
 object PredefinedVariables {
 
     private val repository = ServiceFacade.getHtlAttributesRepository()
 
+    /**
+     * Get all global context objects.
+     *
+     * @return list of context objects
+     */
+    fun allContextObjects() = repository.getContextObjects()
+
+    /**
+     * Create lookup elements for global context objects.
+     *
+     * @return list of lookup elements
+     */
     fun contextObjectsCompletion(): List<LookupElement> {
         return repository.getContextObjects().map {
             LookupElementBuilder.create(it.name)
@@ -35,6 +43,13 @@ object PredefinedVariables {
         }
     }
 
+    /**
+     * Create type descriptor for context object by it's identifier.
+     *
+     * @param variableName context's object identifier
+     * @param project the project
+     * @return context object's type descriptor
+     */
     fun typeDescriptorByIdentifier(variableName: VariableNameMixin, project: Project): TypeDescriptor {
         val name = variableName.variableName()
         val classInfo = repository.findContextObject(name) ?: return TypeDescriptor.empty()
@@ -43,7 +58,7 @@ object PredefinedVariables {
         val psiClass = JavaSearch.findClass(fullClassName, project)
         val predefined = classInfo.predefined
         return when {
-            name == "properties" && psiClass != null && predefined != null && predefined .isNotEmpty() -> {
+            name == "properties" && psiClass != null && predefined != null && predefined.isNotEmpty() -> {
                 MergedTypeDescriptor(
                         PropertiesTypeDescriptor(originalElement),
                         PredefinedTypeDescriptor(predefined),
@@ -64,47 +79,6 @@ object PredefinedVariables {
             }
             else -> empty()
         }
-    }
-
-    /**
-     * Extract Htl applicable completion variants from class element.
-     * @return list of LookupElements extracted from given class.
-     */
-    fun extractSuggestions(psiClass: PsiClass): List<LookupElement> {
-        val methods = psiClass.elMethods()
-        val fields = psiClass.elFields()
-
-        val methodNames = ArrayList<String>()
-        val result = ArrayList<LookupElement>()
-
-        methods.forEach {
-            var name = it.elName()
-            if (methodNames.contains(name)) {
-                name = it.name
-            } else {
-                methodNames.add(name)
-            }
-            var lookupElement = LookupElementBuilder.create(name)
-                    .withIcon(it.getIcon(0))
-                    .withTailText(" ${it.name}()", true)
-
-            val returnType = it.returnType
-            if (returnType != null) {
-                lookupElement = lookupElement.withTypeText(returnType.presentableText, true)
-            }
-
-            result.add(lookupElement)
-        }
-
-        fields.forEach {
-            val lookupElement = LookupElementBuilder.create(it.name.toString())
-                    .withIcon(it.getIcon(0))
-                    .withTypeText(it.type.presentableText, true)
-
-            result.add(lookupElement)
-        }
-
-        return result
     }
 
 }

@@ -16,7 +16,7 @@ object DataSlyIncludeReferenceProvider : PsiReferenceProvider() {
     override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<out PsiReference> {
         val value = element as XmlAttributeValue
 
-        val psiFile = HtlIndexFacade.resolveFile(value.value, value.containingFile)
+        val psiFile = HtlIndexFacade.resolveIncludeFile(value.value, value.containingFile)
 
         return if(psiFile != null) {
             arrayOf(PsiFileReference(psiFile, value, TextRange(1, value.textLength - 1)))

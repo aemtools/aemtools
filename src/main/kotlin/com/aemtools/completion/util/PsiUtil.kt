@@ -2,14 +2,16 @@ package com.aemtools.completion.util
 
 import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.HtlPsiFile
+import com.aemtools.util.psiManager
 import com.intellij.lang.Language
 import com.intellij.lang.StdLanguages
+import com.intellij.openapi.application.runReadAction
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.psi.PsiDirectory
-import com.intellij.psi.PsiFile
-import com.intellij.psi.PsiManager
+import com.intellij.psi.*
+import com.intellij.psi.util.PsiUtilCore
 import com.intellij.psi.xml.XmlFile
+import com.intellij.refactoring.rename.RenamePsiElementProcessor
 
 /**
  * Psi utility & extension methods
@@ -44,9 +46,7 @@ fun PsiFile.getHtlFile(): HtlPsiFile? = getPsi(HtlLanguage) as? HtlPsiFile
  * @receiver [VirtualFile]
  * @return the psi file
  */
-fun VirtualFile.toPsiFile(project: Project): PsiFile? =
-        PsiManager.getInstance(project)
-                .findFile(this)
+fun VirtualFile.toPsiFile(project: Project): PsiFile? = project.psiManager().findFile(this)
 
 /**
  * Convert current [VirtualFile] to [PsiDirectory].
@@ -54,9 +54,7 @@ fun VirtualFile.toPsiFile(project: Project): PsiFile? =
  * @receiver [VirtualFile]
  * @return the psi directory]
  */
-fun VirtualFile.toPsiDirectory(project: Project): PsiDirectory? =
-        PsiManager.getInstance(project)
-                .findDirectory(this)
+fun VirtualFile.toPsiDirectory(project: Project): PsiDirectory? = project.psiManager().findDirectory(this)
 
 /**
  * Get resource type from current [VirtualFile].
@@ -70,4 +68,25 @@ fun VirtualFile.resourceType(): String? {
         currentDir = currentDir.parent
     }
     return null
+}
+
+/**
+ * Get [VirtualFile] instance that contain current [PsiElement].
+ *
+ * @receiver [PsiElement]
+ * @return instance of virtual file
+ * @see [PsiUtilCore.getVirtualFile]
+ */
+fun PsiElement.virtualFile(): VirtualFile? =
+        PsiUtilCore.getVirtualFile(this)
+
+/**
+ * Find incoming references (usages) for current element.
+ *
+ * @receiver [PsiElement]
+ * @return list of incoming references
+ */
+fun PsiElement.incomingReferences(): List<PsiReference> = runReadAction {
+        RenamePsiElementProcessor.forElement(this).findReferences(this)
+                .toList()
 }

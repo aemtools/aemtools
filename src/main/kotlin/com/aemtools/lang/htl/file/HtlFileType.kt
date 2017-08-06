@@ -19,7 +19,7 @@ object HtlFileType : LanguageFileType(HtlLanguage), TemplateLanguageFileType {
 
     override fun getIcon(): Icon = HTL_FILE_ICON
 
-    override fun getName() = "Htl"
+    override fun getName() = "HTL"
 
     override fun getDefaultExtension() = "htl"
 

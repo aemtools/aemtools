@@ -18,5 +18,6 @@ object HtlColors {
     val OPERATOR = r("htl.sel.OPERATOR", dc.OPERATION_SIGN)
     val IDENTIFIER = r("htl.sel.IDENTIFIER", dc.IDENTIFIER)
     val OPTION = r("htl.sel.OPTION", dc.PARAMETER)
+    val NULL = r("htl.sel.NULL", dc.KEYWORD)
     val PARENTHESES = r("htl.sel.PARENTHESES", dc.PARENTHESES)
 }

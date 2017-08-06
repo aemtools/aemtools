@@ -8,6 +8,8 @@ import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.util.indexing.FileBasedIndex
 
 /**
+ * Search methods for Htl templates.
+ *
  * @author Dmytro Troynikov
  */
 object HtlTemplateSearch {
@@ -15,6 +17,7 @@ object HtlTemplateSearch {
     /**
      * Find all template definitions available in opened project.
      *
+     * @param project the project
      * @return list of template definitions
      */
     fun all(project: Project): List<TemplateDefinition> {
@@ -29,8 +32,10 @@ object HtlTemplateSearch {
     }
 
     /**
-     * Resolve use template by name.
+     * Resolve use template by name, relative to given file.
      *
+     * @param name the name of template
+     * @param file the file where the template is used
      * @return list of available templates
      */
     fun resolveUseTemplate(name: String, file: PsiFile): List<TemplateDefinition> {

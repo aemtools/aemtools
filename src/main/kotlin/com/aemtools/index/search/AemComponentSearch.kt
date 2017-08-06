@@ -45,6 +45,10 @@ object AemComponentSearch {
      *
      * `myapp/components/component`
      *
+     * or of "project relative" path e.g.
+     *
+     * `components/component`
+     *
      * @param resourceType the resource type string
      * @param project the project
      * @return component definition or *null* if no component was found
@@ -58,8 +62,11 @@ object AemComponentSearch {
                     }
                 } else {
                     { definition: AemComponentDefinition ->
-                        definition.resourceType()
-                                .substringAfter("/apps/") == typeToFind
+                        definition.resourceType().let {
+                            it.substringAfter("/apps/") == typeToFind
+                                    || it.substringAfter("/apps/")
+                                    .substringAfter("/") == typeToFind
+                        }
                     }
                 }
             }

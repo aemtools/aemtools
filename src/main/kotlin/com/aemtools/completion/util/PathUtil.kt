@@ -34,7 +34,7 @@ fun String.normalizeToJcrRoot(): String =
  * @return new relative path
  */
 fun String.relativeTo(path: String): String =
-        if (startsWith(path)) {
+        if (startsWith("$path/")) {
             substring(path.length + 1)
         } else {
             this

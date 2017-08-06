@@ -78,9 +78,8 @@ object HtlELPredefined {
     val LIST_AND_REPEAT_HELPER_OBJECT = listOf(
             pc("index", "int", "zero-based counter (0..length-1)"),
             pc("count", "int", "one-based counter (1..length)"),
-            pc("count", "boolean", "<b>true</b> for the first element being iterated"),
-            pc("middle", "boolean", "<b>true</b> if element being iterated is neither the first nor the last"),
             pc("first", "boolean", "<b>true</b> for the first element being iterated"),
+            pc("middle", "boolean", "<b>true</b> if element being iterated is neither the first nor the last"),
             pc("last", "boolean", "<b>true</b> for the last element being iterated"),
             pc("odd", "boolean", "<b>true</b> if index is odd"),
             pc("even", "boolean", "<b>true</b> if index is even")

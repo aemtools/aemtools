@@ -11,7 +11,7 @@ class RedundantELQuickFixTest : InspectionFixtureTestCase() {
 
     fun testRedundantELQuickFixForDataSlyUse() {
         myFixture.configureByText("test.html", """
-            <div data-sly-use.bean="$DOLLAR{'com.test.Bean'}"></div>
+            <div data-sly-use="$DOLLAR{'com.test.Bean'}"></div>
         """.trimIndent())
 
         val fix = myFixture.getAllQuickFixes("test.html")
@@ -22,7 +22,7 @@ class RedundantELQuickFixTest : InspectionFixtureTestCase() {
         }
 
         myFixture.checkResult("""
-            <div data-sly-use.bean="com.test.Bean"></div>
+            <div data-sly-use="com.test.Bean"></div>
         """.trimIndent())
     }
 

@@ -27,7 +27,7 @@ class HtlHighlighter : SyntaxHighlighterBase() {
         HtlTypes.DOUBLE_QUOTED_STRING -> HtlColors.STRING
 
         HtlTypes.INTEGER -> HtlColors.INTEGER
-
+        HtlTypes.NULL_LITERAL_TOKEN -> HtlColors.NULL
         HtlTypes.VARIABLE_NAME -> HtlColors.VARIABLE
         HtlTypes.AT -> HtlColors.DELIMITER
 

@@ -1,12 +1,10 @@
 package com.aemtools.reference
 
-import com.aemtools.blocks.base.BaseLightTest.Companion.CARET
-import com.aemtools.blocks.base.BaseLightTest.Companion.DOLLAR
 import com.aemtools.blocks.reference.BaseReferenceTest
 import com.aemtools.constant.const.JCR_ROOT
 import com.aemtools.lang.htl.psi.HtlPsiFile
 import com.aemtools.lang.htl.psi.HtlVariableName
-import com.aemtools.reference.htl.provider.HtlPropertyAccessReferenceProvider
+import com.aemtools.reference.htl.HtlDeclarationIdentifier
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiField
 import com.intellij.psi.PsiMethod
@@ -94,8 +92,8 @@ class ReferenceTest : BaseReferenceTest() {
                 $DOLLAR{${CARET}bean}
             </div>
         """)
-        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
-        shouldContainText("com.test.TestClass")
+        shouldResolveTo(HtlDeclarationIdentifier::class.java)
+        shouldContainText("bean")
     }
 
     fun testSlyUseClassReferencesToPsiClass() = testReference {
@@ -117,8 +115,8 @@ class ReferenceTest : BaseReferenceTest() {
             </div>
         """)
 
-        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
-        shouldContainText("$DOLLAR{bean.show}")
+        shouldResolveTo(HtlDeclarationIdentifier::class.java)
+        shouldContainText("show")
     }
 
     fun testReferenceItemToDataSlyList() = testReference {
@@ -127,8 +125,8 @@ class ReferenceTest : BaseReferenceTest() {
                 $DOLLAR{${CARET}item}
             </div>
         """)
-        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
-        shouldContainText("iterable")
+        shouldResolveTo(HtlDeclarationIdentifier::class.java)
+        shouldContainText("item")
     }
 
     fun testReferenceItemListToDataSlyList() = testReference {
@@ -137,8 +135,8 @@ class ReferenceTest : BaseReferenceTest() {
                 $DOLLAR{${CARET}itemList}
             </div>
         """)
-        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
-        shouldContainText("iterable")
+        shouldResolveTo(HtlDeclarationIdentifier::class.java)
+        shouldContainText("itemList")
     }
 
     fun testReferenceItemToDataSlyRepeat() = testReference {
@@ -147,8 +145,8 @@ class ReferenceTest : BaseReferenceTest() {
                 $DOLLAR{${CARET}item}
             </div>
         """)
-        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
-        shouldContainText("iterable")
+        shouldResolveTo(HtlDeclarationIdentifier::class.java)
+        shouldContainText("item")
     }
 
     fun testReferenceItemListToDataSlyRepeat() = testReference {
@@ -157,8 +155,8 @@ class ReferenceTest : BaseReferenceTest() {
                 $DOLLAR{${CARET}itemList}
             </div>
         """)
-        shouldResolveTo(HtlPropertyAccessReferenceProvider.HtlDeclarationIdentifier::class.java)
-        shouldContainText("iterable")
+        shouldResolveTo(HtlDeclarationIdentifier::class.java)
+        shouldContainText("itemList")
     }
 
     fun testReferenceTemplateParameter() = testReference {

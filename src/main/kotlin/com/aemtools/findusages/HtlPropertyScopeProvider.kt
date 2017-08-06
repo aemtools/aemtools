@@ -1,5 +1,6 @@
 package com.aemtools.findusages
 
+import com.aemtools.lang.htl.file.HtlFileType
 import com.intellij.openapi.fileTypes.StdFileTypes
 import com.intellij.openapi.project.Project
 import com.intellij.psi.impl.search.CustomPropertyScopeProvider
@@ -14,6 +15,6 @@ class HtlPropertyScopeProvider : CustomPropertyScopeProvider {
     override fun getScope(project: Project): SearchScope =
             GlobalSearchScope.getScopeRestrictedByFileTypes(
                     GlobalSearchScope.projectScope(project),
-                    StdFileTypes.HTML
+                    StdFileTypes.HTML, HtlFileType
             )
 }

@@ -1,5 +1,6 @@
 HtlFile:notEquals.html
-  PsiElement([Htl] OUTER_LANGUAGE)('<div>')
+  HtlOuterLangImpl([Htl] OUTER_LANG)
+    PsiElement([Htl] OUTER_LANGUAGE)('<div>')
   HtlHtlElImpl([Htl] HTL_EL)
     HtlHelStartImpl([Htl] HEL_START)
       PsiElement([Htl] ${)('${')
@@ -20,4 +21,5 @@ HtlFile:notEquals.html
                 PsiElement([Htl] VAR_NAME)('value2')
     HtlHelEndImpl([Htl] HEL_END)
       PsiElement([Htl] })('}')
-  PsiElement([Htl] OUTER_LANGUAGE)('\n</div>')
+  HtlOuterLangImpl([Htl] OUTER_LANG)
+    PsiElement([Htl] OUTER_LANGUAGE)('\n</div>')

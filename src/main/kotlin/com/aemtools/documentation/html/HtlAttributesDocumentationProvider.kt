@@ -39,8 +39,7 @@ class HtlAttributesDocumentationProvider : AbstractDocumentationProvider() {
     }
 
     private fun generateDocumentation(info: HtlAttributeMetaInfo): String = with(info) {
-        val builder = StringBuilder()
-        with(builder) {
+        buildString {
             append("<h2>$name</h2>")
             append(descriptionBlock(general))
             append(elementBlock(element))
@@ -49,36 +48,31 @@ class HtlAttributesDocumentationProvider : AbstractDocumentationProvider() {
             append(attributeIdentifierBlock(attributeIdentifier))
             append(footer(info))
         }
-        builder.toString()
     }
 
     private fun attributeIdentifierBlock(value: HtlAttributeIdentifierDescription?): String {
         return if (value != null && value.isNotEmpty()) {
-            val builder = StringBuilder()
-            with(builder) {
+            buildString {
                 append("<b>Attribute identifier:</b><br>")
                 append(renderBlock(value.required) { " - required: ${value.required}<br>" })
                 append(renderBlock(value.description) { " - description: ${value.description}<br>" })
             }
-            builder.toString()
         } else {
             ""
         }
     }
 
-    private fun attributeValueBlock(value: HtlAttributeValueDescription?): String {
-        val strBuilder = StringBuilder()
-        if (value != null && value.isNotEmpty()) {
-            with(strBuilder) {
-                append("<b>Attribute value:</b><br>")
-                append(renderBlock(value.required) { " - required: ${value.required}<br>" })
-                append(renderBlock(value.printType()) { " - type: ${value.printType()}<br>" })
-                append(renderBlock(value.description) { " - description: ${value.description}<br>" })
+    private fun attributeValueBlock(value: HtlAttributeValueDescription?): String =
+            if (value != null && value.isNotEmpty()) {
+                buildString {
+                    append("<b>Attribute value:</b><br>")
+                    append(renderBlock(value.required) { " - required: ${value.required}<br>" })
+                    append(renderBlock(value.printType()) { " - type: ${value.printType()}<br>" })
+                    append(renderBlock(value.description) { " - description: ${value.description}<br>" })
+                }
+            } else {
+                ""
             }
-
-        }
-        return strBuilder.toString()
-    }
 
     private fun renderBlock(value: String?, unit: () -> String): String {
         return if (value != null) {

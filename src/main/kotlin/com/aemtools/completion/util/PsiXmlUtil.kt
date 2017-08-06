@@ -7,12 +7,13 @@ import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_USE
-import com.aemtools.constant.const.htl.HTL_ATTRIBUTES
 import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.HtlVariableName
+import com.aemtools.util.isHtlAttributeName
 import com.intellij.openapi.util.Conditions
+import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.xml.XmlAttribute
@@ -35,8 +36,9 @@ fun <T : PsiElement> PsiElement?.findChildrenByType(type: Class<T>): Collection<
  * @receiver [PsiElement]
  * @see [PsiTreeUtil.findFirstParent]
  */
+@Suppress("UNCHECKED_CAST")
 fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T? {
-    return PsiTreeUtil.findFirstParent(this, Conditions.instanceOf(type)) as T?
+    return PsiTreeUtil.findFirstParent(this, Conditions.instanceOf(type)) as? T?
 }
 
 /**
@@ -107,10 +109,10 @@ fun XmlAttribute.extractHtlHel(): HtlHtlEl? {
 /**
  * Extract Htl attributes from given [XmlAttribute] collection.
  *
- * @receiver [Collection] of [XmlAttribute] objects
+ * @receiver [List] of [XmlAttribute] objects
  * @return new collection with only Htl attributes
  */
-fun Collection<XmlAttribute>.htlAttributes(): Collection<XmlAttribute> =
+fun List<XmlAttribute>.htlAttributes(): List<XmlAttribute> =
         filter { it.isHtlAttribute() }
 
 /**
@@ -164,15 +166,7 @@ fun XmlAttribute.isDataSlyUse(): Boolean = this.name.startsWith("$DATA_SLY_USE."
  *
  * @return __true__ if current element is Htl attribute
  */
-fun XmlAttribute.isHtlAttribute(): Boolean = with(this.name) {
-    HTL_ATTRIBUTES.forEach {
-        if (startsWith("$it.") || equals(it)) {
-            return true
-        }
-    }
-
-    return false
-}
+fun XmlAttribute.isHtlAttribute(): Boolean = this.name.isHtlAttributeName()
 
 /**
  * Check if current element is Htl attribute which declares some variable.
@@ -201,11 +195,36 @@ fun XmlAttribute.isHtlDeclarationAttribute(): Boolean =
         }
 
 /**
+ * Check if current attribute is "local" declaration attribute
+ * (i.e. may be referenced only from current file).
+ *
+ * @receiver [XmlAttribute]
+ * @return *true* if current attribute is local declaration attribute
+ */
+fun XmlAttribute.isHtlLocalDeclarationAttribute(): Boolean =
+        isHtlDeclarationAttribute() && !isHtlGlobalDeclarationAttribute()
+
+/**
+ * Check if current attribute is "global" declaration attribute
+ * (i.e. may be referenced from outside current file).
+ *
+ * @receiver [XmlAttribute]
+ * @return *true* if current element is global declaration attribute
+ */
+fun XmlAttribute.isHtlGlobalDeclarationAttribute(): Boolean =
+        with(this.name) {
+            when {
+                startsWith(DATA_SLY_TEMPLATE) -> true
+                else -> false
+            }
+        }
+
+/**
  * Extract list of Htl variable declarations from current [XmlAttribute] collection.
  * @receiver [Collection] of [XmlAttribute] objects
  * @return collection of [HtlVariableDeclaration] elements
  */
-fun Collection<XmlAttribute>.extractDeclarations(): Collection<HtlVariableDeclaration> {
+fun List<XmlAttribute>.extractDeclarations(): List<HtlVariableDeclaration> {
     return filter { it.isHtlDeclarationAttribute() }
             .flatMap {
                 HtlVariableDeclaration.create(it)
@@ -255,3 +274,19 @@ fun XmlAttribute.extractTemplateDefinition(): TemplateDefinition? {
 
     return TemplateDefinition(containingFile.virtualFile?.path, name, params)
 }
+
+/**
+ * Extract text range of name element.
+ *
+ * @receiver [XmlAttribute]
+ * @return text range of name element
+ */
+fun XmlAttribute.nameRange(): TextRange = this.nameElement.textRange
+
+/**
+ * Extract text range of value element.
+ *
+ * @receiver [XmlAttribute]
+ * @return text range of value element
+ */
+fun XmlAttribute.valueRange(): TextRange? = this.valueElement?.textRange

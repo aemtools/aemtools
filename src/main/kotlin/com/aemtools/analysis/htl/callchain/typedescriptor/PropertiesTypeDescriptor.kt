@@ -1,5 +1,6 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor
 
+import com.aemtools.completion.htl.CompletionPriority.DIALOG_PROPERTY
 import com.aemtools.completion.util.resourceType
 import com.aemtools.index.model.AemComponentClassicDialogDefinition
 import com.aemtools.index.model.AemComponentTouchUIDialogDefinition
@@ -35,13 +36,13 @@ class PropertiesTypeDescriptor(val element: PsiElement) : TypeDescriptor {
         touchUIDialog?.let {
             return it.myParameters.map {
                 it.toLookupElement()
-                        .withPriority(1.0)
+                        .withPriority(DIALOG_PROPERTY)
             }
         }
         classicDialog?.let {
             return it.myParameters.map {
                 it.toLookupElement()
-                        .withPriority(1.0)
+                        .withPriority(DIALOG_PROPERTY)
             }
         }
         return emptyList()

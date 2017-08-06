@@ -14,12 +14,12 @@ import com.intellij.psi.PsiElement
  * @return related base path element, _null_ if no such element exists
  */
 fun CdInclude.basePathElement(): CdBasePath? {
-    var prevSibling: PsiElement? = this
-    while (prevSibling != null && prevSibling.prevSibling != null) {
-        prevSibling = prevSibling.prevSibling
-        if (prevSibling is CdBasePath) {
-            return prevSibling
-        }
+    var element: PsiElement? = this
+    return generateSequence {
+        element = element?.prevSibling
+        element
     }
-    return null
+            .map { it as? CdBasePath }
+            .filterNotNull()
+            .firstOrNull()
 }

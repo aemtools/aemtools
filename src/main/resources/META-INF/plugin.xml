@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.aemtools</id>
     <name>AEM Tools</name>
-    <version>0.7</version>
+    <version>0.8</version>
     <category>Framework integration</category>
     <vendor email="dmytrotroynikov@gmail.com"
             url="https://github.com/DmytroTroynikov/aemtools">
@@ -15,7 +15,8 @@
             <ul>
                 <li><b>Syntax Highlighting</b></li>
                 <li><b>Code Completion</b></li>
-                <li><b>Code navigation</b></li>
+                <li><b>Code Navigation</b></li>
+                <li><b>Rename Refactoring</li>
                 <li><b>Quick Documentation</b> (ctrl+q)</li>
                 <li><b>Java Use API support (Sling Models & Use Classes)</b></li>
             </ul>
@@ -36,23 +37,15 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li>
-                completion for data-sly-resource: all AEM components declared in project will be proposed
-                as <b>resourceType</b> variants.
-            </li>
-            <li>
-                Parameters declared in Classic dialog (dialog.xml) and in Touch UI (_cq_dialog/.content.xml)
-                will be proposed as variants for <b>properties</b> context object.
-                <i>Note:<i> if both Touch UI and Classic UI dialogs are present Touch UI properties will be used.
-            </li>
-            <li>added standard HTML structure view for HTL files</li>
-            <li>added support for js.txt&css.txt files</li>
-            <li>OSGi services have list of corresponding OSGi configs available via gutter icon</li>
+            <li>Added rename refactoring</li>
+            <li>Unused & Unresolved variables will be highlighted</li>
+            <li>Added <b>BETA</b> support for WebStorm</li>
+            <li>Bug fixes</li>
         </ul>
     ]]>
     </change-notes>
 
-    <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.modules.lang</depends>
 
     <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
     <depends optional="true" config-file="java.xml">com.intellij.modules.java</depends>
@@ -66,6 +59,7 @@
                                     implementationClass="com.aemtools.documentation.htl.HtlELDocumentationProvider"/>
         <lang.documentationProvider language="XML" order="first"
                                     implementationClass="com.aemtools.documentation.widget.WidgetDocumentationProvider"/>
+
         <!-- widget.xml completion -->
         <completion.contributor language="XML"
                                 implementationClass="com.aemtools.completion.widget.WidgetCompletionContributor"/>
@@ -103,12 +97,15 @@
                                  forClass="com.aemtools.lang.htl.psi.HtlStringLiteral"/>
         <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlPropertyAccessManipulator"
                                  forClass="com.aemtools.lang.htl.psi.HtlPropertyAccess"/>
+        <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlVariableNameManipulator"
+                                 forClass="com.aemtools.lang.htl.psi.HtlVariableName"/>
 
         <lang.fileViewProviderFactory language="Htl"
                                       implementationClass="com.aemtools.lang.htl.file.HtlViewProviderFactory"/>
 
         <lang.syntaxHighlighterFactory language="Htl"
                                        implementationClass="com.aemtools.lang.htl.highlight.HtlHighlighterFactory"/>
+
         <!-- Htl Completion Contributor  -->
         <completion.contributor language="HTML"
                                 implementationClass="com.aemtools.completion.html.HtmlCompletionContributor"/>
@@ -134,12 +131,39 @@
         <annotator language="HTML"
                    implementationClass="com.aemtools.lang.html.annotation.RedundantDataSlyUnwrapAnnotator"/>
         <annotator language="HTML"
-                   implementationClass="com.aemtools.lang.html.annotation.HtlVariablesAnnotator"/>
+                   implementationClass="com.aemtools.lang.html.annotation.HtlAttributesAnnotator"/>
+
         <annotator language="Htl"
                    implementationClass="com.aemtools.lang.html.inspection.RedundantELAnnotator"/>
 
+        <annotator language="Htl"
+                   implementationClass="com.aemtools.lang.htl.highlight.HtlVariablesAnnotator"/>
+
+        <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
+                       order="before xmlAttribute"/>
+
+        <renamePsiElementProcessor
+                implementation="com.aemtools.refactoring.htl.rename.HtlVariableNameRenameProcessor"/>
+        <referencesSearch
+                order="first"
+                implementation="com.aemtools.reference.html.HtlAttributeReferencesSearch"/>
+        <renamePsiElementProcessor
+                order="first"
+                implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameProcessor"/>
+        <useScopeEnlarger implementation="com.aemtools.refactoring.searchscope.HtlDeclarationSearchScopeEnlarger"/>
+        <useScopeOptimizer implementation="com.aemtools.refactoring.searchscope.HtlDeclarationSearchScopeOptimizer"/>
+        <targetElementEvaluator
+                implementationClass="com.aemtools.refactoring.htl.rename.HtlAttributeTargetElementEvaluator"
+                language="Htl"/>
+        <findUsagesHandlerFactory implementation="com.aemtools.findusages.HtmlAttributeUsagesProvider" />
+        
+        <xml.attributeDescriptorsProvider
+                order="first"
+                implementation="com.aemtools.findusages.HtlAttributesDescriptorsProvider" />
+        
         <lang.psiStructureViewFactory language="Htl"
                                       implementationClass="com.aemtools.ide.HtlStructureViewProvider"/>
+
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
     </extensions>
 
