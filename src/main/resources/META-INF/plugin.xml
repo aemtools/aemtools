@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.aemtools</id>
     <name>AEM Tools</name>
-    <version>0.7.1</version>
+    <version>0.8</version>
     <category>Framework integration</category>
     <vendor email="dmytrotroynikov@gmail.com"
             url="https://github.com/DmytroTroynikov/aemtools">
@@ -39,6 +39,7 @@
         <ul>
             <li>Added rename refactoring</li>
             <li>Unused & Unresolved variables will be highlighted</li>
+            <li>Added <b>BETA</b> support for WebStorm</li>
             <li>Bug fixes</li>
         </ul>
     ]]>
