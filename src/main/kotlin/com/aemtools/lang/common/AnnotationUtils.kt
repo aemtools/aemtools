@@ -39,3 +39,16 @@ fun AnnotationHolder.highlight(element: PsiElement,
                                 message: String? = null) : Unit {
     highlight(element.textRange, textAttributesKey, message)
 }
+
+/**
+ * Create error annotation in current annotation holder using given psi element.
+ *
+ * @param element the element that should be marked with error
+ * @param message error message (`null` by default)
+ *
+ * @receiver [AnnotationHolder]
+ */
+fun AnnotationHolder.error(element: PsiElement,
+                           message: String? = null) : Unit{
+    createErrorAnnotation(element, message)
+}

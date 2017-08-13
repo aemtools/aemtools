@@ -31,7 +31,7 @@ class HtlVariablesAnnotator : Annotator {
         val contextObjects = PredefinedVariables.allContextObjects()
         when {
             contextObjects.find { it.name == name } != null -> {
-                holder.highlight(element, HTL_EL_GLOBAL_VARIABLE)
+                holder.highlight(element, HTL_EL_GLOBAL_VARIABLE, "Context Object")
             }
 
             FileVariablesResolver.validVariable(name, element) -> {
@@ -39,7 +39,7 @@ class HtlVariablesAnnotator : Annotator {
             }
 
             else -> {
-                holder.highlight(element, HTL_EL_UNRESOLVED_VARIABLE, "Unresolved reference: $name" )
+                holder.highlight(element, HTL_EL_UNRESOLVED_VARIABLE, "Cannot resolve symbol '$name'")
             }
         }
 
