@@ -78,7 +78,8 @@ array_expression ::= LSQRBRACKET operand (COMMA operand)+ LSQRBRACKET
 
 expression ::= statement
 
-statement ::= ternary_operation
+statement ::= ternary_operation (operator operand)+
+    | ternary_operation
     | operand operator operand (operator operand)+
     | operand operator operand
     | operand
