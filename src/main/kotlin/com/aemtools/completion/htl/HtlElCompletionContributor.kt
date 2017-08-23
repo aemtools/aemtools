@@ -1,9 +1,6 @@
 package com.aemtools.completion.htl
 
-import com.aemtools.completion.htl.provider.HtlDataSlyUseCompletionProvider
-import com.aemtools.completion.htl.provider.HtlElDataSlyCallVariableCompletionProvider
-import com.aemtools.completion.htl.provider.HtlElMemberAccessCompletionProvider
-import com.aemtools.completion.htl.provider.HtlElVariableNameCompletionProvider
+import com.aemtools.completion.htl.provider.*
 import com.aemtools.completion.htl.provider.option.*
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns
 import com.intellij.codeInsight.completion.CompletionContributor
@@ -18,6 +15,8 @@ class HtlElCompletionContributor : CompletionContributor() {init {
 
     extend(CompletionType.BASIC, HtlPatterns.dataSlyUseMainString, HtlDataSlyUseCompletionProvider)
     extend(CompletionType.SMART, HtlPatterns.dataSlyUseMainString, HtlDataSlyUseCompletionProvider)
+
+    extend(CompletionType.BASIC, HtlPatterns.stringLiteralValue, HtlI18NKeyCompletionProvider)
 
     extend(CompletionType.BASIC, HtlPatterns.variableName, HtlElVariableNameCompletionProvider)
 
