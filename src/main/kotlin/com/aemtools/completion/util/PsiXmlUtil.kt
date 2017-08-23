@@ -94,6 +94,16 @@ fun <T : PsiElement> PsiElement?.hasChild(type: Class<T>): Boolean =
 fun XmlTag.isSlyTag(): Boolean = this.name == SLY_TAG
 
 /**
+ * Check if current [XmlTag] contains at least one attribute matched by
+ * gived "matcher" function.
+ *
+ * @param matcher matcher function
+ * @return *true* if current tag has matching attribute
+ */
+fun XmlTag.hasAttribute(matcher: (attribute: XmlAttribute) -> Boolean) : Boolean =
+        attributes.any(matcher)
+
+/**
  * Extract [HtlHtlEl] from current attribute.
  * @receiver [XmlAttribute]
  * @return first [HtlHtlEl] element from current attribute, *null* if no such element found
