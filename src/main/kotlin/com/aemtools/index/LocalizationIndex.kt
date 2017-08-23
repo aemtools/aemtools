@@ -30,7 +30,7 @@ class LocalizationIndex : XmlIndex<LocalizationModel>() {
 
     override fun getInputFilter(): FileBasedIndex.InputFilter
             = FileBasedIndex.InputFilter {
-        it.name == ".content.xml"
+        it.name.endsWith(".xml")
     }
 
 }
