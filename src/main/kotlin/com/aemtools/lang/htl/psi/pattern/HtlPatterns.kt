@@ -266,6 +266,25 @@ object HtlPatterns {
                             .inside(psiElement().with(HtlTemplatePattern(DATA_SLY_USE)))
             )
 
+    /**
+     * Matches the following:
+     *
+     * ```
+     *    ${'<caret' @ i18n}
+     * ```
+     */
+    val localizationMainString: ElementPattern<PsiElement> =
+            and(
+                    stringLiteralValue,
+                    psiElement().afterLeafSkipping(
+                            psiElement(TokenType.WHITE_SPACE),
+                            psiElement(EL_START)),
+                    psiElement().withAncestor(7,
+                            psiElement(HtlHtlEl::class.java)
+                                    .withChild(psiElement()
+                                            .withText("i18n"))
+                    )
+            )
 }
 
 class HtlTemplatePattern(val name: String) : PatternCondition<PsiElement?>(name) {

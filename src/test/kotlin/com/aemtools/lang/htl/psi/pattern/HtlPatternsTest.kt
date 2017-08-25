@@ -10,6 +10,7 @@ import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyTemplateOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseMainString
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseNoEl
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.htlAttribute
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.localizationMainString
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.mainVariableInsideOfDataSlyCall
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.memberAccess
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.optionName
@@ -290,6 +291,24 @@ class HtlPatternsTest : BasePatternsTest() {
             """
                 <div data-sly-include="$DOLLAR{'$CARET'}></div>
             """,
+            false
+    )
+
+    fun testLocalizationMainStringMain() = testHtlPattern(
+            localizationMainString,
+            "$DOLLAR{'$CARET' @ i18n}",
+            true
+    )
+
+    fun testLocalizationMainStringMain2() = testHtlPattern(
+            localizationMainString,
+            "$DOLLAR{\"$CARET\" @ i18n}",
+            true
+    )
+
+    fun testLocalizationMainStringNegative() = testHtlPattern(
+            localizationMainString,
+            "$DOLLAR{'$CARET'}",
             false
     )
 
