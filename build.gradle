@@ -11,10 +11,8 @@ buildscript {
 }
 
 plugins {
-    id "org.jetbrains.intellij" version "0.2.11"
+    id "org.jetbrains.intellij" version "0.2.16"
 }
-
-apply plugin: 'org.jetbrains.intellij'
 
 apply plugin: 'java'
 apply plugin: 'kotlin'
@@ -27,12 +25,12 @@ targetCompatibility = javaVersion
 
 tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
 
+apply plugin: 'org.jetbrains.intellij'
 intellij {
     pluginName 'aemtools'
-    version 'IC-2017.1.4'
+    version ideaVersion
 
     updateSinceUntilBuild = false
-    downloadSources = true
 }
 
 sourceSets {
