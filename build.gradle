@@ -22,6 +22,8 @@ apply from: rootProject.file('config/jacoco.gradle')
 
 sourceCompatibility = javaVersion
 targetCompatibility = javaVersion
+compileKotlin.kotlinOptions.jvmTarget = javaVersion
+compileTestKotlin.kotlinOptions.jvmTarget = javaVersion
 
 tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
 
