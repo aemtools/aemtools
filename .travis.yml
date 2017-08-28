@@ -9,7 +9,7 @@ env:
 install:
   - ./gradlew generateGrammar
   
-script: ./gradlew jacocoTestReport
+script: ./gradlew test jacocoTestReport
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
