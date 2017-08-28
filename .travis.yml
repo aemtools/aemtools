@@ -8,6 +8,8 @@ env:
 
 install:
   - ./gradlew generateGrammar
+  
+script: ./gradlew jacocoTestReport
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
@@ -23,7 +25,6 @@ cache:
 jobs:
   include:
     - stage: Build and Test
-      script: ./gradlew jacocoTestReport
       env: ORG_GRADLE_PROJECT_ideaVersion=LATEST-EAP-SNAPSHOT
     - env: ORG_GRADLE_PROJECT_ideaVersion=2017.2.2
     - env: ORG_GRADLE_PROJECT_ideaVersion=2017.1.5
