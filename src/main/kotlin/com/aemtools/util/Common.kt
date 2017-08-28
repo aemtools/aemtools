@@ -11,6 +11,7 @@ import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.impl.local.LocalFileSystemBase
+import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFileFactory
 import com.intellij.psi.PsiManager
@@ -18,6 +19,7 @@ import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.refactoring.RefactoringBundle
 import com.intellij.refactoring.util.CommonRefactoringUtil
+import org.apache.commons.lang.StringUtils
 
 /**
  * Some common IDEA Open API methods
@@ -158,6 +160,30 @@ fun LookupElement.withProximity(proximity: Int) =
 fun String.toStringBuilder() = StringBuilder(this)
 
 /**
+ * Get Levenshtein distance between current string and the other.
+ *
+ * @param other the string to calculate distance with
+ * @receiver [String]
+ * @see [StringUtils.getLevenshteinDistance]
+ * @return the distance
+ */
+fun String.distanceTo(other: String): Int =
+        StringUtils.getLevenshteinDistance(this, other)
+
+/**
+ * Find the string with the smallest levenshtein distance relative to current string
+ * from set of given strings.
+ *
+ * @param others other strings
+ * @receiver [String]
+ * @see [distanceTo]
+ * @return the closest element, *null* in case if given set is empty
+ */
+fun String.closest(others: Set<String>): String? =
+        others.minBy { this.distanceTo(it) }
+
+
+/**
  * Get [PsiFileFactory] associated with current project.
  *
  * @receiver [Project]
@@ -172,6 +198,14 @@ fun Project.psiFileFactory(): PsiFileFactory = PsiFileFactory.getInstance(this)
  * @return instance of psi manager
  */
 fun Project.psiManager(): PsiManager = PsiManager.getInstance(this)
+
+/**
+ * Get [PsiDocumentManager] associated with current project.
+ *
+ * @receiver [Project]
+ * @return instance of psi document manager
+ */
+fun Project.psiDocumentManager(): PsiDocumentManager = PsiDocumentManager.getInstance(this)
 
 /**
  * Get [GlobalSearchScope] associated with current project.
