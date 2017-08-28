@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.aemtools</id>
     <name>AEM Tools</name>
-    <version>0.8</version>
+    <version>@version@</version>
     <category>Framework integration</category>
     <vendor email="dmytrotroynikov@gmail.com"
             url="https://github.com/DmytroTroynikov/aemtools">

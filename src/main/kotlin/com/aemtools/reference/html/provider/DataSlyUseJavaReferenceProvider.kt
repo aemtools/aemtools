@@ -20,9 +20,9 @@ import com.intellij.util.ProcessingContext
 object DataSlyUseJavaReferenceProvider : JavaClassReferenceProvider() {
     override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<out PsiReference> {
         val attr = element.findParentByType(XmlAttribute::class.java) ?: return arrayOf()
-        val valueElement = attr.valueElement ?: return arrayOf()
+        val value = attr.valueElement?.value ?: return arrayOf()
         if (attr.isDataSlyUse()) {
-            val psiClass = JavaSearch.findClass(valueElement.value, element.project)
+            val psiClass = JavaSearch.findClass(value, element.project)
                     ?: return arrayOf()
 
             return getReferencesByString(psiClass.qualifiedName, element, 1)

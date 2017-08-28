@@ -14,12 +14,13 @@ import com.intellij.util.ProcessingContext
  */
 object DataSlyIncludeReferenceProvider : PsiReferenceProvider() {
     override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<out PsiReference> {
-        val value = element as XmlAttributeValue
+        val valueElement = element as XmlAttributeValue
+        val value = valueElement.value ?: return emptyArray()
 
-        val psiFile = HtlIndexFacade.resolveIncludeFile(value.value, value.containingFile)
+        val psiFile = HtlIndexFacade.resolveIncludeFile(value, valueElement.containingFile)
 
         return if(psiFile != null) {
-            arrayOf(PsiFileReference(psiFile, value, TextRange(1, value.textLength - 1)))
+            arrayOf(PsiFileReference(psiFile, valueElement, TextRange(1, valueElement.textLength - 1)))
         } else {
             arrayOf()
         }
