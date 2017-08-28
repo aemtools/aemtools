@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.aemtools</id>
     <name>AEM Tools</name>
-    <version>0.8</version>
+    <version>@version@</version>
     <category>Framework integration</category>
     <vendor email="dmytrotroynikov@gmail.com"
             url="https://github.com/DmytroTroynikov/aemtools">
@@ -90,6 +90,8 @@
         <fileBasedIndex implementation="com.aemtools.index.AemComponentDeclarationIndex"/>
         <fileBasedIndex implementation="com.aemtools.index.AemComponentClassicDialogIndex"/>
         <fileBasedIndex implementation="com.aemtools.index.AemComponentTouchUIDialogIndex"/>
+
+        <fileBasedIndex implementation="com.aemtools.index.LocalizationIndex"/>
 
         <extendWordSelectionHandler implementation="com.aemtools.ide.htl.HtlStringLiteralWordSelectioner"/>
 

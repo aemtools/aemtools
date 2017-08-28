@@ -1,6 +1,7 @@
 package com.aemtools.index
 
 import com.aemtools.completion.util.toPsiFile
+import com.aemtools.index.model.LocalizationModel
 import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.util.allScope
 import com.intellij.openapi.project.Project
@@ -116,6 +117,23 @@ object HtlIndexFacade {
         val result = keys.flatMap {
             fbi.getValues(HtlTemplateIndex.HTL_TEMPLATE_ID, it, project.allScope())
         }
+        return result
+    }
+
+    /**
+     * Collect all localization models.
+     *
+     * @param project the project
+     * @return list of [LocalizationModel] objects
+     */
+    fun getAllLocalizationModels(project: Project): List<LocalizationModel> {
+        val fbi = FileBasedIndex.getInstance()
+        val keys = fbi.getAllKeys(LocalizationIndex.LOCALIZATION_INDEX, project)
+
+        val result = keys.flatMap {
+            fbi.getValues(LocalizationIndex.LOCALIZATION_INDEX, it, project.allScope())
+        }
+
         return result
     }
 

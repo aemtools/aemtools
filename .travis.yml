@@ -1,15 +1,45 @@
 language: java
+jdk: oraclejdk8
 dist: trusty
-jdk: 
-  - oraclejdk8
 
-before_install: 
-  - sudo add-apt-repository ppa:webupd8team/java
-  - sudo apt update
-  - sudo apt install oracle-java8-installer
+env:
+  global:
+  - ORG_GRADLE_PROJECT_downloadIdeaSources=false
 
 install:
   - ./gradlew generateGrammar
 
-script:
-  - ./gradlew test
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
+jobs:
+  include:
+    - stage: Build and Test
+      env: ORG_GRADLE_PROJECT_ideaVersion=LATEST-EAP-SNAPSHOT
+    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.2.2
+    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.1.5
+    - stage: Deploy new Release
+      script: skip
+      env: ORG_GRADLE_PROJECT_ideaVersion=2017.2.2
+      deploy:
+        - provider: script
+          script: ./gradlew publishPlugin
+          skip_cleanup: true
+          on:
+            tags: true
+            repo: DmytroTroynikov/aemtools
+        - provider: releases
+          api_key: "generate yours: https://docs.travis-ci.com/user/deployment/releases/"
+          file_glob: true
+          file: "build/distributions/*"
+          skip_cleanup: true
+          on:
+            tags: true
+            repo: DmytroTroynikov/aemtools
+  allow_failures:
+    - env: ORG_GRADLE_PROJECT_ideaVersion=LATEST-EAP-SNAPSHOT

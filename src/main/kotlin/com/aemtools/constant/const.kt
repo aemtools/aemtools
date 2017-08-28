@@ -114,6 +114,11 @@ object const {
         val JCR_PRIMARY_TYPE_OSGI_CONFIG: String = "$JCR_PRIMARY_TYPE=\"$SLING_OSGI_CONFIG\""
         val JCR_PRIMARY_TYPE_CQ_COMPONENT: String = "$JCR_PRIMARY_TYPE=\"$CQ_COMPONENT\""
         val JCR_PRIMARY_TYPE_CQ_DIALOG: String = "$JCR_PRIMARY_TYPE=\"$CQ_DIALOG\""
+        val JCR_LANGUAGE: String = "jcr:language"
+        val SLING_KEY: String = "sling:key"
+        val SLING_MESSAGE: String = "sling:message"
+        val JCR_MIXIN_TYPES: String = "jcr:mixinTypes"
+        val LANGUAGE_MIXIN: String = "mix:language"
     }
 
     object message {

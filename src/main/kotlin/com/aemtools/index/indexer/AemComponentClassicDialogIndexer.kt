@@ -29,17 +29,16 @@ object AemComponentClassicDialogIndexer : DataIndexer<String, AemComponentClassi
             val dialogDefinition = AemComponentClassicDialogDefinition(
                     inputData.file.path,
                     resourceType,
-                    mainTag.findChildrenByType(XmlTag::class.java)
-                            .map {
-                                val xtype = it.getAttribute("xtype")?.value
-                                val name = it.getAttribute("name")?.value
-                                if (xtype != null && name != null) {
-                                    AemComponentClassicDialogDefinition
-                                            .ClassicDialogParameterDeclaration(xtype, name)
-                                } else {
-                                    null
-                                }
-                            }.filterNotNull()
+                    mainTag.findChildrenByType(XmlTag::class.java).mapNotNull {
+                        val xtype = it.getAttribute("xtype")?.value
+                        val name = it.getAttribute("name")?.value
+                        if (xtype != null && name != null) {
+                            AemComponentClassicDialogDefinition
+                                    .ClassicDialogParameterDeclaration(xtype, name)
+                        } else {
+                            null
+                        }
+                    }
             )
 
             return mutableMapOf(
