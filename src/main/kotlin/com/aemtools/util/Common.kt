@@ -182,7 +182,6 @@ fun String.distanceTo(other: String): Int =
 fun String.closest(others: Set<String>): String? =
         others.minBy { this.distanceTo(it) }
 
-
 /**
  * Get [PsiFileFactory] associated with current project.
  *
