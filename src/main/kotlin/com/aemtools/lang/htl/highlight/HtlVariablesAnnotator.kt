@@ -5,13 +5,13 @@ import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.model.htl.ContextObject
 import com.aemtools.completion.util.hasParent
 import com.aemtools.completion.util.isOption
+import com.aemtools.inspection.fix.FixVariableNameErrata
 import com.aemtools.lang.common.HtlHighlightColors.HTL_EL_GLOBAL_VARIABLE
 import com.aemtools.lang.common.HtlHighlightColors.HTL_EL_LOCAL_VARIABLE
 import com.aemtools.lang.common.HtlHighlightColors.HTL_EL_UNRESOLVED_VARIABLE
 import com.aemtools.lang.common.highlight
 import com.aemtools.lang.htl.psi.HtlAccessIdentifier
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
-import com.aemtools.lang.html.fix.FixVariableNameErrata
 import com.aemtools.util.closest
 import com.aemtools.util.distanceTo
 import com.intellij.lang.annotation.AnnotationHolder

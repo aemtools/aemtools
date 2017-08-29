@@ -128,10 +128,4 @@ object const {
         val LANGUAGE_MIXIN: String = "mix:language"
     }
 
-    object message {
-        object annotator {
-            val SIMPLIFY_EXPRESSION = "Unnecessary expression."
-        }
-    }
-
 }

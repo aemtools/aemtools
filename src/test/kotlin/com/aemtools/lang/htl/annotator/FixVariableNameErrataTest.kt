@@ -1,6 +1,8 @@
 package com.aemtools.lang.htl.annotator
 
+import com.aemtools.blocks.util.quickFix
 import com.aemtools.constant.const.DOLLAR
+import com.aemtools.inspection.fix.FixVariableNameErrata
 import com.aemtools.util.writeCommand
 import com.intellij.testFramework.InspectionFixtureTestCase
 
@@ -15,7 +17,8 @@ class FixVariableNameErrataTest : InspectionFixtureTestCase() {
             $DOLLAR{mymodel}
         """.trimIndent())
 
-        val fix = myFixture.getAllQuickFixes("test.html")[1]
+        val fix: FixVariableNameErrata = myFixture.quickFix("test.html")
+                ?: throw AssertionError("No quick fix found!")
 
         writeCommand(project) {
             fix.invoke(project, editor, file)
@@ -30,8 +33,8 @@ class FixVariableNameErrataTest : InspectionFixtureTestCase() {
     fun testFixErrataInContextObject() {
         myFixture.configureByText("test.html", "$DOLLAR{propert1es}")
 
-        val fix = myFixture.getAllQuickFixes("test.html")
-                .first()
+        val fix: FixVariableNameErrata = myFixture.quickFix("test.html")
+                ?: throw AssertionError("No quick fix found!")
 
         writeCommand(project) {
             fix.invoke(project, editor, file)
