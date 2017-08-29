@@ -87,7 +87,14 @@ object const {
                 DATA_SLY_UNWRAP,
                 DATA_SLY_REPEAT
         )
+
+        object options {
+            val CONTEXT = "context"
+            val RESOURCE_TYPE = "resourceType"
+            val I18N = "i18n"
+        }
     }
+
 
     object java {
         val USE_INTERFACE = "io.sightly.java.api.Use"

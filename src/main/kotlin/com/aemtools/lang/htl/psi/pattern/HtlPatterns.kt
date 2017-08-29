@@ -1,7 +1,6 @@
 package com.aemtools.lang.htl.psi.pattern
 
-import com.aemtools.completion.util.findParentByType
-import com.aemtools.completion.util.isInsideOf
+import com.aemtools.constant.const
 import com.aemtools.constant.const.htl.DATA_SLY_CALL
 import com.aemtools.constant.const.htl.DATA_SLY_INCLUDE
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
@@ -15,14 +14,12 @@ import com.aemtools.lang.htl.psi.HtlExpression
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.HtlTypes.*
 import com.intellij.patterns.ElementPattern
-import com.intellij.patterns.PatternCondition
 import com.intellij.patterns.PlatformPatterns.*
 import com.intellij.patterns.XmlPatterns.xmlAttribute
 import com.intellij.patterns.XmlPatterns.xmlAttributeValue
 import com.intellij.psi.PsiElement
 import com.intellij.psi.TokenType
 import com.intellij.psi.xml.XmlTokenType.XML_NAME
-import com.intellij.util.ProcessingContext
 
 /**
  * @author Dmytro Troynikov
@@ -70,12 +67,7 @@ object HtlPatterns {
      * ```
      */
     val dataSlyTemplateOption: ElementPattern<PsiElement> =
-            and(
-                    optionName,
-                    psiElement()
-                            .inside(psiElement()
-                                    .with(HtlTemplatePattern(DATA_SLY_TEMPLATE)))
-            )
+            optionInsideAttribute(DATA_SLY_TEMPLATE)
 
     /**
      * Matches option inside of data-sly-resource, e.g.:
@@ -85,12 +77,7 @@ object HtlPatterns {
      * ```
      */
     val dataSlyResourceOption: ElementPattern<PsiElement> =
-            and(
-                    optionName,
-                    psiElement()
-                            .inside(psiElement()
-                                    .with(HtlTemplatePattern(DATA_SLY_RESOURCE)))
-            )
+            optionInsideAttribute(DATA_SLY_RESOURCE)
 
     /**
      * Matches the following:
@@ -132,14 +119,7 @@ object HtlPatterns {
      * ```
      */
     val contextOptionAssignment: ElementPattern<PsiElement> =
-            and(
-                    stringLiteralValue,
-                    psiElement().inside(psiElement(CONTEXT_EXPRESSION)),
-                    psiElement().inside(
-                            psiElement(ASSIGNMENT_VALUE)
-                                    .afterSibling(psiElement(VARIABLE_NAME).withText("context"))
-                    )
-            )
+            namedOptionAssignement(const.htl.options.CONTEXT)
 
     /**
      * Matches the following:
@@ -149,12 +129,28 @@ object HtlPatterns {
      * ```
      */
     val resourceTypeOptionAssignment: ElementPattern<PsiElement> =
+            namedOptionAssignement(const.htl.options.RESOURCE_TYPE)
+
+    /**
+     * Create matcher for assignment of option with given name.
+     * e.g.:
+     *
+     * ```
+     * namedOptionAssignement("context") ->
+     *   will create pattern that will match:
+     *   ${@ context='<caret>'}
+     * ```
+     *
+     * @param option option name
+     * @return new element pattern
+     */
+    private fun namedOptionAssignement(option: String): ElementPattern<PsiElement> =
             and(
                     stringLiteralValue,
                     psiElement().inside(psiElement(CONTEXT_EXPRESSION)),
                     psiElement().inside(
                             psiElement(ASSIGNMENT_VALUE)
-                                    .afterSibling(psiElement(VARIABLE_NAME).withText("resourceType"))
+                                    .afterSibling(psiElement(VARIABLE_NAME).withText(option))
                     )
             )
 
@@ -241,13 +237,7 @@ object HtlPatterns {
      * ```
      */
     val dataSlyIncludeMainString: ElementPattern<PsiElement> =
-            and(
-                    stringLiteralValue,
-                    psiElement().afterLeafSkipping(
-                            psiElement(TokenType.WHITE_SPACE),
-                            psiElement(EL_START))
-                            .inside(psiElement().with(HtlTemplatePattern(DATA_SLY_INCLUDE)))
-            )
+            mainStringInAttribute(DATA_SLY_INCLUDE)
 
     /**
      * Matches the following:
@@ -258,13 +248,7 @@ object HtlPatterns {
      * ```
      */
     val dataSlyUseMainString: ElementPattern<PsiElement> =
-            and(
-                    stringLiteralValue,
-                    psiElement().afterLeafSkipping(
-                            psiElement(TokenType.WHITE_SPACE),
-                            psiElement(EL_START))
-                            .inside(psiElement().with(HtlTemplatePattern(DATA_SLY_USE)))
-            )
+            mainStringInAttribute(DATA_SLY_USE)
 
     /**
      * Matches the following:
@@ -282,15 +266,37 @@ object HtlPatterns {
                     psiElement().withAncestor(7,
                             psiElement(HtlHtlEl::class.java)
                                     .withChild(psiElement()
-                                            .withText("i18n"))
+                                            .withText(const.htl.options.I18N))
                     )
             )
-}
 
-class HtlTemplatePattern(val name: String) : PatternCondition<PsiElement?>(name) {
-    override fun accepts(element: PsiElement, context: ProcessingContext?): Boolean {
-        return element.findParentByType(HtlHtlEl::class.java)
-                ?.isInsideOf(name)
-                ?: false
-    }
+    /**
+     * Create pattern which will match main string in given htl attribute.
+     *
+     * @param attribute the name of attribute
+     * @return new element pattern
+     */
+    private fun mainStringInAttribute(attribute: String): ElementPattern<PsiElement> =
+            and(
+                    stringLiteralValue,
+                    psiElement().afterLeafSkipping(
+                            psiElement(TokenType.WHITE_SPACE),
+                            psiElement(EL_START))
+                            .inside(psiElement().with(HtlTemplatePattern(attribute)))
+            )
+
+    /**
+     * Create pattern which will match option name inside of given htl attribute.
+     *
+     * @param attribute the name of attribute
+     * @return new element pattern
+     */
+    private fun optionInsideAttribute(attribute: String): ElementPattern<PsiElement> =
+            and(
+                    optionName,
+                    psiElement()
+                            .inside(psiElement()
+                                    .with(HtlTemplatePattern(attribute)))
+            )
+
 }
