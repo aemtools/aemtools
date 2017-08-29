@@ -19,7 +19,10 @@ import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.refactoring.RefactoringBundle
 import com.intellij.refactoring.util.CommonRefactoringUtil
+import com.intellij.util.indexing.FileBasedIndex
+import com.intellij.util.indexing.ID
 import org.apache.commons.lang.StringUtils
+import java.io.Serializable
 
 /**
  * Some common IDEA Open API methods
@@ -229,4 +232,27 @@ fun showErrorMessage(project: Project, editor: Editor?, message: String) {
             RefactoringBundle.message("rename.title"),
             null
     )
+}
+
+/**
+ * Reads all values from file based index with given [ID].
+ *
+ * @param MODEL the model type
+ *
+ * @param indexId the index id
+ * @param project the project
+ * @param scope global search scope, [allScope] by default
+ *
+ * @see [FileBasedIndex], [ID]
+ *
+ * @return collection of all models stored under given index id
+ */
+inline fun <reified MODEL : Serializable> allFromFbi(indexId: ID<String, MODEL>,
+                                                     project: Project,
+                                                     scope: GlobalSearchScope = project.allScope())
+        : List<MODEL> = FileBasedIndex.getInstance().let { fbi ->
+    fbi.getAllKeys(indexId, project)
+            .flatMap {
+                fbi.getValues(indexId, it, scope)
+            }
 }
