@@ -120,7 +120,7 @@ object HtlElementFactory {
      */
     fun createOption(value: String, project: Project): HtlVariableName? =
             project.psiFileFactory()
-                    .file("$DOLLAR{@ ${value}}")
+                    .file("$DOLLAR{@ $value}")
                     .findChildrenByType(HtlVariableName::class.java)
                     .firstOrNull()
 

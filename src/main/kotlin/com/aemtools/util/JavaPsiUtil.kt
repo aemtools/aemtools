@@ -109,7 +109,6 @@ fun PsiClass.elFields(): List<PsiField> = this.allFields
                     && !it.hasModifierProperty(PsiModifier.STATIC)
         }
 
-
 fun PsiClass.fieldsSortedByClass(): LinkedHashMap<PsiClass, List<PsiField>> = this.let {
     var currentClass: PsiClass? = this
     val result: LinkedHashMap<PsiClass, List<PsiField>> = LinkedHashMap()

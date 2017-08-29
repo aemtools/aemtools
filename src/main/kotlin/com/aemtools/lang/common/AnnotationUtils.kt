@@ -10,7 +10,6 @@ import com.intellij.psi.PsiElement
  * @author Dmytro Troynikov
  */
 
-
 /**
  * Create info annotation in current annotation holder using given text range.
  *
@@ -27,7 +26,6 @@ fun AnnotationHolder.highlight(range: TextRange,
         createInfoAnnotation(range, message).apply {
             textAttributes = textAttributesKey
         }
-
 
 /**
  * Create info annotation in current annotation holder using given psi element.

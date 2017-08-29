@@ -19,7 +19,7 @@ abstract class BaseParameterDeclaration : Serializable {
     /**
 
      */
-    abstract protected val tailText: String
+    protected abstract val tailText: String
 
     fun toLookupElement(): LookupElement =
             LookupElementBuilder.create(name.normalize())

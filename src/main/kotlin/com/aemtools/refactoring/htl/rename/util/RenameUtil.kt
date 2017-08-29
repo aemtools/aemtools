@@ -66,7 +66,7 @@ object RenameUtil {
                nameSuggestionContext: PsiElement,
                editor: Editor?,
                defaultName: String? = null
-    ): Unit {
+    ) {
         val processor = RenamePsiElementProcessor.forElement(element)
         val substituted = processor.substituteElementToRename(element, editor)
 
@@ -159,5 +159,4 @@ object RenameUtil {
     }
 
 }
-
 

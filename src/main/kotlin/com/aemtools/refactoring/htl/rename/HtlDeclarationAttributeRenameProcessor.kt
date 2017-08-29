@@ -45,7 +45,7 @@ class HtlDeclarationAttributeRenameProcessor : RenamePsiElementProcessor() {
         val htlListHelperUsages: ArrayList<UsageInfo> = ArrayList()
         val propertyAccessUsages: ArrayList<UsageInfo> = ArrayList()
         usages?.filterTo(htlDeclarationUsages, { it.reference is HtlDeclarationReference })
-        usages?.filterTo(htlListHelperUsages, {it.reference is HtlListHelperReference})
+        usages?.filterTo(htlListHelperUsages, { it.reference is HtlListHelperReference })
         usages?.filterTo(propertyAccessUsages, { it.reference is HtlPropertyAccessReference })
 
         htlListHelperUsages.forEach {

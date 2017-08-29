@@ -241,7 +241,6 @@ fun List<XmlAttribute>.extractDeclarations(): List<HtlVariableDeclaration> {
             }
 }
 
-
 /**
  * Extract template parameters from current [XmlAttribute]
  * e.g.

@@ -1,6 +1,5 @@
 package com.aemtools.lang.htl.colorscheme
 
-
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors as dc
 import com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey as r
 

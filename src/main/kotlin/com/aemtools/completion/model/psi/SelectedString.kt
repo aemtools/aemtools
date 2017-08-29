@@ -17,8 +17,8 @@ data class SelectedString private constructor(
 
     companion object {
 
-        operator fun invoke(value : String?) : SelectedString?{
-            if (value == null){
+        operator fun invoke(value : String?) : SelectedString? {
+            if (value == null) {
                 return null
             }
 
@@ -26,6 +26,5 @@ data class SelectedString private constructor(
         }
 
     }
-
 
 }

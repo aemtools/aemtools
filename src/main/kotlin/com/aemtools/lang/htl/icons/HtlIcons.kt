@@ -21,7 +21,7 @@ object HtlIcons {
     val REPEAT_HELPER_ICON: Icon = AllIcons.Nodes.Variable
 
     val SLY_USE_VARIABLE_ICON: Icon = AllIcons.Nodes.Variable
-    val SLY_TEST_VARIABLE_ICON: Icon =AllIcons.Nodes.Variable
+    val SLY_TEST_VARIABLE_ICON: Icon = AllIcons.Nodes.Variable
 
     val AEM_COMPONENT: Icon = icon("aem-component.png")
 

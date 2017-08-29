@@ -33,7 +33,7 @@ class AemComponentDeclarationIndex : XmlIndex<AemComponentDefinition>() {
             = AemComponentDeclarationIndexer
 
     override fun getInputFilter(): FileBasedIndex.InputFilter
-        =  FileBasedIndex.InputFilter {
+        = FileBasedIndex.InputFilter {
         it.fileType == XmlFileType.INSTANCE
         && it.name == ".content.xml"
     }
