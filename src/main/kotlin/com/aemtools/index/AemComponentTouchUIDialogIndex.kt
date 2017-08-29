@@ -2,7 +2,7 @@ package com.aemtools.index
 
 import com.aemtools.index.dataexternalizer.AemComponentTouchUIDialogDefinitionExternalizer
 import com.aemtools.index.indexer.AemComponentTouchUIDialogIndexer
-import com.aemtools.index.model.AemComponentTouchUIDialogDefinition
+import com.aemtools.index.model.dialog.AemComponentTouchUIDialogDefinition
 import com.intellij.util.indexing.DataIndexer
 import com.intellij.util.indexing.FileBasedIndex
 import com.intellij.util.indexing.FileContent

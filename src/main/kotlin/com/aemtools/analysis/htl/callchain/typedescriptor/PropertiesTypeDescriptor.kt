@@ -2,8 +2,8 @@ package com.aemtools.analysis.htl.callchain.typedescriptor
 
 import com.aemtools.completion.htl.CompletionPriority.DIALOG_PROPERTY
 import com.aemtools.completion.util.resourceType
-import com.aemtools.index.model.AemComponentClassicDialogDefinition
-import com.aemtools.index.model.AemComponentTouchUIDialogDefinition
+import com.aemtools.index.model.dialog.AemComponentClassicDialogDefinition
+import com.aemtools.index.model.dialog.AemComponentTouchUIDialogDefinition
 import com.aemtools.index.search.AemComponentSearch
 import com.aemtools.util.withPriority
 import com.intellij.codeInsight.lookup.LookupElement

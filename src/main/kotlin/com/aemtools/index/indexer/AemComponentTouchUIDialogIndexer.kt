@@ -3,7 +3,8 @@ package com.aemtools.index.indexer
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.getXmlFile
 import com.aemtools.completion.util.normalizeToJcrRoot
-import com.aemtools.index.model.AemComponentTouchUIDialogDefinition
+import com.aemtools.index.model.dialog.AemComponentTouchUIDialogDefinition
+import com.aemtools.index.model.dialog.parameter.TouchUIDialogParameterDeclaration
 import com.intellij.psi.xml.XmlTag
 import com.intellij.util.indexing.DataIndexer
 import com.intellij.util.indexing.FileContent
@@ -25,20 +26,18 @@ object AemComponentTouchUIDialogIndexer : DataIndexer<String, AemComponentTouchU
         val dialogDefinition = AemComponentTouchUIDialogDefinition(
                 inputData.file.path,
                 resourceType,
-                mainTag.findChildrenByType(XmlTag::class.java)
-                        .map {
-                            val slingResourceType = it.getAttribute("sling:resourceType")?.value
-                            val name = it.getAttribute("name")?.value
-                            if (slingResourceType != null && name != null) {
-                                AemComponentTouchUIDialogDefinition
-                                        .TouchUIDialogParameterDeclaration(
-                                                slingResourceType,
-                                                name
-                                        )
-                            } else {
-                                null
-                            }
-                        }.filterNotNull()
+                mainTag.findChildrenByType(XmlTag::class.java).mapNotNull {
+                    val slingResourceType = it.getAttribute("sling:resourceType")?.value
+                    val name = it.getAttribute("name")?.value
+                    if (slingResourceType != null && name != null) {
+                        TouchUIDialogParameterDeclaration(
+                                slingResourceType,
+                                name
+                        )
+                    } else {
+                        null
+                    }
+                }
         )
 
         return mutableMapOf(
