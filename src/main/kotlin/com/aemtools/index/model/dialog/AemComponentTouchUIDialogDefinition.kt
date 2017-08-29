@@ -12,10 +12,7 @@ data class AemComponentTouchUIDialogDefinition(
         override val fullPath: String,
         override val resourceType: String,
         override val myParameters: List<TouchUIDialogParameterDeclaration>
-) : AemComponentDialogBase<TouchUIDialogParameterDeclaration>(
-        fullPath,
-        resourceType,
-        myParameters) {
+) : AemComponentDialogBase<TouchUIDialogParameterDeclaration>() {
 
     companion object {
         @JvmStatic

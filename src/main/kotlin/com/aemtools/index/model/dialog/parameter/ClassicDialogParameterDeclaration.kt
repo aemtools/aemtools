@@ -1,9 +1,5 @@
 package com.aemtools.index.model.dialog.parameter
 
-import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.icons.AllIcons
-
 /**
  * Classic dialog parameter declaration model.
  *
@@ -14,24 +10,14 @@ import com.intellij.icons.AllIcons
 data class ClassicDialogParameterDeclaration(
         val xtype: String,
         override val name: String
-) : BaseParameterDeclaration(
-        name
-) {
+) : BaseParameterDeclaration() {
 
     companion object {
         @JvmStatic
         val serialVersionUID: Long = 1L
     }
 
-    /**
-     * Convert current parameter declaration into [LookupElement].
-     *
-     * @return new lookup element
-     */
-    fun toLookupElement(): LookupElement =
-            LookupElementBuilder.create(name.normalize())
-                    .withIcon(AllIcons.Nodes.Parameter)
-                    .withTailText("($xtype)", true)
-                    .withTypeText("Dialog")
+    override val tailText: String
+        get() = xtype
 
 }

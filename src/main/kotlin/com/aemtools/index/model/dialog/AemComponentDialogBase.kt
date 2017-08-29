@@ -19,11 +19,11 @@ import java.io.Serializable
  *
  * @author Dmytro Troynikov
  */
-abstract class AemComponentDialogBase<out PARAMETER : Serializable>(
-        open val fullPath: String,
-        open val resourceType: String,
-        open val myParameters: List<PARAMETER>
-) : Serializable {
+abstract class AemComponentDialogBase<out PARAMETER : Serializable> : Serializable {
+
+    abstract val fullPath: String
+    abstract val resourceType: String
+    abstract val myParameters: List<PARAMETER>
 
     /**
      * Find declaration element of parameter with given name.

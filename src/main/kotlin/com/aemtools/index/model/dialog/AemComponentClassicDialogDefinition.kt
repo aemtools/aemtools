@@ -13,10 +13,7 @@ data class AemComponentClassicDialogDefinition(
         override val fullPath: String,
         override val resourceType: String,
         override val myParameters: List<ClassicDialogParameterDeclaration>
-) : AemComponentDialogBase<ClassicDialogParameterDeclaration>(
-        fullPath,
-        resourceType,
-        myParameters) {
+) : AemComponentDialogBase<ClassicDialogParameterDeclaration>() {
 
     companion object {
         @JvmStatic
