@@ -1,6 +1,7 @@
 package com.aemtools.lang.htl.psi.pattern
 
 import com.aemtools.completion.util.findParentByType
+import com.aemtools.completion.util.isInsideOf
 import com.aemtools.completion.util.getHtlFile
 import com.aemtools.constant.const.htl.DATA_SLY_CALL
 import com.aemtools.constant.const.htl.DATA_SLY_INCLUDE
