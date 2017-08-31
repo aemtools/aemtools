@@ -166,6 +166,10 @@
         <lang.psiStructureViewFactory language="Htl"
                                       implementationClass="com.aemtools.ide.HtlStructureViewProvider"/>
 
+        <applicationService
+                serviceInterface="com.aemtools.settings.HtlRootDirectories"
+                serviceImplementation="com.aemtools.settings.HtlRootDirectories"/>
+
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
     </extensions>
 
@@ -176,6 +180,12 @@
     </project-components>
 
     <actions>
+        <action id="MarkAsHtlRootDirectory"
+                class="com.aemtools.action.MarkAsHtlRootDirectoryAction"
+                text="HTL Root"
+                description="HTML files under this directory will be considered as HTL files">
+            <add-to-group group-id="MarkRootGroup" anchor="first" />
+        </action>
     </actions>
 
 </idea-plugin>
