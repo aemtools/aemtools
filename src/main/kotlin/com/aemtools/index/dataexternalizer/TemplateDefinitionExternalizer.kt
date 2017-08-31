@@ -13,4 +13,3 @@ import java.io.DataOutput
  */
 object TemplateDefinitionExternalizer : BaseExternalizer<TemplateDefinition>()
 
-

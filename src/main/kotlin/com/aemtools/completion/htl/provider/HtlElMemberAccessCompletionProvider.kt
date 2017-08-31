@@ -29,7 +29,6 @@ object HtlElMemberAccessCompletionProvider : CompletionProvider<CompletionParame
         result.stopHere()
     }
 
-
     fun resolve(element: PsiElement): ResolutionResult {
         val propertyAccessElement = element.findParentByType(PropertyAccessMixin::class.java)
                 ?: return ResolutionResult()

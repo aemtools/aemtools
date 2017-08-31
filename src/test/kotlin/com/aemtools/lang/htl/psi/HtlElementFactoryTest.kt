@@ -5,7 +5,7 @@ import com.aemtools.blocks.base.BaseLightTest
 /**
  * @author Dmytro Troynikov
  */
-class HtlElementFactoryTest : BaseLightTest() {
+class HtlElementFactoryTest : BaseLightTest(false) {
 
     fun testDotAccessIdentifier() {
         val accessIdentifier = HtlElementFactory.createDotAccessIdentifier("identifier", project)

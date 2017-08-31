@@ -17,6 +17,6 @@ object HtlHighlightColors {
     val HTL_EL_LOCAL_VARIABLE = key("HTL_EL_LOCAL_VARIABLE", DefaultLanguageHighlighterColors.LOCAL_VARIABLE)
     val HTL_EL_UNRESOLVED_VARIABLE = key("HTL_EL_UNRESOLVED_VARIABLE", CodeInsightColors.WRONG_REFERENCES_ATTRIBUTES)
 
-    private fun key(name: String, key:TextAttributesKey) =
+    private fun key(name: String, key: TextAttributesKey) =
             TextAttributesKey.createTextAttributesKey(name, key)
 }

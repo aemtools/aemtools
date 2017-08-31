@@ -2,7 +2,8 @@ package com.aemtools.index
 
 import com.aemtools.blocks.base.BaseLightTest
 import com.aemtools.constant.const.JCR_ROOT
-import com.aemtools.index.model.AemComponentClassicDialogDefinition
+import com.aemtools.index.model.dialog.AemComponentClassicDialogDefinition
+import com.aemtools.index.model.dialog.parameter.ClassicDialogParameterDeclaration
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.util.indexing.FileBasedIndex
 
@@ -38,11 +39,11 @@ class AemComponentClassicDialogIndexTest : BaseLightTest() {
                             "/src/jcr_root/apps/components/comp/dialog.xml",
                             "/apps/components/comp",
                             listOf(
-                                    AemComponentClassicDialogDefinition.ClassicDialogParameterDeclaration(
+                                    ClassicDialogParameterDeclaration(
                                             "pathfield",
                                             "./path1"
                                     ),
-                                    AemComponentClassicDialogDefinition.ClassicDialogParameterDeclaration(
+                                    ClassicDialogParameterDeclaration(
                                             "pathfield",
                                             "./path2"
                                     )

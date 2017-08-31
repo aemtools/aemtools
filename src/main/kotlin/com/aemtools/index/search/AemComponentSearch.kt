@@ -3,9 +3,9 @@ package com.aemtools.index.search
 import com.aemtools.index.AemComponentClassicDialogIndex
 import com.aemtools.index.AemComponentDeclarationIndex
 import com.aemtools.index.AemComponentTouchUIDialogIndex
-import com.aemtools.index.model.AemComponentClassicDialogDefinition
+import com.aemtools.index.model.dialog.AemComponentClassicDialogDefinition
 import com.aemtools.index.model.AemComponentDefinition
-import com.aemtools.index.model.AemComponentTouchUIDialogDefinition
+import com.aemtools.index.model.dialog.AemComponentTouchUIDialogDefinition
 import com.intellij.openapi.project.Project
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.util.indexing.FileBasedIndex

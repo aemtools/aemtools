@@ -34,7 +34,7 @@ interface OSGiConfigFixtureMixin {
      * Add list of empty OSGi config files to current fixture.
      * @receiver [ITestFixture]
      */
-    fun ITestFixture.addEmptyOSGiConfigs(vararg names: String): Unit = names.forEach {
+    fun ITestFixture.addEmptyOSGiConfigs(vararg names: String) = names.forEach {
         this.addXml(it, emptyOSGiConfig())
     }
 

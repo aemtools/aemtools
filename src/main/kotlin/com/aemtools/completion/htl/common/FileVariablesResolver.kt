@@ -65,4 +65,22 @@ object FileVariablesResolver {
                 .filterForPosition(position).toList()
     }
 
+    /**
+     * Collect [HtlVariableDeclaration] object suitable for given position.
+     * @param position location against which variables should be filtered
+     * @return list of htl variable declarations
+     */
+    fun declarationsForPosition(position: PsiElement): List<HtlVariableDeclaration> {
+        val htlFile = position.containingFile.originalFile.getHtlFile()
+                ?: return emptyList()
+        val htmlFile = htlFile.getHtmlFile()
+                ?: return emptyList()
+
+        val attributes: List<XmlAttribute> = PsiTreeUtil.findChildrenOfType(htmlFile, XmlAttribute::class.java)
+                .toList()
+
+        return attributes.extractDeclarations()
+                .filterForPosition(position).toList()
+    }
+
 }

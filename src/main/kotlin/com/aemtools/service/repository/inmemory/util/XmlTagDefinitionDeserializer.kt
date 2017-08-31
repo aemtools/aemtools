@@ -11,7 +11,7 @@ import java.lang.reflect.Type
 /**
  * @author Dmytro_Troynikov
  */
-class XmlTagDefinitionDeserializer : JsonDeserializer<XmlTagDefinition>{
+class XmlTagDefinitionDeserializer : JsonDeserializer<XmlTagDefinition> {
     override fun deserialize(json: JsonElement?, typeOfT: Type?,
                              context: JsonDeserializationContext?): XmlTagDefinition? {
 

@@ -41,7 +41,7 @@ class PredefinedVariablesCompletionTest : LightFixtureCompletionTestCase(),
     fun testArrayLikeAccessSinglequoted() = doTest()
     fun testArrayLikeAccessDoublequoted() = doTest()
 
-    fun doTest(completionChar: Char = '\n', vararg extraFileNames: String) {
+    fun doTest(completionChar: Char = '\n') {
         val fileName = getTestName(true)
 
         configureByFile("$fileName.html")

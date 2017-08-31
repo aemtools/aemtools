@@ -13,6 +13,6 @@ interface IDocTestFixture : ITestFixture {
      *
      * @param result html text of required documentation
      */
-    fun documentation(@Language("HTML") result: String): Unit
+    fun documentation(@Language("HTML") result: String)
 
 }

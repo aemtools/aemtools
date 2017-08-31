@@ -1,4 +1,4 @@
-package com.aemtools.lang.html.fix
+package com.aemtools.inspection.fix
 
 import com.intellij.codeInsight.intention.IntentionAction
 import com.intellij.openapi.editor.Editor

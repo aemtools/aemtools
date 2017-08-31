@@ -62,7 +62,7 @@ class HtlAttributesAnnotator : Annotator {
                          attribute: XmlAttribute,
                          attributeName: String,
                          variableName: String,
-                         holder: AnnotationHolder): Unit {
+                         holder: AnnotationHolder) {
         when (attributeName) {
             DATA_SLY_USE,
             DATA_SLY_TEST -> annotateSingleVariable(range, attribute, variableName, holder)

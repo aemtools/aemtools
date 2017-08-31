@@ -146,7 +146,6 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
         return myFixture.completeBasic().toList()
     }
 
-
     /**
      * Runs basic completion in caret position in fileBefore. Implies that there is only one
      * completion variant and it was inserted automatically, and checks the result file text with fileAfter.

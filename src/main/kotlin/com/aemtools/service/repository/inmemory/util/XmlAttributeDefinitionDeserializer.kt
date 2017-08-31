@@ -23,7 +23,7 @@ class XmlAttributeDefinitionDeserializer : JsonDeserializer<XmlAttributeDefiniti
         )
     }
 
-    private fun extractValues(jsonObject :JsonObject) : List<String> {
+    private fun extractValues(jsonObject : JsonObject) : List<String> {
         return jsonObject.get("values")?.asJsonArray?.map { it.asString } ?: listOf()
     }
 

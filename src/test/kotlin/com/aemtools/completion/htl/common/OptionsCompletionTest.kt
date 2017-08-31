@@ -92,10 +92,10 @@ class OptionsCompletionTest : CompletionBaseLightTest(true) {
         addHtml("/jcr_root/apps/myapp/components/comp1/comp1.html", """
             <div data-sly-resource='$DOLLAR{@ resourceType="$CARET"}'></div>
         """)
-        addXml("/jcr_root/apps/myapp/components/comp1/.content.xml","""
+        addXml("/jcr_root/apps/myapp/components/comp1/.content.xml", """
             <jcr:root jcr:primaryType="cq:Component" jcr:title="Component1" componentGroup="group"/>
         """)
-        addXml("/jcr_root/apps/myapp/components/comp2/.content.xml","""
+        addXml("/jcr_root/apps/myapp/components/comp2/.content.xml", """
             <jcr:root jcr:primaryType="cq:Component" jcr:title="Component2" componentGroup="group"/>
         """)
 
