@@ -81,8 +81,6 @@
         <psi.referenceContributor language="Htl"
                                   implementation="com.aemtools.reference.htl.contributor.HtlReferenceContributor"/>
 
-        <lang.substitutor language="HTML"
-                          implementationClass="com.aemtools.lang.htl.HtlLanguageSubstitutor"/>
         <fileTypeFactory implementation="com.aemtools.lang.htl.file.HtlFileTypeFactory"/>
 
         <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>

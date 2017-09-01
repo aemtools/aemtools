@@ -1,6 +1,7 @@
 package com.aemtools.action
 
 import com.aemtools.settings.HtlRootDirectories
+import com.aemtools.util.psiManager
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.project.DumbAwareAction
@@ -19,7 +20,14 @@ class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
         HtlRootDirectories.getInstance()
                 ?.let { htlRootDirectories ->
                     htlRootDirectories.addRoot(path)
+
+                    // attempt to flush cached files
+                    e.project?.psiManager()?.apply {
+                        dropPsiCaches()
+                        dropResolveCaches()
+                    }
                 }
+
     }
 
 }

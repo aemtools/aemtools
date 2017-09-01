@@ -1,5 +1,6 @@
 package com.aemtools.settings
 
+import com.aemtools.constant.const
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.components.State
@@ -16,6 +17,16 @@ class HtlRootDirectories : PersistentStateComponent<HtlRootDirectories> {
 
     fun addRoot(folder: String) {
         directories.add(folder)
+    }
+
+    /**
+     * Check if given
+     */
+    fun inRoot(folder: String): Boolean {
+        return folder.contains(const.JCR_ROOT_SEPARATED)
+                || directories.any {
+            folder.startsWith(it)
+        }
     }
 
     override fun loadState(state: HtlRootDirectories?) {
