@@ -2,7 +2,6 @@ package com.aemtools.lang.htl.psi.pattern
 
 import com.aemtools.completion.util.findParentByType
 import com.aemtools.completion.util.isInsideOf
-import com.aemtools.completion.util.getHtlFile
 import com.aemtools.constant.const.htl.DATA_SLY_CALL
 import com.aemtools.constant.const.htl.DATA_SLY_INCLUDE
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
@@ -21,7 +20,6 @@ import com.intellij.patterns.PlatformPatterns.*
 import com.intellij.patterns.XmlPatterns.xmlAttribute
 import com.intellij.patterns.XmlPatterns.xmlAttributeValue
 import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiFile
 import com.intellij.psi.TokenType
 import com.intellij.psi.xml.XmlTokenType.XML_NAME
 import com.intellij.util.ProcessingContext
@@ -294,14 +292,4 @@ class HtlTemplatePattern(val name: String) : PatternCondition<PsiElement?>(name)
                 ?.isInsideOf(name)
                 ?: false
     }
-}
-
-/**
- * Will match file that contain injected HTL.
- */
-object HtlFilePattern : PatternCondition<PsiFile?>("HTL File") {
-    override fun accepts(t: PsiFile, context: ProcessingContext?): Boolean {
-        return t.getHtlFile() != null
-    }
-
 }
