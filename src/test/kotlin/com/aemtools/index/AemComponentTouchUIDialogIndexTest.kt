@@ -2,7 +2,8 @@ package com.aemtools.index
 
 import com.aemtools.blocks.base.BaseLightTest
 import com.aemtools.constant.const.JCR_ROOT
-import com.aemtools.index.model.AemComponentTouchUIDialogDefinition
+import com.aemtools.index.model.dialog.AemComponentTouchUIDialogDefinition
+import com.aemtools.index.model.dialog.parameter.TouchUIDialogParameterDeclaration
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.util.indexing.FileBasedIndex
 
@@ -34,11 +35,11 @@ class AemComponentTouchUIDialogIndexTest : BaseLightTest() {
                             "/src/jcr_root/apps/myapp/components/comp/_cq_dialog/.content.xml",
                             "/apps/myapp/components/comp",
                             listOf(
-                                    AemComponentTouchUIDialogDefinition.TouchUIDialogParameterDeclaration(
+                                    TouchUIDialogParameterDeclaration(
                                             "my/sling/resource/type1",
                                             "./name1"
                                     ),
-                                    AemComponentTouchUIDialogDefinition.TouchUIDialogParameterDeclaration(
+                                    TouchUIDialogParameterDeclaration(
                                             "my/sling/resource/type2",
                                             "./name2"
                                     )

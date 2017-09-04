@@ -25,4 +25,3 @@ abstract class BaseReferenceTest(withAemUberJar: Boolean = false)
 
 }
 
-

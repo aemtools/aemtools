@@ -2,7 +2,7 @@ package com.aemtools.index
 
 import com.aemtools.index.dataexternalizer.AemComponentClassicDialogDefinitionExternalizer
 import com.aemtools.index.indexer.AemComponentClassicDialogIndexer
-import com.aemtools.index.model.AemComponentClassicDialogDefinition
+import com.aemtools.index.model.dialog.AemComponentClassicDialogDefinition
 import com.intellij.util.indexing.DataIndexer
 import com.intellij.util.indexing.FileBasedIndex
 import com.intellij.util.indexing.FileContent

@@ -30,7 +30,6 @@ object FileDocRepository : WidgetDocRepository {
         documents.forEach { groupedByClass.put(it.className, it) }
     }
 
-
     private fun getDocumentationFromClasspath(): ByteArray? {
         val input = FileDocRepository::class.java.classLoader.getResourceAsStream(
                 const.file.WIDGET_DOCUMENTATION)

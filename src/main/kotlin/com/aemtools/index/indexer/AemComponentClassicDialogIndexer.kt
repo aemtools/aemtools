@@ -4,7 +4,8 @@ import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.getXmlFile
 import com.aemtools.completion.util.normalizeToJcrRoot
 import com.aemtools.constant.const.xml.JCR_PRIMARY_TYPE_CQ_DIALOG
-import com.aemtools.index.model.AemComponentClassicDialogDefinition
+import com.aemtools.index.model.dialog.AemComponentClassicDialogDefinition
+import com.aemtools.index.model.dialog.parameter.ClassicDialogParameterDeclaration
 import com.intellij.psi.xml.XmlTag
 import com.intellij.util.indexing.DataIndexer
 import com.intellij.util.indexing.FileContent
@@ -33,8 +34,7 @@ object AemComponentClassicDialogIndexer : DataIndexer<String, AemComponentClassi
                         val xtype = it.getAttribute("xtype")?.value
                         val name = it.getAttribute("name")?.value
                         if (xtype != null && name != null) {
-                            AemComponentClassicDialogDefinition
-                                    .ClassicDialogParameterDeclaration(xtype, name)
+                            ClassicDialogParameterDeclaration(xtype, name)
                         } else {
                             null
                         }
