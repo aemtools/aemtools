@@ -1,6 +1,5 @@
 package com.aemtools.settings
 
-import com.aemtools.constant.const
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.components.State
@@ -11,22 +10,30 @@ import com.intellij.openapi.components.Storage
  *
  * @author Dmytro Troynikov
  */
-@State(name = "HtlRootsConfiguration", storages = arrayOf(Storage("htl-roots.xml")))
+@State(
+        name = "HtlRootsConfiguration",
+        storages = arrayOf(Storage("htl-roots.xml"))
+)
 class HtlRootDirectories : PersistentStateComponent<HtlRootDirectories> {
+
     val directories: MutableList<String> = ArrayList()
 
+    /**
+     * Add folder as Htl root.
+     *
+     * @param folder folder to add to roots
+     */
     fun addRoot(folder: String) {
         directories.add(folder)
     }
 
     /**
-     * Check if given
+     * Remove folder from Htl roots.
+     *
+     * @param folder folder to remove
      */
-    fun inRoot(folder: String): Boolean {
-        return folder.contains(const.JCR_ROOT_SEPARATED)
-                || directories.any {
-            folder.startsWith(it)
-        }
+    fun removeRoot(folder: String) {
+        directories.remove(folder)
     }
 
     override fun loadState(state: HtlRootDirectories?) {
@@ -36,9 +43,7 @@ class HtlRootDirectories : PersistentStateComponent<HtlRootDirectories> {
         }
     }
 
-    override fun getState(): HtlRootDirectories? {
-        return this
-    }
+    override fun getState(): HtlRootDirectories? = this
 
     companion object {
 

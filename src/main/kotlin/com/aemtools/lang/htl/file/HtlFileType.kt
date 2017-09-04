@@ -3,8 +3,7 @@ package com.aemtools.lang.htl.file
 import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.highlight.HtlTemplateHighlighter
 import com.aemtools.lang.htl.icons.HtlIcons.HTL_FILE_ICON
-import com.aemtools.settings.HtlRootDirectories
-import com.aemtools.util.OpenApiUtil.iAmTest
+import com.aemtools.service.detection.HtlDetectionService
 import com.intellij.openapi.fileTypes.FileTypeEditorHighlighterProviders
 import com.intellij.openapi.fileTypes.LanguageFileType
 import com.intellij.openapi.fileTypes.TemplateLanguageFileType
@@ -28,8 +27,7 @@ object HtlFileType : LanguageFileType(HtlLanguage), TemplateLanguageFileType, Fi
         }
 
         val path = file.path
-        return iAmTest() || HtlRootDirectories.getInstance()
-                ?.inRoot(path) ?: false
+        return HtlDetectionService.isHtlFile(path)
     }
 
     override fun getIcon(): Icon = HTL_FILE_ICON
