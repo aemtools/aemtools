@@ -8,6 +8,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.application.ModalityState
 import com.intellij.openapi.project.DumbAwareAction
 import com.intellij.ui.GuiUtils
+import com.intellij.util.FileContentUtil.reparseOpenedFiles
 
 /**
  * @author Dmytro Troynikov
@@ -51,6 +52,8 @@ class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
 
         // attempt to flush cached files
         e.project?.psiManager()?.apply {
+            reparseOpenedFiles()
+
             GuiUtils.invokeLaterIfNeeded(Runnable {
                 dropPsiCaches()
             },
