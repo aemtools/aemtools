@@ -184,6 +184,7 @@ object HtlPatterns {
                                     string().startsWith("$DATA_SLY_USE.")
                             )
                     ))
+                    .inFile(psiFile().with(HtlFilePattern))
 
     /**
      * Matches the following:
@@ -194,11 +195,9 @@ object HtlPatterns {
      */
     val dataSlyIncludeNoEl: ElementPattern<PsiElement> =
             psiElement()
-                    .inside(
-                            xmlAttributeValue()
-                                    .withLocalName(
-                                            string()
-                                                    .equalTo(DATA_SLY_INCLUDE)))
+                    .inside(xmlAttributeValue()
+                            .withLocalName(string().equalTo(DATA_SLY_INCLUDE)))
+                    .inFile(psiFile().with(HtlFilePattern))
 
     /**
      * Matches Htl xml attribute
