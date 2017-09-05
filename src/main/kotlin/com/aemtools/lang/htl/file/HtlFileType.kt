@@ -8,7 +8,7 @@ import com.intellij.openapi.fileTypes.FileTypeEditorHighlighterProviders
 import com.intellij.openapi.fileTypes.LanguageFileType
 import com.intellij.openapi.fileTypes.TemplateLanguageFileType
 import com.intellij.openapi.fileTypes.ex.FileTypeIdentifiableByVirtualFile
-import com.intellij.openapi.project.guessProjectForFile
+import com.intellij.openapi.project.ProjectLocator
 import com.intellij.openapi.vfs.VirtualFile
 import javax.swing.Icon
 
@@ -23,7 +23,7 @@ object HtlFileType : LanguageFileType(HtlLanguage), TemplateLanguageFileType, Fi
     }
 
     override fun isMyFileType(file: VirtualFile): Boolean {
-        val project = guessProjectForFile(file)
+        val project = ProjectLocator.getInstance().guessProjectForFile(file)
 
         if (file.isDirectory
                 || project == null
