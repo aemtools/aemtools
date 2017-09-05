@@ -1,9 +1,9 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor.java
 
-import com.aemtools.analysis.htl.callchain.typedescriptor.ArrayTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.IterableTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.MapTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.ArrayTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.IterableTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.MapTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.aemtools.lang.java.JavaSearch
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.openapi.project.Project

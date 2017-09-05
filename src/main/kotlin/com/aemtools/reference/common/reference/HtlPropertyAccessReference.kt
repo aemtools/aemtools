@@ -1,9 +1,9 @@
 package com.aemtools.reference.common.reference
 
 import com.aemtools.analysis.htl.callchain.elements.CallChainElement
-import com.aemtools.analysis.htl.callchain.typedescriptor.JavaPsiUnresolvedTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiUnresolvedTypeDescriptor
 import com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.intellij.openapi.util.TextRange

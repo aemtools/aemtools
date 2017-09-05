@@ -1,6 +1,6 @@
 package com.aemtools.completion.htl.predefined
 
-import com.aemtools.analysis.htl.callchain.typedescriptor.PredefinedDescriptionTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.predefined.PredefinedDescriptionTypeDescriptor
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.google.gson.annotations.SerializedName
 import com.intellij.codeInsight.lookup.LookupElement

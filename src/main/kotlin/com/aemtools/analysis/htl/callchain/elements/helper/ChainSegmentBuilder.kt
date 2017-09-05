@@ -3,7 +3,7 @@ package com.aemtools.analysis.htl.callchain.elements.helper
 import com.aemtools.analysis.htl.callchain.elements.BaseCallChainSegment
 import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.elements.CallChainSegment
-import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 
 /**

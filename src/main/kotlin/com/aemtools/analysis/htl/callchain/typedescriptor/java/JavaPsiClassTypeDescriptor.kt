@@ -1,6 +1,6 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor.java
 
-import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.lang.java.JavaSearch
 import com.aemtools.util.allScope
@@ -10,7 +10,6 @@ import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.psi.*
 import com.intellij.psi.impl.source.PsiClassReferenceType
-import com.intellij.psi.search.GlobalSearchScope
 import java.util.*
 
 /**
