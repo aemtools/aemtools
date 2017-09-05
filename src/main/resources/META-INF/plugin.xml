@@ -188,7 +188,7 @@
                 class="com.aemtools.action.MarkAsHtlRootDirectoryAction"
                 text="HTL Root"
                 description="HTML files under this directory will be considered as HTL files">
-            <add-to-group group-id="MarkRootGroup" anchor="first" />
+            <add-to-group group-id="MarkRootGroup" anchor="last" />
         </action>
     </actions>
 
