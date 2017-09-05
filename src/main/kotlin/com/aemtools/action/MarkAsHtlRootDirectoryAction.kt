@@ -26,16 +26,17 @@ class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
     override fun update(e: AnActionEvent) {
         val file = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
                 ?.firstOrNull()
-
+        val project = e.project
         if (file == null
+                || project == null
                 || !file.isDirectory
                 && e.place != ActionPlaces.PROJECT_VIEW_POPUP
-                || HtlDetectionService.isUnderHtlRoot(file.path)) {
+                || HtlDetectionService.isUnderHtlRoot(file.path, project)) {
             e.presentation.isEnabledAndVisible = false
             return
         }
 
-        if (HtlDetectionService.isHtlRootDirectory(file.path)) {
+        if (HtlDetectionService.isHtlRootDirectory(file.path, project)) {
             e.presentation.text = "Unmark as HTL Root"
             return
         }
@@ -46,14 +47,14 @@ class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
     override fun actionPerformed(e: AnActionEvent) {
         val file = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
                 ?.firstOrNull() ?: return
-
-        if (!e.presentation.isEnabledAndVisible) {
+        val project = e.project
+        if (!e.presentation.isEnabledAndVisible || project == null) {
             return
         }
 
         val path = file.path
 
-        val htlRootDirectories = HtlRootDirectories.getInstance()
+        val htlRootDirectories = HtlRootDirectories.getInstance(project)
                 ?: return
 
         if (e.presentation.text == "HTL Root") {

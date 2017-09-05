@@ -170,7 +170,7 @@
         <lang.psiStructureViewFactory language="Htl"
                                       implementationClass="com.aemtools.ide.HtlStructureViewProvider"/>
 
-        <applicationService
+        <projectService
                 serviceInterface="com.aemtools.settings.HtlRootDirectories"
                 serviceImplementation="com.aemtools.settings.HtlRootDirectories"/>
 

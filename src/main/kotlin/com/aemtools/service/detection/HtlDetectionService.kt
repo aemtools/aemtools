@@ -4,9 +4,10 @@ import com.aemtools.constant.const.JCR_ROOT
 import com.aemtools.constant.const.JCR_ROOT_SEPARATED
 import com.aemtools.settings.HtlRootDirectories
 import com.aemtools.util.OpenApiUtil.iAmTest
+import com.intellij.openapi.project.Project
 
 /**
- * The service
+ * The service responsible of Htl file type detection.
  *
  * @author Dmytro Troynikov
  */
@@ -18,10 +19,13 @@ object HtlDetectionService {
     /**
      * Check if given path is a correct htl root path.
      *
+     * @param path the path to check
+     * @param project the project
+     *
      * @return *true* if given path may be marked as Htl root, *false* otherwise
      */
-    fun eligibleHtlRoot(path: String): Boolean {
-        val htlRootDirectories = HtlRootDirectories.getInstance()
+    fun eligibleHtlRoot(path: String, project: Project): Boolean {
+        val htlRootDirectories = HtlRootDirectories.getInstance(project)
                 ?: return false
 
         return htlRootDirectories.directories.any { dir ->
@@ -33,16 +37,18 @@ object HtlDetectionService {
      * Check if given file is Htl file.
      *
      * @param fileName the file name
+     * @param project the project
+     *
      * @return *true* if given file name is recognized as Htl,
      * *false* otherwise
      */
-    fun isHtlFile(fileName: String): Boolean {
+    fun isHtlFile(fileName: String, project: Project): Boolean {
         val extension = fileName.substringAfterLast(".")
         if (extension != "html") {
             return false
         }
 
-        HtlRootDirectories.getInstance()?.let { roots ->
+        HtlRootDirectories.getInstance(project)?.let { roots ->
             if (roots.directories.any { fileName.startsWith(it) }) {
                 return true
             }
@@ -55,10 +61,12 @@ object HtlDetectionService {
      * Check if given directory is one of Htl roots.
      *
      * @param path directory to check
+     * @param project the project
+     *
      * @return *true* if given directory is Htl root, *false* otherwise
      */
-    fun isHtlRootDirectory(path: String): Boolean =
-            HtlRootDirectories.getInstance()
+    fun isHtlRootDirectory(path: String, project: Project): Boolean =
+            HtlRootDirectories.getInstance(project)
                     ?.directories?.contains(path) ?: false
                     || path.substringAfterLast("/") == JCR_ROOT
 
@@ -66,11 +74,13 @@ object HtlDetectionService {
      * Check if given path lays under some of Htl roots.
      *
      * @param path the path to check
+     * @param project the project
+     *
      * @return *true* if given path is part of Htl root,
      * *false* otherwise
      */
-    fun isUnderHtlRoot(path: String): Boolean {
-        HtlRootDirectories.getInstance()?.let { roots ->
+    fun isUnderHtlRoot(path: String, project: Project): Boolean {
+        HtlRootDirectories.getInstance(project)?.let { roots ->
             if (roots.directories.any { path.startsWith(it) }) {
                 return true
             }

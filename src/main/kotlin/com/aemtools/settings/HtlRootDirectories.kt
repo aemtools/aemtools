@@ -1,9 +1,10 @@
 package com.aemtools.settings
 
-import com.intellij.openapi.components.PersistentStateComponent
-import com.intellij.openapi.components.ServiceManager
-import com.intellij.openapi.components.State
-import com.intellij.openapi.components.Storage
+import com.intellij.openapi.components.*
+import com.intellij.openapi.components.StoragePathMacros.WORKSPACE_FILE
+import com.intellij.openapi.project.Project
+import com.intellij.util.xmlb.annotations.AbstractCollection
+import com.intellij.util.xmlb.annotations.Tag
 
 /**
  * Storage for HTL root folders.
@@ -12,10 +13,14 @@ import com.intellij.openapi.components.Storage
  */
 @State(
         name = "HtlRootsConfiguration",
-        storages = arrayOf(Storage("htl-roots.xml"))
+        storages = arrayOf(
+                Storage(WORKSPACE_FILE)
+        )
 )
 class HtlRootDirectories : PersistentStateComponent<HtlRootDirectories> {
 
+    @Tag("htl-roots")
+    @AbstractCollection(surroundWithTag = true)
     val directories: MutableList<String> = ArrayList()
 
     /**
@@ -47,8 +52,8 @@ class HtlRootDirectories : PersistentStateComponent<HtlRootDirectories> {
 
     companion object {
 
-        fun getInstance(): HtlRootDirectories? =
-                ServiceManager.getService(HtlRootDirectories::class.java)
+        fun getInstance(project: Project): HtlRootDirectories? =
+                ServiceManager.getService(project, HtlRootDirectories::class.java)
 
     }
 
