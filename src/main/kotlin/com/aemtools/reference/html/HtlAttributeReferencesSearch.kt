@@ -4,7 +4,7 @@ import com.aemtools.completion.util.*
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
-import com.intellij.ide.highlighter.HtmlFileType
+import com.aemtools.lang.htl.file.HtlFileType
 import com.intellij.openapi.application.QueryExecutorBase
 import com.intellij.psi.PsiReference
 import com.intellij.psi.search.GlobalSearchScope
@@ -39,7 +39,8 @@ class HtlAttributeReferencesSearch : QueryExecutorBase<PsiReference, ReferencesS
                         ?: return
 
                 val scope = GlobalSearchScope.getScopeRestrictedByFileTypes(
-                        GlobalSearchScope.projectScope(attribute.project), HtmlFileType.INSTANCE)
+                        GlobalSearchScope.projectScope(attribute.project),
+                        HtlFileType)
                 val optimizer = queryParameters.optimizer
                 optimizer.searchWord(name, scope, true, attribute)
             }
