@@ -81,7 +81,7 @@ object HtlDetectionService {
      */
     fun isUnderHtlRoot(path: String, project: Project): Boolean {
         HtlRootDirectories.getInstance(project)?.let { roots ->
-            if (roots.directories.any { path.startsWith(it) }) {
+            if (roots.directories.any { it != path && path.startsWith(it) }) {
                 return true
             }
         }

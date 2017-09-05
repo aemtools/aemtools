@@ -55,6 +55,16 @@ class HtlDetectionServiceTest : BaseLightTest(false) {
                 .isTrue()
     }
 
+    @Test
+    fun `test isUnderHtlRoot should return false for htl root`() {
+        HtlRootDirectories.getInstance(project)?.let {
+            it.addRoot("/content/root")
+        } ?: throw AssertionError("Unable to configure htl roots")
+
+        assertThat(HtlDetectionService.isUnderHtlRoot("/content/root", project))
+                .isFalse()
+    }
+
     fun `test isHtlFile should return true for htl root directory`() {
         HtlRootDirectories.getInstance(project)?.let {
             it.addRoot("/content/root1")
