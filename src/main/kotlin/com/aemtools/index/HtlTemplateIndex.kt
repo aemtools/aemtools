@@ -21,6 +21,12 @@ class HtlTemplateIndex : XmlIndex<TemplateDefinition>() {
     companion object {
         val HTL_TEMPLATE_ID: ID<String, TemplateDefinition>
                 = ID.create<String, TemplateDefinition>("HtlTemplateIndex")
+
+        /**
+         * Rebuild Htl template index.
+         */
+        fun rebuildIndex() = FileBasedIndex.getInstance()
+                .requestRebuild(HTL_TEMPLATE_ID)
     }
 
     override fun getIndexer(): DataIndexer<String, TemplateDefinition, FileContent>

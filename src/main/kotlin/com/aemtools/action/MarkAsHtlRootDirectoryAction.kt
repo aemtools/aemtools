@@ -1,5 +1,6 @@
 package com.aemtools.action
 
+import com.aemtools.index.HtlTemplateIndex
 import com.aemtools.lang.htl.icons.HtlIcons
 import com.aemtools.service.detection.HtlDetectionService
 import com.aemtools.settings.HtlRootDirectories
@@ -70,6 +71,8 @@ class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
             },
                     ModalityState.defaultModalityState(),
                     project.disposed)
+
+            HtlTemplateIndex.rebuildIndex()
         }
     }
 
