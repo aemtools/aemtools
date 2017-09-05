@@ -66,8 +66,6 @@ class MarkAsHtlRootDirectoryActionTest {
         projectManager = mock()
         fileEditorManager = mock()
 
-        ApplicationManager.setApplication(application, { })
-
         `when`(mockProject.getComponent(PsiManager::class.java))
                 .thenReturn(psiManager)
 

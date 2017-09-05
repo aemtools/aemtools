@@ -4,61 +4,52 @@ import com.aemtools.blocks.base.BaseLightTest
 import com.aemtools.constant.const.JCR_ROOT
 import com.aemtools.settings.HtlRootDirectories
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
 
 /**
  * @author Dmytro Troynikov
  */
 class HtlDetectionServiceTest : BaseLightTest(false) {
 
-    @Test
     fun `test isHtlFile should return false for non html file`() {
         assertThat(HtlDetectionService.isHtlFile("blah.xml", project))
                 .isFalse()
     }
 
-    @Test
     fun `test isHtlFile should return true for all html files in tests`() {
         assertThat(HtlDetectionService.isHtlFile("test.html", project))
                 .isTrue()
     }
 
-    @Test
     fun `test isHtlFile should return true for html file in jcr_root`() {
         HtlDetectionService.markAllInTest = false
 
         assertThat(HtlDetectionService.isHtlFile("/$JCR_ROOT/test.html", project))
                 .isTrue()
+        HtlDetectionService.markAllInTest = true
     }
 
-    @Test
     fun `test isHtlRootDirectory should be false if no jcr_root present in path`() {
         assertThat(HtlDetectionService.isHtlRootDirectory("/some/path", project))
                 .isFalse()
     }
 
-    @Test
     fun `test isHtlRootDirectory should be true for jcr_root containing path`() {
         assertThat(HtlDetectionService.isHtlRootDirectory("/content/jcr_root", project))
                 .isTrue()
     }
 
-    @Test
     fun `test isUnderHtlRoot without jcr_root should be false`() {
         assertThat(HtlDetectionService.isUnderHtlRoot("/content/test.html", project))
                 .isFalse()
     }
 
-    @Test
     fun `test isUnderHtlRoot with jcr_root should be true`() {
         assertThat(HtlDetectionService.isUnderHtlRoot("/jcr_root/test.html", project))
                 .isTrue()
     }
 
-    @Test
     fun `test isUnderHtlRoot should return false for htl root`() {
         HtlRootDirectories.getInstance(project)?.let {
-            it.directories.clear()
             it.addRoot("/content/root")
         } ?: throw AssertionError("Unable to configure htl roots")
 
@@ -68,7 +59,6 @@ class HtlDetectionServiceTest : BaseLightTest(false) {
 
     fun `test isHtlFile should return true for htl root directory`() {
         HtlRootDirectories.getInstance(project)?.let {
-            it.directories.clear()
             it.addRoot("/content/root1")
             it.addRoot("/content/root2")
         } ?: throw AssertionError("Unable to configure htl roots")
@@ -85,7 +75,6 @@ class HtlDetectionServiceTest : BaseLightTest(false) {
 
     fun `test isUnderHtlRoot should return true for htl root directory`() {
         HtlRootDirectories.getInstance(project)?.let {
-            it.directories.clear()
             it.addRoot("/content/root1")
             it.addRoot("/content/root2")
         } ?: throw AssertionError("Unable to configure htl roots")
@@ -100,4 +89,10 @@ class HtlDetectionServiceTest : BaseLightTest(false) {
         HtlDetectionService.markAllInTest = true
     }
 
+    override fun setUp() {
+        super.setUp()
+        HtlRootDirectories.getInstance(project)?.let {
+            it.directories.clear()
+        }
+    }
 }
