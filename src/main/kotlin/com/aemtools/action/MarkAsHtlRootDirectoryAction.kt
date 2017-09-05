@@ -31,7 +31,7 @@ class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
                 || project == null
                 || !file.isDirectory
                 && e.place != ActionPlaces.PROJECT_VIEW_POPUP
-                || HtlDetectionService.isUnderHtlRoot(file.path, project)) {
+                || !HtlDetectionService.mayBeMarked(file.path, project)) {
             e.presentation.isEnabledAndVisible = false
             return
         }

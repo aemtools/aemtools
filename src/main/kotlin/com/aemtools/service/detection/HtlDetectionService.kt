@@ -17,23 +17,6 @@ object HtlDetectionService {
     var markAllInTest: Boolean = true
 
     /**
-     * Check if given path is a correct htl root path.
-     *
-     * @param path the path to check
-     * @param project the project
-     *
-     * @return *true* if given path may be marked as Htl root, *false* otherwise
-     */
-    fun eligibleHtlRoot(path: String, project: Project): Boolean {
-        val htlRootDirectories = HtlRootDirectories.getInstance(project)
-                ?: return false
-
-        return htlRootDirectories.directories.any { dir ->
-            dir.startsWith(path)
-        } or !path.contains(JCR_ROOT_SEPARATED)
-    }
-
-    /**
      * Check if given file is Htl file.
      *
      * @param fileName the file name
@@ -88,5 +71,25 @@ object HtlDetectionService {
 
         return path.contains(JCR_ROOT_SEPARATED)
     }
+
+    /**
+     * Check if given directory may be marked as Htl root.
+     *
+     * @param path path to check
+     * @param project the project
+     *
+     * @return *true* if given directory may be marked as htl root,
+     * *false* otherwise
+     */
+    fun mayBeMarked(path: String, project: Project): Boolean {
+        if (isJcrRoot(path)) {
+            return false
+        }
+
+        return !isUnderHtlRoot(path, project)
+    }
+
+    private fun isJcrRoot(path: String) : Boolean =
+            path.substringAfterLast("/", "") == JCR_ROOT
 
 }
