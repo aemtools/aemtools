@@ -58,47 +58,6 @@ fun PsiClass.elMethods(): List<PsiMethod> {
 }
 
 /**
- * Collect methods grouped by declaration class.
- * Classes are sorted from the deepest one up to `Object` class.
- *
- * @receiver [PsiClass]
- * @return map with methods grouped by declaring class and keys sorted by inheritance depth (from the deepest one to `Object`)
- */
-fun PsiClass.methodsSortedByClass(): LinkedHashMap<PsiClass, List<PsiMethod>> = this.let {
-    var currentClass: PsiClass? = this
-    val result: LinkedHashMap<PsiClass, List<PsiMethod>> = LinkedHashMap()
-    while (currentClass != null) {
-        val methods = currentClass.methods.filter { classMethod ->
-            classMethod.isProperForHtlEl()
-                    && !result.flatMap { it.value }.any { it.name == classMethod.name }
-        }
-        result.put(currentClass, methods)
-        currentClass = currentClass.superClass
-    }
-    result
-}
-
-/**
- * Check if current method is suitable for usage in Htl EL.
- *
- * @receiver [PsiMethod]]
- * @return *true* if current method may be invoked from Htl EL, *false* otherwise
- */
-fun PsiMethod.isProperForHtlEl(): Boolean = !this.isConstructor
-        && hasModifierProperty(PsiModifier.PUBLIC)
-        && parameterList.parameters.isEmpty()
-        && !returnType!!.isAssignableFrom(PsiType.VOID)
-
-/**
- * Check if current field is sutable for usage in Htl EL.
- *
- * @receiver [PsiField]
- * @return *true* if current method may be used from Htl EL, *false* otherwise
- */
-fun PsiField.isProperForHtlEl(): Boolean = hasModifierProperty(PsiModifier.PUBLIC)
-        && !hasModifierProperty(PsiModifier.STATIC)
-
-/**
  * Find all fields which may be used from EL.
  *
  * The suitable fields should be public
@@ -109,25 +68,12 @@ fun PsiClass.elFields(): List<PsiField> = this.allFields
                     && !it.hasModifierProperty(PsiModifier.STATIC)
         }
 
-fun PsiClass.fieldsSortedByClass(): LinkedHashMap<PsiClass, List<PsiField>> = this.let {
-    var currentClass: PsiClass? = this
-    val result: LinkedHashMap<PsiClass, List<PsiField>> = LinkedHashMap()
-    while (currentClass != null) {
-        val fields = this.fields.filter { it.hasModifierProperty(PsiModifier.PUBLIC) }
-        result.put(currentClass, fields)
-        currentClass = currentClass.superClass
-    }
-    result
-}
-
 /**
  * Find all Htl EL compatible members.
  *
  * @return the sum of [elFields] and [elMembers]
  */
-fun PsiClass.elMembers(): List<PsiMember> {
-    return this.elMethods() + this.elFields()
-}
+fun PsiClass.elMembers(): List<PsiMember> = this.elMethods() + this.elFields()
 
 /**
  * Find member (method or function) by name.
