@@ -37,10 +37,16 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li>Added rename refactoring</li>
-            <li>Unused & Unresolved variables will be highlighted</li>
-            <li>Added <b>BETA</b> support for WebStorm</li>
-            <li>Bug fixes</li>
+            <li>
+                Added "Mark As -> HTL Root" action which allows to mark
+                any folder as HTL Root, all HTML files under HTL roots will be
+                considered as HTL files.
+            </li>
+            <li>
+                Added localization keys completion: ${'<caret>' @ i18n} in this
+                example under caret all available in project i18n keys will be
+                proposed as completion variants.
+            </li>
         </ul>
     ]]>
     </change-notes>
