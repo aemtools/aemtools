@@ -37,10 +37,16 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li>Added rename refactoring</li>
-            <li>Unused & Unresolved variables will be highlighted</li>
-            <li>Added <b>BETA</b> support for WebStorm</li>
-            <li>Bug fixes</li>
+            <li>
+                Added "Mark As -> HTL Root" action which allows to mark
+                any folder as HTL Root, all HTML files under HTL roots will be
+                considered as HTL files.
+            </li>
+            <li>
+                Added localization keys completion: ${'<caret>' @ i18n} in this
+                example under caret all available in project i18n keys will be
+                proposed as completion variants.
+            </li>
         </ul>
     ]]>
     </change-notes>
@@ -81,8 +87,6 @@
         <psi.referenceContributor language="Htl"
                                   implementation="com.aemtools.reference.htl.contributor.HtlReferenceContributor"/>
 
-        <lang.substitutor language="HTML"
-                          implementationClass="com.aemtools.lang.htl.HtlLanguageSubstitutor"/>
         <fileTypeFactory implementation="com.aemtools.lang.htl.file.HtlFileTypeFactory"/>
 
         <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>
@@ -166,6 +170,10 @@
         <lang.psiStructureViewFactory language="Htl"
                                       implementationClass="com.aemtools.ide.HtlStructureViewProvider"/>
 
+        <projectService
+                serviceInterface="com.aemtools.settings.HtlRootDirectories"
+                serviceImplementation="com.aemtools.settings.HtlRootDirectories"/>
+
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
     </extensions>
 
@@ -176,6 +184,12 @@
     </project-components>
 
     <actions>
+        <action id="MarkAsHtlRootDirectory"
+                class="com.aemtools.action.MarkAsHtlRootDirectoryAction"
+                text="HTL Root"
+                description="HTML files under this directory will be considered as HTL files">
+            <add-to-group group-id="MarkRootGroup" anchor="last" />
+        </action>
     </actions>
 
 </idea-plugin>

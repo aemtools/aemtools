@@ -1,11 +1,14 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor
 
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.EmptyTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.psi.PsiElement
 
 /**
- * Type descriptor compounded from the type descriptors.
+ * Type descriptor compounded from several type descriptors.
+ *
  * @author Dmytro Troynikov
  */
 class MergedTypeDescriptor(vararg val types: TypeDescriptor) : TypeDescriptor {
