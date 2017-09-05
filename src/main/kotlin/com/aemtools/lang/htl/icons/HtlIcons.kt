@@ -25,6 +25,8 @@ object HtlIcons {
 
     val AEM_COMPONENT: Icon = icon("aem-component.png")
 
+    val HTL_ROOT: Icon = icon("/root/htlRoot.png")
+
     private fun icon(name: String) = IconLoader.getIcon("/icons/$name", HtlIcons::class.java)
 
 }

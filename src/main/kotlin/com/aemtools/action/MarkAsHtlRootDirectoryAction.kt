@@ -1,5 +1,7 @@
 package com.aemtools.action
 
+import com.aemtools.lang.htl.icons.HtlIcons
+import com.aemtools.service.detection.HtlDetectionService
 import com.aemtools.settings.HtlRootDirectories
 import com.aemtools.util.psiManager
 import com.intellij.openapi.actionSystem.ActionPlaces
@@ -11,24 +13,33 @@ import com.intellij.ui.GuiUtils
 import com.intellij.util.FileContentUtil.reparseOpenedFiles
 
 /**
+ * Action that allows to mark/unmark directory as Htl Root.
+ *
+ * `Mark As -> HTL Root`
+ * `Mark As -> Unmark as HTL Root`
+ *
  * @author Dmytro Troynikov
  */
 class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
 
     override fun update(e: AnActionEvent) {
         val file = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
-                ?.firstOrNull() ?: return
+                ?.firstOrNull()
 
-        if (!file.isDirectory && e.place != ActionPlaces.PROJECT_VIEW_POPUP) {
+        if (file == null
+                || !file.isDirectory
+                && e.place != ActionPlaces.PROJECT_VIEW_POPUP
+                || HtlDetectionService.isUnderHtlRoot(file.path)) {
             e.presentation.isEnabledAndVisible = false
             return
         }
 
-        val htlRootDirectories = HtlRootDirectories.getInstance()
-
-        if (htlRootDirectories != null && htlRootDirectories.directories.contains(file.path)) {
+        if (HtlDetectionService.isHtlRootDirectory(file.path)) {
             e.presentation.text = "Unmark as HTL Root"
+            return
         }
+
+        e.presentation.icon = HtlIcons.HTL_ROOT
     }
 
     override fun actionPerformed(e: AnActionEvent) {
