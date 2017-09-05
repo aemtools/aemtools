@@ -4,7 +4,8 @@ import com.aemtools.blocks.base.BaseLightTest
 import com.aemtools.completion.util.findParentByType
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiMethod
-import junit.framework.TestCase
+import com.intellij.psi.xml.XmlAttribute
+import org.assertj.core.api.Assertions.assertThat
 
 /**
  * @author Dmytro Troynikov
@@ -32,7 +33,8 @@ class FindUsagesTest : BaseLightTest() {
             val element = elementUnderCaret.findParentByType(PsiMethod::class.java)
             val usages = myFixture.findUsages(element as PsiElement)
 
-            TestCase.assertNotNull(usages)
+            assertThat(usages)
+                    .isNotNull
 
             val holders = usages.map { it.element?.text }
                     .filterNotNull()
@@ -41,6 +43,24 @@ class FindUsagesTest : BaseLightTest() {
                     "bean.property",
                     "bean.getProperty"
             ))
+        }
+    }
+
+    fun testFindUsagesOfUseVariable() = fileCase {
+        addHtml("test.html", """
+            <div ${CARET}data-sly-use.bean="">
+                $DOLLAR{bean}
+            </div>
+        """)
+        verify {
+            val element = elementUnderCaret()
+            val attr = element.findParentByType(XmlAttribute::class.java)
+
+            val usages = myFixture.findUsages(attr!!)
+
+            assertThat(usages)
+                    .isNotNull
+
         }
     }
 

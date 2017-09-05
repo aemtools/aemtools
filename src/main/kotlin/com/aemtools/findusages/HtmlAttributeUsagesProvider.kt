@@ -1,5 +1,6 @@
 package com.aemtools.findusages
 
+import com.aemtools.completion.util.incomingReferences
 import com.aemtools.completion.util.isHtlDeclarationAttribute
 import com.aemtools.reference.htl.reference.HtlDeclarationReference
 import com.aemtools.reference.htl.reference.HtlListHelperReference
@@ -32,7 +33,7 @@ class HtmlAttributeUsagesProvider : FindUsagesHandlerFactory() {
         return element is XmlAttribute && element.isHtlDeclarationAttribute()
     }
 
-    class HtlAttributesFindUsagesHandler(xmlAttribute: XmlAttribute) : FindUsagesHandler(xmlAttribute) {
+    class HtlAttributesFindUsagesHandler(val xmlAttribute: XmlAttribute) : FindUsagesHandler(xmlAttribute) {
         override fun isSearchForTextOccurrencesAvailable(psiElement: PsiElement, isSingleFile: Boolean): Boolean {
             return super.isSearchForTextOccurrencesAvailable(psiElement, isSingleFile)
         }
@@ -72,7 +73,9 @@ class HtmlAttributeUsagesProvider : FindUsagesHandlerFactory() {
         }
 
         override fun getSecondaryElements(): Array<PsiElement> {
-            return super.getSecondaryElements()
+            return xmlAttribute.incomingReferences().mapNotNull {
+                it.element
+            }.toTypedArray()
         }
 
         override fun getFindUsagesDialog(isSingleFile: Boolean, toShowInNewTab: Boolean, mustOpenInNewTab: Boolean): AbstractFindUsagesDialog {
