@@ -1,5 +1,6 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor.properties
 
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.BaseTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.aemtools.completion.htl.CompletionPriority.DIALOG_PROPERTY
 import com.aemtools.completion.util.resourceType
@@ -15,7 +16,7 @@ import com.intellij.psi.PsiElement
  *
  * @author Dmytro Troynikov
  */
-class PropertiesTypeDescriptor(val element: PsiElement) : TypeDescriptor {
+class PropertiesTypeDescriptor(val element: PsiElement) : BaseTypeDescriptor() {
 
     private val myResourceType: String? by lazy {
         element.containingFile.originalFile.virtualFile.resourceType()
@@ -67,11 +68,5 @@ class PropertiesTypeDescriptor(val element: PsiElement) : TypeDescriptor {
     }
 
     override fun name(): String = "properties"
-
-    override fun isArray(): Boolean = false
-
-    override fun isIterable(): Boolean = false
-
-    override fun isMap(): Boolean = true
 
 }

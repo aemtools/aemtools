@@ -1,5 +1,6 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor.properties
 
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.BaseTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.aemtools.index.model.dialog.AemComponentTouchUIDialogDefinition
 import com.intellij.codeInsight.lookup.LookupElement
@@ -12,7 +13,7 @@ class TouchDialogPropertyTypeDescriptor(
         val name: String,
         val element: PsiElement,
         val touchDialogDefinition: AemComponentTouchUIDialogDefinition)
-    : TypeDescriptor {
+    : BaseTypeDescriptor() {
 
     override fun referencedElement(): PsiElement? =
             touchDialogDefinition.declarationElement(name, element.project)
@@ -23,7 +24,5 @@ class TouchDialogPropertyTypeDescriptor(
             = TypeDescriptor.empty()
 
     override fun name(): String = name
-    override fun isArray(): Boolean = false
-    override fun isIterable(): Boolean = false
-    override fun isMap(): Boolean = false
+
 }
