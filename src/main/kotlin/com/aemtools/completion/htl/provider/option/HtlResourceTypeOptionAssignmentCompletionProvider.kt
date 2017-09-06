@@ -20,10 +20,6 @@ object HtlResourceTypeOptionAssignmentCompletionProvider
             parameters: CompletionParameters,
             context: ProcessingContext?,
             result: CompletionResultSet) {
-        if (result.isStopped) {
-            return
-        }
-
         val myDirectory = parameters.position.containingFile.originalFile.containingDirectory.virtualFile
                 .path
 

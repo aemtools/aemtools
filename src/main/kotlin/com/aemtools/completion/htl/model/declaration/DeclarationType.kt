@@ -2,7 +2,8 @@ package com.aemtools.completion.htl.model.declaration
 
 /**
  * The enumeration of declaration types.
- * @author Dmytro_Troynikov
+ *
+ * @author Dmytro Troynikov
  */
 enum class DeclarationType {
     /**

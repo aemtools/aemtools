@@ -14,10 +14,6 @@ object HtlContextOptionAssignmentCompletionProvider : CompletionProvider<Complet
     override fun addCompletions(parameters: CompletionParameters,
                                 context: ProcessingContext?,
                                 result: CompletionResultSet) {
-        if (result.isStopped) {
-            return
-        }
-
         val variants = HtlELPredefined.CONTEXT_VALUES.map {
             LookupElementBuilder.create(it.completionText)
                     .withTypeText("HTL Context Value")

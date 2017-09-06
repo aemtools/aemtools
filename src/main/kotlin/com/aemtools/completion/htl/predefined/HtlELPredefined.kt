@@ -113,17 +113,3 @@ data class PredefinedCompletion(
     fun asTypeDescriptor(): PredefinedDescriptionTypeDescriptor =
             PredefinedDescriptionTypeDescriptor(this)
 }
-
-/**
- * Add lookup elements from given list to current resolution result.
- * @param completionVariants variants to add
- * @return new [ResolutionResult] object
- */
-fun ResolutionResult.add(completionVariants: List<LookupElement>): ResolutionResult {
-    val myVariants = this.predefined
-    if (myVariants == null) {
-        return ResolutionResult(this.psiClass, completionVariants)
-    } else {
-        return ResolutionResult(this.psiClass, myVariants + completionVariants)
-    }
-}

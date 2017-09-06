@@ -20,10 +20,6 @@ object HtlElVariableNameCompletionProvider : CompletionProvider<CompletionParame
     override fun addCompletions(parameters: CompletionParameters,
                                 context: ProcessingContext?,
                                 result: CompletionResultSet) {
-        if (result.isStopped) {
-            return
-        }
-
         val currentPosition = parameters.position
         val contextObjects = PredefinedVariables.contextObjectsCompletion()
                 .map { it.withPriority(CompletionPriority.CONTEXT_OBJECT) }
