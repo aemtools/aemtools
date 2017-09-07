@@ -43,7 +43,7 @@
                 considered as HTL files.
             </li>
             <li>
-                Added localization keys completion: ${'<caret>' @ i18n} in this
+                Added localization keys completion: ${'&lt;caret>' @ i18n} in this
                 example under caret all available in project i18n keys will be
                 proposed as completion variants.
             </li>
