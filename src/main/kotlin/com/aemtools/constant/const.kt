@@ -87,6 +87,12 @@ object const {
                 DATA_SLY_UNWRAP,
                 DATA_SLY_REPEAT
         )
+
+        object options {
+            val CONTEXT = "context"
+            val RESOURCE_TYPE = "resourceType"
+            val I18N = "i18n"
+        }
     }
 
     object java {
@@ -119,12 +125,6 @@ object const {
         val SLING_MESSAGE: String = "sling:message"
         val JCR_MIXIN_TYPES: String = "jcr:mixinTypes"
         val LANGUAGE_MIXIN: String = "mix:language"
-    }
-
-    object message {
-        object annotator {
-            val SIMPLIFY_EXPRESSION = "Unnecessary expression."
-        }
     }
 
 }

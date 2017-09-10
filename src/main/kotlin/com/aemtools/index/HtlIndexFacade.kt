@@ -3,13 +3,12 @@ package com.aemtools.index
 import com.aemtools.completion.util.toPsiFile
 import com.aemtools.index.model.LocalizationModel
 import com.aemtools.index.model.TemplateDefinition
-import com.aemtools.util.allScope
+import com.aemtools.util.allFromFbi
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiFile
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.util.PathUtil
-import com.intellij.util.indexing.FileBasedIndex
 
 /**
  * @author Dmytro Troynikov
@@ -29,17 +28,12 @@ object HtlIndexFacade {
     fun resolveUseFile(name: String, psiFile: PsiFile): PsiFile? {
         val extension = PathUtil.getFileExtension(name)
                 ?: return null
+
         if (extension !in SLY_USE_EXTENSIONS) {
             return null
         }
 
-        val normalizedName = if (isAbsolutePath(name)) {
-            name
-        } else {
-            with(psiFile.virtualFile.path) {
-                substring(0, lastIndexOf('/')) + "/$name"
-            }
-        }
+        val normalizedName = normalizeName(name, psiFile)
 
         val files = FilenameIndex
                 .getAllFilesByExt(psiFile.project,
@@ -66,13 +60,7 @@ object HtlIndexFacade {
             return null
         }
 
-        val normalizedName = if (isAbsolutePath(name)) {
-            name
-        } else {
-            with(psiFile.virtualFile.path) {
-                substring(0, lastIndexOf('/')) + "/$name"
-            }
-        }
+        val normalizedName = normalizeName(name, psiFile)
 
         val files = FilenameIndex
                 .getAllFilesByExt(psiFile.project,
@@ -100,8 +88,7 @@ object HtlIndexFacade {
         val relativeToDir = relativeToFile.containingDirectory.virtualFile.path
 
         return files.filter { it.path.startsWith(relativeToDir) }
-                .map { it.toPsiFile(relativeToFile.project) }
-                .filterNotNull()
+                .mapNotNull { it.toPsiFile(relativeToFile.project) }
                 .filterNot { it.name == relativeToFile.name }
     }
 
@@ -111,14 +98,8 @@ object HtlIndexFacade {
      * @param project the project
      * @return list of [TemplateDefinition] objects
      */
-    fun getTemplates(project: Project): List<TemplateDefinition> {
-        val fbi = FileBasedIndex.getInstance()
-        val keys = fbi.getAllKeys(HtlTemplateIndex.HTL_TEMPLATE_ID, project)
-        val result = keys.flatMap {
-            fbi.getValues(HtlTemplateIndex.HTL_TEMPLATE_ID, it, project.allScope())
-        }
-        return result
-    }
+    fun getTemplates(project: Project): List<TemplateDefinition> =
+            allFromFbi(HtlTemplateIndex.HTL_TEMPLATE_ID, project)
 
     /**
      * Collect all localization models.
@@ -126,15 +107,28 @@ object HtlIndexFacade {
      * @param project the project
      * @return list of [LocalizationModel] objects
      */
-    fun getAllLocalizationModels(project: Project): List<LocalizationModel> {
-        val fbi = FileBasedIndex.getInstance()
-        val keys = fbi.getAllKeys(LocalizationIndex.LOCALIZATION_INDEX, project)
+    fun getAllLocalizationModels(project: Project): List<LocalizationModel> =
+            allFromFbi(LocalizationIndex.LOCALIZATION_INDEX, project)
 
-        val result = keys.flatMap {
-            fbi.getValues(LocalizationIndex.LOCALIZATION_INDEX, it, project.allScope())
+    /**
+     * Normalize file name relative to given psi file.
+     * If the name contains absolute path (i.e. starts with '/')
+     * it will returned as is.
+     * If the name contains relative path
+     * it will be appended to path of given psi file.
+     *
+     * @param name file name as it was entered in htl
+     * @param psiFile the file in which the file inclusion is present
+     * @return normalized name
+     */
+    private fun normalizeName(name: String, psiFile: PsiFile): String {
+        return if (isAbsolutePath(name)) {
+            name
+        } else {
+            with(psiFile.virtualFile.path) {
+                substring(0, lastIndexOf('/')) + "/$name"
+            }
         }
-
-        return result
     }
 
     private fun isAbsolutePath(path: String): Boolean = path.startsWith("/")

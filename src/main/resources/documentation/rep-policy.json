@@ -17,7 +17,9 @@
   },
   {
     "nodeName": "allow_\nd|deny_\nd",
-    "childNodes": ["rep:restrictions"],
+    "childNodes": [
+      "rep:restrictions"
+    ],
     "attributes": [
       {
         "name": "jcr:primaryType",
@@ -79,7 +81,9 @@
       {
         "name": "rep:glob",
         "type": "String",
-        "values": ["glob"]
+        "values": [
+          "glob"
+        ]
       },
       {
         "name": "rep:ntNames",

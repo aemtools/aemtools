@@ -57,7 +57,7 @@ class DataSlyCallCompletionTest : CompletionBaseLightTest() {
         shouldContain(listOf("template"))
     }
 
-    fun testDataSlyCallTemplateShouldNotBeProposedOutsideOfSlyCall() =  completionTest {
+    fun testDataSlyCallTemplateShouldNotBeProposedOutsideOfSlyCall() = completionTest {
         addHtml("test.html", """
             <div data-sly-template.template=''></div>
             $DOLLAR{$CARET}

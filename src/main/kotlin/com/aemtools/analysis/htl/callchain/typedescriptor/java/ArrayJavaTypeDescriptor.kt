@@ -1,7 +1,7 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor.java
 
-import com.aemtools.analysis.htl.callchain.typedescriptor.ArrayTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.ArrayTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiMember
 import com.intellij.psi.PsiType

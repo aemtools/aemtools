@@ -24,7 +24,7 @@ object OSGiConfigIndexer : DataIndexer<String, OSGiConfiguration, FileContent> {
             val attributes = mainTag.attributes
                     .filterNot { it.name == JCR_PRIMARY_TYPE
                     || it.name == "xmlns:sling"
-                    || it.name == "xmlns:jcr"}
+                    || it.name == "xmlns:jcr" }
             val parameters = attributes.map {
                 it.name to it.value
             }.toMap()

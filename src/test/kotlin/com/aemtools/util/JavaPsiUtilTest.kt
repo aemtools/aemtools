@@ -7,7 +7,6 @@ import com.aemtools.constant.const.java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.constant.const.java.SLING_FILTER_ANNOTATION
 import com.aemtools.constant.const.java.SLING_SERVLET_ANNOTATION
 import com.aemtools.lang.java.JavaSearch
-import junit.framework.TestCase
 
 /**
  * @author Dmytro_Troynikov

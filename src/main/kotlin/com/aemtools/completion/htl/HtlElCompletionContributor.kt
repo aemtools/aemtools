@@ -9,7 +9,7 @@ import com.intellij.codeInsight.completion.CompletionType
 /**
  * @author Dmytro Troynikov.
  */
-class HtlElCompletionContributor : CompletionContributor() {init {
+class HtlElCompletionContributor : CompletionContributor() { init {
     extend(CompletionType.BASIC, HtlPatterns.memberAccess, HtlElMemberAccessCompletionProvider)
     extend(CompletionType.BASIC, HtlPatterns.mainVariableInsideOfDataSlyCall, HtlElDataSlyCallVariableCompletionProvider)
 

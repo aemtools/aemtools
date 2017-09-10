@@ -1,6 +1,6 @@
 package com.aemtools.completion.htl.model.declaration
 
-import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateHolderTypeDescriptor
 import com.aemtools.completion.util.resolveUseClass

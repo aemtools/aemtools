@@ -15,22 +15,6 @@ import com.intellij.psi.PsiFileFactory
 object HtlElementFactory {
 
     /**
-     * Create [ASTNode] of [HtlTypes.VAR_NAME] type.
-     *
-     * @param name the name (text) of node to create
-     * @param project the project
-     *
-     * @return new ast node
-     */
-    fun createVarName(name: String, project: Project): ASTNode? =
-            project.psiFileFactory()
-                    .file("$DOLLAR{$name}")
-                    .findChildrenByType(HtlVariableName::class.java)
-                    .firstOrNull()
-                    ?.node
-                    ?.findChildByType(HtlTypes.VAR_NAME)
-
-    /**
      * Create [HtlPropertyAccess] element with given text.
      *
      * @param text the text
@@ -120,7 +104,7 @@ object HtlElementFactory {
      */
     fun createOption(value: String, project: Project): HtlVariableName? =
             project.psiFileFactory()
-                    .file("$DOLLAR{@ ${value}}")
+                    .file("$DOLLAR{@ $value}")
                     .findChildrenByType(HtlVariableName::class.java)
                     .firstOrNull()
 

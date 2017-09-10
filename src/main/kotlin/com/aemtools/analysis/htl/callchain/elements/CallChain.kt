@@ -1,6 +1,6 @@
 package com.aemtools.analysis.htl.callchain.elements
 
-import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.intellij.psi.PsiElement
 
 /**

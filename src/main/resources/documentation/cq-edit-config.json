@@ -65,12 +65,16 @@
   },
   {
     "nodeName": "cq:dropTargets",
-    "childNodes": ["cq:DropTargetConfig"],
+    "childNodes": [
+      "cq:DropTargetConfig"
+    ],
     "attributes": [
       {
         "name": "jcr:primaryType",
         "type": "String",
-        "values": ["cq:DropTargetConfig"],
+        "values": [
+          "cq:DropTargetConfig"
+        ],
         "autoinsert": "true"
       },
       {
@@ -102,7 +106,9 @@
       {
         "name": "jcr:primaryType",
         "type": "String",
-        "values": ["nt:unstructured"],
+        "values": [
+          "nt:unstructured"
+        ],
         "autoinsert": "true"
       }
     ]
@@ -114,7 +120,9 @@
       {
         "name": "jcr:primaryType",
         "type": "String",
-        "values": ["cq:InplaceEditingConfig"],
+        "values": [
+          "cq:InplaceEditingConfig"
+        ],
         "autoinsert": "true"
       },
       {
@@ -143,7 +151,9 @@
       {
         "name": "jcr:primaryType",
         "type": "String",
-        "values": ["cq:EditListenersConfig"],
+        "values": [
+          "cq:EditListenersConfig"
+        ],
         "autoinsert": "true"
       },
       {

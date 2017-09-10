@@ -12,7 +12,7 @@ interface OSGiFelixAnnotationsMixin {
      *
      * @receiver [ITestFixture]
      */
-    fun ITestFixture.addFelixServiceAnnotation(): Unit =
+    fun ITestFixture.addFelixServiceAnnotation() =
             this.addClass("org/apache/felix/scr/annotations/Service.java", """
                 package org.apache.felix.scr.annotations;
 
@@ -24,7 +24,7 @@ interface OSGiFelixAnnotationsMixin {
      *
      * @receiver [ITestFixture]
      */
-    fun ITestFixture.addFelixSlingFilterAnnotation(): Unit =
+    fun ITestFixture.addFelixSlingFilterAnnotation() =
             this.addClass("org/apache/felix/src/annotations/sling/SlingFilter.java", """
                 package org.apache.felix.scr.annotations.sling;
 
@@ -36,7 +36,7 @@ interface OSGiFelixAnnotationsMixin {
      *
      * @receiver [ITestFixture]
      */
-    fun ITestFixture.addFelixSlingServletAnnotation(): Unit =
+    fun ITestFixture.addFelixSlingServletAnnotation() =
             this.addClass("org/apache/felix/scr/annotations/sling/SlingServlet.java", """
                 package org.apache.felix.scr.annotations.sling;
 

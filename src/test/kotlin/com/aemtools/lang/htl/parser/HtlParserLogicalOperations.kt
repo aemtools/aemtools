@@ -1,6 +1,5 @@
 package com.aemtools.lang.htl.parser
 
-import com.aemtools.lang.htl.HtlParserDefinition
 import com.intellij.testFramework.ParsingTestCase
 
 /**

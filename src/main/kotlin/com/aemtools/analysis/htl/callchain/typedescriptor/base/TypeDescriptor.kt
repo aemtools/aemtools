@@ -1,5 +1,6 @@
-package com.aemtools.analysis.htl.callchain.typedescriptor
+package com.aemtools.analysis.htl.callchain.typedescriptor.base
 
+import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiUnresolvedTypeDescriptor
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.psi.PsiElement
@@ -73,44 +74,4 @@ interface TypeDescriptor {
 
     fun asResolutionResult(): ResolutionResult = ResolutionResult(predefined = myVariants())
 
-}
-
-open class NamedTypeDescriptor(private val myName: String)
-    : EmptyTypeDescriptor() {
-    override fun name(): String = myName
-}
-
-open class JavaPsiUnresolvedTypeDescriptor(private val myName: String,
-                                           val psiMember: PsiMember,
-                                           val psiType: PsiType) : EmptyTypeDescriptor() {
-
-    override fun name(): String = myName
-
-    override fun referencedElement(): PsiElement? = psiMember
-
-}
-
-open class EmptyTypeDescriptor : TypeDescriptor {
-    override fun isArray(): Boolean = false
-    override fun isIterable(): Boolean = false
-    override fun isMap(): Boolean = false
-
-    override fun myVariants(): List<LookupElement> = listOf()
-
-    override fun subtype(identifier: String): TypeDescriptor = TypeDescriptor.empty()
-
-    override fun name(): String = ""
-}
-
-interface ArrayTypeDescriptor : TypeDescriptor {
-    fun arrayType(): TypeDescriptor
-}
-
-interface IterableTypeDescriptor : TypeDescriptor {
-    fun iterableType(): TypeDescriptor
-}
-
-interface MapTypeDescriptor : TypeDescriptor {
-    fun keyType(): TypeDescriptor
-    fun valueType(): TypeDescriptor
 }

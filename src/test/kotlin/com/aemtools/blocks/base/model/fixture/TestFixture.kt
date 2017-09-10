@@ -12,7 +12,7 @@ import java.util.*
  * @author Dmytro Troynikov
  */
 open class TestFixture(val fixture: JavaCodeInsightTestFixture)
-    : ITestFixture, ITestFixtureInternal{
+    : ITestFixture, ITestFixtureInternal {
 
     override fun assertionContext(): IAssertionContext {
         checkInitialized()
@@ -50,6 +50,6 @@ open class TestFixture(val fixture: JavaCodeInsightTestFixture)
     }
 
     protected fun checkInitialized() {
-        assert(initialized, {"Current fixture is not initialized"})
+        assert(initialized, { "Current fixture is not initialized" })
     }
 }

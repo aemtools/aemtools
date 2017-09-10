@@ -40,4 +40,3 @@ private class WidgetCompletionProvider : CompletionProvider<CompletionParameters
 
 }
 
-

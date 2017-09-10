@@ -64,5 +64,4 @@
     "name": "unsafe",
     "description": "Use this at your own risk, this disables XSS protection completely."
   }
-
 ]

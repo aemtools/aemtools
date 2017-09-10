@@ -19,10 +19,6 @@ object HtlDataSlyResourceOptionCompletionProvider : CompletionProvider<Completio
             parameters: CompletionParameters,
             context: ProcessingContext?,
             result: CompletionResultSet) {
-        if (result.isStopped) {
-            return
-        }
-
         val currentPosition = parameters.position
         val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
                 ?: return

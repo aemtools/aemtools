@@ -15,10 +15,6 @@ import com.intellij.util.ProcessingContext
  */
 object HtlElMemberAccessCompletionProvider : CompletionProvider<CompletionParameters>() {
     override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext, result: CompletionResultSet) {
-        if (result.isStopped) {
-            return
-        }
-
         val currentPosition = parameters.position
         val resolutionResult = resolve(currentPosition)
 
@@ -28,7 +24,6 @@ object HtlElMemberAccessCompletionProvider : CompletionProvider<CompletionParame
 
         result.stopHere()
     }
-
 
     fun resolve(element: PsiElement): ResolutionResult {
         val propertyAccessElement = element.findParentByType(PropertyAccessMixin::class.java)

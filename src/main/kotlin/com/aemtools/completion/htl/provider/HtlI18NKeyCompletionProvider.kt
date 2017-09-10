@@ -15,11 +15,9 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Troynikov
  */
 object HtlI18NKeyCompletionProvider : CompletionProvider<CompletionParameters>() {
-    override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext, result: CompletionResultSet) {
-        if (result.isStopped) {
-            return
-        }
-
+    override fun addCompletions(parameters: CompletionParameters,
+                                context: ProcessingContext,
+                                result: CompletionResultSet) {
         val position = parameters.position
 
         if (localizationMainString(position)) {

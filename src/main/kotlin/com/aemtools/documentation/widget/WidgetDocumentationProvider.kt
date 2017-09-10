@@ -16,8 +16,6 @@ import com.intellij.psi.PsiElement
  */
 open class WidgetDocumentationProvider : AbstractDocumentationProvider() {
 
-    val widgetRepository = ServiceFacade.getWidgetRepository()
-
     fun acceptGenerateDoc(element: PsiElement): Boolean {
         if (element.containingFile
                 .originalFile
@@ -36,7 +34,7 @@ open class WidgetDocumentationProvider : AbstractDocumentationProvider() {
 
         val widgetXType = widgetDefinition.getFieldValue(const.XTYPE) ?: return null
 
-        val widgetDocumentation = widgetRepository.findByXType(widgetXType) ?: return null
+        val widgetDocumentation = ServiceFacade.getWidgetRepository().findByXType(widgetXType) ?: return null
 
         if (widgetDefinition.isXtypeValueSelected()) {
             return xtypeDocumentation(widgetDocumentation)
@@ -54,10 +52,8 @@ open class WidgetDocumentationProvider : AbstractDocumentationProvider() {
     fun xtypeDocumentation(widgetDoc: WidgetDoc): String {
         return """
             <h2>${widgetDoc.className}</h2>
-            <p>
-                ${widgetDoc.description}
-            </p>
-        """.trimIndent().replace("\n", "")
+            <p>${widgetDoc.description}</p>
+        """.trimIndent().replace(Regex("\n|\r"), "")
     }
 
     fun fieldDocumentation(widgetDoc: WidgetDoc, widgetMember: WidgetMember): String {
