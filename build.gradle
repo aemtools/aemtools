@@ -12,6 +12,7 @@ buildscript {
 
 plugins {
     id "org.jetbrains.intellij" version "0.2.16"
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC4-3"
 }
 
 apply plugin: 'java'
@@ -101,6 +102,8 @@ apply from: rootProject.file("config/idea.gradle")
  * Import Lexer Parser Related tasks.
  */
 apply from: rootProject.file("config/lexerparser.gradle")
+
+apply from: rootProject.file("config/detekt.gradle")
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.1'

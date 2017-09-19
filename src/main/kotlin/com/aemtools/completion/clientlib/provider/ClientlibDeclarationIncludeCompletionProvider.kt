@@ -11,7 +11,6 @@ import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.project.DumbAware
 import com.intellij.psi.PsiDirectory
-import com.intellij.psi.PsiElement
 import com.intellij.util.ProcessingContext
 import javax.swing.Icon
 

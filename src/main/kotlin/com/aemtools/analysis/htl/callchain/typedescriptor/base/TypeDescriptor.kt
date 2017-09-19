@@ -5,7 +5,6 @@ import com.aemtools.completion.htl.model.ResolutionResult
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiMember
-import com.intellij.psi.PsiType
 
 /**
  * Base Type Descriptor.

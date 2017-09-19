@@ -142,30 +142,24 @@ fun List<HtlVariableDeclaration>.filterForPosition(position: PsiElement): List<H
             DeclarationAttributeType.LIST_HELPER -> {
                 val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
 
-                return@filter position.isWithin(tag)
+                position.isWithin(tag)
             }
             DeclarationAttributeType.DATA_SLY_REPEAT,
             DeclarationAttributeType.REPEAT_HELPER -> {
                 val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
 
-                return@filter position.isPartOf(tag) && position.isNotPartOf(it.xmlAttribute)
+                position.isPartOf(tag) && position.isNotPartOf(it.xmlAttribute)
             }
             DeclarationAttributeType.DATA_SLY_TEMPLATE_PARAMETER -> {
                 val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
 
-                return@filter position.isWithin(tag)
+                position.isWithin(tag)
             }
 
             DeclarationAttributeType.DATA_SLY_TEMPLATE -> {
                 val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
-                if (position.isPartOf(tag)) {
-                    return@filter false
-                }
-
-                true
+                !position.isPartOf(tag)
             }
-
-            else -> false
         }
     }
 
