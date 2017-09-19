@@ -23,6 +23,4 @@ class PredefinedTypeDescriptor(val predefined: List<PredefinedCompletion>) : Bas
             predefined.find { it.completionText == identifier }?.asTypeDescriptor()
                     ?: TypeDescriptor.empty()
 
-    override fun name(): String = ""
-
 }

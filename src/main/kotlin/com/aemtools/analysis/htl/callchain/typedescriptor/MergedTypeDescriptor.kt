@@ -30,10 +30,6 @@ class MergedTypeDescriptor(vararg val types: TypeDescriptor) : TypeDescriptor {
                     .find { it !is EmptyTypeDescriptor }
                     ?: EmptyTypeDescriptor()
 
-    override fun name(): String = types.map { it.name() }
-            .find { it.isNotBlank() }
-            ?: ""
-
     override fun isArray(): Boolean = types.any { it.isArray() }
 
     override fun isIterable(): Boolean = types.any { it.isIterable() }

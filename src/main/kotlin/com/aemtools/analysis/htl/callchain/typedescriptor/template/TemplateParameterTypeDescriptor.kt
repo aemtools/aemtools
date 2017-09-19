@@ -18,6 +18,4 @@ class TemplateParameterTypeDescriptor(
     override fun subtype(identifier: String): TypeDescriptor =
             TypeDescriptor.empty()
 
-    override fun name(): String = declaration.variableName
-
 }

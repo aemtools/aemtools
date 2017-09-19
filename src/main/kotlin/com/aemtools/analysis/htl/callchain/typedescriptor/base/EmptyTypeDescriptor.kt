@@ -13,6 +13,4 @@ open class EmptyTypeDescriptor : TypeDescriptor {
     override fun myVariants(): List<LookupElement> = listOf()
 
     override fun subtype(identifier: String): TypeDescriptor = TypeDescriptor.empty()
-
-    override fun name(): String = ""
 }

@@ -96,6 +96,10 @@ object const {
     }
 
     object java {
+        val ITERABLE = "java.lang.Iterable"
+        val ITERATOR = "java.util.Iterator"
+        val MAP = "java.util.Map"
+
         val USE_INTERFACE = "io.sightly.java.api.Use"
         val WCM_USE_CLASS = "com.adobe.cq.sightly.WCMUse"
         val POJO_USE = "org.apache.sling.scripting.sightly.pojo.Use"

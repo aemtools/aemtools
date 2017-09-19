@@ -67,6 +67,4 @@ class PropertiesTypeDescriptor(val element: PsiElement) : BaseTypeDescriptor() {
         return TypeDescriptor.empty()
     }
 
-    override fun name(): String = "properties"
-
 }

@@ -3,8 +3,8 @@ package com.aemtools.service
 import com.aemtools.service.repository.IRepositoryService
 import com.aemtools.service.repository.WidgetDocRepository
 import com.aemtools.service.repository.inmemory.EditConfigRepository
-import com.aemtools.service.repository.inmemory.RepPolicyRepository
 import com.aemtools.service.repository.inmemory.HtlAttributesRepository
+import com.aemtools.service.repository.inmemory.RepPolicyRepository
 import com.intellij.openapi.components.ServiceManager
 
 /**

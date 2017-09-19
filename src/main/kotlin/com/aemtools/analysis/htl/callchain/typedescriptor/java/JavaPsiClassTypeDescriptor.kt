@@ -2,9 +2,8 @@ package com.aemtools.analysis.htl.callchain.typedescriptor.java
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.aemtools.completion.htl.model.ResolutionResult
+import com.aemtools.constant.const
 import com.aemtools.lang.java.JavaSearch
-import com.aemtools.util.allScope
-import com.aemtools.util.psiManager
 import com.aemtools.util.*
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
@@ -78,10 +77,6 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
         else -> 0.5
     }
 
-    override fun name(): String = psiClass.qualifiedName
-            ?: psiClass.name
-            ?: psiClass.text
-
     override fun subtype(identifier: String): TypeDescriptor {
         val psiMember = psiClass.findElMemberByName(identifier)
                 ?: return TypeDescriptor.empty()
@@ -107,7 +102,7 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
         } ?: return TypeDescriptor.empty()
 
         val typeClass = JavaSearch.findClass(className, psiClass.project)
-                ?: return TypeDescriptor.named(className, psiMember, psiType)
+                ?: return TypeDescriptor.unresolved(psiMember)
 
         return JavaPsiClassTypeDescriptor.create(typeClass, psiMember, psiType)
     }
@@ -124,9 +119,9 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
                    psiType: PsiType? = null): JavaPsiClassTypeDescriptor {
             return when (psiType) {
                 is PsiClassReferenceType -> {
-                    val iterable = JavaSearch.findClass("java.lang.Iterable", psiClass.project)
-                    val iterator = JavaSearch.findClass("java.util.Iterator", psiClass.project)
-                    val map = JavaSearch.findClass("java.util.Map", psiClass.project)
+                    val iterable = JavaSearch.findClass(const.java.ITERABLE, psiClass.project)
+                    val iterator = JavaSearch.findClass(const.java.ITERATOR, psiClass.project)
+                    val map = JavaSearch.findClass(const.java.MAP, psiClass.project)
 
                     if (iterable != null && map != null && iterator != null) {
                         if (psiClass.isInheritor(iterable, true)

@@ -23,6 +23,4 @@ class TemplateTypeDescriptor(
     override fun myVariants(): List<LookupElement> = emptyList()
     override fun subtype(identifier: String): TypeDescriptor = TypeDescriptor.empty()
 
-    override fun name(): String = template.name
-
 }

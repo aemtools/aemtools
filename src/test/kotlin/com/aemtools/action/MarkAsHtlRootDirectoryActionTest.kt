@@ -2,6 +2,7 @@ package com.aemtools.action
 
 import com.aemtools.blocks.util.mock
 import com.aemtools.lang.htl.icons.HtlIcons
+import com.aemtools.service.ServiceFacade
 import com.aemtools.settings.HtlRootDirectories
 import com.intellij.openapi.actionSystem.ActionPlaces
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -65,7 +66,6 @@ class MarkAsHtlRootDirectoryActionTest {
         application = mock()
         projectManager = mock()
         fileEditorManager = mock()
-
         `when`(mockProject.getComponent(PsiManager::class.java))
                 .thenReturn(psiManager)
 

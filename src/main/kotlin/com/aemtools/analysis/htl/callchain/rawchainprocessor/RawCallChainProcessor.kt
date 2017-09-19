@@ -2,27 +2,24 @@ package com.aemtools.analysis.htl.callchain.rawchainprocessor
 
 import com.aemtools.analysis.htl.callchain.elements.*
 import com.aemtools.analysis.htl.callchain.elements.helper.chainSegment
-import com.aemtools.analysis.htl.callchain.typedescriptor.base.EmptyTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.MergedTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.predefined.PredefinedTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.EmptyTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.IterableJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateHolderTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.predefined.PredefinedTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateParameterTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
 import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.htl.model.declaration.*
 import com.aemtools.completion.htl.predefined.HtlELPredefined.LIST_AND_REPEAT_HELPER_OBJECT
 import com.aemtools.completion.util.hasChild
-import com.aemtools.completion.util.resolveUseClass
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
 import com.aemtools.lang.htl.psi.chain.RawChainUnit
 import com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
-import com.aemtools.lang.java.JavaSearch
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiElement
 import java.util.*
@@ -48,12 +45,6 @@ object RawCallChainProcessor {
             val outputType = firstSegment.outputType()
             val newSegment = when (outputType) {
                 is JavaPsiClassTypeDescriptor ->
-                    constructTypedChainSegment(outputType,
-                            rawChain.pop())
-                is TemplateTypeDescriptor ->
-                    constructTypedChainSegment(outputType,
-                            rawChain.pop())
-                is TemplateHolderTypeDescriptor ->
                     constructTypedChainSegment(outputType,
                             rawChain.pop())
 
@@ -97,7 +88,7 @@ object RawCallChainProcessor {
         val inputType = resolveFirstType(rawChainUnit)
 
         if (inputType.isEmpty()) {
-            return createAttributeChainElement(rawChainUnit)
+            return CallChainSegment.empty()
         }
 
         if (inputType is JavaPsiClassTypeDescriptor
@@ -145,21 +136,6 @@ object RawCallChainProcessor {
         }
     }
 
-    private fun createAttributeChainElement(rawChainUnit: RawChainUnit): CallChainSegment {
-        val xmlAttribute = rawChainUnit.myDeclaration?.xmlAttribute
-        if (xmlAttribute != null) {
-            val className = xmlAttribute.resolveUseClass()
-            if (className != null) {
-                val psiClass = JavaSearch.findClass(className, xmlAttribute.project)
-                if (psiClass != null) {
-                    val typeDescriptor = JavaPsiClassTypeDescriptor(psiClass, null, null)
-                    return BaseCallChainSegment(typeDescriptor, typeDescriptor, rawChainUnit.myDeclaration, listOf())
-                }
-            }
-        }
-        return CallChainSegment.empty()
-    }
-
     private fun constructEmptyChainSegment(rawChainUnit: RawChainUnit)
             : CallChainSegment = chainSegment {
         this.inputType = inputType
@@ -171,7 +147,11 @@ object RawCallChainProcessor {
             val nextElement = rawElements.pop()
             val elementName = extractElementName(nextElement)
 
-            result.add(BaseChainElement(nextElement, elementName, TypeDescriptor.Companion.named(elementName)))
+            result.add(BaseChainElement(
+                    nextElement,
+                    elementName,
+                    TypeDescriptor.empty()
+            ))
         }
 
         chain = result

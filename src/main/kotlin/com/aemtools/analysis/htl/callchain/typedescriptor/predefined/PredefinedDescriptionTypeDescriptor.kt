@@ -14,8 +14,6 @@ class PredefinedDescriptionTypeDescriptor(val predefined: PredefinedCompletion) 
 
     override fun subtype(identifier: String): TypeDescriptor = TypeDescriptor.empty()
 
-    override fun name(): String = predefined.type ?: ""
-
     override fun documentation(): String? = predefined.documentation
 
 }

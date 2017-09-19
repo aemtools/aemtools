@@ -31,8 +31,6 @@ class TemplateHolderTypeDescriptor(
                 .toTypeDescriptor()
     }
 
-    override fun name(): String = "name"
-
     override fun asResolutionResult(): ResolutionResult =
             ResolutionResult(null, myVariants())
 
@@ -42,5 +40,6 @@ class TemplateHolderTypeDescriptor(
             } else {
                 TypeDescriptor.empty()
             }
+
 }
 

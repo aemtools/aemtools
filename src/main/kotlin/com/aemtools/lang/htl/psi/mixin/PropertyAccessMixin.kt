@@ -1,7 +1,7 @@
 package com.aemtools.lang.htl.psi.mixin
 
-import com.aemtools.analysis.htl.callchain.HtlCallChainResolver
 import com.aemtools.analysis.htl.callchain.elements.CallChain
+import com.aemtools.analysis.htl.callchain.rawchainprocessor.RawCallChainProcessor
 import com.aemtools.completion.htl.common.FileVariablesResolver
 import com.aemtools.completion.htl.model.declaration.DeclarationAttributeType
 import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
@@ -18,9 +18,7 @@ import java.util.*
  */
 abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
 
-    fun accessChain(): CallChain? {
-        return HtlCallChainResolver.resolveCallChain(this)
-    }
+    fun accessChain(): CallChain? = RawCallChainProcessor.processChain(callChain())
 
     override fun getReferences(): Array<PsiReference> {
         return ReferenceProvidersRegistry.getReferencesFromProviders(this)
