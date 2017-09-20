@@ -5,3 +5,5 @@ detekt {
         config = "$projectDir/config/detekt.yml"
     }
 }
+
+tasks.test.dependsOn detektCheck
