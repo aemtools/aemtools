@@ -145,6 +145,9 @@
         <annotator language="Htl"
                    implementationClass="com.aemtools.lang.htl.highlight.HtlVariablesAnnotator"/>
 
+        <annotator language="Htl"
+                   implementationClass="com.aemtools.lang.htl.highlight.HtlTemplateParametersAnnotator"/>
+
         <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
                        order="before xmlAttribute"/>
 
