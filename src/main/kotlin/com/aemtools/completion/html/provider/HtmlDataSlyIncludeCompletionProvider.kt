@@ -13,7 +13,10 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Troynikov
  */
 object HtmlDataSlyIncludeCompletionProvider : CompletionProvider<CompletionParameters>() {
-    override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext?, result: CompletionResultSet) {
+    override fun addCompletions(
+            parameters: CompletionParameters,
+            context: ProcessingContext?,
+            result: CompletionResultSet) {
         if (result.isStopped) {
             return
         }

@@ -11,7 +11,10 @@ import com.intellij.util.IncorrectOperationException
  * @author Dmytro_Troynikov
  */
 class HtlPropertyAccessManipulator : AbstractElementManipulator<HtlPropertyAccess>() {
-    override fun handleContentChange(element: HtlPropertyAccess, range: TextRange, newContent: String): HtlPropertyAccess {
+    override fun handleContentChange(
+            element: HtlPropertyAccess,
+            range: TextRange,
+            newContent: String): HtlPropertyAccess {
         val propertyAccessMixin = element as? PropertyAccessMixin
                 ?: throw IncorrectOperationException("Cannot rename: $element")
 

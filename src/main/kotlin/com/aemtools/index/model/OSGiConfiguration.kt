@@ -83,5 +83,10 @@ fun List<OSGiConfiguration>.sortByMods(): List<OSGiConfiguration> =
             }
         })
 
+/**
+ * Get all mods concatenated into single string.
+ *
+ * @return concatenated mods string
+ */
 fun OSGiConfiguration.modsConcatenated(): String =
         mods.joinToString(separator = "") { it }

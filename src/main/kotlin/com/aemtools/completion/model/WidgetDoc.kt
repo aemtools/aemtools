@@ -46,8 +46,16 @@ data class WidgetDoc(
         var members: List<WidgetMember>
 ) : Serializable {
 
+    /**
+     * Get psi member by name.
+     *
+     * @param name the name
+     * @return widget member with given name, *null* if no such member available
+     */
     fun getMember(name: String): WidgetMember? {
-        return this.members.firstOrNull { it -> it.name == name }
+        return this.members.firstOrNull { (widgetName) ->
+            widgetName == name
+        }
     }
 
 }

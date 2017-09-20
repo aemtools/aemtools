@@ -34,6 +34,12 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
         result.addAllElements(useSuggestions(parameters))
     }
 
+    /**
+     * Collect lookup elements suitable for `data-sly-use`.
+     *
+     * @param parameters completion parameters
+     * @return list of lookup elements for `data-sly-use`
+     */
     fun useSuggestions(parameters: CompletionParameters): List<LookupElement> {
         val project = parameters.position.project
         val currentFileName = normalizedFileName(parameters)
@@ -72,7 +78,10 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
                     ?: parameters.originalFile.name.toLowerCase()
                     .let { it.replace("-", "") }
 
-    private fun extractCompletions(classes: List<PsiClass>, currentFileName: String, type: String): List<LookupElement> {
+    private fun extractCompletions(
+            classes: List<PsiClass>,
+            currentFileName: String,
+            type: String): List<LookupElement> {
         return classes.flatMap {
             val qualifiedName = it.qualifiedName as? String
             val name = it.name as? String
@@ -85,7 +94,8 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
                     .withPresentableText(name)
                     .withIcon(it.getIcon(0))
                     .withTypeText(type)
-                    .withTailText("(${qualifiedName.substring(0, qualifiedName.lastIndexOf("."))})", true)
+                    .withTailText(
+                            "(${qualifiedName.substring(0, qualifiedName.lastIndexOf("."))})", true)
                     .withPriority(classCompletionPriority(currentFileName, name))
 
             return@flatMap listOf(result)

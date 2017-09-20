@@ -2,7 +2,11 @@ package com.aemtools.completion.widget
 
 import com.aemtools.completion.util.WidgetDefinitionUtil
 import com.aemtools.constant.const
-import com.intellij.codeInsight.completion.*
+import com.intellij.codeInsight.completion.CompletionContributor
+import com.intellij.codeInsight.completion.CompletionParameters
+import com.intellij.codeInsight.completion.CompletionProvider
+import com.intellij.codeInsight.completion.CompletionResultSet
+import com.intellij.codeInsight.completion.CompletionType
 import com.intellij.patterns.PlatformPatterns
 import com.intellij.util.ProcessingContext
 

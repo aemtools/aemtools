@@ -11,30 +11,42 @@ import com.aemtools.completion.htl.provider.option.HtlDataSlyResourceOptionCompl
 import com.aemtools.completion.htl.provider.option.HtlDataSlyTemplateOptionCompletionProvider
 import com.aemtools.completion.htl.provider.option.HtlOptionCompletionProvider
 import com.aemtools.completion.htl.provider.option.HtlResourceTypeOptionAssignmentCompletionProvider
-import com.aemtools.lang.htl.psi.pattern.HtlPatterns
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.contextOptionAssignment
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyCallOption
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyResourceOption
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyTemplateOption
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseMainString
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.mainVariableInsideOfDataSlyCall
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.memberAccess
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.optionName
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.resourceTypeOptionAssignment
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.stringLiteralValue
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.variableName
 import com.intellij.codeInsight.completion.CompletionContributor
-import com.intellij.codeInsight.completion.CompletionType
+import com.intellij.codeInsight.completion.CompletionType.BASIC
+import com.intellij.codeInsight.completion.CompletionType.SMART
 
 /**
  * @author Dmytro Troynikov.
  */
 class HtlElCompletionContributor : CompletionContributor() { init {
-    extend(CompletionType.BASIC, HtlPatterns.memberAccess, HtlElMemberAccessCompletionProvider)
-    extend(CompletionType.BASIC, HtlPatterns.mainVariableInsideOfDataSlyCall, HtlElDataSlyCallVariableCompletionProvider)
+    extend(BASIC, memberAccess, HtlElMemberAccessCompletionProvider)
 
-    extend(CompletionType.BASIC, HtlPatterns.dataSlyUseMainString, HtlDataSlyUseCompletionProvider)
-    extend(CompletionType.SMART, HtlPatterns.dataSlyUseMainString, HtlDataSlyUseCompletionProvider)
+    extend(BASIC, mainVariableInsideOfDataSlyCall, HtlElDataSlyCallVariableCompletionProvider)
 
-    extend(CompletionType.BASIC, HtlPatterns.stringLiteralValue, HtlI18NKeyCompletionProvider)
+    extend(BASIC, dataSlyUseMainString, HtlDataSlyUseCompletionProvider)
+    extend(SMART, dataSlyUseMainString, HtlDataSlyUseCompletionProvider)
 
-    extend(CompletionType.BASIC, HtlPatterns.variableName, HtlElVariableNameCompletionProvider)
+    extend(BASIC, stringLiteralValue, HtlI18NKeyCompletionProvider)
 
-    extend(CompletionType.BASIC, HtlPatterns.dataSlyTemplateOption, HtlDataSlyTemplateOptionCompletionProvider)
-    extend(CompletionType.BASIC, HtlPatterns.dataSlyCallOption, HtlDataSlyCallOptionCompletionProvider)
-    extend(CompletionType.BASIC, HtlPatterns.dataSlyResourceOption, HtlDataSlyResourceOptionCompletionProvider)
-    extend(CompletionType.BASIC, HtlPatterns.optionName, HtlOptionCompletionProvider)
+    extend(BASIC, variableName, HtlElVariableNameCompletionProvider)
 
-    extend(CompletionType.BASIC, HtlPatterns.contextOptionAssignment, HtlContextOptionAssignmentCompletionProvider)
-    extend(CompletionType.BASIC, HtlPatterns.resourceTypeOptionAssignment, HtlResourceTypeOptionAssignmentCompletionProvider)
+    extend(BASIC, dataSlyTemplateOption, HtlDataSlyTemplateOptionCompletionProvider)
+    extend(BASIC, dataSlyCallOption, HtlDataSlyCallOptionCompletionProvider)
+    extend(BASIC, dataSlyResourceOption, HtlDataSlyResourceOptionCompletionProvider)
+    extend(BASIC, optionName, HtlOptionCompletionProvider)
+
+    extend(BASIC, contextOptionAssignment, HtlContextOptionAssignmentCompletionProvider)
+    extend(BASIC, resourceTypeOptionAssignment, HtlResourceTypeOptionAssignmentCompletionProvider)
 }
 }

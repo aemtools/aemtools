@@ -5,6 +5,11 @@ package com.aemtools.service.repository
  */
 interface IRepositoryService {
 
+    /**
+     * Getter for widget doc repository.
+     *
+     * @return widget doc repository instance
+     */
     fun getWidgetDocRepository(): WidgetDocRepository
 
 }

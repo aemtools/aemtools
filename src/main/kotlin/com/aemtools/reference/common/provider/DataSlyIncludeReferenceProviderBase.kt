@@ -24,6 +24,11 @@ abstract class DataSlyIncludeReferenceProviderBase : PsiReferenceProvider() {
         )
     }
 
+    /**
+     * Extract name of included resource.
+     *
+     * @return the name of included resource
+     */
     abstract fun name(element: PsiElement, context: ProcessingContext): String?
 
 }

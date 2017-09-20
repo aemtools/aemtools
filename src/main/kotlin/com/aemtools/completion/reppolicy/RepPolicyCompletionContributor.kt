@@ -34,7 +34,10 @@ private class RepPolicyCompletionProvider : CompletionProvider<CompletionParamet
 
     private val repPolicyRepository = ServiceFacade.getRepPolicyRepository()
 
-    override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext?, result: CompletionResultSet) {
+    override fun addCompletions(
+            parameters: CompletionParameters,
+            context: ProcessingContext?,
+            result: CompletionResultSet) {
         if (!accept(parameters)) {
             return
         }

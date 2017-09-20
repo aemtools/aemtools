@@ -29,6 +29,13 @@ class WidgetVariantsProvider {
         fun INSTANCE(): WidgetVariantsProvider = instance
     }
 
+    /**
+     * Generate variants for given completion parameters and widget definition.
+     *
+     * @param parameters the completion parameters
+     * @param widgetDefinition the widget definition
+     * @return collection of lookup elements
+     */
     fun generateVariants(parameters: CompletionParameters,
                          widgetDefinition: PsiWidgetDefinition?)
             : Collection<LookupElement> {
@@ -61,9 +68,10 @@ class WidgetVariantsProvider {
         }
 
         when (currentPositionType) {
-            const.xml.XML_ATTRIBUTE_NAME -> return variantsForName(widgetDefinition as PsiWidgetDefinition).filter { it ->
-                widgetDefinition.getFieldValue(it.lookupString) == null
-            }
+            const.xml.XML_ATTRIBUTE_NAME -> return variantsForName(widgetDefinition as PsiWidgetDefinition)
+                    .filter { it ->
+                        widgetDefinition.getFieldValue(it.lookupString) == null
+                    }
             const.xml.XML_ATTRIBUTE_VALUE -> {
                 return when (PsiXmlUtil.nameOfAttribute(currentElement)) {
                     const.XTYPE -> variantsForXTypeValue(currentElement)

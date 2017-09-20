@@ -55,6 +55,13 @@ data class TemplateDefinition(
         }
     }
 
+    /**
+     * Get parameter declaration element.
+     *
+     * @param project the project
+     * @param parameter the parameter name
+     * @return htl variable name
+     */
     fun parameterDeclarationElement(project: Project, parameter: String): HtlVariableName? {
         val declarationElement = declarationElement(project) as? XmlAttribute
                 ?: return null

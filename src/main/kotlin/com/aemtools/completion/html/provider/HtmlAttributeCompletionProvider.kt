@@ -28,7 +28,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
 import com.intellij.util.ProcessingContext
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Provider of Htl specific attributes.
@@ -38,7 +38,7 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
 
     // Attributes, which need expression after defining
     // (For example: data-sly-include=${})
-    val HTL_ATTRIBUTES_WITH_EXPRESSION = listOf(
+    private val HTL_ATTRIBUTES_WITH_EXPRESSION = listOf(
             DATA_SLY_TEST,
             DATA_SLY_LIST,
             DATA_SLY_REPEAT,

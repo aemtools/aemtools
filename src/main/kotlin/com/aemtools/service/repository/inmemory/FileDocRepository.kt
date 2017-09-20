@@ -7,6 +7,11 @@ import com.google.common.collect.Lists
 import com.google.gson.Gson
 import org.apache.sanselan.util.IOUtils
 
+/**
+ * [WidgetDocRepository] implementation that uses json files as the storage.
+ *
+ * @author Dmytro Troynikov
+ */
 object FileDocRepository : WidgetDocRepository {
 
     var documents: List<WidgetDoc> = ArrayList()
@@ -36,11 +41,11 @@ object FileDocRepository : WidgetDocRepository {
     }
 
     override fun findByXType(xtype: String): WidgetDoc? {
-        return groupedByXtype.get(xtype)
+        return groupedByXtype[xtype]
     }
 
     override fun findByClass(className: String): WidgetDoc? {
-        return groupedByClass.get(className)
+        return groupedByClass[className]
     }
 
     override fun findXTypes(query: String?): List<String> {

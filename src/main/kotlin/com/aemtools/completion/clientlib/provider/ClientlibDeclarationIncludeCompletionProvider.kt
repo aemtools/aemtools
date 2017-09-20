@@ -1,6 +1,10 @@
 package com.aemtools.completion.clientlib.provider
 
-import com.aemtools.completion.util.*
+import com.aemtools.completion.util.basePathElement
+import com.aemtools.completion.util.findParentByType
+import com.aemtools.completion.util.getPsi
+import com.aemtools.completion.util.relativeTo
+import com.aemtools.completion.util.toPsiFile
 import com.aemtools.lang.clientlib.CdLanguage
 import com.aemtools.lang.clientlib.psi.CdBasePath
 import com.aemtools.lang.clientlib.psi.CdInclude
@@ -18,7 +22,10 @@ import javax.swing.Icon
  * @author Dmytro_Troynikov
  */
 object ClientlibDeclarationIncludeCompletionProvider : CompletionProvider<CompletionParameters>(), DumbAware {
-    override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext?, result: CompletionResultSet) {
+    override fun addCompletions(
+            parameters: CompletionParameters,
+            context: ProcessingContext?,
+            result: CompletionResultSet) {
         if (result.isStopped) {
             return
         }
@@ -115,7 +122,8 @@ object ClientlibDeclarationIncludeCompletionProvider : CompletionProvider<Comple
         parts.forEach {
             when (it) {
                 ".." -> result = result?.parentDirectory
-                "." -> { }
+                "." -> {
+                }
                 else -> result = result?.subdirectories?.find { subdirectory -> subdirectory.name == it }
             }
         }

@@ -55,6 +55,12 @@ class HtlRootDirectories : PersistentStateComponent<HtlRootDirectories> {
 
     companion object {
 
+        /**
+         * Get instance of [HtlRootDirectories] associated with given [Project].
+         *
+         * @param project the project
+         * @return htl root directories instance, may be *null*
+         */
         fun getInstance(project: Project): HtlRootDirectories? =
                 ServiceManager.getService(project, HtlRootDirectories::class.java)
 

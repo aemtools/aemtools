@@ -67,8 +67,12 @@ class OSGiGutterIconNavigationHandler(
         }
     }
 
+    /**
+     * Cell descriptor.
+     */
     data class CellDescriptor(
             val elementText: String,
             val containerText: String
     )
+
 }

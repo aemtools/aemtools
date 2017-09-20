@@ -1,17 +1,15 @@
 package com.aemtools.lang.htl.highlight
 
 import com.aemtools.lang.htl.colorscheme.HtlColors
-import com.aemtools.lang.htl.lexer.HtlLexer
 import com.aemtools.lang.htl.psi.HtlTypes
-import com.intellij.lexer.LayeredLexer
 import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
 import com.intellij.psi.tree.IElementType
 
 /**
-* @author Dmytro_Troynikov
-*/
+ * @author Dmytro_Troynikov
+ */
 class HtlHighlighter : SyntaxHighlighterBase() {
     override fun getTokenHighlights(tokenType: IElementType?): Array<out TextAttributesKey> {
         return pack(map(tokenType))
@@ -47,5 +45,3 @@ class HtlHighlighter : SyntaxHighlighterBase() {
         else -> null
     }
 }
-
-class HtlHighlightingLexer : LayeredLexer(HtlLexer())

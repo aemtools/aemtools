@@ -11,7 +11,7 @@ import com.aemtools.lang.htl.psi.chain.RawChainUnit
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiReference
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry
-import java.util.*
+import java.util.LinkedList
 
 /**
  * @author Dmytro_Troynikov
@@ -26,6 +26,8 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
 
     /**
      * Returns call chain of current element.
+     *
+     * @return list of raw chain units
      */
     fun callChain(): LinkedList<RawChainUnit> {
         var result = LinkedList<RawChainUnit>()
@@ -37,7 +39,8 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
         val declaration = FileVariablesResolver.findDeclaration(firstName, firstElement)
 
         if (declaration != null
-                && declaration.attributeType !in listOf(DeclarationAttributeType.LIST_HELPER, DeclarationAttributeType.REPEAT_HELPER)) {
+                && declaration.attributeType !in listOf(
+                DeclarationAttributeType.LIST_HELPER, DeclarationAttributeType.REPEAT_HELPER)) {
             val propertyAccessMixin = declaration.xmlAttribute
                     .extractHtlHel()?.extractPropertyAccess()
 

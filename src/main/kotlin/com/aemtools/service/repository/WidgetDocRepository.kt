@@ -25,7 +25,12 @@ interface WidgetDocRepository {
      */
     fun findByClass(className : String) : WidgetDoc?
 
-
+    /**
+     * Collect available xtypes by given query.
+     *
+     * @param query the query
+     * @return collection of suitable xtypes
+     */
     fun findXTypes(query : String?) : List<String>
 
 }

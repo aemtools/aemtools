@@ -16,6 +16,13 @@ import com.intellij.psi.PsiElement
  */
 open class WidgetDocumentationProvider : AbstractDocumentationProvider() {
 
+    /**
+     * Check if given element is suitable for doc generation.
+     *
+     * @param element the element
+     * @return *true* if current element is suitable for doc generation,
+     * *false* otherwise
+     */
     fun acceptGenerateDoc(element: PsiElement): Boolean {
         if (element.containingFile
                 .originalFile
@@ -49,14 +56,14 @@ open class WidgetDocumentationProvider : AbstractDocumentationProvider() {
         return documentation
     }
 
-    fun xtypeDocumentation(widgetDoc: WidgetDoc): String {
+    private fun xtypeDocumentation(widgetDoc: WidgetDoc): String {
         return """
             <h2>${widgetDoc.className}</h2>
             <p>${widgetDoc.description}</p>
         """.trimIndent().replace(Regex("\n|\r"), "")
     }
 
-    fun fieldDocumentation(widgetDoc: WidgetDoc, widgetMember: WidgetMember): String {
+    private fun fieldDocumentation(widgetDoc: WidgetDoc, widgetMember: WidgetMember): String {
         return """
             <h2>${widgetDoc.fullClassName}</h2>
             <p>

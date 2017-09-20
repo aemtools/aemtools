@@ -3,7 +3,13 @@ package com.aemtools.completion.util
 import com.aemtools.completion.htl.model.declaration.DeclarationAttributeType
 import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 import com.aemtools.constant.const
-import com.aemtools.lang.htl.psi.*
+import com.aemtools.lang.htl.psi.HtlAssignmentValue
+import com.aemtools.lang.htl.psi.HtlContextExpression
+import com.aemtools.lang.htl.psi.HtlExpression
+import com.aemtools.lang.htl.psi.HtlHel
+import com.aemtools.lang.htl.psi.HtlHtlEl
+import com.aemtools.lang.htl.psi.HtlStringLiteral
+import com.aemtools.lang.htl.psi.HtlVariableName
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.htl.psi.util.isNotPartOf
@@ -12,7 +18,7 @@ import com.aemtools.lang.htl.psi.util.isWithin
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Htl related utility methods.

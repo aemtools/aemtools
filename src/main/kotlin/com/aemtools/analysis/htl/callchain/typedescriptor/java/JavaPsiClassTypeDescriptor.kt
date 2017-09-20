@@ -1,6 +1,7 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor.java
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
+import com.aemtools.completion.htl.CompletionPriority
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.constant.const
 import com.aemtools.lang.java.JavaSearch
@@ -85,9 +86,11 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
     }
 
     private fun extractPriority(member: PsiMember, clazz: PsiMember) = when {
-        member.containingClass == clazz -> 1.0
-        member.containingClass?.qualifiedName == "java.lang.Object" -> 0.0
-        else -> 0.5
+        member.containingClass == clazz ->
+            CompletionPriority.CONTAINING_CLASS
+        member.containingClass?.qualifiedName == "java.lang.Object" ->
+            CompletionPriority.OBJECT_CLASS
+        else -> CompletionPriority.MIDDLE_CLASS
     }
 
     override fun subtype(identifier: String): TypeDescriptor {

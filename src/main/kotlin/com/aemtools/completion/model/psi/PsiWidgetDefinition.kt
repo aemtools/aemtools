@@ -19,7 +19,7 @@ data class PsiWidgetDefinition constructor(
         val selectedAttribute: SelectedAttribute?
 ) {
 
-    companion object factory {
+    companion object {
 
         /**
          * Builder method for [PsiWidgetDefinition].

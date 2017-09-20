@@ -16,11 +16,13 @@ abstract class BaseParameterDeclaration : Serializable {
 
     abstract val name: String
 
-    /**
-
-     */
     protected abstract val tailText: String
 
+    /**
+     * Convert current parameter declaration into [LookupElement].
+     *
+     * @return lookup element
+     */
     fun toLookupElement(): LookupElement =
             LookupElementBuilder.create(name.normalize())
                     .withIcon(AllIcons.Nodes.Parameter)
@@ -34,7 +36,7 @@ abstract class BaseParameterDeclaration : Serializable {
      * @receiver [String]
      * @return normalized parameter name
      */
-    protected fun String.normalize() = if (this.startsWith("./")) {
+    private fun String.normalize() = if (this.startsWith("./")) {
         this.substringAfter("./")
     } else {
         this

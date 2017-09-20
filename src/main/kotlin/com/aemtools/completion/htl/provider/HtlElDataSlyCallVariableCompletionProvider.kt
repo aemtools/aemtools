@@ -16,7 +16,10 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Troynikov
  */
 object HtlElDataSlyCallVariableCompletionProvider : CompletionProvider<CompletionParameters>() {
-    override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext?, result: CompletionResultSet) {
+    override fun addCompletions(
+            parameters: CompletionParameters,
+            context: ProcessingContext?,
+            result: CompletionResultSet) {
         val position = parameters.position
         val fileVariables = FileVariablesResolver.declarationsForPosition(position, parameters)
 

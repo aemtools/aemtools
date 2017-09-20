@@ -30,6 +30,12 @@ object RepPolicyRepository {
         data.addAll(result)
     }
 
+    /**
+     * Get tag definition by name.
+     *
+     * @param name the name
+     * @return xml tag definition, may be empty
+     */
     fun getTagDefinitionByName(name: String): XmlTagDefinition {
         return data.find { it.name == name } ?: XmlTagDefinition.empty()
     }

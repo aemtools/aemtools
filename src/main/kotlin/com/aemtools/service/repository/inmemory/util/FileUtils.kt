@@ -8,6 +8,12 @@ import org.apache.sanselan.util.IOUtils
  */
 object FileUtils {
 
+    /**
+     * Read file content as string.
+     *
+     * @param fileName the file name
+     * @return the content of file as string
+     */
     fun readFileAsString(fileName: String): String {
         val input = FileUtils::class.java.classLoader
             .getResourceAsStream(fileName)

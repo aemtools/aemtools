@@ -1,6 +1,6 @@
 package com.aemtools.lang.htl.psi.util
 
-import com.intellij.psi.*
+import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.tree.CompositeElement
 import com.intellij.psi.xml.XmlElement
 import com.intellij.psi.xml.XmlTag

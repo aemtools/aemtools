@@ -14,7 +14,10 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro_Troynikov
  */
 object HtlElMemberAccessCompletionProvider : CompletionProvider<CompletionParameters>() {
-    override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext, result: CompletionResultSet) {
+    override fun addCompletions(
+            parameters: CompletionParameters,
+            context: ProcessingContext,
+            result: CompletionResultSet) {
         val currentPosition = parameters.position
         val resolutionResult = resolve(currentPosition)
 

@@ -13,7 +13,7 @@ import com.intellij.util.ProcessingContext
 /**
  * Adds references for Htl attributes to make it possible to trigger `Quick Documentation` action on them.
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Troynikov
  */
 object HtmlAttributeReferenceProvider : PsiReferenceProvider() {
     override fun getReferencesByElement(element: PsiElement,
@@ -27,6 +27,9 @@ object HtmlAttributeReferenceProvider : PsiReferenceProvider() {
         return arrayOf()
     }
 
+    /**
+     * Xml attribute reference wrapper.
+     */
     class XmlAttributeReferenceWrapper(val xmlAttribute: XmlAttributeImpl) : XmlAttributeReference(xmlAttribute) {
         override fun resolve() = xmlAttribute
 

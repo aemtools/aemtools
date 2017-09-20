@@ -30,10 +30,3 @@ class CdHighlighter : SyntaxHighlighterBase() {
     override fun getHighlightingLexer(): Lexer = LayeredLexer(CdLexer())
 
 }
-
-object CdColors {
-    val COMMENT = r("cd.COMMENT", dc.LINE_COMMENT)
-    val IMPORT = r("cd.IMPORT", dc.IDENTIFIER)
-    val DOT = r("cd.DOT", dc.DOT)
-    val PREFIX = r("cd.PREFIX", dc.CONSTANT)
-}

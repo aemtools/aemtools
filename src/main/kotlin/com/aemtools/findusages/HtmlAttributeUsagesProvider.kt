@@ -31,7 +31,9 @@ class HtmlAttributeUsagesProvider : FindUsagesHandlerFactory() {
 
     class HtlAttributesFindUsagesHandler(val xmlAttribute: XmlAttribute) : FindUsagesHandler(xmlAttribute) {
 
-        override fun findReferencesToHighlight(target: PsiElement, searchScope: SearchScope): MutableCollection<PsiReference> {
+        override fun findReferencesToHighlight(
+                target: PsiElement,
+                searchScope: SearchScope): MutableCollection<PsiReference> {
             return super.findReferencesToHighlight(target, searchScope)
                     .filter { it is HtlDeclarationReference || it is HtlListHelperReference }
                     .toMutableList()
