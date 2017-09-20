@@ -119,8 +119,8 @@ fun PsiMember.resolveReturnType(): PsiType? = when (this) {
  */
 fun PsiMethod.elName() = this.name.run {
     when {
-        startsWith("is") -> substring(2).decapitalize()
-        startsWith("get") -> substring(3).decapitalize()
+        startsWith("is") -> substringAfter("is").decapitalize()
+        startsWith("get") -> substringAfter("get").decapitalize()
         else -> this
     }
 }

@@ -20,7 +20,13 @@ class XmlTagDefinitionDeserializer : JsonDeserializer<XmlTagDefinition> {
         return XmlTagDefinition(
                 jsonObject.get("nodeName")?.asString ?: "",
                 jsonObject.get("childNodes")?.asJsonArray?.map { it.asString } ?: listOf(),
-                jsonObject.get("attributes")?.asJsonArray?.map { XmlAttributeDefinitionDeserializer().deserialize(it as JsonElement, null, null) as XmlAttributeDefinition }.orEmpty()
+                jsonObject.get("attributes")?.asJsonArray?.map {
+                    XmlAttributeDefinitionDeserializer().deserialize(
+                            it as JsonElement,
+                            null,
+                            null) as XmlAttributeDefinition
+                }
+                        .orEmpty()
         )
 
     }

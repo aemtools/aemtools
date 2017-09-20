@@ -19,6 +19,9 @@ data class WidgetMember (
         var definedBy: String
 ) : Serializable {
 
+    /**
+     * Enumeration for member types.
+     */
     enum class MemberType {
         OPTION,
         PUBLIC_PROPERTY,

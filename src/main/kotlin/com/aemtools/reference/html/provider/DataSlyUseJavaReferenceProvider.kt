@@ -31,7 +31,8 @@ object DataSlyUseJavaReferenceProvider : JavaClassReferenceProvider() {
     }
 
     /**
-     * Intentionally using global scope here, since Model classes can be defined in another module, which is not explicitly
+     * Intentionally using global scope here,
+     * since Model classes can be defined in another module, which is not explicitly
      * declared as a dependency for current module, resulting in non-resolvable reference.
      *
      * @see com.intellij.psi.impl.source.resolve.reference.impl.providers.JavaClassReference.getScope

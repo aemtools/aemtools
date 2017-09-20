@@ -6,6 +6,9 @@ import com.intellij.codeInsight.completion.InsertionContext
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.openapi.editor.Document
 
+/**
+ * Base htl text insert handler.
+ */
 abstract class HtlTextInsertHandler(private val expression: String,
                                     private val offset: Int) : InsertHandler<LookupElement> {
 

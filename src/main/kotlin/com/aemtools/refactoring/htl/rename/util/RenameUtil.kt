@@ -23,7 +23,7 @@ import com.intellij.refactoring.actions.BaseRefactoringAction
 import com.intellij.refactoring.rename.RenamePsiElementProcessor
 import com.intellij.refactoring.util.CommonRefactoringUtil
 import com.intellij.usageView.UsageViewUtil
-import java.util.*
+import java.util.Arrays
 
 /**
  * @author Dmytro Troynikov
@@ -42,7 +42,8 @@ object RenameUtil {
         if (nameSuggestionContext.isPhysical
                 && (contextFile == null || contextFile.fileType != ScratchFileType.INSTANCE)
                 && !project.psiManager().isInProject(nameSuggestionContext)) {
-            val message = "Selected element is used from non-project files. These usages won't be renamed. Proceed anyway?"
+            val message = "Selected element is used from non-project files." +
+                    " These usages won't be renamed. Proceed anyway?"
             if (ApplicationManager.getApplication().isUnitTestMode) {
                 throw CommonRefactoringUtil.RefactoringErrorHintException(message)
             }
@@ -120,7 +121,9 @@ object RenameUtil {
                 && element.metaData is PsiWritableMetaData
 
         if (!hasRenameProcessor && !hasWritableMetaData && element !is PsiNamedElement) {
-            return RefactoringBundle.getCannotRefactorMessage(RefactoringBundle.message("error.wrong.caret.position.symbol.to.rename"))
+            return RefactoringBundle.getCannotRefactorMessage(
+                    RefactoringBundle.message("error.wrong.caret.position.symbol.to.rename")
+            )
         }
 
         if (!project.psiManager().isInProject(element)) {

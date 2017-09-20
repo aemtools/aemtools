@@ -4,12 +4,25 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.constant.const
 import com.aemtools.lang.java.JavaSearch
-import com.aemtools.util.*
+import com.aemtools.util.allScope
+import com.aemtools.util.elFields
+import com.aemtools.util.elMethods
+import com.aemtools.util.elName
+import com.aemtools.util.findElMemberByName
+import com.aemtools.util.psiManager
+import com.aemtools.util.resolveReturnType
+import com.aemtools.util.withPriority
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.psi.*
+import com.intellij.psi.PsiArrayType
+import com.intellij.psi.PsiClass
+import com.intellij.psi.PsiClassType
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiMember
+import com.intellij.psi.PsiPrimitiveType
+import com.intellij.psi.PsiType
 import com.intellij.psi.impl.source.PsiClassReferenceType
-import java.util.*
+import java.util.ArrayList
 
 /**
  * Type descriptor which uses given [PsiClass] to provide type information.

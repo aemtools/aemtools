@@ -1,6 +1,9 @@
 package com.aemtools.analysis.htl.callchain.rawchainprocessor
 
-import com.aemtools.analysis.htl.callchain.elements.*
+import com.aemtools.analysis.htl.callchain.elements.ArrayAccessIdentifierElement
+import com.aemtools.analysis.htl.callchain.elements.BaseChainElement
+import com.aemtools.analysis.htl.callchain.elements.CallChain
+import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.elements.helper.chainSegment
 import com.aemtools.analysis.htl.callchain.elements.segment.BaseCallChainSegment
 import com.aemtools.analysis.htl.callchain.elements.segment.CallChainSegment
@@ -15,7 +18,13 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.predefined.PredefinedT
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateParameterTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
 import com.aemtools.completion.htl.common.PredefinedVariables
-import com.aemtools.completion.htl.model.declaration.*
+import com.aemtools.completion.htl.model.declaration.DeclarationAttributeType
+import com.aemtools.completion.htl.model.declaration.DeclarationType
+import com.aemtools.completion.htl.model.declaration.HtlListHelperDeclaration
+import com.aemtools.completion.htl.model.declaration.HtlTemplateDeclaration
+import com.aemtools.completion.htl.model.declaration.HtlTemplateParameterDeclaration
+import com.aemtools.completion.htl.model.declaration.HtlUseVariableDeclaration
+import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 import com.aemtools.completion.htl.predefined.HtlELPredefined.LIST_AND_REPEAT_HELPER_OBJECT
 import com.aemtools.completion.util.hasChild
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
@@ -24,7 +33,8 @@ import com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiElement
-import java.util.*
+import java.util.ArrayList
+import java.util.LinkedList
 
 /**
  * @author Dmytro_Troynikov

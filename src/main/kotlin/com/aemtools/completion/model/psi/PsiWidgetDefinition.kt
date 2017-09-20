@@ -20,8 +20,16 @@ data class PsiWidgetDefinition constructor(
 ) {
 
     companion object factory {
+
+        /**
+         * Builder method for [PsiWidgetDefinition].
+         *
+         * @param attributes list of xml attributes
+         * @param selectedElement selected xml element
+         * @return psi widget definition instance
+         */
         fun create(attributes: Array<XmlAttribute>,
-                          selectedElement: XmlElement): PsiWidgetDefinition {
+                   selectedElement: XmlElement): PsiWidgetDefinition {
             val fields = LinkedHashMap<String, String?>()
             val originalAttributes = LinkedList<XmlAttribute>()
 
@@ -33,7 +41,7 @@ data class PsiWidgetDefinition constructor(
             }
 
             return PsiWidgetDefinition(fields, originalAttributes,
-                                       tryExtractSelectedAttribute(selectedElement))
+                    tryExtractSelectedAttribute(selectedElement))
         }
 
         private fun tryExtractSelectedAttribute(element: XmlElement): SelectedAttribute? {
@@ -58,18 +66,25 @@ data class PsiWidgetDefinition constructor(
                 return false
             }
             return (OpenApiUtil.isCurrentThreadIsDispatch() && OpenApiUtil.isCurrentElementSelected(element))
-                   || targetElement.text == (element as? XmlAttributeValueImpl)?.value
+                    || targetElement.text == (element as? XmlAttributeValueImpl)?.value
         }
     }
 
+    /**
+     * Get value for field by name.
+     *
+     * @param fieldName the field's name
+     * @return field's value, *null* if no field or value present
+     */
     fun getFieldValue(fieldName: String): String? {
         return fields[fieldName]
     }
 
-    fun fieldExists(fieldName: String): Boolean {
-        return fields.containsKey(fieldName)
-    }
-
+    /**
+     * Check if xtype is selected in current [PsiWidgetDefinition].
+     *
+     * @return *true* if xtype is selected, *false* otherwise
+     */
     fun isXtypeValueSelected(): Boolean {
         if (selectedAttribute == null) {
             return false

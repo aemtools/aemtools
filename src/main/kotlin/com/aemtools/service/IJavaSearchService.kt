@@ -72,16 +72,18 @@ interface IJavaSearchService {
     /**
      * Find all __io.sightly.java.api.Use__ and __com.adobe.cq.sightly.WCMUse__
      * inheritors in given project.
+     *
      * @param project the project
      * @return list of inheritors
      */
-    fun findWcmUseClasses(project: Project): List<PsiClass> = JavaSearch.USE_CLASSES.map { JavaSearch.findClass(it, project) }
-            .asSequence()
-            .filterNotNull()
-            .flatMap { JavaSearch.findInheritors(it, project).asSequence() }
-            .filterNot { it is PsiAnonymousClass }
-            .filterNot { it.hasModifierProperty(PsiModifier.ABSTRACT) }
-            .toSet()
-            .toList()
+    fun findWcmUseClasses(project: Project): List<PsiClass> =
+            JavaSearch.USE_CLASSES.map { JavaSearch.findClass(it, project) }
+                    .asSequence()
+                    .filterNotNull()
+                    .flatMap { JavaSearch.findInheritors(it, project).asSequence() }
+                    .filterNot { it is PsiAnonymousClass }
+                    .filterNot { it.hasModifierProperty(PsiModifier.ABSTRACT) }
+                    .toSet()
+                    .toList()
 
 }

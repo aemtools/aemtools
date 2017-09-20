@@ -23,7 +23,7 @@ import com.intellij.psi.PsiReference
 import com.intellij.psi.PsiReferenceBase
 import com.intellij.psi.PsiReferenceProvider
 import com.intellij.util.ProcessingContext
-import java.util.*
+import java.util.LinkedList
 
 /**
  * @author Dmytro Troynikov
@@ -105,7 +105,8 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
             is AccessIdentifierMixin ->
                 if (element.hasChild(HtlArrayLikeAccess::class.java)
                         && element.hasChild(HtlStringLiteral::class.java)) {
-                    val stringLiteral: PsiElement = element.findChildrenByType(HtlStringLiteral::class.java).firstOrNull() as? PsiElement
+                    val stringLiteral: PsiElement = element.findChildrenByType(
+                            HtlStringLiteral::class.java).firstOrNull() as? PsiElement
                             ?: return TextRange.EMPTY_RANGE
 
                     val offset = element.startOffsetInParent + stringLiteral.startOffsetInParent + 1
@@ -113,7 +114,10 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
                     TextRange(offset, offset + stringLiteral.text.length - 2)
 
                 } else if (!element.hasChild(HtlArrayLikeAccess::class.java)) {
-                    TextRange(element.startOffsetInParent + 1, element.startOffsetInParent + element.variableName().length + 1)
+                    TextRange(
+                            element.startOffsetInParent + 1,
+                            element.startOffsetInParent + element.variableName().length + 1
+                    )
                 } else {
                     TextRange.EMPTY_RANGE
                 }
