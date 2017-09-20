@@ -15,11 +15,11 @@ import java.util.LinkedList
  * @author Dmytro_Troynikov
  */
 open class RawChainUnit(
-        val myCallChain: LinkedList<PsiElement>,
-        val myDeclaration: HtlVariableDeclaration? = null) {
+    val myCallChain: LinkedList<PsiElement>,
+    val myDeclaration: HtlVariableDeclaration? = null) {
 
-    override fun toString(): String {
-        return "RawChainUnit(myCallChain=$myCallChain, myDeclaration=$myDeclaration)"
-    }
+  override fun toString(): String {
+    return "RawChainUnit(myCallChain=$myCallChain, myDeclaration=$myDeclaration)"
+  }
 
 }

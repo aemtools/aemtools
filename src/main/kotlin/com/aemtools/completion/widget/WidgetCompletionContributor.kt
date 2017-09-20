@@ -15,32 +15,32 @@ import com.intellij.util.ProcessingContext
  */
 class WidgetCompletionContributor : CompletionContributor {
 
-    constructor() {
-        extend(CompletionType.BASIC, PlatformPatterns.psiElement(), WidgetCompletionProvider())
-    }
+  constructor() {
+    extend(CompletionType.BASIC, PlatformPatterns.psiElement(), WidgetCompletionProvider())
+  }
 
 }
 
 private class WidgetCompletionProvider : CompletionProvider<CompletionParameters>() {
 
-    override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext,
-                                result: CompletionResultSet) {
-        if (!accept(parameters)) {
-            return
-        }
-
-        val widgetDefinition = WidgetDefinitionUtil.extract(parameters.position)
-
-        val suggestions = WidgetVariantsProvider.Companion.INSTANCE()
-                .generateVariants(parameters, widgetDefinition)
-
-        result.addAllElements(suggestions)
-        result.stopHere()
+  override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext,
+                              result: CompletionResultSet) {
+    if (!accept(parameters)) {
+      return
     }
 
-    private fun accept(parameters: CompletionParameters): Boolean {
-        return const.DIALOG_XML == parameters.originalFile.name
-    }
+    val widgetDefinition = WidgetDefinitionUtil.extract(parameters.position)
+
+    val suggestions = WidgetVariantsProvider.Companion.INSTANCE()
+        .generateVariants(parameters, widgetDefinition)
+
+    result.addAllElements(suggestions)
+    result.stopHere()
+  }
+
+  private fun accept(parameters: CompletionParameters): Boolean {
+    return const.DIALOG_XML == parameters.originalFile.name
+  }
 
 }
 

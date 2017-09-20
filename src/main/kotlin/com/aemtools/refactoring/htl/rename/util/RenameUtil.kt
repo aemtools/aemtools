@@ -29,137 +29,137 @@ import java.util.Arrays
  * @author Dmytro Troynikov
  */
 object RenameUtil {
-    fun invoke(element: PsiElement,
-               project: Project,
-               nameSuggestionContext: PsiElement,
-               editor: Editor?) {
-        if (!canRename(project, editor, element)) {
-            return
-        }
-
-        val contextFile = nameSuggestionContext.virtualFile()
-
-        if (nameSuggestionContext.isPhysical
-                && (contextFile == null || contextFile.fileType != ScratchFileType.INSTANCE)
-                && !project.psiManager().isInProject(nameSuggestionContext)) {
-            val message = "Selected element is used from non-project files." +
-                    " These usages won't be renamed. Proceed anyway?"
-            if (ApplicationManager.getApplication().isUnitTestMode) {
-                throw CommonRefactoringUtil.RefactoringErrorHintException(message)
-            }
-
-            if (Messages.showYesNoDialog(
-                    project,
-                    message,
-                    RefactoringBundle.getCannotRefactorMessage(null),
-                    Messages.getWarningIcon()) != Messages.YES) {
-                return
-            }
-        }
-
-        FeatureUsageTracker.getInstance().triggerFeatureUsed("refactoring.rename")
-
-        rename(element, project, nameSuggestionContext, editor)
+  fun invoke(element: PsiElement,
+             project: Project,
+             nameSuggestionContext: PsiElement,
+             editor: Editor?) {
+    if (!canRename(project, editor, element)) {
+      return
     }
 
-    fun rename(element: PsiElement,
-               project: Project,
-               nameSuggestionContext: PsiElement,
-               editor: Editor?,
-               defaultName: String? = null
-    ) {
-        val processor = RenamePsiElementProcessor.forElement(element)
-        val substituted = processor.substituteElementToRename(element, editor)
+    val contextFile = nameSuggestionContext.virtualFile()
 
-        if (substituted == null || !canRename(project, editor, substituted)) {
-            return
-        }
+    if (nameSuggestionContext.isPhysical
+        && (contextFile == null || contextFile.fileType != ScratchFileType.INSTANCE)
+        && !project.psiManager().isInProject(nameSuggestionContext)) {
+      val message = "Selected element is used from non-project files." +
+          " These usages won't be renamed. Proceed anyway?"
+      if (ApplicationManager.getApplication().isUnitTestMode) {
+        throw CommonRefactoringUtil.RefactoringErrorHintException(message)
+      }
 
-        val dialog = processor.createRenameDialog(project, substituted, nameSuggestionContext, editor)
-
-        val _defaultName = if (defaultName == null && ApplicationManager.getApplication().isUnitTestMode) {
-            val strings = dialog.suggestedNames
-            if (strings != null && strings.isNotEmpty()) {
-                Arrays.sort(strings)
-                strings[0]
-            } else {
-                "undefined"
-            }
-        } else {
-            defaultName
-        }
-
-        if (_defaultName != null) {
-            try {
-                dialog.performRename(_defaultName)
-            } finally {
-                dialog.close(DialogWrapper.CANCEL_EXIT_CODE)
-            }
-        } else {
-            dialog.show()
-        }
+      if (Messages.showYesNoDialog(
+          project,
+          message,
+          RefactoringBundle.getCannotRefactorMessage(null),
+          Messages.getWarningIcon()) != Messages.YES) {
+        return
+      }
     }
 
-    fun canRename(project: Project,
-                  editor: Editor?,
-                  element: PsiElement): Boolean {
-        val message = renameabilityStatus(project, element)
-        if (message != null && StringUtil.isNotEmpty(message)) {
-            showErrorMessage(project, editor, message)
-            return false
-        }
-        return true
+    FeatureUsageTracker.getInstance().triggerFeatureUsed("refactoring.rename")
+
+    rename(element, project, nameSuggestionContext, editor)
+  }
+
+  fun rename(element: PsiElement,
+             project: Project,
+             nameSuggestionContext: PsiElement,
+             editor: Editor?,
+             defaultName: String? = null
+  ) {
+    val processor = RenamePsiElementProcessor.forElement(element)
+    val substituted = processor.substituteElementToRename(element, editor)
+
+    if (substituted == null || !canRename(project, editor, substituted)) {
+      return
     }
 
-    fun renameabilityStatus(project: Project, element: PsiElement?): String? {
-        if (element == null) {
-            return ""
-        }
+    val dialog = processor.createRenameDialog(project, substituted, nameSuggestionContext, editor)
 
-        val hasRenameProcessor = RenamePsiElementProcessor.forElement(element) != RenamePsiElementProcessor.DEFAULT
-        val hasWritableMetaData = element is PsiMetaOwner
-                && element.metaData is PsiWritableMetaData
-
-        if (!hasRenameProcessor && !hasWritableMetaData && element !is PsiNamedElement) {
-            return RefactoringBundle.getCannotRefactorMessage(
-                    RefactoringBundle.message("error.wrong.caret.position.symbol.to.rename")
-            )
-        }
-
-        if (!project.psiManager().isInProject(element)) {
-            if (element.isPhysical) {
-                val virtualFile = element.virtualFile()
-
-                if (!(virtualFile != null
-                        && NonProjectFileWritingAccessProvider.isWriteAccessAllowed(virtualFile, project))) {
-                    val message = RefactoringBundle.message("error.out.of.project.element",
-                            UsageViewUtil.getType(element))
-                    return RefactoringBundle.getCannotRefactorMessage(message)
-                }
-            }
-
-            if (!element.isWritable) {
-                return RefactoringBundle.getCannotRefactorMessage(
-                        RefactoringBundle.message("error.cannot.be.renamed")
-                )
-            }
-        }
-
-        if (InjectedLanguageUtil.isInInjectedLanguagePrefixSuffix(element)) {
-            val message = RefactoringBundle.message(
-                    "error.in.injected.lang.prefix.suffix",
-                    UsageViewUtil.getType(element)
-            )
-            return RefactoringBundle.getCannotRefactorMessage(message)
-        }
-
-        return null
+    val _defaultName = if (defaultName == null && ApplicationManager.getApplication().isUnitTestMode) {
+      val strings = dialog.suggestedNames
+      if (strings != null && strings.isNotEmpty()) {
+        Arrays.sort(strings)
+        strings[0]
+      } else {
+        "undefined"
+      }
+    } else {
+      defaultName
     }
 
-    fun getElement(dataContext: DataContext?): PsiElement? {
-        val elements = BaseRefactoringAction.getPsiElementArray(dataContext)
-        return elements.firstOrNull()
+    if (_defaultName != null) {
+      try {
+        dialog.performRename(_defaultName)
+      } finally {
+        dialog.close(DialogWrapper.CANCEL_EXIT_CODE)
+      }
+    } else {
+      dialog.show()
     }
+  }
+
+  fun canRename(project: Project,
+                editor: Editor?,
+                element: PsiElement): Boolean {
+    val message = renameabilityStatus(project, element)
+    if (message != null && StringUtil.isNotEmpty(message)) {
+      showErrorMessage(project, editor, message)
+      return false
+    }
+    return true
+  }
+
+  fun renameabilityStatus(project: Project, element: PsiElement?): String? {
+    if (element == null) {
+      return ""
+    }
+
+    val hasRenameProcessor = RenamePsiElementProcessor.forElement(element) != RenamePsiElementProcessor.DEFAULT
+    val hasWritableMetaData = element is PsiMetaOwner
+        && element.metaData is PsiWritableMetaData
+
+    if (!hasRenameProcessor && !hasWritableMetaData && element !is PsiNamedElement) {
+      return RefactoringBundle.getCannotRefactorMessage(
+          RefactoringBundle.message("error.wrong.caret.position.symbol.to.rename")
+      )
+    }
+
+    if (!project.psiManager().isInProject(element)) {
+      if (element.isPhysical) {
+        val virtualFile = element.virtualFile()
+
+        if (!(virtualFile != null
+            && NonProjectFileWritingAccessProvider.isWriteAccessAllowed(virtualFile, project))) {
+          val message = RefactoringBundle.message("error.out.of.project.element",
+              UsageViewUtil.getType(element))
+          return RefactoringBundle.getCannotRefactorMessage(message)
+        }
+      }
+
+      if (!element.isWritable) {
+        return RefactoringBundle.getCannotRefactorMessage(
+            RefactoringBundle.message("error.cannot.be.renamed")
+        )
+      }
+    }
+
+    if (InjectedLanguageUtil.isInInjectedLanguagePrefixSuffix(element)) {
+      val message = RefactoringBundle.message(
+          "error.in.injected.lang.prefix.suffix",
+          UsageViewUtil.getType(element)
+      )
+      return RefactoringBundle.getCannotRefactorMessage(message)
+    }
+
+    return null
+  }
+
+  fun getElement(dataContext: DataContext?): PsiElement? {
+    val elements = BaseRefactoringAction.getPsiElementArray(dataContext)
+    return elements.firstOrNull()
+  }
 
 }
 

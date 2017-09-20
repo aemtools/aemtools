@@ -1,8 +1,7 @@
-
 detekt {
     version = "1.0.0.RC4-3"
     profile("main") {
-        input="$projectDir/src/main/kotlin"
-        config="$projectDir/config/detekt.yml"
+        input = "$projectDir/src/main/kotlin"
+        config = "$projectDir/config/detekt.yml"
     }
 }

@@ -11,14 +11,14 @@ import com.intellij.psi.PsiReference
  */
 class HtlAttributeTargetElementEvaluator : TargetElementEvaluator {
 
-    override fun getElementByReference(ref: PsiReference, flags: Int): PsiElement? {
-        return when (ref) {
-            is HtlDeclarationReference -> ref.xmlAttribute
-            is HtlListHelperReference -> ref.xmlAttribute
-            else -> null
-        }
+  override fun getElementByReference(ref: PsiReference, flags: Int): PsiElement? {
+    return when (ref) {
+      is HtlDeclarationReference -> ref.xmlAttribute
+      is HtlListHelperReference -> ref.xmlAttribute
+      else -> null
     }
+  }
 
-    override fun includeSelfInGotoImplementation(element: PsiElement): Boolean = true
+  override fun includeSelfInGotoImplementation(element: PsiElement): Boolean = true
 
 }

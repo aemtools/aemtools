@@ -10,13 +10,13 @@ import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
  * @author Dmytro Troynikov
  */
 class BaseCallChainSegment(
-        private val input: TypeDescriptor,
-        private val output: TypeDescriptor,
-        val declaration: HtlVariableDeclaration?,
-        private val elements: List<CallChainElement>) : CallChainSegment {
-    override fun inputType(): TypeDescriptor = input
+    private val input: TypeDescriptor,
+    private val output: TypeDescriptor,
+    val declaration: HtlVariableDeclaration?,
+    private val elements: List<CallChainElement>) : CallChainSegment {
+  override fun inputType(): TypeDescriptor = input
 
-    override fun outputType(): TypeDescriptor = output
+  override fun outputType(): TypeDescriptor = output
 
-    override fun chainElements(): List<CallChainElement> = elements
+  override fun chainElements(): List<CallChainElement> = elements
 }

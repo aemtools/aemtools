@@ -9,55 +9,55 @@ import com.intellij.testFramework.InspectionFixtureTestCase
  */
 class RedundantELQuickFixTest : InspectionFixtureTestCase() {
 
-    fun testRedundantELQuickFixForDataSlyUse() {
-        myFixture.configureByText("test.html", """
+  fun testRedundantELQuickFixForDataSlyUse() {
+    myFixture.configureByText("test.html", """
             <div data-sly-use="$DOLLAR{'com.test.Bean'}"></div>
         """.trimIndent())
 
-        val fix = myFixture.getAllQuickFixes("test.html")
-                .first()
+    val fix = myFixture.getAllQuickFixes("test.html")
+        .first()
 
-        writeCommand(project) {
-            fix.invoke(project, editor, file)
-        }
-
-        myFixture.checkResult("""
-            <div data-sly-use="com.test.Bean"></div>
-        """.trimIndent())
+    writeCommand(project) {
+      fix.invoke(project, editor, file)
     }
 
-    fun testRedundantELQuickFixForDataSlyUse1() {
-        myFixture.configureByText("test.html", """
+    myFixture.checkResult("""
+            <div data-sly-use="com.test.Bean"></div>
+        """.trimIndent())
+  }
+
+  fun testRedundantELQuickFixForDataSlyUse1() {
+    myFixture.configureByText("test.html", """
             <div data-sly-use="$DOLLAR{'com.test.Bean'}"></div>
         """.trimIndent())
 
-        val fix = myFixture.getAllQuickFixes("test.html")
-                .first()
+    val fix = myFixture.getAllQuickFixes("test.html")
+        .first()
 
-        writeCommand(project) {
-            fix.invoke(project, editor, file)
-        }
-
-        myFixture.checkResult("""
-            <div data-sly-use="com.test.Bean"></div>
-        """.trimIndent())
+    writeCommand(project) {
+      fix.invoke(project, editor, file)
     }
 
-    fun testRedundantELQuickFixForDataSlyInclude() {
-        myFixture.configureByText("test.html", """
+    myFixture.checkResult("""
+            <div data-sly-use="com.test.Bean"></div>
+        """.trimIndent())
+  }
+
+  fun testRedundantELQuickFixForDataSlyInclude() {
+    myFixture.configureByText("test.html", """
             <div data-sly-include="$DOLLAR{'template.html'}"></div>
         """.trimIndent())
 
-        val fix = myFixture.getAllQuickFixes("test.html")
-                .first()
+    val fix = myFixture.getAllQuickFixes("test.html")
+        .first()
 
-        writeCommand(project) {
-            fix.invoke(project, editor, file)
-        }
+    writeCommand(project) {
+      fix.invoke(project, editor, file)
+    }
 
-        myFixture.checkResult("""
+    myFixture.checkResult("""
             <div data-sly-include="template.html"></div>
         """.trimIndent())
-    }
+  }
 
 }

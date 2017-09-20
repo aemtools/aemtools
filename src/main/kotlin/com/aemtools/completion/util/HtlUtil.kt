@@ -37,18 +37,18 @@ import java.util.ArrayList
  * @return _iterable_ to _list variable_ names pair
  */
 fun extractItemAndItemListNames(value: String): Pair<String, String> {
-    val item: String = when {
-        value.startsWith(const.htl.DATA_SLY_REPEAT) && value.length > const.htl.DATA_SLY_REPEAT.length + 1 -> {
-            value.substring(value.lastIndexOf(".") + 1)
-        }
-        value.startsWith(const.htl.DATA_SLY_LIST) && value.length > const.htl.DATA_SLY_LIST.length + 1 -> {
-            value.substring(value.lastIndexOf(".") + 1)
-        }
-        else -> {
-            "item"
-        }
+  val item: String = when {
+    value.startsWith(const.htl.DATA_SLY_REPEAT) && value.length > const.htl.DATA_SLY_REPEAT.length + 1 -> {
+      value.substring(value.lastIndexOf(".") + 1)
     }
-    return item to "${item}List"
+    value.startsWith(const.htl.DATA_SLY_LIST) && value.length > const.htl.DATA_SLY_LIST.length + 1 -> {
+      value.substring(value.lastIndexOf(".") + 1)
+    }
+    else -> {
+      "item"
+    }
+  }
+  return item to "${item}List"
 }
 
 /**
@@ -59,9 +59,9 @@ fun extractItemAndItemListNames(value: String): Pair<String, String> {
  * @return *true* if current string is main EL string, *false* otherwise
  */
 fun HtlStringLiteral.isMainString(): Boolean {
-    val expression = this.findParentByType(HtlExpression::class.java) ?: return false
+  val expression = this.findParentByType(HtlExpression::class.java) ?: return false
 
-    return expression.parent is HtlHel
+  return expression.parent is HtlHel
 }
 
 /**
@@ -76,8 +76,8 @@ fun HtlStringLiteral.isMainString(): Boolean {
  * @return *true* if current variable name is "option", *false* otherwise
  */
 fun HtlVariableName.isOption(): Boolean {
-    return this.hasParent(HtlContextExpression::class.java)
-            && !this.hasParent(HtlAssignmentValue::class.java)
+  return this.hasParent(HtlContextExpression::class.java)
+      && !this.hasParent(HtlAssignmentValue::class.java)
 }
 
 /**
@@ -88,9 +88,9 @@ fun HtlVariableName.isOption(): Boolean {
  * @return *true* if current variable is "option", *false* otherwise
  */
 fun VariableNameMixin.isOption(): Boolean =
-        (this as? HtlVariableName)
-                ?.isOption()
-                ?: false
+    (this as? HtlVariableName)
+        ?.isOption()
+        ?: false
 
 /**
  * Extract first (top level) [PropertyAccessMixin].
@@ -99,11 +99,11 @@ fun VariableNameMixin.isOption(): Boolean =
  * @return first [PropertyAccessMixin] in current [HtlHtlEl], *null* if no property access mixin present
  */
 fun HtlHtlEl.extractPropertyAccess(): PropertyAccessMixin? {
-    val propertyAccessItems = findChildrenByType(PropertyAccessMixin::class.java)
-    if (propertyAccessItems.isEmpty()) {
-        return null
-    }
-    return propertyAccessItems.first()
+  val propertyAccessItems = findChildrenByType(PropertyAccessMixin::class.java)
+  if (propertyAccessItems.isEmpty()) {
+    return null
+  }
+  return propertyAccessItems.first()
 }
 
 /**
@@ -113,12 +113,12 @@ fun HtlHtlEl.extractPropertyAccess(): PropertyAccessMixin? {
  * @return __true__ if current element is the value of attribute with given name
  */
 fun HtlHtlEl.isInsideOF(attributeName: String): Boolean {
-    val html = this.containingFile.getHtmlFile()
-            ?: return false
-    val attribute = html.findElementAt(this.textOffset - 1)
-            .findParentByType(XmlAttribute::class.java) ?: return false
+  val html = this.containingFile.getHtmlFile()
+      ?: return false
+  val attribute = html.findElementAt(this.textOffset - 1)
+      .findParentByType(XmlAttribute::class.java) ?: return false
 
-    return attribute.name.startsWith(attributeName)
+  return attribute.name.startsWith(attributeName)
 }
 
 /**
@@ -129,8 +129,8 @@ fun HtlHtlEl.isInsideOF(attributeName: String): Boolean {
  * @return __true__ if current element si the value of attribute with given name
  */
 fun PsiElement.isInsideOf(attributeName: String): Boolean {
-    val htlHtlEl = findParentByType(HtlHtlEl::class.java) ?: return false
-    return htlHtlEl.isInsideOF(attributeName)
+  val htlHtlEl = findParentByType(HtlHtlEl::class.java) ?: return false
+  return htlHtlEl.isInsideOF(attributeName)
 }
 
 /**
@@ -140,81 +140,81 @@ fun PsiElement.isInsideOf(attributeName: String): Boolean {
  * @return collection of applicable declarations
  */
 fun List<HtlVariableDeclaration>.filterForPosition(position: PsiElement): List<HtlVariableDeclaration> {
-    val applicableDeclarations = this.filter {
-        when (it.attributeType) {
-            DeclarationAttributeType.DATA_SLY_USE ->
-                true
-            DeclarationAttributeType.DATA_SLY_TEST ->
-                true
-            DeclarationAttributeType.DATA_SLY_LIST,
-            DeclarationAttributeType.LIST_HELPER -> {
-                val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
+  val applicableDeclarations = this.filter {
+    when (it.attributeType) {
+      DeclarationAttributeType.DATA_SLY_USE ->
+        true
+      DeclarationAttributeType.DATA_SLY_TEST ->
+        true
+      DeclarationAttributeType.DATA_SLY_LIST,
+      DeclarationAttributeType.LIST_HELPER -> {
+        val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
 
-                position.isWithin(tag)
-            }
-            DeclarationAttributeType.DATA_SLY_REPEAT,
-            DeclarationAttributeType.REPEAT_HELPER -> {
-                val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
+        position.isWithin(tag)
+      }
+      DeclarationAttributeType.DATA_SLY_REPEAT,
+      DeclarationAttributeType.REPEAT_HELPER -> {
+        val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
 
-                position.isPartOf(tag) && position.isNotPartOf(it.xmlAttribute)
-            }
-            DeclarationAttributeType.DATA_SLY_TEMPLATE_PARAMETER -> {
-                val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
+        position.isPartOf(tag) && position.isNotPartOf(it.xmlAttribute)
+      }
+      DeclarationAttributeType.DATA_SLY_TEMPLATE_PARAMETER -> {
+        val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
 
-                position.isWithin(tag)
-            }
+        position.isWithin(tag)
+      }
 
-            DeclarationAttributeType.DATA_SLY_TEMPLATE -> {
-                val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
-                !position.isPartOf(tag)
-            }
-        }
+      DeclarationAttributeType.DATA_SLY_TEMPLATE -> {
+        val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false
+        !position.isPartOf(tag)
+      }
     }
+  }
 
-    val groupedByName = applicableDeclarations.groupBy { it.variableName }
-    val result = if (groupedByName.values.find { it.size > 1 } != null) {
+  val groupedByName = applicableDeclarations.groupBy { it.variableName }
+  val result = if (groupedByName.values.find { it.size > 1 } != null) {
 
-        groupedByName.values.flatMap {
-            if (it.size == 1) {
-                it
-            } else {
+    groupedByName.values.flatMap {
+      if (it.size == 1) {
+        it
+      } else {
 
-                val parentTags = position.run {
-                    val html = position.containingFile.getHtmlFile() ?: return@run listOf<XmlTag>()
-                    val parent = position.findParentByType(HtlHtlEl::class.java) ?: return@run listOf<XmlTag>()
-                    val offset = parent.textOffset - 1
-                    val htmlElement = html.findElementAt(offset)
+        val parentTags = position.run {
+          val html = position.containingFile.getHtmlFile() ?: return@run listOf<XmlTag>()
+          val parent = position.findParentByType(HtlHtlEl::class.java) ?: return@run listOf<XmlTag>()
+          val offset = parent.textOffset - 1
+          val htmlElement = html.findElementAt(offset)
 
-                    var currentElement = htmlElement.findParentByType(XmlTag::class.java)
-                    val result = ArrayList<XmlTag>()
+          var currentElement = htmlElement.findParentByType(XmlTag::class.java)
+          val result = ArrayList<XmlTag>()
 
-                    while (currentElement != null) {
-                        result.add(currentElement)
-                        currentElement = currentElement.prevSibling.findParentByType(XmlTag::class.java)
-                    }
-                    result
-                }
-
-                val closest = it.minBy {
-                    val myTag = it.xmlAttribute.findParentByType(XmlTag::class.java)
-                            ?: return@minBy 100
-
-                    val myIndex = parentTags.indexOf(myTag)
-                    return@minBy if (myIndex > -1) {
-                        myIndex
-                    } else {
-                        100
-                    }
-                } ?: return@flatMap listOf<HtlVariableDeclaration>()
-
-                listOf(closest)
-            }
+          while (currentElement != null) {
+            result.add(currentElement)
+            currentElement = currentElement.prevSibling.findParentByType(XmlTag::class.java)
+          }
+          result
         }
 
-    } else {
-        applicableDeclarations
+        val closest = it.minBy {
+          val myTag = it.xmlAttribute.findParentByType(XmlTag::class.java)
+              ?: return@minBy 100
+
+          val myIndex = parentTags.indexOf(myTag)
+          return@minBy if (myIndex > -1) {
+            myIndex
+          } else {
+            100
+          }
+        } ?: return@flatMap listOf<HtlVariableDeclaration>()
+
+        listOf(closest)
+      }
     }
-    return result
+
+  } else {
+    applicableDeclarations
+  }
+  return result
 }
 
 /**
@@ -230,15 +230,15 @@ fun List<HtlVariableDeclaration>.filterForPosition(position: PsiElement): List<H
  * @return the name of Htl attribute, _null_ if current attribute is not Htl one
  */
 fun XmlAttribute.htlAttributeName(): String? {
-    if (!isHtlAttribute()) {
-        return null
-    }
+  if (!isHtlAttribute()) {
+    return null
+  }
 
-    return if (name.contains(".")) {
-        name.substring(0, name.indexOf("."))
-    } else {
-        name
-    }
+  return if (name.contains(".")) {
+    name.substring(0, name.indexOf("."))
+  } else {
+    name
+  }
 }
 
 /**
@@ -253,13 +253,13 @@ fun XmlAttribute.htlAttributeName(): String? {
  * @return the name of Htl variable declared in current Htl attribute
  */
 fun XmlAttribute.htlVariableName(): String? {
-    if (!isHtlDeclarationAttribute()) {
-        return null
-    }
+  if (!isHtlDeclarationAttribute()) {
+    return null
+  }
 
-    return if (name.contains(".")) {
-        name.substring(name.indexOf(".") + 1)
-    } else {
-        null
-    }
+  return if (name.contains(".")) {
+    name.substring(name.indexOf(".") + 1)
+  } else {
+    null
+  }
 }

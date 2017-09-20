@@ -12,10 +12,10 @@ import com.intellij.psi.xml.XmlAttribute
 class HtlListHelperReference(val xmlAttribute: XmlAttribute,
                              holder: PsiElement,
                              range: TextRange) :
-        PsiReferenceBase<PsiElement>(holder, range, true) {
-    override fun resolve(): PsiElement? = HtlListHelperDeclarationIdentifier(xmlAttribute)
+    PsiReferenceBase<PsiElement>(holder, range, true) {
+  override fun resolve(): PsiElement? = HtlListHelperDeclarationIdentifier(xmlAttribute)
 
-    override fun getVariants(): Array<Any> {
-        return arrayOf()
-    }
+  override fun getVariants(): Array<Any> {
+    return arrayOf()
+  }
 }

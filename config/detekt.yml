@@ -171,10 +171,10 @@ code-smell:
 
 formatting:
   active: true
-  useTabs: true
+  useTabs: false
   Indentation:
-    active: false
-    indentSize: 4
+    active: true
+    indentSize: 2
   ConsecutiveBlankLines:
     active: true
     autoCorrect: true

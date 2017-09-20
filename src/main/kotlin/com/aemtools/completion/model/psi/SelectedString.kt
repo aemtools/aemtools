@@ -8,21 +8,21 @@ import com.aemtools.constant.const
  * @author Dmytro Troynikov
  */
 data class SelectedString constructor(
-        val value: String,
-        val cursorPosition: Int
+    val value: String,
+    val cursorPosition: Int
 ) {
 
-    companion object {
+  companion object {
 
-        operator fun invoke(value: String?): SelectedString? {
-            if (value == null) {
-                return null
-            }
+    operator fun invoke(value: String?): SelectedString? {
+      if (value == null) {
+        return null
+      }
 
-            return SelectedString(value.replace(const.IDEA_STRING_CARET_PLACEHOLDER, ""),
-                    value.indexOf(const.IDEA_STRING_CARET_PLACEHOLDER))
-        }
-
+      return SelectedString(value.replace(const.IDEA_STRING_CARET_PLACEHOLDER, ""),
+          value.indexOf(const.IDEA_STRING_CARET_PLACEHOLDER))
     }
+
+  }
 
 }

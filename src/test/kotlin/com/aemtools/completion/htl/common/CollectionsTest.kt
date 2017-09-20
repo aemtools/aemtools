@@ -8,20 +8,20 @@ import com.aemtools.blocks.BaseVariantsWithJdkContributorTest
  */
 class CollectionsTest : BaseVariantsWithJdkContributorTest("com/aemtools/completion/htl/fixtures/noafter/collections") {
 
-    fun testCollectionsResolveArrayWithLiteral() = assertVariants(MY_MODEL_VARIANTS)
-    fun testCollectionsResolveArrayWithVariable() = assertVariants(MY_MODEL_VARIANTS)
+  fun testCollectionsResolveArrayWithLiteral() = assertVariants(MY_MODEL_VARIANTS)
+  fun testCollectionsResolveArrayWithVariable() = assertVariants(MY_MODEL_VARIANTS)
 
-    fun testCollectionsResolveListWithLiteral() = assertVariants(MY_MODEL_VARIANTS)
-    fun testCollectionsResolveListWithVariable() = assertVariants(MY_MODEL_VARIANTS)
+  fun testCollectionsResolveListWithLiteral() = assertVariants(MY_MODEL_VARIANTS)
+  fun testCollectionsResolveListWithVariable() = assertVariants(MY_MODEL_VARIANTS)
 
-    fun testCollectionsResolveMapWithLiteral() = assertVariants(MY_MAP_MODEL_VARIANTS)
-    fun testCollectionsResolveMapWithVariable() = assertVariants(MY_MAP_MODEL_VARIANTS)
+  fun testCollectionsResolveMapWithLiteral() = assertVariants(MY_MAP_MODEL_VARIANTS)
+  fun testCollectionsResolveMapWithVariable() = assertVariants(MY_MAP_MODEL_VARIANTS)
 
-    companion object {
-        val MY_MODEL_VARIANTS = listOf("modelFieldString", "modelFieldBoolean",
-                "methodModelString", "methodModelBoolean") + OBJECT_VARIANTS
-        val MY_MAP_MODEL_VARIANTS = listOf("mapModelField", "mapModelBooleanField",
-                "methodMapModelString", "methodMapModelBoolean") + OBJECT_VARIANTS
-    }
+  companion object {
+    val MY_MODEL_VARIANTS = listOf("modelFieldString", "modelFieldBoolean",
+        "methodModelString", "methodModelBoolean") + OBJECT_VARIANTS
+    val MY_MAP_MODEL_VARIANTS = listOf("mapModelField", "mapModelBooleanField",
+        "methodMapModelString", "methodMapModelBoolean") + OBJECT_VARIANTS
+  }
 
 }

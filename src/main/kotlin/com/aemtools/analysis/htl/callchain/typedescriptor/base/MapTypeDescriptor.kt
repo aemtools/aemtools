@@ -11,13 +11,13 @@ package com.aemtools.analysis.htl.callchain.typedescriptor.base
  */
 interface MapTypeDescriptor : TypeDescriptor {
 
-    /**
-     * The type of key.
-     */
-    fun keyType(): TypeDescriptor
+  /**
+   * The type of key.
+   */
+  fun keyType(): TypeDescriptor
 
-    /**
-     * The type of value.
-     */
-    fun valueType(): TypeDescriptor
+  /**
+   * The type of value.
+   */
+  fun valueType(): TypeDescriptor
 }

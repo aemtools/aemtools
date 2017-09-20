@@ -21,52 +21,52 @@ import com.intellij.util.FileContentUtil.reparseOpenedFiles
  */
 class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
 
-    override fun update(e: AnActionEvent) {
-        val file = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
-                ?.firstOrNull()
-        val project = e.project
-        if (file == null
-                || project == null
-                || !file.isDirectory
-                && e.place != ActionPlaces.PROJECT_VIEW_POPUP
-                || !HtlDetectionService.mayBeMarked(file.path, project)) {
-            e.presentation.isEnabledAndVisible = false
-            return
-        }
-
-        if (HtlDetectionService.isHtlRootDirectory(file.path, project)) {
-            e.presentation.text = "Unmark as HTL Root"
-            return
-        }
-
-        e.presentation.icon = HtlIcons.HTL_ROOT
+  override fun update(e: AnActionEvent) {
+    val file = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
+        ?.firstOrNull()
+    val project = e.project
+    if (file == null
+        || project == null
+        || !file.isDirectory
+        && e.place != ActionPlaces.PROJECT_VIEW_POPUP
+        || !HtlDetectionService.mayBeMarked(file.path, project)) {
+      e.presentation.isEnabledAndVisible = false
+      return
     }
 
-    override fun actionPerformed(e: AnActionEvent) {
-        val file = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
-                ?.firstOrNull() ?: return
-        val project = e.project
-        if (!e.presentation.isEnabledAndVisible || project == null) {
-            return
-        }
-
-        val path = file.path
-
-        val htlRootDirectories = HtlRootDirectories.getInstance(project)
-                ?: return
-
-        if (e.presentation.text == "HTL Root") {
-            htlRootDirectories.addRoot(path)
-        } else {
-            htlRootDirectories.removeRoot(path)
-        }
-
-        // attempt to flush cached files
-        e.project?.psiManager()?.apply {
-            reparseOpenedFiles()
-
-            HtlTemplateIndex.rebuildIndex()
-        }
+    if (HtlDetectionService.isHtlRootDirectory(file.path, project)) {
+      e.presentation.text = "Unmark as HTL Root"
+      return
     }
+
+    e.presentation.icon = HtlIcons.HTL_ROOT
+  }
+
+  override fun actionPerformed(e: AnActionEvent) {
+    val file = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
+        ?.firstOrNull() ?: return
+    val project = e.project
+    if (!e.presentation.isEnabledAndVisible || project == null) {
+      return
+    }
+
+    val path = file.path
+
+    val htlRootDirectories = HtlRootDirectories.getInstance(project)
+        ?: return
+
+    if (e.presentation.text == "HTL Root") {
+      htlRootDirectories.addRoot(path)
+    } else {
+      htlRootDirectories.removeRoot(path)
+    }
+
+    // attempt to flush cached files
+    e.project?.psiManager()?.apply {
+      reparseOpenedFiles()
+
+      HtlTemplateIndex.rebuildIndex()
+    }
+  }
 
 }

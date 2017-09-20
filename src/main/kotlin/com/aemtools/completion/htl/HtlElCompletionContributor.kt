@@ -30,23 +30,23 @@ import com.intellij.codeInsight.completion.CompletionType.SMART
  * @author Dmytro Troynikov.
  */
 class HtlElCompletionContributor : CompletionContributor() { init {
-    extend(BASIC, memberAccess, HtlElMemberAccessCompletionProvider)
+  extend(BASIC, memberAccess, HtlElMemberAccessCompletionProvider)
 
-    extend(BASIC, mainVariableInsideOfDataSlyCall, HtlElDataSlyCallVariableCompletionProvider)
+  extend(BASIC, mainVariableInsideOfDataSlyCall, HtlElDataSlyCallVariableCompletionProvider)
 
-    extend(BASIC, dataSlyUseMainString, HtlDataSlyUseCompletionProvider)
-    extend(SMART, dataSlyUseMainString, HtlDataSlyUseCompletionProvider)
+  extend(BASIC, dataSlyUseMainString, HtlDataSlyUseCompletionProvider)
+  extend(SMART, dataSlyUseMainString, HtlDataSlyUseCompletionProvider)
 
-    extend(BASIC, stringLiteralValue, HtlI18NKeyCompletionProvider)
+  extend(BASIC, stringLiteralValue, HtlI18NKeyCompletionProvider)
 
-    extend(BASIC, variableName, HtlElVariableNameCompletionProvider)
+  extend(BASIC, variableName, HtlElVariableNameCompletionProvider)
 
-    extend(BASIC, dataSlyTemplateOption, HtlDataSlyTemplateOptionCompletionProvider)
-    extend(BASIC, dataSlyCallOption, HtlDataSlyCallOptionCompletionProvider)
-    extend(BASIC, dataSlyResourceOption, HtlDataSlyResourceOptionCompletionProvider)
-    extend(BASIC, optionName, HtlOptionCompletionProvider)
+  extend(BASIC, dataSlyTemplateOption, HtlDataSlyTemplateOptionCompletionProvider)
+  extend(BASIC, dataSlyCallOption, HtlDataSlyCallOptionCompletionProvider)
+  extend(BASIC, dataSlyResourceOption, HtlDataSlyResourceOptionCompletionProvider)
+  extend(BASIC, optionName, HtlOptionCompletionProvider)
 
-    extend(BASIC, contextOptionAssignment, HtlContextOptionAssignmentCompletionProvider)
-    extend(BASIC, resourceTypeOptionAssignment, HtlResourceTypeOptionAssignmentCompletionProvider)
+  extend(BASIC, contextOptionAssignment, HtlContextOptionAssignmentCompletionProvider)
+  extend(BASIC, resourceTypeOptionAssignment, HtlResourceTypeOptionAssignmentCompletionProvider)
 }
 }

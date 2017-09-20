@@ -12,7 +12,7 @@ import com.intellij.openapi.vfs.VirtualFile
  */
 class CdHighlighterFactory : SyntaxHighlighterFactory() {
 
-    override fun getSyntaxHighlighter(project: Project?, virtualFile: VirtualFile?): SyntaxHighlighter
-            = CdHighlighter()
+  override fun getSyntaxHighlighter(project: Project?, virtualFile: VirtualFile?): SyntaxHighlighter
+      = CdHighlighter()
 
 }

@@ -10,3 +10,10 @@ idea {
         generatedSourceDirs += file('gen')
     }
 }
+
+task copyCodeStyle(type: Copy) {
+    from "$projectDir/config/codeStyleSettings.xml"
+    into "$projectDir/.idea"
+}
+
+tasks.idea.dependsOn copyCodeStyle

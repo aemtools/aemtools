@@ -9,18 +9,18 @@ import com.intellij.testFramework.fixtures.CodeInsightTestUtil
  */
 class HtlStringLiteralWordSelectionerTest : BaseLightTest(false) {
 
-    fun testDoublequotedLiteral() = doTest()
+  fun testDoublequotedLiteral() = doTest()
 
-    fun testSinglequotedLiteral() = doTest()
+  fun testSinglequotedLiteral() = doTest()
 
-    override fun getTestDataPath(): String = HtlTestCase.testResourcesPath
+  override fun getTestDataPath(): String = HtlTestCase.testResourcesPath
 
-    private fun doTest() {
-        CodeInsightTestUtil.doWordSelectionTestOnDirectory(
-                myFixture,
-                "/com/aemtools/ide/selectword/${getTestName(true)}",
-                "html"
-        )
-    }
+  private fun doTest() {
+    CodeInsightTestUtil.doWordSelectionTestOnDirectory(
+        myFixture,
+        "/com/aemtools/ide/selectword/${getTestName(true)}",
+        "html"
+    )
+  }
 
 }

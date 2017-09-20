@@ -83,14 +83,14 @@ fun VirtualFile.toPsiDirectory(project: Project): PsiDirectory? = project.psiMan
  * @return resource type of current virtual file
  */
 fun VirtualFile.resourceType(): String? {
-    var currentDir: VirtualFile? = this
-    while (currentDir != null) {
-        if (currentDir.findChild(".content.xml") != null) {
-            return currentDir.path.normalizeToJcrRoot()
-        }
-        currentDir = currentDir.parent
+  var currentDir: VirtualFile? = this
+  while (currentDir != null) {
+    if (currentDir.findChild(".content.xml") != null) {
+      return currentDir.path.normalizeToJcrRoot()
     }
-    return null
+    currentDir = currentDir.parent
+  }
+  return null
 }
 
 /**
@@ -102,7 +102,7 @@ fun VirtualFile.resourceType(): String? {
  * @return instance of virtual file
  */
 fun PsiElement.virtualFile(): VirtualFile? =
-        PsiUtilCore.getVirtualFile(this)
+    PsiUtilCore.getVirtualFile(this)
 
 /**
  * Find incoming references (usages) for current element.
@@ -112,6 +112,6 @@ fun PsiElement.virtualFile(): VirtualFile? =
  * @return list of incoming references
  */
 fun PsiElement.incomingReferences(): List<PsiReference> = runReadAction {
-    RenamePsiElementProcessor.forElement(this).findReferences(this)
-            .toList()
+  RenamePsiElementProcessor.forElement(this).findReferences(this)
+      .toList()
 }

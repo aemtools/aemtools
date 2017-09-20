@@ -8,10 +8,10 @@ import com.intellij.openapi.actionSystem.IdeActions
  */
 class HtlCommenterTest : BaseLightTest(false) {
 
-    fun testHtlCommenter() {
-        myFixture.configureByText("test.html", CARET)
-        myFixture.performEditorAction(IdeActions.ACTION_COMMENT_BLOCK)
-        myFixture.checkResult("<!--/*  */-->")
-    }
+  fun testHtlCommenter() {
+    myFixture.configureByText("test.html", CARET)
+    myFixture.performEditorAction(IdeActions.ACTION_COMMENT_BLOCK)
+    myFixture.checkResult("<!--/*  */-->")
+  }
 
 }

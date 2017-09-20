@@ -10,7 +10,7 @@ import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry
  */
 open class ClientlibPsiBaseElement(node: ASTNode) : ASTWrapperPsiElement(node) {
 
-    override fun getReferences(): Array<PsiReference> =
-            ReferenceProvidersRegistry.getReferencesFromProviders(this)
+  override fun getReferences(): Array<PsiReference> =
+      ReferenceProvidersRegistry.getReferencesFromProviders(this)
 
 }

@@ -14,13 +14,13 @@ import com.intellij.codeInsight.lookup.LookupElement
  */
 class PredefinedTypeDescriptor(val predefined: List<PredefinedCompletion>) : BaseTypeDescriptor() {
 
-    override fun myVariants(): List<LookupElement> {
-        return predefined.map(PredefinedCompletion::toLookupElement)
-                .map { it.withPriority(CompletionPriority.PREDEFINED_PARAMETER) }
-    }
+  override fun myVariants(): List<LookupElement> {
+    return predefined.map(PredefinedCompletion::toLookupElement)
+        .map { it.withPriority(CompletionPriority.PREDEFINED_PARAMETER) }
+  }
 
-    override fun subtype(identifier: String): TypeDescriptor =
-            predefined.find { it.completionText == identifier }?.asTypeDescriptor()
-                    ?: TypeDescriptor.empty()
+  override fun subtype(identifier: String): TypeDescriptor =
+      predefined.find { it.completionText == identifier }?.asTypeDescriptor()
+          ?: TypeDescriptor.empty()
 
 }

@@ -11,14 +11,14 @@ import com.intellij.psi.PsiReferenceBase
  * @author Dmytro Troynikov
  */
 class HtlTemplateParameterReference(
-        val type: TemplateParameterTypeDescriptor,
-        holder: PsiElement,
-        range: TextRange
+    val type: TemplateParameterTypeDescriptor,
+    holder: PsiElement,
+    range: TextRange
 ) : PsiReferenceBase<PsiElement>(holder, range, true) {
 
-    override fun resolve(): PsiElement? =
-            type.declaration.htlVariableNameElement
+  override fun resolve(): PsiElement? =
+      type.declaration.htlVariableNameElement
 
-    override fun getVariants(): Array<Any> = emptyArray()
+  override fun getVariants(): Array<Any> = emptyArray()
 
 }

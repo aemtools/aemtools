@@ -13,11 +13,11 @@ import com.intellij.testFramework.fixtures.CodeInsightTestFixture
  * @return instance of quick fix object, `null` if no object found
  */
 inline fun <reified FIX : IntentionAction> CodeInsightTestFixture.quickFix(fileName: String): FIX? {
-    val fixes: List<FIX> = quickFixes(fileName)
-    if (fixes.size > 1) {
-        throw AssertionError("Found several quick fixes of type ${FIX::class.java}\nIn file: $fileName")
-    }
-    return fixes.firstOrNull()
+  val fixes: List<FIX> = quickFixes(fileName)
+  if (fixes.size > 1) {
+    throw AssertionError("Found several quick fixes of type ${FIX::class.java}\nIn file: $fileName")
+  }
+  return fixes.firstOrNull()
 }
 
 /**
@@ -29,5 +29,5 @@ inline fun <reified FIX : IntentionAction> CodeInsightTestFixture.quickFix(fileN
  * @return list of quick fixes, will be empty if no fixes with given type found
  */
 inline fun <reified FIX : IntentionAction> CodeInsightTestFixture.quickFixes(fileName: String): List<FIX> =
-        getAllQuickFixes(fileName)
-                .mapNotNull { it as? FIX }
+    getAllQuickFixes(fileName)
+        .mapNotNull { it as? FIX }

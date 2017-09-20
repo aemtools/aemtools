@@ -22,128 +22,128 @@ import javax.swing.Icon
  * @author Dmytro_Troynikov
  */
 object ClientlibDeclarationIncludeCompletionProvider : CompletionProvider<CompletionParameters>(), DumbAware {
-    override fun addCompletions(
-            parameters: CompletionParameters,
-            context: ProcessingContext?,
-            result: CompletionResultSet) {
-        if (result.isStopped) {
-            return
-        }
-
-        val currentElement = parameters.position.findParentByType(CdInclude::class.java)
-                ?: return
-        val basePath = currentElement.basePathElement()?.include?.text
-        val startDir = findStartDirectory(parameters.originalFile.containingDirectory, basePath)
-                ?: return
-
-        val rawVariants = collectRawVariants(parameters, startDir, basePath)
-
-        val file = parameters.originalFile.getPsi(CdLanguage) as? CdPsiFile
-                ?: return
-
-        val presentVariants = extractPresentVariants(file)
-
-        val filteredVariants = rawVariants.filterNot {
-            presentVariants.any { present -> present.realPath == it.realPath }
-        }
-
-        result.addAllElements(filteredVariants.map {
-            LookupElementBuilder.create(it.relativePath)
-                    .withIcon(it.icon)
-        })
-        result.stopHere()
+  override fun addCompletions(
+      parameters: CompletionParameters,
+      context: ProcessingContext?,
+      result: CompletionResultSet) {
+    if (result.isStopped) {
+      return
     }
 
-    private fun extractPresentVariants(cdFile: CdPsiFile): Collection<CdImport> {
-        val elements = cdFile.children.filter {
-            it is CdBasePath
-                    || it is CdInclude
-        }
-        val realPath: String = cdFile.containingDirectory
-                ?.virtualFile
-                ?.path
-                ?: return emptyList()
+    val currentElement = parameters.position.findParentByType(CdInclude::class.java)
+        ?: return
+    val basePath = currentElement.basePathElement()?.include?.text
+    val startDir = findStartDirectory(parameters.originalFile.containingDirectory, basePath)
+        ?: return
 
-        val result: ArrayList<CdImport> = ArrayList()
-        var currentBasePath: String? = null
-        elements.forEach {
-            if (it is CdBasePath) {
-                currentBasePath = it.text
-            } else if (it is CdInclude) {
-                if (currentBasePath == null) {
-                    result.add(CdImport(
-                            realPath = "$realPath/${it.text}",
-                            relativePath = it.text
-                    ))
-                } else {
-                    result.add(CdImport(
-                            realPath = "$realPath/$currentBasePath/${it.text}",
-                            relativePath = it.text,
-                            basePath = currentBasePath
-                    ))
-                }
-            }
-        }
-        return result
+    val rawVariants = collectRawVariants(parameters, startDir, basePath)
+
+    val file = parameters.originalFile.getPsi(CdLanguage) as? CdPsiFile
+        ?: return
+
+    val presentVariants = extractPresentVariants(file)
+
+    val filteredVariants = rawVariants.filterNot {
+      presentVariants.any { present -> present.realPath == it.realPath }
     }
 
-    private fun collectRawVariants(parameters: CompletionParameters,
-                                   startDir: PsiDirectory,
-                                   basePath: String?): List<CdImport> {
-        val currentFile = parameters.originalFile
+    result.addAllElements(filteredVariants.map {
+      LookupElementBuilder.create(it.relativePath)
+          .withIcon(it.icon)
+    })
+    result.stopHere()
+  }
 
-        fun variantsCollector(dir: PsiDirectory): List<CdImport> {
-            val result = ArrayList<CdImport>()
-            dir.files.filter {
-                accept(currentFile.name, it.name)
-            }
-                    .forEach {
-                        result.add(CdImport(
-                                it.virtualFile.path,
-                                it.virtualFile.path.relativeTo(startDir.virtualFile.path),
-                                basePath,
-                                it.virtualFile.toPsiFile(parameters.position.project)?.getIcon(0)
-                        ))
-                    }
-            result.addAll(dir.subdirectories.flatMap(::variantsCollector))
-            return result
+  private fun extractPresentVariants(cdFile: CdPsiFile): Collection<CdImport> {
+    val elements = cdFile.children.filter {
+      it is CdBasePath
+          || it is CdInclude
+    }
+    val realPath: String = cdFile.containingDirectory
+        ?.virtualFile
+        ?.path
+        ?: return emptyList()
+
+    val result: ArrayList<CdImport> = ArrayList()
+    var currentBasePath: String? = null
+    elements.forEach {
+      if (it is CdBasePath) {
+        currentBasePath = it.text
+      } else if (it is CdInclude) {
+        if (currentBasePath == null) {
+          result.add(CdImport(
+              realPath = "$realPath/${it.text}",
+              relativePath = it.text
+          ))
+        } else {
+          result.add(CdImport(
+              realPath = "$realPath/$currentBasePath/${it.text}",
+              relativePath = it.text,
+              basePath = currentBasePath
+          ))
         }
-        return variantsCollector(startDir)
+      }
+    }
+    return result
+  }
+
+  private fun collectRawVariants(parameters: CompletionParameters,
+                                 startDir: PsiDirectory,
+                                 basePath: String?): List<CdImport> {
+    val currentFile = parameters.originalFile
+
+    fun variantsCollector(dir: PsiDirectory): List<CdImport> {
+      val result = ArrayList<CdImport>()
+      dir.files.filter {
+        accept(currentFile.name, it.name)
+      }
+          .forEach {
+            result.add(CdImport(
+                it.virtualFile.path,
+                it.virtualFile.path.relativeTo(startDir.virtualFile.path),
+                basePath,
+                it.virtualFile.toPsiFile(parameters.position.project)?.getIcon(0)
+            ))
+          }
+      result.addAll(dir.subdirectories.flatMap(::variantsCollector))
+      return result
+    }
+    return variantsCollector(startDir)
+  }
+
+  private fun findStartDirectory(directory: PsiDirectory, basePath: String?): PsiDirectory? {
+    if (basePath == null) {
+      return directory
     }
 
-    private fun findStartDirectory(directory: PsiDirectory, basePath: String?): PsiDirectory? {
-        if (basePath == null) {
-            return directory
+    val parts = basePath.split("\\", "/")
+
+    var result: PsiDirectory? = directory
+    parts.forEach {
+      when (it) {
+        ".." -> result = result?.parentDirectory
+        "." -> {
         }
-
-        val parts = basePath.split("\\", "/")
-
-        var result: PsiDirectory? = directory
-        parts.forEach {
-            when (it) {
-                ".." -> result = result?.parentDirectory
-                "." -> {
-                }
-                else -> result = result?.subdirectories?.find { subdirectory -> subdirectory.name == it }
-            }
-        }
-
-        return result
+        else -> result = result?.subdirectories?.find { subdirectory -> subdirectory.name == it }
+      }
     }
 
-    private fun accept(currentFileName: String, fileToCheck: String): Boolean = if (currentFileName == "js.txt") {
-        fileToCheck.endsWith(".js")
-    } else {
-        fileToCheck.endsWith(".css") || fileToCheck.endsWith(".less")
-    }
+    return result
+  }
 
-    /**
-     * File import data class.
-     */
-    data class CdImport(
-            val realPath: String,
-            val relativePath: String,
-            val basePath: String? = null,
-            val icon: Icon? = null)
+  private fun accept(currentFileName: String, fileToCheck: String): Boolean = if (currentFileName == "js.txt") {
+    fileToCheck.endsWith(".js")
+  } else {
+    fileToCheck.endsWith(".css") || fileToCheck.endsWith(".less")
+  }
+
+  /**
+   * File import data class.
+   */
+  data class CdImport(
+      val realPath: String,
+      val relativePath: String,
+      val basePath: String? = null,
+      val icon: Icon? = null)
 
 }

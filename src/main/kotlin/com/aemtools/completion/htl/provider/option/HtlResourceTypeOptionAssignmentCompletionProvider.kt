@@ -15,35 +15,35 @@ import org.apache.commons.lang.StringUtils
  * @author Dmytro Troynikov
  */
 object HtlResourceTypeOptionAssignmentCompletionProvider
-    : CompletionProvider<CompletionParameters>() {
-    override fun addCompletions(
-            parameters: CompletionParameters,
-            context: ProcessingContext?,
-            result: CompletionResultSet) {
-        val myDirectory = parameters.position.containingFile.originalFile.containingDirectory.virtualFile
-                .path
+  : CompletionProvider<CompletionParameters>() {
+  override fun addCompletions(
+      parameters: CompletionParameters,
+      context: ProcessingContext?,
+      result: CompletionResultSet) {
+    val myDirectory = parameters.position.containingFile.originalFile.containingDirectory.virtualFile
+        .path
 
-        val myNormalizedDirectory = myDirectory.normalizeToJcrRoot()
+    val myNormalizedDirectory = myDirectory.normalizeToJcrRoot()
 
-        val declarations = AemComponentSearch
-                .allComponentDeclarations(parameters.position.project)
-                .filterNot {
-                    myNormalizedDirectory == it.resourceType()
-                            || myNormalizedDirectory.startsWith(it.resourceType())
-                }
-                .map {
-                    val lookupElement = it.toLookupElement()
+    val declarations = AemComponentSearch
+        .allComponentDeclarations(parameters.position.project)
+        .filterNot {
+          myNormalizedDirectory == it.resourceType()
+              || myNormalizedDirectory.startsWith(it.resourceType())
+        }
+        .map {
+          val lookupElement = it.toLookupElement()
 
-                    PrioritizedLookupElement
-                            .withPriority(lookupElement, calcPriority(lookupElement, myNormalizedDirectory))
-                }
-        result.addAllElements(declarations)
-        result.stopHere()
-    }
+          PrioritizedLookupElement
+              .withPriority(lookupElement, calcPriority(lookupElement, myNormalizedDirectory))
+        }
+    result.addAllElements(declarations)
+    result.stopHere()
+  }
 
-    private fun calcPriority(lookupElement: LookupElement, myDirectory: String): Double {
-        return 1 - StringUtils.getLevenshteinDistance(lookupElement.lookupString, myDirectory)
-                .toDouble() / 100
-    }
+  private fun calcPriority(lookupElement: LookupElement, myDirectory: String): Double {
+    return 1 - StringUtils.getLevenshteinDistance(lookupElement.lookupString, myDirectory)
+        .toDouble() / 100
+  }
 
 }

@@ -10,17 +10,17 @@ import com.intellij.psi.PsiElement
  * @author Dmytro Troynikov
  */
 class ClassicDialogPropertyTypeDescriptor(
-        val name: String,
-        val element: PsiElement,
-        val classicDialogDefinition: AemComponentClassicDialogDefinition)
-    : BaseTypeDescriptor() {
+    val name: String,
+    val element: PsiElement,
+    val classicDialogDefinition: AemComponentClassicDialogDefinition)
+  : BaseTypeDescriptor() {
 
-    override fun referencedElement(): PsiElement? =
-            classicDialogDefinition.declarationElement(name, element.project)
+  override fun referencedElement(): PsiElement? =
+      classicDialogDefinition.declarationElement(name, element.project)
 
-    override fun myVariants(): List<LookupElement> = emptyList()
+  override fun myVariants(): List<LookupElement> = emptyList()
 
-    override fun subtype(identifier: String): TypeDescriptor
-            = TypeDescriptor.empty()
+  override fun subtype(identifier: String): TypeDescriptor
+      = TypeDescriptor.empty()
 
 }

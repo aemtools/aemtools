@@ -9,38 +9,38 @@ import com.intellij.psi.PsiElement
  */
 class CallChain(val callChainSegments: List<CallChainSegment>) {
 
-    /**
-     * Find call chain element containing given [PsiElement].
-     * @param element the psi element to look for
-     * @return call chain element which contains given psi element, _null_ if no such element found
-     */
-    fun findChainElement(element: PsiElement): CallChainElement? {
-        callChainSegments.forEach {
-            it.chainElements().forEach {
-                if (it.element == element) {
-                    return it
-                }
-            }
+  /**
+   * Find call chain element containing given [PsiElement].
+   * @param element the psi element to look for
+   * @return call chain element which contains given psi element, _null_ if no such element found
+   */
+  fun findChainElement(element: PsiElement): CallChainElement? {
+    callChainSegments.forEach {
+      it.chainElements().forEach {
+        if (it.element == element) {
+          return it
         }
-        return null
+      }
     }
+    return null
+  }
+
+  /**
+   * Return last output type of this call chain.
+   *
+   * @return last output type descriptor
+   */
+  fun getLastOutputType(): TypeDescriptor? =
+      callChainSegments.lastOrNull()?.outputType()
+
+  companion object {
+    private val EMPTY_CHAIN = CallChain(listOf())
 
     /**
-     * Return last output type of this call chain.
+     * Create empty call chain instance.
      *
-     * @return last output type descriptor
+     * @return empty call chain instance
      */
-    fun getLastOutputType(): TypeDescriptor? =
-            callChainSegments.lastOrNull()?.outputType()
-
-    companion object {
-        private val EMPTY_CHAIN = CallChain(listOf())
-
-        /**
-         * Create empty call chain instance.
-         *
-         * @return empty call chain instance
-         */
-        fun empty() = EMPTY_CHAIN
-    }
+    fun empty() = EMPTY_CHAIN
+  }
 }

@@ -26,7 +26,7 @@ import com.intellij.psi.xml.XmlTag
  * @see [PsiTreeUtil.findChildrenOfType]
  */
 fun <T : PsiElement> PsiElement?.findChildrenByType(type: Class<T>): Collection<T> {
-    return PsiTreeUtil.findChildrenOfType(this, type)
+  return PsiTreeUtil.findChildrenOfType(this, type)
 }
 
 /**
@@ -37,7 +37,7 @@ fun <T : PsiElement> PsiElement?.findChildrenByType(type: Class<T>): Collection<
  */
 @Suppress("UNCHECKED_CAST")
 fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T? {
-    return PsiTreeUtil.findFirstParent(this, Conditions.instanceOf(type)) as? T?
+  return PsiTreeUtil.findFirstParent(this, Conditions.instanceOf(type)) as? T?
 }
 
 /**
@@ -48,24 +48,24 @@ fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T? {
  * @return the element
  */
 fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>, predicate: (T) -> Boolean): T? =
-        if (this != null) {
-            val elements = kotlin.run {
-                val result = ArrayList<T>()
-                var currentElement = this
+    if (this != null) {
+      val elements = kotlin.run {
+        val result = ArrayList<T>()
+        var currentElement = this
 
-                while (currentElement != null) {
-                    if (type.isAssignableFrom(currentElement.javaClass)) {
-                        result.add(currentElement as T)
-                    }
-                    currentElement = currentElement.parent
-                }
-                result
-            }
-
-            elements.find { predicate.invoke(it) }
-        } else {
-            null
+        while (currentElement != null) {
+          if (type.isAssignableFrom(currentElement.javaClass)) {
+            result.add(currentElement as T)
+          }
+          currentElement = currentElement.parent
         }
+        result
+      }
+
+      elements.find { predicate.invoke(it) }
+    } else {
+      null
+    }
 
 /**
  * Check if current [PsiElement] has parent of specified class.
@@ -74,7 +74,7 @@ fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>, predicate: (T)
  * @return *true* if current element has parent of specified type, *false* otherwise
  */
 fun <T : PsiElement> PsiElement?.hasParent(type: Class<T>): Boolean =
-        this.findParentByType(type) != null
+    this.findParentByType(type) != null
 
 /**
  * Check if current [PsiElement] has child of specified type.
@@ -83,7 +83,7 @@ fun <T : PsiElement> PsiElement?.hasParent(type: Class<T>): Boolean =
  * @return *true* if current element has one or more children of specified type
  */
 fun <T : PsiElement> PsiElement?.hasChild(type: Class<T>): Boolean =
-        this.findChildrenByType(type).isNotEmpty()
+    this.findChildrenByType(type).isNotEmpty()
 
 /**
  * Check if current [XmlTag] is sly tag.
@@ -100,7 +100,7 @@ fun XmlTag.isSlyTag(): Boolean = this.name == SLY_TAG
  * @return *true* if current tag has matching attribute
  */
 fun XmlTag.hasAttribute(matcher: (attribute: XmlAttribute) -> Boolean): Boolean =
-        attributes.any(matcher)
+    attributes.any(matcher)
 
 /**
  * Extract [HtlHtlEl] from current attribute.
@@ -108,11 +108,11 @@ fun XmlTag.hasAttribute(matcher: (attribute: XmlAttribute) -> Boolean): Boolean 
  * @return first [HtlHtlEl] element from current attribute, *null* if no such element found
  */
 fun XmlAttribute.extractHtlHel(): HtlHtlEl? {
-    val htlFile = containingFile?.viewProvider?.getPsi(HtlLanguage)
-            ?: return null
-    val valueElement = valueElement ?: return null
-    val helStart = htlFile.findElementAt(valueElement.textOffset + 1)
-    return helStart.findParentByType(HtlHtlEl::class.java)
+  val htlFile = containingFile?.viewProvider?.getPsi(HtlLanguage)
+      ?: return null
+  val valueElement = valueElement ?: return null
+  val helStart = htlFile.findElementAt(valueElement.textOffset + 1)
+  return helStart.findParentByType(HtlHtlEl::class.java)
 }
 
 /**
@@ -122,7 +122,7 @@ fun XmlAttribute.extractHtlHel(): HtlHtlEl? {
  * @return new collection with only Htl attributes
  */
 fun List<XmlAttribute>.htlAttributes(): List<XmlAttribute> =
-        filter { it.isHtlAttribute() }
+    filter { it.isHtlAttribute() }
 
 /**
  * Resolves the class of variable declared in current [XmlAttribute] element.
@@ -143,22 +143,22 @@ fun List<XmlAttribute>.htlAttributes(): List<XmlAttribute> =
  */
 @Deprecated("To be removed")
 fun XmlAttribute.resolveUseClass(): String? {
-    val attributeValue = valueElement?.value ?: return null
-    return when {
-        attributeValue.matches(Regex("[\\w.]+")) -> attributeValue
-        attributeValue.indexOf("\${") != -1 -> extractBeanNameFromEl(attributeValue)
-        else -> null
-    }
+  val attributeValue = valueElement?.value ?: return null
+  return when {
+    attributeValue.matches(Regex("[\\w.]+")) -> attributeValue
+    attributeValue.indexOf("\${") != -1 -> extractBeanNameFromEl(attributeValue)
+    else -> null
+  }
 }
 
 @Deprecated("To be removed")
 private fun extractBeanNameFromEl(el: String): String? {
-    val start = el.indexOf("'") + 1
-    val end = el.indexOf("'", start + 1)
-    if (start != -1 && end != -1) {
-        return el.substring(start, end)
-    }
-    return null
+  val start = el.indexOf("'") + 1
+  val end = el.indexOf("'", start + 1)
+  if (start != -1 && end != -1) {
+    return el.substring(start, end)
+  }
+  return null
 }
 
 /**
@@ -168,7 +168,7 @@ private fun extractBeanNameFromEl(el: String): String? {
  * @return *true* if current attribute is data-sly-use, *false* otherwise
  */
 fun XmlAttribute.isDataSlyUse(): Boolean = this.name.startsWith("$DATA_SLY_USE.")
-        || this.name == DATA_SLY_USE
+    || this.name == DATA_SLY_USE
 
 /**
  * Check if current [XmlAttribute] is Htl attribute.
@@ -192,16 +192,16 @@ fun XmlAttribute.isHtlAttribute(): Boolean = this.name.isHtlAttributeName()
  * @return *true* if current element declares some variable
  */
 fun XmlAttribute.isHtlDeclarationAttribute(): Boolean =
-        with(this.name) {
-            when {
-                startsWith(DATA_SLY_USE) && length > DATA_SLY_USE.length -> true
-                startsWith(DATA_SLY_TEST) && length > DATA_SLY_TEST.length -> true
-                startsWith(DATA_SLY_TEMPLATE) -> true
-                startsWith(DATA_SLY_LIST) -> true
-                startsWith(DATA_SLY_REPEAT) -> true
-                else -> false
-            }
-        }
+    with(this.name) {
+      when {
+        startsWith(DATA_SLY_USE) && length > DATA_SLY_USE.length -> true
+        startsWith(DATA_SLY_TEST) && length > DATA_SLY_TEST.length -> true
+        startsWith(DATA_SLY_TEMPLATE) -> true
+        startsWith(DATA_SLY_LIST) -> true
+        startsWith(DATA_SLY_REPEAT) -> true
+        else -> false
+      }
+    }
 
 /**
  * Check if current attribute is "local" declaration attribute
@@ -211,7 +211,7 @@ fun XmlAttribute.isHtlDeclarationAttribute(): Boolean =
  * @return *true* if current attribute is local declaration attribute
  */
 fun XmlAttribute.isHtlLocalDeclarationAttribute(): Boolean =
-        isHtlDeclarationAttribute() && !isHtlGlobalDeclarationAttribute()
+    isHtlDeclarationAttribute() && !isHtlGlobalDeclarationAttribute()
 
 /**
  * Check if current attribute is "global" declaration attribute
@@ -221,12 +221,12 @@ fun XmlAttribute.isHtlLocalDeclarationAttribute(): Boolean =
  * @return *true* if current element is global declaration attribute
  */
 fun XmlAttribute.isHtlGlobalDeclarationAttribute(): Boolean =
-        with(this.name) {
-            when {
-                startsWith(DATA_SLY_TEMPLATE) -> true
-                else -> false
-            }
-        }
+    with(this.name) {
+      when {
+        startsWith(DATA_SLY_TEMPLATE) -> true
+        else -> false
+      }
+    }
 
 /**
  * Extract list of Htl variable declarations from current [XmlAttribute] collection.
@@ -234,10 +234,10 @@ fun XmlAttribute.isHtlGlobalDeclarationAttribute(): Boolean =
  * @return collection of [HtlVariableDeclaration] elements
  */
 fun List<XmlAttribute>.extractDeclarations(): List<HtlVariableDeclaration> {
-    return filter { it.isHtlDeclarationAttribute() }
-            .flatMap {
-                HtlVariableDeclaration.create(it)
-            }
+  return filter { it.isHtlDeclarationAttribute() }
+      .flatMap {
+        HtlVariableDeclaration.create(it)
+      }
 }
 
 /**
@@ -255,14 +255,14 @@ fun List<XmlAttribute>.extractDeclarations(): List<HtlVariableDeclaration> {
  * or in case if the attribute is not `data-sly-template`
  */
 fun XmlAttribute.extractTemplateParameters(): List<String> {
-    if (!this.name.startsWith(DATA_SLY_TEMPLATE)) {
-        return listOf()
-    }
+  if (!this.name.startsWith(DATA_SLY_TEMPLATE)) {
+    return listOf()
+  }
 
-    val htlHel = this.extractHtlHel() ?: return listOf()
+  val htlHel = this.extractHtlHel() ?: return listOf()
 
-    return htlHel.findChildrenByType(HtlVariableName::class.java)
-            .filter(HtlVariableName::isOption).map { it.text }
+  return htlHel.findChildrenByType(HtlVariableName::class.java)
+      .filter(HtlVariableName::isOption).map { it.text }
 }
 
 /**
@@ -272,15 +272,15 @@ fun XmlAttribute.extractTemplateParameters(): List<String> {
  * @return template definition, _null_ in case if current tag isn't of `data-sly-template` type.
  */
 fun XmlAttribute.extractTemplateDefinition(): TemplateDefinition? {
-    val name = if (name.contains(".")) {
-        name.substring(name.indexOf(".") + 1)
-    } else {
-        ""
-    }
+  val name = if (name.contains(".")) {
+    name.substring(name.indexOf(".") + 1)
+  } else {
+    ""
+  }
 
-    val params = extractTemplateParameters()
+  val params = extractTemplateParameters()
 
-    return TemplateDefinition(containingFile.virtualFile?.path, name, params)
+  return TemplateDefinition(containingFile.virtualFile?.path, name, params)
 }
 
 /**

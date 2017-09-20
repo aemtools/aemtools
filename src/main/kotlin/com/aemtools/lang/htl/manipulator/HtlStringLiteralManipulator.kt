@@ -11,17 +11,17 @@ import com.intellij.psi.AbstractElementManipulator
  * @author Dmytro_Troynikov
  */
 class HtlStringLiteralManipulator : AbstractElementManipulator<HtlStringLiteral>() {
-    override fun handleContentChange(
-            element: HtlStringLiteral,
-            range: TextRange,
-            newContent: String): HtlStringLiteral {
-        val newElement = HtlElementFactory.createStringLiteral(
-                newContent,
-                element.project,
-                element.doubleQuotedString != null)
-                ?: return element
-        element.node.replaceChild(element.node.firstChildNode, newElement.node.firstChildNode)
+  override fun handleContentChange(
+      element: HtlStringLiteral,
+      range: TextRange,
+      newContent: String): HtlStringLiteral {
+    val newElement = HtlElementFactory.createStringLiteral(
+        newContent,
+        element.project,
+        element.doubleQuotedString != null)
+        ?: return element
+    element.node.replaceChild(element.node.firstChildNode, newElement.node.firstChildNode)
 
-        return element
-    }
+    return element
+  }
 }

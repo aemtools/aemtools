@@ -7,137 +7,137 @@ import com.aemtools.blocks.documentation.model.IDocTestFixture
  * @author Dmytro Troynikov
  */
 class HtlElDocumentationContextValuesTest
-    : BaseDocumentationTest(HtlELDocumentationProvider()) {
+  : BaseDocumentationTest(HtlELDocumentationProvider()) {
 
-    fun testDocHtml() = docCase {
-        contextValue("html")
+  fun testDocHtml() = docCase {
+    contextValue("html")
 
-        documentation("""
+    documentation("""
             Use this in case you want to output HTML - Removes markup that may contain XSS risks.
         """)
-    }
+  }
 
-    fun testDocText() = docCase {
-        contextValue("text")
+  fun testDocText() = docCase {
+    contextValue("text")
 
-        documentation("""
+    documentation("""
             Use this for simple HTML content - Encodes all HTML.
         """)
-    }
+  }
 
-    fun testDocElementName() = docCase {
-        contextValue("elementName")
+  fun testDocElementName() = docCase {
+    contextValue("elementName")
 
-        documentation("""
+    documentation("""
             Allows only element names that are white-listed, outputs 'div' otherwise.
         """)
-    }
+  }
 
-    fun testDocAttributeName() = docCase {
-        contextValue("attributeName")
+  fun testDocAttributeName() = docCase {
+    contextValue("attributeName")
 
-        documentation("""
+    documentation("""
             Outputs nothing if the value doesn't correspond to the HTML attribute name syntax - doesn't allow 'style' and 'on*' attributes.
         """)
-    }
+  }
 
-    fun testDocAttribute() = docCase {
-        contextValue("attribute")
+  fun testDocAttribute() = docCase {
+    contextValue("attribute")
 
-        documentation("""
+    documentation("""
             Applies HTML attribute escaping
         """)
-    }
+  }
 
-    fun testDocUri() = docCase {
-        contextValue("uri")
+  fun testDocUri() = docCase {
+    contextValue("uri")
 
-        documentation("""
+    documentation("""
             Outputs nothing if the value contains XSS risks.
         """)
-    }
+  }
 
-    fun testDocScriptToken() = docCase {
-        contextValue("scriptToken")
+  fun testDocScriptToken() = docCase {
+    contextValue("scriptToken")
 
-        documentation("""
+    documentation("""
             Outputs nothing if the value doesn't correspond to the JavaScript token syntax.
         """)
-    }
+  }
 
-    fun testDocScriptString() = docCase {
-        contextValue("scriptString")
+  fun testDocScriptString() = docCase {
+    contextValue("scriptString")
 
-        documentation("""
+    documentation("""
             Applies JavaScript string escaping.
         """)
-    }
+  }
 
-    fun testDocScriptComment() = docCase {
-        contextValue("scriptComment")
+  fun testDocScriptComment() = docCase {
+    contextValue("scriptComment")
 
-        documentation("""
+    documentation("""
             Context for JavaScript block comments. Outputs nothing if value is trying to break out of the comment context.
         """)
-    }
+  }
 
-    fun testDocScriptRegExp() = docCase {
-        contextValue("scriptRegExp")
+  fun testDocScriptRegExp() = docCase {
+    contextValue("scriptRegExp")
 
-        documentation("""
+    documentation("""
             Applies JavaScript regular expression escaping.
         """)
-    }
+  }
 
-    fun testDocStyleToken() = docCase {
-        contextValue("styleToken")
+  fun testDocStyleToken() = docCase {
+    contextValue("styleToken")
 
-        documentation("""
+    documentation("""
             Outputs nothing if the value doesn't correspond to the CSS token syntax.
         """)
-    }
+  }
 
-    fun testDocStyleString() = docCase {
-        contextValue("styleString")
+  fun testDocStyleString() = docCase {
+    contextValue("styleString")
 
-        documentation("""
+    documentation("""
             Applies CSS string escaping.
         """)
-    }
+  }
 
-    fun testDocStyleComment() = docCase {
-        contextValue("styleComment")
+  fun testDocStyleComment() = docCase {
+    contextValue("styleComment")
 
-        documentation("""
+    documentation("""
             Context for CSS comments. Outputs noting if value is trying to break out of the comment context.
         """)
-    }
+  }
 
-    fun testDocComment() = docCase {
-        contextValue("comment")
+  fun testDocComment() = docCase {
+    contextValue("comment")
 
-        documentation("""
+    documentation("""
             Applies HTML comment escaping.
         """)
-    }
+  }
 
-    fun testDocNumber() = docCase {
-        contextValue("number")
+  fun testDocNumber() = docCase {
+    contextValue("number")
 
-        documentation("""
+    documentation("""
             Outputs zero if the value is not a number.
         """)
-    }
+  }
 
-    fun testDocUnsafe() = docCase {
-        contextValue("unsafe")
+  fun testDocUnsafe() = docCase {
+    contextValue("unsafe")
 
-        documentation("""
+    documentation("""
             Use this at your own risk, this disables XSS protection completely.
         """)
-    }
+  }
 
-    private fun IDocTestFixture.contextValue(value: String) =
-            this.addHtml("test.html", "$DOLLAR{@ context='$CARET$value'}")
+  private fun IDocTestFixture.contextValue(value: String) =
+      this.addHtml("test.html", "$DOLLAR{@ context='$CARET$value'}")
 
 }

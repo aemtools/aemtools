@@ -13,17 +13,17 @@ import com.intellij.psi.xml.XmlTag
  * @author Dmytro Troynikov
  */
 class RedundantDataSlyUnwrapAnnotator : Annotator {
-    override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-        if (element is XmlAttribute
-                && element.text == DATA_SLY_UNWRAP
-                && element.findParentByType(XmlTag::class.java)?.name?.equals("sly", true) ?: false) {
-            holder.createWarningAnnotation(element, REDUNDANT_DATA_SLY_UNWRAP_MESSAGE)
-                    .registerFix(RemoveRedundantDataSlyUnwrapAction(element))
-        }
+  override fun annotate(element: PsiElement, holder: AnnotationHolder) {
+    if (element is XmlAttribute
+        && element.text == DATA_SLY_UNWRAP
+        && element.findParentByType(XmlTag::class.java)?.name?.equals("sly", true) ?: false) {
+      holder.createWarningAnnotation(element, REDUNDANT_DATA_SLY_UNWRAP_MESSAGE)
+          .registerFix(RemoveRedundantDataSlyUnwrapAction(element))
     }
+  }
 
-    companion object {
-        val REDUNDANT_DATA_SLY_UNWRAP_MESSAGE = "The data-sly-unwrap attribute is redundant in sly tag."
-    }
+  companion object {
+    val REDUNDANT_DATA_SLY_UNWRAP_MESSAGE = "The data-sly-unwrap attribute is redundant in sly tag."
+  }
 
 }

@@ -8,4 +8,4 @@ import org.mockito.Mockito
  * @param TYPE classToMock
  * @return mock object
  */
-inline fun <reified TYPE>mock(): TYPE = Mockito.mock(TYPE::class.java)
+inline fun <reified TYPE> mock(): TYPE = Mockito.mock(TYPE::class.java)

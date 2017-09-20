@@ -20,93 +20,93 @@ import java.io.Serializable
  * @author Dmytro Troynikov
  */
 data class TemplateDefinition(
-        /**
-         * Full name
-         */
-        var fullName: String?,
-        /**
-         * The name of the template
-         */
-        val name: String,
-        /**
-         * List of parameters declared in template.
-         * e.g.
-         *
-         * ```
-         * <div data-sly-template.template="${@ param1, param2}> -> [param1, param2]
-         * ```
-         *
-         */
-        val parameters: List<String>) : Serializable {
-
     /**
-     * Get [XmlAttribute] in which current template was declared.
+     * Full name
+     */
+    var fullName: String?,
+    /**
+     * The name of the template
+     */
+    val name: String,
+    /**
+     * List of parameters declared in template.
+     * e.g.
      *
-     * @param project the project
-     * @return declaration xml attribute
-     */
-    fun declarationElement(project: Project): XmlAttribute? {
-        val file = OpenApiUtil.findFileByRelativePath(normalizedPath, project)
-                ?.toPsiFile(project) as? HtlPsiFile
-                ?: return null
-        val htmlFile = file.getHtmlFile() ?: return null
-        return htmlFile.findChildrenByType(XmlAttribute::class.java).find {
-            it.htlVariableName() == name
-        }
-    }
-
-    /**
-     * Get parameter declaration element.
+     * ```
+     * <div data-sly-template.template="${@ param1, param2}> -> [param1, param2]
+     * ```
      *
-     * @param project the project
-     * @param parameter the parameter name
-     * @return htl variable name
      */
-    fun parameterDeclarationElement(project: Project, parameter: String): HtlVariableName? {
-        val declarationElement = declarationElement(project) as? XmlAttribute
-                ?: return null
+    val parameters: List<String>) : Serializable {
 
-        val hel = declarationElement.extractHtlHel() as? HtlElExpressionMixin
+  /**
+   * Get [XmlAttribute] in which current template was declared.
+   *
+   * @param project the project
+   * @return declaration xml attribute
+   */
+  fun declarationElement(project: Project): XmlAttribute? {
+    val file = OpenApiUtil.findFileByRelativePath(normalizedPath, project)
+        ?.toPsiFile(project) as? HtlPsiFile
+        ?: return null
+    val htmlFile = file.getHtmlFile() ?: return null
+    return htmlFile.findChildrenByType(XmlAttribute::class.java).find {
+      it.htlVariableName() == name
+    }
+  }
 
-        return hel?.getOptions()
-                ?.find {
-                    it.name() == parameter
-                }
-                ?.contextExpression?.variableName
+  /**
+   * Get parameter declaration element.
+   *
+   * @param project the project
+   * @param parameter the parameter name
+   * @return htl variable name
+   */
+  fun parameterDeclarationElement(project: Project, parameter: String): HtlVariableName? {
+    val declarationElement = declarationElement(project) as? XmlAttribute
+        ?: return null
+
+    val hel = declarationElement.extractHtlHel() as? HtlElExpressionMixin
+
+    return hel?.getOptions()
+        ?.find {
+          it.name() == parameter
+        }
+        ?.contextExpression?.variableName
+  }
+
+  val containingDirectory: String
+    get() {
+      val _fullName = fullName
+          ?: return ""
+      return _fullName.substring(0, _fullName.lastIndexOf("/"))
     }
 
-    val containingDirectory: String
-        get() {
-            val _fullName = fullName
-                    ?: return ""
-            return _fullName.substring(0, _fullName.lastIndexOf("/"))
-        }
-
-    /**
-     * Return path starting from "/apps"
-     */
-    val normalizedPath: String
-        get() {
-            val _path = fullName
-            return if (_path != null) {
-                return _path.normalizeToJcrRoot()
-            } else {
-                ""
-            }
-        }
-
-    /**
-     * The name of html file
-     */
-    val fileName: String
-        get() {
-            val _path = fullName
-            return _path?.substring(_path.lastIndexOf("/") + 1) ?: ""
-        }
-
-    companion object {
-        @JvmStatic
-        val serialVersionUID: Long = 1L
+  /**
+   * Return path starting from "/apps"
+   */
+  val normalizedPath: String
+    get() {
+      val _path = fullName
+      return if (_path != null) {
+        return _path.normalizeToJcrRoot()
+      } else {
+        ""
+      }
     }
+
+  /**
+   * The name of html file
+   */
+  val fileName: String
+    get() {
+      val _path = fullName
+      return _path?.substring(_path.lastIndexOf("/") + 1) ?: ""
+    }
+
+  companion object {
+    @JvmStatic
+    val serialVersionUID: Long = 1L
+  }
 
 }

@@ -9,14 +9,14 @@ import com.aemtools.blocks.rename.model.fixture.RenameFixture
  */
 abstract class BaseRenameTest(withUberJar: Boolean = false) : BaseLightTest(withUberJar) {
 
-    fun renameCase(case: IRenameFixture.() -> Unit) {
-        val renameFixture = RenameFixture(myFixture)
+  fun renameCase(case: IRenameFixture.() -> Unit) {
+    val renameFixture = RenameFixture(myFixture)
 
-        case.invoke(renameFixture)
+    case.invoke(renameFixture)
 
-        renameFixture.init()
+    renameFixture.init()
 
-        renameFixture.test()
-    }
+    renameFixture.test()
+  }
 
 }

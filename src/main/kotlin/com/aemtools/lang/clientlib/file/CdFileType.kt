@@ -10,12 +10,12 @@ import javax.swing.Icon
  */
 object CdFileType : LanguageFileType(CdLanguage) {
 
-    override fun getIcon(): Icon = AllIcons.FileTypes.Text
+  override fun getIcon(): Icon = AllIcons.FileTypes.Text
 
-    override fun getName() = "Clientlib definition"
+  override fun getName() = "Clientlib definition"
 
-    override fun getDefaultExtension(): String = "cd"
+  override fun getDefaultExtension(): String = "cd"
 
-    override fun getDescription(): String = "Clientlib definition"
+  override fun getDescription(): String = "Clientlib definition"
 
 }

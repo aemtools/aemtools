@@ -17,30 +17,30 @@ import javax.swing.Icon
  */
 object HtlFileType : LanguageFileType(HtlLanguage), TemplateLanguageFileType, FileTypeIdentifiableByVirtualFile {
 
-    init {
-        FileTypeEditorHighlighterProviders.INSTANCE.addExplicitExtension(this)
-        { project, _, virtualFile, colors -> HtlTemplateHighlighter(project, virtualFile, colors) }
+  init {
+    FileTypeEditorHighlighterProviders.INSTANCE.addExplicitExtension(this)
+    { project, _, virtualFile, colors -> HtlTemplateHighlighter(project, virtualFile, colors) }
+  }
+
+  override fun isMyFileType(file: VirtualFile): Boolean {
+    val project = ProjectLocator.getInstance().guessProjectForFile(file)
+
+    if (file.isDirectory
+        || project == null
+        || file.extension != "html") {
+      return false
     }
 
-    override fun isMyFileType(file: VirtualFile): Boolean {
-        val project = ProjectLocator.getInstance().guessProjectForFile(file)
+    val path = file.path
+    return HtlDetectionService.isHtlFile(path, project)
+  }
 
-        if (file.isDirectory
-                || project == null
-                || file.extension != "html") {
-            return false
-        }
+  override fun getIcon(): Icon = HTL_FILE_ICON
 
-        val path = file.path
-        return HtlDetectionService.isHtlFile(path, project)
-    }
+  override fun getName() = "HTL"
 
-    override fun getIcon(): Icon = HTL_FILE_ICON
+  override fun getDefaultExtension() = "htl"
 
-    override fun getName() = "HTL"
-
-    override fun getDefaultExtension() = "htl"
-
-    override fun getDescription() = "HTL File"
+  override fun getDescription() = "HTL File"
 
 }

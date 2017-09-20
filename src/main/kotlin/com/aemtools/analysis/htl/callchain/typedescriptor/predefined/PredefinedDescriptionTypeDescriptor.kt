@@ -10,10 +10,10 @@ import com.intellij.codeInsight.lookup.LookupElement
  */
 class PredefinedDescriptionTypeDescriptor(val predefined: PredefinedCompletion) : BaseTypeDescriptor() {
 
-    override fun myVariants(): List<LookupElement> = emptyList()
+  override fun myVariants(): List<LookupElement> = emptyList()
 
-    override fun subtype(identifier: String): TypeDescriptor = TypeDescriptor.empty()
+  override fun subtype(identifier: String): TypeDescriptor = TypeDescriptor.empty()
 
-    override fun documentation(): String? = predefined.documentation
+  override fun documentation(): String? = predefined.documentation
 
 }

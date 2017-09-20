@@ -10,9 +10,9 @@ import com.intellij.codeInsight.completion.CompletionType
  * @author Dmytro_Troynikov
  */
 class CdCompletionContributor : CompletionContributor() {
-    init {
-        extend(CompletionType.BASIC, CdPatterns.basePath, ClientlibDeclarationBasePathCompletionProvider)
+  init {
+    extend(CompletionType.BASIC, CdPatterns.basePath, ClientlibDeclarationBasePathCompletionProvider)
 
-        extend(CompletionType.BASIC, CdPatterns.include, ClientlibDeclarationIncludeCompletionProvider)
-    }
+    extend(CompletionType.BASIC, CdPatterns.include, ClientlibDeclarationIncludeCompletionProvider)
+  }
 }

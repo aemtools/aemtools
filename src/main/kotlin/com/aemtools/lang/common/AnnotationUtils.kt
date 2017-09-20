@@ -23,9 +23,9 @@ import com.intellij.psi.PsiElement
 fun AnnotationHolder.highlight(range: TextRange,
                                textAttributesKey: TextAttributesKey,
                                message: String? = null): Annotation =
-        createInfoAnnotation(range, message).apply {
-            textAttributes = textAttributesKey
-        }
+    createInfoAnnotation(range, message).apply {
+      textAttributes = textAttributesKey
+    }
 
 /**
  * Create info annotation in current annotation holder using given psi element.
@@ -40,7 +40,7 @@ fun AnnotationHolder.highlight(range: TextRange,
 fun AnnotationHolder.highlight(element: PsiElement,
                                textAttributesKey: TextAttributesKey,
                                message: String? = null): Annotation =
-        highlight(element.textRange, textAttributesKey, message)
+    highlight(element.textRange, textAttributesKey, message)
 
 /**
  * Create error annotation in current annotation holder using given psi element.
@@ -53,4 +53,4 @@ fun AnnotationHolder.highlight(element: PsiElement,
  */
 fun AnnotationHolder.error(element: PsiElement,
                            message: String? = null): Annotation =
-        createErrorAnnotation(element, message)
+    createErrorAnnotation(element, message)

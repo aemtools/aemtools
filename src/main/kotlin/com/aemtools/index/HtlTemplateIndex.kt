@@ -18,29 +18,29 @@ import com.intellij.xml.index.XmlIndex
  */
 class HtlTemplateIndex : XmlIndex<TemplateDefinition>() {
 
-    companion object {
-        val HTL_TEMPLATE_ID: ID<String, TemplateDefinition>
-                = ID.create<String, TemplateDefinition>("HtlTemplateIndex")
+  companion object {
+    val HTL_TEMPLATE_ID: ID<String, TemplateDefinition>
+        = ID.create<String, TemplateDefinition>("HtlTemplateIndex")
 
-        /**
-         * Rebuild Htl template index.
-         */
-        fun rebuildIndex() = FileBasedIndex.getInstance()
-                .requestRebuild(HTL_TEMPLATE_ID)
-    }
+    /**
+     * Rebuild Htl template index.
+     */
+    fun rebuildIndex() = FileBasedIndex.getInstance()
+        .requestRebuild(HTL_TEMPLATE_ID)
+  }
 
-    override fun getIndexer(): DataIndexer<String, TemplateDefinition, FileContent>
-            = HtlTemplateIndexer
+  override fun getIndexer(): DataIndexer<String, TemplateDefinition, FileContent>
+      = HtlTemplateIndexer
 
-    override fun getInputFilter(): FileBasedIndex.InputFilter
-            = FileBasedIndex.InputFilter {
-        it.fileType == HtlFileType
-    }
+  override fun getInputFilter(): FileBasedIndex.InputFilter
+      = FileBasedIndex.InputFilter {
+    it.fileType == HtlFileType
+  }
 
-    override fun getValueExternalizer(): DataExternalizer<TemplateDefinition>
-            = TemplateDefinitionExternalizer
+  override fun getValueExternalizer(): DataExternalizer<TemplateDefinition>
+      = TemplateDefinitionExternalizer
 
-    override fun getName(): ID<String, TemplateDefinition>
-            = HTL_TEMPLATE_ID
+  override fun getName(): ID<String, TemplateDefinition>
+      = HTL_TEMPLATE_ID
 
 }

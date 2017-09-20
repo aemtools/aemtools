@@ -9,30 +9,30 @@ import com.aemtools.constant.const.JCR_ROOT
  */
 class HtlFilePatternTest : BasePatternsTest() {
 
-    fun testHtlFilePatternTestPositive() = testCondition(
-            HtlFilePattern,
-            "",
-            true,
-            false,
-            {
-                this.addHtml("/$JCR_ROOT/test.html", CARET)
-            },
-            {
-                openedFile()
-            }
-    )
+  fun testHtlFilePatternTestPositive() = testCondition(
+      HtlFilePattern,
+      "",
+      true,
+      false,
+      {
+        this.addHtml("/$JCR_ROOT/test.html", CARET)
+      },
+      {
+        openedFile()
+      }
+  )
 
-    fun testHtlFilePatternsTestNegative() = testCondition(
-            HtlFilePattern,
-            "",
-            false,
-            false,
-            {
-                addXml("/$JCR_ROOT/test.xml", CARET)
-            },
-            {
-                openedFile()
-            }
-    )
+  fun testHtlFilePatternsTestNegative() = testCondition(
+      HtlFilePattern,
+      "",
+      false,
+      false,
+      {
+        addXml("/$JCR_ROOT/test.xml", CARET)
+      },
+      {
+        openedFile()
+      }
+  )
 
 }

@@ -12,20 +12,20 @@ import com.intellij.psi.PsiFile
  * @author Dmytro Troynikov
  */
 class FixVariableNameErrata(
-        private val possiblyCorrectName: String,
-        val element: PsiElement
+    private val possiblyCorrectName: String,
+    val element: PsiElement
 ) : BaseHtlFix(
-        text = { "Change to '$possiblyCorrectName'" }
+    text = { "Change to '$possiblyCorrectName'" }
 ) {
 
-    override fun invoke(project: Project, editor: Editor, file: PsiFile) {
-        val document = project.psiDocumentManager().getDocument(file)
-                ?: return
+  override fun invoke(project: Project, editor: Editor, file: PsiFile) {
+    val document = project.psiDocumentManager().getDocument(file)
+        ?: return
 
-        val (start, end) = element.textRange.startOffset to element.textRange.endOffset
+    val (start, end) = element.textRange.startOffset to element.textRange.endOffset
 
-        document.replaceString(start, end, possiblyCorrectName)
-        project.psiDocumentManager().commitDocument(document)
-    }
+    document.replaceString(start, end, possiblyCorrectName)
+    project.psiDocumentManager().commitDocument(document)
+  }
 
 }

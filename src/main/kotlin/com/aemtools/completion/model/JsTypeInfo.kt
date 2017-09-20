@@ -7,15 +7,15 @@ package com.aemtools.completion.model
  * @author Dmytro_Troynikov
  */
 class JsTypeInfo(
-        val types: List<String>
+    val types: List<String>
 ) {
-    companion object {
+  companion object {
 
-        /**
-         * Create empty [JsTypeInfo].
-         *
-         * @return instance of empty js type info
-         */
-        fun empty() = JsTypeInfo(listOf())
-    }
+    /**
+     * Create empty [JsTypeInfo].
+     *
+     * @return instance of empty js type info
+     */
+    fun empty() = JsTypeInfo(listOf())
+  }
 }

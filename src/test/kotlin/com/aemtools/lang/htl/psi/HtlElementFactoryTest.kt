@@ -7,32 +7,32 @@ import com.aemtools.blocks.base.BaseLightTest
  */
 class HtlElementFactoryTest : BaseLightTest(false) {
 
-    fun testDotAccessIdentifier() {
-        val accessIdentifier = HtlElementFactory.createDotAccessIdentifier("identifier", project)
+  fun testDotAccessIdentifier() {
+    val accessIdentifier = HtlElementFactory.createDotAccessIdentifier("identifier", project)
 
-        assertEquals(".identifier", accessIdentifier?.text)
-        assertEquals(HtlTypes.DOT_ACCESS, accessIdentifier?.elementType)
-    }
+    assertEquals(".identifier", accessIdentifier?.text)
+    assertEquals(HtlTypes.DOT_ACCESS, accessIdentifier?.elementType)
+  }
 
-    fun testArrayLikeAccessSinglequoted() {
-        val accessIdentifier = HtlElementFactory.createArrayLikeAccessSingleQuoted("identifier", project)
+  fun testArrayLikeAccessSinglequoted() {
+    val accessIdentifier = HtlElementFactory.createArrayLikeAccessSingleQuoted("identifier", project)
 
-        assertEquals("['identifier']", accessIdentifier?.text)
-        assertEquals(HtlTypes.ARRAY_LIKE_ACCESS, accessIdentifier?.elementType)
-    }
+    assertEquals("['identifier']", accessIdentifier?.text)
+    assertEquals(HtlTypes.ARRAY_LIKE_ACCESS, accessIdentifier?.elementType)
+  }
 
-    fun testArrayLikeAccessDoubleQuoted() {
-        val accessIdentifier = HtlElementFactory.createArrayLikeAccessDoublequoted("identifier", project)
+  fun testArrayLikeAccessDoubleQuoted() {
+    val accessIdentifier = HtlElementFactory.createArrayLikeAccessDoublequoted("identifier", project)
 
-        assertEquals("[\"identifier\"]", accessIdentifier?.text)
-        assertEquals(HtlTypes.ARRAY_LIKE_ACCESS, accessIdentifier?.elementType)
-    }
+    assertEquals("[\"identifier\"]", accessIdentifier?.text)
+    assertEquals(HtlTypes.ARRAY_LIKE_ACCESS, accessIdentifier?.elementType)
+  }
 
-    fun testOption() {
-        val option = HtlElementFactory.createOption("name", project)
+  fun testOption() {
+    val option = HtlElementFactory.createOption("name", project)
 
-        assertEquals("name", option?.text)
-        assertTrue(HtlVariableName::class.java.isAssignableFrom(option?.javaClass))
-    }
+    assertEquals("name", option?.text)
+    assertTrue(HtlVariableName::class.java.isAssignableFrom(option?.javaClass))
+  }
 
 }
