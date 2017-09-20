@@ -1,0 +1,31 @@
+<?xml version='1.0'?>
+<list>
+    <option name="sightly.el.BOOLEAN">
+        <value>
+            <option name="FOREGROUND" value="20999d"/>
+            <option name="FONT_TYPE" value="2"/>
+        </value>
+    </option>
+    <option name="sightly.sel.STRING">
+        <value>
+            <option name="FOREGROUND" value="DD6718"/>
+        </value>
+    </option>
+    <option name="sightly.sel.INTEGER">
+        <value>
+            <option name="FOREGROUND" value="20999d"/>
+        </value>
+    </option>
+    <option name="htl.sel.TEMPLATE_ARGUMENT">
+        <value>
+            <option name="FOREGROUND" value="467CDA"/>
+            <option name="FONT_TYPE" value="3"/>
+        </value>
+    </option>
+    <option name="htl.sel.STANDARD_OPTION">
+        <value>
+            <option name="FOREGROUND" value="000000"/>
+            <option name="FONT_TYPE" value="3"/>
+        </value>
+    </option>
+</list>

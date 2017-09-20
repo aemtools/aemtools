@@ -16,7 +16,8 @@ object HtlColors {
     val BRACKET = r("htl.sel.BRACKET", dc.BRACKETS)
     val OPERATOR = r("htl.sel.OPERATOR", dc.OPERATION_SIGN)
     val IDENTIFIER = r("htl.sel.IDENTIFIER", dc.IDENTIFIER)
-    val OPTION = r("htl.sel.OPTION", dc.PARAMETER)
+    val TEMPLATE_ARGUMENT = r("htl.sel.TEMPLATE_ARGUMENT", dc.PARAMETER)
+    val STANDARD_OPTION = r("htl.sel.STANDARD_OPTION", dc.PARAMETER)
     val NULL = r("htl.sel.NULL", dc.KEYWORD)
     val PARENTHESES = r("htl.sel.PARENTHESES", dc.PARENTHESES)
 }
