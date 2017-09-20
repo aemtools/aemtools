@@ -47,7 +47,7 @@ class HtlVariablesAnnotatorTest : LightCodeInsightFixtureTestCase() {
         myFixture.checkHighlighting(true, true, true)
     }
 
-    fun testGlobalVariable(variableName: String) {
+    private fun testGlobalVariable(variableName: String) {
         myFixture.configureByText("test.html", """
             $DOLLAR{<info descr="Context Object">$variableName</info>}
         """)
