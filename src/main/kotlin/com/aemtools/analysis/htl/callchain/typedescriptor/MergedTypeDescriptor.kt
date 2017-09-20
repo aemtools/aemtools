@@ -39,6 +39,13 @@ class MergedTypeDescriptor(vararg val types: TypeDescriptor) : TypeDescriptor {
             .map { it.asResolutionResult() }
             .reduce { acc, next -> acc + next }
 
+    /**
+     * Plus operator function for [MergedTypeDescriptor].
+     * Will append given type descriptor into the end of current type descriptor.
+     *
+     * @param other type descriptor to append to current
+     * @return merged type descriptor
+     */
     operator fun plus(other: TypeDescriptor): TypeDescriptor =
             MergedTypeDescriptor(*this.types, other)
 

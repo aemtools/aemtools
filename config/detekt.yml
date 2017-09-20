@@ -221,10 +221,10 @@ formatting:
 style:
   active: true
   ReturnCount:
-    active: true
+    active: false
     max: 2
   NewLineAtEndOfFile:
-    active: true
+    active: false
   OptionalAbstractKeyword:
     active: true
   OptionalWhenBraces:
@@ -303,6 +303,8 @@ style:
 comments:
   active: true
   CommentOverPrivateMethod:
+    active: false
+  CommentOverPrivateFunction:
     active: false
   CommentOverPrivateProperty:
     active: false

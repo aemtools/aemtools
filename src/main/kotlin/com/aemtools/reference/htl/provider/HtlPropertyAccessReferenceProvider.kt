@@ -1,8 +1,8 @@
 package com.aemtools.reference.htl.provider
 
-import com.aemtools.analysis.htl.callchain.elements.BaseCallChainSegment
 import com.aemtools.analysis.htl.callchain.elements.BaseChainElement
 import com.aemtools.analysis.htl.callchain.elements.CallChainElement
+import com.aemtools.analysis.htl.callchain.elements.segment.BaseCallChainSegment
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateParameterTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
 import com.aemtools.completion.htl.model.declaration.HtlListHelperDeclaration
@@ -29,7 +29,9 @@ import java.util.*
  * @author Dmytro Troynikov
  */
 object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
-    override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
+    override fun getReferencesByElement(
+            element: PsiElement,
+            context: ProcessingContext): Array<PsiReference> {
         val propertyAccess = element as? PropertyAccessMixin ?: return arrayOf()
 
         val chain = propertyAccess.accessChain() ?: return arrayOf()

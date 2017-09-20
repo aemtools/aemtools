@@ -1,6 +1,6 @@
 package com.aemtools.completion.htl.provider
 
-import com.aemtools.analysis.htl.callchain.elements.resolveSelectedItem
+import com.aemtools.analysis.htl.callchain.elements.segment.resolveSelectedItem
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.completion.util.findParentByType
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin

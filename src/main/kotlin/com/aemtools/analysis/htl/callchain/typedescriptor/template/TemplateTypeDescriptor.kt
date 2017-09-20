@@ -15,6 +15,12 @@ import com.intellij.psi.PsiElement
 class TemplateTypeDescriptor(
         val template: TemplateDefinition,
         val project: Project) : BaseTypeDescriptor() {
+
+    /**
+     * Getter for template parameters.
+     *
+     * @return template parameters
+     */
     fun parameters() = template.parameters
 
     override fun referencedElement(): PsiElement?

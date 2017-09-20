@@ -17,8 +17,12 @@ object EditConfigRepository {
                     .create()
     )
 
-    fun getAttributesData(): List<XmlTagDefinition> = attributesData
-
+    /**
+     * Get tag definition by name.
+     *
+     * @param name the name
+     * @return xml tag definition, may be empty
+     */
     fun getTagDefinitionByName(name: String): XmlTagDefinition =
             attributesData.find { it.name == name } ?: XmlTagDefinition.empty()
 

@@ -16,10 +16,6 @@ import com.intellij.psi.search.searches.ClassInheritorsSearch
  */
 interface IJavaSearchService {
 
-    companion object {
-        val USE_CLASSES = listOf(const.java.USE_INTERFACE, const.java.WCM_USE_CLASS, const.java.POJO_USE)
-    }
-
     /**
      * Search for [PsiClass] by qualified name with predefined "allScope".
      *

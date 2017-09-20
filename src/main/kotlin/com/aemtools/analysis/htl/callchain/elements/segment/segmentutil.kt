@@ -1,59 +1,19 @@
-package com.aemtools.analysis.htl.callchain.elements
+package com.aemtools.analysis.htl.callchain.elements.segment
 
-import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.elements.ArrayAccessIdentifierElement
+import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.IterableJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
-import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 import com.aemtools.completion.htl.model.ResolutionResult
-import com.aemtools.constant.const.IDEA_STRING_CARET_PLACEHOLDER
+import com.aemtools.constant.const
 
 /**
- * @Author Dmytro_Troynikov
+ * Resolve selected item in current [CallChainSegment].
+ *
+ * @receiver [CallChainSegment]
+ * @return resolution result
  */
-interface CallChainSegment {
-
-    /**
-     * [TypeDescriptor] for output type.
-     */
-    fun outputType(): TypeDescriptor
-
-    /**
-     * [TypeDescriptor] for input type.
-     */
-    fun inputType(): TypeDescriptor
-
-    /**
-     * List of [CallChainElement] items.
-     */
-    fun chainElements(): List<CallChainElement>
-
-    companion object {
-        private val EMPTY = EmptyCallChainSegment()
-        fun empty(): CallChainSegment = EMPTY
-    }
-}
-
-class EmptyCallChainSegment : CallChainSegment {
-    override fun outputType(): TypeDescriptor = TypeDescriptor.empty()
-
-    override fun inputType(): TypeDescriptor = TypeDescriptor.empty()
-
-    override fun chainElements(): List<CallChainElement> = listOf()
-}
-
-class BaseCallChainSegment(
-        private val input: TypeDescriptor,
-        private val output: TypeDescriptor,
-        val declaration: HtlVariableDeclaration?,
-        private val elements: List<CallChainElement>) : CallChainSegment {
-    override fun inputType(): TypeDescriptor = input
-
-    override fun outputType(): TypeDescriptor = output
-
-    override fun chainElements(): List<CallChainElement> = elements
-}
-
 fun CallChainSegment.resolveSelectedItem(): ResolutionResult {
     val chainElements = this.chainElements()
     if (chainElements.isEmpty()) {
@@ -86,8 +46,10 @@ fun CallChainSegment.resolveSelectedItem(): ResolutionResult {
 
 /**
  * Find selected element in current [CallChainSegment].
+ *
+ * @receiver [CallChainSegment]
  * @return the element
  */
 fun CallChainSegment.selectedElement(): CallChainElement? {
-    return chainElements().find { it.name.contains(IDEA_STRING_CARET_PLACEHOLDER) }
+    return chainElements().find { it.name.contains(const.IDEA_STRING_CARET_PLACEHOLDER) }
 }

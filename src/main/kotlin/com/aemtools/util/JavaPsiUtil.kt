@@ -3,7 +3,13 @@ package com.aemtools.util
 import com.aemtools.constant.const.java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.constant.const.java.SLING_FILTER_ANNOTATION
 import com.aemtools.constant.const.java.SLING_SERVLET_ANNOTATION
-import com.intellij.psi.*
+import com.intellij.psi.PsiAnnotation
+import com.intellij.psi.PsiClass
+import com.intellij.psi.PsiField
+import com.intellij.psi.PsiMember
+import com.intellij.psi.PsiMethod
+import com.intellij.psi.PsiModifier
+import com.intellij.psi.PsiType
 
 /**
  * @author Dmytro_Troynikov
@@ -33,6 +39,9 @@ fun PsiClass.isOSGiService(): Boolean {
  * Find all methods which may used from EL
  *
  * The suitable method should be public and should not contain any arguments.
+ *
+ * @receiver [PsiClass]
+ * @return list of psi methods suitable for usage in EL
  */
 fun PsiClass.elMethods(): List<PsiMethod> {
     val grouped: Map<PsiClass?, List<PsiMethod>> = this.allMethods.groupBy { it.containingClass }

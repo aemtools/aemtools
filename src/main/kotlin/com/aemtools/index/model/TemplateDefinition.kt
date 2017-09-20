@@ -1,6 +1,11 @@
 package com.aemtools.index.model
 
-import com.aemtools.completion.util.*
+import com.aemtools.completion.util.extractHtlHel
+import com.aemtools.completion.util.findChildrenByType
+import com.aemtools.completion.util.getHtmlFile
+import com.aemtools.completion.util.htlVariableName
+import com.aemtools.completion.util.normalizeToJcrRoot
+import com.aemtools.completion.util.toPsiFile
 import com.aemtools.lang.htl.psi.HtlPsiFile
 import com.aemtools.lang.htl.psi.HtlVariableName
 import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
@@ -10,11 +15,9 @@ import com.intellij.psi.xml.XmlAttribute
 import java.io.Serializable
 
 /**
+ * Container of template definition data. (`data-sly-template.name="${@ param1, param2}"
+ *
  * @author Dmytro Troynikov
- */
-
-/**
- *  Container of template definition data. (`data-sly-template.name="${@ param1, param2}"
  */
 data class TemplateDefinition(
         /**

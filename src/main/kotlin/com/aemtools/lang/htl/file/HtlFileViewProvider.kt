@@ -1,7 +1,8 @@
 package com.aemtools.lang.htl.file
 
 import com.aemtools.lang.htl.HtlLanguage.getDefaultTemplateLang
-import com.aemtools.lang.htl.psi.HtlTypes.*
+import com.aemtools.lang.htl.psi.HtlTypes.HEL
+import com.aemtools.lang.htl.psi.HtlTypes.OUTER_LANGUAGE
 import com.intellij.lang.Language
 import com.intellij.lang.LanguageParserDefinitions
 import com.intellij.lang.ParserDefinition
@@ -85,6 +86,14 @@ class HtlFileViewProvider @JvmOverloads constructor(manager: PsiManager,
 
 }
 
+/**
+ * Get template data language.
+ *
+ * @param manager the psi manager
+ * @param virtualFile the virtual file
+ *
+ * @return the template language
+ */
 fun getTemplateDataLanguage(manager: PsiManager, virtualFile: VirtualFile): Language {
 
     val mappings = TemplateDataLanguageMappings.getInstance(manager.project)

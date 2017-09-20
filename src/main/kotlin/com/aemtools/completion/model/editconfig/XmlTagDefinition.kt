@@ -21,6 +21,11 @@ data class XmlTagDefinition(
         val attributes: List<XmlAttributeDefinition>
 ) {
     companion object {
+        /**
+         * Create empty [XmlTagDefinition] object.
+         *
+         * @return instance of empty xml tag definition object
+         */
         fun empty() = XmlTagDefinition("", listOf(), listOf())
     }
 }

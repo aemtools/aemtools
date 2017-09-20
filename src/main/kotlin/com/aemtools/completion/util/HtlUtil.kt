@@ -117,7 +117,9 @@ fun HtlHtlEl.isInsideOF(attributeName: String): Boolean {
 
 /**
  * Check if current [PsiElement] element resides within attribute with given name.
+ *
  * @param attributeName the name of attribute
+ * @receiver [PsiElement]
  * @return __true__ if current element si the value of attribute with given name
  */
 fun PsiElement.isInsideOf(attributeName: String): Boolean {

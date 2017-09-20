@@ -35,7 +35,6 @@ object OpenApiUtil {
      * Checks if given element is withing selection. Should be invoked from **Dispatch Thread**.
      */
     fun isCurrentElementSelected(element: PsiElement): Boolean {
-
         val editor: Editor = FileEditorManager
                 .getInstance(element.project)
                 .selectedTextEditor
@@ -49,13 +48,22 @@ object OpenApiUtil {
         return element.text.contains(selectedText as CharSequence)
     }
 
+    /**
+     * Check if current thread is dispatch thread.
+     *
+     * @see [ApplicationManager]
+     * @see [com.intellij.openapi.application.Application.isDispatchThread]
+     * @return *true* if current thread is dispatch thread, *false* otherwise
+     */
     fun isCurrentThreadIsDispatch(): Boolean
             = ApplicationManager.getApplication().isDispatchThread
 
     /**
      * Check if current IDEA process is executed within a test.
      *
-     * @return *true* is current app is running in test
+     * @see [ApplicationManager]
+     * @see [com.intellij.openapi.application.Application.isUnitTestMode]
+     * @return *true* is current app is running in test, *false* otherwise
      */
     fun iAmTest(): Boolean = ApplicationManager.getApplication().isUnitTestMode
 

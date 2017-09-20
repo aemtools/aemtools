@@ -1,6 +1,10 @@
 package com.aemtools.util
 
-import java.io.*
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
+import java.io.Serializable
 
 /**
  * @author Dmytro_Troynikov
@@ -46,14 +50,14 @@ object ObjectSerializer {
      */
     @Suppress("UNCHECKED_CAST")
     fun <T : Serializable> deserialize(string: String): T? =
-        deserialize(string.toByteArray(charset("ISO-8859-1")))
+            deserialize(string.toByteArray(charset("ISO-8859-1")))
 
     /**
      * Deserialize given [ByteArray] using [ObjectInputStream].
      * @param byteArray the array to deserialize
      * @return deserialized object, _null_ in case of error.
      */
-    fun <T : Serializable> deserialize(byteArray: ByteArray) : T? {
+    fun <T : Serializable> deserialize(byteArray: ByteArray): T? {
         if (byteArray.isEmpty()) {
             return null
         }

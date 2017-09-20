@@ -95,6 +95,13 @@ open class HtlVariableDeclaration internal constructor(
     }
 
     companion object {
+
+        /**
+         * Builder method for [HtlVariableDeclaration].
+         *
+         * @param attribute the declaration attribute
+         * @return list of htl variable declaration objects spawned by given attribute
+         */
         fun create(attribute: XmlAttribute): List<HtlVariableDeclaration> {
             val htlAttributeName = attribute.htlAttributeName()
             val htlVariableName = attribute.htlVariableName()

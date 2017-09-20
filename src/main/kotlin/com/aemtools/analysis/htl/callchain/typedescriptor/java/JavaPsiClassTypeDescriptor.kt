@@ -114,6 +114,15 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
             ResolutionResult(psiClass, myVariants())
 
     companion object {
+        /**
+         * Build method for [JavaPsiClassTypeDescriptor].
+         *
+         * @param psiClass the psi class
+         * @param psiMember the psi member (_null_ by default)
+         * @param psiType the psi type (_null_ by default)
+         *
+         * @return new java psi class type descriptor
+         */
         fun create(psiClass: PsiClass,
                    psiMember: PsiMember? = null,
                    psiType: PsiType? = null): JavaPsiClassTypeDescriptor {

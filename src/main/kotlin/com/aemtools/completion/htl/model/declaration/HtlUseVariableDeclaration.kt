@@ -25,17 +25,32 @@ class HtlUseVariableDeclaration(
         type
 ) {
 
+    /**
+     * Get use class from current use variable declaration.
+     *
+     * @return psi class instance or _null_ if no psi class available
+     */
     fun useClass(): PsiClass? {
         val useClassName = xmlAttribute.resolveUseClass()
                 ?: return null
         return JavaSearch.findClass(useClassName, xmlAttribute.project)
     }
 
+    /**
+     * Get list of template definitions.
+     *
+     * @return list of template definitions, _empty_ list if no definitions available
+     */
     fun template(): List<TemplateDefinition> {
         val name = xmlAttribute.value ?: return listOf()
         return HtlTemplateSearch.resolveUseTemplate(name, xmlAttribute.containingFile)
     }
 
+    /**
+     * Get type descriptor spawned by underlying `data-sly-use` attribute.
+     *
+     * @return type descriptor
+     */
     fun typeDescriptor(): TypeDescriptor {
         val useClass = useClass()
         if (useClass != null) {

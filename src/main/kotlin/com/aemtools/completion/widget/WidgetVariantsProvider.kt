@@ -65,10 +65,10 @@ class WidgetVariantsProvider {
                 widgetDefinition.getFieldValue(it.lookupString) == null
             }
             const.xml.XML_ATTRIBUTE_VALUE -> {
-                when (PsiXmlUtil.nameOfAttribute(currentElement)) {
-                    const.XTYPE -> return variantsForXTypeValue(currentElement)
-                    const.JCR_PRIMARY_TYPE -> return variantsForJcrPrimaryType()
-                    else -> return variantsForValue(parameters, widgetDefinition as PsiWidgetDefinition)
+                return when (PsiXmlUtil.nameOfAttribute(currentElement)) {
+                    const.XTYPE -> variantsForXTypeValue(currentElement)
+                    const.JCR_PRIMARY_TYPE -> variantsForJcrPrimaryType()
+                    else -> variantsForValue(parameters, widgetDefinition as PsiWidgetDefinition)
                 }
             }
         }

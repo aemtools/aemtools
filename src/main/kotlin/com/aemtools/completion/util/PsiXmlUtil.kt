@@ -18,7 +18,6 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
-import java.util.*
 
 /**
  * Searches for children by type.
@@ -100,7 +99,7 @@ fun XmlTag.isSlyTag(): Boolean = this.name == SLY_TAG
  * @param matcher matcher function
  * @return *true* if current tag has matching attribute
  */
-fun XmlTag.hasAttribute(matcher: (attribute: XmlAttribute) -> Boolean) : Boolean =
+fun XmlTag.hasAttribute(matcher: (attribute: XmlAttribute) -> Boolean): Boolean =
         attributes.any(matcher)
 
 /**

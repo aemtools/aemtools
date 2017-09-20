@@ -4,7 +4,12 @@ import com.aemtools.completion.model.editconfig.XmlAttributeDefinition
 import com.aemtools.completion.util.findParentByType
 import com.aemtools.constant.const
 import com.aemtools.service.ServiceFacade
-import com.intellij.codeInsight.completion.*
+import com.intellij.codeInsight.completion.CompletionContributor
+import com.intellij.codeInsight.completion.CompletionParameters
+import com.intellij.codeInsight.completion.CompletionProvider
+import com.intellij.codeInsight.completion.CompletionResultSet
+import com.intellij.codeInsight.completion.CompletionType
+import com.intellij.codeInsight.completion.XmlAttributeInsertHandler
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.patterns.PlatformPatterns
@@ -42,8 +47,7 @@ private class RepPolicyCompletionProvider : CompletionProvider<CompletionParamet
         result.addAllElements(variantsGenerator(parameters, currentElement))
     }
 
-    private val variantsForName: (CompletionParameters, XmlToken) -> List<LookupElement> = {
-        _, token ->
+    private val variantsForName: (CompletionParameters, XmlToken) -> List<LookupElement> = { _, token ->
         val tag = token.findParentByType(XmlTag::class.java)
 
         val tagDefinition = repPolicyRepository.getTagDefinitionByName((tag as XmlTagImpl).name)
@@ -57,8 +61,7 @@ private class RepPolicyCompletionProvider : CompletionProvider<CompletionParamet
         }
     }
 
-    private val variantsForValue: (CompletionParameters, XmlToken) -> List<LookupElement> = {
-        _, token ->
+    private val variantsForValue: (CompletionParameters, XmlToken) -> List<LookupElement> = { _, token ->
         val tag = token.findParentByType(XmlTag::class.java)
         val tagDefinition = repPolicyRepository.getTagDefinitionByName((tag as XmlTagImpl).name)
         val attributeName = (token.findParentByType(XmlAttribute::class.java) as XmlAttribute).name
@@ -67,8 +70,7 @@ private class RepPolicyCompletionProvider : CompletionProvider<CompletionParamet
         attributeDefinition?.values.orEmpty().map { LookupElementBuilder.create(it) }
     }
 
-    private val variantsForTagName: (CompletionParameters, XmlToken) -> List<LookupElement> = {
-        _, token ->
+    private val variantsForTagName: (CompletionParameters, XmlToken) -> List<LookupElement> = { _, token ->
         val parentTag = token.findParentByType(XmlTag::class.java)
                 ?.findParentByType(XmlTag::class.java)
 
@@ -91,7 +93,7 @@ private class RepPolicyCompletionProvider : CompletionProvider<CompletionParamet
         return currentPositionType
     }
 
-    private fun accept(parameters: CompletionParameters) : Boolean {
+    private fun accept(parameters: CompletionParameters): Boolean {
         return const.REP_POLICY == parameters.originalFile.name
     }
 

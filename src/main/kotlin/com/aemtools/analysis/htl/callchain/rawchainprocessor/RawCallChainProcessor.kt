@@ -2,6 +2,8 @@ package com.aemtools.analysis.htl.callchain.rawchainprocessor
 
 import com.aemtools.analysis.htl.callchain.elements.*
 import com.aemtools.analysis.htl.callchain.elements.helper.chainSegment
+import com.aemtools.analysis.htl.callchain.elements.segment.BaseCallChainSegment
+import com.aemtools.analysis.htl.callchain.elements.segment.CallChainSegment
 import com.aemtools.analysis.htl.callchain.typedescriptor.MergedTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.EmptyTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
@@ -28,6 +30,13 @@ import java.util.*
  * @author Dmytro_Troynikov
  */
 object RawCallChainProcessor {
+
+    /**
+     * Convert raw call chain into [CallChain].
+     *
+     * @param rawChain the raw chain
+     * @return call chain instance
+     */
     fun processChain(rawChain: LinkedList<RawChainUnit>): CallChain {
         if (rawChain.isEmpty()) {
             return CallChain.empty()

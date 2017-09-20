@@ -1,5 +1,6 @@
 package com.aemtools.analysis.htl.callchain.elements
 
+import com.aemtools.analysis.htl.callchain.elements.segment.CallChainSegment
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.intellij.psi.PsiElement
 
@@ -34,6 +35,12 @@ class CallChain(val callChainSegments: List<CallChainSegment>) {
 
     companion object {
         private val EMPTY_CHAIN = CallChain(listOf())
+
+        /**
+         * Create empty call chain instance.
+         *
+         * @return empty call chain instance
+         */
         fun empty() = EMPTY_CHAIN
     }
 }
