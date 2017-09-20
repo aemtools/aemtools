@@ -28,7 +28,11 @@ class HtlDeclarationAttributeRenameProcessor : RenamePsiElementProcessor() {
         && element.isHtlDeclarationAttribute()
   }
 
-  override fun renameElement(element: PsiElement?, newName: String?, usages: Array<out UsageInfo>?, listener: RefactoringElementListener?) {
+  override fun renameElement(
+      element: PsiElement?,
+      newName: String?,
+      usages: Array<out UsageInfo>?,
+      listener: RefactoringElementListener?) {
     if (element == null || newName == null) {
       return
     }
@@ -83,6 +87,9 @@ class HtlDeclarationAttributeRenameProcessor : RenamePsiElementProcessor() {
 
 }
 
+/**
+ * Htl attribute rename dialog.
+ */
 class HtlAttributeRenameDialog(project: Project,
                                element: PsiElement,
                                context: PsiElement?,

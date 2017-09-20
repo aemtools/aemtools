@@ -29,6 +29,9 @@ class HtmlAttributeUsagesProvider : FindUsagesHandlerFactory() {
     return element is XmlAttribute && element.isHtlDeclarationAttribute()
   }
 
+  /**
+   * Htl attributes find usages handler.
+   */
   class HtlAttributesFindUsagesHandler(val xmlAttribute: XmlAttribute) : FindUsagesHandler(xmlAttribute) {
 
     override fun findReferencesToHighlight(

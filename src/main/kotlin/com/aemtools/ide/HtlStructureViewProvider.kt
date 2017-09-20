@@ -45,6 +45,9 @@ class HtlStructureViewProvider : PsiStructureViewFactory {
 
 }
 
+/**
+ * Htl structure view element.
+ */
 class HtlStructureViewElement(val file: PsiFile) : PsiTreeElementBase<PsiElement>(file) {
   override fun getPresentableText(): String? {
     return "HtlStructure: ${file.name}"

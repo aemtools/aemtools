@@ -28,6 +28,8 @@ import org.apache.commons.lang.StringUtils
  */
 object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
 
+  private const val ONE_HUNDRED: Double = 100.0
+
   override fun addCompletions(parameters: CompletionParameters,
                               context: ProcessingContext?,
                               result: CompletionResultSet) {
@@ -83,8 +85,8 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
       currentFileName: String,
       type: String): List<LookupElement> {
     return classes.flatMap {
-      val qualifiedName = it.qualifiedName as? String
-      val name = it.name as? String
+      val qualifiedName = it.qualifiedName
+      val name = it.name
       if (qualifiedName == null || name == null) {
         return@flatMap listOf<LookupElement>()
       }
@@ -95,7 +97,7 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
           .withIcon(it.getIcon(0))
           .withTypeText(type)
           .withTailText(
-              "(${qualifiedName.substring(0, qualifiedName.lastIndexOf("."))})", true)
+              "(${qualifiedName.substringAfterLast(".")})", true)
           .withPriority(classCompletionPriority(currentFileName, name))
 
       return@flatMap listOf(result)
@@ -103,7 +105,7 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
   }
 
   private fun classCompletionPriority(fileName: String, className: String): Double =
-      base(fileName, className) - StringUtils.getLevenshteinDistance(fileName, className) / 100.0
+      base(fileName, className) - StringUtils.getLevenshteinDistance(fileName, className) / ONE_HUNDRED
 
   private fun base(name1: String, name2: String): Double = if (closeName(name1, name2)) {
     CLOSE_CLASS

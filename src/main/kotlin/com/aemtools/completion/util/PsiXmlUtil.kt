@@ -40,32 +40,26 @@ fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T? {
   return PsiTreeUtil.findFirstParent(this, Conditions.instanceOf(type)) as? T?
 }
 
+private fun <T : PsiElement> PsiElement?.findParentsByType(type: Class<T>): List<T> {
+  var element: T? = null
+  return generateSequence {
+    val next = (this ?: element).findParentByType(type)
+    element = next
+    element
+  }
+      .toList()
+}
+
 /**
  * Search for parent which is of given type and satisfies given predicate.
+ *
  * @param type the type of parent
  * @param predicate the predicate
  * @receiver [PsiElement]
  * @return the element
  */
 fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>, predicate: (T) -> Boolean): T? =
-    if (this != null) {
-      val elements = kotlin.run {
-        val result = ArrayList<T>()
-        var currentElement = this
-
-        while (currentElement != null) {
-          if (type.isAssignableFrom(currentElement.javaClass)) {
-            result.add(currentElement as T)
-          }
-          currentElement = currentElement.parent
-        }
-        result
-      }
-
-      elements.find { predicate.invoke(it) }
-    } else {
-      null
-    }
+    this.findParentsByType(type).firstOrNull { predicate.invoke(it)}
 
 /**
  * Check if current [PsiElement] has parent of specified class.

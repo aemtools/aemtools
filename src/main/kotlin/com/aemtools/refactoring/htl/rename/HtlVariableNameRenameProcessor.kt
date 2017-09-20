@@ -16,7 +16,11 @@ class HtlVariableNameRenameProcessor : RenamePsiElementProcessor() {
     return element is HtlVariableName
   }
 
-  override fun renameElement(element: PsiElement?, newName: String?, usages: Array<out UsageInfo>?, listener: RefactoringElementListener?) {
+  override fun renameElement(
+      element: PsiElement?,
+      newName: String?,
+      usages: Array<out UsageInfo>?,
+      listener: RefactoringElementListener?) {
     if (element == null || newName == null) {
       return
     }

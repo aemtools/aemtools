@@ -22,11 +22,12 @@ import java.util.concurrent.ConcurrentMap
 /**
  * @author Dmytro Troynikov
  */
-class HtlFileViewProvider @JvmOverloads constructor(manager: PsiManager,
-                                                    virtualFile: VirtualFile,
-                                                    physical: Boolean,
-                                                    val myBaseLanguage: Language,
-                                                    val myTemplateLanguage: Language = getTemplateDataLanguage(manager, virtualFile))
+class HtlFileViewProvider @JvmOverloads constructor(
+    manager: PsiManager,
+    virtualFile: VirtualFile,
+    physical: Boolean,
+    val myBaseLanguage: Language,
+    val myTemplateLanguage: Language = getTemplateDataLanguage(manager, virtualFile))
   : MultiplePsiFilesPerDocumentFileViewProvider(manager, virtualFile, physical),
     ConfigurableTemplateLanguageFileViewProvider {
 

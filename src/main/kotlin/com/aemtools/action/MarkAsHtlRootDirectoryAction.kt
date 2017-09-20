@@ -9,6 +9,8 @@ import com.intellij.openapi.actionSystem.ActionPlaces
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.project.DumbAwareAction
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.util.FileContentUtil.reparseOpenedFiles
 
 /**
@@ -21,25 +23,31 @@ import com.intellij.util.FileContentUtil.reparseOpenedFiles
  */
 class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
 
-  override fun update(e: AnActionEvent) {
-    val file = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
+  override fun update(event: AnActionEvent) {
+    val file = event.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
         ?.firstOrNull()
-    val project = e.project
+    val project = event.project
     if (file == null
         || project == null
-        || !file.isDirectory
-        && e.place != ActionPlaces.PROJECT_VIEW_POPUP
-        || !HtlDetectionService.mayBeMarked(file.path, project)) {
-      e.presentation.isEnabledAndVisible = false
+        || shouldDisable(file, project, event)) {
+      event.presentation.isEnabledAndVisible = false
       return
     }
 
     if (HtlDetectionService.isHtlRootDirectory(file.path, project)) {
-      e.presentation.text = "Unmark as HTL Root"
+      event.presentation.text = "Unmark as HTL Root"
       return
     }
 
-    e.presentation.icon = HtlIcons.HTL_ROOT
+    event.presentation.icon = HtlIcons.HTL_ROOT
+  }
+
+  private fun shouldDisable(file: VirtualFile,
+                            project: Project,
+                            event: AnActionEvent): Boolean {
+    return (!file.isDirectory
+        && event.place != ActionPlaces.PROJECT_VIEW_POPUP
+        || !HtlDetectionService.mayBeMarked(file.path, project))
   }
 
   override fun actionPerformed(e: AnActionEvent) {

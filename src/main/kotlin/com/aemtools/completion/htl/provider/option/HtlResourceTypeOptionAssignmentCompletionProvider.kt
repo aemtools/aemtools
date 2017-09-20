@@ -16,6 +16,10 @@ import org.apache.commons.lang.StringUtils
  */
 object HtlResourceTypeOptionAssignmentCompletionProvider
   : CompletionProvider<CompletionParameters>() {
+
+  private const val BASE_LINE: Double = 1.0
+  private const val ONE_HUNDRED: Double = 100.0
+
   override fun addCompletions(
       parameters: CompletionParameters,
       context: ProcessingContext?,
@@ -42,8 +46,8 @@ object HtlResourceTypeOptionAssignmentCompletionProvider
   }
 
   private fun calcPriority(lookupElement: LookupElement, myDirectory: String): Double {
-    return 1 - StringUtils.getLevenshteinDistance(lookupElement.lookupString, myDirectory)
-        .toDouble() / 100
+    return BASE_LINE - StringUtils.getLevenshteinDistance(lookupElement.lookupString, myDirectory)
+        .toDouble() / ONE_HUNDRED
   }
 
 }

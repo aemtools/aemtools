@@ -29,6 +29,15 @@ import java.util.Arrays
  * @author Dmytro Troynikov
  */
 object RenameUtil {
+
+  /**
+   * Run rename process.
+   *
+   * @param editor element to rename
+   * @param project the project
+   * @param nameSuggestionContext the context
+   * @param element the editor
+   */
   fun invoke(element: PsiElement,
              project: Project,
              nameSuggestionContext: PsiElement,
@@ -62,6 +71,15 @@ object RenameUtil {
     rename(element, project, nameSuggestionContext, editor)
   }
 
+  /**
+   * Perform rename action.
+   *
+   * @param element element to rename
+   * @param project the project
+   * @param nameSuggestionContext the rename context
+   * @param editor the editor
+   * @param defaultName default name
+   */
   fun rename(element: PsiElement,
              project: Project,
              nameSuggestionContext: PsiElement,
@@ -100,9 +118,9 @@ object RenameUtil {
     }
   }
 
-  fun canRename(project: Project,
-                editor: Editor?,
-                element: PsiElement): Boolean {
+  private fun canRename(project: Project,
+                        editor: Editor?,
+                        element: PsiElement): Boolean {
     val message = renameabilityStatus(project, element)
     if (message != null && StringUtil.isNotEmpty(message)) {
       showErrorMessage(project, editor, message)
@@ -111,7 +129,7 @@ object RenameUtil {
     return true
   }
 
-  fun renameabilityStatus(project: Project, element: PsiElement?): String? {
+  private fun renameabilityStatus(project: Project, element: PsiElement?): String? {
     if (element == null) {
       return ""
     }
@@ -156,6 +174,12 @@ object RenameUtil {
     return null
   }
 
+  /**
+   * Extract psi element from data context.
+   *
+   * @param dataContext the data context
+   * @return psi element, *null* if no element found
+   */
   fun getElement(dataContext: DataContext?): PsiElement? {
     val elements = BaseRefactoringAction.getPsiElementArray(dataContext)
     return elements.firstOrNull()

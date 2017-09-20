@@ -18,18 +18,18 @@ import java.util.LinkedList
  */
 abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
 
-  fun accessChain(): CallChain? = RawCallChainProcessor.processChain(callChain())
+  /**
+   * Get call chain from current property access.
+   *
+   * @return call chain, *null* if no call chain available
+   */
+  fun callChain(): CallChain? = RawCallChainProcessor.processChain(rawCallChain())
 
   override fun getReferences(): Array<PsiReference> {
     return ReferenceProvidersRegistry.getReferencesFromProviders(this)
   }
 
-  /**
-   * Returns call chain of current element.
-   *
-   * @return list of raw chain units
-   */
-  fun callChain(): LinkedList<RawChainUnit> {
+  private fun rawCallChain(): LinkedList<RawChainUnit> {
     var result = LinkedList<RawChainUnit>()
     val myChain = LinkedList(listOf(*this.children))
 
@@ -46,7 +46,7 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
 
       // if property access mixin is available recursively obtain it's call chain
       if (propertyAccessMixin != null) {
-        result = propertyAccessMixin.callChain()
+        result = propertyAccessMixin.rawCallChain()
       }
 
       if (propertyAccessMixin == null) {

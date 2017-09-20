@@ -5,4 +5,4 @@ package com.aemtools.completion.html.inserthandler
  *
  * Adds `.<caret>=""` upon trigger.
  */
-class HtlIdentifierInsertHandler : HtlTextInsertHandler(".=\"\"", 1)
+class HtlIdentifierInsertHandler : HtlTextInsertHandler(".=\"\"", offset = 1)

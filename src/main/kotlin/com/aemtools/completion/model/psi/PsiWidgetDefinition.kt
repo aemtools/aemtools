@@ -47,8 +47,9 @@ data class PsiWidgetDefinition constructor(
     private fun tryExtractSelectedAttribute(element: XmlElement): SelectedAttribute? {
       val selectedXmlAttribute = element.findParentByType(XmlAttribute::class.java) ?: return null
 
-      val attrName = SelectedString(selectedXmlAttribute.name) as SelectedString
-      val attrValue = SelectedString(selectedXmlAttribute.value)
+      val attrName = SelectedString.create(selectedXmlAttribute.name)
+          ?: return null
+      val attrValue = SelectedString.create(selectedXmlAttribute.value)
 
       return SelectedAttribute(
           attrName.value,

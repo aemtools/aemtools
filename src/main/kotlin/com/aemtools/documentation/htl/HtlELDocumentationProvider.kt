@@ -54,7 +54,7 @@ open class HtlELDocumentationProvider : AbstractDocumentationProvider() {
             ?: return super.generateDoc(element, originalElement)
         val variableNameMixin = originalElement.findParentByType(VariableNameMixin::class.java)
             ?: return super.generateDoc(element, originalElement)
-        val currentChainElement = propertyAccessMixin.accessChain()?.findChainElement(variableNameMixin)
+        val currentChainElement = propertyAccessMixin.callChain()?.findChainElement(variableNameMixin)
             ?: return super.generateDoc(element, originalElement)
 
         currentChainElement.type.documentation()

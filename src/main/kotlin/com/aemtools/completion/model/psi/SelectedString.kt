@@ -14,7 +14,13 @@ data class SelectedString constructor(
 
   companion object {
 
-    operator fun invoke(value: String?): SelectedString? {
+    /**
+     * Builder method for [SelectedString].
+     *
+     * @param value incoming string
+     * @return selected string instance, *null* for null input
+     */
+    fun create(value: String?): SelectedString? {
       if (value == null) {
         return null
       }

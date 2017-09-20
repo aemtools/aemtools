@@ -14,20 +14,15 @@ import com.intellij.psi.xml.XmlToken
 /**
  * @author Dmytro_Troynikov.
  */
-class WidgetVariantsProvider {
+object WidgetVariantsProvider {
 
-  companion object {
-    val DEFAULT_ATTRIBUTES = listOf("jcr:primaryType", const.XTYPE)
-    val JCR_PRIMARY_TYPE_VALUES = listOf("nt:unstructured",
-        "cq:Widget",
-        "cq:WidgetCollection",
-        "cq:Dialog",
-        "cq:TabPanel",
-        "cq:Panel")
-
-    private val instance = WidgetVariantsProvider()
-    fun INSTANCE(): WidgetVariantsProvider = instance
-  }
+  val DEFAULT_ATTRIBUTES = listOf("jcr:primaryType", const.XTYPE)
+  val JCR_PRIMARY_TYPE_VALUES = listOf("nt:unstructured",
+      "cq:Widget",
+      "cq:WidgetCollection",
+      "cq:Dialog",
+      "cq:TabPanel",
+      "cq:Panel")
 
   /**
    * Generate variants for given completion parameters and widget definition.

@@ -7,46 +7,35 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 
 /**
- * @author Dmytro_Troynikov
+ * Segment data holder.
+ *
+ * @property inputType
+ *              input type descriptor.
+ * @property outputType
+ *              output type descriptor.
+ * @property declarationType
+ *              declaration type.
+ * @property chain
+ *              call chain element list.
  */
-class ChainSegmentBuilder() {
-  constructor(init: SegmentDataHolder.() -> Unit = {}) : this() {
-    init(dataHolder)
-  }
-
-  private val dataHolder = SegmentDataHolder()
-
+class SegmentDataHolder(var inputType: TypeDescriptor = TypeDescriptor.empty(),
+                        var outputType: TypeDescriptor = TypeDescriptor.empty(),
+                        var declarationType: HtlVariableDeclaration? = null,
+                        var chain: List<CallChainElement> = listOf()) {
   /**
-   * Build [CallChainSegment] from underlying [SegmentDataHolder].
+   * Build call chain segment.
    *
    * @return call chain segment instance
    */
-  fun build(): CallChainSegment {
-    return BaseCallChainSegment(
-        dataHolder.inputType,
-        dataHolder.outputType,
-        dataHolder.declarationType,
-        dataHolder.chain
-    )
-  }
+  fun build() = BaseCallChainSegment(
+      inputType,
+      outputType,
+      declarationType,
+      chain
+  )
 
-  /**
-   * Segment data holder.
-   *
-   * @property inputType
-   *              input type descriptor.
-   * @property outputType
-   *              output type descriptor.
-   * @property declarationType
-   *              declaration type.
-   * @property chain
-   *              call chain element list.
-   */
-  class SegmentDataHolder(var inputType: TypeDescriptor = TypeDescriptor.empty(),
-                          var outputType: TypeDescriptor = TypeDescriptor.empty(),
-                          var declarationType: HtlVariableDeclaration? = null,
-                          var chain: List<CallChainElement> = listOf())
 }
+
 
 /**
  * Call chain segment builder entry method.
@@ -55,6 +44,10 @@ class ChainSegmentBuilder() {
  *          initialization method
  * @return call chain segment instance
  */
-fun chainSegment(init: ChainSegmentBuilder.SegmentDataHolder.() -> Unit): CallChainSegment {
-  return ChainSegmentBuilder(init).build()
+fun chainSegment(init: SegmentDataHolder.() -> Unit): CallChainSegment {
+  val dataHolder = SegmentDataHolder()
+
+  init.invoke(dataHolder)
+
+  return dataHolder.build()
 }

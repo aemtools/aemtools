@@ -25,7 +25,7 @@ object HtlDataSlyCallOptionCompletionProvider : CompletionProvider<CompletionPar
 
     val outputType = hel
         .getMainPropertyAccess()
-        ?.accessChain()
+        ?.callChain()
         ?.getLastOutputType()
         as? TemplateTypeDescriptor
         ?: return

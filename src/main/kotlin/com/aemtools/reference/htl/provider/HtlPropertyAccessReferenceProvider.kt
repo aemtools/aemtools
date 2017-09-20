@@ -34,7 +34,7 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
       context: ProcessingContext): Array<PsiReference> {
     val propertyAccess = element as? PropertyAccessMixin ?: return arrayOf()
 
-    val chain = propertyAccess.accessChain() ?: return arrayOf()
+    val chain = propertyAccess.callChain() ?: return arrayOf()
 
     val chainSegment = chain.callChainSegments.lastOrNull() as? BaseCallChainSegment ?: return arrayOf()
 

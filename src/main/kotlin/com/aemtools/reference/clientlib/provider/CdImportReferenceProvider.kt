@@ -38,7 +38,7 @@ object CdImportReferenceProvider : PsiReferenceProvider() {
    */
   fun PsiDirectory.myRelativeFile(path: String): PsiFile? {
     val normalizedPath = if (path.startsWith("./")) {
-      path.substring(2)
+      path.substringAfter("./")
     } else {
       path
     }

@@ -30,7 +30,7 @@ object DataSlyCallPropertiesReferenceProvider : PsiReferenceProvider() {
 
     val outputType = hel
         .getMainPropertyAccess()
-        ?.accessChain()
+        ?.callChain()
         ?.getLastOutputType()
         as? TemplateTypeDescriptor
         ?: return arrayOf()

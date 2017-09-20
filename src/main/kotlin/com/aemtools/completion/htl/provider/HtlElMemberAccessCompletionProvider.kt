@@ -38,7 +38,7 @@ object HtlElMemberAccessCompletionProvider : CompletionProvider<CompletionParame
     val propertyAccessElement = element.findParentByType(PropertyAccessMixin::class.java)
         ?: return ResolutionResult()
 
-    val chain = propertyAccessElement.accessChain()
+    val chain = propertyAccessElement.callChain()
         ?: return ResolutionResult()
     val lastSegment = chain.callChainSegments.lastOrNull()
         ?: return ResolutionResult()

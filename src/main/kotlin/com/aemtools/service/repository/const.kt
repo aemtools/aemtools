@@ -7,6 +7,9 @@ object const {
 
   private val DOCUMENTATION_DIR = "documentation"
 
+  /**
+   * File names.
+   */
   object file {
 
     val WIDGET_DOCUMENTATION = "$DOCUMENTATION_DIR/documentation.json"

@@ -34,6 +34,11 @@ abstract class VariableNameMixin(node: ASTNode)
     return this
   }
 
+  /**
+   * Get variable name.
+   *
+   * @return variable name
+   */
   open fun variableName(): String = text
 
   override fun getPresentation(): ItemPresentation? {

@@ -42,8 +42,11 @@ object const {
     val CQ_ICON: String = "cq:icon"
   }
 
+  /**
+   * Htl constants.
+   */
   object htl {
-    val HTL_PREFIX = "data-sly-"
+    private val HTL_PREFIX = "data-sly-"
     val DATA_SLY_USE = "${HTL_PREFIX}use"
     val DATA_SLY_TEST = "${HTL_PREFIX}test"
     val DATA_SLY_REPEAT = "${HTL_PREFIX}repeat"
@@ -88,6 +91,9 @@ object const {
         DATA_SLY_REPEAT
     )
 
+    /**
+     * Options constants.
+     */
     object options {
       val CONTEXT = "context"
       val RESOURCE_TYPE = "resourceType"
@@ -95,6 +101,9 @@ object const {
     }
   }
 
+  /**
+   * Java related constants.
+   */
   object java {
     val ITERABLE = "java.lang.Iterable"
     val ITERATOR = "java.util.Iterator"
@@ -113,6 +122,9 @@ object const {
     val SLING_FILTER_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingFilter"
   }
 
+  /**
+   * Xml related constants.
+   */
   object xml {
     val XML_ATTRIBUTE_NAME: String = "XML_NAME"
     val XML_ATTRIBUTE_VALUE: String = "XML_ATTRIBUTE_VALUE_TOKEN"
