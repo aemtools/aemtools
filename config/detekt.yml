@@ -62,7 +62,7 @@ performance:
   ForEachOnRange:
     active: true
   SpreadOperator:
-    active: true
+    active: false
   UnnecessaryTemporaryInstantiation:
     active: true
 
@@ -150,7 +150,7 @@ complexity:
   ComplexMethod:
     threshold: 10
   TooManyFunctions:
-    threshold: 10
+    threshold: 30
   ComplexCondition:
     threshold: 3
   LabeledExpression:
@@ -260,7 +260,7 @@ style:
     active: true
     packagePattern: '^[a-z]+(\.[a-z][a-z0-9]*)*$'
   ClassNaming:
-    active: true
+    active: false
     classPattern: '[A-Z$][a-zA-Z$]*'
   EnumNaming:
     active: true
