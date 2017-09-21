@@ -42,19 +42,11 @@ class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
     event.presentation.icon = HtlIcons.HTL_ROOT
   }
 
-  private fun shouldDisable(file: VirtualFile,
-                            project: Project,
-                            event: AnActionEvent): Boolean {
-    return (!file.isDirectory
-        && event.place != ActionPlaces.PROJECT_VIEW_POPUP
-        || !HtlDetectionService.mayBeMarked(file.path, project))
-  }
-
-  override fun actionPerformed(e: AnActionEvent) {
-    val file = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
+  override fun actionPerformed(event: AnActionEvent) {
+    val file = event.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
         ?.firstOrNull() ?: return
-    val project = e.project
-    if (!e.presentation.isEnabledAndVisible || project == null) {
+    val project = event.project
+    if (!event.presentation.isEnabledAndVisible || project == null) {
       return
     }
 
@@ -63,18 +55,28 @@ class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
     val htlRootDirectories = HtlRootDirectories.getInstance(project)
         ?: return
 
-    if (e.presentation.text == "HTL Root") {
+    if (shouldAdd(event)) {
       htlRootDirectories.addRoot(path)
     } else {
       htlRootDirectories.removeRoot(path)
     }
 
     // attempt to flush cached files
-    e.project?.psiManager()?.apply {
+    event.project?.psiManager()?.apply {
       reparseOpenedFiles()
 
       HtlTemplateIndex.rebuildIndex()
     }
+  }
+
+  private fun shouldAdd(event: AnActionEvent) = event.presentation.text == "HTL Root"
+
+  private fun shouldDisable(file: VirtualFile,
+                            project: Project,
+                            event: AnActionEvent): Boolean {
+    return (!file.isDirectory
+        && event.place != ActionPlaces.PROJECT_VIEW_POPUP
+        || !HtlDetectionService.mayBeMarked(file.path, project))
   }
 
 }
