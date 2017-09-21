@@ -36,7 +36,7 @@ object CdImportReferenceProvider : PsiReferenceProvider() {
    *
    * @return relative element, *null* if no such element exists
    */
-  fun PsiDirectory.myRelativeFile(path: String): PsiFile? {
+  private fun PsiDirectory.myRelativeFile(path: String): PsiFile? {
     val normalizedPath = if (path.startsWith("./")) {
       path.substringAfter("./")
     } else {
@@ -44,7 +44,8 @@ object CdImportReferenceProvider : PsiReferenceProvider() {
     }
 
     when {
-      normalizedPath.startsWith("../") -> return this.parentDirectory?.myRelativeFile(path.substring(3))
+      normalizedPath.startsWith("../") ->
+        return this.parentDirectory?.myRelativeFile(path.substringAfter("../"))
       normalizedPath.contains("/") -> {
         val subdirName = normalizedPath.split("/")[0]
         val subdir = this.findSubdirectory(subdirName)

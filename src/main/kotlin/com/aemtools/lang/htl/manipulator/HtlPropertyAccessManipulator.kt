@@ -43,9 +43,9 @@ class HtlPropertyAccessManipulator : AbstractElementManipulator<HtlPropertyAcces
           || (oldName.startsWith("is") && newName.startsWith("is")) ->
         newName
       !oldName.startsWith("get") && newName.startsWith("get") ->
-        newName.substring(3).decapitalize()
+        newName.substringAfter("get").decapitalize()
       !oldName.startsWith("is") && newName.startsWith("is") ->
-        newName.substring(2).decapitalize()
+        newName.substringAfter("is").decapitalize()
       else -> newName
     }
   }
