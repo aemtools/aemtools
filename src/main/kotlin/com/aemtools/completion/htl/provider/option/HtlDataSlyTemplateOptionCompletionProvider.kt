@@ -11,9 +11,9 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Troynikov
  */
 object HtlDataSlyTemplateOptionCompletionProvider : CompletionProvider<CompletionParameters>() {
-    override fun addCompletions(parameters: CompletionParameters,
-                                context: ProcessingContext?,
-                                result: CompletionResultSet) {
-        result.stopHere()
-    }
+  override fun addCompletions(parameters: CompletionParameters,
+                              context: ProcessingContext?,
+                              result: CompletionResultSet) {
+    result.stopHere()
+  }
 }

@@ -15,18 +15,18 @@ data class HtlOption(val name: String,
                      val examples: List<String>,
                      val link: String) {
 
-    /**
-     * Convert current [HtlOption] into [LookupElement].
-     *
-     * @return new lookup element
-     */
-    fun toLookupElement(): LookupElement = LookupElementBuilder.create(name)
-            .withTypeText("HTL Option")
-            .withIcon(AllIcons.Nodes.Parameter)
-            .withInsertHandler(when (name) {
-                "format" -> HtlElArrayOptionInsertHandler()
-                "i18n" -> null
-                else -> HtlElStringOptionInsertHandler()
-            })
+  /**
+   * Convert current [HtlOption] into [LookupElement].
+   *
+   * @return new lookup element
+   */
+  fun toLookupElement(): LookupElement = LookupElementBuilder.create(name)
+      .withTypeText("HTL Option")
+      .withIcon(AllIcons.Nodes.Parameter)
+      .withInsertHandler(when (name) {
+        "format" -> HtlElArrayOptionInsertHandler()
+        "i18n" -> null
+        else -> HtlElStringOptionInsertHandler()
+      })
 
 }

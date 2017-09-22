@@ -10,11 +10,11 @@ import javax.swing.Icon
  * @author Dmytro Troynikov
  */
 class HtlFileIconProvider : IconProvider() {
-    override fun getIcon(element: PsiElement, flags: Int): Icon? {
-        return if (element is HtlPsiFile) {
-            HtlIcons.HTL_FILE_ICON
-        } else {
-            null
-        }
+  override fun getIcon(element: PsiElement, flags: Int): Icon? {
+    return if (element is HtlPsiFile) {
+      HtlIcons.HTL_FILE_ICON
+    } else {
+      null
     }
+  }
 }

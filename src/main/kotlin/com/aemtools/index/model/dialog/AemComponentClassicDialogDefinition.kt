@@ -10,14 +10,14 @@ import com.aemtools.index.model.dialog.parameter.ClassicDialogParameterDeclarati
  * @author Dmytro Troynikov
  */
 data class AemComponentClassicDialogDefinition(
-        override val fullPath: String,
-        override val resourceType: String,
-        override val myParameters: List<ClassicDialogParameterDeclaration>
+    override val fullPath: String,
+    override val resourceType: String,
+    override val myParameters: List<ClassicDialogParameterDeclaration>
 ) : AemComponentDialogBase<ClassicDialogParameterDeclaration>() {
 
-    companion object {
-        @JvmStatic
-        val serialVersionUID: Long = 1L
-    }
+  companion object {
+    @JvmStatic
+    val serialVersionUID: Long = 1L
+  }
 
 }

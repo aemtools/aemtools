@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement
  * @author Dmytro Troynikov
  */
 class HtlVariableRefactoringSupport : RefactoringSupportProvider() {
-    override fun isInplaceRenameAvailable(element: PsiElement, context: PsiElement?): Boolean {
-        return false
-    }
+  override fun isInplaceRenameAvailable(element: PsiElement, context: PsiElement?): Boolean {
+    return false
+  }
 }

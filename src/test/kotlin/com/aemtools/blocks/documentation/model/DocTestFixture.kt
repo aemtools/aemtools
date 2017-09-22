@@ -9,24 +9,24 @@ import junit.framework.TestCase.assertEquals
  * @author Dmytro Troynikov
  */
 class DocTestFixture(
-        val documentationProvider: AbstractDocumentationProvider,
-        fixture: JavaCodeInsightTestFixture)
-    : TestFixture(fixture), IDocTestFixture {
+    val documentationProvider: AbstractDocumentationProvider,
+    fixture: JavaCodeInsightTestFixture)
+  : TestFixture(fixture), IDocTestFixture {
 
-    var documentation: String? = null
+  var documentation: String? = null
 
-    override fun documentation(result: String) {
-        documentation = result.trimIndent().replace(Regex("\n|\r"), "")
-    }
+  override fun documentation(result: String) {
+    documentation = result.trimIndent().replace(Regex("\n|\r"), "")
+  }
 
-    override fun test() {
-        super.test()
+  override fun test() {
+    super.test()
 
-        val elementUnderCaret = assertionContext().elementUnderCaret()
+    val elementUnderCaret = assertionContext().elementUnderCaret()
 
-        val result = documentationProvider.generateDoc(elementUnderCaret, elementUnderCaret)
+    val result = documentationProvider.generateDoc(elementUnderCaret, elementUnderCaret)
 
-        assertEquals(documentation, result)
-    }
+    assertEquals(documentation, result)
+  }
 
 }

@@ -19,22 +19,22 @@ import com.intellij.psi.xml.XmlTokenType
  * @author Dmytro_Troynikov
  */
 class HtmlCompletionContributor : CompletionContributor() { init {
-    extend(CompletionType.BASIC,
-            dataSlyUseNoEl,
-            HtmlDataSlyUseCompletionProvider)
+  extend(CompletionType.BASIC,
+      dataSlyUseNoEl,
+      HtmlDataSlyUseCompletionProvider)
 
-    extend(CompletionType.SMART,
-            dataSlyUseNoEl,
-            HtmlDataSlyUseCompletionProvider)
+  extend(CompletionType.SMART,
+      dataSlyUseNoEl,
+      HtmlDataSlyUseCompletionProvider)
 
-    extend(CompletionType.BASIC,
-            psiElement(XmlTokenType.XML_NAME)
-                    .inside(xmlAttribute())
-                    .inFile(PlatformPatterns.psiFile().with(HtlFilePattern)),
-            HtmlAttributeCompletionProvider)
+  extend(CompletionType.BASIC,
+      psiElement(XmlTokenType.XML_NAME)
+          .inside(xmlAttribute())
+          .inFile(PlatformPatterns.psiFile().with(HtlFilePattern)),
+      HtmlAttributeCompletionProvider)
 
-    extend(CompletionType.BASIC,
-            dataSlyIncludeNoEl,
-            HtmlDataSlyIncludeCompletionProvider)
+  extend(CompletionType.BASIC,
+      dataSlyIncludeNoEl,
+      HtmlDataSlyIncludeCompletionProvider)
 }
 }

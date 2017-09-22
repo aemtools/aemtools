@@ -13,16 +13,20 @@ import com.intellij.psi.PsiElement
  * @author Dmytro Troynikov
  */
 class TemplateTypeDescriptor(
-        val template: TemplateDefinition,
-        val project: Project) : BaseTypeDescriptor() {
-    fun parameters() = template.parameters
+    val template: TemplateDefinition,
+    val project: Project) : BaseTypeDescriptor() {
 
-    override fun referencedElement(): PsiElement?
-            = template.declarationElement(project)
+  /**
+   * Getter for template parameters.
+   *
+   * @return template parameters
+   */
+  fun parameters() = template.parameters
 
-    override fun myVariants(): List<LookupElement> = emptyList()
-    override fun subtype(identifier: String): TypeDescriptor = TypeDescriptor.empty()
+  override fun referencedElement(): PsiElement?
+      = template.declarationElement(project)
 
-    override fun name(): String = template.name
+  override fun myVariants(): List<LookupElement> = emptyList()
+  override fun subtype(identifier: String): TypeDescriptor = TypeDescriptor.empty()
 
 }

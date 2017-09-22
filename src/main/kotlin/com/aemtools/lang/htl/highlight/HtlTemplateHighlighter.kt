@@ -18,21 +18,21 @@ import com.intellij.psi.templateLanguages.TemplateDataLanguageMappings
 class HtlTemplateHighlighter(val project: Project?,
                              val virtualFile: VirtualFile?,
                              scheme: EditorColorsScheme) :
-        LayeredLexerEditorHighlighter(HtlHighlighter(), scheme) {
-    init {
-        var type: FileType = if (project == null || virtualFile == null) {
-            StdFileTypes.PLAIN_TEXT
-        } else {
-            val language = TemplateDataLanguageMappings.getInstance(project).getMapping(virtualFile)
-            if (language != null && language.associatedFileType != null) {
-                language.associatedFileType as FileType
-            } else {
-                HtlLanguage.getDefaultTemplateLang()
-            }
-        }
-
-        val outerHighlighter = SyntaxHighlighter.PROVIDER.create(type, project, virtualFile)
-
-        registerLayer(HtlTypes.OUTER_LANGUAGE, LayerDescriptor(outerHighlighter, ""))
+    LayeredLexerEditorHighlighter(HtlHighlighter(), scheme) {
+  init {
+    var type: FileType = if (project == null || virtualFile == null) {
+      StdFileTypes.PLAIN_TEXT
+    } else {
+      val language = TemplateDataLanguageMappings.getInstance(project).getMapping(virtualFile)
+      if (language != null && language.associatedFileType != null) {
+        language.associatedFileType as FileType
+      } else {
+        HtlLanguage.getDefaultTemplateLang()
+      }
     }
+
+    val outerHighlighter = SyntaxHighlighter.PROVIDER.create(type, project, virtualFile)
+
+    registerLayer(HtlTypes.OUTER_LANGUAGE, LayerDescriptor(outerHighlighter, ""))
+  }
 }

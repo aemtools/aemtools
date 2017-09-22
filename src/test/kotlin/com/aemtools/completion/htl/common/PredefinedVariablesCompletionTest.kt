@@ -13,67 +13,67 @@ import java.io.File
  * @author Dmytro Troynikov.
  */
 class PredefinedVariablesCompletionTest : LightFixtureCompletionTestCase(),
-        UberJarFixtureMixin {
+    UberJarFixtureMixin {
 
-    fun testCompleteStartedVariable() = doTest()
+  fun testCompleteStartedVariable() = doTest()
 
-    fun testSecondLevelCompletion() = doTest()
+  fun testSecondLevelCompletion() = doTest()
 
-    fun testThirdLevelCompletion() = doTest()
+  fun testThirdLevelCompletion() = doTest()
 
-    fun testCompletionWithinArray() = doTest()
+  fun testCompletionWithinArray() = doTest()
 
-    fun testCompletionWithinTernaryOperation() = doTest()
+  fun testCompletionWithinTernaryOperation() = doTest()
 
-    fun testCompletionWithinContext() = doTest()
-    fun testCompletionWithContextPresent() = doTest()
+  fun testCompletionWithinContext() = doTest()
+  fun testCompletionWithContextPresent() = doTest()
 
-    fun testDataSlyUseVariable() = doTest()
+  fun testDataSlyUseVariable() = doTest()
 
-    fun testDataSlyUseSecondLevel() = doTest()
+  fun testDataSlyUseSecondLevel() = doTest()
 
-    fun testDataSlyUseSecondLevelResolvedFromEL() = doTest()
+  fun testDataSlyUseSecondLevelResolvedFromEL() = doTest()
 
-    fun testDataSlyTestVariable() = doTest()
+  fun testDataSlyTestVariable() = doTest()
 
-    fun testCompletionWithPredefinedValue() = doTest()
+  fun testCompletionWithPredefinedValue() = doTest()
 
-    fun testArrayLikeAccessSinglequoted() = doTest()
-    fun testArrayLikeAccessDoublequoted() = doTest()
+  fun testArrayLikeAccessSinglequoted() = doTest()
+  fun testArrayLikeAccessDoublequoted() = doTest()
 
-    fun doTest(completionChar: Char = '\n') {
-        val fileName = getTestName(true)
+  fun doTest(completionChar: Char = '\n') {
+    val fileName = getTestName(true)
 
-        configureByFile("$fileName.html")
-        complete()
-        if (myItems != null) {
-            val item = myItems.singleOrNull()
-            if (item != null) {
-                selectItem(item, completionChar)
-            }
-        }
-
-        checkResultByFile("$fileName.html.after")
+    configureByFile("$fileName.html")
+    complete()
+    if (myItems != null) {
+      val item = myItems.singleOrNull()
+      if (item != null) {
+        selectItem(item, completionChar)
+      }
     }
 
-    val fixture: JavaCodeInsightTestFixture
-        get() = myFixture
+    checkResultByFile("$fileName.html.after")
+  }
 
-    override fun setUp() {
-        super.setUp()
-        VfsRootAccess.allowRootAccess(File("src/test").absolutePath)
-        myFixture.addUberJar()
-    }
+  val fixture: JavaCodeInsightTestFixture
+    get() = myFixture
 
-    override fun tearDown() {
-        super.tearDown()
-        VfsRootAccess.disallowRootAccess(File("src/test").absolutePath)
-    }
+  override fun setUp() {
+    super.setUp()
+    VfsRootAccess.allowRootAccess(File("src/test").absolutePath)
+    myFixture.addUberJar()
+  }
 
-    override fun getTestDataPath() = File("${HtlTestCase.testResourcesPath}/com/aemtools/completion/htl/fixtures/").path + "/"
+  override fun tearDown() {
+    super.tearDown()
+    VfsRootAccess.disallowRootAccess(File("src/test").absolutePath)
+  }
 
-    override fun getProjectDescriptor(): LightProjectDescriptor {
-        return LightCodeInsightFixtureTestCase.JAVA_8
-    }
+  override fun getTestDataPath() = File("${HtlTestCase.testResourcesPath}/com/aemtools/completion/htl/fixtures/").path + "/"
+
+  override fun getProjectDescriptor(): LightProjectDescriptor {
+    return LightCodeInsightFixtureTestCase.JAVA_8
+  }
 
 }

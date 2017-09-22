@@ -14,22 +14,22 @@ import com.intellij.util.ProcessingContext
  */
 object HtlOptionCompletionProvider : CompletionProvider<CompletionParameters>() {
 
-    override fun addCompletions(parameters: CompletionParameters,
-                                context: ProcessingContext?,
-                                result: CompletionResultSet) {
-        val currentPosition = parameters.position
-        val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
-                ?: return
+  override fun addCompletions(parameters: CompletionParameters,
+                              context: ProcessingContext?,
+                              result: CompletionResultSet) {
+    val currentPosition = parameters.position
+    val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
+        ?: return
 
-        val names = hel.getOptions().map { it.name() }
-                .filterNot { it == "" }
+    val names = hel.getOptions().map { it.name() }
+        .filterNot { it == "" }
 
-        val completionVariants = HtlAttributesRepository.getHtlOptions()
-                .filterNot { names.contains(it.name) }
-                .map(HtlOption::toLookupElement)
+    val completionVariants = HtlAttributesRepository.getHtlOptions()
+        .filterNot { names.contains(it.name) }
+        .map(HtlOption::toLookupElement)
 
-        result.addAllElements(completionVariants)
-        result.stopHere()
-    }
+    result.addAllElements(completionVariants)
+    result.stopHere()
+  }
 
 }

@@ -12,9 +12,9 @@ import com.intellij.psi.search.SearchScope
  * @author Dmytro Troynikov
  */
 class HtlPropertyScopeProvider : CustomPropertyScopeProvider {
-    override fun getScope(project: Project): SearchScope =
-            GlobalSearchScope.getScopeRestrictedByFileTypes(
-                    GlobalSearchScope.projectScope(project),
-                    StdFileTypes.HTML, HtlFileType
-            )
+  override fun getScope(project: Project): SearchScope =
+      GlobalSearchScope.getScopeRestrictedByFileTypes(
+          GlobalSearchScope.projectScope(project),
+          StdFileTypes.HTML, HtlFileType
+      )
 }

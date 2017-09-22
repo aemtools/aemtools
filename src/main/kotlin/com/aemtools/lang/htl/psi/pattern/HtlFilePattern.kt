@@ -12,8 +12,8 @@ import com.intellij.util.ProcessingContext
  */
 object HtlFilePattern : PatternCondition<PsiFile?>("HTL File") {
 
-    override fun accepts(t: PsiFile, context: ProcessingContext?): Boolean {
-        return t.getHtlFile() != null
-    }
+  override fun accepts(t: PsiFile, context: ProcessingContext?): Boolean {
+    return t.getHtlFile() != null
+  }
 
 }

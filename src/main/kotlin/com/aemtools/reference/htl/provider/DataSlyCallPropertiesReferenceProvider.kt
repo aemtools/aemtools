@@ -16,30 +16,30 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Troynikov
  */
 object DataSlyCallPropertiesReferenceProvider : PsiReferenceProvider() {
-    override fun getReferencesByElement(element: PsiElement,
-                                        context: ProcessingContext): Array<PsiReference> {
-        val variableName = element as? VariableNameMixin
-                ?: return arrayOf()
+  override fun getReferencesByElement(element: PsiElement,
+                                      context: ProcessingContext): Array<PsiReference> {
+    val variableName = element as? VariableNameMixin
+        ?: return arrayOf()
 
-        if (!variableName.isOption()) {
-            return arrayOf()
-        }
-
-        val hel = element.findParentByType(HtlElExpressionMixin::class.java)
-                ?: return arrayOf()
-
-        val outputType = hel
-                .getMainPropertyAccess()
-                ?.accessChain()
-                ?.getLastOutputType()
-                as? TemplateTypeDescriptor
-                ?: return arrayOf()
-
-        val myName = variableName.variableName()
-        val parameterDeclaration = outputType.template.parameterDeclarationElement(element.project, myName)
-                ?: return emptyArray()
-
-        return arrayOf(HtlTemplateArgumentReference(parameterDeclaration, element, TextRange.create(0, element.textLength)))
+    if (!variableName.isOption()) {
+      return arrayOf()
     }
+
+    val hel = element.findParentByType(HtlElExpressionMixin::class.java)
+        ?: return arrayOf()
+
+    val outputType = hel
+        .getMainPropertyAccess()
+        ?.callChain()
+        ?.getLastOutputType()
+        as? TemplateTypeDescriptor
+        ?: return arrayOf()
+
+    val myName = variableName.variableName()
+    val parameterDeclaration = outputType.template.parameterDeclarationElement(element.project, myName)
+        ?: return emptyArray()
+
+    return arrayOf(HtlTemplateArgumentReference(parameterDeclaration, element, TextRange.create(0, element.textLength)))
+  }
 
 }

@@ -10,8 +10,8 @@ import com.intellij.psi.PsiReferenceRegistrar
  */
 class CdReferenceContributor : PsiReferenceContributor() {
 
-    override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
-        registrar.registerReferenceProvider(CdPatterns.include, CdImportReferenceProvider)
-    }
+  override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
+    registrar.registerReferenceProvider(CdPatterns.include, CdImportReferenceProvider)
+  }
 
 }

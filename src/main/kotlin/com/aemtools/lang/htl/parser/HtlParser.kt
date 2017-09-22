@@ -7,12 +7,12 @@ import com.intellij.lang.PsiParser
 import com.intellij.psi.tree.IElementType
 
 /**
-* @author Dmytro_Troynikov
-*/
+ * @author Dmytro_Troynikov
+ */
 class HtlParser : PsiParser {
-    override fun parse(root: IElementType, builder: PsiBuilder): ASTNode {
-        val parser = HtlParser()
-        val result = parser.parse(root, builder)
-        return result
-    }
+  override fun parse(root: IElementType, builder: PsiBuilder): ASTNode {
+    val parser = HtlParser()
+    val result = parser.parse(root, builder)
+    return result
+  }
 }

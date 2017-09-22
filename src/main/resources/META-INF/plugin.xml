@@ -161,12 +161,12 @@
         <targetElementEvaluator
                 implementationClass="com.aemtools.refactoring.htl.rename.HtlAttributeTargetElementEvaluator"
                 language="Htl"/>
-        <findUsagesHandlerFactory implementation="com.aemtools.findusages.HtmlAttributeUsagesProvider" />
-        
+        <findUsagesHandlerFactory implementation="com.aemtools.findusages.HtmlAttributeUsagesProvider"/>
+
         <xml.attributeDescriptorsProvider
                 order="first"
-                implementation="com.aemtools.findusages.HtlAttributesDescriptorsProvider" />
-        
+                implementation="com.aemtools.findusages.HtlAttributesDescriptorsProvider"/>
+
         <lang.psiStructureViewFactory language="Htl"
                                       implementationClass="com.aemtools.ide.HtlStructureViewProvider"/>
 
@@ -188,7 +188,7 @@
                 class="com.aemtools.action.MarkAsHtlRootDirectoryAction"
                 text="HTL Root"
                 description="HTML files under this directory will be considered as HTL files">
-            <add-to-group group-id="MarkRootGroup" anchor="last" />
+            <add-to-group group-id="MarkRootGroup" anchor="last"/>
         </action>
     </actions>
 

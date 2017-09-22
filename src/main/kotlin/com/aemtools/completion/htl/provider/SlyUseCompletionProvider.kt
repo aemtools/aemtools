@@ -28,105 +28,117 @@ import org.apache.commons.lang.StringUtils
  */
 object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
 
-    override fun addCompletions(parameters: CompletionParameters,
-                                context: ProcessingContext?,
-                                result: CompletionResultSet) {
-        result.addAllElements(useSuggestions(parameters))
-    }
+  private const val ONE_HUNDRED: Double = 100.0
 
-    fun useSuggestions(parameters: CompletionParameters): List<LookupElement> {
-        val project = parameters.position.project
-        val currentFileName = normalizedFileName(parameters)
+  override fun addCompletions(parameters: CompletionParameters,
+                              context: ProcessingContext?,
+                              result: CompletionResultSet) {
+    result.addAllElements(useSuggestions(parameters))
+  }
 
-        val useClasses = JavaSearch.findWcmUseClasses(project)
-        val slingModelClasses = JavaSearch.findSlingModels(project)
+  /**
+   * Collect lookup elements suitable for `data-sly-use`.
+   *
+   * @param parameters completion parameters
+   * @return list of lookup elements for `data-sly-use`
+   */
+  fun useSuggestions(parameters: CompletionParameters): List<LookupElement> {
+    val project = parameters.position.project
+    val currentFileName = normalizedFileName(parameters)
 
-        val useClassesVariants = extractCompletions(useClasses, currentFileName, "Use Class")
-        val slingModelVariants = extractCompletions(slingModelClasses, currentFileName, "Sling Model")
+    val useClasses = JavaSearch.findWcmUseClasses(project)
+    val slingModelClasses = JavaSearch.findSlingModels(project)
 
-        val allClasses = if (parameters.completionType == CompletionType.BASIC) {
-            useClassesVariants + slingModelVariants
-        } else {
-            (useClassesVariants + slingModelVariants)
-                    .filter {
-                        closeName(normalizedClassName(it.lookupString), currentFileName)
-                    }
-        }
+    val useClassesVariants = extractCompletions(useClasses, currentFileName, "Use Class")
+    val slingModelVariants = extractCompletions(slingModelClasses, currentFileName, "Sling Model")
 
-        val templates = extractTemplates(parameters)
-
-        return allClasses + templates
-    }
-
-    private fun closeName(normalizedClassName: String, currentFileName: String): Boolean {
-        return StringUtils.getLevenshteinDistance(
-                normalizedClassName,
-                currentFileName) < (currentFileName.length / 2).inc()
-    }
-
-    private fun normalizedClassName(fqn: String): String =
-            fqn.substringAfterLast(".").toLowerCase()
-
-    private fun normalizedFileName(parameters: CompletionParameters): String =
-            parameters.originalFile.parent?.name?.toLowerCase()
-                    ?: parameters.originalFile.name.toLowerCase()
-                    .let { it.replace("-", "") }
-
-    private fun extractCompletions(classes: List<PsiClass>, currentFileName: String, type: String): List<LookupElement> {
-        return classes.flatMap {
-            val qualifiedName = it.qualifiedName as? String
-            val name = it.name as? String
-            if (qualifiedName == null || name == null) {
-                return@flatMap listOf<LookupElement>()
-            }
-
-            val result = LookupElementBuilder.create(qualifiedName)
-                    .withLookupString(name)
-                    .withPresentableText(name)
-                    .withIcon(it.getIcon(0))
-                    .withTypeText(type)
-                    .withTailText("(${qualifiedName.substring(0, qualifiedName.lastIndexOf("."))})", true)
-                    .withPriority(classCompletionPriority(currentFileName, name))
-
-            return@flatMap listOf(result)
-        }
-    }
-
-    private fun classCompletionPriority(fileName: String, className: String): Double =
-            base(fileName, className) - StringUtils.getLevenshteinDistance(fileName, className) / 100.0
-
-    private fun base(name1: String, name2: String): Double = if (closeName(name1, name2)) {
-        CLOSE_CLASS
+    val allClasses = if (parameters.completionType == CompletionType.BASIC) {
+      useClassesVariants + slingModelVariants
     } else {
-        FAR_CLASS
+      (useClassesVariants + slingModelVariants)
+          .filter {
+            closeName(normalizedClassName(it.lookupString), currentFileName)
+          }
     }
 
-    private fun extractTemplates(parameters: CompletionParameters): List<LookupElement> {
-        val dir = parameters.originalFile.containingDirectory.virtualFile
-        val dirPath = dir.path
-        val result: List<TemplateDefinition> = if (parameters.completionType == CompletionType.BASIC) {
-            getTemplates(parameters.position.project)
-        } else {
-            val allTemplates = getTemplates(parameters.position.project)
-            allTemplates.filter { "${it.containingDirectory}/".startsWith("${dir.path}/") }
-        }.groupBy { it.normalizedPath }
-                .flatMap { it.value }
-                .filter {
-                    it.fullName != parameters.originalFile.virtualFile.path
-                }
+    val templates = extractTemplates(parameters)
 
-        return result.map {
-            LookupElementBuilder.create(it.normalizedPath.relativeTo(dirPath.normalizeToJcrRoot()))
-                    .withTypeText("HTL Template")
-                    .withTailText("(${it.normalizedPath})", true)
-                    .withPresentableText(it.fileName)
-                    .withIcon(AllIcons.FileTypes.Html)
-                    .withPriority(if ("${it.containingDirectory}/".startsWith("${dir.path}/")) {
-                        CLOSE_TEMPLATE
-                    } else {
-                        FAR_TEMPLATE
-                    })
+    return allClasses + templates
+  }
+
+  private fun closeName(normalizedClassName: String, currentFileName: String): Boolean {
+    return StringUtils.getLevenshteinDistance(
+        normalizedClassName,
+        currentFileName) < (currentFileName.length / 2).inc()
+  }
+
+  private fun normalizedClassName(fqn: String): String =
+      fqn.substringAfterLast(".").toLowerCase()
+
+  private fun normalizedFileName(parameters: CompletionParameters): String =
+      parameters.originalFile.parent?.name?.toLowerCase()
+          ?: parameters.originalFile.name.toLowerCase()
+          .let { it.replace("-", "") }
+
+  private fun extractCompletions(
+      classes: List<PsiClass>,
+      currentFileName: String,
+      type: String): List<LookupElement> {
+    return classes.flatMap {
+      val qualifiedName = it.qualifiedName
+      val name = it.name
+      if (qualifiedName == null || name == null) {
+        return@flatMap listOf<LookupElement>()
+      }
+
+      val result = LookupElementBuilder.create(qualifiedName)
+          .withLookupString(name)
+          .withPresentableText(name)
+          .withIcon(it.getIcon(0))
+          .withTypeText(type)
+          .withTailText(
+              "(${qualifiedName.substringAfterLast(".")})", true)
+          .withPriority(classCompletionPriority(currentFileName, name))
+
+      return@flatMap listOf(result)
+    }
+  }
+
+  private fun classCompletionPriority(fileName: String, className: String): Double =
+      base(fileName, className) - StringUtils.getLevenshteinDistance(fileName, className) / ONE_HUNDRED
+
+  private fun base(name1: String, name2: String): Double = if (closeName(name1, name2)) {
+    CLOSE_CLASS
+  } else {
+    FAR_CLASS
+  }
+
+  private fun extractTemplates(parameters: CompletionParameters): List<LookupElement> {
+    val dir = parameters.originalFile.containingDirectory.virtualFile
+    val dirPath = dir.path
+    val result: List<TemplateDefinition> = if (parameters.completionType == CompletionType.BASIC) {
+      getTemplates(parameters.position.project)
+    } else {
+      val allTemplates = getTemplates(parameters.position.project)
+      allTemplates.filter { "${it.containingDirectory}/".startsWith("${dir.path}/") }
+    }.groupBy { it.normalizedPath }
+        .flatMap { it.value }
+        .filter {
+          it.fullName != parameters.originalFile.virtualFile.path
         }
+
+    return result.map {
+      LookupElementBuilder.create(it.normalizedPath.relativeTo(dirPath.normalizeToJcrRoot()))
+          .withTypeText("HTL Template")
+          .withTailText("(${it.normalizedPath})", true)
+          .withPresentableText(it.fileName)
+          .withIcon(AllIcons.FileTypes.Html)
+          .withPriority(if ("${it.containingDirectory}/".startsWith("${dir.path}/")) {
+            CLOSE_TEMPLATE
+          } else {
+            FAR_TEMPLATE
+          })
     }
+  }
 
 }

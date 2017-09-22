@@ -128,7 +128,7 @@ property_access ::= unary_operator? variable_name [access_identifier+] {implemen
 
 variable_name ::= VAR_NAME {implements="com.intellij.psi.ContributedReferenceHost"}
 
-access_identifier ::= dot_access | array_like_access
+inner access_identifier ::= dot_access | array_like_access
 
 dot_access ::= DOT variable_name
 

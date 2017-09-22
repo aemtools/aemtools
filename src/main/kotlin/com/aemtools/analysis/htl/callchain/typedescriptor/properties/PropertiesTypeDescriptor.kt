@@ -18,55 +18,53 @@ import com.intellij.psi.PsiElement
  */
 class PropertiesTypeDescriptor(val element: PsiElement) : BaseTypeDescriptor() {
 
-    private val myResourceType: String? by lazy {
-        element.containingFile.originalFile.virtualFile.resourceType()
-    }
+  private val myResourceType: String? by lazy {
+    element.containingFile.originalFile.virtualFile.resourceType()
+  }
 
-    private val touchUIDialog: AemComponentTouchUIDialogDefinition? by lazy {
-        myResourceType?.let {
-            AemComponentSearch.findTouchUIDialogByResourceType(it, element.project)
-        }
+  private val touchUIDialog: AemComponentTouchUIDialogDefinition? by lazy {
+    myResourceType?.let {
+      AemComponentSearch.findTouchUIDialogByResourceType(it, element.project)
     }
+  }
 
-    private val classicDialog: AemComponentClassicDialogDefinition? by lazy {
-        myResourceType?.let {
-            AemComponentSearch.findClassicDialogByResourceType(it, element.project)
-        }
+  private val classicDialog: AemComponentClassicDialogDefinition? by lazy {
+    myResourceType?.let {
+      AemComponentSearch.findClassicDialogByResourceType(it, element.project)
     }
+  }
 
-    override fun myVariants(): List<LookupElement> {
-        touchUIDialog?.let {
-            return it.myParameters.map {
-                it.toLookupElement()
-                        .withPriority(DIALOG_PROPERTY)
-            }
-        }
-        classicDialog?.let {
-            return it.myParameters.map {
-                it.toLookupElement()
-                        .withPriority(DIALOG_PROPERTY)
-            }
-        }
-        return emptyList()
+  override fun myVariants(): List<LookupElement> {
+    touchUIDialog?.let {
+      return it.myParameters.map {
+        it.toLookupElement()
+            .withPriority(DIALOG_PROPERTY)
+      }
     }
-
-    override fun subtype(identifier: String): TypeDescriptor {
-        touchUIDialog?.let {
-            return TouchDialogPropertyTypeDescriptor(
-                    identifier,
-                    element,
-                    it)
-        }
-        classicDialog?.let {
-            return ClassicDialogPropertyTypeDescriptor(
-                    identifier,
-                    element,
-                    it
-            )
-        }
-        return TypeDescriptor.empty()
+    classicDialog?.let {
+      return it.myParameters.map {
+        it.toLookupElement()
+            .withPriority(DIALOG_PROPERTY)
+      }
     }
+    return emptyList()
+  }
 
-    override fun name(): String = "properties"
+  override fun subtype(identifier: String): TypeDescriptor {
+    touchUIDialog?.let {
+      return TouchDialogPropertyTypeDescriptor(
+          identifier,
+          element,
+          it)
+    }
+    classicDialog?.let {
+      return ClassicDialogPropertyTypeDescriptor(
+          identifier,
+          element,
+          it
+      )
+    }
+    return TypeDescriptor.empty()
+  }
 
 }

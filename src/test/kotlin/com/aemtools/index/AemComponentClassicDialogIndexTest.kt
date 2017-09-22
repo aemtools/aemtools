@@ -12,8 +12,8 @@ import com.intellij.util.indexing.FileBasedIndex
  */
 class AemComponentClassicDialogIndexTest : BaseLightTest() {
 
-    fun testMain() = fileCase {
-        addXml("/$JCR_ROOT/apps/components/comp/dialog.xml", """
+  fun testMain() = fileCase {
+    addXml("/$JCR_ROOT/apps/components/comp/dialog.xml", """
             <jcr:root
                 jcr:primaryType="cq:Dialog">
                 <items>
@@ -25,33 +25,33 @@ class AemComponentClassicDialogIndexTest : BaseLightTest() {
             </jcr:root>
         """)
 
-        verify {
-            val fbi = FileBasedIndex.getInstance()
+    verify {
+      val fbi = FileBasedIndex.getInstance()
 
-            val value = fbi.getValues(
-                    AemComponentClassicDialogIndex.AEM_COMPONENT_CLASSIC_DIALOG_INDEX_ID,
-                    "/apps/components/comp",
-                    GlobalSearchScope.projectScope(project))
-                    .first()
+      val value = fbi.getValues(
+          AemComponentClassicDialogIndex.AEM_COMPONENT_CLASSIC_DIALOG_INDEX_ID,
+          "/apps/components/comp",
+          GlobalSearchScope.projectScope(project))
+          .first()
 
-            assertEquals(
-                    AemComponentClassicDialogDefinition(
-                            "/src/jcr_root/apps/components/comp/dialog.xml",
-                            "/apps/components/comp",
-                            listOf(
-                                    ClassicDialogParameterDeclaration(
-                                            "pathfield",
-                                            "./path1"
-                                    ),
-                                    ClassicDialogParameterDeclaration(
-                                            "pathfield",
-                                            "./path2"
-                                    )
-                            )
-                    ),
-                    value
-            )
-        }
+      assertEquals(
+          AemComponentClassicDialogDefinition(
+              "/src/jcr_root/apps/components/comp/dialog.xml",
+              "/apps/components/comp",
+              listOf(
+                  ClassicDialogParameterDeclaration(
+                      "pathfield",
+                      "./path1"
+                  ),
+                  ClassicDialogParameterDeclaration(
+                      "pathfield",
+                      "./path2"
+                  )
+              )
+          ),
+          value
+      )
     }
+  }
 
 }

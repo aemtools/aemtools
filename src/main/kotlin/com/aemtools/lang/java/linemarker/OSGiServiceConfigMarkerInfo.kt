@@ -13,25 +13,25 @@ import com.intellij.util.Function
  * @author Dmytro_Troynikov
  */
 class OSGiServiceConfigMarkerInfo(
-        val classIdentifier: PsiIdentifier,
-        configs: List<OSGiConfiguration>
+    val classIdentifier: PsiIdentifier,
+    configs: List<OSGiConfiguration>
 ) : LineMarkerInfo<PsiElement>(
-        classIdentifier,
-        classIdentifier.textRange,
-        AllIcons.FileTypes.Config,
-        Pass.LINE_MARKERS,
-        Function { "OSGi configs found" },
-        OSGiGutterIconNavigationHandler(configs, classIdentifier, "OSGi Config"),
-        GutterIconRenderer.Alignment.CENTER) {
-    override fun equals(other: Any?): Boolean {
-        val otherMarker = other as? OSGiServiceConfigMarkerInfo
-                ?: return false
+    classIdentifier,
+    classIdentifier.textRange,
+    AllIcons.FileTypes.Config,
+    Pass.LINE_MARKERS,
+    Function { "OSGi configs found" },
+    OSGiGutterIconNavigationHandler(configs, classIdentifier, "OSGi Config"),
+    GutterIconRenderer.Alignment.CENTER) {
+  override fun equals(other: Any?): Boolean {
+    val otherMarker = other as? OSGiServiceConfigMarkerInfo
+        ?: return false
 
-        return this.classIdentifier.text == otherMarker.classIdentifier.text
-    }
+    return this.classIdentifier.text == otherMarker.classIdentifier.text
+  }
 
-    override fun hashCode(): Int {
-        return this.classIdentifier.text.hashCode()
-    }
+  override fun hashCode(): Int {
+    return this.classIdentifier.text.hashCode()
+  }
 
 }

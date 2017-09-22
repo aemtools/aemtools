@@ -25,75 +25,75 @@ import java.io.Serializable
  * @author Dmytro Troynikov
  */
 data class LocalizationModel(
-        /**
-         * The name of containing file.
-         */
-        val fileName: String,
-        /**
-         * The language property (jcr:language) value.
-         * I.E. the locale.
-         */
-        val language: String,
-        /**
-         * The message key.
-         * Set by `sling:key` or by tag's name.
-         */
-        val key: String,
-        /**
-         * Value of `sling:message` property.
-         * May contain "placeholders" e.g.:
-         *
-         * ```
-         *  "Message with placeholder {0}"
-         * ```
-         * "{0}" is a placeholder that may be substituted
-         * via `format` option.
-         *
-         * @see [placeholdersAmount]
-         */
-        val message: String
+    /**
+     * The name of containing file.
+     */
+    val fileName: String,
+    /**
+     * The language property (jcr:language) value.
+     * I.E. the locale.
+     */
+    val language: String,
+    /**
+     * The message key.
+     * Set by `sling:key` or by tag's name.
+     */
+    val key: String,
+    /**
+     * Value of `sling:message` property.
+     * May contain "placeholders" e.g.:
+     *
+     * ```
+     *  "Message with placeholder {0}"
+     * ```
+     * "{0}" is a placeholder that may be substituted
+     * via `format` option.
+     *
+     * @see [placeholdersAmount]
+     */
+    val message: String
 ) : Serializable {
 
+  /**
+   * Collects amount of placeholders present
+   * in current message.
+   *
+   * @return amount of placeholders
+   */
+  fun placeholdersAmount(): Int = message.let {
+    "\\{\\d}".toRegex()
+        .findAll(it)
+        .count()
+  }
+
+  companion object {
+
     /**
-     * Collects amount of placeholders present
-     * in current message.
+     * Extract [LocalizationModel] object from given [XmlTag].
      *
-     * @return amount of placeholders
+     * @param tag the tag with localization data
+     * @param fileName file name
+     * @param language language
+     *
+     * @return new localization model, *null* in case if
+     * given tag do not contain all required attributes
      */
-    fun placeholdersAmount(): Int = message.let {
-        "\\{\\d}".toRegex()
-                .findAll(it)
-                .count()
+    fun create(tag: XmlTag,
+               fileName: String,
+               language: String): LocalizationModel? {
+      val key = tag.getAttributeValue(const.xml.SLING_KEY)
+          ?: tag.name
+
+      val message = tag.getAttributeValue(const.xml.SLING_MESSAGE)
+          ?: return null
+
+      return LocalizationModel(
+          fileName,
+          language,
+          key,
+          message
+      )
     }
-
-    companion object {
-
-        /**
-         * Extract [LocalizationModel] object from given [XmlTag].
-         *
-         * @param tag the tag with localization data
-         * @param fileName file name
-         * @param language language
-         *
-         * @return new localization model, *null* in case if
-         * given tag do not contain all required attributes
-         */
-        fun create(tag: XmlTag,
-                   fileName: String,
-                   language: String): LocalizationModel? {
-            val key = tag.getAttributeValue(const.xml.SLING_KEY)
-                    ?: tag.name
-
-            val message = tag.getAttributeValue(const.xml.SLING_MESSAGE)
-                    ?: return null
-
-            return LocalizationModel(
-                    fileName,
-                    language,
-                    key,
-                    message
-            )
-        }
-    }
+  }
 
 }

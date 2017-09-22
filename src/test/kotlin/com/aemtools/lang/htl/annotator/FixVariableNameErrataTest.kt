@@ -11,36 +11,36 @@ import com.intellij.testFramework.InspectionFixtureTestCase
  */
 class FixVariableNameErrataTest : InspectionFixtureTestCase() {
 
-    fun testFixErrata() {
-        myFixture.configureByText("test.html", """
+  fun testFixErrata() {
+    myFixture.configureByText("test.html", """
             <div data-sly-use.myModel=""></div>
             $DOLLAR{mymodel}
         """.trimIndent())
 
-        val fix: FixVariableNameErrata = myFixture.quickFix("test.html")
-                ?: throw AssertionError("No quick fix found!")
+    val fix: FixVariableNameErrata = myFixture.quickFix("test.html")
+        ?: throw AssertionError("No quick fix found!")
 
-        writeCommand(project) {
-            fix.invoke(project, editor, file)
-        }
+    writeCommand(project) {
+      fix.invoke(project, editor, file)
+    }
 
-        myFixture.checkResult("""
+    myFixture.checkResult("""
             <div data-sly-use.myModel=""></div>
             $DOLLAR{myModel}
         """.trimIndent())
+  }
+
+  fun testFixErrataInContextObject() {
+    myFixture.configureByText("test.html", "$DOLLAR{propert1es}")
+
+    val fix: FixVariableNameErrata = myFixture.quickFix("test.html")
+        ?: throw AssertionError("No quick fix found!")
+
+    writeCommand(project) {
+      fix.invoke(project, editor, file)
     }
 
-    fun testFixErrataInContextObject() {
-        myFixture.configureByText("test.html", "$DOLLAR{propert1es}")
-
-        val fix: FixVariableNameErrata = myFixture.quickFix("test.html")
-                ?: throw AssertionError("No quick fix found!")
-
-        writeCommand(project) {
-            fix.invoke(project, editor, file)
-        }
-
-        myFixture.checkResult("$DOLLAR{properties}")
-    }
+    myFixture.checkResult("$DOLLAR{properties}")
+  }
 
 }

@@ -10,13 +10,13 @@ import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 abstract class BaseFileFixtureDescriptor(protected val _name: String,
                                          protected val _text: String,
                                          protected val fixture: JavaCodeInsightTestFixture)
-    : IFileFixtureDescriptor {
-    protected var initialized = false
-    protected var psiFile: PsiFile? = null
+  : IFileFixtureDescriptor {
+  protected var initialized = false
+  protected var psiFile: PsiFile? = null
 
-    override fun containsCaret(): Boolean = _text.contains(CodeInsightTestFixture.CARET_MARKER)
+  override fun containsCaret(): Boolean = _text.contains(CodeInsightTestFixture.CARET_MARKER)
 
-    var text: String = _text
-        get() = _text
+  var text: String = _text
+    get() = _text
 
 }

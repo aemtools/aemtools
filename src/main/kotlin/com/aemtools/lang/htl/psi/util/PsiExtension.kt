@@ -1,6 +1,6 @@
 package com.aemtools.lang.htl.psi.util
 
-import com.intellij.psi.*
+import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.tree.CompositeElement
 import com.intellij.psi.xml.XmlElement
 import com.intellij.psi.xml.XmlTag
@@ -25,14 +25,14 @@ import com.intellij.psi.xml.XmlTokenType
  *  @return __true__ if current element is situated within given tag's body.
  */
 fun PsiElement.isWithin(tag: XmlTag): Boolean {
-    val composite = tag as CompositeElement
-    val tagEnd = composite.findChildByType(XmlTokenType.XML_TAG_END) ?: return false
-    val endTagStart = composite.findChildByType(XmlTokenType.XML_END_TAG_START) ?: return false
+  val composite = tag as CompositeElement
+  val tagEnd = composite.findChildByType(XmlTokenType.XML_TAG_END) ?: return false
+  val endTagStart = composite.findChildByType(XmlTokenType.XML_END_TAG_START) ?: return false
 
-    val leftBorder = tagEnd.startOffset + 1
-    val rightBorder = endTagStart.startOffset
+  val leftBorder = tagEnd.startOffset + 1
+  val rightBorder = endTagStart.startOffset
 
-    return textOffset > leftBorder && textOffset < rightBorder
+  return textOffset > leftBorder && textOffset < rightBorder
 }
 
 /**
@@ -54,7 +54,7 @@ fun PsiElement.isNotWithin(tag: XmlTag): Boolean = !isWithin(tag)
  *  @return __true__ in case if current element is part given tag
  */
 fun PsiElement.isPartOf(element: XmlElement): Boolean {
-    return textOffset > element.textOffset && textOffset < (element.textOffset + element.textLength)
+  return textOffset > element.textOffset && textOffset < (element.textOffset + element.textLength)
 }
 
 /**
@@ -62,5 +62,5 @@ fun PsiElement.isPartOf(element: XmlElement): Boolean {
  * (inverted version of [isPartOf])
  */
 fun PsiElement.isNotPartOf(element: XmlElement): Boolean {
-    return !isPartOf(element)
+  return !isPartOf(element)
 }

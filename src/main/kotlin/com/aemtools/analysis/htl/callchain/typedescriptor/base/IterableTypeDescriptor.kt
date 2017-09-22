@@ -8,6 +8,11 @@ package com.aemtools.analysis.htl.callchain.typedescriptor.base
  */
 interface IterableTypeDescriptor : TypeDescriptor {
 
-    fun iterableType(): TypeDescriptor
+  /**
+   * Getter for iterable type descriptor.
+   *
+   * @return type descriptor for iterable type
+   */
+  fun iterableType(): TypeDescriptor
 
 }

@@ -12,11 +12,11 @@ import com.intellij.psi.PsiReferenceRegistrar
  */
 class HtmlToJavaReferenceContributor : PsiReferenceContributor() {
 
-    override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
-        registrar.registerReferenceProvider(
-                XmlPatterns.xmlAttributeValue(),
-                DataSlyUseJavaReferenceProvider)
+  override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
+    registrar.registerReferenceProvider(
+        XmlPatterns.xmlAttributeValue(),
+        DataSlyUseJavaReferenceProvider)
 
-    }
+  }
 
 }

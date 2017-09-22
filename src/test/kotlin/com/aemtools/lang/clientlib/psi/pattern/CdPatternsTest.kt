@@ -9,28 +9,28 @@ import com.intellij.psi.PsiElement
  */
 class CdPatternsTest : BasePatternsTest() {
 
-    fun testBasePathMain() = testCdPattern(
-            CdPatterns.basePath,
-            "#base=$CARET",
-            true
-    )
+  fun testBasePathMain() = testCdPattern(
+      CdPatterns.basePath,
+      "#base=$CARET",
+      true
+  )
 
-    fun testBasePath2() = testCdPattern(
-            CdPatterns.basePath,
-            "#$CARET",
-            false
-    )
+  fun testBasePath2() = testCdPattern(
+      CdPatterns.basePath,
+      "#$CARET",
+      false
+  )
 
-    fun testCdPattern(pattern: ElementPattern<PsiElement>,
-                      text: String,
-                      result: Boolean,
-                      addCompletionPlaceholder: Boolean = true) =
-            testPattern(
-                    pattern,
-                    text,
-                    result,
-                    addCompletionPlaceholder,
-                    { textToAdd -> addFile("js.txt", textToAdd ) }
-            )
+  fun testCdPattern(pattern: ElementPattern<PsiElement>,
+                    text: String,
+                    result: Boolean,
+                    addCompletionPlaceholder: Boolean = true) =
+      testPattern(
+          pattern,
+          text,
+          result,
+          addCompletionPlaceholder,
+          { textToAdd -> addFile("js.txt", textToAdd) }
+      )
 
 }

@@ -6,4 +6,4 @@ import com.aemtools.completion.html.inserthandler.HtlTextInsertHandler
  * @author Dmytro Troynikov
  */
 class HtlElArrayOptionInsertHandler
-        : HtlTextInsertHandler("=[]", 2)
+  : HtlTextInsertHandler("=[]", offset = 2)
