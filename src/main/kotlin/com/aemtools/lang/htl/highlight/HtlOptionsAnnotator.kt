@@ -30,7 +30,7 @@ class HtlOptionsAnnotator : Annotator {
 
             val outputType = hel
                     .getMainPropertyAccess()
-                    ?.accessChain()
+                    ?.callChain()
                     ?.getLastOutputType()
                     as? TemplateTypeDescriptor
                     ?: return

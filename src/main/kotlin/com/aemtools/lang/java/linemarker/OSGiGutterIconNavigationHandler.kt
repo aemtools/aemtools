@@ -13,62 +13,66 @@ import java.awt.event.MouseEvent
  * @author Dmytro_Troynikov
  */
 class OSGiGutterIconNavigationHandler(
-        val configs: List<OSGiConfiguration>,
-        val classIdentifier: PsiIdentifier,
-        val myTitle: String
+    val configs: List<OSGiConfiguration>,
+    val classIdentifier: PsiIdentifier,
+    val myTitle: String
 ) : GutterIconNavigationHandler<PsiElement> {
-    override fun equals(other: Any?): Boolean {
-        val otherGutter = other as? OSGiGutterIconNavigationHandler
-                ?: return false
-        return classIdentifier.text == otherGutter.classIdentifier.text
+  override fun equals(other: Any?): Boolean {
+    val otherGutter = other as? OSGiGutterIconNavigationHandler
+        ?: return false
+    return classIdentifier.text == otherGutter.classIdentifier.text
+  }
+
+  override fun hashCode(): Int {
+    return classIdentifier.text.hashCode()
+  }
+
+  private val messages: Map<String, CellDescriptor> = configs.flatMap {
+    val path = it.xmlFile?.virtualFile?.path
+    if (path != null) {
+      listOf(path to CellDescriptor(
+          it.mods.joinToString { it },
+          it.suffix()))
+    } else {
+      listOf()
     }
+  }.toMap()
 
-    override fun hashCode(): Int {
-        return classIdentifier.text.hashCode()
+  override fun navigate(e: MouseEvent?, elt: PsiElement?) {
+    PsiElementListNavigator.openTargets(e,
+        configs.map { it.xmlFile }.toTypedArray(),
+        myTitle, null, createListCellRenderer())
+  }
+
+  private fun createListCellRenderer(): PsiElementListCellRenderer<PsiFile> {
+    return object : PsiElementListCellRenderer<PsiFile>() {
+      override fun getIconFlags(): Int {
+        return 0
+      }
+
+      override fun getElementText(element: PsiFile?): String {
+        val path = element?.virtualFile?.path
+            ?: return "Unknown"
+        return messages[path]?.elementText
+            ?: return "Unknown"
+      }
+
+      override fun getContainerText(element: PsiFile?, name: String?): String? {
+        val path = element?.virtualFile?.path
+            ?: return ""
+        return messages[path]?.containerText
+            ?: ""
+      }
+
     }
+  }
 
-    private val messages: Map<String, CellDescriptor> = configs.flatMap {
-        val path = it.xmlFile?.virtualFile?.path
-        if (path != null) {
-            listOf(path to CellDescriptor(
-                    it.mods.joinToString { it },
-                    it.suffix()))
-        } else {
-            listOf()
-        }
-    }.toMap()
+  /**
+   * Cell descriptor.
+   */
+  data class CellDescriptor(
+      val elementText: String,
+      val containerText: String
+  )
 
-    override fun navigate(e: MouseEvent?, elt: PsiElement?) {
-        PsiElementListNavigator.openTargets(e,
-                configs.map { it.xmlFile }.toTypedArray(),
-                myTitle, null, createListCellRenderer())
-    }
-
-    private fun createListCellRenderer(): PsiElementListCellRenderer<PsiFile> {
-        return object : PsiElementListCellRenderer<PsiFile>() {
-            override fun getIconFlags(): Int {
-                return 0
-            }
-
-            override fun getElementText(element: PsiFile?): String {
-                val path = element?.virtualFile?.path
-                        ?: return "Unknown"
-                return messages[path]?.elementText
-                        ?: return "Unknown"
-            }
-
-            override fun getContainerText(element: PsiFile?, name: String?): String? {
-                val path = element?.virtualFile?.path
-                        ?: return ""
-                return messages[path]?.containerText
-                        ?: ""
-            }
-
-        }
-    }
-
-    data class CellDescriptor(
-            val elementText: String,
-            val containerText: String
-    )
 }

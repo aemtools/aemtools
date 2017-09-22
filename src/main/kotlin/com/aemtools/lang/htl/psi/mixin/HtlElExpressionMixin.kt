@@ -11,12 +11,22 @@ import com.intellij.lang.ASTNode
  */
 abstract class HtlElExpressionMixin(node: ASTNode) : ASTWrapperPsiElement(node) {
 
-    fun getOptions() : List<HtlOptionModel> =
-            this.findChildrenByClass(HtlContextExpression::class.java)
-                    .map(::HtlOptionModel)
+  /**
+   * Get list of options available in current Htl expression.
+   *
+   * @return list of options
+   */
+  fun getOptions(): List<HtlOptionModel> =
+      this.findChildrenByClass(HtlContextExpression::class.java)
+          .map(::HtlOptionModel)
 
-    fun getMainPropertyAccess() : PropertyAccessMixin? =
-            this.findChildrenByType(PropertyAccessMixin::class.java)
-                    .firstOrNull()
+  /**
+   * Get main property access.
+   *
+   * @return property access mixin, *null* if no property access available
+   */
+  fun getMainPropertyAccess(): PropertyAccessMixin? =
+      this.findChildrenByType(PropertyAccessMixin::class.java)
+          .firstOrNull()
 
 }

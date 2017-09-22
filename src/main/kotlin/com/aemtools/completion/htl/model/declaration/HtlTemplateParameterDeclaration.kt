@@ -7,11 +7,11 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Dmytro Troynikov
  */
 class HtlTemplateParameterDeclaration(
-        val htlVariableNameElement: HtlVariableName,
-        xmlAttribute: XmlAttribute,
-        variableName: String
+    val htlVariableNameElement: HtlVariableName,
+    xmlAttribute: XmlAttribute,
+    variableName: String
 ) : HtlVariableDeclaration(
-        xmlAttribute,
-        variableName,
-        DeclarationAttributeType.DATA_SLY_TEMPLATE_PARAMETER
+    xmlAttribute,
+    variableName,
+    DeclarationAttributeType.DATA_SLY_TEMPLATE_PARAMETER
 )

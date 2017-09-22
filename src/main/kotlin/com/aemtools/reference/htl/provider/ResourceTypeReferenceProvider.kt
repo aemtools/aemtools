@@ -15,27 +15,27 @@ import generated.psi.impl.HtlStringLiteralImpl
  * @author Dmytro Troynikov
  */
 object ResourceTypeReferenceProvider : PsiReferenceProvider() {
-    override fun getReferencesByElement(
-            element: PsiElement,
-            context: ProcessingContext): Array<PsiReference> {
-        val literal = element as? HtlStringLiteralImpl
-                ?: return emptyArray()
+  override fun getReferencesByElement(
+      element: PsiElement,
+      context: ProcessingContext): Array<PsiReference> {
+    val literal = element as? HtlStringLiteralImpl
+        ?: return emptyArray()
 
-        val resourceType = literal.name
-        val component = AemComponentSearch.findByResourceType(resourceType, literal.project)
-                ?: return emptyArray()
+    val resourceType = literal.name
+    val component = AemComponentSearch.findByResourceType(resourceType, literal.project)
+        ?: return emptyArray()
 
-        val componentFile = OpenApiUtil.findFileByRelativePath(component.fullPath, literal.project)
-                ?: return emptyArray()
+    val componentFile = OpenApiUtil.findFileByRelativePath(component.fullPath, literal.project)
+        ?: return emptyArray()
 
-        val parentDir = componentFile.parent.toPsiDirectory(literal.project)
-                ?: return emptyArray()
+    val parentDir = componentFile.parent.toPsiDirectory(literal.project)
+        ?: return emptyArray()
 
-        return arrayOf(PsiDirectoryReference(
-                parentDir,
-                literal,
-                TextRange(1, literal.textLength - 1)
-        ))
-    }
+    return arrayOf(PsiDirectoryReference(
+        parentDir,
+        literal,
+        TextRange(1, literal.textLength - 1)
+    ))
+  }
 
 }

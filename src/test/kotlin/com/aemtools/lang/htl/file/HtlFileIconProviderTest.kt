@@ -9,24 +9,24 @@ import org.assertj.core.api.Assertions.assertThat
  */
 class HtlFileIconProviderTest : BaseLightTest(false) {
 
-    fun testShouldProvideIconForHtlFile() = fileCase {
-        addHtml("test.html", CARET)
-        verify {
-            val file = myFixture.file
+  fun testShouldProvideIconForHtlFile() = fileCase {
+    addHtml("test.html", CARET)
+    verify {
+      val file = myFixture.file
 
-            assertThat(HtlFileIconProvider().getIcon(file, 0))
-                    .isEqualTo(HtlIcons.HTL_FILE_ICON)
-        }
+      assertThat(HtlFileIconProvider().getIcon(file, 0))
+          .isEqualTo(HtlIcons.HTL_FILE_ICON)
     }
+  }
 
-    fun testShouldNotMatchNonHtl() = fileCase {
-        addXml("test.xml", CARET)
-        verify {
-            val file = myFixture.file
+  fun testShouldNotMatchNonHtl() = fileCase {
+    addXml("test.xml", CARET)
+    verify {
+      val file = myFixture.file
 
-            assertThat(HtlFileIconProvider().getIcon(file, 0))
-                    .isNull()
-        }
+      assertThat(HtlFileIconProvider().getIcon(file, 0))
+          .isNull()
     }
+  }
 
 }

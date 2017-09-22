@@ -7,7 +7,7 @@ import com.intellij.openapi.fileTypes.FileTypeFactory
  * @author Dmytro_Troynikov
  */
 class CdFileTypeFactory : FileTypeFactory() {
-    override fun createFileTypes(consumer: FileTypeConsumer) {
-        consumer.consume(CdFileType, CdFileType.defaultExtension)
-    }
+  override fun createFileTypes(consumer: FileTypeConsumer) {
+    consumer.consume(CdFileType, CdFileType.defaultExtension)
+  }
 }

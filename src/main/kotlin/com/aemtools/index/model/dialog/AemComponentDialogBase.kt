@@ -21,37 +21,37 @@ import java.io.Serializable
  */
 abstract class AemComponentDialogBase<out PARAMETER : Serializable> : Serializable {
 
-    abstract val fullPath: String
-    abstract val resourceType: String
-    abstract val myParameters: List<PARAMETER>
+  abstract val fullPath: String
+  abstract val resourceType: String
+  abstract val myParameters: List<PARAMETER>
 
-    /**
-     * Find declaration element of parameter with given name.
-     *
-     * @param name name of parameter to look for
-     * @param project the project
-     *
-     * @return psi element - declaration of property,
-     * `null` if no declaration found for given property
-     */
-    fun declarationElement(name: String, project: Project): PsiElement? {
-        val file = OpenApiUtil
-                .findFileByRelativePath(
-                        fullPath.normalizeToJcrRoot(),
-                        project
-                )
-                ?.toPsiFile(project) as? XmlFile
-                ?: return null
+  /**
+   * Find declaration element of parameter with given name.
+   *
+   * @param name name of parameter to look for
+   * @param project the project
+   *
+   * @return psi element - declaration of property,
+   * `null` if no declaration found for given property
+   */
+  fun declarationElement(name: String, project: Project): PsiElement? {
+    val file = OpenApiUtil
+        .findFileByRelativePath(
+            fullPath.normalizeToJcrRoot(),
+            project
+        )
+        ?.toPsiFile(project) as? XmlFile
+        ?: return null
 
-        val rootTag = file.rootTag
-                ?: return null
+    val rootTag = file.rootTag
+        ?: return null
 
-        return rootTag.findChildrenByType(XmlTag::class.java)
-                .find {
-                    it.attributes.any {
-                        it.value in listOf(name, "./$name")
-                    }
-                }
-    }
+    return rootTag.findChildrenByType(XmlTag::class.java)
+        .find {
+          it.attributes.any {
+            it.value in listOf(name, "./$name")
+          }
+        }
+  }
 
 }

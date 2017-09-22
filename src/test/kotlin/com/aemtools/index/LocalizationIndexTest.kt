@@ -9,8 +9,8 @@ import junit.framework.TestCase
  */
 class LocalizationIndexTest : BaseLightTest() {
 
-    fun testLocalizationIndex() = fileCase {
-        addXml(".content.xml", """
+  fun testLocalizationIndex() = fileCase {
+    addXml(".content.xml", """
            <jcr:root
               jcr:mixinTypes="mix:language"
               jcr:language="en">
@@ -25,25 +25,25 @@ class LocalizationIndexTest : BaseLightTest() {
            </jcr:root>
         """)
 
-        verify {
-            val models = HtlIndexFacade.getAllLocalizationModels(project)
+    verify {
+      val models = HtlIndexFacade.getAllLocalizationModels(project)
 
-            TestCase.assertEquals(listOf(
-                    LocalizationModel(
-                            "/src/.content.xml",
-                            "en",
-                            "message",
-                            "First message"
-                    ),
-                    LocalizationModel(
-                            "/src/.content.xml",
-                            "en",
-                            "message-2",
-                            "Second message"
-                    )
-            ),
-                    models)
-        }
+      TestCase.assertEquals(listOf(
+          LocalizationModel(
+              "/src/.content.xml",
+              "en",
+              "message",
+              "First message"
+          ),
+          LocalizationModel(
+              "/src/.content.xml",
+              "en",
+              "message-2",
+              "Second message"
+          )
+      ),
+          models)
     }
+  }
 
 }

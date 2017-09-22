@@ -11,10 +11,10 @@ import com.intellij.psi.PsiReferenceRegistrar
  * @author Dmytro Troynikov
  */
 class HtlToJavaReferenceContributor : PsiReferenceContributor() {
-    override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
-        registrar.registerReferenceProvider(
-                HtlPatterns.dataSlyUseMainString,
-                DataSlyUseElJavaReferenceProvider)
-    }
+  override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
+    registrar.registerReferenceProvider(
+        HtlPatterns.dataSlyUseMainString,
+        DataSlyUseElJavaReferenceProvider)
+  }
 
 }

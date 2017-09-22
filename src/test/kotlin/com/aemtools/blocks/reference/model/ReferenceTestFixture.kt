@@ -9,44 +9,44 @@ import junit.framework.TestCase
  * @author Dmytro Troynikov
  */
 class ReferenceTestFixture(fixture: JavaCodeInsightTestFixture)
-    : TestFixture(fixture),
-        IReferenceTestFixture {
-    var shouldBeResolvedTo: Class<out PsiElement>? = null
-    var shouldBeResolvedStrictly: Boolean = false
-    var shouldContainText: String? = null
+  : TestFixture(fixture),
+    IReferenceTestFixture {
+  var shouldBeResolvedTo: Class<out PsiElement>? = null
+  var shouldBeResolvedStrictly: Boolean = false
+  var shouldContainText: String? = null
 
-    override fun shouldResolveTo(type: Class<out PsiElement>, strict: Boolean) {
-        shouldBeResolvedTo = type
-        shouldBeResolvedStrictly = strict
+  override fun shouldResolveTo(type: Class<out PsiElement>, strict: Boolean) {
+    shouldBeResolvedTo = type
+    shouldBeResolvedStrictly = strict
+  }
+
+  override fun shouldContainText(text: String) {
+    shouldContainText = text
+  }
+
+  override fun test() {
+    super.test()
+
+    val referenceUnderCaret = fixture.file.findReferenceAt(fixture.editor.caretModel.offset)
+        ?: throw AssertionError("Unable to find reference in:\n${fixture.file.text}")
+
+    val resolvedReference = referenceUnderCaret.resolve()
+
+    val _shouldBeResolvedTo = shouldBeResolvedTo
+    if (_shouldBeResolvedTo != null) {
+      if (shouldBeResolvedStrictly) {
+        TestCase.assertEquals(_shouldBeResolvedTo, resolvedReference?.javaClass)
+      } else {
+        TestCase.assertNotNull("Unable to resolve reference $referenceUnderCaret", resolvedReference)
+        TestCase.assertTrue("${_shouldBeResolvedTo.canonicalName} is not assignable from ${resolvedReference?.javaClass?.canonicalName}",
+            _shouldBeResolvedTo.isAssignableFrom(resolvedReference?.javaClass))
+      }
     }
 
-    override fun shouldContainText(text: String) {
-        shouldContainText = text
+    if (shouldContainText != null) {
+      TestCase.assertEquals(shouldContainText, resolvedReference?.text)
     }
-
-    override fun test() {
-        super.test()
-
-        val referenceUnderCaret = fixture.file.findReferenceAt(fixture.editor.caretModel.offset)
-                ?: throw AssertionError("Unable to find reference in:\n${fixture.file.text}")
-
-        val resolvedReference = referenceUnderCaret.resolve()
-
-        val _shouldBeResolvedTo = shouldBeResolvedTo
-        if (_shouldBeResolvedTo != null) {
-            if (shouldBeResolvedStrictly) {
-                TestCase.assertEquals(_shouldBeResolvedTo, resolvedReference?.javaClass)
-            } else {
-                TestCase.assertNotNull("Unable to resolve reference $referenceUnderCaret", resolvedReference)
-                TestCase.assertTrue("${_shouldBeResolvedTo.canonicalName} is not assignable from ${resolvedReference?.javaClass?.canonicalName}",
-                        _shouldBeResolvedTo.isAssignableFrom(resolvedReference?.javaClass))
-            }
-        }
-
-        if (shouldContainText != null) {
-            TestCase.assertEquals(shouldContainText, resolvedReference?.text)
-        }
-    }
+  }
 
 }
 

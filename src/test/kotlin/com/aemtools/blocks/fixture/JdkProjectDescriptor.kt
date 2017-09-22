@@ -9,9 +9,9 @@ import java.io.File
  * @author Dmytro Troynikov
  */
 class JdkProjectDescriptor : LightProjectDescriptor() {
-    override fun getSdk(): Sdk? {
-        val javaHome = System.getProperty("java.home")
-        assert(File(javaHome).isDirectory)
-        return JavaSdk.getInstance().createJdk("Full JDK", javaHome, true)
-    }
+  override fun getSdk(): Sdk? {
+    val javaHome = System.getProperty("java.home")
+    assert(File(javaHome).isDirectory)
+    return JavaSdk.getInstance().createJdk("Full JDK", javaHome, true)
+  }
 }

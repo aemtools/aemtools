@@ -10,6 +10,11 @@ import com.intellij.psi.templateLanguages.TemplateLanguage
  */
 object HtlLanguage : Language("Htl"), TemplateLanguage {
 
-    fun getDefaultTemplateLang(): LanguageFileType = StdFileTypes.HTML
+  /**
+   * Get default template language file type.
+   *
+   * @return default template file type
+   */
+  fun getDefaultTemplateLang(): LanguageFileType = StdFileTypes.HTML
 
 }

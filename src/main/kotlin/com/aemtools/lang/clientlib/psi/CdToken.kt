@@ -7,5 +7,5 @@ import com.intellij.psi.tree.IElementType
  * @author Dmytro_Troynikov
  */
 class CdToken(debugName: String) : IElementType(debugName, CdLanguage) {
-    override fun toString(): String = "[Cd] ${super.toString()}"
+  override fun toString(): String = "[Cd] ${super.toString()}"
 }

@@ -10,38 +10,38 @@ import com.intellij.openapi.actionSystem.IdeActions
  */
 class CdCommenterTest : BaseLightTest(false) {
 
-    fun testLineComment() = fileCase {
-        addFile("js.txt", """
+  fun testLineComment() = fileCase {
+    addFile("js.txt", """
 ${CARET}my/path
         """)
 
-        verify {
-            val action = ActionManager.getInstance()
-                    .getAction(IdeActions.ACTION_COMMENT_LINE)
-                    as MultiCaretCodeInsightAction
-            action.actionPerformedImpl(project, editor)
+    verify {
+      val action = ActionManager.getInstance()
+          .getAction(IdeActions.ACTION_COMMENT_LINE)
+          as MultiCaretCodeInsightAction
+      action.actionPerformedImpl(project, editor)
 
-            myFixture.checkResult("""
+      myFixture.checkResult("""
 # my/path
         """)
-        }
     }
+  }
 
-    fun testLineUncomment() = fileCase {
-        addFile("js.txt", """
+  fun testLineUncomment() = fileCase {
+    addFile("js.txt", """
             $CARET# my/path
             """)
 
-        verify {
-            val action = ActionManager.getInstance()
-                    .getAction(IdeActions.ACTION_COMMENT_LINE)
-                    as MultiCaretCodeInsightAction
-            action.actionPerformedImpl(project, editor)
+    verify {
+      val action = ActionManager.getInstance()
+          .getAction(IdeActions.ACTION_COMMENT_LINE)
+          as MultiCaretCodeInsightAction
+      action.actionPerformedImpl(project, editor)
 
-            myFixture.checkResult("""
+      myFixture.checkResult("""
             my/path
             """)
-        }
     }
+  }
 
 }

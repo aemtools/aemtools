@@ -8,28 +8,28 @@ import com.intellij.psi.PsiElement
  */
 interface IReferenceTestFixture : ITestFixture {
 
-    /**
-     * Assert that the element under caret should be resolved to item of specified type.
-     * @param type the type of resolution item
-     * @param strict for _false_ [Class.isAssignableFrom] will be called, otherwise the classes will
-     * be checked for equality
-     */
-    fun shouldResolveTo(type: Class<out PsiElement>, strict: Boolean = false)
+  /**
+   * Assert that the element under caret should be resolved to item of specified type.
+   * @param type the type of resolution item
+   * @param strict for _false_ [Class.isAssignableFrom] will be called, otherwise the classes will
+   * be checked for equality
+   */
+  fun shouldResolveTo(type: Class<out PsiElement>, strict: Boolean = false)
 
-    /**
-     * Assert that resolved item should contained specified text.
-     * @param text the text
-     */
-    fun shouldContainText(text: String)
+  /**
+   * Assert that resolved item should contained specified text.
+   * @param text the text
+   */
+  fun shouldContainText(text: String)
 
-    /**
-     * Initialize the fixture.
-     */
-    fun init()
+  /**
+   * Initialize the fixture.
+   */
+  fun init()
 
-    /**
-     * Perform the test.
-     */
-    fun test()
+  /**
+   * Perform the test.
+   */
+  fun test()
 
 }

@@ -10,10 +10,10 @@ import com.intellij.psi.tree.ILeafElementType
  * Created by Dmytro_Troynikov on 5/16/2016.
  */
 class HtlTokenType(debugName: String) :
-IElementType(debugName, HtlLanguage), ILeafElementType {
+    IElementType(debugName, HtlLanguage), ILeafElementType {
 
-    override fun createLeafNode(leafText: CharSequence): ASTNode {
-        return LeafPsiElement(this, leafText)
-    }
+  override fun createLeafNode(leafText: CharSequence): ASTNode {
+    return LeafPsiElement(this, leafText)
+  }
 
 }

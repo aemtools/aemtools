@@ -8,8 +8,8 @@ import com.intellij.psi.PsiFile
  */
 interface IAssertionContext {
 
-    fun elementUnderCaret() : PsiElement
+  fun elementUnderCaret(): PsiElement
 
-    fun openedFile() : PsiFile
+  fun openedFile(): PsiFile
 
 }

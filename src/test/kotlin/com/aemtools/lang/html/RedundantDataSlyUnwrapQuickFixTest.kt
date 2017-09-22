@@ -8,20 +8,20 @@ import com.intellij.testFramework.InspectionFixtureTestCase
  */
 class RedundantDataSlyUnwrapQuickFixTest : InspectionFixtureTestCase() {
 
-    fun testQuickFix() {
-        myFixture.configureByText("test.html", """
+  fun testQuickFix() {
+    myFixture.configureByText("test.html", """
             <sly data-sly-unwrap></sly>
         """.trimIndent())
-        val fix = myFixture.getAllQuickFixes("test.html")
-                .first()
+    val fix = myFixture.getAllQuickFixes("test.html")
+        .first()
 
-        writeCommand(project) {
-            fix.invoke(project, editor, file)
-        }
+    writeCommand(project) {
+      fix.invoke(project, editor, file)
+    }
 
-        myFixture.checkResult("""
+    myFixture.checkResult("""
             <sly ></sly>
         """.trimIndent())
-    }
+  }
 
 }

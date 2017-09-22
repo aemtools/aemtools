@@ -12,14 +12,14 @@ import com.intellij.psi.PsiManager
  */
 class HtlViewProviderFactory : FileViewProviderFactory {
 
-    override fun createFileViewProvider(file: VirtualFile,
-                                        language: Language?,
-                                        manager: PsiManager,
-                                        eventSystemEnabled: Boolean): FileViewProvider {
-        if (language == null || !language.isKindOf(HtlLanguage)) {
-            throw AssertionError("Htl language expected")
-        }
-        return HtlFileViewProvider(manager, file, eventSystemEnabled, language)
+  override fun createFileViewProvider(file: VirtualFile,
+                                      language: Language?,
+                                      manager: PsiManager,
+                                      eventSystemEnabled: Boolean): FileViewProvider {
+    if (language == null || !language.isKindOf(HtlLanguage)) {
+      throw AssertionError("Htl language expected")
     }
+    return HtlFileViewProvider(manager, file, eventSystemEnabled, language)
+  }
 
 }

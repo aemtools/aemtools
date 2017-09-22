@@ -9,31 +9,31 @@ import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
  */
 class RedundantELAnnotatorTest : LightCodeInsightFixtureTestCase() {
 
-    fun testRedundantELInDataSlyUse() {
-        myFixture.configureByText("test.html", """
+  fun testRedundantELInDataSlyUse() {
+    myFixture.configureByText("test.html", """
             <div data-sly-use="<warning descr="$SIMPLIFY_EXPRESSION">$DOLLAR{'com.test.Bean'}</warning>"></div>
         """)
-        myFixture.checkHighlighting()
-    }
+    myFixture.checkHighlighting()
+  }
 
-    fun testRedundantELInDataSlyUseNotReportedInPresenceOfOptions() {
-        myFixture.configureByText("test.html", """
+  fun testRedundantELInDataSlyUseNotReportedInPresenceOfOptions() {
+    myFixture.configureByText("test.html", """
             <div data-sly-use="$DOLLAR{'com.test.Bean' @ param='value'}"></div>
         """)
-        myFixture.checkHighlighting()
-    }
+    myFixture.checkHighlighting()
+  }
 
-    fun testRedundantELInDataSlyInclude() {
-        myFixture.configureByText("test.html", """
+  fun testRedundantELInDataSlyInclude() {
+    myFixture.configureByText("test.html", """
             <div data-sly-include="<warning descr="$SIMPLIFY_EXPRESSION">$DOLLAR{'template.html'}</warning>"></div>
         """)
-        myFixture.checkHighlighting()
-    }
+    myFixture.checkHighlighting()
+  }
 
-    fun testRedundantELInDataSlyIncludeNotReportedInPresenceOfOptions() {
-        myFixture.configureByText("test.html", """
+  fun testRedundantELInDataSlyIncludeNotReportedInPresenceOfOptions() {
+    myFixture.configureByText("test.html", """
             <div data-sly-include="$DOLLAR{'template' @ param='value'}"></div>
         """)
-    }
+  }
 
 }

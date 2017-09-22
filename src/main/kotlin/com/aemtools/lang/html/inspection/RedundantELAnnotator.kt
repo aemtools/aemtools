@@ -20,33 +20,33 @@ import com.intellij.testFramework.MockProblemDescriptor
  */
 class RedundantELAnnotator : Annotator {
 
-    override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-        if (element is HtlHtlEl && accept(element)) {
-            holder.createWarningAnnotation(element, SIMPLIFY_EXPRESSION)
-                    .registerFix(ELSimplifyAction(element),
-                            element.textRange,
-                            HighlightDisplayKey.find("Annotator"),
-                            MockProblemDescriptor(element,
-                                    SIMPLIFY_EXPRESSION,
-                                    ProblemHighlightType.WEAK_WARNING,
-                                    ELSimplifyAction(element)))
-        }
+  override fun annotate(element: PsiElement, holder: AnnotationHolder) {
+    if (element is HtlHtlEl && accept(element)) {
+      holder.createWarningAnnotation(element, SIMPLIFY_EXPRESSION)
+          .registerFix(ELSimplifyAction(element),
+              element.textRange,
+              HighlightDisplayKey.find("Annotator"),
+              MockProblemDescriptor(element,
+                  SIMPLIFY_EXPRESSION,
+                  ProblemHighlightType.WEAK_WARNING,
+                  ELSimplifyAction(element)))
     }
+  }
 
-    private fun accept(element: PsiElement): Boolean = (element is HtlHtlEl
-            && element.isDumbStringLiteralEl()
-            && (element.isInsideOF(DATA_SLY_USE) || element.isInsideOF(DATA_SLY_INCLUDE)))
+  private fun accept(element: PsiElement): Boolean = (element is HtlHtlEl
+      && element.isDumbStringLiteralEl()
+      && (element.isInsideOF(DATA_SLY_USE) || element.isInsideOF(DATA_SLY_INCLUDE)))
 
-    /**
-     * Check if current current [HtlHtlEl] is a "Dumb String Literal", which mean
-     * that the expression doesn't contain anything except the string literal, e.g.:
-     * ```
-     *   ${'static string'}
-     * ```
-     */
-    fun HtlHtlEl.isDumbStringLiteralEl(): Boolean =
-            this.hasChild(HtlStringLiteral::class.java)
-                    && !this.hasChild(com.aemtools.lang.htl.psi.HtlPropertyAccess::class.java)
-                    && !this.hasChild(com.aemtools.lang.htl.psi.HtlContextExpression::class.java)
+  /**
+   * Check if current current [HtlHtlEl] is a "Dumb String Literal", which mean
+   * that the expression doesn't contain anything except the string literal, e.g.:
+   * ```
+   *   ${'static string'}
+   * ```
+   */
+  fun HtlHtlEl.isDumbStringLiteralEl(): Boolean =
+      this.hasChild(HtlStringLiteral::class.java)
+          && !this.hasChild(com.aemtools.lang.htl.psi.HtlPropertyAccess::class.java)
+          && !this.hasChild(com.aemtools.lang.htl.psi.HtlContextExpression::class.java)
 
 }

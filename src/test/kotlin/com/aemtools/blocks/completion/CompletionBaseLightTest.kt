@@ -11,16 +11,16 @@ import com.intellij.testFramework.LightProjectDescriptor
  */
 abstract class CompletionBaseLightTest(withUberJar: Boolean = true) : BaseLightTest(withUberJar) {
 
-    fun completionTest(fixture: ICompletionTestFixture.() -> Unit) {
-        val completionTestFixture = CompletionTestFixture(myFixture).apply { fixture() }
+  fun completionTest(fixture: ICompletionTestFixture.() -> Unit) {
+    val completionTestFixture = CompletionTestFixture(myFixture).apply { fixture() }
 
-        completionTestFixture.init()
+    completionTestFixture.init()
 
-        completionTestFixture.test()
-    }
+    completionTestFixture.test()
+  }
 
-    override fun getProjectDescriptor(): LightProjectDescriptor {
-        return JdkProjectDescriptor()
-    }
+  override fun getProjectDescriptor(): LightProjectDescriptor {
+    return JdkProjectDescriptor()
+  }
 
 }

@@ -6,4 +6,4 @@ import com.aemtools.completion.html.inserthandler.HtlTextInsertHandler
  * @author Dmytro Troynikov
  */
 class HtlElAssignmentInsertHandler :
-        HtlTextInsertHandler("=", 1)
+    HtlTextInsertHandler("=", offset = 1)

@@ -8,11 +8,11 @@ import com.aemtools.constant.const
  * @author Dmytro Troynikov
  */
 class HtlAttributesDocumentationProviderTest
-    : BaseDocumentationTest(HtlAttributesDocumentationProvider()) {
+  : BaseDocumentationTest(HtlAttributesDocumentationProvider()) {
 
-    fun testDataSlyUseDocumentation() = docCase {
-        htlAttribute(const.htl.DATA_SLY_USE)
-        documentation("""
+  fun testDataSlyUseDocumentation() = docCase {
+    htlAttribute(const.htl.DATA_SLY_USE)
+    documentation("""
             <h2>data-sly-use</h2>
             <b>Description:</b> Exposes logic to the template<br>
             <b>Element:</b> always shown<br>
@@ -24,11 +24,11 @@ class HtlAttributesDocumentationProviderTest
              - required: false<br>
              - description: Customised identifier name to access the instantiated logic<br><br><br>See also: <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#221-use">Htl Specification</a>
         """)
-    }
+  }
 
-    fun testDataSlyTestDocumentation() = docCase {
-        htlAttribute(const.htl.DATA_SLY_TEST)
-        documentation("""
+  fun testDataSlyTestDocumentation() = docCase {
+    htlAttribute(const.htl.DATA_SLY_TEST)
+    documentation("""
             <h2>data-sly-test</h2>
             <b>Description:</b> Keeps, or removes the element depending on the attribute value.<br>
             <b>Element:</b> shown if test evaluates to <strong>true</strong>.<br>
@@ -42,11 +42,11 @@ class HtlAttributesDocumentationProviderTest
              - description: Identifier name to access the result of the test.<br><br><br>
             See also: <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#225-test">Htl Specification</a>
         """)
-    }
+  }
 
-    fun testDataSlyRepeatDocumentation() = docCase {
-        htlAttribute(const.htl.DATA_SLY_REPEAT)
-        documentation("""
+  fun testDataSlyRepeatDocumentation() = docCase {
+    htlAttribute(const.htl.DATA_SLY_REPEAT)
+    documentation("""
             <h2>data-sly-repeat</h2>
             <b>Description:</b> Iterates over the content of each item in the attribute value and displays the containing element as many times as items in the attribute value.<br>
             <b>Element:</b> shown only if the number of items from the attribute value is greater than 0, or if the attribute value is a string or number.<br>
@@ -60,11 +60,11 @@ class HtlAttributesDocumentationProviderTest
              - description: Customised identifier name to access the item within the list element.<br><br><br>
             See also: <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#227-repeat">Htl Specification</a>
         """)
-    }
+  }
 
-    fun testDataSlyListDocumentation() = docCase {
-        htlAttribute(const.htl.DATA_SLY_LIST)
-        documentation("""
+  fun testDataSlyListDocumentation() = docCase {
+    htlAttribute(const.htl.DATA_SLY_LIST)
+    documentation("""
             <h2>data-sly-list</h2>
             <b>Description:</b> Iterates over the content of each item in the attribute value.<br>
             <b>Element:</b> shown only if the number of items from the attribute value is greater than 0, or if the attribute value is a string or number.<br>
@@ -78,11 +78,11 @@ class HtlAttributesDocumentationProviderTest
              - description: Customised identifier name to access the item within the list element.<br><br><br>
             See also: <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#226-list">Htl Specification</a>
         """)
-    }
+  }
 
-    fun testDataSlyTemplateDocumentation() = docCase {
-        htlAttribute(const.htl.DATA_SLY_TEMPLATE)
-        documentation("""
+  fun testDataSlyTemplateDocumentation() = docCase {
+    htlAttribute(const.htl.DATA_SLY_TEMPLATE)
+    documentation("""
             <h2>data-sly-template</h2>
             <b>Description:</b> Declares an HTML block, naming it with an identifier and defining the parameters it can get.<br>
             <b>Element:</b> never shown.<br>
@@ -95,11 +95,11 @@ class HtlAttributesDocumentationProviderTest
              - description: The template identifier to declare.<br><br><br>
             See also: <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#22101-template">Htl Specification</a>
         """)
-    }
+  }
 
-    fun testDataSlyAttributeDocumentation() = docCase {
-        htlAttribute(const.htl.DATA_SLY_ATTRIBUTE)
-        documentation("""
+  fun testDataSlyAttributeDocumentation() = docCase {
+    htlAttribute(const.htl.DATA_SLY_ATTRIBUTE)
+    documentation("""
             <h2>data-sly-attribute</h2>
             <b>Description:</b> Sets an attribute or group of attributes on the current element.<br>
             <b>Element:</b> always shown<br>
@@ -113,11 +113,11 @@ class HtlAttributesDocumentationProviderTest
              - description: the attribute name; must be omitted only if attribute value is an <strong>Object</strong><br><br><br>
             See also: <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#223-attribute">Htl Specification</a>
         """)
-    }
+  }
 
-    fun testDataSlyElementDocumentation() = docCase {
-        htlAttribute(const.htl.DATA_SLY_ELEMENT)
-        documentation("""
+  fun testDataSlyElementDocumentation() = docCase {
+    htlAttribute(const.htl.DATA_SLY_ELEMENT)
+    documentation("""
             <h2>data-sly-element</h2>
             <b>Description:</b> Replaces the element's tag name<br>
             <b>Element:</b> always shown<br>
@@ -128,11 +128,11 @@ class HtlAttributesDocumentationProviderTest
              - description: The element's tag name.<br><br><br>
             See also: <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#224-element">Htl Specification</a>
         """)
-    }
+  }
 
-    fun testDataSlyCallDocumentation() = docCase {
-        htlAttribute(const.htl.DATA_SLY_CALL)
-        documentation("""
+  fun testDataSlyCallDocumentation() = docCase {
+    htlAttribute(const.htl.DATA_SLY_CALL)
+    documentation("""
             <h2>data-sly-call</h2>
             <b>Description:</b> Calls a declared HTML block, passing parameters to it.<br>
             <b>Element:</b> always shown.<br>
@@ -142,11 +142,11 @@ class HtlAttributesDocumentationProviderTest
              - description: An expression defining the template identifier and the parameters to pass.<br><br><br>
             See also: <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#22102-call">Htl Specification</a>
         """)
-    }
+  }
 
-    fun testDataSlyIncludeDocumentation() = docCase {
-        htlAttribute(const.htl.DATA_SLY_INCLUDE)
-        documentation("""
+  fun testDataSlyIncludeDocumentation() = docCase {
+    htlAttribute(const.htl.DATA_SLY_INCLUDE)
+    documentation("""
             <h2>data-sly-include</h2>
             <b>Description:</b> Includes the output of rendering script run with the current context.<br>
             <b>Element:</b> always shown<br>
@@ -157,22 +157,22 @@ class HtlAttributesDocumentationProviderTest
              - description: The file to include.<br><br><br>
             See also: <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#228-include">Htl Specification</a>
         """)
-    }
+  }
 
-    fun testDataSlyUnwrapDocumentation() = docCase {
-        htlAttribute(const.htl.DATA_SLY_UNWRAP)
-        documentation("""
+  fun testDataSlyUnwrapDocumentation() = docCase {
+    htlAttribute(const.htl.DATA_SLY_UNWRAP)
+    documentation("""
             <h2>data-sly-unwrap</h2>
             <b>Description:</b> Removes containing tag.<br>
             <b>Element:</b> never shown.<br>
             <b>Content of element:</b> always shown.<br><br><br>
             See also: <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#2211-unwrap">Htl Specification</a>
         """)
-    }
+  }
 
-    fun testDataSlyTextDocumentation() = docCase {
-        htlAttribute(const.htl.DATA_SLY_TEXT)
-        documentation("""
+  fun testDataSlyTextDocumentation() = docCase {
+    htlAttribute(const.htl.DATA_SLY_TEXT)
+    documentation("""
             <h2>data-sly-text</h2>
             <b>Description:</b> Sets the content for the current element.<br>
             <b>Element:</b> always shown<br>
@@ -183,11 +183,11 @@ class HtlAttributesDocumentationProviderTest
              - description: The element content<br><br><br>
             See also: <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#222-text">Htl Specification</a>
         """)
-    }
+  }
 
-    fun testDataSlyResourceDocumentation() = docCase {
-        htlAttribute(const.htl.DATA_SLY_RESOURCE)
-        documentation("""
+  fun testDataSlyResourceDocumentation() = docCase {
+    htlAttribute(const.htl.DATA_SLY_RESOURCE)
+    documentation("""
             <h2>data-sly-resource</h2>
             <b>Description:</b> Includes a rendered resource.<br>
             <b>Element:</b> always shown.<br>
@@ -198,10 +198,10 @@ class HtlAttributesDocumentationProviderTest
              - description: The path to include.<br><br><br>
             See also: <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#229-resource">Htl Specification</a>
         """)
-    }
+  }
 
-    fun IDocTestFixture.htlAttribute(attribute: String) =
-            this.addHtml("test.html", """
+  fun IDocTestFixture.htlAttribute(attribute: String) =
+      this.addHtml("test.html", """
                 <div $CARET$attribute=""></div>
             """)
 

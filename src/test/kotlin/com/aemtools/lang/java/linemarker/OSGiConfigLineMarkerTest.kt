@@ -14,16 +14,17 @@ import org.mockito.junit.MockitoRule
  */
 
 class OSGiConfigLineMarkerTest : BaseLightTest(),
-        OSGiConfigFixtureMixin,
-        OSGiFelixAnnotationsMixin {
+    OSGiConfigFixtureMixin,
+    OSGiFelixAnnotationsMixin {
 
-    var tested: OSGiConfigLineMarker = OSGiConfigLineMarker()
+  var tested: OSGiConfigLineMarker = OSGiConfigLineMarker()
 
-    @Rule var mockitoRule: MockitoRule = MockitoJUnit.rule()
+  @Rule
+  var mockitoRule: MockitoRule = MockitoJUnit.rule()
 
-    fun testFelixServiceShouldBeMarked() = fileCase {
-        addFelixServiceAnnotation()
-        addClass("MyService.java", """
+  fun testFelixServiceShouldBeMarked() = fileCase {
+    addFelixServiceAnnotation()
+    addClass("MyService.java", """
             package com.test;
 
             import $FELIX_SERVICE_ANNOTATION;
@@ -31,23 +32,23 @@ class OSGiConfigLineMarkerTest : BaseLightTest(),
             @Service
             public class MyService {}
         """)
-        addEmptyOSGiConfigs("/config/com.test.MyService.xml")
+    addEmptyOSGiConfigs("/config/com.test.MyService.xml")
 
-        verify {
-            val psiClass = JavaSearch.findClass("com.test.MyService", project)
-                    ?: throw AssertionError("Unable to find fixture class!")
-            val classIdentifier = psiClass.nameIdentifier
-                    ?: throw AssertionError("Unable to get class identifier!")
+    verify {
+      val psiClass = JavaSearch.findClass("com.test.MyService", project)
+          ?: throw AssertionError("Unable to find fixture class!")
+      val classIdentifier = psiClass.nameIdentifier
+          ?: throw AssertionError("Unable to get class identifier!")
 
-            val marker = tested.getLineMarkerInfo(classIdentifier)
+      val marker = tested.getLineMarkerInfo(classIdentifier)
 
-            assertNotNull("Marker should be created for given identifier", marker)
-        }
+      assertNotNull("Marker should be created for given identifier", marker)
     }
+  }
 
-    fun testAvailableConfigsShouldBeSortedCorrectly() = fileCase {
-        addFelixServiceAnnotation()
-        addClass("MyService.java", """
+  fun testAvailableConfigsShouldBeSortedCorrectly() = fileCase {
+    addFelixServiceAnnotation()
+    addClass("MyService.java", """
             package com.test;
 
             import $FELIX_SERVICE_ANNOTATION;
@@ -55,38 +56,38 @@ class OSGiConfigLineMarkerTest : BaseLightTest(),
             @Service
             public class MyService {}
         """)
-        addEmptyOSGiConfigs(
-                "/config/com.test.MyService-a.xml",
-                "/config/com.test.MyService-b.xml",
-                "/config.author/com.test.MyService-a.xml",
-                "/config.author/com.test.MyService-b.xml",
-                "/config.author.dev/com.test.MyService-a.xml",
-                "/config.author.dev.perf/com.test.MyService-a.xml",
-                "/config.alongrunmodename/com.test.MyService-a.xml"
-        )
-        verify {
-            val psiClass = JavaSearch.findClass("com.test.MyService", project)
-                    ?: throw AssertionError("Unable to find fixture class!")
-            val classIdentifier = psiClass.nameIdentifier
-                    ?: throw AssertionError("Unable to get class identifier!")
+    addEmptyOSGiConfigs(
+        "/config/com.test.MyService-a.xml",
+        "/config/com.test.MyService-b.xml",
+        "/config.author/com.test.MyService-a.xml",
+        "/config.author/com.test.MyService-b.xml",
+        "/config.author.dev/com.test.MyService-a.xml",
+        "/config.author.dev.perf/com.test.MyService-a.xml",
+        "/config.alongrunmodename/com.test.MyService-a.xml"
+    )
+    verify {
+      val psiClass = JavaSearch.findClass("com.test.MyService", project)
+          ?: throw AssertionError("Unable to find fixture class!")
+      val classIdentifier = psiClass.nameIdentifier
+          ?: throw AssertionError("Unable to get class identifier!")
 
-            val marker = tested.getLineMarkerInfo(classIdentifier)
-                    ?: throw AssertionError("Marker is null")
-            val navigationHandler = marker.navigationHandler as? OSGiGutterIconNavigationHandler
-                    ?: throw AssertionError("Navigation handler is null")
+      val marker = tested.getLineMarkerInfo(classIdentifier)
+          ?: throw AssertionError("Marker is null")
+      val navigationHandler = marker.navigationHandler as? OSGiGutterIconNavigationHandler
+          ?: throw AssertionError("Navigation handler is null")
 
-            val configs = navigationHandler.configs
+      val configs = navigationHandler.configs
 
-            assertEquals(listOf(
-                    "default a",
-                    "default b",
-                    "alongrunmodename a",
-                    "author a",
-                    "author b",
-                    "author, dev a",
-                    "author, dev, perf a"
-            ), configs.map { "${it.mods.joinToString { it }} ${it.suffix()}" })
-        }
+      assertEquals(listOf(
+          "default a",
+          "default b",
+          "alongrunmodename a",
+          "author a",
+          "author b",
+          "author, dev a",
+          "author, dev, perf a"
+      ), configs.map { "${it.mods.joinToString { it }} ${it.suffix()}" })
     }
+  }
 
 }
