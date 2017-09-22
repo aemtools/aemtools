@@ -109,5 +109,5 @@ apply from: rootProject.file("config/lexerparser.gradle")
 apply from: rootProject.file("config/detekt.gradle")
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.1'
+    gradleVersion = '4.2'
 }
