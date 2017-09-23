@@ -6,9 +6,6 @@ build_script:
 
 test_script:
   - gradlew.bat test jacocoTestReport --info --no-daemon
-  
-cache:
-  - C:\Users\appveyor\.gradle
 
 environment:
   matrix:
