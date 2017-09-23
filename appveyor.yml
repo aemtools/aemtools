@@ -5,7 +5,12 @@ build_script:
   - gradlew.bat generateGrammar buildPlugin --info --no-daemon
 
 test_script:
-  - gradlew.bat test --info --no-daemon
+  - gradlew.bat test jacocoTestReport --info --no-daemon
   
 cache:
   - C:\Users\appveyor\.gradle
+
+environment:
+  - ORG_GRADLE_PROJECT_ideaVersion=2017.1.5
+  - ORG_GRADLE_PROJECT_ideaVersion=2017.2.2
+  - ORG_GRADLE_PROJECT_ideaVersion=LATEST-EAP-SNAPSHOT
