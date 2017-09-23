@@ -1,0 +1,11 @@
+build:
+  verbosity: detailed
+  
+build_script:
+  - gradlew.bat generateGrammar buildPlugin --info --no-daemon
+
+test_script:
+  - gradlew.bat test --info --no-daemon
+  
+cache:
+  - C:\Users\appveyor\.gradle
