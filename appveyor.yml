@@ -12,6 +12,6 @@ cache:
 
 environment:
   matrix:
-    - ORG_GRADLE_PROJECT_ideaVersion=2017.1.5
-    - ORG_GRADLE_PROJECT_ideaVersion=2017.2.2
-    - ORG_GRADLE_PROJECT_ideaVersion=LATEST-EAP-SNAPSHOT
+    - ORG_GRADLE_PROJECT_ideaVersion: 2017.1.5
+    - ORG_GRADLE_PROJECT_ideaVersion: 2017.2.2
+    - ORG_GRADLE_PROJECT_ideaVersion: LATEST-EAP-SNAPSHOT
