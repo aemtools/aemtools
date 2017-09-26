@@ -18,38 +18,42 @@ import com.intellij.psi.PsiElement
  * @author Dmytro Troynikov
  */
 class HtlOptionsAnnotator : Annotator {
-    override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-        if (element !is VariableNameMixin
-                || !element.isOption()) {
-            return
-        }
-
-        if (element.isInsideOf(const.htl.DATA_SLY_CALL)) {
-            val hel = element.findParentByType(HtlElExpressionMixin::class.java)
-                    ?: return
-
-            val outputType = hel
-                    .getMainPropertyAccess()
-                    ?.callChain()
-                    ?.getLastOutputType()
-                    as? TemplateTypeDescriptor
-                    ?: return
-
-            val templateParameters = outputType.parameters()
-            if (templateParameters.any { it == element.variableName() }) {
-                holder.highlight(element, HtlColors.TEMPLATE_ARGUMENT, "Template Argument")
-            }
-            return
-        }
-
-        if (element.isInsideOf(const.htl.DATA_SLY_USE)) {
-            return
-        }
-
-        if (HtlAttributesRepository.getHtlOptions()
-                .any { it.name == element.variableName() }) {
-            holder.highlight(element, HtlColors.STANDARD_OPTION, "Option")
-        }
+  override fun annotate(element: PsiElement, holder: AnnotationHolder) {
+    if (element !is VariableNameMixin
+        || !element.isOption()) {
+      return
     }
+
+    if (element.isInsideOf(const.htl.DATA_SLY_CALL)) {
+      val hel = element.findParentByType(HtlElExpressionMixin::class.java)
+          ?: return
+
+      val outputType = hel
+          .getMainPropertyAccess()
+          ?.callChain()
+          ?.getLastOutputType()
+          as? TemplateTypeDescriptor
+          ?: return
+
+      val templateParameters = outputType.parameters()
+      if (templateParameters.any { it == element.variableName() }) {
+        holder.highlight(element, HtlColors.TEMPLATE_ARGUMENT, "Template Argument")
+      }
+      return
+    }
+
+    if (element.isInsideOf(const.htl.DATA_SLY_TEMPLATE)) {
+      holder.highlight(element, HtlColors.TEMPLATE_PARAMETER, "Template Parameter")
+    }
+
+    if (element.isInsideOf(const.htl.DATA_SLY_USE)) {
+      return
+    }
+
+    if (HtlAttributesRepository.getHtlOptions()
+        .any { it.name == element.variableName() }) {
+      holder.highlight(element, HtlColors.STANDARD_OPTION, "Standard Option")
+    }
+  }
 
 }

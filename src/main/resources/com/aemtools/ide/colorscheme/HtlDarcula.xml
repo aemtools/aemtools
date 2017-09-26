@@ -1,31 +1,83 @@
 <?xml version='1.0'?>
 <list>
-    <option name="sightly.el.BOOLEAN">
+    <option name="HTL_EL_BOOLEAN">
         <value>
-            <option name="FOREGROUND" value="20999d"/>
+            <option name="FOREGROUND" value="000080"/>
             <option name="FONT_TYPE" value="2"/>
         </value>
     </option>
-    <option name="sightly.sel.STRING">
+    <option name="HTL_EL_STRING">
         <value>
             <option name="FOREGROUND" value="DD6718"/>
         </value>
     </option>
-    <option name="sightly.sel.INTEGER">
+    <option name="HTL_EL_INTEGER">
         <value>
-            <option name="FOREGROUND" value="20999d"/>
+            <option name="FOREGROUND" value="0000FF"/>
         </value>
     </option>
-    <option name="htl.sel.TEMPLATE_ARGUMENT">
+    <option name="HTL_EL_VARIABLE">
+        <value>
+            <option name=""/>
+        </value>
+    </option>
+
+    <option name="HTL_EL_TEMPLATE_ARGUMENT">
         <value>
             <option name="FOREGROUND" value="4A86E8"/>
             <option name="FONT_TYPE" value="3"/>
         </value>
     </option>
-    <option name="htl.sel.STANDARD_OPTION">
+    <option name="HTL_EL_TEMPLATE_PARAMETER">
         <value>
             <option name="FOREGROUND" value="FFC66D"/>
             <option name="FONT_TYPE" value="3"/>
         </value>
     </option>
+    <option name="HTL_EL_STANDARD_OPTION">
+        <value>
+            <option name="FOREGROUND" value="FFC66D"/>
+            <option name="FONT_TYPE" value="3"/>
+        </value>
+    </option>
+    <option name="HTL_EL_OPTION">
+        <value>
+            <option name="FOREGROUND" value=""/>
+        </value>
+    </option>
+
+    <option name="HTL_EL_NULL">
+        <value>
+            <option name="FOREGROUND" value=""/>
+        </value>
+    </option>
+    <option name="HTL_EL_PARENTHESES">
+        <value>
+            <option name="FOREGROUND" value=""/>
+        </value>
+    </option>
+
+    <option name="HTL_ATTRIBUTE">
+        <value>
+            <option name="FOREGROUND" value=""/>
+        </value>
+    </option>
+
+    <option name="HTL_VARIABLE_DECLARATION">
+
+    </option>
+    <option name="HTL_VARIABLE_UNUSED">
+
+    </option>
+
+    <option name="HTL_EL_GLOBAL_VARIABLE">
+
+    </option>
+    <option name="HTL_EL_LOCAL_VARIABLE">
+
+    </option>
+    <option name="HTL_EL_UNRESOLVED_VARIABLE">
+
+    </option>
+
 </list>

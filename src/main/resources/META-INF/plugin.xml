@@ -183,7 +183,7 @@
         <additionalTextAttributes
             scheme="Darcula"
             file="com/aemtools/ide/colorscheme/HtlDarcula.xml"/>
-
+        <colorSettingsPage implementation="com.aemtools.ide.htl.HtlColorsAndFontsPage"/>
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
     </extensions>
 
