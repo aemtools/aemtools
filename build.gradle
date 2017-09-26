@@ -92,6 +92,7 @@ dependencies {
     testCompile group: 'com.github.markusbernhardt', name: 'proxy-vole', version: '1.0.3'
 
     testCompile "junit:junit:$junit_version"
+    testCompile "org.powermock:powermock-core:$powermock_version"
     testCompile "org.powermock:powermock-module-junit4:$powermock_version"
     testCompile "org.powermock:powermock-api-mockito2:$powermock_version"
 
