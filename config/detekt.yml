@@ -279,7 +279,7 @@ style:
     variablePattern: '^(_)?[a-z$][a-zA-Z$0-9]*$'
   ConstantNaming:
     active: true
-    constantPattern: '^([A-Z_]*|serialVersionUID)$'
+    constantPattern: '^([A-Z_][A-Z\d_]*|serialVersionUID)$'
   VariableMaxLength:
     active: false
     maximumVariableNameLength: 30

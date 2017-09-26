@@ -16,7 +16,7 @@ import javax.swing.Icon
  */
 class HtlColorsAndFontsPage : ColorSettingsPage {
 
-  private val PREVIEW_TAGS: MutableMap<String, TextAttributesKey> = mutableMapOf(
+  private val previewTags: MutableMap<String, TextAttributesKey> = mutableMapOf(
       "HTL_EL_BOOLEAN" to HtlColors.BOOLEAN,
       "HTL_EL_STRING" to HtlColors.STRING,
       "HTL_EL_INTEGER" to HtlColors.INTEGER,
@@ -42,7 +42,7 @@ class HtlColorsAndFontsPage : ColorSettingsPage {
       "HTL_EL_UNRESOLVED_VARIABLE" to HtlColors.HTL_EL_UNRESOLVED_VARIABLE
   )
 
-  private val ATTRS: Array<AttributesDescriptor> = arrayOf(
+  private val attributes: Array<AttributesDescriptor> = arrayOf(
       AttributesDescriptor("Boolean", HtlColors.BOOLEAN),
       AttributesDescriptor("String", HtlColors.STRING),
       AttributesDescriptor("Integer", HtlColors.INTEGER),
@@ -72,13 +72,13 @@ class HtlColorsAndFontsPage : ColorSettingsPage {
       = HtlHighlighter()
 
   override fun getAdditionalHighlightingTagToDescriptorMap(): MutableMap<String, TextAttributesKey>
-      = PREVIEW_TAGS
+      = previewTags
 
   override fun getIcon(): Icon?
       = HtlIcons.HTL_FILE_ICON
 
   override fun getAttributeDescriptors(): Array<AttributesDescriptor>
-      = ATTRS
+      = attributes
 
   override fun getColorDescriptors(): Array<ColorDescriptor>
       = ColorDescriptor.EMPTY_ARRAY
@@ -96,7 +96,8 @@ class HtlColorsAndFontsPage : ColorSettingsPage {
     append("$DOLLAR{true || false || null || (100 < 200)}\n")
     append("$DOLLAR{<HTL_EL_GLOBAL_VARIABLE>properties</HTL_EL_GLOBAL_VARIABLE>[jcr:title]}\n")
     append("$DOLLAR{<HTL_EL_UNRESOLVED_VARIABLE>unresolved</HTL_EL_UNRESOLVED_VARIABLE>}\n")
-    append("<div <HTL_ATTRIBUTE>data-sly-test.</HTL_ATTRIBUTE><HTL_VARIABLE_UNUSED>unused</HTL_VARIABLE_UNUSED>=\"\">\n")
+    append("<div <HTL_ATTRIBUTE>data-sly-test.</HTL_ATTRIBUTE>")
+    append("<HTL_VARIABLE_UNUSED>unused</HTL_VARIABLE_UNUSED>=\"\">\n")
     append("<div <HTL_ATTRIBUTE>data-sly-template.</HTL_ATTRIBUTE>")
     append("<HTL_VARIABLE_DECLARATION>template</HTL_VARIABLE_DECLARATION>=\"")
     append("$DOLLAR{@ <HTL_EL_TEMPLATE_PARAMETER>param1</HTL_EL_TEMPLATE_PARAMETER>}\"></div>\n")
