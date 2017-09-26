@@ -64,7 +64,7 @@ $CARET
 
     private fun testStandardOptionHighlight(option: String) {
         myFixture.configureByText("test.html", """
-            $DOLLAR{'' @ <info descr="Option">$option</info>=''}
+            $DOLLAR{'' @ <info descr="Standard Option">$option</info>=''}
         """)
         myFixture.checkHighlighting(true, true, true)
     }

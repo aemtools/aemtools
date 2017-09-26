@@ -58,7 +58,7 @@ class HtlColorsAndFontsPage : ColorSettingsPage {
       AttributesDescriptor("Null", HtlColors.NULL),
       AttributesDescriptor("Parentheses", HtlColors.PARENTHESES),
 
-      AttributesDescriptor("Htl Attribute", HtlColors.HTL_ATTRIBUTE),
+      AttributesDescriptor("HTL Attribute", HtlColors.HTL_ATTRIBUTE),
 
       AttributesDescriptor("Variable Declaration", HtlColors.HTL_VARIABLE_DECLARATION),
       AttributesDescriptor("Unused Variable", HtlColors.HTL_VARIABLE_UNUSED),
