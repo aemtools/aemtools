@@ -8,10 +8,10 @@ import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.constant.const.htl.DATA_SLY_USE
-import com.aemtools.lang.common.HtlHighlightColors.HTL_ATTRIBUTE
-import com.aemtools.lang.common.HtlHighlightColors.HTL_VARIABLE_DECLARATION
-import com.aemtools.lang.common.HtlHighlightColors.HTL_VARIABLE_UNUSED
 import com.aemtools.lang.common.highlight
+import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_ATTRIBUTE
+import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_VARIABLE_DECLARATION
+import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_VARIABLE_UNUSED
 import com.aemtools.reference.htl.reference.HtlDeclarationReference
 import com.aemtools.reference.htl.reference.HtlListHelperReference
 import com.intellij.codeInsight.intention.IntentionAction

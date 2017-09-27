@@ -8,7 +8,7 @@ import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
 import com.intellij.psi.tree.IElementType
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Troynikov
  */
 class HtlHighlighter : SyntaxHighlighterBase() {
   override fun getTokenHighlights(tokenType: IElementType?): Array<out TextAttributesKey> {
@@ -25,23 +25,32 @@ class HtlHighlighter : SyntaxHighlighterBase() {
     HtlTypes.DOUBLE_QUOTED_STRING -> HtlColors.STRING
 
     HtlTypes.INTEGER -> HtlColors.INTEGER
+
     HtlTypes.NULL_LITERAL_TOKEN -> HtlColors.NULL
+
     HtlTypes.VARIABLE_NAME -> HtlColors.VARIABLE
+
     HtlTypes.AT -> HtlColors.DELIMITER
 
     HtlTypes.LBRACE,
     HtlTypes.EL_START,
     HtlTypes.RBRACE -> HtlColors.DELIMITER
+
     HtlTypes.LBRACKET,
     HtlTypes.RBRACKET -> HtlColors.PARENTHESES
+
     HtlTypes.GT,
     HtlTypes.LT,
     HtlTypes.GTE,
     HtlTypes.LTE,
     HtlTypes.AND_AND,
     HtlTypes.OR_OR -> HtlColors.OPERATOR
+
     HtlTypes.VAR_NAME -> HtlColors.IDENTIFIER
-    HtlTypes.LSQRBRACKET, HtlTypes.RSQRBRACKET -> HtlColors.BRACKET
+
+    HtlTypes.LSQRBRACKET,
+    HtlTypes.RSQRBRACKET -> HtlColors.BRACKET
+
     else -> null
   }
 }

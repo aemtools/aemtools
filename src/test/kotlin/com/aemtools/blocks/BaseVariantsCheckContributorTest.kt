@@ -1,15 +1,14 @@
 package com.aemtools.blocks
 
+import com.aemtools.blocks.fixture.TestClassesMixin
 import com.aemtools.blocks.fixture.UberJarFixtureMixin
 import com.aemtools.lang.htl.lexer.HtlTestCase
 import com.intellij.codeInsight.completion.LightFixtureCompletionTestCase
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.ide.startup.impl.StartupManagerImpl
 import com.intellij.openapi.startup.StartupManager
-import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess
 import com.intellij.testFramework.LightProjectDescriptor
-import com.intellij.testFramework.PsiTestUtil
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 import org.assertj.core.api.Assertions.assertThat
@@ -21,6 +20,7 @@ import java.io.File
 abstract class BaseVariantsCheckContributorTest(val dataPath: String)
   : LightFixtureCompletionTestCase(),
     HtlTestCase,
+    TestClassesMixin,
     UberJarFixtureMixin {
 
   companion object {
@@ -166,15 +166,7 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
     super.setUp()
     VfsRootAccess.allowRootAccess(File("src/test").absolutePath)
     myFixture.addUberJar()
-    val lfs = LocalFileSystem.getInstance()
-
-    File("src/test/resources/com/aemtools/completion/htl/fixtures/classes").walkTopDown()
-        .forEach {
-          val file = lfs.findFileByIoFile(it)
-          if (file != null) {
-            PsiTestUtil.addSourceContentToRoots(myModule, file)
-          }
-        }
+    myFixture.addClasses()
     (StartupManager.getInstance(project) as StartupManagerImpl).runPostStartupActivities()
   }
 
