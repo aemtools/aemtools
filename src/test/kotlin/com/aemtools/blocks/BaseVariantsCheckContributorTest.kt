@@ -97,10 +97,22 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
         "description", "template"
     ) + OBJECT_VARIANTS
 
-    val CUSTOM_MODEL_FIELDS = listOf("booleanField",
-        "isBooleanField", "publicBoolean", "publicString",
-        "publicStringArray", "publicStringList", "publicStringMap",
-        "stringArray", "stringField", "stringList", "stringMap", "modelList")
+    val CUSTOM_MODEL_FIELDS = listOf(
+        "booleanField",
+        "isBooleanField",
+        "publicBoolean",
+        "publicString",
+        "publicStringArray",
+        "publicStringList",
+        "publicStringMap",
+        "stringArray",
+        "stringField",
+        "stringList",
+        "stringMap",
+        "modelList",
+        "class",
+        "hashCode",
+        "toString")
 
   }
 
@@ -108,7 +120,7 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
 
   protected val fileName: String get() = "$testName.html"
 
-  protected val testName: String get() = getTestName(true)
+  private val testName: String get() = getTestName(true)
 
   protected fun assertVariantsAreEmpty() = assertVariants(listOf())
 
