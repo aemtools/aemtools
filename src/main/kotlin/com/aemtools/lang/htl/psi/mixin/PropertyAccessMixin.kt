@@ -14,7 +14,7 @@ import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry
 import java.util.LinkedList
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Troynikov
  */
 abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
 
@@ -40,7 +40,11 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
 
     if (declaration != null
         && declaration.attributeType !in listOf(
-        DeclarationAttributeType.LIST_HELPER, DeclarationAttributeType.REPEAT_HELPER)) {
+        DeclarationAttributeType.LIST_HELPER,
+        DeclarationAttributeType.REPEAT_HELPER,
+        DeclarationAttributeType.DATA_SLY_USE
+    )
+        ) {
       val propertyAccessMixin = declaration.xmlAttribute
           .extractHtlHel()?.extractPropertyAccess()
 
