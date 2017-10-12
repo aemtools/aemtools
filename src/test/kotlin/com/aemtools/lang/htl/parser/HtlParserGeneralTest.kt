@@ -16,6 +16,7 @@ class HtlParserGeneralTest
   fun testContext() = doTest()
   fun testContextNoValue() = doTest()
   fun testContextAndExpression() = doTest()
+  fun testContextAndComplexExpression() = doTest()
   fun testContextWithMultipleAssignments() = doTest()
   fun testContextWithBothAssignmentAndNonAssignment() = doTest()
 
