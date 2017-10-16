@@ -3,10 +3,10 @@ package com.aemtools.codeinsight.osgiconfig
 import com.aemtools.blocks.base.BaseLightTest
 import com.aemtools.blocks.fixture.OSGiConfigFixtureMixin
 import com.aemtools.completion.util.findChildrenByType
+import com.intellij.psi.impl.source.tree.LeafElement
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlTag
-import junit.framework.TestCase
 
 /**
  * Test for [OSGiConfigGotoClassLineMarkerProvider].
@@ -31,7 +31,11 @@ class OSGiConfigGotoClassLineMarkerProviderTest : BaseLightTest(),
 
       val lineMarkerInfo = tested.getLineMarkerInfo(rootTag)
 
-      TestCase.assertNotNull(lineMarkerInfo)
+      val element = lineMarkerInfo?.element
+          ?: throw AssertionError("Element is null")
+
+      assertTrue(element is LeafElement)
+      assertNotNull(lineMarkerInfo)
     }
   }
 

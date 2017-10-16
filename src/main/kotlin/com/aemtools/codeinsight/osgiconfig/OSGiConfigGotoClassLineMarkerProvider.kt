@@ -21,7 +21,7 @@ import javax.swing.DefaultListCellRenderer
  * @author Dmytro Troynikov
  */
 class OSGiConfigGotoClassLineMarkerProvider : LineMarkerProvider {
-  override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<XmlTag>? {
+  override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<PsiElement>? {
     val xmlTag = element as? XmlTag ?: return null
 
     if (xmlTag hasAttribute xmlAttributeMatcher(
@@ -37,8 +37,8 @@ class OSGiConfigGotoClassLineMarkerProvider : LineMarkerProvider {
           ?: return null
 
       return LineMarkerInfo(
-          xmlTag,
-          xmlTag.textRange,
+          xmlTag.firstChild,
+          xmlTag.firstChild.textRange,
           AllIcons.FileTypes.JavaClass,
           Pass.LINE_MARKERS,
           Function { "Open associated OSGi service" },
