@@ -93,8 +93,23 @@ fun XmlTag.isSlyTag(): Boolean = this.name == SLY_TAG
  * @param matcher matcher function
  * @return *true* if current tag has matching attribute
  */
-fun XmlTag.hasAttribute(matcher: (attribute: XmlAttribute) -> Boolean): Boolean =
+infix fun XmlTag.hasAttribute(matcher: XmlAttributeMatcher): Boolean =
     attributes.any(matcher)
+
+typealias XmlAttributeMatcher = (attribute: XmlAttribute) -> Boolean
+
+/**
+ * Create "name&value" xml attribute matcher.
+ *
+ * @param name the name of attribute
+ * @param value the value of attribute
+ * @return xml attribute matcher
+ */
+fun xmlAttributeMatcher(name: String, value: String? = null): XmlAttributeMatcher =
+    {
+      it.name == name
+      && (value == null || it.value == value)
+    }
 
 /**
  * Extract [HtlHtlEl] from current attribute.
