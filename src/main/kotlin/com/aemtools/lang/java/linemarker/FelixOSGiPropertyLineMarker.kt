@@ -71,10 +71,12 @@ class FelixOSGiPropertyLineMarker : LineMarkerProvider {
     }
 
 
-    override fun collectSlowLineMarkers(elements: MutableList<PsiElement>, result: MutableCollection<LineMarkerInfo<PsiElement>>) {
+    override fun collectSlowLineMarkers(elements: MutableList<PsiElement>,
+                                        result: MutableCollection<LineMarkerInfo<PsiElement>>) {
     }
 
-    private fun padModsByMaxModLength(propertyDescriptors: List<FelixOSGiPropertyDescriptor>): List<FelixOSGiPropertyDescriptor> {
+    private fun padModsByMaxModLength(propertyDescriptors: List<FelixOSGiPropertyDescriptor>)
+        : List<FelixOSGiPropertyDescriptor> {
         val modsMaxLength = propertyDescriptors
                 .maxBy {
                     it.mods.length

@@ -1,15 +1,16 @@
 package com.aemtools.util
 
+import com.aemtools.constant.const.java.FELIX_PROPERTY_ANNOTATION
 import com.aemtools.constant.const.java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.constant.const.java.SLING_FILTER_ANNOTATION
 import com.aemtools.constant.const.java.SLING_SERVLET_ANNOTATION
-import com.aemtools.constant.const.java.FELIX_PROPERTY_ANNOTATION
 import com.intellij.psi.PsiAnnotation
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiField
 import com.intellij.psi.PsiMember
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiModifier
+import com.intellij.psi.PsiModifierListOwner
 import com.intellij.psi.PsiType
 
 /**
@@ -24,12 +25,12 @@ import com.intellij.psi.PsiType
  */
 fun PsiClass.isOSGiService(): Boolean {
 
-    // TODO add check for OSGi declarative service
-    return annotations().any {
-        it.qualifiedName in listOf(FELIX_SERVICE_ANNOTATION,
-                SLING_SERVLET_ANNOTATION,
-                SLING_FILTER_ANNOTATION)
-    }
+  // TODO add check for OSGi declarative service
+  return annotations().any {
+    it.qualifiedName in listOf(FELIX_SERVICE_ANNOTATION,
+        SLING_SERVLET_ANNOTATION,
+        SLING_FILTER_ANNOTATION)
+  }
 }
 
 /**
@@ -40,9 +41,9 @@ fun PsiClass.isOSGiService(): Boolean {
  * @return _true_ if current field is felix property
  */
 fun PsiField.isFelixProperty(): Boolean =
-        annotations().any {
-            it.qualifiedName == FELIX_PROPERTY_ANNOTATION
-        }
+    annotations().any {
+      it.qualifiedName == FELIX_PROPERTY_ANNOTATION
+    }
 
 /**
  * Get list of [PsiAnnotation] objects from current psi modifier list owner.
@@ -51,9 +52,9 @@ fun PsiField.isFelixProperty(): Boolean =
  * @return list of annotations
  */
 fun PsiModifierListOwner.annotations(): List<PsiAnnotation> =
-        modifierList?.children?.map { it as? PsiAnnotation }
-                ?.filterNotNull()
-                ?: emptyList()
+    modifierList?.children?.map { it as? PsiAnnotation }
+        ?.filterNotNull()
+        ?: emptyList()
 
 /**
  * Find all methods which may used from EL
