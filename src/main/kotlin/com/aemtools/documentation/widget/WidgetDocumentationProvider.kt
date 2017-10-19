@@ -16,64 +16,55 @@ import com.intellij.psi.PsiElement
  */
 open class WidgetDocumentationProvider : AbstractDocumentationProvider() {
 
-    val widgetRepository = ServiceFacade.getWidgetRepository()
+  /**
+   * Check if given element is suitable for doc generation.
+   *
+   * @param element the element
+   * @return *true* if current element is suitable for doc generation,
+   * *false* otherwise
+   */
+  fun acceptGenerateDoc(element: PsiElement): Boolean {
+    if (element.containingFile
+        .originalFile
+        .name != const.DIALOG_XML) {
+      return false
+    }
+    return true
+  }
 
-    fun acceptGenerateDoc(element: PsiElement): Boolean {
-        if (element.containingFile
-                .originalFile
-                .name != const.DIALOG_XML) {
-            return false
-        }
-        return true
+  override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {
+    if (originalElement == null || !acceptGenerateDoc(originalElement)) {
+      return null
     }
 
-    override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {
-        if (originalElement == null || !acceptGenerateDoc(originalElement)) {
-            return null
-        }
+    val widgetDefinition = WidgetDefinitionUtil.extract(originalElement) ?: return null
 
-        val widgetDefinition = WidgetDefinitionUtil.extract(originalElement) ?: return null
+    val widgetXType = widgetDefinition.getFieldValue(const.XTYPE) ?: return null
 
-        val widgetXType = widgetDefinition.getFieldValue(const.XTYPE) ?: return null
+    val widgetDocumentation = ServiceFacade.getWidgetRepository().findByXType(widgetXType) ?: return null
 
-        val widgetDocumentation = widgetRepository.findByXType(widgetXType) ?: return null
-
-        if (widgetDefinition.isXtypeValueSelected()) {
-            return xtypeDocumentation(widgetDocumentation)
-        }
-
-        val selectedAttribute: SelectedAttribute = widgetDefinition.selectedAttribute ?: return null
-
-        val widgetMember = widgetDocumentation.getMember(selectedAttribute.name) ?: return null
-
-        val documentation = fieldDocumentation(widgetDocumentation, widgetMember)
-
-        return documentation
+    if (widgetDefinition.isXtypeValueSelected()) {
+      return xtypeDocumentation(widgetDocumentation)
     }
 
-    /**
-     * Generate documentation for `xtype`.
-     *
-     * @param widgetDoc the xtype data holder
-     *
-     * @return string with xtype documentation
-     */
-    fun xtypeDocumentation(widgetDoc: WidgetDoc): String = """
+    val selectedAttribute: SelectedAttribute = widgetDefinition.selectedAttribute ?: return null
+
+    val widgetMember = widgetDocumentation.getMember(selectedAttribute.name) ?: return null
+
+    val documentation = fieldDocumentation(widgetDocumentation, widgetMember)
+
+    return documentation
+  }
+
+  private fun xtypeDocumentation(widgetDoc: WidgetDoc): String {
+    return """
             <h2>${widgetDoc.className}</h2>
-            <p>
-                ${widgetDoc.description}
-            </p>
-        """.trimIndent().replace("\n", "")
+            <p>${widgetDoc.description}</p>
+        """.trimIndent().replace(Regex("\n|\r"), "")
+  }
 
-    /**
-     * Generate documentation for specific member of `xtype` (field, method).
-     *
-     * @param widgetDoc the xtype descriptor
-     * @param widgetMember the specific widget member
-     *
-     * @return string with documentation
-     */
-    fun fieldDocumentation(widgetDoc: WidgetDoc, widgetMember: WidgetMember): String = """
+  private fun fieldDocumentation(widgetDoc: WidgetDoc, widgetMember: WidgetMember): String {
+    return """
             <h2>${widgetDoc.fullClassName}</h2>
             <p>
                 Field name: <b>${widgetMember.name}</b>
@@ -85,5 +76,6 @@ open class WidgetDocumentationProvider : AbstractDocumentationProvider() {
                 ${widgetMember.description}
             </p>
         """.trimIndent().replace("\n", "")
+  }
 
 }

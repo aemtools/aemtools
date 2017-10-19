@@ -15,39 +15,35 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Troynikov
  */
 object HtlDataSlyResourceOptionCompletionProvider : CompletionProvider<CompletionParameters>() {
-    override fun addCompletions(
-            parameters: CompletionParameters,
-            context: ProcessingContext?,
-            result: CompletionResultSet) {
-        if (result.isStopped) {
-            return
+  override fun addCompletions(
+      parameters: CompletionParameters,
+      context: ProcessingContext?,
+      result: CompletionResultSet) {
+    val currentPosition = parameters.position
+    val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
+        ?: return
+
+    val names = hel.getOptions().map { it.name() }
+        .filterNot { it == "" }
+
+    // todo temporary solution
+    val resourceType = HtlOption("resourceType", "string", "", emptyList(), "")
+    val options = listOf(resourceType) + HtlAttributesRepository.getHtlOptions()
+
+    val completionVariants = options
+        .filterNot { names.contains(it.name) }
+        .map(HtlOption::toLookupElement)
+        .map {
+          if (it.lookupString == "resourceType") {
+            PrioritizedLookupElement.withPriority(it, RESOURCE_TYPE)
+          } else {
+            it
+          }
         }
 
-        val currentPosition = parameters.position
-        val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
-                ?: return
+    result.addAllElements(completionVariants)
 
-        val names = hel.getOptions().map { it.name() }
-                .filterNot { it == "" }
-
-        // todo temporary solution
-        val resourceType = HtlOption("resourceType", "string", "", emptyList(), "")
-        val options = listOf(resourceType) + HtlAttributesRepository.getHtlOptions()
-
-        val completionVariants = options
-                .filterNot { names.contains(it.name) }
-                .map(HtlOption::toLookupElement)
-                .map {
-                    if (it.lookupString == "resourceType") {
-                        PrioritizedLookupElement.withPriority(it, RESOURCE_TYPE)
-                    } else {
-                        it
-                    }
-                }
-
-        result.addAllElements(completionVariants)
-
-        result.stopHere()
-    }
+    result.stopHere()
+  }
 
 }

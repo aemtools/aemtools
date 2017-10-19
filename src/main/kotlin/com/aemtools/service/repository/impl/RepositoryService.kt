@@ -9,10 +9,10 @@ import com.aemtools.service.repository.inmemory.FileDocRepository
  */
 class RepositoryService : IRepositoryService {
 
-    private val widgetRepository = FileDocRepository
+  private val widgetRepository = FileDocRepository
 
-    override fun getWidgetDocRepository() : WidgetDocRepository {
-        return widgetRepository
-    }
+  override fun getWidgetDocRepository(): WidgetDocRepository {
+    return widgetRepository
+  }
 
 }

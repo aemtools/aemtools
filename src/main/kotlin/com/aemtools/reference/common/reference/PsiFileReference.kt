@@ -14,28 +14,28 @@ import com.intellij.psi.impl.source.resolve.reference.impl.providers.PsiFileRefe
 class PsiFileReference(val psiFile: PsiElement?,
                        holder: PsiElement,
                        range: TextRange) : PsiReferenceBase<PsiElement>(holder, range, true),
-        PsiFileReference {
+    PsiFileReference {
 
-    override fun multiResolve(incompleteCode: Boolean): Array<out ResolveResult> {
+  override fun multiResolve(incompleteCode: Boolean): Array<out ResolveResult> {
 
-        return arrayOf(object : ResolveResult {
-            override fun getElement(): PsiElement? {
-                return psiFile
-            }
-
-            override fun isValidResult(): Boolean {
-                return true
-            }
-
-        })
-    }
-
-    override fun resolve(): PsiElement? {
+    return arrayOf(object : ResolveResult {
+      override fun getElement(): PsiElement? {
         return psiFile
-    }
+      }
 
-    override fun getVariants(): Array<out Any> {
-        return arrayOf()
-    }
+      override fun isValidResult(): Boolean {
+        return true
+      }
+
+    })
+  }
+
+  override fun resolve(): PsiElement? {
+    return psiFile
+  }
+
+  override fun getVariants(): Array<out Any> {
+    return arrayOf()
+  }
 
 }

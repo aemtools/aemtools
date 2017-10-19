@@ -18,68 +18,68 @@ import junit.framework.TestCase
  */
 abstract class BasePatternsTest : BaseLightTest() {
 
-    fun testPattern(pattern: ElementPattern<PsiElement>,
-                    text: String,
-                    result: Boolean,
-                    addCompletionPlaceholder: Boolean = true,
-                    fixtureSetup: ITestFixture.(textToAdd: String) -> Unit) = fileCase {
-        val textToAdd = preprocessText(text, addCompletionPlaceholder)
+  fun testPattern(pattern: ElementPattern<PsiElement>,
+                  text: String,
+                  result: Boolean,
+                  addCompletionPlaceholder: Boolean = true,
+                  fixtureSetup: ITestFixture.(textToAdd: String) -> Unit) = fileCase {
+    val textToAdd = preprocessText(text, addCompletionPlaceholder)
 
-        fixtureSetup.invoke(this, textToAdd)
-        verify {
-            assertEquals(
-                    assertionMessage(pattern, file, text),
-                    result,
-                    pattern.accepts(elementUnderCaret()))
-        }
+    fixtureSetup.invoke(this, textToAdd)
+    verify {
+      assertEquals(
+          assertionMessage(pattern, file, text),
+          result,
+          pattern.accepts(elementUnderCaret()))
+    }
+  }
+
+  inline fun <reified T> testCondition(condition: PatternCondition<T>,
+                                       text: String,
+                                       result: Boolean,
+                                       addCompletionPlaceholder: Boolean = true,
+                                       crossinline fixtureSetup: ITestFixture.(textToAdd: String) -> Unit,
+                                       crossinline elementSelector: IAssertionContext.() -> T) = fileCase {
+    val textToAdd = preprocessText(text, addCompletionPlaceholder)
+
+    fixtureSetup.invoke(this, textToAdd)
+
+    verify {
+      val element = elementSelector.invoke(this)
+      TestCase.assertEquals(result,
+          condition.accepts(element, null))
     }
 
-    inline fun <reified T>testCondition(condition: PatternCondition<T>,
-                                        text: String,
-                                        result: Boolean,
-                                        addCompletionPlaceholder: Boolean = true,
-                                        crossinline fixtureSetup: ITestFixture.(textToAdd: String) -> Unit,
-                                        crossinline elementSelector: IAssertionContext.() -> T) = fileCase {
-        val textToAdd = preprocessText(text, addCompletionPlaceholder)
+  }
 
-        fixtureSetup.invoke(this, textToAdd)
+  fun preprocessText(textToAdd: String, addCompletionPlaceholder: Boolean): String =
+      if (addCompletionPlaceholder) {
+        textToAdd.addIdeaPlaceholder()
+      } else {
+        textToAdd
+      }
 
-        verify {
-            val element = elementSelector.invoke(this)
-            TestCase.assertEquals(result,
-                    condition.accepts(element, null))
-        }
-
+  private fun assertionMessage(pattern: ElementPattern<PsiElement>,
+                               file: PsiFile,
+                               text: String): String {
+    val builder = StringBuilder()
+    with(builder) {
+      append("\nPattern:\n$pattern")
+      append("\nPSI:\n${DebugUtil.psiToString(file, true)}")
+      val htmlFile = file.getHtmlFile()
+      if (htmlFile != null) {
+        append("PSI Html:\n${DebugUtil.psiToString(htmlFile, true)}")
+      }
+      append("Text: $text")
     }
+    return builder.toString()
+  }
 
-    fun preprocessText(textToAdd: String, addCompletionPlaceholder: Boolean) : String =
-            if (addCompletionPlaceholder) {
-                textToAdd.addIdeaPlaceholder()
-            } else {
-                textToAdd
-            }
-
-    private fun assertionMessage(pattern: ElementPattern<PsiElement>,
-                                 file: PsiFile,
-                                 text: String): String {
-        val builder = StringBuilder()
-        with(builder) {
-            append("\nPattern:\n$pattern")
-            append("\nPSI:\n${DebugUtil.psiToString(file, true)}")
-            val htmlFile = file.getHtmlFile()
-            if (htmlFile != null) {
-                append("PSI Html:\n${DebugUtil.psiToString(htmlFile, true)}")
-            }
-            append("Text: $text")
-        }
-        return builder.toString()
-    }
-
-    private fun String.addIdeaPlaceholder(): String =
-            StringBuilder(this)
-                    .insert(this.indexOf(CodeInsightTestFixture.CARET_MARKER)
-                            + CodeInsightTestFixture.CARET_MARKER.length,
-                            const.IDEA_STRING_CARET_PLACEHOLDER)
-                    .toString()
+  private fun String.addIdeaPlaceholder(): String =
+      StringBuilder(this)
+          .insert(this.indexOf(CodeInsightTestFixture.CARET_MARKER)
+              + CodeInsightTestFixture.CARET_MARKER.length,
+              const.IDEA_STRING_CARET_PLACEHOLDER)
+          .toString()
 
 }

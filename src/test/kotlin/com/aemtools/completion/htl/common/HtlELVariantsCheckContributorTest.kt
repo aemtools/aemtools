@@ -7,25 +7,25 @@ import com.aemtools.blocks.BaseVariantsCheckContributorTest
  */
 class HtlELVariantsCheckContributorTest : BaseVariantsCheckContributorTest("com/aemtools/completion/htl/fixtures/noafter") {
 
-    fun testContextObjects() = defaultContextObjectTest()
+  fun testContextObjects() = defaultContextObjectTest()
 
-    fun testContextWithinSecondEl() = defaultContextObjectTest()
+  fun testContextWithinSecondEl() = defaultContextObjectTest()
 
-    fun testHtlInAttribute() = defaultContextObjectTest()
+  fun testHtlInAttribute() = defaultContextObjectTest()
 
-    fun testHtlWithinTag() = defaultContextObjectTest()
+  fun testHtlWithinTag() = defaultContextObjectTest()
 
-    fun testHtlInScriptTag() = defaultContextObjectTest()
+  fun testHtlInScriptTag() = defaultContextObjectTest()
 
-    fun testHtlInStyleAttribute() = defaultContextObjectTest()
+  fun testHtlInStyleAttribute() = defaultContextObjectTest()
 
-    fun testHtlInStyleTag() = defaultContextObjectTest()
+  fun testHtlInStyleTag() = defaultContextObjectTest()
 
-    fun testHtlAfterHtml() = defaultContextObjectTest()
-    fun testHtlBeforeHtml() = defaultContextObjectTest()
+  fun testHtlAfterHtml() = defaultContextObjectTest()
+  fun testHtlBeforeHtml() = defaultContextObjectTest()
 
-    fun testUnknownVariable() = assertVariantsAreEmpty()
+  fun testUnknownVariable() = assertVariantsAreEmpty()
 
-    private fun defaultContextObjectTest() = assertVariants(DEFAULT_CONTEXT_OBJECTS)
+  private fun defaultContextObjectTest() = assertVariants(DEFAULT_CONTEXT_OBJECTS)
 
 }

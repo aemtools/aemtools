@@ -13,18 +13,18 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Troynikov
  */
 object DataSlyUseElReferenceProvider : PsiReferenceProvider() {
-    override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
-        val literal = element as? HtlStringLiteralMixin ?: return emptyArray()
+  override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
+    val literal = element as? HtlStringLiteralMixin ?: return emptyArray()
 
-        val psiFile = HtlIndexFacade.resolveUseFile(literal.name,
-                element.containingFile)
-                ?: return emptyArray()
+    val psiFile = HtlIndexFacade.resolveUseFile(literal.name,
+        element.containingFile)
+        ?: return emptyArray()
 
-        return arrayOf(
-                PsiFileReference(psiFile,
-                        literal,
-                        TextRange(1, literal.textLength - 1))
-        )
-    }
+    return arrayOf(
+        PsiFileReference(psiFile,
+            literal,
+            TextRange(1, literal.textLength - 1))
+    )
+  }
 
 }

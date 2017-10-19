@@ -9,15 +9,15 @@ import com.aemtools.index.model.dialog.parameter.TouchUIDialogParameterDeclarati
  * @author Dmytro Troynikov
  */
 data class AemComponentTouchUIDialogDefinition(
-        override val fullPath: String,
-        override val resourceType: String,
-        override val myParameters: List<TouchUIDialogParameterDeclaration>
+    override val fullPath: String,
+    override val resourceType: String,
+    override val myParameters: List<TouchUIDialogParameterDeclaration>
 ) : AemComponentDialogBase<TouchUIDialogParameterDeclaration>() {
 
-    companion object {
-        @JvmStatic
-        val serialVersionUID: Long = 1L
-    }
+  companion object {
+    @JvmStatic
+    val serialVersionUID: Long = 1L
+  }
 
 }
 

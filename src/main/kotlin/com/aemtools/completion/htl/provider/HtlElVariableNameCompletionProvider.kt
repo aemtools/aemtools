@@ -17,54 +17,50 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Troynikov
  */
 object HtlElVariableNameCompletionProvider : CompletionProvider<CompletionParameters>() {
-    override fun addCompletions(parameters: CompletionParameters,
-                                context: ProcessingContext?,
-                                result: CompletionResultSet) {
-        if (result.isStopped) {
-            return
-        }
+  override fun addCompletions(parameters: CompletionParameters,
+                              context: ProcessingContext?,
+                              result: CompletionResultSet) {
+    val currentPosition = parameters.position
+    val contextObjects = PredefinedVariables.contextObjectsCompletion()
+        .map { it.withPriority(CompletionPriority.CONTEXT_OBJECT) }
 
-        val currentPosition = parameters.position
-        val contextObjects = PredefinedVariables.contextObjectsCompletion()
-                .map { it.withPriority(CompletionPriority.CONTEXT_OBJECT) }
+    val fileVariables = FileVariablesResolver.declarationsForPosition(parameters.position, parameters)
+        .filter { it.attributeType != DeclarationAttributeType.DATA_SLY_TEMPLATE }
+        .let { variables -> convertToLookupElements(currentPosition, variables) }
 
-        val fileVariables = FileVariablesResolver.declarationsForPosition(parameters.position, parameters)
-                .filter { it.attributeType != DeclarationAttributeType.DATA_SLY_TEMPLATE }
-                .let { variables -> convertToLookupElements(currentPosition, variables) }
+    result.addAllElements(fileVariables + contextObjects)
+    result.stopHere()
+  }
 
-        result.addAllElements(fileVariables + contextObjects)
-        result.stopHere()
+  private fun convertToLookupElements(
+      currentPosition: PsiElement,
+      variables: List<HtlVariableDeclaration>): List<LookupElement> {
+    val result = ArrayList<LookupElement>()
+
+    val outsiders = variables.filter {
+      it.xmlAttribute.textOffset > currentPosition.textOffset
+    }
+    // variables declared after current position should go into the end of the list
+    outsiders.mapTo(result) {
+      it.toLookupElement().withPriority(CompletionPriority.VARIABLE_OUTSIDER)
     }
 
-    private fun convertToLookupElements(
-            currentPosition: PsiElement,
-            variables: List<HtlVariableDeclaration>): List<LookupElement> {
-        val result = ArrayList<LookupElement>()
+    val varsToPrioritize = variables - outsiders
 
-        val outsiders = variables.filter {
-            it.xmlAttribute.textOffset > currentPosition.textOffset
-        }
-        // variables declared after current position should go into the end of the list
-        outsiders.mapTo(result) {
-            it.toLookupElement().withPriority(CompletionPriority.VARIABLE_OUTSIDER)
-        }
+    val weightedVars = varsToPrioritize.map {
+      currentPosition.textOffset - it.xmlAttribute.textOffset to it
+    }.sortedBy { it.first }
 
-        val varsToPrioritize = variables - outsiders
+    weightedVars.forEachIndexed { index, pair ->
+      val variableDeclaration = pair.second
+      val priority = weightedVars.size - 1 - index
 
-        val weightedVars = varsToPrioritize.map {
-            currentPosition.textOffset - it.xmlAttribute.textOffset to it
-        }.sortedBy { it.first }
-
-        weightedVars.forEachIndexed { index, pair ->
-            val variableDeclaration = pair.second
-            val priority = weightedVars.size - 1 - index
-
-            result.add(variableDeclaration
-                    .toLookupElement()
-                    .withPriority(CompletionPriority.VARIABLE_BASE + priority))
-        }
-
-        return result
+      result.add(variableDeclaration
+          .toLookupElement()
+          .withPriority(CompletionPriority.VARIABLE_BASE + priority))
     }
+
+    return result
+  }
 
 }

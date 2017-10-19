@@ -1,0 +1,14 @@
+build:
+  verbosity: detailed
+  
+build_script:
+  - gradlew.bat generateGrammar buildPlugin --info --no-daemon
+
+test_script:
+  - gradlew.bat test jacocoTestReport --info --no-daemon
+
+environment:
+  matrix:
+    - ORG_GRADLE_PROJECT_ideaVersion: 2017.1.5
+    - ORG_GRADLE_PROJECT_ideaVersion: 2017.2.2
+    - ORG_GRADLE_PROJECT_ideaVersion: LATEST-EAP-SNAPSHOT

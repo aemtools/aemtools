@@ -11,26 +11,32 @@ import com.google.gson.GsonBuilder
  */
 object RepPolicyRepository {
 
-    private val data: MutableList<XmlTagDefinition> = arrayListOf()
+  private val data: MutableList<XmlTagDefinition> = arrayListOf()
 
-    init {
-        loadData()
-    }
+  init {
+    loadData()
+  }
 
-    private fun loadData() {
-        val jsonString = FileUtils.readFileAsString(const.file.REP_POLICY)
+  private fun loadData() {
+    val jsonString = FileUtils.readFileAsString(const.file.REP_POLICY)
 
-        val gson = GsonBuilder()
-                .registerTypeAdapter(XmlTagDefinition::class.java, XmlTagDefinitionDeserializer())
-                .create()
+    val gson = GsonBuilder()
+        .registerTypeAdapter(XmlTagDefinition::class.java, XmlTagDefinitionDeserializer())
+        .create()
 
-        val result: Array<XmlTagDefinition> =
-                gson.fromJson(jsonString, emptyArray<XmlTagDefinition>().javaClass)
+    val result: Array<XmlTagDefinition> =
+        gson.fromJson(jsonString, emptyArray<XmlTagDefinition>().javaClass)
 
-        data.addAll(result)
-    }
+    data.addAll(result)
+  }
 
-    fun getTagDefinitionByName(name: String): XmlTagDefinition {
-        return data.find { it.name == name } ?: XmlTagDefinition.empty()
-    }
+  /**
+   * Get tag definition by name.
+   *
+   * @param name the name
+   * @return xml tag definition, may be empty
+   */
+  fun getTagDefinitionByName(name: String): XmlTagDefinition {
+    return data.find { it.name == name } ?: XmlTagDefinition.empty()
+  }
 }

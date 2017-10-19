@@ -9,21 +9,21 @@ import org.junit.Test
  */
 class ObjectSerializerTest {
 
-    val fixture = TemplateDefinition("path", "name", listOf("param1", "param2"))
-    @Test
-    fun serializeAndDeserializeShouldReturnSameObject() {
-        val serialized = fixture.serialize()
-        val deserialized = ObjectSerializer.deserialize<TemplateDefinition>(serialized)
+  val fixture = TemplateDefinition("path", "name", listOf("param1", "param2"))
+  @Test
+  fun serializeAndDeserializeShouldReturnSameObject() {
+    val serialized = fixture.serialize()
+    val deserialized = ObjectSerializer.deserialize<TemplateDefinition>(serialized)
 
-        assertEquals(fixture, deserialized)
-    }
+    assertEquals(fixture, deserialized)
+  }
 
-    @Test
-    fun serializeAndDeserializeShouldReturnSameObject2() {
-        val serialized = fixture.serializeToByteArray()
-        val deserialized = ObjectSerializer.deserialize<TemplateDefinition>(serialized)
+  @Test
+  fun serializeAndDeserializeShouldReturnSameObject2() {
+    val serialized = fixture.serializeToByteArray()
+    val deserialized = ObjectSerializer.deserialize<TemplateDefinition>(serialized)
 
-        assertEquals(fixture, deserialized)
-    }
+    assertEquals(fixture, deserialized)
+  }
 
 }

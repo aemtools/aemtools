@@ -5,17 +5,17 @@ package com.aemtools.blocks.rename.model.fixture
  */
 class RenameState : IRenameState {
 
-    val files: ArrayList<SimpleFileDescriptor> = ArrayList()
+  val files: ArrayList<SimpleFileDescriptor> = ArrayList()
 
-    override fun addHtml(name: String, text: String) = addFile(name, text)
+  override fun addHtml(name: String, text: String) = addFile(name, text)
 
-    override fun addClass(name: String, text: String) = addFile(name, text)
+  override fun addClass(name: String, text: String) = addFile(name, text)
 
-    override fun addXml(name: String, text: String) = addFile(name, text)
+  override fun addXml(name: String, text: String) = addFile(name, text)
 
-    override fun addFile(name: String, text: String) {
-        files.add(SimpleFileDescriptor(name, text))
-    }
+  override fun addFile(name: String, text: String) {
+    files.add(SimpleFileDescriptor(name, text))
+  }
 
 }
 

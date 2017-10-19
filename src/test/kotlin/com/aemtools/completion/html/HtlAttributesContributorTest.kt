@@ -11,14 +11,14 @@ import com.aemtools.constant.const.htl.HTL_ATTRIBUTES
  */
 class HtlAttributesContributorTest : BaseVariantsCheckContributorTest("com/aemtools/completion/html/attributes") {
 
-    fun testHtlAttributes() = assertVariantsPresent(HTL_ATTRIBUTES)
+  fun testHtlAttributes() = assertVariantsPresent(HTL_ATTRIBUTES)
 
-    fun testHtlAttributesFilterOutUnwrap() = assertVariantsAbsent(listOf(DATA_SLY_UNWRAP))
+  fun testHtlAttributesFilterOutUnwrap() = assertVariantsAbsent(listOf(DATA_SLY_UNWRAP))
 
-    fun testHtlAttributesFilterOutUnwrap2() = assertVariantsAbsent(listOf(DATA_SLY_UNWRAP))
+  fun testHtlAttributesFilterOutUnwrap2() = assertVariantsAbsent(listOf(DATA_SLY_UNWRAP))
 
-    fun testHtlAttributesFilterOutDataSlyList() = assertVariantsAbsent(listOf(DATA_SLY_LIST))
+  fun testHtlAttributesFilterOutDataSlyList() = assertVariantsAbsent(listOf(DATA_SLY_LIST))
 
-    fun testHtlAttributesFilterOutDataSlyRepeat() = assertVariantsAbsent(listOf(DATA_SLY_REPEAT))
+  fun testHtlAttributesFilterOutDataSlyRepeat() = assertVariantsAbsent(listOf(DATA_SLY_REPEAT))
 
 }

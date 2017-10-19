@@ -13,59 +13,64 @@ import javax.swing.Icon
  * @author Dmytro_Troynikov
  */
 abstract class VariableNameMixin(node: ASTNode)
-    : HtlELNavigableMixin(node),
-        PsiNamedElement, PsiNameIdentifierOwner {
+  : HtlELNavigableMixin(node),
+    PsiNamedElement, PsiNameIdentifierOwner {
 
-    override fun getName(): String? {
-        return text
+  override fun getName(): String? {
+    return text
+  }
+
+  override fun setName(name: String): PsiElement {
+    val newElement = HtlElementFactory.createOption(name, project)
+
+    newElement?.let {
+      node.replaceChild(node.firstChildNode, it.node.firstChildNode)
     }
 
-    override fun setName(name: String): PsiElement {
-        val newElement = HtlElementFactory.createOption(name, project)
+    return this
+  }
 
-        newElement?.let {
-            node.replaceChild(node.firstChildNode, it.node.firstChildNode)
-        }
+  override fun getNameIdentifier(): PsiElement? {
+    return this
+  }
 
-        return this
+  /**
+   * Get variable name.
+   *
+   * @return variable name
+   */
+  open fun variableName(): String = text
+
+  override fun getPresentation(): ItemPresentation? {
+    return object : ItemPresentation {
+      override fun getLocationString(): String? {
+        return "My location"
+      }
+
+      override fun getIcon(unused: Boolean): Icon? = null
+
+      override fun getPresentableText(): String? =
+          if (this@VariableNameMixin.isOption()) {
+            "context option"
+          } else {
+            "htl variable"
+          }
     }
+  }
 
-    override fun getNameIdentifier(): PsiElement? {
-        return this
-    }
+  override fun isEquivalentTo(another: PsiElement?): Boolean {
+    val other = another as? VariableNameMixin
+        ?: return false
 
-    open fun variableName(): String = text
+    return variableName() == other.variableName()
+  }
 
-    override fun getPresentation(): ItemPresentation? {
-        return object : ItemPresentation {
-            override fun getLocationString(): String? {
-                return "My location"
-            }
+  override fun equals(other: Any?): Boolean {
+    return (other as? VariableNameMixin)?.variableName() == variableName()
+  }
 
-            override fun getIcon(unused: Boolean): Icon? = null
-
-            override fun getPresentableText(): String? =
-                    if (this@VariableNameMixin.isOption()) {
-                        "context option"
-                    } else {
-                        "htl variable"
-                    }
-        }
-    }
-
-    override fun isEquivalentTo(another: PsiElement?): Boolean {
-        val other = another as? VariableNameMixin
-                ?: return false
-
-        return variableName() == other.variableName()
-    }
-
-    override fun equals(other: Any?): Boolean {
-        return (other as? VariableNameMixin)?.variableName() == variableName()
-    }
-
-    override fun hashCode(): Int {
-        return variableName().hashCode()
-    }
+  override fun hashCode(): Int {
+    return variableName().hashCode()
+  }
 
 }

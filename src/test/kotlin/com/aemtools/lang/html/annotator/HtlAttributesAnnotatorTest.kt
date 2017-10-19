@@ -7,32 +7,32 @@ import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
  */
 class HtlAttributesAnnotatorTest : LightCodeInsightFixtureTestCase() {
 
-    fun testUnusedDataSlyUse() {
-        myFixture.configureByText("test.html", """
+  fun testUnusedDataSlyUse() {
+    myFixture.configureByText("test.html", """
             <div data-sly-use.<warning descr="null">bean</warning>=""></div>
         """)
-        myFixture.testHighlighting()
-    }
+    myFixture.testHighlighting()
+  }
 
-    fun testUnusedDataSlyTest() {
-        myFixture.configureByText("test.html", """
+  fun testUnusedDataSlyTest() {
+    myFixture.configureByText("test.html", """
             <div data-sly-test.<warning descr="null">test</warning>=""></div>
         """)
-        myFixture.testHighlighting()
-    }
+    myFixture.testHighlighting()
+  }
 
-    fun testUnusedDataSlyList() {
-        myFixture.configureByText("test.html", """
+  fun testUnusedDataSlyList() {
+    myFixture.configureByText("test.html", """
             <div data-sly-list.<warning descr="null">model</warning>=""></div>
         """)
-        myFixture.testHighlighting()
-    }
+    myFixture.testHighlighting()
+  }
 
-    fun testUnusedDataSlyRepeat() {
-        myFixture.configureByText("test.html", """
+  fun testUnusedDataSlyRepeat() {
+    myFixture.configureByText("test.html", """
             <div data-sly-repeat.<warning descr="null">model</warning>=""></div>
         """)
-        myFixture.testHighlighting()
-    }
+    myFixture.testHighlighting()
+  }
 
 }

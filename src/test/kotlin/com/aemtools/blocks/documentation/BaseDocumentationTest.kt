@@ -9,18 +9,18 @@ import com.intellij.lang.documentation.AbstractDocumentationProvider
  * @author Dmytro Troynikov
  */
 abstract class BaseDocumentationTest(
-        val tested: AbstractDocumentationProvider,
-        withAemUberJar: Boolean = false
+    val tested: AbstractDocumentationProvider,
+    withAemUberJar: Boolean = false
 ) : BaseLightTest(withAemUberJar) {
 
-    fun docCase(case: IDocTestFixture.() -> Unit) {
-        val fixture = DocTestFixture(tested, myFixture)
+  fun docCase(case: IDocTestFixture.() -> Unit) {
+    val fixture = DocTestFixture(tested, myFixture)
 
-        case.invoke(fixture)
+    case.invoke(fixture)
 
-        fixture.init()
+    fixture.init()
 
-        fixture.test()
-    }
+    fixture.test()
+  }
 
 }

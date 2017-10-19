@@ -8,16 +8,21 @@ import com.aemtools.lang.htl.psi.HtlContextExpression
  */
 class HtlOptionModel(val contextExpression: HtlContextExpression) {
 
-    fun name() : String {
-        val assignment = contextExpression.assignment
-        val variableName = contextExpression.variableName
-        if (assignment != null) {
-            return assignment.variableName.varName.text
-        }
-        if (variableName != null) {
-            return variableName.varName.text
-        }
-        return ""
+  /**
+   * Get name of current option.
+   *
+   * @return name of current option
+   */
+  fun name(): String {
+    val assignment = contextExpression.assignment
+    val variableName = contextExpression.variableName
+    if (assignment != null) {
+      return assignment.variableName.varName.text
     }
+    if (variableName != null) {
+      return variableName.varName.text
+    }
+    return ""
+  }
 
 }

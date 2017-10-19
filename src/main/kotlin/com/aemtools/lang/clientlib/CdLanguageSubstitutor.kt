@@ -10,11 +10,11 @@ import com.intellij.psi.LanguageSubstitutor
  */
 class CdLanguageSubstitutor : LanguageSubstitutor() {
 
-    override fun getLanguage(file: VirtualFile, project: Project): Language? {
-        return if (file.name in listOf("js.txt", "css.txt")) {
-            CdLanguage
-        } else {
-            null
-        }
+  override fun getLanguage(file: VirtualFile, project: Project): Language? {
+    return if (file.name in listOf("js.txt", "css.txt")) {
+      CdLanguage
+    } else {
+      null
     }
+  }
 }

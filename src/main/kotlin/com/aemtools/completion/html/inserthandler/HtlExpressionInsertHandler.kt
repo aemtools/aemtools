@@ -1,3 +1,9 @@
 package com.aemtools.completion.html.inserthandler
 
-class HtlExpressionInsertHandler : HtlTextInsertHandler("=\"\${}\"", 4)
+/**
+ * Htl expression insert handler.
+ *
+ * Adds `="${<caret>}"` upon trigger.
+ */
+class HtlExpressionInsertHandler :
+    HtlTextInsertHandler("=\"\${}\"", offset = 4)

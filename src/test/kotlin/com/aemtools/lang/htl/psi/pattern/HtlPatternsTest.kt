@@ -25,302 +25,302 @@ import com.intellij.psi.PsiElement
  */
 class HtlPatternsTest : BasePatternsTest() {
 
-    fun testVariablePatternMain() = testHtlPattern(
-            variableName,
-            "$DOLLAR{$CARET}",
-            true
-    )
+  fun testVariablePatternMain() = testHtlPattern(
+      variableName,
+      "$DOLLAR{$CARET}",
+      true
+  )
 
-    fun testVariablePatternAsOptionValue() = testHtlPattern(
-            variableName,
-            "$DOLLAR{@ option=$CARET}",
-            true
-    )
+  fun testVariablePatternAsOptionValue() = testHtlPattern(
+      variableName,
+      "$DOLLAR{@ option=$CARET}",
+      true
+  )
 
-    fun testVariablePatternAsPartOfArray() = testHtlPattern(
-            variableName,
-            "$DOLLAR{[$CARET, 'string']}",
-            true
-    )
+  fun testVariablePatternAsPartOfArray() = testHtlPattern(
+      variableName,
+      "$DOLLAR{[$CARET, 'string']}",
+      true
+  )
 
-    fun testVariablePatternInArrayLikeAccess() = testHtlPattern(
-            variableName,
-            "$DOLLAR{variable[$CARET]}",
-            true
-    )
+  fun testVariablePatternInArrayLikeAccess() = testHtlPattern(
+      variableName,
+      "$DOLLAR{variable[$CARET]}",
+      true
+  )
 
-    fun testVariablePatternShouldNotMatchAccessIdentifier() = testHtlPattern(
-            variableName,
-            "$DOLLAR{variable.$CARET}",
-            false
-    )
+  fun testVariablePatternShouldNotMatchAccessIdentifier() = testHtlPattern(
+      variableName,
+      "$DOLLAR{variable.$CARET}",
+      false
+  )
 
-    fun testVariablePatternShouldNotMatchOption() = testHtlPattern(
-            variableName,
-            "$DOLLAR{@ $CARET}",
-            false
-    )
+  fun testVariablePatternShouldNotMatchOption() = testHtlPattern(
+      variableName,
+      "$DOLLAR{@ $CARET}",
+      false
+  )
 
-    fun testStringLiteralValueMain() = testHtlPattern(
-            stringLiteralValue,
-            "$DOLLAR{'$CARET'}",
-            true
-    )
+  fun testStringLiteralValueMain() = testHtlPattern(
+      stringLiteralValue,
+      "$DOLLAR{'$CARET'}",
+      true
+  )
 
-    fun testStringLiteralValueInOptions() = testHtlPattern(
-            stringLiteralValue,
-            "$DOLLAR{@ option='$CARET'}",
-            true
-    )
+  fun testStringLiteralValueInOptions() = testHtlPattern(
+      stringLiteralValue,
+      "$DOLLAR{@ option='$CARET'}",
+      true
+  )
 
-    fun testOptionNameMain() = testHtlPattern(
-            optionName,
-            "$DOLLAR{@ $CARET}",
-            true
-    )
+  fun testOptionNameMain() = testHtlPattern(
+      optionName,
+      "$DOLLAR{@ $CARET}",
+      true
+  )
 
-    fun testOptionNameSecondOption() = testHtlPattern(
-            optionName,
-            "$DOLLAR{@ option='', $CARET}",
-            true
-    )
+  fun testOptionNameSecondOption() = testHtlPattern(
+      optionName,
+      "$DOLLAR{@ option='', $CARET}",
+      true
+  )
 
-    fun testOptionNameWithValue() = testHtlPattern(
-            optionName,
-            "$DOLLAR{@ $CARET=''",
-            true
-    )
+  fun testOptionNameWithValue() = testHtlPattern(
+      optionName,
+      "$DOLLAR{@ $CARET=''",
+      true
+  )
 
-    fun testOptionNameOptionValueShouldNotMatch() = testHtlPattern(
-            optionName,
-            "$DOLLAR{@ option=$CARET}",
-            false
-    )
+  fun testOptionNameOptionValueShouldNotMatch() = testHtlPattern(
+      optionName,
+      "$DOLLAR{@ option=$CARET}",
+      false
+  )
 
-    fun testDataSlyCallOptionMain() = testHtlPattern(
-            dataSlyCallOption,
-            """
+  fun testDataSlyCallOptionMain() = testHtlPattern(
+      dataSlyCallOption,
+      """
                 <div data-sly-call="$DOLLAR{template @ $CARET}"></div>
             """,
-            true
-    )
+      true
+  )
 
-    fun testDataSlyCallOptionMain2() = testHtlPattern(
-            dataSlyCallOption,
-            """
+  fun testDataSlyCallOptionMain2() = testHtlPattern(
+      dataSlyCallOption,
+      """
                 <div data-sly-call="$DOLLAR{template @ ${CARET}option=''}"></div>
             """,
-            result = true,
-            addCompletionPlaceholder = false
-    )
+      result = true,
+      addCompletionPlaceholder = false
+  )
 
-    fun testDataSlyCallOptionShouldMatchOrdinaryOption() = testHtlPattern(
-            dataSlyCallOption,
-            """
+  fun testDataSlyCallOptionShouldMatchOrdinaryOption() = testHtlPattern(
+      dataSlyCallOption,
+      """
                 $DOLLAR{@ $CARET}
             """,
-            false
-    )
+      false
+  )
 
-    fun testDataSlyCallOptionShouldNotMatchTemplateOption() = testHtlPattern(
-            dataSlyCallOption,
-            """
+  fun testDataSlyCallOptionShouldNotMatchTemplateOption() = testHtlPattern(
+      dataSlyCallOption,
+      """
                 <div data-sly-template.template="$DOLLAR{@ ${CARET}param}"></div>
             """,
-            result = false,
-            addCompletionPlaceholder = false
-    )
+      result = false,
+      addCompletionPlaceholder = false
+  )
 
-    fun testDataSlyTemplateOptionMain() = testHtlPattern(
-            dataSlyTemplateOption,
-            """
+  fun testDataSlyTemplateOptionMain() = testHtlPattern(
+      dataSlyTemplateOption,
+      """
                 <div data-sly-template.template="$DOLLAR{@ $CARET}"></div>
             """,
-            true
-    )
+      true
+  )
 
-    fun testDataSlyTemplateOptionShouldNotMatchOrdinaryOption() = testHtlPattern(
-            dataSlyTemplateOption,
-            "$DOLLAR{@ $CARET}",
-            false
-    )
+  fun testDataSlyTemplateOptionShouldNotMatchOrdinaryOption() = testHtlPattern(
+      dataSlyTemplateOption,
+      "$DOLLAR{@ $CARET}",
+      false
+  )
 
-    fun testDataSlyResourceOptionMain() = testHtlPattern(
-            dataSlyResourceOption,
-            """
+  fun testDataSlyResourceOptionMain() = testHtlPattern(
+      dataSlyResourceOption,
+      """
                 <div data-sly-resource="$DOLLAR{@ $CARET}"></div>
             """,
-            true
-    )
+      true
+  )
 
-    fun testDataSlyResourceOptionShouldNotMatchOrdinaryOption() = testHtlPattern(
-            dataSlyResourceOption,
-            "$DOLLAR{@ $CARET}",
-            false
-    )
+  fun testDataSlyResourceOptionShouldNotMatchOrdinaryOption() = testHtlPattern(
+      dataSlyResourceOption,
+      "$DOLLAR{@ $CARET}",
+      false
+  )
 
-    fun testContextOptionAssignmentMain() = testHtlPattern(
-            contextOptionAssignment,
-            "$DOLLAR{@ context='$CARET'}",
-            true
-    )
+  fun testContextOptionAssignmentMain() = testHtlPattern(
+      contextOptionAssignment,
+      "$DOLLAR{@ context='$CARET'}",
+      true
+  )
 
-    fun testContextOptionAssignmentShouldNotTriggerOnUnknownOption() = testHtlPattern(
-            contextOptionAssignment,
-            "$DOLLAR{@ join='$CARET'}",
-            false
-    )
+  fun testContextOptionAssignmentShouldNotTriggerOnUnknownOption() = testHtlPattern(
+      contextOptionAssignment,
+      "$DOLLAR{@ join='$CARET'}",
+      false
+  )
 
-    fun testResourceTypeOptionAssignmentMain() = testHtlPattern(
-            resourceTypeOptionAssignment,
-            "$DOLLAR{@ resourceType='$CARET'}",
-            true
-    )
+  fun testResourceTypeOptionAssignmentMain() = testHtlPattern(
+      resourceTypeOptionAssignment,
+      "$DOLLAR{@ resourceType='$CARET'}",
+      true
+  )
 
-    fun testResourceTypeOptionAssignmentShouldNotTriggerOnUnknownOption() = testHtlPattern(
-            resourceTypeOptionAssignment,
-            "$DOLLAR{@ context='$CARET'}",
-            false
-    )
+  fun testResourceTypeOptionAssignmentShouldNotTriggerOnUnknownOption() = testHtlPattern(
+      resourceTypeOptionAssignment,
+      "$DOLLAR{@ context='$CARET'}",
+      false
+  )
 
-    fun testMemberAccessMain() = testHtlPattern(
-            memberAccess,
-            "$DOLLAR{object.$CARET}",
-            true
-    )
+  fun testMemberAccessMain() = testHtlPattern(
+      memberAccess,
+      "$DOLLAR{object.$CARET}",
+      true
+  )
 
-    fun testMemberAccessArrayLikeAccess() = testHtlPattern(
-            memberAccess,
-            "$DOLLAR{object['$CARET']}",
-            true
-    )
+  fun testMemberAccessArrayLikeAccess() = testHtlPattern(
+      memberAccess,
+      "$DOLLAR{object['$CARET']}",
+      true
+  )
 
-    fun testMemberAccessInArrayLikeAccess() = testHtlPattern(
-            memberAccess,
-            "$DOLLAR{object[inner.$CARET]}",
-            true
-    )
+  fun testMemberAccessInArrayLikeAccess() = testHtlPattern(
+      memberAccess,
+      "$DOLLAR{object[inner.$CARET]}",
+      true
+  )
 
-    fun testMemberAccessInOptions() = testHtlPattern(
-            memberAccess,
-            "$DOLLAR{@ option=object.$CARET}",
-            true
-    )
+  fun testMemberAccessInOptions() = testHtlPattern(
+      memberAccess,
+      "$DOLLAR{@ option=object.$CARET}",
+      true
+  )
 
-    fun testMemberAccessShouldMatchVariable() = testHtlPattern(
-            memberAccess,
-            "$DOLLAR{$CARET}",
-            false
-    )
+  fun testMemberAccessShouldMatchVariable() = testHtlPattern(
+      memberAccess,
+      "$DOLLAR{$CARET}",
+      false
+  )
 
-    fun testDataSlyUseNoElMain() = testHtlPattern(
-            dataSlyUseNoEl,
-            """<div data-sly-use="$CARET">""",
-            true
-    )
+  fun testDataSlyUseNoElMain() = testHtlPattern(
+      dataSlyUseNoEl,
+      """<div data-sly-use="$CARET">""",
+      true
+  )
 
-    fun testDataSlyUseNoElMain2() = testHtlPattern(
-            dataSlyUseNoEl,
-            """<div data-sly-use.bean="$CARET">""",
-            true
-    )
+  fun testDataSlyUseNoElMain2() = testHtlPattern(
+      dataSlyUseNoEl,
+      """<div data-sly-use.bean="$CARET">""",
+      true
+  )
 
-    fun testDataSlyIncludeNoElMain() = testHtlPattern(
-            dataSlyIncludeNoEl,
-            """<div data-sly-include="$CARET">""",
-            true
-    )
+  fun testDataSlyIncludeNoElMain() = testHtlPattern(
+      dataSlyIncludeNoEl,
+      """<div data-sly-include="$CARET">""",
+      true
+  )
 
-    fun testHtlAttributeMain() = testHtlPattern(
-            htlAttribute,
-            "<div ${CARET}data-sly-use>",
-            true,
-            false
-    )
+  fun testHtlAttributeMain() = testHtlPattern(
+      htlAttribute,
+      "<div ${CARET}data-sly-use>",
+      true,
+      false
+  )
 
-    fun testMainVariableInsideOFDataSlyCallMain() = testHtlPattern(
-            mainVariableInsideOfDataSlyCall,
-            """
+  fun testMainVariableInsideOFDataSlyCallMain() = testHtlPattern(
+      mainVariableInsideOfDataSlyCall,
+      """
                 <div data-sly-call="$DOLLAR{$CARET}"></div>
             """,
-            true
-    )
+      true
+  )
 
-    fun testMainVariableInsideOfDataSlyCallShouldNotMatchInOption() = testHtlPattern(
-            mainVariableInsideOfDataSlyCall,
-            """
+  fun testMainVariableInsideOfDataSlyCallShouldNotMatchInOption() = testHtlPattern(
+      mainVariableInsideOfDataSlyCall,
+      """
                 <div data-sly-call="$DOLLAR{@ $CARET}"></div>
             """,
-            false
-    )
+      false
+  )
 
-    fun testMainVariableInsideOfDataSlyCallShouldNotMatchInOption2() = testHtlPattern(
-            mainVariableInsideOfDataSlyCall,
-            """
+  fun testMainVariableInsideOfDataSlyCallShouldNotMatchInOption2() = testHtlPattern(
+      mainVariableInsideOfDataSlyCall,
+      """
                 <div data-sly-call="$DOLLAR{@ option=$CARET}"></div
             """,
-            false
-    )
+      false
+  )
 
-    fun testSlyIncludeMainStringMain() = testHtlPattern(
-            dataSlyIncludeMainString,
-            """
+  fun testSlyIncludeMainStringMain() = testHtlPattern(
+      dataSlyIncludeMainString,
+      """
                 <div data-sly-include="$DOLLAR{'$CARET'}"></div>
             """,
-            true
-    )
+      true
+  )
 
-    fun testSlyIncludeMainStringShouldNotMatchOtherAttribute() = testHtlPattern(
-            dataSlyIncludeMainString,
-            """
+  fun testSlyIncludeMainStringShouldNotMatchOtherAttribute() = testHtlPattern(
+      dataSlyIncludeMainString,
+      """
                 <div data-sly-use="$DOLLAR{'$CARET'}"></div>
             """,
-            false
-    )
+      false
+  )
 
-    fun testDataSlyUseMainStringMain() = testHtlPattern(
-            dataSlyUseMainString,
-            """
+  fun testDataSlyUseMainStringMain() = testHtlPattern(
+      dataSlyUseMainString,
+      """
                 <div data-sly-use="$DOLLAR{'$CARET'}"></div>
             """,
-            true
-    )
+      true
+  )
 
-    fun testDataSlyUseMainStringShouldNotMatchOtherAttribute() = testHtlPattern(
-            dataSlyUseMainString,
-            """
+  fun testDataSlyUseMainStringShouldNotMatchOtherAttribute() = testHtlPattern(
+      dataSlyUseMainString,
+      """
                 <div data-sly-include="$DOLLAR{'$CARET'}></div>
             """,
-            false
-    )
+      false
+  )
 
-    fun testLocalizationMainStringMain() = testHtlPattern(
-            localizationMainString,
-            "$DOLLAR{'$CARET' @ i18n}",
-            true
-    )
+  fun testLocalizationMainStringMain() = testHtlPattern(
+      localizationMainString,
+      "$DOLLAR{'$CARET' @ i18n}",
+      true
+  )
 
-    fun testLocalizationMainStringMain2() = testHtlPattern(
-            localizationMainString,
-            "$DOLLAR{\"$CARET\" @ i18n}",
-            true
-    )
+  fun testLocalizationMainStringMain2() = testHtlPattern(
+      localizationMainString,
+      "$DOLLAR{\"$CARET\" @ i18n}",
+      true
+  )
 
-    fun testLocalizationMainStringNegative() = testHtlPattern(
-            localizationMainString,
-            "$DOLLAR{'$CARET'}",
-            false
-    )
+  fun testLocalizationMainStringNegative() = testHtlPattern(
+      localizationMainString,
+      "$DOLLAR{'$CARET'}",
+      false
+  )
 
-    private fun testHtlPattern(
-            pattern: ElementPattern<PsiElement>,
-            text: String,
-            result: Boolean,
-            addCompletionPlaceholder: Boolean = true) =
-            testPattern(pattern,
-                    text,
-                    result,
-                    addCompletionPlaceholder,
-                    { textToAdd -> addHtml("test.html", textToAdd) })
+  private fun testHtlPattern(
+      pattern: ElementPattern<PsiElement>,
+      text: String,
+      result: Boolean,
+      addCompletionPlaceholder: Boolean = true) =
+      testPattern(pattern,
+          text,
+          result,
+          addCompletionPlaceholder,
+          { textToAdd -> addHtml("test.html", textToAdd) })
 
 }

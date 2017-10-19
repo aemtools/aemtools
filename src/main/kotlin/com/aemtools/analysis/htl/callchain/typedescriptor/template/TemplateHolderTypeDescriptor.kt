@@ -1,6 +1,7 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor.template
 
-import com.aemtools.analysis.htl.callchain.typedescriptor.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.BaseTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.lang.htl.icons.HtlIcons
@@ -14,38 +15,31 @@ import com.intellij.openapi.project.Project
  * @author Dmytro Troynikov
  */
 class TemplateHolderTypeDescriptor(
-        val templates: List<TemplateDefinition>,
-        val project: Project)
-    : TypeDescriptor {
-    override fun myVariants(): List<LookupElement> {
-        return templates.map {
-            LookupElementBuilder.create(it.name)
-                    .withTypeText("HTL Template")
-                    .withIcon(HtlIcons.HTL_FILE_ICON)
-        }
+    val templates: List<TemplateDefinition>,
+    val project: Project)
+  : BaseTypeDescriptor() {
+  override fun myVariants(): List<LookupElement> {
+    return templates.map {
+      LookupElementBuilder.create(it.name)
+          .withTypeText("HTL Template")
+          .withIcon(HtlIcons.HTL_FILE_ICON)
     }
+  }
 
-    override fun subtype(identifier: String): TypeDescriptor {
-        return templates.find { it.name == identifier }
-                .toTypeDescriptor()
-    }
+  override fun subtype(identifier: String): TypeDescriptor {
+    return templates.find { it.name == identifier }
+        .toTypeDescriptor()
+  }
 
-    override fun name(): String = "name"
+  override fun asResolutionResult(): ResolutionResult =
+      ResolutionResult(null, myVariants())
 
-    override fun isArray(): Boolean = false
+  private fun TemplateDefinition?.toTypeDescriptor(): TypeDescriptor =
+      if (this != null) {
+        TemplateTypeDescriptor(this, project)
+      } else {
+        TypeDescriptor.empty()
+      }
 
-    override fun isIterable(): Boolean = false
-
-    override fun isMap(): Boolean = false
-
-    override fun asResolutionResult(): ResolutionResult =
-            ResolutionResult(null, myVariants())
-
-    private fun TemplateDefinition?.toTypeDescriptor(): TypeDescriptor =
-            if (this != null) {
-                TemplateTypeDescriptor(this, project)
-            } else {
-                TypeDescriptor.empty()
-            }
 }
 
