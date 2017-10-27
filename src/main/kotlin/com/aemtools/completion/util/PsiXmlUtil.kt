@@ -60,7 +60,7 @@ private fun <T : PsiElement> PsiElement?.findParentsByType(type: Class<T>): List
  * @return the element
  */
 fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>, predicate: (T) -> Boolean): T? =
-    this.findParentsByType(type).firstOrNull { predicate.invoke(it)}
+    this.findParentsByType(type).firstOrNull { predicate.invoke(it) }
 
 /**
  * Check if current [PsiElement] has parent of specified class.
@@ -109,7 +109,7 @@ typealias XmlAttributeMatcher = (attribute: XmlAttribute) -> Boolean
 fun xmlAttributeMatcher(name: String, value: String? = null): XmlAttributeMatcher =
     {
       it.name == name
-      && (value == null || it.value == value)
+          && (value == null || it.value == value)
     }
 
 /**
@@ -302,20 +302,11 @@ fun XmlAttribute.extractTemplateDefinition(): TemplateDefinition? {
 fun XmlAttribute.nameRange(): TextRange = this.nameElement.textRange
 
 /**
- * Extract text range of value element.
- *
- * @receiver [XmlAttribute]
- * @return text range of value element
- */
-fun XmlAttribute.valueRange(): TextRange? = this.valueElement?.textRange
-
-
-/**
  * Convert current xml attribute to navigable element.
  *
  * @receiver [XmlAttribute]
  * @return navigable element
  */
 fun XmlAttribute.toNavigatable(): IncludedXmlAttribute {
-    return IncludedXmlAttribute(this, this.parent)
+  return IncludedXmlAttribute(this, this.parent)
 }
