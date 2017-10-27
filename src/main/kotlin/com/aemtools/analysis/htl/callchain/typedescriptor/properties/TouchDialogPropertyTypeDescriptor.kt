@@ -10,19 +10,17 @@ import com.intellij.psi.PsiElement
  * @author Dmytro Troynikov
  */
 class TouchDialogPropertyTypeDescriptor(
-        val name: String,
-        val element: PsiElement,
-        val touchDialogDefinition: AemComponentTouchUIDialogDefinition)
-    : BaseTypeDescriptor() {
+    val name: String,
+    val element: PsiElement,
+    val touchDialogDefinition: AemComponentTouchUIDialogDefinition)
+  : BaseTypeDescriptor() {
 
-    override fun referencedElement(): PsiElement? =
-            touchDialogDefinition.declarationElement(name, element.project)
+  override fun referencedElement(): PsiElement? =
+      touchDialogDefinition.declarationElement(name, element.project)
 
-    override fun myVariants(): List<LookupElement> = emptyList()
+  override fun myVariants(): List<LookupElement> = emptyList()
 
-    override fun subtype(identifier: String): TypeDescriptor
-            = TypeDescriptor.empty()
-
-    override fun name(): String = name
+  override fun subtype(identifier: String): TypeDescriptor
+      = TypeDescriptor.empty()
 
 }

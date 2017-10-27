@@ -7,8 +7,8 @@ import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
  */
 interface UberJarFixtureMixin : OSGiFelixAnnotationsMixin {
 
-    fun JavaCodeInsightTestFixture.addUberJar() {
-        addClass("""
+  fun JavaCodeInsightTestFixture.addUberJar() {
+    addClass("""
             package org.apache.sling.api.resource;
 
             import aQute.bnd.annotation.ProviderType;
@@ -47,7 +47,7 @@ interface UberJarFixtureMixin : OSGiFelixAnnotationsMixin {
             }
         """)
 
-        addClass("""
+    addClass("""
             package org.apache.sling.api.resource;
 
             import aQute.bnd.annotation.ConsumerType;
@@ -65,7 +65,7 @@ interface UberJarFixtureMixin : OSGiFelixAnnotationsMixin {
             }
         """)
 
-        addClass("""
+    addClass("""
             package org.apache.sling.models.annotations;
 
             import java.lang.annotation.ElementType;
@@ -86,7 +86,7 @@ interface UberJarFixtureMixin : OSGiFelixAnnotationsMixin {
             }
         """)
 
-        addClass("""
+    addClass("""
             package com.day.cq.commons;
 
             public interface Filter<T> {
@@ -94,7 +94,7 @@ interface UberJarFixtureMixin : OSGiFelixAnnotationsMixin {
             }
         """)
 
-        addClass("""
+    addClass("""
             package com.day.cq.commons;
 
             public interface LabeledResource {
@@ -108,7 +108,7 @@ interface UberJarFixtureMixin : OSGiFelixAnnotationsMixin {
             }
         """)
 
-        addClass("""
+    addClass("""
             package com.day.cq.tagging;
 
             import com.day.cq.commons.Filter;
@@ -169,7 +169,7 @@ interface UberJarFixtureMixin : OSGiFelixAnnotationsMixin {
             }
         """)
 
-        addClass("""
+    addClass("""
             package org.apache.sling.api.adapter;
 
             import aQute.bnd.annotation.ConsumerType;
@@ -180,7 +180,7 @@ interface UberJarFixtureMixin : OSGiFelixAnnotationsMixin {
             }
         """)
 
-        addClass("""
+    addClass("""
             package com.day.cq.wcm.api;
 
             import com.day.cq.commons.Filter;
@@ -268,7 +268,7 @@ interface UberJarFixtureMixin : OSGiFelixAnnotationsMixin {
 
         """)
 
-        addClass("""
+    addClass("""
             package io.sightly.java.api;
 
             import javax.script.Bindings;
@@ -278,7 +278,7 @@ interface UberJarFixtureMixin : OSGiFelixAnnotationsMixin {
             }
         """)
 
-        addClass("""
+    addClass("""
             package com.adobe.cq.sightly;
 
             import com.day.cq.wcm.api.Page;
@@ -396,7 +396,7 @@ interface UberJarFixtureMixin : OSGiFelixAnnotationsMixin {
 
         """)
 
-        addClass("""
+    addClass("""
             package org.apache.sling.api;
 
             import aQute.bnd.annotation.ProviderType;
@@ -470,7 +470,7 @@ interface UberJarFixtureMixin : OSGiFelixAnnotationsMixin {
             }
         """)
 
-        addClass("""
+    addClass("""
             package org.apache.sling.api.request;
 
             import aQute.bnd.annotation.ProviderType;
@@ -500,7 +500,7 @@ interface UberJarFixtureMixin : OSGiFelixAnnotationsMixin {
             }
         """)
 
-        addClass("""
+    addClass("""
             package com.adobe.cq.sightly;
 
             import aQute.bnd.annotation.ProviderType;
@@ -556,6 +556,6 @@ interface UberJarFixtureMixin : OSGiFelixAnnotationsMixin {
                 }
             }
         """)
-    }
+  }
 
 }

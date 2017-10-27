@@ -1,9 +1,17 @@
 package com.aemtools.util
 
+import com.aemtools.constant.const.java.FELIX_PROPERTY_ANNOTATION
 import com.aemtools.constant.const.java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.constant.const.java.SLING_FILTER_ANNOTATION
 import com.aemtools.constant.const.java.SLING_SERVLET_ANNOTATION
-import com.intellij.psi.*
+import com.intellij.psi.PsiAnnotation
+import com.intellij.psi.PsiClass
+import com.intellij.psi.PsiField
+import com.intellij.psi.PsiMember
+import com.intellij.psi.PsiMethod
+import com.intellij.psi.PsiModifier
+import com.intellij.psi.PsiModifierListOwner
+import com.intellij.psi.PsiType
 
 /**
  * @author Dmytro_Troynikov
@@ -15,46 +23,67 @@ import com.intellij.psi.*
  * @receiver [PsiClass]
  * @return *true* if class is marked with corresponding OSGi annotations, *false* otherwise
  */
-fun PsiClass.isOSGiService(): Boolean {
-    val annotations = this.modifierList?.children?.map {
-        it as? PsiAnnotation
-    }?.filterNotNull()
-            ?: return false
+fun PsiClass.isOSGiService():Boolean {
 
-    // TODO add check for OSGi declarative service
-    return annotations.any {
-        it.qualifiedName in listOf(FELIX_SERVICE_ANNOTATION,
-                SLING_SERVLET_ANNOTATION,
-                SLING_FILTER_ANNOTATION)
-    }
+  // TODO add check for OSGi declarative service
+  return annotations().any {
+    it.qualifiedName in listOf(FELIX_SERVICE_ANNOTATION,
+        SLING_SERVLET_ANNOTATION,
+        SLING_FILTER_ANNOTATION)
+  }
 }
+
+/**
+ * Check if current field is Felix property
+ * (annotated with [FELIX_PROPERTY_ANNOTATION]).
+ *
+ * @receiver [PsiField]
+ * @return _true_ if current field is felix property
+ */
+fun PsiField.isFelixProperty(): Boolean =
+    annotations().any {
+      it.qualifiedName == FELIX_PROPERTY_ANNOTATION
+    }
+
+/**
+ * Get list of [PsiAnnotation] objects from current psi modifier list owner.
+ *
+ * @receiver [PsiModifierListOwner]
+ * @return list of annotations
+ */
+fun PsiModifierListOwner.annotations(): List<PsiAnnotation> =
+    modifierList?.children?.mapNotNull { it as? PsiAnnotation }
+        ?: emptyList()
 
 /**
  * Find all methods which may used from EL
  *
  * The suitable method should be public and should not contain any arguments.
+ *
+ * @receiver [PsiClass]
+ * @return list of psi methods suitable for usage in EL
  */
 fun PsiClass.elMethods(): List<PsiMethod> {
-    val grouped: Map<PsiClass?, List<PsiMethod>> = this.allMethods.groupBy { it.containingClass }
-    val myMethods = grouped[this] ?: listOf()
+  val grouped: Map<PsiClass?, List<PsiMethod>> = this.allMethods.groupBy { it.containingClass }
+  val myMethods = grouped[this] ?: listOf()
 
-    return grouped.flatMap<PsiClass?, List<PsiMethod>, PsiMethod> {
-        when {
-            it.key == this@elMethods.containingClass -> listOf()
-            else -> it.value.filter {
-                !it.isConstructor
-                        && it.hasModifierProperty(PsiModifier.PUBLIC)
-                        && it.parameterList.parameters.isEmpty()
-                        && !it.returnType!!.isAssignableFrom(PsiType.VOID)
-                        && myMethods.find { myMethod -> it.name == myMethod.name } == null
-            }
-        }
-    } + myMethods.filter {
+  return grouped.flatMap<PsiClass?, List<PsiMethod>, PsiMethod> {
+    when {
+      it.key == this@elMethods.containingClass -> listOf()
+      else -> it.value.filter {
         !it.isConstructor
-                && it.hasModifierProperty(PsiModifier.PUBLIC)
-                && it.parameterList.parameters.isEmpty()
-                && !it.returnType!!.isAssignableFrom(PsiType.VOID)
+            && it.hasModifierProperty(PsiModifier.PUBLIC)
+            && it.parameterList.parameters.isEmpty()
+            && !it.returnType!!.isAssignableFrom(PsiType.VOID)
+            && myMethods.find { myMethod -> it.name == myMethod.name } == null
+      }
     }
+  } + myMethods.filter {
+    !it.isConstructor
+        && it.hasModifierProperty(PsiModifier.PUBLIC)
+        && it.parameterList.parameters.isEmpty()
+        && !it.returnType!!.isAssignableFrom(PsiType.VOID)
+  }
 }
 
 /**
@@ -63,10 +92,10 @@ fun PsiClass.elMethods(): List<PsiMethod> {
  * The suitable fields should be public
  */
 fun PsiClass.elFields(): List<PsiField> = this.allFields
-        .filter {
-            it.hasModifierProperty(PsiModifier.PUBLIC)
-                    && !it.hasModifierProperty(PsiModifier.STATIC)
-        }
+    .filter {
+      it.hasModifierProperty(PsiModifier.PUBLIC)
+          && !it.hasModifierProperty(PsiModifier.STATIC)
+    }
 
 /**
  * Find all Htl EL compatible members.
@@ -81,20 +110,20 @@ fun PsiClass.elMembers(): List<PsiMember> = this.elMethods() + this.elFields()
  * @return found [PsiMember] or _null_
  */
 fun PsiClass.findElMemberByName(name: String): PsiMember? = elMembers().find {
-    if (it is PsiMethod) {
-        name == it.elName() || name == it.name
-    } else {
-        name == it.name
-    }
+  if (it is PsiMethod) {
+    name == it.elName() || name == it.name
+  } else {
+    name == it.name
+  }
 }
 
 /**
  * Get return [PsiType] of current [PsiMember].
  */
 fun PsiMember.resolveReturnType(): PsiType? = when (this) {
-    is PsiMethod -> this.returnType
-    is PsiField -> this.type
-    else -> null
+  is PsiMethod -> this.returnType
+  is PsiField -> this.type
+  else -> null
 }
 
 /**
@@ -109,9 +138,9 @@ fun PsiMember.resolveReturnType(): PsiType? = when (this) {
  * @return normalized method name
  */
 fun PsiMethod.elName() = this.name.run {
-    when {
-        startsWith("is") -> substring(2).decapitalize()
-        startsWith("get") -> substring(3).decapitalize()
-        else -> this
-    }
+  when {
+    startsWith("is") -> substringAfter("is").decapitalize()
+    startsWith("get") -> substringAfter("get").decapitalize()
+    else -> this
+  }
 }

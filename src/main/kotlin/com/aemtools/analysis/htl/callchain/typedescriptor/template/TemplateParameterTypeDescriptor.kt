@@ -11,13 +11,11 @@ import com.intellij.codeInsight.lookup.LookupElement
  * @author Dmytro Troynikov
  */
 class TemplateParameterTypeDescriptor(
-        val declaration: HtlTemplateParameterDeclaration) : BaseTypeDescriptor() {
+    val declaration: HtlTemplateParameterDeclaration) : BaseTypeDescriptor() {
 
-    override fun myVariants(): List<LookupElement> = emptyList()
+  override fun myVariants(): List<LookupElement> = emptyList()
 
-    override fun subtype(identifier: String): TypeDescriptor =
-            TypeDescriptor.empty()
-
-    override fun name(): String = declaration.variableName
+  override fun subtype(identifier: String): TypeDescriptor =
+      TypeDescriptor.empty()
 
 }

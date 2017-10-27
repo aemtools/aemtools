@@ -10,18 +10,18 @@ import com.intellij.psi.PsiNamedElement
  * @author Dmytro_Troynikov
  */
 abstract class HtlStringLiteralMixin(node: ASTNode)
-    : HtlPsiBaseElement(node), HtlStringLiteral, PsiNamedElement {
+  : HtlPsiBaseElement(node), HtlStringLiteral, PsiNamedElement {
 
-    override fun setName(name: String): PsiElement {
-        return this
-    }
+  override fun setName(name: String): PsiElement {
+    return this
+  }
 
-    override fun getName(): String {
-        return if (this.text.length <= 2) {
-            return ""
-        } else {
-            this.text.substring(1, this.text.length - 1)
-        }
+  override fun getName(): String {
+    return if (this.text.length <= 2) {
+      return ""
+    } else {
+      this.text.substring(1, this.text.length - 1)
     }
+  }
 
 }

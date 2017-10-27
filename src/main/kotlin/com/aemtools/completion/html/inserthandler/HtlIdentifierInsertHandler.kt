@@ -1,3 +1,8 @@
 package com.aemtools.completion.html.inserthandler
 
-class HtlIdentifierInsertHandler : HtlTextInsertHandler(".=\"\"", 1)
+/**
+ * Htl identifier insert handler.
+ *
+ * Adds `.<caret>=""` upon trigger.
+ */
+class HtlIdentifierInsertHandler : HtlTextInsertHandler(".=\"\"", offset = 1)

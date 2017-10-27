@@ -10,9 +10,9 @@ import com.intellij.util.ProcessingContext
  */
 object DataSlyIncludeElReferenceProvider : DataSlyIncludeReferenceProviderBase() {
 
-    override fun name(element: PsiElement, context: ProcessingContext): String? {
-        val literal = element as? HtlStringLiteralMixin
-        return literal?.name
-    }
+  override fun name(element: PsiElement, context: ProcessingContext): String? {
+    val literal = element as? HtlStringLiteralMixin
+    return literal?.name
+  }
 
 }

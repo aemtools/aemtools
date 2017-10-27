@@ -6,11 +6,13 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 
 /**
+ * Highlighter factory for [com.aemtools.lang.clientlib.CdLanguage].
+ *
  * @author Dmytro_Troynikov
  */
 class CdHighlighterFactory : SyntaxHighlighterFactory() {
 
-    override fun getSyntaxHighlighter(project: Project?, virtualFile: VirtualFile?): SyntaxHighlighter
-        = CdHighlighter()
+  override fun getSyntaxHighlighter(project: Project?, virtualFile: VirtualFile?): SyntaxHighlighter
+      = CdHighlighter()
 
 }

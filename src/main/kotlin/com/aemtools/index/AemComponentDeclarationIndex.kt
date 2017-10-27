@@ -18,24 +18,24 @@ import com.intellij.xml.index.XmlIndex
  */
 class AemComponentDeclarationIndex : XmlIndex<AemComponentDefinition>() {
 
-    companion object {
-        val AEM_COMPONENT_DECLARATION_INDEX_ID: ID<String, AemComponentDefinition>
-                = ID.create<String, AemComponentDefinition>("AemComponentDeclarationIndex")
-    }
+  companion object {
+    val AEM_COMPONENT_DECLARATION_INDEX_ID: ID<String, AemComponentDefinition>
+        = ID.create<String, AemComponentDefinition>("AemComponentDeclarationIndex")
+  }
 
-    override fun getValueExternalizer(): DataExternalizer<AemComponentDefinition>
-            = AemComponentDeclarationExternalizer
+  override fun getValueExternalizer(): DataExternalizer<AemComponentDefinition>
+      = AemComponentDeclarationExternalizer
 
-    override fun getName(): ID<String, AemComponentDefinition>
-            = AEM_COMPONENT_DECLARATION_INDEX_ID
+  override fun getName(): ID<String, AemComponentDefinition>
+      = AEM_COMPONENT_DECLARATION_INDEX_ID
 
-    override fun getIndexer(): DataIndexer<String, AemComponentDefinition, FileContent>
-            = AemComponentDeclarationIndexer
+  override fun getIndexer(): DataIndexer<String, AemComponentDefinition, FileContent>
+      = AemComponentDeclarationIndexer
 
-    override fun getInputFilter(): FileBasedIndex.InputFilter
-        = FileBasedIndex.InputFilter {
-        it.fileType == XmlFileType.INSTANCE
+  override fun getInputFilter(): FileBasedIndex.InputFilter
+      = FileBasedIndex.InputFilter {
+    it.fileType == XmlFileType.INSTANCE
         && it.name == ".content.xml"
-    }
+  }
 
 }

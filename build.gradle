@@ -11,7 +11,8 @@ buildscript {
 }
 
 plugins {
-    id "org.jetbrains.intellij" version "0.2.16"
+    id "org.jetbrains.intellij" version "0.2.17"
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC5-2"
 }
 
 apply plugin: 'java'
@@ -91,6 +92,9 @@ dependencies {
     testCompile group: 'com.github.markusbernhardt', name: 'proxy-vole', version: '1.0.3'
 
     testCompile "junit:junit:$junit_version"
+
+    testCompile "org.jmockit:jmockit:$jmockit_version"
+
     testCompile "org.assertj:assertj-core:$assertj_version"
     testCompile "org.mockito:mockito-core:$mockito_version"
 }
@@ -102,6 +106,8 @@ apply from: rootProject.file("config/idea.gradle")
  */
 apply from: rootProject.file("config/lexerparser.gradle")
 
+apply from: rootProject.file("config/detekt.gradle")
+
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.1'
+    gradleVersion = '4.2.1'
 }

@@ -7,10 +7,10 @@ import com.aemtools.lang.htl.HtlParserDefinition
  * @author Dmytro Troynikov
  */
 abstract class HtlParserBaseTest(dataPath: String, fileExt: String = "html")
-    : BaseParserTest(dataPath, fileExt, HtlParserDefinition()) {
+  : BaseParserTest(dataPath, fileExt, HtlParserDefinition()) {
 
-    override fun getTestDataPath(): String = "src/test/resources"
+  override fun getTestDataPath(): String = "src/test/resources"
 
-    override fun checkAllPsiRoots() = false
+  override fun checkAllPsiRoots() = false
 
 }

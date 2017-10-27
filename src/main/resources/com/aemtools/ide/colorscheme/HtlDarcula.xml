@@ -1,0 +1,92 @@
+<?xml version='1.0'?>
+<list>
+    <option name="HTL_ATTRIBUTE">
+        <value>
+            <option name="FOREGROUND" value="bababa" />
+        </value>
+    </option>
+    <option name="HTL_EL_AT">
+        <value>
+            <option name="FOREGROUND" value="cc7832" />
+            <option name="FONT_TYPE" value="1" />
+        </value>
+    </option>
+    <option name="HTL_EL_BOOLEAN">
+        <value>
+            <option name="FOREGROUND" value="cc7832" />
+            <option name="FONT_TYPE" value="1" />
+        </value>
+    </option>
+    <option name="HTL_EL_BRACKET">
+        <value />
+    </option>
+    <option name="HTL_EL_GLOBAL_VARIABLE">
+        <value>
+            <option name="FOREGROUND" value="9876aa" />
+            <option name="FONT_TYPE" value="2" />
+        </value>
+    </option>
+    <option name="HTL_EL_IDENTIFIER">
+        <value>
+            <option name="FOREGROUND" value="a9b7c6" />
+        </value>
+    </option>
+    <option name="HTL_EL_INTEGER">
+        <value>
+            <option name="FOREGROUND" value="6897bb" />
+        </value>
+    </option>
+    <option name="HTL_EL_LOCAL_VARIABLE">
+        <value>
+            <option name="FOREGROUND" value="a9b7c6" />
+        </value>
+    </option>
+    <option name="HTL_EL_NULL">
+        <value>
+            <option name="FOREGROUND" value="cc7832" />
+            <option name="FONT_TYPE" value="1" />
+        </value>
+    </option>
+    <option name="HTL_EL_OPERATOR">
+        <value />
+    </option>
+    <option name="HTL_EL_STANDARD_OPTION">
+        <value>
+            <option name="FOREGROUND" value="ffc66d" />
+            <option name="FONT_TYPE" value="2" />
+        </value>
+    </option>
+    <option name="HTL_EL_STRING">
+        <value>
+            <option name="FOREGROUND" value="6a8759" />
+        </value>
+    </option>
+    <option name="HTL_EL_TEMPLATE_ARGUMENT">
+        <value>
+            <option name="FOREGROUND" value="4a86e8" />
+            <option name="FONT_TYPE" value="2" />
+        </value>
+    </option>
+    <option name="HTL_EL_TEMPLATE_PARAMETER">
+        <value>
+            <option name="FOREGROUND" value="a9b7c6" />
+        </value>
+    </option>
+    <option name="HTL_EL_UNRESOLVED_VARIABLE">
+        <value>
+            <option name="FOREGROUND" value="bc3f3c" />
+        </value>
+    </option>
+    <option name="HTL_VARIABLE_DECLARATION">
+        <value>
+            <option name="FOREGROUND" value="9876aa" />
+        </value>
+    </option>
+    <option name="HTL_VARIABLE_UNUSED">
+        <value>
+            <option name="FOREGROUND" value="808080" />
+            <option name="EFFECT_COLOR" value="808080" />
+            <option name="EFFECT_TYPE" value="2" />
+        </value>
+    </option>
+</list>

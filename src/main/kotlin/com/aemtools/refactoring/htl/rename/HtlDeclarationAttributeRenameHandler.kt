@@ -23,47 +23,47 @@ import com.intellij.refactoring.rename.RenameHandler
  * @author Dmytro Troynikov
  */
 class HtlDeclarationAttributeRenameHandler : RenameHandler {
-    companion object {
-        val LOG = Logger.getInstance("#com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler")
+  companion object {
+    val LOG = Logger.getInstance("#com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler")
+  }
+
+  override fun isRenaming(dataContext: DataContext?): Boolean {
+    return isAvailableOnDataContext(dataContext)
+  }
+
+  override fun isAvailableOnDataContext(dataContext: DataContext?): Boolean {
+    if (dataContext == null) {
+      return false
     }
 
-    override fun isRenaming(dataContext: DataContext?): Boolean {
-        return isAvailableOnDataContext(dataContext)
+    val attribute = PsiElementRenameHandler.getElement(dataContext) as? XmlAttribute
+        ?: return false
+
+    return attribute.isHtlGlobalDeclarationAttribute()
+  }
+
+  override fun invoke(project: Project, editor: Editor?, file: PsiFile?, dataContext: DataContext?) {
+    val element = getElement(dataContext)
+        ?: BaseRefactoringAction.getElementAtCaret(editor, file)
+        ?: return
+    if (dataContext == null || editor == null || file == null) {
+      return
     }
 
-    override fun isAvailableOnDataContext(dataContext: DataContext?): Boolean {
-        if (dataContext == null) {
-            return false
-        }
-
-        val attribute = PsiElementRenameHandler.getElement(dataContext) as? XmlAttribute
-                ?: return false
-
-        return attribute.isHtlGlobalDeclarationAttribute()
+    if (ApplicationManager.getApplication().isUnitTestMode) {
+      val newName = DEFAULT_NAME.getData(dataContext)
+      if (newName != null) {
+        rename(element, project, element, editor, newName)
+        return
+      }
     }
 
-    override fun invoke(project: Project, editor: Editor?, file: PsiFile?, dataContext: DataContext?) {
-        val element = getElement(dataContext)
-                ?: BaseRefactoringAction.getElementAtCaret(editor, file)
-                ?: return
-        if (dataContext == null || editor == null || file == null) {
-            return
-        }
+    editor.scrollingModel.scrollToCaret(ScrollType.MAKE_VISIBLE)
+    val nameSuggestionContext = InjectedLanguageUtil.findElementAtNoCommit(file, editor.caretModel.offset)
+    RenameUtil.invoke(element, project, nameSuggestionContext, editor)
+  }
 
-        if (ApplicationManager.getApplication().isUnitTestMode) {
-            val newName = DEFAULT_NAME.getData(dataContext)
-            if (newName != null) {
-                rename(element, project, element, editor, newName)
-                return
-            }
-        }
-
-        editor.scrollingModel.scrollToCaret(ScrollType.MAKE_VISIBLE)
-        val nameSuggestionContext = InjectedLanguageUtil.findElementAtNoCommit(file, editor.caretModel.offset)
-        RenameUtil.invoke(element, project, nameSuggestionContext, editor)
-    }
-
-    override fun invoke(project: Project, elements: Array<out PsiElement>, dataContext: DataContext?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+  override fun invoke(project: Project, elements: Array<out PsiElement>, dataContext: DataContext?) {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
 }

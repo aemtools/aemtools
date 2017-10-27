@@ -12,14 +12,14 @@ import org.assertj.core.api.Assertions.assertThat
  */
 class FindUsagesTest : BaseLightTest() {
 
-    fun testFindUsageOfPropertyMethod() = fileCase {
-        addHtml("test.html", """
+  fun testFindUsageOfPropertyMethod() = fileCase {
+    addHtml("test.html", """
             <div data-sly-use.bean='com.test.Bean'>
                 $DOLLAR{bean.property}
                 $DOLLAR{bean.getProperty}
             </div>
         """)
-        addClass("Bean", """
+    addClass("Bean", """
             package com.test;
 
             public class Bean {
@@ -28,41 +28,41 @@ class FindUsagesTest : BaseLightTest() {
                 }
             }
         """)
-        verify {
-            val elementUnderCaret = elementUnderCaret()
-            val element = elementUnderCaret.findParentByType(PsiMethod::class.java)
-            val usages = myFixture.findUsages(element as PsiElement)
+    verify {
+      val elementUnderCaret = elementUnderCaret()
+      val element = elementUnderCaret.findParentByType(PsiMethod::class.java)
+      val usages = myFixture.findUsages(element as PsiElement)
 
-            assertThat(usages)
-                    .isNotNull
+      assertThat(usages)
+          .isNotNull
 
-            val holders = usages.map { it.element?.text }
-                    .filterNotNull()
+      val holders = usages.map { it.element?.text }
+          .filterNotNull()
 
-            assertContainsElements(holders, listOf(
-                    "bean.property",
-                    "bean.getProperty"
-            ))
-        }
+      assertContainsElements(holders, listOf(
+          "bean.property",
+          "bean.getProperty"
+      ))
     }
+  }
 
-    fun testFindUsagesOfUseVariable() = fileCase {
-        addHtml("test.html", """
+  fun testFindUsagesOfUseVariable() = fileCase {
+    addHtml("test.html", """
             <div ${CARET}data-sly-use.bean="">
                 $DOLLAR{bean}
             </div>
         """)
-        verify {
-            val element = elementUnderCaret()
-            val attr = element.findParentByType(XmlAttribute::class.java)
+    verify {
+      val element = elementUnderCaret()
+      val attr = element.findParentByType(XmlAttribute::class.java)
 
-            val usages = myFixture.findUsages(attr!!)
+      val usages = myFixture.findUsages(attr!!)
 
-            assertThat(usages)
-                    .isNotNull
+      assertThat(usages)
+          .isNotNull
 
-        }
     }
+  }
 
-    //todo add test for nested call e.g. bean.model.field
+  //todo add test for nested call e.g. bean.model.field
 }

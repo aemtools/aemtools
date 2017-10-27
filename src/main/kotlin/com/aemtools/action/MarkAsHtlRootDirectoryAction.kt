@@ -9,6 +9,8 @@ import com.intellij.openapi.actionSystem.ActionPlaces
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.project.DumbAwareAction
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.util.FileContentUtil.reparseOpenedFiles
 
 /**
@@ -21,52 +23,60 @@ import com.intellij.util.FileContentUtil.reparseOpenedFiles
  */
 class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
 
-    override fun update(e: AnActionEvent) {
-        val file = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
-                ?.firstOrNull()
-        val project = e.project
-        if (file == null
-                || project == null
-                || !file.isDirectory
-                && e.place != ActionPlaces.PROJECT_VIEW_POPUP
-                || !HtlDetectionService.mayBeMarked(file.path, project)) {
-            e.presentation.isEnabledAndVisible = false
-            return
-        }
-
-        if (HtlDetectionService.isHtlRootDirectory(file.path, project)) {
-            e.presentation.text = "Unmark as HTL Root"
-            return
-        }
-
-        e.presentation.icon = HtlIcons.HTL_ROOT
+  override fun update(event: AnActionEvent) {
+    val file = event.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
+        ?.firstOrNull()
+    val project = event.project
+    if (file == null
+        || project == null
+        || shouldDisable(file, project, event)) {
+      event.presentation.isEnabledAndVisible = false
+      return
     }
 
-    override fun actionPerformed(e: AnActionEvent) {
-        val file = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
-                ?.firstOrNull() ?: return
-        val project = e.project
-        if (!e.presentation.isEnabledAndVisible || project == null) {
-            return
-        }
-
-        val path = file.path
-
-        val htlRootDirectories = HtlRootDirectories.getInstance(project)
-                ?: return
-
-        if (e.presentation.text == "HTL Root") {
-            htlRootDirectories.addRoot(path)
-        } else {
-            htlRootDirectories.removeRoot(path)
-        }
-
-        // attempt to flush cached files
-        e.project?.psiManager()?.apply {
-            reparseOpenedFiles()
-
-            HtlTemplateIndex.rebuildIndex()
-        }
+    if (HtlDetectionService.isHtlRootDirectory(file.path, project)) {
+      event.presentation.text = "Unmark as HTL Root"
+      return
     }
+
+    event.presentation.icon = HtlIcons.HTL_ROOT
+  }
+
+  override fun actionPerformed(event: AnActionEvent) {
+    val file = event.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
+        ?.firstOrNull() ?: return
+    val project = event.project
+    if (!event.presentation.isEnabledAndVisible || project == null) {
+      return
+    }
+
+    val path = file.path
+
+    val htlRootDirectories = HtlRootDirectories.getInstance(project)
+        ?: return
+
+    if (shouldAdd(event)) {
+      htlRootDirectories.addRoot(path)
+    } else {
+      htlRootDirectories.removeRoot(path)
+    }
+
+    // attempt to flush cached files
+    event.project?.psiManager()?.apply {
+      reparseOpenedFiles()
+
+      HtlTemplateIndex.rebuildIndex()
+    }
+  }
+
+  private fun shouldAdd(event: AnActionEvent) = event.presentation.text == "HTL Root"
+
+  private fun shouldDisable(file: VirtualFile,
+                            project: Project,
+                            event: AnActionEvent): Boolean {
+    return (!file.isDirectory
+        && event.place != ActionPlaces.PROJECT_VIEW_POPUP
+        || !HtlDetectionService.mayBeMarked(file.path, project))
+  }
 
 }

@@ -145,6 +145,9 @@
         <annotator language="Htl"
                    implementationClass="com.aemtools.lang.htl.highlight.HtlVariablesAnnotator"/>
 
+        <annotator language="Htl"
+                   implementationClass="com.aemtools.lang.htl.highlight.HtlOptionsAnnotator"/>
+
         <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
                        order="before xmlAttribute"/>
 
@@ -161,12 +164,12 @@
         <targetElementEvaluator
                 implementationClass="com.aemtools.refactoring.htl.rename.HtlAttributeTargetElementEvaluator"
                 language="Htl"/>
-        <findUsagesHandlerFactory implementation="com.aemtools.findusages.HtmlAttributeUsagesProvider" />
-        
+        <findUsagesHandlerFactory implementation="com.aemtools.findusages.HtmlAttributeUsagesProvider"/>
+
         <xml.attributeDescriptorsProvider
                 order="first"
-                implementation="com.aemtools.findusages.HtlAttributesDescriptorsProvider" />
-        
+                implementation="com.aemtools.findusages.HtlAttributesDescriptorsProvider"/>
+
         <lang.psiStructureViewFactory language="Htl"
                                       implementationClass="com.aemtools.ide.HtlStructureViewProvider"/>
 
@@ -174,6 +177,13 @@
                 serviceInterface="com.aemtools.settings.HtlRootDirectories"
                 serviceImplementation="com.aemtools.settings.HtlRootDirectories"/>
 
+        <additionalTextAttributes
+            scheme="Default"
+            file="com/aemtools/ide/colorscheme/HtlDefault.xml"/>
+        <additionalTextAttributes
+            scheme="Darcula"
+            file="com/aemtools/ide/colorscheme/HtlDarcula.xml"/>
+        <colorSettingsPage implementation="com.aemtools.ide.htl.HtlColorsAndFontsPage"/>
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
     </extensions>
 
@@ -188,7 +198,7 @@
                 class="com.aemtools.action.MarkAsHtlRootDirectoryAction"
                 text="HTL Root"
                 description="HTML files under this directory will be considered as HTL files">
-            <add-to-group group-id="MarkRootGroup" anchor="last" />
+            <add-to-group group-id="MarkRootGroup" anchor="last"/>
         </action>
     </actions>
 

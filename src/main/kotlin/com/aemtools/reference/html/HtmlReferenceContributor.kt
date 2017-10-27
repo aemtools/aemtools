@@ -14,21 +14,21 @@ import com.intellij.psi.PsiReferenceRegistrar
  */
 class HtmlReferenceContributor : PsiReferenceContributor() {
 
-    override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
-        registrar.registerReferenceProvider(
-                XmlPatterns.xmlAttribute(),
-                HtmlAttributeReferenceProvider)
+  override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
+    registrar.registerReferenceProvider(
+        XmlPatterns.xmlAttribute(),
+        HtmlAttributeReferenceProvider)
 
-        registrar.registerReferenceProvider(
-                XmlPatterns.xmlAttributeValue(),
-                DataSlyUseReferenceProvider)
+    registrar.registerReferenceProvider(
+        XmlPatterns.xmlAttributeValue(),
+        DataSlyUseReferenceProvider)
 
-        registrar.registerReferenceProvider(
-                XmlPatterns.xmlAttributeValue()
-                        .withAncestor(1, XmlPatterns.xmlAttribute("data-sly-include")),
-                DataSlyIncludeReferenceProvider
-        )
+    registrar.registerReferenceProvider(
+        XmlPatterns.xmlAttributeValue()
+            .withAncestor(1, XmlPatterns.xmlAttribute("data-sly-include")),
+        DataSlyIncludeReferenceProvider
+    )
 
-    }
+  }
 
 }

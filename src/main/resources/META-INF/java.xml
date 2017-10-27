@@ -14,8 +14,17 @@
                 language="JAVA"
                 implementationClass="com.aemtools.lang.java.linemarker.OSGiConfigLineMarker"/>
 
+        <codeInsight.lineMarkerProvider
+                language="XML"
+                implementationClass="com.aemtools.codeinsight.osgiconfig.OSGiConfigGotoClassLineMarkerProvider"/>
+
         <applicationService
                 serviceInterface="com.aemtools.service.IJavaSearchService"
                 serviceImplementation="com.aemtools.service.JavaSearchService"/>
+
+        <codeInsight.lineMarkerProvider
+                language="JAVA"
+                implementationClass="com.aemtools.lang.java.linemarker.FelixOSGiPropertyLineMarker"/>
+
     </extensions>
 </idea-plugin>

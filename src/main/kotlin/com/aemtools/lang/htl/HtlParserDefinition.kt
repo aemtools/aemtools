@@ -22,34 +22,34 @@ import com.intellij.psi.tree.TokenSet
  */
 class HtlParserDefinition : ParserDefinition {
 
-    override fun createLexer(project: Project?): Lexer
-            = HtlLexer()
+  override fun createLexer(project: Project?): Lexer
+      = HtlLexer()
 
-    override fun createParser(project: Project?): PsiParser?
-            = HtlParser()
+  override fun createParser(project: Project?): PsiParser?
+      = HtlParser()
 
-    override fun createFile(viewProvider: FileViewProvider): PsiFile?
-            = HtlPsiFile(viewProvider)
+  override fun createFile(viewProvider: FileViewProvider): PsiFile?
+      = HtlPsiFile(viewProvider)
 
-    override fun spaceExistanceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements?
-            = ParserDefinition.SpaceRequirements.MUST
+  override fun spaceExistanceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements?
+      = ParserDefinition.SpaceRequirements.MUST
 
-    override fun getStringLiteralElements(): TokenSet
-            = TokenSet.create(
-            HtlTypes.SINGLE_QUOTED_STRING,
-            HtlTypes.DOUBLE_QUOTED_STRING
-    )
+  override fun getStringLiteralElements(): TokenSet
+      = TokenSet.create(
+      HtlTypes.SINGLE_QUOTED_STRING,
+      HtlTypes.DOUBLE_QUOTED_STRING
+  )
 
-    override fun getWhitespaceTokens(): TokenSet
-            = TokenSet.create(TokenType.WHITE_SPACE)
+  override fun getWhitespaceTokens(): TokenSet
+      = TokenSet.create(TokenType.WHITE_SPACE)
 
-    override fun getFileNodeType(): IFileElementType?
-            = HtlFileElementType
+  override fun getFileNodeType(): IFileElementType?
+      = HtlFileElementType
 
-    override fun createElement(node: ASTNode?): PsiElement
-            = HtlTypes.Factory.createElement(node)
+  override fun createElement(node: ASTNode?): PsiElement
+      = HtlTypes.Factory.createElement(node)
 
-    override fun getCommentTokens(): TokenSet
-            = TokenSet.EMPTY
+  override fun getCommentTokens(): TokenSet
+      = TokenSet.EMPTY
 
 }

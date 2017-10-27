@@ -8,38 +8,38 @@ import com.intellij.testFramework.InspectionFixtureTestCase
  */
 class HtlAttributesAnnotatorRemoveUnusedVariableFixTest : InspectionFixtureTestCase() {
 
-    fun testQuickFixWithDataSlyUse() {
-        myFixture.configureByText("test.html", """
+  fun testQuickFixWithDataSlyUse() {
+    myFixture.configureByText("test.html", """
             <div data-sly-use.bean=""></div>
         """)
 
-        val fix = myFixture.getAllQuickFixes("test.html")
-                .first()
+    val fix = myFixture.getAllQuickFixes("test.html")
+        .first()
 
-        writeCommand(project) {
-            fix.invoke(project, editor, file)
-        }
-
-        myFixture.checkResult("""
-            <div data-sly-use=""></div>
-        """)
+    writeCommand(project) {
+      fix.invoke(project, editor, file)
     }
 
-    fun testQuickFixWithDataSlyTest() {
-        myFixture.configureByText("test.html", """
+    myFixture.checkResult("""
+            <div data-sly-use=""></div>
+        """)
+  }
+
+  fun testQuickFixWithDataSlyTest() {
+    myFixture.configureByText("test.html", """
             <div data-sly-test.condition=""></div>
         """)
 
-        val fix = myFixture.getAllQuickFixes("test.html")
-                .first()
+    val fix = myFixture.getAllQuickFixes("test.html")
+        .first()
 
-        writeCommand(project) {
-            fix.invoke(project, editor, file)
-        }
+    writeCommand(project) {
+      fix.invoke(project, editor, file)
+    }
 
-        myFixture.checkResult("""
+    myFixture.checkResult("""
             <div data-sly-test=""></div>
         """)
-    }
+  }
 
 }

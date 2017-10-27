@@ -1,0 +1,9 @@
+detekt {
+    version = "1.0.0.RC5-2"
+    profile("main") {
+        input = "$projectDir/src/main/kotlin"
+        config = "$projectDir/config/detekt.yml"
+    }
+}
+
+tasks.test.dependsOn detektCheck

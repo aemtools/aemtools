@@ -12,15 +12,15 @@ import com.intellij.psi.PsiType
 class ArrayJavaTypeDescriptor(psiClass: PsiClass,
                               psiMember: PsiMember?,
                               originalType: PsiType? = null)
-    : JavaPsiClassTypeDescriptor(psiClass, psiMember, originalType), ArrayTypeDescriptor {
+  : JavaPsiClassTypeDescriptor(psiClass, psiMember, originalType), ArrayTypeDescriptor {
 
-    override fun isArray() = true
+  override fun isArray() = true
 
-    override fun isIterable() = false
+  override fun isIterable() = false
 
-    override fun isMap() = false
+  override fun isMap() = false
 
-    //for array the 'arrayType' is the same as main type
-    override fun arrayType(): TypeDescriptor = this
+  //for array the 'arrayType' is the same as main type
+  override fun arrayType(): TypeDescriptor = this
 
 }

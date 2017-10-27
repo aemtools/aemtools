@@ -16,21 +16,21 @@ import com.intellij.util.ProcessingContext
  */
 object DataSlyUseReferenceProvider : PsiReferenceProvider() {
 
-    override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
-        val attr = element.findParentByType(XmlAttribute::class.java) ?: return emptyArray()
-        val valueElement = attr.valueElement ?: return emptyArray()
-        val value = valueElement.value ?: return emptyArray()
-        if (attr.isDataSlyUse()) {
-            val psiFile = HtlIndexFacade.resolveUseFile(value, attr.containingFile)
+  override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
+    val attr = element.findParentByType(XmlAttribute::class.java) ?: return emptyArray()
+    val valueElement = attr.valueElement ?: return emptyArray()
+    val value = valueElement.value ?: return emptyArray()
+    if (attr.isDataSlyUse()) {
+      val psiFile = HtlIndexFacade.resolveUseFile(value, attr.containingFile)
 
-            if (psiFile != null) {
-                val fileReference = PsiFileReference(psiFile,
-                        valueElement,
-                        TextRange(1, valueElement.textLength - 1))
-                return arrayOf(fileReference)
-            }
-        }
-        return emptyArray()
+      if (psiFile != null) {
+        val fileReference = PsiFileReference(psiFile,
+            valueElement,
+            TextRange(1, valueElement.textLength - 1))
+        return arrayOf(fileReference)
+      }
     }
+    return emptyArray()
+  }
 
 }

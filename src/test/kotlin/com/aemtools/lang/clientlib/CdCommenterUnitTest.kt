@@ -9,30 +9,30 @@ import org.junit.Test
  */
 class CdCommenterUnitTest {
 
-    @Test
-    fun `getCommentedBlockCommentPrefix should return null`() =
-            assertThat(CdCommenter().commentedBlockCommentPrefix)
-                    .isNull()
+  @Test
+  fun `getCommentedBlockCommentPrefix should return null`() =
+      assertThat(CdCommenter().commentedBlockCommentPrefix)
+          .isNull()
 
-    @Test
-    fun `getCommentedBlockCommentSuffix should return null`() =
-            assertThat(CdCommenter().commentedBlockCommentSuffix)
-                    .isNull()
+  @Test
+  fun `getCommentedBlockCommentSuffix should return null`() =
+      assertThat(CdCommenter().commentedBlockCommentSuffix)
+          .isNull()
 
-    @Test
-    fun `getBlockCommentPrefix should return null`() =
-            assertThat(CdCommenter().blockCommentPrefix)
-                    .isNull()
+  @Test
+  fun `getBlockCommentPrefix should return null`() =
+      assertThat(CdCommenter().blockCommentPrefix)
+          .isNull()
 
-    @Test
-    fun `getBlockCommentSuffix should return null`() =
-            assertThat(CdCommenter().blockCommentSuffix)
-                    .isNull()
+  @Test
+  fun `getBlockCommentSuffix should return null`() =
+      assertThat(CdCommenter().blockCommentSuffix)
+          .isNull()
 
-    @Test
-    fun `getLineCommentPrefix should return "# "`() {
-        assertThat(CdCommenter().lineCommentPrefix)
-                .isEqualTo("# ")
-    }
+  @Test
+  fun `getLineCommentPrefix should return "# "`() {
+    assertThat(CdCommenter().lineCommentPrefix)
+        .isEqualTo("# ")
+  }
 
 }

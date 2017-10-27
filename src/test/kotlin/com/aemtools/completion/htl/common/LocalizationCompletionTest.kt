@@ -7,8 +7,8 @@ import com.aemtools.blocks.completion.CompletionBaseLightTest
  */
 class LocalizationCompletionTest : CompletionBaseLightTest(false) {
 
-    fun testLocalizationCompletion() = completionTest {
-        addXml("en.xml", """
+  fun testLocalizationCompletion() = completionTest {
+    addXml("en.xml", """
             <jcr:root
               jcr:language="en"
               jcr:mixinTypes="[mix:language]">
@@ -25,17 +25,17 @@ class LocalizationCompletionTest : CompletionBaseLightTest(false) {
             </jcr:root>
         """)
 
-        addHtml("test.html", """
+    addHtml("test.html", """
             $DOLLAR{'$CARET' @ i18n}
         """)
-        shouldContain(
-                "message1",
-                "message2"
-        )
-    }
+    shouldContain(
+        "message1",
+        "message2"
+    )
+  }
 
-    fun testLocalizationCompletionShouldNotContainDuplicates() = completionTest {
-        addXml("en.xml", """
+  fun testLocalizationCompletionShouldNotContainDuplicates() = completionTest {
+    addXml("en.xml", """
             <jcr:root
               jcr:language="en"
               jcr:mixinTypes="[mix:language]">
@@ -50,7 +50,7 @@ class LocalizationCompletionTest : CompletionBaseLightTest(false) {
                     sling:message="Message1"/>
             </jcr:root>
         """)
-        addXml("fr.xml", """
+    addXml("fr.xml", """
             <jcr:root
               jcr:language="en"
               jcr:mixinTypes="[mix:language]">
@@ -66,13 +66,13 @@ class LocalizationCompletionTest : CompletionBaseLightTest(false) {
             </jcr:root>
         """)
 
-        addHtml("test.html", """
+    addHtml("test.html", """
             $DOLLAR{'$CARET' @ i18n}
         """)
-        shouldContain(
-                "message1",
-                "message2"
-        )
-    }
+    shouldContain(
+        "message1",
+        "message2"
+    )
+  }
 
 }

@@ -56,6 +56,7 @@
     mixin       ("property_access") = "com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin"
     mixin       ("variable_name") = "com.aemtools.lang.htl.psi.mixin.VariableNameMixin"
     mixin       ("access_identifier") = "com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin"
+
 }
 
 root ::= ( htl_el | outer_lang )*
@@ -128,7 +129,7 @@ property_access ::= unary_operator? variable_name [access_identifier+] {implemen
 
 variable_name ::= VAR_NAME {implements="com.intellij.psi.ContributedReferenceHost"}
 
-access_identifier ::= dot_access | array_like_access
+inner access_identifier ::= dot_access | array_like_access
 
 dot_access ::= DOT variable_name
 
@@ -158,7 +159,10 @@ context_expression ::= assignment
 
 assignment ::= variable_name SINGLE_EQ assignment_value
 
-assignment_value ::= array_expression
+assignment_value ::= assignment_value_expr (logical_operator assignment_value_expr)*
+    | assignment_value_expr
+
+private assignment_value_expr ::= array_expression
     | ternary_operation
     | literal
     | property_access
