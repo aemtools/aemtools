@@ -3,17 +3,23 @@ package com.aemtools.inspection.fix
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin
-import com.intellij.codeInspection.LocalQuickFixOnPsiElement
+import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDocumentManager
-import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
+import com.intellij.psi.SmartPsiElementPointer
 
 /**
  * @author Dmytro Troynikov
  */
-class ELSimplifyAction(val element: HtlHtlEl) : LocalQuickFixOnPsiElement(element) {
-  override fun invoke(project: Project, file: PsiFile, startElement: PsiElement, endElement: PsiElement) {
+class ELSimplifyIntention(private val pointer: SmartPsiElementPointer<HtlHtlEl>)
+  : BaseHtlFix(
+    text = { "Simplify expression" }
+) {
+
+  override fun invoke(project: Project, editor: Editor, file: PsiFile) {
+    val element = pointer.element ?: return
+
     val newValue = element.findChildrenByType(HtlStringLiteralMixin::class.java)
         .firstOrNull()?.name ?: return
     val (start, end) = element.textRange.startOffset to element.textRange.endOffset
@@ -23,7 +29,4 @@ class ELSimplifyAction(val element: HtlHtlEl) : LocalQuickFixOnPsiElement(elemen
     document.replaceString(start, end, newValue)
   }
 
-  override fun getFamilyName(): String = "HTL Intentions"
-
-  override fun getText(): String = "Simplify expression"
 }

@@ -120,6 +120,8 @@ object const {
     val FELIX_SERVICE_ANNOTATION = "org.apache.felix.scr.annotations.Service"
     val SLING_SERVLET_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingServlet"
     val SLING_FILTER_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingFilter"
+
+    val FELIX_PROPERTY_ANNOTATION = "org.apache.felix.scr.annotations.Property"
   }
 
   /**

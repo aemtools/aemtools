@@ -1,5 +1,6 @@
 package com.aemtools.util
 
+import com.aemtools.constant.const.java.FELIX_PROPERTY_ANNOTATION
 import com.aemtools.constant.const.java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.constant.const.java.SLING_FILTER_ANNOTATION
 import com.aemtools.constant.const.java.SLING_SERVLET_ANNOTATION
@@ -9,6 +10,7 @@ import com.intellij.psi.PsiField
 import com.intellij.psi.PsiMember
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiModifier
+import com.intellij.psi.PsiModifierListOwner
 import com.intellij.psi.PsiType
 
 /**
@@ -21,19 +23,37 @@ import com.intellij.psi.PsiType
  * @receiver [PsiClass]
  * @return *true* if class is marked with corresponding OSGi annotations, *false* otherwise
  */
-fun PsiClass.isOSGiService(): Boolean {
-  val annotations = this.modifierList?.children?.map {
-    it as? PsiAnnotation
-  }?.filterNotNull()
-      ?: return false
+fun PsiClass.isOSGiService():Boolean {
 
   // TODO add check for OSGi declarative service
-  return annotations.any {
+  return annotations().any {
     it.qualifiedName in listOf(FELIX_SERVICE_ANNOTATION,
         SLING_SERVLET_ANNOTATION,
         SLING_FILTER_ANNOTATION)
   }
 }
+
+/**
+ * Check if current field is Felix property
+ * (annotated with [FELIX_PROPERTY_ANNOTATION]).
+ *
+ * @receiver [PsiField]
+ * @return _true_ if current field is felix property
+ */
+fun PsiField.isFelixProperty(): Boolean =
+    annotations().any {
+      it.qualifiedName == FELIX_PROPERTY_ANNOTATION
+    }
+
+/**
+ * Get list of [PsiAnnotation] objects from current psi modifier list owner.
+ *
+ * @receiver [PsiModifierListOwner]
+ * @return list of annotations
+ */
+fun PsiModifierListOwner.annotations(): List<PsiAnnotation> =
+    modifierList?.children?.mapNotNull { it as? PsiAnnotation }
+        ?: emptyList()
 
 /**
  * Find all methods which may used from EL

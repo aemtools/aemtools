@@ -3,6 +3,9 @@ package com.aemtools.codeinsight.osgiconfig
 import com.aemtools.blocks.base.BaseLightTest
 import com.aemtools.blocks.fixture.OSGiConfigFixtureMixin
 import com.aemtools.completion.util.findChildrenByType
+import com.intellij.codeHighlighting.Pass
+import com.intellij.codeInsight.daemon.GutterIconNavigationHandler
+import com.intellij.openapi.editor.markup.GutterIconRenderer
 import com.intellij.psi.impl.source.tree.LeafElement
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
@@ -21,6 +24,7 @@ class OSGiConfigGotoClassLineMarkerProviderTest : BaseLightTest(),
   fun testShouldMarkOSGiServiceConfiguration() = fileCase {
     addEmptyOSGiConfigs("/config/com.test.Bean.xml")
     addClass("com.test.Bean.java", "package com.test; class Bean{}")
+
     verify {
       val config = FilenameIndex.getFilesByName(
           project,
@@ -36,6 +40,28 @@ class OSGiConfigGotoClassLineMarkerProviderTest : BaseLightTest(),
 
       assertTrue(element is LeafElement)
       assertNotNull(lineMarkerInfo)
+
+      assertEquals(
+          "Open associated OSGi service",
+          lineMarkerInfo.lineMarkerTooltip
+      )
+
+      assertEquals(
+          Pass.LINE_MARKERS,
+          lineMarkerInfo.updatePass
+      )
+
+      assertEquals(
+          GutterIconRenderer.Alignment.CENTER,
+          lineMarkerInfo.createGutterRenderer()?.alignment
+      )
+
+      val navigationHandler = lineMarkerInfo.navigationHandler
+
+      assertTrue(
+          GutterIconNavigationHandler::class.java.isAssignableFrom(
+              navigationHandler?.javaClass)
+      )
     }
   }
 

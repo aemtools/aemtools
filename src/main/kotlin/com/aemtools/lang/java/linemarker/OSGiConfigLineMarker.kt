@@ -2,6 +2,7 @@ package com.aemtools.lang.java.linemarker
 
 import com.aemtools.index.model.sortByMods
 import com.aemtools.index.search.OSGiConfigSearch
+import com.aemtools.lang.java.linemarker.markerinfo.OSGiServiceConfigMarkerInfo
 import com.aemtools.util.isOSGiService
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerProvider

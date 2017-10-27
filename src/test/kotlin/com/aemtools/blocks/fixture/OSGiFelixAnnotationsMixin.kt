@@ -3,7 +3,7 @@ package com.aemtools.blocks.fixture
 import com.aemtools.blocks.base.model.fixture.ITestFixture
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Troynikov
  */
 interface OSGiFelixAnnotationsMixin {
 
@@ -14,10 +14,10 @@ interface OSGiFelixAnnotationsMixin {
    */
   fun ITestFixture.addFelixServiceAnnotation() =
       this.addClass("org/apache/felix/scr/annotations/Service.java", """
-                package org.apache.felix.scr.annotations;
+        package org.apache.felix.scr.annotations;
 
-                public @interface Service {}
-            """)
+        public @interface Service {}
+      """)
 
   /**
    * Add Sling Filter annotation to current fixture.
@@ -26,10 +26,10 @@ interface OSGiFelixAnnotationsMixin {
    */
   fun ITestFixture.addFelixSlingFilterAnnotation() =
       this.addClass("org/apache/felix/src/annotations/sling/SlingFilter.java", """
-                package org.apache.felix.scr.annotations.sling;
+        package org.apache.felix.scr.annotations.sling;
 
-                public @interface SlingFilter {}
-            """)
+        public @interface SlingFilter {}
+      """)
 
   /**
    * Add Sling Servlet annotation to current fixture.
@@ -38,9 +38,16 @@ interface OSGiFelixAnnotationsMixin {
    */
   fun ITestFixture.addFelixSlingServletAnnotation() =
       this.addClass("org/apache/felix/scr/annotations/sling/SlingServlet.java", """
-                package org.apache.felix.scr.annotations.sling;
+        package org.apache.felix.scr.annotations.sling;
 
-                public @interface SlingServlet {}
-            """)
+        public @interface SlingServlet {}
+      """)
+
+  fun ITestFixture.addFelixPropertyAnnotation() =
+      this.addClass("org/apache/felix/scr/annotations/Property.java", """
+        package org.apache.felix.scr.annotations;
+
+        public @interface Property {}
+      """)
 
 }

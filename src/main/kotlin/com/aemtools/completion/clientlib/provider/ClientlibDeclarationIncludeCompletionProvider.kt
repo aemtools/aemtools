@@ -68,7 +68,7 @@ object ClientlibDeclarationIncludeCompletionProvider : CompletionProvider<Comple
     var currentBasePath: String? = null
     elements.forEach {
       if (it is CdBasePath) {
-        currentBasePath = it.text
+        currentBasePath = it.include?.text
       } else if (it is CdInclude) {
         if (currentBasePath == null) {
           result.add(CdImport(

@@ -12,7 +12,7 @@ buildscript {
 
 plugins {
     id "org.jetbrains.intellij" version "0.2.17"
-    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC4-3"
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC5-2"
 }
 
 apply plugin: 'java'

@@ -55,6 +55,31 @@ class ClientlibJsTxtCompletionTest : CompletionBaseLightTest(false) {
     shouldNotContain(listOf("first.js"))
   }
 
+  fun testFilterOutDuplicatesAfter() = completionTest {
+    addFile("$JCR_ROOT/apps/components/comp/clientlibs/js.txt", """
+          $CARET
+          first.js
+    """)
+    addFile("$JCR_ROOT/apps/components/comp/clientlibs/first.js", "")
+    addFile("$JCR_ROOT/apps/components/comp/clientlibs/second.js", "")
+
+    shouldContain(listOf("second.js"))
+    shouldNotContain(listOf("first.js"))
+  }
+
+  fun testFilterOutDuplicatesWithBasePathAfter() = completionTest {
+    addFile("$JCR_ROOT/apps/components/comp/clientlibs/js.txt", """
+          $CARET
+          #base=js
+          first.js
+    """)
+    addFile("$JCR_ROOT/apps/components/comp/clientlibs/js/first.js", "")
+    addFile("$JCR_ROOT/apps/components/comp/clientlibs/js/second.js", "")
+
+    shouldContain(listOf("js/second.js"))
+    shouldNotContain(listOf("js/first.js", "first.js"))
+  }
+
   fun testBasePathCompletion1() = completionTest {
     addFile("$JCR_ROOT/apps/components/comp/clientlibs/js.txt", """
             #base=$CARET
