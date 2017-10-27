@@ -23,7 +23,7 @@ import com.intellij.psi.PsiType
  * @receiver [PsiClass]
  * @return *true* if class is marked with corresponding OSGi annotations, *false* otherwise
  */
-fun PsiClass.isOSGiService(): Boolean {
+fun PsiClass.isOSGiService():Boolean {
 
   // TODO add check for OSGi declarative service
   return annotations().any {
@@ -52,8 +52,7 @@ fun PsiField.isFelixProperty(): Boolean =
  * @return list of annotations
  */
 fun PsiModifierListOwner.annotations(): List<PsiAnnotation> =
-    modifierList?.children?.map { it as? PsiAnnotation }
-        ?.filterNotNull()
+    modifierList?.children?.mapNotNull { it as? PsiAnnotation }
         ?: emptyList()
 
 /**

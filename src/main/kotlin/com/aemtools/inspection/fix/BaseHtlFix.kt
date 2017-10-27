@@ -18,10 +18,10 @@ import com.intellij.psi.PsiFile
  * @author Dmytro Troynikov
  */
 abstract class BaseHtlFix(
-    val text: () -> String,
-    val family: String = "HTL Intentions",
-    val startInWriteAction: Boolean = true,
-    val isAvailable: (project: Project, editor: Editor?, file: PsiFile?) -> Boolean = { _, _, _ -> true }
+    private val text: () -> String,
+    private val family: String = "HTL Intentions",
+    private val startInWriteAction: Boolean = true,
+    private val isAvailable: (project: Project, editor: Editor?, file: PsiFile?) -> Boolean = { _, _, _ -> true }
 ) : IntentionAction {
 
   override fun getFamilyName(): String = family
