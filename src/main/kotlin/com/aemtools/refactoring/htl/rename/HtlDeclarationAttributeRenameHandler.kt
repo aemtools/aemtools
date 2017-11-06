@@ -23,9 +23,6 @@ import com.intellij.refactoring.rename.RenameHandler
  * @author Dmytro Troynikov
  */
 class HtlDeclarationAttributeRenameHandler : RenameHandler {
-  companion object {
-    val LOG = Logger.getInstance("#com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler")
-  }
 
   override fun isRenaming(dataContext: DataContext?): Boolean {
     return isAvailableOnDataContext(dataContext)

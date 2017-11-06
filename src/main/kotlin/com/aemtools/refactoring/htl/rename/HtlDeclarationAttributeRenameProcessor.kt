@@ -43,7 +43,7 @@ class HtlDeclarationAttributeRenameProcessor : RenamePsiElementProcessor() {
     val htlAttributeName = attribute.htlAttributeName() ?: return
 
     val newAttributeName = "$htlAttributeName.$newName"
-    attribute.setName(newAttributeName)
+    attribute.name = newAttributeName
 
     val htlDeclarationUsages: ArrayList<UsageInfo> = ArrayList()
     val htlListHelperUsages: ArrayList<UsageInfo> = ArrayList()

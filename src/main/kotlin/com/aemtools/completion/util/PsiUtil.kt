@@ -12,6 +12,8 @@ import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiReference
+import com.intellij.psi.SmartPointerManager
+import com.intellij.psi.SmartPsiElementPointer
 import com.intellij.psi.util.PsiUtilCore
 import com.intellij.psi.xml.XmlFile
 import com.intellij.refactoring.rename.RenamePsiElementProcessor
@@ -115,3 +117,13 @@ fun PsiElement.incomingReferences(): List<PsiReference> = runReadAction {
   RenamePsiElementProcessor.forElement(this).findReferences(this)
       .toList()
 }
+
+/**
+ * Convert current [PsiElement] into [SmartPsiElementPointer].
+ *
+ * @receiver [PsiElement] based item
+ * @return [SmartPsiElementPointer] pointing to current [PsiElement]
+ */
+inline fun <reified T : PsiElement> T.toSmartPointer(): SmartPsiElementPointer<T>
+    = SmartPointerManager.getInstance(project)
+    .createSmartPsiElementPointer(this)

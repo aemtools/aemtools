@@ -8,6 +8,7 @@ import com.intellij.openapi.editor.ex.util.LayeredLexerEditorHighlighter
 import com.intellij.openapi.fileTypes.FileType
 import com.intellij.openapi.fileTypes.StdFileTypes
 import com.intellij.openapi.fileTypes.SyntaxHighlighter
+import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.templateLanguages.TemplateDataLanguageMappings
@@ -30,8 +31,7 @@ class HtlTemplateHighlighter(val project: Project?,
         HtlLanguage.getDefaultTemplateLang()
       }
     }
-
-    val outerHighlighter = SyntaxHighlighter.PROVIDER.create(type, project, virtualFile)
+    val outerHighlighter = SyntaxHighlighterFactory.getSyntaxHighlighter(type, project, virtualFile)
 
     registerLayer(HtlTypes.OUTER_LANGUAGE, LayerDescriptor(outerHighlighter, ""))
   }

@@ -101,6 +101,118 @@ object const {
     }
   }
 
+  object html {
+
+    val WINDOW_EVENT_ATTRIBUTES = listOf(
+        "onafterprint",
+        "onbeforeprint",
+        "onbeforeunload",
+        "onerror",
+        "onhashchange",
+        "onload",
+        "onmessage",
+        "onoffline",
+        "ononline",
+        "onpagehide",
+        "onpageshow",
+        "onpopstate",
+        "onresize",
+        "onstorage",
+        "onunload"
+    )
+
+    val FORM_EVENTS = listOf(
+        "onblur",
+        "onchange",
+        "oncontextmenu",
+        "onfocus",
+        "oninput",
+        "oninvalid",
+        "onreset",
+        "onsearch",
+        "onselect",
+        "onsubmit"
+    )
+
+    val KEYBOARD_EVENTS = listOf(
+        "onkeydown",
+        "onkeypress",
+        "onkeyup"
+    )
+
+    val MOUSE_EVENTS = listOf(
+        "onclick",
+        "ondblclick",
+        "onmousedown",
+        "onmousemove",
+        "onmouseout",
+        "onmouseover",
+        "onmouseup",
+        "onmousewheel",
+        "onwheel"
+    )
+
+    val DRAG_EVENTS = listOf(
+        "ondrag",
+        "ondragend",
+        "ondragenter",
+        "ondragleave",
+        "ondragover",
+        "ondragstart",
+        "ondrop",
+        "onscroll"
+    )
+
+    val CLIPBOARD_EVENTS = listOf(
+        "oncopy",
+        "oncut",
+        "onpaste"
+    )
+
+    val MEDIA_EVENTS = listOf(
+        "onabort",
+        "oncanplay",
+        "oncanplaythrough",
+        "oncuechange",
+        "ondurationchange",
+        "onemptied",
+        "onended",
+        "onerror",
+        "onloadeddata",
+        "onloadedmetadata",
+        "onloadstart",
+        "onpause",
+        "onplay",
+        "onplaying",
+        "onprogress",
+        "onratechange",
+        "onseeked",
+        "onseeking",
+        "onstalled",
+        "onsuspend",
+        "ontimeupdate",
+        "onvolumechange",
+        "onwaiting"
+    )
+
+    val MISC_EVENTS = listOf(
+        "onshow",
+        "ontoggle"
+    )
+
+    val JS_ATTRIBUTES = hashSetOf(
+        *(WINDOW_EVENT_ATTRIBUTES
+            + FORM_EVENTS
+            + KEYBOARD_EVENTS
+            + MOUSE_EVENTS
+            + DRAG_EVENTS
+            + CLIPBOARD_EVENTS
+            + MEDIA_EVENTS
+            + MISC_EVENTS).toTypedArray()
+    )
+
+  }
+
   /**
    * Java related constants.
    */
