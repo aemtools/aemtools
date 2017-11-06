@@ -1,6 +1,8 @@
 package com.aemtools.inspection.fix
 
 import com.intellij.codeInsight.intention.IntentionAction
+import com.intellij.codeInspection.LocalQuickFix
+import com.intellij.codeInspection.ProblemDescriptor
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiFile
@@ -17,12 +19,15 @@ import com.intellij.psi.PsiFile
  *
  * @author Dmytro Troynikov
  */
-abstract class BaseHtlFix(
+abstract class BaseHtlIntentionAction(
     private val text: () -> String,
     private val family: String = "HTL Intentions",
     private val startInWriteAction: Boolean = true,
     private val isAvailable: (project: Project, editor: Editor?, file: PsiFile?) -> Boolean = { _, _, _ -> true }
-) : IntentionAction {
+) : IntentionAction, LocalQuickFix {
+
+  override fun applyFix(project: Project, descriptor: ProblemDescriptor)
+      = invoke(project, null, null)
 
   override fun getFamilyName(): String = family
   override fun startInWriteAction(): Boolean = startInWriteAction

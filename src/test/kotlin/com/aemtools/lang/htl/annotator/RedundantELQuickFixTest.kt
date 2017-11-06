@@ -3,13 +3,13 @@ package com.aemtools.lang.htl.annotator
 import com.aemtools.blocks.util.notNull
 import com.aemtools.blocks.util.quickFix
 import com.aemtools.constant.const.DOLLAR
-import com.aemtools.inspection.fix.ELSimplifyIntention
+import com.aemtools.inspection.fix.SimplifyElIntentionAction
 import com.aemtools.util.writeCommand
 import com.intellij.testFramework.InspectionFixtureTestCase
 import org.assertj.core.api.Assertions.assertThat
 
 /**
- * Test for [ELSimplifyIntention].
+ * Test for [SimplifyElIntentionAction].
  *
  * @author Dmytro Troynikov
  */
@@ -20,7 +20,7 @@ class RedundantELQuickFixTest : InspectionFixtureTestCase() {
             <div data-sly-use="$DOLLAR{'com.test.Bean'}"></div>
         """.trimIndent())
 
-    val fix by notNull<ELSimplifyIntention> {
+    val fix by notNull<SimplifyElIntentionAction> {
       myFixture.quickFix("test.html")
     }
 

@@ -5,20 +5,22 @@ import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
+import com.intellij.psi.SmartPsiElementPointer
 
 /**
  * Provides fix for variable that may contain errata.
  *
  * @author Dmytro Troynikov
  */
-class FixVariableNameErrata(
+class VariableNameErrataIntentionAction(
     private val possiblyCorrectName: String,
-    val element: PsiElement
-) : BaseHtlFix(
+    private val pointer: SmartPsiElementPointer<PsiElement>
+) : BaseHtlIntentionAction(
     text = { "Change to '$possiblyCorrectName'" }
 ) {
 
   override fun invoke(project: Project, editor: Editor, file: PsiFile) {
+    val element = pointer.element ?: return
     val document = project.psiDocumentManager().getDocument(file)
         ?: return
 

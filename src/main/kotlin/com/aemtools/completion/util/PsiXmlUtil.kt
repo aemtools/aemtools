@@ -68,8 +68,26 @@ fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>, predicate: (T)
  * @receiver [PsiElement]
  * @return *true* if current element has parent of specified type, *false* otherwise
  */
-fun <T : PsiElement> PsiElement?.hasParent(type: Class<T>): Boolean =
+fun <T : PsiElement> PsiElement?.hasParentOfType(type: Class<T>): Boolean =
     this.findParentByType(type) != null
+
+/**
+ * Check if current [PsiElement] has parent which is evaluates to *true* by given predicate.
+ *
+ * @param predicate the predicate
+ * @receiver [PsiElement]
+ * @return *true* if this psi element has element that conforms to given predicate, *false* otherwise
+ */
+fun <T : PsiElement> T.hasParent(predicate: (element: PsiElement) -> Boolean) : Boolean {
+  var parent = this.parent
+  while (parent != null) {
+    if (predicate.invoke(parent)) {
+      return true
+    }
+    parent = parent.parent
+  }
+  return false
+}
 
 /**
  * Check if current [PsiElement] has child of specified type.
@@ -305,7 +323,7 @@ fun XmlAttribute.nameRange(): TextRange = this.nameElement.textRange
  * Convert current xml attribute to navigable element.
  *
  * @receiver [XmlAttribute]
- * @return navigable element
+ * @return navigatable element
  */
 fun XmlAttribute.toNavigatable(): IncludedXmlAttribute {
   return IncludedXmlAttribute(this, this.parent)

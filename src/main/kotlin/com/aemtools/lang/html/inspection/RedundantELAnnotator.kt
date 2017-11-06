@@ -5,7 +5,7 @@ import com.aemtools.completion.util.isInsideOF
 import com.aemtools.constant.const.htl.DATA_SLY_INCLUDE
 import com.aemtools.constant.const.htl.DATA_SLY_USE
 import com.aemtools.constant.messages.annotator.SIMPLIFY_EXPRESSION
-import com.aemtools.inspection.fix.ELSimplifyIntention
+import com.aemtools.inspection.fix.SimplifyElIntentionAction
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.HtlStringLiteral
 import com.intellij.lang.annotation.AnnotationHolder
@@ -25,7 +25,7 @@ class RedundantELAnnotator : Annotator {
           .createSmartPsiElementPointer(element)
 
       holder.createWarningAnnotation(element, SIMPLIFY_EXPRESSION)
-          .registerFix(ELSimplifyIntention(elementPointer))
+          .registerFix(SimplifyElIntentionAction(elementPointer))
     }
   }
 

@@ -3,7 +3,7 @@ package com.aemtools.inspection.html
 import com.aemtools.completion.util.htlAttributeName
 import com.aemtools.completion.util.toSmartPointer
 import com.aemtools.constant.const
-import com.aemtools.lang.html.inspection.MessedSlyAttributeAnnotator
+import com.aemtools.inspection.fix.SubstituteWithRawAttributeIntentionAction
 import com.intellij.codeInsight.daemon.impl.analysis.RemoveAttributeIntentionFix
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
@@ -12,34 +12,29 @@ import com.intellij.psi.xml.XmlAttribute
 
 /**
  * Checks if data-sly-attribute is used with prohibited attribute
- * e.g. "style".
+ * (e.g. "style").
  *
  * @author Dmytro Troynikov
  */
 class MessedDataSlyAttributeInspection : HtmlLocalInspectionTool() {
   override fun getGroupDisplayName(): String {
-    return "HTL Inspections"
+    return "HTL"
   }
 
   override fun getDisplayName(): String {
     return "data-sly-attribute with prohibited attributes"
   }
 
-  override fun getDescriptionFileName(): String? {
-
-      return "MessedDataSlyAttributeInspection.html"
-  }
-
-  override fun getID(): String {
-    return super.getID()
-  }
-
   override fun getStaticDescription(): String? {
-    return super.getStaticDescription()
-  }
-
-  override fun getShortName(): String {
-    return super.getShortName()
+    return """
+<html>
+<body>
+This inspection verifies that <i>data-sly-attribute</i> is
+<b>not</b> used with prohibited attributes, such as <b>style</b> or event attributes i.e.
+attributes that take JavaScript as input (e.g. onclick, onmousemove, etc).
+</body>
+</html>
+    """
   }
 
   override fun checkAttribute(attribute: XmlAttribute,
@@ -59,7 +54,7 @@ class MessedDataSlyAttributeInspection : HtmlLocalInspectionTool() {
           RemoveAttributeIntentionFix(
               attribute.name, attribute
           ),
-          MessedSlyAttributeAnnotator.SubstituteWithRawAttributeFix(
+          SubstituteWithRawAttributeIntentionAction(
               attribute.toSmartPointer(),
               "Replace with: $htlVariableName=\"${attribute.value}\""
           )

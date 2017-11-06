@@ -12,8 +12,8 @@ import com.intellij.psi.SmartPsiElementPointer
 /**
  * @author Dmytro Troynikov
  */
-class ELSimplifyIntention(private val pointer: SmartPsiElementPointer<HtlHtlEl>)
-  : BaseHtlFix(
+class SimplifyElIntentionAction(private val pointer: SmartPsiElementPointer<HtlHtlEl>)
+  : BaseHtlIntentionAction(
     text = { "Simplify expression" }
 ) {
 

@@ -53,8 +53,10 @@
 
     <depends>com.intellij.modules.lang</depends>
 
-    <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
     <depends optional="true" config-file="java.xml">com.intellij.modules.java</depends>
+
+    <depends optional="false" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
+    <depends optional="false" config-file="inspections.xml">com.intellij.modules.lang</depends>
 
     <idea-version since-build="131"/>
 
@@ -138,14 +140,6 @@
                    implementationClass="com.aemtools.lang.html.annotation.RedundantDataSlyUnwrapAnnotator"/>
         <annotator language="HTML"
                    implementationClass="com.aemtools.lang.html.annotation.HtlAttributesAnnotator"/>
-        <!--<annotator language="HTML"-->
-        <!--implementationClass="com.aemtools.lang.html.inspection.MessedSlyAttributeAnnotator"/>-->
-
-        <localInspection
-                language="HTML"
-                enabledByDefault="true"
-                implementationClass="com.aemtools.inspection.html.MessedDataSlyAttributeInspection"/>
-
         <annotator language="Htl"
                    implementationClass="com.aemtools.lang.html.inspection.RedundantELAnnotator"/>
 

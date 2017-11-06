@@ -76,8 +76,8 @@ fun HtlStringLiteral.isMainString(): Boolean {
  * @return *true* if current variable name is "option", *false* otherwise
  */
 fun HtlVariableName.isOption(): Boolean {
-  return this.hasParent(HtlContextExpression::class.java)
-      && !this.hasParent(HtlAssignmentValue::class.java)
+  return this.hasParentOfType(HtlContextExpression::class.java)
+      && !this.hasParentOfType(HtlAssignmentValue::class.java)
 }
 
 /**

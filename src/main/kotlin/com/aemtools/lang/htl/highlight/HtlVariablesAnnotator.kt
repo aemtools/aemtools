@@ -3,9 +3,10 @@ package com.aemtools.lang.htl.highlight
 import com.aemtools.completion.htl.common.FileVariablesResolver
 import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.model.htl.ContextObject
-import com.aemtools.completion.util.hasParent
+import com.aemtools.completion.util.hasParentOfType
 import com.aemtools.completion.util.isOption
-import com.aemtools.inspection.fix.FixVariableNameErrata
+import com.aemtools.completion.util.toSmartPointer
+import com.aemtools.inspection.fix.VariableNameErrataIntentionAction
 import com.aemtools.lang.common.highlight
 import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_EL_GLOBAL_VARIABLE
 import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_EL_LOCAL_VARIABLE
@@ -27,7 +28,7 @@ class HtlVariablesAnnotator : Annotator {
   override fun annotate(element: PsiElement, holder: AnnotationHolder) {
     if (element !is VariableNameMixin
         || element.isOption()
-        || element.hasParent(HtlAccessIdentifier::class.java)) {
+        || element.hasParentOfType(HtlAccessIdentifier::class.java)) {
       return
     }
 
@@ -49,7 +50,12 @@ class HtlVariablesAnnotator : Annotator {
 
         val similar = findSimilarVariable(element, contextObjects, name)
         if (similar != null) {
-          annotation.registerFix(FixVariableNameErrata(similar, element))
+          annotation.registerFix(
+              VariableNameErrataIntentionAction(
+                  similar,
+                  element.toSmartPointer()
+              )
+          )
         }
       }
     }

@@ -3,17 +3,17 @@ package com.aemtools.lang.htl.annotator
 import com.aemtools.blocks.util.notNull
 import com.aemtools.blocks.util.quickFix
 import com.aemtools.constant.const.DOLLAR
-import com.aemtools.inspection.fix.FixVariableNameErrata
+import com.aemtools.inspection.fix.VariableNameErrataIntentionAction
 import com.aemtools.util.writeCommand
 import com.intellij.testFramework.InspectionFixtureTestCase
 import org.assertj.core.api.Assertions.assertThat
 
 /**
- * Test for [FixVariableNameErrata].
+ * Test for [VariableNameErrataIntentionAction].
  *
  * @author Dmytro Troynikov
  */
-class FixVariableNameErrataTest : InspectionFixtureTestCase() {
+class VariableNameErrataIntentionActionTest : InspectionFixtureTestCase() {
 
   fun testFixErrataCorrectFormat() {
     myFixture.configureByText("test.html", """
@@ -21,7 +21,7 @@ class FixVariableNameErrataTest : InspectionFixtureTestCase() {
             $DOLLAR{mymodel}
         """.trimIndent())
 
-    val fix by notNull<FixVariableNameErrata> {
+    val fix by notNull<VariableNameErrataIntentionAction> {
       myFixture.quickFix("test.html")
     }
 
@@ -44,7 +44,7 @@ class FixVariableNameErrataTest : InspectionFixtureTestCase() {
             $DOLLAR{mymodel}
         """.trimIndent())
 
-    val fix: FixVariableNameErrata = myFixture.quickFix("test.html")
+    val fix: VariableNameErrataIntentionAction = myFixture.quickFix("test.html")
         ?: throw AssertionError("No quick fix found!")
 
     writeCommand(project) {
@@ -60,7 +60,7 @@ class FixVariableNameErrataTest : InspectionFixtureTestCase() {
   fun testFixErrataInContextObject() {
     myFixture.configureByText("test.html", "$DOLLAR{propert1es}")
 
-    val fix: FixVariableNameErrata = myFixture.quickFix("test.html")
+    val fix: VariableNameErrataIntentionAction = myFixture.quickFix("test.html")
         ?: throw AssertionError("No quick fix found!")
 
     writeCommand(project) {
