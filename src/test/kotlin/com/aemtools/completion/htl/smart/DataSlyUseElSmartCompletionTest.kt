@@ -1,6 +1,6 @@
 package com.aemtools.completion.htl.smart
 
-import com.aemtools.blocks.completion.CompletionBaseLightTest
+import com.aemtools.test.completion.CompletionBaseLightTest
 import com.aemtools.constant.const.JCR_ROOT
 
 /**

@@ -1,6 +1,6 @@
 package com.aemtools.lang.clientlib.reference
 
-import com.aemtools.blocks.reference.BaseReferenceTest
+import com.aemtools.test.reference.BaseReferenceTest
 import com.intellij.psi.PsiFile
 
 /**

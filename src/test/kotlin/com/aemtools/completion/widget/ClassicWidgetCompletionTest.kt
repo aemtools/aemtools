@@ -1,6 +1,6 @@
 package com.aemtools.completion.widget
 
-import com.aemtools.blocks.completion.CompletionBaseLightTest
+import com.aemtools.test.completion.CompletionBaseLightTest
 import com.aemtools.completion.widget.WidgetVariantsProvider.DEFAULT_ATTRIBUTES
 import com.aemtools.completion.widget.WidgetVariantsProvider.JCR_PRIMARY_TYPE_VALUES
 

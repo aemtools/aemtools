@@ -1,6 +1,6 @@
 package com.aemtools.completion.htl.lists
 
-import com.aemtools.blocks.BaseVariantsWithJdkContributorTest
+import com.aemtools.test.BaseVariantsWithJdkContributorTest
 
 /**
  * @author Dmytro_Troynikov

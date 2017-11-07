@@ -1,6 +1,6 @@
 package com.aemtools.index
 
-import com.aemtools.blocks.base.BaseLightTest
+import com.aemtools.test.base.BaseLightTest
 import com.aemtools.index.model.LocalizationModel
 import junit.framework.TestCase
 

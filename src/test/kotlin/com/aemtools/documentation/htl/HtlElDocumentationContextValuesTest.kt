@@ -1,7 +1,7 @@
 package com.aemtools.documentation.htl
 
-import com.aemtools.blocks.documentation.BaseDocumentationTest
-import com.aemtools.blocks.documentation.model.IDocTestFixture
+import com.aemtools.test.documentation.BaseDocumentationTest
+import com.aemtools.test.documentation.model.IDocTestFixture
 
 /**
  * @author Dmytro Troynikov

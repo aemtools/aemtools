@@ -1,9 +1,9 @@
 package com.aemtools.completion.htl.common
 
-import com.aemtools.blocks.BaseVariantsCheckContributorTest.Companion.CUSTOM_MODEL_FIELDS
-import com.aemtools.blocks.BaseVariantsCheckContributorTest.Companion.DATA_SLY_SUITABLE_CLASSES
-import com.aemtools.blocks.completion.CompletionBaseLightTest
-import com.aemtools.blocks.fixture.TestClassesMixin
+import com.aemtools.test.BaseVariantsCheckContributorTest.Companion.CUSTOM_MODEL_FIELDS
+import com.aemtools.test.BaseVariantsCheckContributorTest.Companion.DATA_SLY_SUITABLE_CLASSES
+import com.aemtools.test.completion.CompletionBaseLightTest
+import com.aemtools.test.fixture.TestClassesMixin
 
 /**
  * Tests for Htl variables resolution.

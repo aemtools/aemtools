@@ -88,6 +88,7 @@ dependencies {
 
     gen 'de.jflex:jflex:1.6.1'
 
+    testCompile project('test-framework')
     // https://mvnrepository.com/artifact/com.github.markusbernhardt/proxy-vole
     testCompile group: 'com.github.markusbernhardt', name: 'proxy-vole', version: '1.0.3'
 

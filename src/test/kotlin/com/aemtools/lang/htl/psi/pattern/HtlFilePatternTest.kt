@@ -1,6 +1,6 @@
 package com.aemtools.lang.htl.psi.pattern
 
-import com.aemtools.blocks.pattern.BasePatternsTest
+import com.aemtools.test.pattern.BasePatternsTest
 
 import com.aemtools.constant.const.JCR_ROOT
 

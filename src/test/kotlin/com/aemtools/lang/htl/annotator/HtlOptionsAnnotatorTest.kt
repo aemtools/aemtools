@@ -1,6 +1,6 @@
 package com.aemtools.lang.htl.annotator
 
-import com.aemtools.blocks.base.BaseLightTest
+import com.aemtools.test.base.BaseLightTest
 
 /**
  * @author Dmytro Troynikov

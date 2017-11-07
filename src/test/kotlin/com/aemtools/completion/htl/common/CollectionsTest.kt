@@ -1,6 +1,6 @@
 package com.aemtools.completion.htl.common
 
-import com.aemtools.blocks.BaseVariantsWithJdkContributorTest
+import com.aemtools.test.BaseVariantsWithJdkContributorTest
 
 /**
  * Tests for proper collections variables resolution.

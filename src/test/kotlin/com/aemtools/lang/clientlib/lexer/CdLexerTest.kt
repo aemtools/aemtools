@@ -1,6 +1,6 @@
 package com.aemtools.lang.clientlib.lexer
 
-import com.aemtools.lang.htl.lexer.LexerBaseTest
+import com.aemtools.test.lexer.LexerBaseTest
 import com.intellij.lexer.Lexer
 
 /**

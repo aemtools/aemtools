@@ -1,7 +1,7 @@
 package com.aemtools.findusages
 
-import com.aemtools.blocks.base.BaseLightTest
 import com.aemtools.completion.util.findParentByType
+import com.aemtools.test.base.BaseLightTest
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.xml.XmlAttribute

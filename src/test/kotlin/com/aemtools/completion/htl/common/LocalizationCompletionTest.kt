@@ -1,6 +1,6 @@
 package com.aemtools.completion.htl.common
 
-import com.aemtools.blocks.completion.CompletionBaseLightTest
+import com.aemtools.test.completion.CompletionBaseLightTest
 
 /**
  * @author Dmytro Troynikov

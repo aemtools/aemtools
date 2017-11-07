@@ -1,6 +1,6 @@
 package com.aemtools.documentation.widget
 
-import com.aemtools.blocks.documentation.BaseDocumentationTest
+import com.aemtools.test.documentation.BaseDocumentationTest
 
 /**
  * @author Dmytro Troynikov

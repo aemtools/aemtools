@@ -56,6 +56,14 @@ fun PsiFile.getXmlFile(): XmlFile? = getPsi(StdLanguages.XML) as? XmlFile
 fun PsiFile.getHtlFile(): HtlPsiFile? = getPsi(HtlLanguage) as? HtlPsiFile
 
 /**
+ * Check if current [PsiFile] is [HtlPsiFile].
+ *
+ * @receiver [PsiFile]
+ * @return *true* if current file is htl file, *false* otherwise
+ */
+fun PsiFile.isHtlFile(): Boolean = getHtlFile() != null
+
+/**
  * Convert current [VirtualFile] to [PsiFile].
  *
  * @param project the project

@@ -1,6 +1,6 @@
 package com.aemtools.completion.htl.common
 
-import com.aemtools.blocks.BaseVariantsCheckContributorTest
+import com.aemtools.test.BaseVariantsCheckContributorTest
 
 /**
  * @author Dmytro Troynikov.

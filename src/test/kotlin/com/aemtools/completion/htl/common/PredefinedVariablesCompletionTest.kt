@@ -1,7 +1,7 @@
 package com.aemtools.completion.htl.common
 
-import com.aemtools.blocks.fixture.UberJarFixtureMixin
-import com.aemtools.lang.htl.lexer.HtlTestCase
+import com.aemtools.test.HtlTestCase
+import com.aemtools.test.fixture.UberJarFixtureMixin
 import com.intellij.codeInsight.completion.LightFixtureCompletionTestCase
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess
 import com.intellij.testFramework.LightProjectDescriptor
