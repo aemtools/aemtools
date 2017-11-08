@@ -1,10 +1,10 @@
 package com.aemtools.inspection.html
 
-import com.aemtools.blocks.base.BaseLightTest.Companion.CARET
-import com.aemtools.blocks.base.BaseLightTest.Companion.DOLLAR
-import com.aemtools.blocks.util.notNull
-import com.aemtools.blocks.util.quickFix
 import com.aemtools.inspection.fix.SubstituteWithRawAttributeIntentionAction
+import com.aemtools.test.base.BaseLightTest.Companion.CARET
+import com.aemtools.test.base.BaseLightTest.Companion.DOLLAR
+import com.aemtools.test.util.notNull
+import com.aemtools.test.util.quickFix
 import com.intellij.testFramework.InspectionFixtureTestCase
 import org.assertj.core.api.Assertions.assertThat
 

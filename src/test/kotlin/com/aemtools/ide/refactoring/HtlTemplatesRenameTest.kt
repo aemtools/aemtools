@@ -1,6 +1,6 @@
 package com.aemtools.ide.refactoring
 
-import com.aemtools.blocks.rename.BaseRenameTest
+import com.aemtools.test.rename.BaseRenameTest
 import com.aemtools.constant.const
 
 /**

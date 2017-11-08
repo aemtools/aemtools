@@ -1,8 +1,10 @@
 package com.aemtools.lang.html.annotation
 
+import com.aemtools.completion.util.getHtlFile
 import com.aemtools.completion.util.htlAttributeName
 import com.aemtools.completion.util.htlVariableName
 import com.aemtools.completion.util.incomingReferences
+import com.aemtools.completion.util.isHtlFile
 import com.aemtools.completion.util.nameRange
 import com.aemtools.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
@@ -33,7 +35,7 @@ import com.intellij.psi.xml.XmlAttribute
  */
 class HtlAttributesAnnotator : Annotator {
   override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-    if (element is XmlAttribute) {
+    if (element is XmlAttribute && element.containingFile.isHtlFile()) {
       val attributeName = element.htlAttributeName()
       val variableName = element.htlVariableName()
 

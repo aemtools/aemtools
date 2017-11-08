@@ -1,6 +1,6 @@
 package com.aemtools.completion.html.smart
 
-import com.aemtools.blocks.completion.CompletionBaseLightTest
+import com.aemtools.test.completion.CompletionBaseLightTest
 import com.aemtools.constant.const.JCR_ROOT
 
 /**

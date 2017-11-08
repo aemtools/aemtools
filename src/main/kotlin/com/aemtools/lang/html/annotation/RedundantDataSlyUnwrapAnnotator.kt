@@ -2,6 +2,8 @@ package com.aemtools.lang.html.annotation
 
 import com.aemtools.completion.util.hasParent
 import com.aemtools.completion.util.toSmartPointer
+import com.aemtools.completion.util.findParentByType
+import com.aemtools.completion.util.isHtlFile
 import com.aemtools.constant.const.htl.DATA_SLY_UNWRAP
 import com.aemtools.inspection.fix.RemoveRedundantDataSlyUnwrapAction
 import com.intellij.lang.annotation.AnnotationHolder
@@ -16,6 +18,7 @@ import com.intellij.psi.xml.XmlTag
 class RedundantDataSlyUnwrapAnnotator : Annotator {
   override fun annotate(element: PsiElement, holder: AnnotationHolder) {
     if (element is XmlAttribute
+        && element.containingFile.isHtlFile()
         && element.text == DATA_SLY_UNWRAP
         && element.hasParent {
       it is XmlTag && it.name.equals("sly", true)

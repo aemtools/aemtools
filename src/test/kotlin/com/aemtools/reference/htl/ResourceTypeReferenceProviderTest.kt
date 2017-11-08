@@ -1,6 +1,6 @@
 package com.aemtools.reference.htl
 
-import com.aemtools.blocks.reference.BaseReferenceTest
+import com.aemtools.test.reference.BaseReferenceTest
 import com.aemtools.constant.const.JCR_ROOT
 import com.intellij.psi.PsiDirectory
 

@@ -1,6 +1,6 @@
 package com.aemtools.lang.htl.psi
 
-import com.aemtools.blocks.base.BaseLightTest
+import com.aemtools.test.base.BaseLightTest
 
 /**
  * @author Dmytro Troynikov

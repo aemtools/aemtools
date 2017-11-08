@@ -1,7 +1,7 @@
 package com.aemtools.ide.htl
 
-import com.aemtools.blocks.base.BaseLightTest
-import com.aemtools.lang.htl.lexer.HtlTestCase
+import com.aemtools.test.HtlTestCase
+import com.aemtools.test.base.BaseLightTest
 import com.intellij.testFramework.fixtures.CodeInsightTestUtil
 
 /**

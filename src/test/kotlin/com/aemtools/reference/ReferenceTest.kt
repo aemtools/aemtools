@@ -1,6 +1,6 @@
 package com.aemtools.reference
 
-import com.aemtools.blocks.reference.BaseReferenceTest
+import com.aemtools.test.reference.BaseReferenceTest
 import com.aemtools.constant.const.JCR_ROOT
 import com.aemtools.lang.htl.psi.HtlPsiFile
 import com.aemtools.lang.htl.psi.HtlVariableName

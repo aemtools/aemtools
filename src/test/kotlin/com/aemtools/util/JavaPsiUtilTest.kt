@@ -1,15 +1,15 @@
 package com.aemtools.util
 
-import com.aemtools.blocks.base.BaseLightTest
-import com.aemtools.blocks.fixture.JavaSearchMixin
-import com.aemtools.blocks.fixture.OSGiConfigFixtureMixin
-import com.aemtools.blocks.fixture.OSGiFelixAnnotationsMixin
-import com.aemtools.blocks.util.notNull
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.constant.const.java.FELIX_PROPERTY_ANNOTATION
 import com.aemtools.constant.const.java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.constant.const.java.SLING_FILTER_ANNOTATION
 import com.aemtools.constant.const.java.SLING_SERVLET_ANNOTATION
+import com.aemtools.test.base.BaseLightTest
+import com.aemtools.test.fixture.JavaSearchMixin
+import com.aemtools.test.fixture.OSGiConfigFixtureMixin
+import com.aemtools.test.fixture.OSGiFelixAnnotationsMixin
+import com.aemtools.test.util.notNull
 import com.intellij.psi.PsiField
 
 /**

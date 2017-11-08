@@ -1,6 +1,6 @@
 package com.aemtools.lang.htl.editor
 
-import com.aemtools.blocks.base.BaseLightTest
+import com.aemtools.test.base.BaseLightTest
 import com.intellij.openapi.actionSystem.IdeActions
 
 /**

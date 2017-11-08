@@ -1,6 +1,6 @@
 package com.aemtools.completion.editconfig
 
-import com.aemtools.blocks.completion.CompletionBaseLightTest
+import com.aemtools.test.completion.CompletionBaseLightTest
 
 /**
  * @author Dmytro Troynikov

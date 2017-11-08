@@ -1,6 +1,6 @@
 package com.aemtools.index
 
-import com.aemtools.blocks.base.BaseLightTest
+import com.aemtools.test.base.BaseLightTest
 import com.aemtools.constant.const.JCR_ROOT
 import com.aemtools.index.model.dialog.AemComponentClassicDialogDefinition
 import com.aemtools.index.model.dialog.parameter.ClassicDialogParameterDeclaration

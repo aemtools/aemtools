@@ -1,5 +1,8 @@
 package com.aemtools.lang.htl.lexer
 
+import com.aemtools.test.HtlTestCase
+import com.aemtools.test.lexer.LexerBaseTest
+
 /**
  * @author Dmytro Troynikov.
  */

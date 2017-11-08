@@ -1,7 +1,7 @@
 package com.aemtools.index.search
 
-import com.aemtools.blocks.base.BaseLightTest
-import com.aemtools.blocks.fixture.OSGiConfigFixtureMixin
+import com.aemtools.test.base.BaseLightTest
+import com.aemtools.test.fixture.OSGiConfigFixtureMixin
 import com.aemtools.index.model.sortByMods
 
 /**

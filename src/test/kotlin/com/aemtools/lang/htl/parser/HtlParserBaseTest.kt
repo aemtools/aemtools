@@ -1,6 +1,6 @@
 package com.aemtools.lang.htl.parser
 
-import com.aemtools.blocks.parser.BaseParserTest
+import com.aemtools.test.parser.BaseParserTest
 import com.aemtools.lang.htl.HtlParserDefinition
 
 /**

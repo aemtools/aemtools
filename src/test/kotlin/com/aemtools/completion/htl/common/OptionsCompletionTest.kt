@@ -1,9 +1,9 @@
 package com.aemtools.completion.htl.common
 
-import com.aemtools.blocks.BaseVariantsCheckContributorTest.Companion.CONTEXT_PARAMETERS
-import com.aemtools.blocks.BaseVariantsCheckContributorTest.Companion.CONTEXT_VALUES
-import com.aemtools.blocks.BaseVariantsCheckContributorTest.Companion.DEFAULT_CONTEXT_OBJECTS
-import com.aemtools.blocks.completion.CompletionBaseLightTest
+import com.aemtools.test.BaseVariantsCheckContributorTest.Companion.CONTEXT_PARAMETERS
+import com.aemtools.test.BaseVariantsCheckContributorTest.Companion.CONTEXT_VALUES
+import com.aemtools.test.BaseVariantsCheckContributorTest.Companion.DEFAULT_CONTEXT_OBJECTS
+import com.aemtools.test.completion.CompletionBaseLightTest
 
 /**
  * @author Dmytro_Troynikov
