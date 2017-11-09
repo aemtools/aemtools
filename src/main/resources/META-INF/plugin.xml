@@ -90,6 +90,8 @@
             language="El"
             implementationClass="com.aemtools.lang.el.highlight.ElHighlighterFactory"/>
 
+        <multiHostInjector implementation="com.aemtools.lang.el.ElInjector"/>
+
         <!-- Htl -->
         <iconProvider implementation="com.aemtools.lang.htl.file.HtlFileIconProvider"/>
 

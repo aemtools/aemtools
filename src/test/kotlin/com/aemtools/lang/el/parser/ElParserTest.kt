@@ -8,7 +8,7 @@ import com.aemtools.test.parser.BaseParserTest
  */
 class ElParserTest
   : BaseParserTest(
-    "com/aemtools/lang/el/parser/fixtures",
+    "com/aemtools/lang/el/parser/fixtures/general",
     "el",
     ElParserDefinition()
 ) {
@@ -67,4 +67,6 @@ class ElParserTest
   fun testNot0() = doTest()
   fun testNot1() = doTest()
   fun testEmpty() = doTest()
+
+  fun testMemberAccess() = doTest()
 }
