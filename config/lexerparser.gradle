@@ -69,10 +69,44 @@ task generateCdPsiAndParser(type: JavaExec) {
     classpath configurations.gen
 }
 
+task generateElLexer(type: JavaExec) {
+    group = "grammar"
+
+    def src = "$project.projectDir/src/main/kotlin/com/aemtools/lang/el/el.flex"
+    def dst = "$project.projectDir/src/main/gen/com/aemtools/lang/el/"
+
+    main = "jflex.Main"
+
+    args = ["--skel", "src/main/kotlin/com/aemtools/lang/htl/lexer/HtlLexer.skeleton", "-d", dst, src]
+
+    inputs.file file(src)
+    outputs.dir file(dst + "_ElLexer.java")
+
+    classpath configurations.gen
+}
+
+task generateElPsiAndParser(type: JavaExec) {
+    group = "grammar"
+
+    def src = "$project.projectDir/src/main/kotlin/com/aemtools/lang/el/el.bnf"
+    def dst = "$project.projectDir/src/main/gen"
+
+    main = "org.intellij.grammar.Main"
+
+    args = [dst, file(src)]
+
+    inputs.file file(src)
+    outputs.dir file(dst + "/com/aemtools/lang/el")
+
+    classpath configurations.gen
+}
+
 task generateGrammar {
     dependsOn generateHtlLexer
     dependsOn generateHtlPsiAndParser
     dependsOn generateCdLexer
     dependsOn generateCdPsiAndParser
+    dependsOn generateElLexer
+    dependsOn generateElPsiAndParser
     group = "grammar"
 }
