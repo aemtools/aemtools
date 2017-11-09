@@ -1,0 +1,7 @@
+${ ('${')
+INTEGER_LITERAL ('1')
+WHITE_SPACE (' ')
+or ('or')
+WHITE_SPACE (' ')
+INTEGER_LITERAL ('1')
+} ('}')

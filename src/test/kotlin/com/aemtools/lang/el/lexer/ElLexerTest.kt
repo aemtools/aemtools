@@ -44,4 +44,29 @@ class ElLexerTest : LexerBaseTest(), HtlTestCase {
   fun testNeq0() = doTest()
   fun testNeq1() = doTest()
 
+  fun testLt0() = doTest()
+  fun testLt1() = doTest()
+
+  fun testGt0() = doTest()
+  fun testGt1() = doTest()
+
+  fun testLe0() = doTest()
+  fun testLe1() = doTest()
+
+  fun testGe0() = doTest()
+  fun testGe1() = doTest()
+  fun testTernaryOperation() = doTest()
+
+  fun testPlus() = doTest()
+  fun testMinus() = doTest()
+  fun testMult() = doTest()
+  fun testDiv() = doTest()
+
+  fun testMod0() = doTest()
+  fun testMod1() = doTest()
+
+  fun testNot0() = doTest()
+  fun testNot1() = doTest()
+  fun testEmpty() = doTest()
+
 }

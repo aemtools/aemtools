@@ -1,0 +1,5 @@
+${ ('${')
+empty ('empty')
+WHITE_SPACE (' ')
+IDENTIFIER ('collection')
+} ('}')
