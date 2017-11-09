@@ -1,18 +1,17 @@
-package com.aemtools.lang.el.lexer
+package com.aemtools.lang.el.parser
 
-import com.aemtools.test.HtlTestCase
-import com.aemtools.test.lexer.LexerBaseTest
-import com.intellij.lexer.Lexer
+import com.aemtools.lang.el.ElParserDefinition
+import com.aemtools.test.parser.BaseParserTest
 
 /**
  * @author Dmytro Troynikov
  */
-class ElLexerTest : LexerBaseTest(), HtlTestCase {
-  override fun getDirPath(): String = "com.aemtools.lang.el.lexer"
-  override fun createLexer(): Lexer = ElLexer()
-  override fun getTestDataPath(): String = "com/aemtools/lang/el/lexer/fixtures"
-  override fun getInExtension(): String = "el"
-
+class ElParserTest
+  : BaseParserTest(
+    "com/aemtools/lang/el/parser/fixtures",
+    "el",
+    ElParserDefinition()
+) {
   fun testStringLiteral() = doTest()
   fun testStringLiteralDoublequoted() = doTest()
 
@@ -68,5 +67,4 @@ class ElLexerTest : LexerBaseTest(), HtlTestCase {
   fun testNot0() = doTest()
   fun testNot1() = doTest()
   fun testEmpty() = doTest()
-
 }
