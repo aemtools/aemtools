@@ -57,6 +57,7 @@
         STRING_LITERAL =''
         IDENTIFIER_TOKEN = ''
         LITERAL_EXPRESSION_TOKEN = ''
+        FUNCTION_SUFFIX = ''
     ]
 }
 
@@ -87,24 +88,24 @@ private math::=multiplication((PLUS multiplication)|(MINUS multiplication))*
 
 private multiplication::=unary((MULT unary) | (DIV unary)|((MOD0|MOD1)unary))*
 
-private unary::= MINUS unary
+private unary ::= MINUS unary
     | (NOT0|NOT1) unary
     | EMPTY unary
     | value
 
-private value::=(value_prefix (value_suffix)*)
+private value ::= (value_prefix (value_suffix)*)
 
-private value_prefix::=literal
+private value_prefix ::= literal
     | non_literal
 
-value_suffix::=dot_suffix
+private value_suffix::=dot_suffix
     | bracket_suffix
 
 dot_suffix::=DOT IDENTIFIER_TOKEN
 
 bracket_suffix::=LBRACK expression RBRACK
 
-non_literal::=LPAREN expression RPAREN
+non_literal ::= LPAREN expression RPAREN
     | function
     | identifier
 
@@ -112,18 +113,18 @@ identifier::=IDENTIFIER_TOKEN
 
 function::=IDENTIFIER_TOKEN (FUNCTION_SUFFIX)? LPAREN (expression (COMMA expression)*)? RPAREN
 
-private literal::=boolean_literal
+private literal ::= boolean_literal
     | floating_point
     | integer
     | string
     | null_literal
 
-boolean_literal::=TRUE | FALSE
+boolean_literal ::= TRUE | FALSE
 
-floating_point::=FLOATING_POINT_LITERAL
+floating_point ::= FLOATING_POINT_LITERAL
 
-integer::=INTEGER_LITERAL
+integer ::= INTEGER_LITERAL
 
-string::=STRING_LITERAL
+string ::= STRING_LITERAL
 
-null_literal::=NULL_LITERAL_TOKEN
+null_literal ::= NULL_LITERAL_TOKEN

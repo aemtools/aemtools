@@ -1,7 +1,10 @@
 EL File
-  PsiElement(${)('${')
-  PsiElement(empty)('empty')
-  PsiWhiteSpace(' ')
-  PsiErrorElement:<unary> expected, got 'collection'
-    PsiElement(IDENTIFIER)('collection')
-  PsiElement(})('}')
+  ElDynamicExpressionImpl(DYNAMIC_EXPRESSION)
+    PsiElement(${)('${')
+    ElExpressionImpl(EXPRESSION)
+      PsiElement(empty)('empty')
+      PsiWhiteSpace(' ')
+      ElNonLiteralImpl(NON_LITERAL)
+        ElIdentifierImpl(IDENTIFIER)
+          PsiElement(IDENTIFIER_TOKEN)('collection')
+    PsiElement(})('}')

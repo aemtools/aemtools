@@ -55,8 +55,7 @@
 
     <depends optional="true" config-file="java.xml">com.intellij.modules.java</depends>
 
-    <depends optional="false" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
-    <depends optional="false" config-file="inspections.xml">com.intellij.modules.lang</depends>
+    <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
 
     <idea-version since-build="131"/>
 
@@ -87,8 +86,8 @@
 
         <fileTypeFactory implementation="com.aemtools.lang.el.file.ElFileTypeFactory"/>
         <lang.syntaxHighlighterFactory
-            language="El"
-            implementationClass="com.aemtools.lang.el.highlight.ElHighlighterFactory"/>
+                language="El"
+                implementationClass="com.aemtools.lang.el.highlight.ElHighlighterFactory"/>
 
         <multiHostInjector implementation="com.aemtools.lang.el.ElInjector"/>
 
@@ -196,6 +195,13 @@
                 file="com/aemtools/ide/colorscheme/HtlDarcula.xml"/>
         <colorSettingsPage implementation="com.aemtools.ide.htl.HtlColorsAndFontsPage"/>
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
+
+        <localInspection
+                language="HTML"
+                enabledByDefault="true"
+                hasStaticDescription="true"
+                implementationClass="com.aemtools.inspection.html.MessedDataSlyAttributeInspection"/>
+
     </extensions>
 
     <application-components>

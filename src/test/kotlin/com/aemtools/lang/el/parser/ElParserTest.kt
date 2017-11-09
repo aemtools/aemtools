@@ -68,5 +68,4 @@ class ElParserTest
   fun testNot1() = doTest()
   fun testEmpty() = doTest()
 
-  fun testMemberAccess() = doTest()
 }
