@@ -1,0 +1,7 @@
+EL File
+  PsiElement(${)('${')
+  PsiElement(empty)('empty')
+  PsiWhiteSpace(' ')
+  PsiErrorElement:<unary> expected, got 'collection'
+    PsiElement(IDENTIFIER)('collection')
+  PsiElement(})('}')

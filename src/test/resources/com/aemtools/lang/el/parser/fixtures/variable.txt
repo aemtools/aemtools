@@ -1,0 +1,5 @@
+EL File
+  PsiElement(${)('${')
+  PsiErrorElement:<unary> expected, got 'variable'
+    PsiElement(IDENTIFIER)('variable')
+  PsiElement(})('}')

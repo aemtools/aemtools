@@ -1,0 +1,12 @@
+EL File
+  ElDynamicExpressionImpl(DYNAMIC_EXPRESSION)
+    PsiElement(${)('${')
+    ElExpressionImpl(EXPRESSION)
+      ElIntegerImpl(INTEGER)
+        PsiElement(INTEGER_LITERAL)('1')
+      PsiWhiteSpace(' ')
+      PsiElement(lt)('lt')
+      PsiWhiteSpace(' ')
+      ElIntegerImpl(INTEGER)
+        PsiElement(INTEGER_LITERAL)('2')
+    PsiElement(})('}')
