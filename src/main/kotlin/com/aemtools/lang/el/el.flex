@@ -94,10 +94,10 @@ LETTER=\w
   "false"                     { return FALSE; }
   "null"                      { return NULL_LITERAL_TOKEN; }
   {LITERAL_EXPRESSION_TOKEN}  { return LITERAL_EXPRESSION_TOKEN; }
+  {INTEGER_LITERAL}           { return INTEGER_LITERAL; }
   {IDENTIFIER}                { return IDENTIFIER; }
 //  {FUNCTION_SUFFIX}           { return FUNCTION_SUFFIX; }
   {FLOATING_POINT_LITERAL}    { return FLOATING_POINT_LITERAL; }
-  {INTEGER_LITERAL}           { return INTEGER_LITERAL; }
   {STRING_LITERAL}            { return STRING_LITERAL; }
 
 
