@@ -80,6 +80,16 @@
         <completion.contributor language="XML"
                                 implementationClass="com.aemtools.completion.reppolicy.RepPolicyCompletionContributor"/>
 
+        <!-- El -->
+        <lang.parserDefinition
+                language="El"
+                implementationClass="com.aemtools.lang.el.ElParserDefinition"/>
+
+        <fileTypeFactory implementation="com.aemtools.lang.el.file.ElFileTypeFactory"/>
+        <lang.syntaxHighlighterFactory
+            language="El"
+            implementationClass="com.aemtools.lang.el.highlight.ElHighlighterFactory"/>
+
         <!-- Htl -->
         <iconProvider implementation="com.aemtools.lang.htl.file.HtlFileIconProvider"/>
 
@@ -92,11 +102,9 @@
         <fileTypeFactory implementation="com.aemtools.lang.htl.file.HtlFileTypeFactory"/>
 
         <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>
-
         <fileBasedIndex implementation="com.aemtools.index.AemComponentDeclarationIndex"/>
         <fileBasedIndex implementation="com.aemtools.index.AemComponentClassicDialogIndex"/>
         <fileBasedIndex implementation="com.aemtools.index.AemComponentTouchUIDialogIndex"/>
-
         <fileBasedIndex implementation="com.aemtools.index.LocalizationIndex"/>
 
         <extendWordSelectionHandler implementation="com.aemtools.ide.htl.HtlStringLiteralWordSelectioner"/>

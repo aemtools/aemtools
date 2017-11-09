@@ -8,7 +8,7 @@ data class GraniteComponent(
     val resourceType: String,
     val description: String,
     val fields: List<GraniteField>,
-    val attributes: List<GraniteAttribute>
+    val attributes: List<GraniteAttribute> = emptyList()
 )
 
 data class GraniteAttribute(

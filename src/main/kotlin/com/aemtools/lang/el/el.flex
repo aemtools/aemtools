@@ -25,6 +25,30 @@ import static com.aemtools.lang.el.psi.ElTypes.*;
 EOL=\R
 WHITE_SPACE=\s+
 
+LITERAL_EXPRESSION_TOKEN=(~(\$\{))|(~(#\{))
+INTEGER_LITERAL=[0-9]([0-9])*
+
+FLOATING_POINT_LITERAL=(({DIGIT})+\.({DIGIT})*{EXPONENT}?)|(\.({DIGIT})+{EXPONENT})|({DIGIT}+{EXPONENT})
+
+DIGIT=[0-9]
+
+EXPONENT=[eE]([-+]?)({DIGIT})+
+
+STRING_LITERAL=(\"(( [^\"\\]) | (\\ ([\\\"\'])))* \")|(\'(( [^\'\\]) | (\\([\\\"\'])))* \')
+
+CONCAT=(\+=)
+
+ASSIGN=\=
+
+ARROW=->
+
+IDENTIFIER=({LETTER}|{IMPL_OBJ_START})({LETTER}|{DIGIT})*
+
+FUNCTIONSUFFIX={IDENTIFIER}
+
+IMPL_OBJ_START=#
+
+LETTER=\w
 
 %%
 <YYINITIAL> {
@@ -68,13 +92,13 @@ WHITE_SPACE=\s+
   ","                         { return COMMA; }
   "true"                      { return TRUE; }
   "false"                     { return FALSE; }
-  "null"                      { return NULL_LITERAL; }
-  "LITERAL_EXPRESSION"        { return LITERAL_EXPRESSION; }
-  "IDENTIFIER"                { return IDENTIFIER; }
-  "FUNCTION_SUFFIX"           { return FUNCTION_SUFFIX; }
-  "FLOATING_POINT_LITERAL"    { return FLOATING_POINT_LITERAL; }
-  "INTEGER_LITERAL"           { return INTEGER_LITERAL; }
-  "STRING_LITERAL"            { return STRING_LITERAL; }
+  "null"                      { return NULL_LITERAL_TOKEN; }
+  {LITERAL_EXPRESSION_TOKEN}  { return LITERAL_EXPRESSION_TOKEN; }
+  {IDENTIFIER}                { return IDENTIFIER; }
+//  {FUNCTION_SUFFIX}           { return FUNCTION_SUFFIX; }
+  {FLOATING_POINT_LITERAL}    { return FLOATING_POINT_LITERAL; }
+  {INTEGER_LITERAL}           { return INTEGER_LITERAL; }
+  {STRING_LITERAL}            { return STRING_LITERAL; }
 
 
 }

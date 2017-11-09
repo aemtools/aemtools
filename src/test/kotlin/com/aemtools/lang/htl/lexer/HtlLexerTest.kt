@@ -9,6 +9,7 @@ import com.aemtools.test.lexer.LexerBaseTest
 class HtlLexerTest : LexerBaseTest(), HtlTestCase {
   override fun getTestDataPath(): String
       = "com/aemtools/lang/htl/lexer/fixtures"
+  override fun getDirPath(): String? = "com.aemtools.lang.htl.lexer"
 
   fun testStringLiteral() = doTest()
   fun testDoubleQuotedStringLiteral() = doTest()
@@ -45,6 +46,5 @@ class HtlLexerTest : LexerBaseTest(), HtlTestCase {
   fun testUnclosedEl() = doTest()
   fun testEmptyEl() = doTest()
 
-  override fun getDirPath(): String? = "com.aemtools.lang.htl.lexer"
 
 }
