@@ -8,6 +8,6 @@ import com.intellij.openapi.fileTypes.FileTypeFactory
  */
 class ElFileTypeFactory : FileTypeFactory() {
   override fun createFileTypes(consumer: FileTypeConsumer) {
-    consumer.consume(ElFileType, ElFileType.defaultExtension)
+    // consumer.consume(ElFileType, ElFileType.defaultExtension)
   }
 }
