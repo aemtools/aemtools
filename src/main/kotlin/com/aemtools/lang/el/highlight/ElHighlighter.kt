@@ -5,6 +5,7 @@ import com.aemtools.lang.el.psi.ElTypes.AND0
 import com.aemtools.lang.el.psi.ElTypes.AND1
 import com.aemtools.lang.el.psi.ElTypes.BOOLEAN_LITERAL
 import com.aemtools.lang.el.psi.ElTypes.EMPTY
+import com.aemtools.lang.el.psi.ElTypes.END_EXPRESSION
 import com.aemtools.lang.el.psi.ElTypes.GE0
 import com.aemtools.lang.el.psi.ElTypes.GE1
 import com.aemtools.lang.el.psi.ElTypes.GT0
@@ -21,6 +22,8 @@ import com.aemtools.lang.el.psi.ElTypes.OR0
 import com.aemtools.lang.el.psi.ElTypes.OR1
 import com.aemtools.lang.el.psi.ElTypes.RBRACK
 import com.aemtools.lang.el.psi.ElTypes.RPAREN
+import com.aemtools.lang.el.psi.ElTypes.START_DEFERRED_EXPRESSION
+import com.aemtools.lang.el.psi.ElTypes.START_DYNAMIC_EXPRESSION
 import com.aemtools.lang.el.psi.ElTypes.STRING_LITERAL
 import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.colors.TextAttributesKey
@@ -47,13 +50,20 @@ class ElHighlighter : SyntaxHighlighterBase() {
     NULL_LITERAL_TOKEN,
     EMPTY,
     BOOLEAN_LITERAL -> ElColors.OPERATOR
+
     STRING_LITERAL -> ElColors.STRING
+
     INTEGER_LITERAL -> ElColors.INTEGER
+
     IDENTIFIER_TOKEN -> ElColors.IDENTIFIER
 
     LBRACK, RBRACK -> ElColors.BRACKET
 
     LPAREN, RPAREN -> ElColors.PARENTHESES
+
+    START_DEFERRED_EXPRESSION,
+    START_DYNAMIC_EXPRESSION,
+    END_EXPRESSION -> ElColors.DELIMITER
 
     else -> null
   }

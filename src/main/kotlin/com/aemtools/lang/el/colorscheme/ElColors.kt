@@ -17,4 +17,6 @@ object ElColors {
 
   val PARENTHESES = r("EL_PARENTHESES", dc.PARENTHESES)
   val BRACKET = r("EL_BRACKET", dc.PARENTHESES)
+
+  val DELIMITER = r("EL_DELIMITER", dc.KEYWORD)
 }
