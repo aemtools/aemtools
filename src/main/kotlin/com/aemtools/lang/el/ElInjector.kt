@@ -21,7 +21,7 @@ class ElInjector : MultiHostInjector {
       return
     }
 
-    val text = xmlAttributeValue.value ?: return
+    val text = xmlAttributeValue.text ?: return
 
     val elOccurences = extractEl(text)
 
@@ -34,7 +34,7 @@ class ElInjector : MultiHostInjector {
               null,
               null,
               context,
-              textRange.shiftRight(1))
+              textRange)
         }
       }
 
@@ -52,7 +52,7 @@ class ElInjector : MultiHostInjector {
         break
       }
 
-      var close = findCloseBrace(start, text)
+      var close = findCloseBrace(start, text) + 1
       if (close == -1) {
         break
       }

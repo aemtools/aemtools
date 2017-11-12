@@ -16,4 +16,5 @@ class ElParserFunctionTest
   fun testMemberAccess() = doTest()
   fun testFunctionCall() = doTest()
 
+  fun testTwoEls() = doTest()
 }

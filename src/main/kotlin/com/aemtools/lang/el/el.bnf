@@ -93,12 +93,12 @@ private unary ::= MINUS unary
     | EMPTY unary
     | value
 
-private value ::= (value_prefix (value_suffix)*)
+private value ::= (value_prefix (value_suffix+)?)
 
 private value_prefix ::=  non_literal
     | literal
 
-private value_suffix::=dot_suffix
+private value_suffix ::= dot_suffix
     | bracket_suffix
 
 dot_suffix::=DOT IDENTIFIER_TOKEN
