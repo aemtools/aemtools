@@ -11,6 +11,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.never
+import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -43,15 +44,15 @@ class ElInjectorAlgorithmTest {
   @Test
   fun `should mark single occurrence`() = testInjection(
       "$DOLLAR{}",
-      listOf(TextRange.from(1, 4))
+      listOf(TextRange.from(1, 3))
   )
 
   @Test
   fun `should two occurrences`() = testInjection(
       "$DOLLAR{} $DOLLAR{ }",
       listOf(
-          TextRange.from(1, 4),
-          TextRange.from(6, 5)
+          TextRange.from(1, 3),
+          TextRange.from(5, 4)
       )
   )
 
@@ -71,7 +72,7 @@ class ElInjectorAlgorithmTest {
       verify(registrar, never())
           .doneInjecting()
     } else {
-      verify(registrar)
+      verify(registrar, times(expectedRanges.size))
           .startInjecting(ElLanguage)
 
       expectedRanges.forEach { textRange ->
@@ -79,7 +80,7 @@ class ElInjectorAlgorithmTest {
             .addPlace(null, null, context, textRange)
       }
 
-      verify(registrar)
+      verify(registrar, times(expectedRanges.size))
           .doneInjecting()
     }
   }

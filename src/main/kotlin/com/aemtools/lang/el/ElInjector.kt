@@ -26,9 +26,8 @@ class ElInjector : MultiHostInjector {
     val elOccurences = extractEl(text)
 
     if (elOccurences.isNotEmpty()) {
-      registrar.startInjecting(ElLanguage)
-
-      elOccurences.forEach {textRange->
+      elOccurences.forEach { textRange ->
+        registrar.startInjecting(ElLanguage)
         if (context is PsiLanguageInjectionHost) {
           registrar.addPlace(
               null,
@@ -36,13 +35,12 @@ class ElInjector : MultiHostInjector {
               context,
               textRange)
         }
+        registrar.doneInjecting()
       }
-
-      registrar.doneInjecting()
     }
   }
 
-  private fun extractEl(text: String) : List<TextRange> {
+  private fun extractEl(text: String): List<TextRange> {
     val result = ArrayList<TextRange>()
     var startIndex = 0
     while (true) {
@@ -52,7 +50,7 @@ class ElInjector : MultiHostInjector {
         break
       }
 
-      var close = findCloseBrace(start, text) + 1
+      var close = findCloseBrace(start, text)
       if (close == -1) {
         break
       }
@@ -69,8 +67,7 @@ class ElInjector : MultiHostInjector {
 
     var inString = false
 
-    var quote: Char? = null
-    for (position in start..text.length - 1) {
+    for (position in start until text.length) {
       val char = text[position]
 
       // braces within string literals should be ignored
