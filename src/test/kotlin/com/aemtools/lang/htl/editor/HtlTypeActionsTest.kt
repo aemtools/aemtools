@@ -1,16 +1,17 @@
 package com.aemtools.lang.htl.editor
 
-import com.aemtools.lang.htl.file.HtlFileType
+import com.aemtools.test.action.TypeActionTest
 import com.aemtools.test.base.BaseLightTest.Companion.CARET
 import com.aemtools.test.base.BaseLightTest.Companion.DOLLAR
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
+import com.aemtools.test.base.BasePlatformLightTest
 
 /**
  * Test for [HtlBraceMatcher], [HtlQuoteHandler], [HtlBackspaceHandler]
  *
  * @author Dmytro Troynikov
  */
-class HtlTypeActionsTest : LightCodeInsightFixtureTestCase() {
+class HtlTypeActionsTest : BasePlatformLightTest(),
+    TypeActionTest {
 
   fun `test should close expression`() = htlTypeTest(
       "$DOLLAR$CARET",
@@ -103,15 +104,6 @@ class HtlTypeActionsTest : LightCodeInsightFixtureTestCase() {
   )
 
   fun htlTypeTest(before: String, type: String, result: String)
-    = typedActionTest("test.html", before, type, result)
-
-  fun typedActionTest(fileName: String,
-                      before: String,
-                      type: String,
-                      result: String) {
-    myFixture.configureByText(fileName, before)
-    myFixture.type(type)
-    myFixture.checkResult(result)
-  }
+      = typedActionTest("test.html", before, type, result)
 
 }

@@ -34,7 +34,10 @@ DIGIT=[0-9]
 
 EXPONENT=[eE]([-+]?)({DIGIT})+
 
-STRING_LITERAL=(\"(( [^\"\\]) | (\\ ([\\\"\'])))* \")|(\'(( [^\'\\]) | (\\([\\\"\'])))* \')
+STRING_LITERAL={DOUBLE_QUOTED_STRING}|{SINGLE_QUOTED_STRING}
+
+DOUBLE_QUOTED_STRING=\"(( [^\"\\]) | (\\ ([\\\"\'])))* \"?
+SINGLE_QUOTED_STRING=\'(( [^\'\\]) | (\\([\\\"\'])))* \'?
 
 CONCAT=(\+=)
 
