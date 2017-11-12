@@ -66,7 +66,7 @@ LETTER=\w
   "=="                        { return EQ0; }
   "eq"                        { return EQ1; }
   "!="                        { return NE0; }
-  "neq"                       { return NE1; }
+  "ne"                        { return NE1; }
   "<"                         { return LT0; }
   "lt"                        { return LT1; }
   ">"                         { return GT0; }

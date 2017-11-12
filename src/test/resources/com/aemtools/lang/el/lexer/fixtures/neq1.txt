@@ -1,7 +1,7 @@
 ${ ('${')
 INTEGER_LITERAL ('10')
 WHITE_SPACE (' ')
-neq ('neq')
+neq ('ne')
 WHITE_SPACE (' ')
 INTEGER_LITERAL ('5')
 } ('}')

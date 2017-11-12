@@ -5,7 +5,7 @@ EL File
       ElIntegerImpl(INTEGER)
         PsiElement(INTEGER_LITERAL)('10')
       PsiWhiteSpace(' ')
-      PsiElement(neq)('neq')
+      PsiElement(neq)('ne')
       PsiWhiteSpace(' ')
       ElIntegerImpl(INTEGER)
         PsiElement(INTEGER_LITERAL)('5')
