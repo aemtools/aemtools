@@ -56,6 +56,14 @@ class ElInjectorAlgorithmTest {
       )
   )
 
+  @Test
+  fun `should ignore el in string literal`() = testInjection(
+      "$DOLLAR{'$DOLLAR{}'}",
+      listOf(
+          TextRange.from(1, 8)
+      )
+  )
+
   private fun testInjection(
       input: String,
       expectedRanges: List<TextRange>

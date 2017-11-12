@@ -1,0 +1,20 @@
+<idea-plugin url="https://www.jetbrains.com/idea">
+    <extensions defaultExtensionNs="com.intellij">
+        <lang.parserDefinition
+                language="El"
+                implementationClass="com.aemtools.lang.el.ElParserDefinition"/>
+
+        <fileTypeFactory implementation="com.aemtools.lang.el.file.ElFileTypeFactory"/>
+        <lang.syntaxHighlighterFactory
+                language="El"
+                implementationClass="com.aemtools.lang.el.highlight.ElHighlighterFactory"/>
+
+        <multiHostInjector implementation="com.aemtools.lang.el.ElInjector"/>
+        <lang.fileViewProviderFactory
+                language="El"
+                implementationClass="com.aemtools.lang.el.file.ElViewProviderFactory"/>
+
+        <lang.braceMatcher language="Htl" implementationClass="com.aemtools.lang.el.editor.ElBraceMatcher"/>
+        <lang.quoteHandler language="Htl" implementationClass="com.aemtools.lang.el.editor.ElQuoteHandler"/>
+    </extensions>
+</idea-plugin>
