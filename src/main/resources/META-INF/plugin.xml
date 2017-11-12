@@ -57,6 +57,8 @@
 
     <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
 
+    <depends optional="true" config-file="expression-language.xml">com.intellij.modules.lang</depends>
+
     <idea-version since-build="131"/>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -79,24 +81,6 @@
         <completion.contributor language="XML"
                                 implementationClass="com.aemtools.completion.reppolicy.RepPolicyCompletionContributor"/>
 
-        <!-- El -->
-        <lang.parserDefinition
-                language="El"
-                implementationClass="com.aemtools.lang.el.ElParserDefinition"/>
-
-        <fileTypeFactory implementation="com.aemtools.lang.el.file.ElFileTypeFactory"/>
-        <lang.syntaxHighlighterFactory
-                language="El"
-                implementationClass="com.aemtools.lang.el.highlight.ElHighlighterFactory"/>
-
-        <multiHostInjector implementation="com.aemtools.lang.el.ElInjector"/>
-        <lang.fileViewProviderFactory
-                language="El"
-                implementationClass="com.aemtools.lang.el.file.ElViewProviderFactory"/>
-
-        <lang.braceMatcher language="Htl" implementationClass="com.aemtools.lang.el.editor.ElBraceMatcher"/>
-        <lang.quoteHandler language="Htl" implementationClass="com.aemtools.lang.el.editor.ElQuoteHandler"/>
-
         <!-- Htl -->
         <iconProvider implementation="com.aemtools.lang.htl.file.HtlFileIconProvider"/>
 
@@ -114,6 +98,7 @@
         <fileBasedIndex implementation="com.aemtools.index.AemComponentTouchUIDialogIndex"/>
         <fileBasedIndex implementation="com.aemtools.index.LocalizationIndex"/>
 
+        <backspaceHandlerDelegate implementation="com.aemtools.lang.htl.editor.HtlBackspaceHandler"/>
         <extendWordSelectionHandler implementation="com.aemtools.ide.htl.HtlStringLiteralWordSelectioner"/>
 
         <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlStringLiteralManipulator"
@@ -135,7 +120,9 @@
 
         <completion.contributor language="Htl"
                                 implementationClass="com.aemtools.completion.htl.HtlElCompletionContributor"/>
-        <lang.braceMatcher language="Htl" implementationClass="com.aemtools.lang.htl.editor.HtlBraceMatcher"/>
+
+        <lang.braceMatcher language="Htl"
+                           implementationClass="com.aemtools.lang.htl.editor.HtlBraceMatcher"/>
 
         <lang.parserDefinition language="Htl"
                                implementationClass="com.aemtools.lang.htl.HtlParserDefinition"/>
