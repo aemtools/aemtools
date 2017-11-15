@@ -51,7 +51,8 @@ open class HtlVariableDeclaration internal constructor(
 
   /**
    * Convert current [HtlVariableDeclaration] into [LookupElement].
-   * @return lookup xmlAttribute
+   *
+   * @return lookup element
    */
   fun toLookupElement(): LookupElement {
     var result = LookupElementBuilder.create(variableName)

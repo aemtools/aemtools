@@ -40,6 +40,7 @@ object HtlElVariableNameCompletionProvider : CompletionProvider<CompletionParame
     val outsiders = variables.filter {
       it.xmlAttribute.textOffset > currentPosition.textOffset
     }
+
     // variables declared after current position should go into the end of the list
     outsiders.mapTo(result) {
       it.toLookupElement().withPriority(CompletionPriority.VARIABLE_OUTSIDER)
