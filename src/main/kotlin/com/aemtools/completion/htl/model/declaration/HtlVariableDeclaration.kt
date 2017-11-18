@@ -162,7 +162,8 @@ open class HtlVariableDeclaration internal constructor(
                   DeclarationType.ITERABLE
               ),
               HtlListHelperDeclaration.createForRepeat(
-                  attribute, itemList
+                  attribute,
+                  itemList
               )
           )
         }
