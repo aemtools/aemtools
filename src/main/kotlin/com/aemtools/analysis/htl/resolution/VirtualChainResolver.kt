@@ -11,7 +11,7 @@ import com.intellij.codeInsight.lookup.LookupElement
  */
 object VirtualChainResolver {
 
-  private val OVERFLOW_GUARD = 5
+  private const val OVERFLOW_GUARD = 5
 
   /**
    * Resolve nested iterables starting from given
