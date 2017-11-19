@@ -1,7 +1,7 @@
 package com.aemtools.completion.htl.provider
 
-import com.aemtools.analysis.htl.callchain.elements.BaseVirtualCallChainElement
-import com.aemtools.analysis.htl.callchain.elements.VirtualCallChainElement
+import com.aemtools.analysis.htl.callchain.elements.virtual.BaseVirtualCallChainElement
+import com.aemtools.analysis.htl.callchain.elements.virtual.VirtualCallChainElement
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.analysis.htl.resolution.VirtualChainResolver
 import com.aemtools.completion.htl.common.FileVariablesResolver

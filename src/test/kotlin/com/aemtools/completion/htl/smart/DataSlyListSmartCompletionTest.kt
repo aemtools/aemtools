@@ -5,18 +5,22 @@ import com.aemtools.test.completion.CompletionBaseLightTest
 /**
  * @author Dmytro Troynikov
  */
-class DataSlyListSmartCompletionTest : CompletionBaseLightTest(true){
+class DataSlyListSmartCompletionTest : CompletionBaseLightTest(true) {
 
   fun testUseWithList() = completionTest {
     addClass("TestModel.java", """
         package com.test;
 
+        import java.util.List;
+
         public class TestModel {
             public List<String> stringList;
-            public List<InnerModel> innerModel;
+            public InnerModel innerModel;
         }
         class InnerModel {
-            public List<String> getInnerModelList() {return null;}
+            public List<String> getInnerModelList() {
+                return null;
+            }
         }
     """)
 
@@ -30,9 +34,12 @@ class DataSlyListSmartCompletionTest : CompletionBaseLightTest(true){
 
     shouldContain(
         "bean.stringList",
-        "bean.innerModel",
         "bean.innerModel.innerModelList"
     )
+
+    verify {
+
+    }
   }
 
 }

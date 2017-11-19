@@ -1,6 +1,9 @@
-package com.aemtools.analysis.htl.callchain.elements
+package com.aemtools.analysis.htl.callchain.elements.virtual
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.java.IterableJavaTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 
@@ -33,26 +36,3 @@ interface VirtualCallChainElement {
   fun toLookupElement(): LookupElement
 }
 
-/**
- * Base implementation of [VirtualCallChainElement].
- *
- * @author Dmytro Primshyts
- */
-class BaseVirtualCallChainElement(
-    override val name: String,
-    override val type: TypeDescriptor,
-    override val previous: VirtualCallChainElement? = null
-) : VirtualCallChainElement {
-  override fun toLookupElement(): LookupElement {
-    return LookupElementBuilder.create(buildString {
-      append(name)
-
-      var _previous = previous
-      while (_previous != null) {
-        insert(0, "${_previous.name}.")
-        _previous = _previous.previous
-      }
-    })
-  }
-
-}

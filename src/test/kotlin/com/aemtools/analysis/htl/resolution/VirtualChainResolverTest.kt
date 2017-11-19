@@ -1,6 +1,6 @@
 package com.aemtools.analysis.htl.resolution
 
-import com.aemtools.analysis.htl.callchain.elements.BaseVirtualCallChainElement
+import com.aemtools.analysis.htl.callchain.elements.virtual.BaseVirtualCallChainElement
 import com.aemtools.test.typedescriptor.typeDescriptor
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
