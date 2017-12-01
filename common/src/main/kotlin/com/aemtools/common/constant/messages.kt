@@ -1,4 +1,4 @@
-package com.aemtools.constant
+package com.aemtools.common.constant
 
 /**
  * @author Dmytro Troynikov

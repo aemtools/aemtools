@@ -4,7 +4,7 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.base.BaseTypeDescripto
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.aemtools.completion.htl.CompletionPriority
 import com.aemtools.completion.htl.predefined.PredefinedCompletion
-import com.aemtools.util.withPriority
+import com.aemtools.common.util.withPriority
 import com.intellij.codeInsight.lookup.LookupElement
 
 /**

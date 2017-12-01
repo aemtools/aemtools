@@ -1,10 +1,10 @@
 package com.aemtools.documentation.widget
 
+import com.aemtools.common.constant.const
 import com.aemtools.completion.model.WidgetDoc
 import com.aemtools.completion.model.WidgetMember
 import com.aemtools.completion.model.psi.SelectedAttribute
 import com.aemtools.completion.util.WidgetDefinitionUtil
-import com.aemtools.constant.const
 import com.aemtools.service.ServiceFacade
 import com.intellij.lang.documentation.AbstractDocumentationProvider
 import com.intellij.psi.PsiElement

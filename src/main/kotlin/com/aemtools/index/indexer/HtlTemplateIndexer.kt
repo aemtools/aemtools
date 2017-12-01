@@ -1,9 +1,9 @@
 package com.aemtools.index.indexer
 
+import com.aemtools.common.constant.const
 import com.aemtools.completion.util.extractTemplateDefinition
 import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.completion.util.getHtmlFile
-import com.aemtools.constant.const
 import com.aemtools.index.model.TemplateDefinition
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.util.indexing.DataIndexer

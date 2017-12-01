@@ -1,6 +1,6 @@
-package com.aemtools.util
+package com.aemtools.common.util
 
-import com.aemtools.constant.const
+import com.aemtools.common.constant.const
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 

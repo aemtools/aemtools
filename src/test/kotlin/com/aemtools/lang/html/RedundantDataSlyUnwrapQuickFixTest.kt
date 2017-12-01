@@ -1,6 +1,6 @@
 package com.aemtools.lang.html
 
-import com.aemtools.util.writeCommand
+import com.aemtools.common.util.writeCommand
 import com.intellij.testFramework.InspectionFixtureTestCase
 
 /**

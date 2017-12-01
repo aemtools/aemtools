@@ -21,10 +21,10 @@ class CdPatternsTest : BasePatternsTest() {
       false
   )
 
-  fun testCdPattern(pattern: ElementPattern<PsiElement>,
-                    text: String,
-                    result: Boolean,
-                    addCompletionPlaceholder: Boolean = true) =
+  private fun testCdPattern(pattern: ElementPattern<PsiElement>,
+                            text: String,
+                            result: Boolean,
+                            addCompletionPlaceholder: Boolean = true) =
       testPattern(
           pattern,
           text,

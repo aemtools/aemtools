@@ -1,9 +1,9 @@
 package com.aemtools.completion.widget
 
+import com.aemtools.common.constant.const
 import com.aemtools.completion.model.WidgetMember
 import com.aemtools.completion.model.psi.PsiWidgetDefinition
 import com.aemtools.completion.util.PsiXmlUtil
-import com.aemtools.constant.const
 import com.aemtools.service.ServiceFacade
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.XmlAttributeInsertHandler

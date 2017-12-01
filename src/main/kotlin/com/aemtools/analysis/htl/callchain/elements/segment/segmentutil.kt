@@ -5,8 +5,8 @@ import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.IterableJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
+import com.aemtools.common.constant.const
 import com.aemtools.completion.htl.model.ResolutionResult
-import com.aemtools.constant.const
 
 /**
  * Resolve selected item in current [CallChainSegment].

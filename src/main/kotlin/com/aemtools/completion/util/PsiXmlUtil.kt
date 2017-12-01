@@ -1,17 +1,17 @@
 package com.aemtools.completion.util
 
+import com.aemtools.common.constant.const.SLY_TAG
+import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
+import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
+import com.aemtools.common.constant.const.htl.DATA_SLY_TEMPLATE
+import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
+import com.aemtools.common.constant.const.htl.DATA_SLY_USE
+import com.aemtools.common.util.isHtlAttributeName
 import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
-import com.aemtools.constant.const.SLY_TAG
-import com.aemtools.constant.const.htl.DATA_SLY_LIST
-import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
-import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
-import com.aemtools.constant.const.htl.DATA_SLY_TEST
-import com.aemtools.constant.const.htl.DATA_SLY_USE
 import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.HtlVariableName
-import com.aemtools.util.isHtlAttributeName
 import com.intellij.openapi.util.Conditions
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
@@ -78,7 +78,7 @@ fun <T : PsiElement> PsiElement?.hasParentOfType(type: Class<T>): Boolean =
  * @receiver [PsiElement]
  * @return *true* if this psi element has element that conforms to given predicate, *false* otherwise
  */
-fun <T : PsiElement> T.hasParent(predicate: (element: PsiElement) -> Boolean) : Boolean {
+fun <T : PsiElement> T.hasParent(predicate: (element: PsiElement) -> Boolean): Boolean {
   var parent = this.parent
   while (parent != null) {
     if (predicate.invoke(parent)) {

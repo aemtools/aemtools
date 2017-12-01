@@ -1,4 +1,4 @@
-package com.aemtools.util
+package com.aemtools.common.util
 
 import com.aemtools.index.model.TemplateDefinition
 import org.junit.Assert.assertEquals

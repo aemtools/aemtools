@@ -13,8 +13,8 @@ import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_EL_LOCAL_VARIABLE
 import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_EL_UNRESOLVED_VARIABLE
 import com.aemtools.lang.htl.psi.HtlAccessIdentifier
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
-import com.aemtools.util.closest
-import com.aemtools.util.distanceTo
+import com.aemtools.common.util.closest
+import com.aemtools.common.util.distanceTo
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.psi.PsiElement

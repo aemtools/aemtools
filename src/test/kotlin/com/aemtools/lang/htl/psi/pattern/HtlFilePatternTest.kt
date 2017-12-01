@@ -1,8 +1,7 @@
 package com.aemtools.lang.htl.psi.pattern
 
+import com.aemtools.common.constant.const.JCR_ROOT
 import com.aemtools.test.pattern.BasePatternsTest
-
-import com.aemtools.constant.const.JCR_ROOT
 
 /**
  * @author Dmytro Troynikov

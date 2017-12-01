@@ -1,7 +1,7 @@
 package com.aemtools.lang.htl.annotator
 
-import com.aemtools.constant.const.DOLLAR
-import com.aemtools.constant.messages.annotator.SIMPLIFY_EXPRESSION
+import com.aemtools.common.constant.const.DOLLAR
+import com.aemtools.common.constant.messages.annotator.SIMPLIFY_EXPRESSION
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 
 /**

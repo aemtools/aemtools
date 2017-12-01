@@ -1,6 +1,6 @@
 package com.aemtools.completion.html.inserthandler
 
-import com.aemtools.constant.const.DOLLAR
+import com.aemtools.common.constant.const.DOLLAR
 
 /**
  * @author Dmytro Troynikov

@@ -1,31 +1,29 @@
 package com.aemtools.inspection.html
 
-import com.aemtools.inspection.fix.SubstituteWithRawAttributeIntentionAction
-import com.aemtools.test.base.BaseLightTest.Companion.CARET
-import com.aemtools.test.base.BaseLightTest.Companion.DOLLAR
-import com.aemtools.test.util.notNull
-import com.aemtools.test.util.quickFix
-import com.intellij.testFramework.InspectionFixtureTestCase
-import org.assertj.core.api.Assertions.assertThat
+import com.aemtools.test.HtlTestCase
+import com.intellij.codeInspection.ex.LocalInspectionToolWrapper
+import com.intellij.testFramework.InspectionTestCase
+import java.io.File
 
 /**
  * Test for [MessedDataSlyAttributeInspection].
  *
  * @author Dmytro Troynikov
  */
-class MessedDataSlyAttributeInspectionTest : InspectionFixtureTestCase() {
+class MessedDataSlyAttributeInspectionTest : InspectionTestCase() {
 
-  fun testCorrectFormat() {
-    myFixture.configureByText("test.html", """
-      <div data-sly-attribute.${CARET}style="$DOLLAR{'...'}">
-    """)
+  override fun getTestDataPath(): String {
+    return File(HtlTestCase.testResourcesPath).absolutePath
+  }
 
-    val fix by notNull<SubstituteWithRawAttributeIntentionAction> {
-      myFixture.quickFix("test.html")
-    }
+  fun testInspectionForStyle() {
+    doTest("com/aemtools/inspection/html/messed-data-sly-attribute/style",
+        LocalInspectionToolWrapper(MessedDataSlyAttributeInspection()))
+  }
 
-    assertThat(fix.familyName)
-        .isEqualTo("HTL")
+  fun testInspectionForOnclick() {
+    doTest("com/aemtools/inspection/html/messed-data-sly-attribute/onclick",
+        LocalInspectionToolWrapper(MessedDataSlyAttributeInspection()))
   }
 
 }

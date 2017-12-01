@@ -1,10 +1,9 @@
 package com.aemtools.lang.html.annotation
 
+import com.aemtools.common.constant.const.htl.DATA_SLY_UNWRAP
 import com.aemtools.completion.util.hasParent
-import com.aemtools.completion.util.toSmartPointer
-import com.aemtools.completion.util.findParentByType
 import com.aemtools.completion.util.isHtlFile
-import com.aemtools.constant.const.htl.DATA_SLY_UNWRAP
+import com.aemtools.completion.util.toSmartPointer
 import com.aemtools.inspection.fix.RemoveRedundantDataSlyUnwrapAction
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator

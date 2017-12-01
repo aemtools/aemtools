@@ -1,5 +1,10 @@
 package com.aemtools.completion.htl.model.declaration
 
+import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
+import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
+import com.aemtools.common.constant.const.htl.DATA_SLY_TEMPLATE
+import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
+import com.aemtools.common.constant.const.htl.DATA_SLY_USE
 import com.aemtools.completion.util.extractHtlHel
 import com.aemtools.completion.util.extractItemAndItemListNames
 import com.aemtools.completion.util.extractTemplateDefinition
@@ -8,11 +13,6 @@ import com.aemtools.completion.util.htlAttributeName
 import com.aemtools.completion.util.htlVariableName
 import com.aemtools.completion.util.isOption
 import com.aemtools.completion.util.resolveUseClass
-import com.aemtools.constant.const.htl.DATA_SLY_LIST
-import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
-import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
-import com.aemtools.constant.const.htl.DATA_SLY_TEST
-import com.aemtools.constant.const.htl.DATA_SLY_USE
 import com.aemtools.lang.htl.icons.HtlIcons.DATA_SLY_LIST_ICON
 import com.aemtools.lang.htl.icons.HtlIcons.DATA_SLY_REPEAT_ICON
 import com.aemtools.lang.htl.icons.HtlIcons.HTL_FILE_ICON

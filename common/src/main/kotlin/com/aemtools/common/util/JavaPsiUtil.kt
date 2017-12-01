@@ -1,9 +1,9 @@
-package com.aemtools.util
+package com.aemtools.common.util
 
-import com.aemtools.constant.const.java.FELIX_PROPERTY_ANNOTATION
-import com.aemtools.constant.const.java.FELIX_SERVICE_ANNOTATION
-import com.aemtools.constant.const.java.SLING_FILTER_ANNOTATION
-import com.aemtools.constant.const.java.SLING_SERVLET_ANNOTATION
+import com.aemtools.common.constant.const.java.FELIX_PROPERTY_ANNOTATION
+import com.aemtools.common.constant.const.java.FELIX_SERVICE_ANNOTATION
+import com.aemtools.common.constant.const.java.SLING_FILTER_ANNOTATION
+import com.aemtools.common.constant.const.java.SLING_SERVLET_ANNOTATION
 import com.intellij.psi.PsiAnnotation
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiField
@@ -23,7 +23,7 @@ import com.intellij.psi.PsiType
  * @receiver [PsiClass]
  * @return *true* if class is marked with corresponding OSGi annotations, *false* otherwise
  */
-fun PsiClass.isOSGiService():Boolean {
+fun PsiClass.isOSGiService(): Boolean {
 
   // TODO add check for OSGi declarative service
   return annotations().any {

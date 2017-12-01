@@ -1,6 +1,6 @@
 package com.aemtools.completion.util
 
-import com.aemtools.constant.const.JCR_ROOT_SEPARATED
+import com.aemtools.common.constant.const.JCR_ROOT_SEPARATED
 
 /**
  * @author Dmytro Troynikov

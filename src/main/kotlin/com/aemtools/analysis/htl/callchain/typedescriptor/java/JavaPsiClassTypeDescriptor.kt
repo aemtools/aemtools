@@ -1,18 +1,18 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor.java
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
+import com.aemtools.common.constant.const
+import com.aemtools.common.util.allScope
+import com.aemtools.common.util.elFields
+import com.aemtools.common.util.elMethods
+import com.aemtools.common.util.elName
+import com.aemtools.common.util.findElMemberByName
+import com.aemtools.common.util.psiManager
+import com.aemtools.common.util.resolveReturnType
+import com.aemtools.common.util.withPriority
 import com.aemtools.completion.htl.CompletionPriority
 import com.aemtools.completion.htl.model.ResolutionResult
-import com.aemtools.constant.const
 import com.aemtools.lang.java.JavaSearch
-import com.aemtools.util.allScope
-import com.aemtools.util.elFields
-import com.aemtools.util.elMethods
-import com.aemtools.util.elName
-import com.aemtools.util.findElMemberByName
-import com.aemtools.util.psiManager
-import com.aemtools.util.resolveReturnType
-import com.aemtools.util.withPriority
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.psi.PsiArrayType

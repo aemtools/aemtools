@@ -1,7 +1,7 @@
 package com.aemtools.test.fixture
 
-import com.aemtools.test.base.BaseLightTest
 import com.aemtools.lang.java.JavaSearch
+import com.aemtools.test.base.BaseLightTest
 import com.intellij.psi.PsiClass
 
 /**

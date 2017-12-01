@@ -1,7 +1,7 @@
 package com.aemtools.ide.refactoring
 
+import com.aemtools.common.constant.const
 import com.aemtools.test.rename.BaseRenameTest
-import com.aemtools.constant.const
 
 /**
  * @author Dmytro Troynikov

@@ -1,6 +1,6 @@
 package com.aemtools.index.model
 
-import com.aemtools.constant.const
+import com.aemtools.common.constant.const
 import com.intellij.psi.xml.XmlTag
 import java.io.Serializable
 

@@ -1,8 +1,8 @@
 package com.aemtools.inspection.html
 
+import com.aemtools.common.constant.const
 import com.aemtools.completion.util.htlAttributeName
 import com.aemtools.completion.util.toSmartPointer
-import com.aemtools.constant.const
 import com.aemtools.inspection.fix.SubstituteWithRawAttributeIntentionAction
 import com.intellij.codeInsight.daemon.impl.analysis.RemoveAttributeIntentionFix
 import com.intellij.codeInspection.ProblemHighlightType
@@ -17,13 +17,9 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Dmytro Troynikov
  */
 class MessedDataSlyAttributeInspection : HtmlLocalInspectionTool() {
-  override fun getGroupDisplayName(): String {
-    return "HTL"
-  }
+  override fun getGroupDisplayName(): String = "HTL"
 
-  override fun getDisplayName(): String {
-    return "data-sly-attribute with prohibited attributes"
-  }
+  override fun getDisplayName(): String = "data-sly-attribute with prohibited attributes"
 
   override fun getStaticDescription(): String? {
     return """
@@ -34,12 +30,12 @@ This inspection verifies that <i>data-sly-attribute</i> is
 attributes that take JavaScript as input (e.g. onclick, onmousemove, etc).
 </body>
 </html>
-    """
+    """.trimIndent()
   }
 
-  override fun checkAttribute(attribute: XmlAttribute,
-                              holder: ProblemsHolder,
-                              isOnTheFly: Boolean) {
+  public override fun checkAttribute(attribute: XmlAttribute,
+                                     holder: ProblemsHolder,
+                                     isOnTheFly: Boolean) {
     val htlAttributeName = attribute.htlAttributeName()
     if (htlAttributeName != const.htl.DATA_SLY_ATTRIBUTE) {
       return

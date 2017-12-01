@@ -1,3 +1,5 @@
 rootProject.name="aemtools"
+
 include 'test-framework'
+include 'common'
 

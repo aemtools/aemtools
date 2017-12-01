@@ -1,8 +1,8 @@
 package com.aemtools.codeinsight.osgiconfig
 
+import com.aemtools.completion.util.findChildrenByType
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin
-import com.aemtools.completion.util.findChildrenByType
 import com.intellij.codeHighlighting.Pass
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler
 import com.intellij.openapi.editor.markup.GutterIconRenderer

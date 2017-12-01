@@ -1,10 +1,10 @@
 package com.aemtools.completion.htl
 
+import com.aemtools.common.constant.const.JCR_ROOT
+import com.aemtools.common.constant.const.java.SLING_MODEL
 import com.aemtools.test.BaseVariantsCheckContributorTest.Companion.DEFAULT_CONTEXT_OBJECTS
 import com.aemtools.test.base.model.fixture.ITestFixture
 import com.aemtools.test.completion.CompletionBaseLightTest
-import com.aemtools.constant.const.JCR_ROOT
-import com.aemtools.constant.const.java.SLING_MODEL
 
 /**
  * @author Dmytro Troynikov

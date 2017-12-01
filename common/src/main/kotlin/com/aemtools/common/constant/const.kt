@@ -1,4 +1,4 @@
-package com.aemtools.constant
+package com.aemtools.common.constant
 
 /**
  * @author Dmytro_Troynikov
@@ -11,7 +11,7 @@ object const {
 
   val JCR_ROOT: String = "jcr_root"
 
-  val JCR_ROOT_SEPARATED: String = "/$JCR_ROOT/"
+  val JCR_ROOT_SEPARATED: String = "/${JCR_ROOT}/"
 
   val IDEA_STRING_CARET_PLACEHOLDER: String = "IntellijIdeaRulezzz"
 
@@ -247,9 +247,9 @@ object const {
     val SLING_OSGI_CONFIG: String = "sling:OsgiConfig"
     val CQ_COMPONENT: String = "cq:Component"
     val CQ_DIALOG: String = "cq:Dialog"
-    val JCR_PRIMARY_TYPE_OSGI_CONFIG: String = "$JCR_PRIMARY_TYPE=\"$SLING_OSGI_CONFIG\""
-    val JCR_PRIMARY_TYPE_CQ_COMPONENT: String = "$JCR_PRIMARY_TYPE=\"$CQ_COMPONENT\""
-    val JCR_PRIMARY_TYPE_CQ_DIALOG: String = "$JCR_PRIMARY_TYPE=\"$CQ_DIALOG\""
+    val JCR_PRIMARY_TYPE_OSGI_CONFIG: String = "${JCR_PRIMARY_TYPE}=\"${SLING_OSGI_CONFIG}\""
+    val JCR_PRIMARY_TYPE_CQ_COMPONENT: String = "${JCR_PRIMARY_TYPE}=\"${CQ_COMPONENT}\""
+    val JCR_PRIMARY_TYPE_CQ_DIALOG: String = "${JCR_PRIMARY_TYPE}=\"${CQ_DIALOG}\""
     val JCR_LANGUAGE: String = "jcr:language"
     val SLING_KEY: String = "sling:key"
     val SLING_MESSAGE: String = "sling:message"

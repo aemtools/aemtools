@@ -1,6 +1,6 @@
 package com.aemtools.completion.model.psi
 
-import com.aemtools.constant.const
+import com.aemtools.common.constant.const
 
 /**
  * Represent String value of Lexeme under user cursor

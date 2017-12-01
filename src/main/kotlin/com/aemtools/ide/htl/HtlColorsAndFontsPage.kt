@@ -1,6 +1,6 @@
 package com.aemtools.ide.htl
 
-import com.aemtools.constant.const.DOLLAR
+import com.aemtools.common.constant.const.DOLLAR
 import com.aemtools.lang.htl.colorscheme.HtlColors
 import com.aemtools.lang.htl.highlight.HtlHighlighter
 import com.aemtools.lang.htl.icons.HtlIcons

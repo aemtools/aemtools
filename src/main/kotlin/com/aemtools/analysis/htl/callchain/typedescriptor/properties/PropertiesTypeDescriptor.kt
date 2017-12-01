@@ -7,7 +7,7 @@ import com.aemtools.completion.util.resourceType
 import com.aemtools.index.model.dialog.AemComponentClassicDialogDefinition
 import com.aemtools.index.model.dialog.AemComponentTouchUIDialogDefinition
 import com.aemtools.index.search.AemComponentSearch
-import com.aemtools.util.withPriority
+import com.aemtools.common.util.withPriority
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.psi.PsiElement
 

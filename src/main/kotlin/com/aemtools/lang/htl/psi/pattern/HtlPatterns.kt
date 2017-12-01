@@ -1,15 +1,15 @@
 package com.aemtools.lang.htl.psi.pattern
 
-import com.aemtools.constant.const
-import com.aemtools.constant.const.htl.DATA_SLY_CALL
-import com.aemtools.constant.const.htl.DATA_SLY_INCLUDE
-import com.aemtools.constant.const.htl.DATA_SLY_LIST
-import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
-import com.aemtools.constant.const.htl.DATA_SLY_RESOURCE
-import com.aemtools.constant.const.htl.DATA_SLY_TEMPLATE
-import com.aemtools.constant.const.htl.DATA_SLY_TEST
-import com.aemtools.constant.const.htl.DATA_SLY_USE
-import com.aemtools.constant.const.htl.HTL_ATTRIBUTES
+import com.aemtools.common.constant.const
+import com.aemtools.common.constant.const.htl.DATA_SLY_CALL
+import com.aemtools.common.constant.const.htl.DATA_SLY_INCLUDE
+import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
+import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
+import com.aemtools.common.constant.const.htl.DATA_SLY_RESOURCE
+import com.aemtools.common.constant.const.htl.DATA_SLY_TEMPLATE
+import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
+import com.aemtools.common.constant.const.htl.DATA_SLY_USE
+import com.aemtools.common.constant.const.htl.HTL_ATTRIBUTES
 import com.aemtools.lang.htl.psi.HtlExpression
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.HtlTypes.ACCESS_IDENTIFIER

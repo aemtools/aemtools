@@ -1,7 +1,7 @@
 package com.aemtools.completion.htl.dataslycall
 
+import com.aemtools.common.constant.const
 import com.aemtools.test.completion.CompletionBaseLightTest
-import com.aemtools.constant.const
 
 /**
  * @author Dmytro Troynikov

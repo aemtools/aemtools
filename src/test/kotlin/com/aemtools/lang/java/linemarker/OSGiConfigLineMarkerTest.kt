@@ -1,11 +1,11 @@
 package com.aemtools.lang.java.linemarker
 
+import com.aemtools.common.constant.const.java.FELIX_SERVICE_ANNOTATION
+import com.aemtools.lang.java.JavaSearch
+import com.aemtools.lang.java.linemarker.navigationhandler.OSGiGutterIconNavigationHandler
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin
 import com.aemtools.test.fixture.OSGiFelixAnnotationsMixin
-import com.aemtools.constant.const.java.FELIX_SERVICE_ANNOTATION
-import com.aemtools.lang.java.JavaSearch
-import com.aemtools.lang.java.linemarker.navigationhandler.OSGiGutterIconNavigationHandler
 import org.junit.Rule
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule

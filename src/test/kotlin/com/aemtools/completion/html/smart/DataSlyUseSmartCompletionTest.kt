@@ -1,7 +1,7 @@
 package com.aemtools.completion.html.smart
 
+import com.aemtools.common.constant.const.JCR_ROOT
 import com.aemtools.test.completion.CompletionBaseLightTest
-import com.aemtools.constant.const.JCR_ROOT
 
 /**
  * @author Dmytro Troynikov

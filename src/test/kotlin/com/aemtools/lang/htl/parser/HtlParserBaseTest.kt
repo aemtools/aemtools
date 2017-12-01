@@ -1,7 +1,7 @@
 package com.aemtools.lang.htl.parser
 
-import com.aemtools.test.parser.BaseParserTest
 import com.aemtools.lang.htl.HtlParserDefinition
+import com.aemtools.test.parser.BaseParserTest
 
 /**
  * @author Dmytro Troynikov

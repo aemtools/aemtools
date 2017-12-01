@@ -1,9 +1,9 @@
 package com.aemtools.codeinsight.osgiconfig
 
+import com.aemtools.common.constant.const.JCR_PRIMARY_TYPE
+import com.aemtools.common.constant.const.xml.SLING_OSGI_CONFIG
 import com.aemtools.completion.util.hasAttribute
 import com.aemtools.completion.util.xmlAttributeMatcher
-import com.aemtools.constant.const.JCR_PRIMARY_TYPE
-import com.aemtools.constant.const.xml.SLING_OSGI_CONFIG
 import com.aemtools.lang.java.JavaSearch
 import com.intellij.codeHighlighting.Pass
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler

@@ -1,9 +1,9 @@
 package com.aemtools.lang.htl.psi
 
+import com.aemtools.common.constant.const.DOLLAR
+import com.aemtools.common.util.psiFileFactory
 import com.aemtools.completion.util.findChildrenByType
-import com.aemtools.constant.const.DOLLAR
 import com.aemtools.lang.htl.file.HtlFileType
-import com.aemtools.util.psiFileFactory
 import com.intellij.lang.ASTNode
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiFile

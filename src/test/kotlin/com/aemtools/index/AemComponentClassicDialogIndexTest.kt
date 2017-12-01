@@ -1,9 +1,9 @@
 package com.aemtools.index
 
-import com.aemtools.test.base.BaseLightTest
-import com.aemtools.constant.const.JCR_ROOT
+import com.aemtools.common.constant.const.JCR_ROOT
 import com.aemtools.index.model.dialog.AemComponentClassicDialogDefinition
 import com.aemtools.index.model.dialog.parameter.ClassicDialogParameterDeclaration
+import com.aemtools.test.base.BaseLightTest
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.util.indexing.FileBasedIndex
 

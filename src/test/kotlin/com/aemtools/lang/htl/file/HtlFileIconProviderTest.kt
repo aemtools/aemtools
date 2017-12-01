@@ -1,7 +1,7 @@
 package com.aemtools.lang.htl.file
 
-import com.aemtools.test.base.BaseLightTest
 import com.aemtools.lang.htl.icons.HtlIcons
+import com.aemtools.test.base.BaseLightTest
 import org.assertj.core.api.Assertions.assertThat
 
 /**

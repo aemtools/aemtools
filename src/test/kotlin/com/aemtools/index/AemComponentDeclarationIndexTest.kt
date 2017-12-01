@@ -1,8 +1,8 @@
 package com.aemtools.index
 
-import com.aemtools.test.base.BaseLightTest
 import com.aemtools.index.model.AemComponentDefinition
 import com.aemtools.index.search.AemComponentSearch
+import com.aemtools.test.base.BaseLightTest
 
 /**
  * @author Dmytro Troynikov

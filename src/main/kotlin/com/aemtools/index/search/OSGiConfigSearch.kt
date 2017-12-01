@@ -2,7 +2,7 @@ package com.aemtools.index.search
 
 import com.aemtools.index.OSGiConfigIndex
 import com.aemtools.index.model.OSGiConfiguration
-import com.aemtools.util.allScope
+import com.aemtools.common.util.allScope
 import com.intellij.openapi.project.Project
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope

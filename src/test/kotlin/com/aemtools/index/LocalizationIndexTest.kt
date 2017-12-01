@@ -1,7 +1,7 @@
 package com.aemtools.index
 
-import com.aemtools.test.base.BaseLightTest
 import com.aemtools.index.model.LocalizationModel
+import com.aemtools.test.base.BaseLightTest
 import junit.framework.TestCase
 
 /**

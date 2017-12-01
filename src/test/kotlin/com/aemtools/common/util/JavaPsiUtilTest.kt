@@ -1,10 +1,10 @@
-package com.aemtools.util
+package com.aemtools.common.util
 
+import com.aemtools.common.constant.const.java.FELIX_PROPERTY_ANNOTATION
+import com.aemtools.common.constant.const.java.FELIX_SERVICE_ANNOTATION
+import com.aemtools.common.constant.const.java.SLING_FILTER_ANNOTATION
+import com.aemtools.common.constant.const.java.SLING_SERVLET_ANNOTATION
 import com.aemtools.completion.util.findChildrenByType
-import com.aemtools.constant.const.java.FELIX_PROPERTY_ANNOTATION
-import com.aemtools.constant.const.java.FELIX_SERVICE_ANNOTATION
-import com.aemtools.constant.const.java.SLING_FILTER_ANNOTATION
-import com.aemtools.constant.const.java.SLING_SERVLET_ANNOTATION
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.JavaSearchMixin
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin

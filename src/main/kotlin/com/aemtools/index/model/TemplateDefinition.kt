@@ -9,7 +9,7 @@ import com.aemtools.completion.util.toPsiFile
 import com.aemtools.lang.htl.psi.HtlPsiFile
 import com.aemtools.lang.htl.psi.HtlVariableName
 import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
-import com.aemtools.util.OpenApiUtil
+import com.aemtools.common.util.OpenApiUtil
 import com.intellij.openapi.project.Project
 import com.intellij.psi.xml.XmlAttribute
 import java.io.Serializable

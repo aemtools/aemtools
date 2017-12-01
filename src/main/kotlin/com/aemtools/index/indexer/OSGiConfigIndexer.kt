@@ -1,8 +1,8 @@
 package com.aemtools.index.indexer
 
+import com.aemtools.common.constant.const
+import com.aemtools.common.constant.const.JCR_PRIMARY_TYPE
 import com.aemtools.completion.util.getXmlFile
-import com.aemtools.constant.const
-import com.aemtools.constant.const.JCR_PRIMARY_TYPE
 import com.aemtools.index.model.OSGiConfiguration
 import com.intellij.util.indexing.DataIndexer
 import com.intellij.util.indexing.FileContent

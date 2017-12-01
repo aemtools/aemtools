@@ -1,8 +1,8 @@
 package com.aemtools.service
 
-import com.aemtools.constant.const
+import com.aemtools.common.constant.const
+import com.aemtools.common.util.allScope
 import com.aemtools.lang.java.JavaSearch
-import com.aemtools.util.allScope
 import com.intellij.openapi.project.Project
 import com.intellij.psi.JavaPsiFacade
 import com.intellij.psi.PsiAnonymousClass

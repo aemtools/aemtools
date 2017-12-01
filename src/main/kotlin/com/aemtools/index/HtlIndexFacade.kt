@@ -3,7 +3,7 @@ package com.aemtools.index
 import com.aemtools.completion.util.toPsiFile
 import com.aemtools.index.model.LocalizationModel
 import com.aemtools.index.model.TemplateDefinition
-import com.aemtools.util.allFromFbi
+import com.aemtools.common.util.allFromFbi
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiFile
 import com.intellij.psi.search.FilenameIndex

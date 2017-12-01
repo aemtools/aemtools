@@ -55,8 +55,8 @@
 
     <depends optional="true" config-file="java.xml">com.intellij.modules.java</depends>
 
-    <depends optional="false" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
-    <depends optional="false" config-file="inspections.xml">com.intellij.modules.lang</depends>
+    <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
+    <depends optional="true" config-file="inspections.xml">com.intellij.modules.lang</depends>
 
     <idea-version since-build="131"/>
 

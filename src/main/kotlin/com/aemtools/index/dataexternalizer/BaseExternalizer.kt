@@ -1,7 +1,7 @@
 package com.aemtools.index.dataexternalizer
 
-import com.aemtools.util.ObjectSerializer
-import com.aemtools.util.serializeToByteArray
+import com.aemtools.common.util.ObjectSerializer
+import com.aemtools.common.util.serializeToByteArray
 import com.intellij.util.io.DataExternalizer
 import java.io.ByteArrayOutputStream
 import java.io.DataInput

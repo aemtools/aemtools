@@ -1,7 +1,7 @@
 package com.aemtools.documentation.htl
 
+import com.aemtools.common.constant.const.JCR_ROOT
 import com.aemtools.test.documentation.BaseDocumentationTest
-import com.aemtools.constant.const.JCR_ROOT
 
 /**
  * @author Dmytro Troynikov

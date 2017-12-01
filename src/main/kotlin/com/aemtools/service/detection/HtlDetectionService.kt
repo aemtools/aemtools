@@ -1,9 +1,9 @@
 package com.aemtools.service.detection
 
-import com.aemtools.constant.const.JCR_ROOT
-import com.aemtools.constant.const.JCR_ROOT_SEPARATED
+import com.aemtools.common.constant.const.JCR_ROOT
+import com.aemtools.common.constant.const.JCR_ROOT_SEPARATED
+import com.aemtools.common.util.OpenApiUtil.iAmTest
 import com.aemtools.settings.HtlRootDirectories
-import com.aemtools.util.OpenApiUtil.iAmTest
 import com.intellij.openapi.project.Project
 
 /**

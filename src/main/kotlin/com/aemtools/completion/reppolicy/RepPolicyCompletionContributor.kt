@@ -1,8 +1,8 @@
 package com.aemtools.completion.reppolicy
 
+import com.aemtools.common.constant.const
 import com.aemtools.completion.model.editconfig.XmlAttributeDefinition
 import com.aemtools.completion.util.findParentByType
-import com.aemtools.constant.const
 import com.aemtools.service.ServiceFacade
 import com.intellij.codeInsight.completion.CompletionContributor
 import com.intellij.codeInsight.completion.CompletionParameters

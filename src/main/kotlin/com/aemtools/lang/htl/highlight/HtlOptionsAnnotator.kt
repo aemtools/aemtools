@@ -1,10 +1,10 @@
 package com.aemtools.lang.htl.highlight
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
+import com.aemtools.common.constant.const
 import com.aemtools.completion.util.findParentByType
 import com.aemtools.completion.util.isInsideOf
 import com.aemtools.completion.util.isOption
-import com.aemtools.constant.const
 import com.aemtools.lang.common.highlight
 import com.aemtools.lang.htl.colorscheme.HtlColors
 import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin

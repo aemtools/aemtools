@@ -1,8 +1,8 @@
 package com.aemtools.index
 
-import com.aemtools.test.base.BaseLightTest
-import com.aemtools.constant.const.JCR_ROOT
+import com.aemtools.common.constant.const.JCR_ROOT
 import com.aemtools.index.search.OSGiConfigSearch
+import com.aemtools.test.base.BaseLightTest
 
 /**
  * @author Dmytro_Troynikov

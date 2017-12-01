@@ -1,8 +1,8 @@
 package com.aemtools.documentation.html
 
+import com.aemtools.common.constant.const
 import com.aemtools.test.documentation.BaseDocumentationTest
 import com.aemtools.test.documentation.model.IDocTestFixture
-import com.aemtools.constant.const
 
 /**
  * @author Dmytro Troynikov

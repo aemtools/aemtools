@@ -1,7 +1,7 @@
 package com.aemtools.ide.refactoring
 
+import com.aemtools.common.constant.const.JCR_ROOT
 import com.aemtools.test.rename.BaseRenameTest
-import com.aemtools.constant.const.JCR_ROOT
 
 /**
  * @author Dmytro Troynikov

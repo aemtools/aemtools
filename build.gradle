@@ -43,6 +43,8 @@ intellij {
     version ideaVersion
     updateSinceUntilBuild = false
 
+    plugins 'IntelliLang'
+
     // SET YOUR JETBRAINS LOGIN DETAILS AS ENVIRONMENT VARIABLES SO THAT YOU CAN PUBLISH A NEW BUILD TO THE REPOSITORY
     publishPlugin {
         username System.getenv('JETBRAINS_USERNAME')
@@ -77,27 +79,27 @@ repositories {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile "org.jetbrains.kotlin:kotlin-runtime:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-runtime:$kotlin_version"
 
-    compile "com.google.code.gson:gson:$gson_version"
+    implementation "com.google.code.gson:gson:$gson_version"
 
-    compile "commons-lang:commons-lang:$apache_commons_version"
+    implementation "commons-lang:commons-lang:$apache_commons_version"
+
+    compile project('common')
 
     gen files('lib/grammar-kit-2.jar')
 
     gen 'de.jflex:jflex:1.6.1'
 
-    testCompile project('test-framework')
-    // https://mvnrepository.com/artifact/com.github.markusbernhardt/proxy-vole
-    testCompile group: 'com.github.markusbernhardt', name: 'proxy-vole', version: '1.0.3'
+    testImplementation project('test-framework')
 
-    testCompile "junit:junit:$junit_version"
+    testImplementation group: 'com.github.markusbernhardt', name: 'proxy-vole', version: '1.0.3'
 
-    testCompile "org.jmockit:jmockit:$jmockit_version"
-
-    testCompile "org.assertj:assertj-core:$assertj_version"
-    testCompile "org.mockito:mockito-core:$mockito_version"
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "org.jmockit:jmockit:$jmockit_version"
+    testImplementation "org.assertj:assertj-core:$assertj_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
 }
 
 apply from: rootProject.file("config/idea.gradle")
@@ -110,5 +112,5 @@ apply from: rootProject.file("config/lexerparser.gradle")
 apply from: rootProject.file("config/detekt.gradle")
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.2.1'
+    gradleVersion = '4.3.1'
 }

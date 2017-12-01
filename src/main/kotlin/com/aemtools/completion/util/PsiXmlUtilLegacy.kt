@@ -1,6 +1,6 @@
 package com.aemtools.completion.util
 
-import com.aemtools.constant.const
+import com.aemtools.common.constant.const
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag

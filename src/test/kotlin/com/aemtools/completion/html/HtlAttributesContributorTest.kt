@@ -1,10 +1,10 @@
 package com.aemtools.completion.html
 
+import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
+import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
+import com.aemtools.common.constant.const.htl.DATA_SLY_UNWRAP
+import com.aemtools.common.constant.const.htl.HTL_ATTRIBUTES
 import com.aemtools.test.BaseVariantsCheckContributorTest
-import com.aemtools.constant.const.htl.DATA_SLY_LIST
-import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
-import com.aemtools.constant.const.htl.DATA_SLY_UNWRAP
-import com.aemtools.constant.const.htl.HTL_ATTRIBUTES
 
 /**
  * @author Dmytro_Troynikov

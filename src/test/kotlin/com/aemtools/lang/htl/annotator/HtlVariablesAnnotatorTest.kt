@@ -1,6 +1,6 @@
 package com.aemtools.lang.htl.annotator
 
-import com.aemtools.constant.const.DOLLAR
+import com.aemtools.common.constant.const.DOLLAR
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 
 /**

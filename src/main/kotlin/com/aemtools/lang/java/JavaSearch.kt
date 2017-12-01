@@ -1,8 +1,8 @@
 package com.aemtools.lang.java
 
-import com.aemtools.constant.const.java.POJO_USE
-import com.aemtools.constant.const.java.USE_INTERFACE
-import com.aemtools.constant.const.java.WCM_USE_CLASS
+import com.aemtools.common.constant.const.java.POJO_USE
+import com.aemtools.common.constant.const.java.USE_INTERFACE
+import com.aemtools.common.constant.const.java.WCM_USE_CLASS
 import com.aemtools.service.IJavaSearchService
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.project.Project

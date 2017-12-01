@@ -1,4 +1,4 @@
-package com.aemtools.util
+package com.aemtools.common.util
 
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream

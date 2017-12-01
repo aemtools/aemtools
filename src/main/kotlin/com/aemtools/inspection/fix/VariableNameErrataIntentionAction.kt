@@ -1,6 +1,6 @@
 package com.aemtools.inspection.fix
 
-import com.aemtools.util.psiDocumentManager
+import com.aemtools.common.util.psiDocumentManager
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement

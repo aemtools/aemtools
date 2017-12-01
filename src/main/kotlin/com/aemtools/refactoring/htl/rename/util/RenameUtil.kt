@@ -1,8 +1,8 @@
 package com.aemtools.refactoring.htl.rename.util
 
 import com.aemtools.completion.util.virtualFile
-import com.aemtools.util.psiManager
-import com.aemtools.util.showErrorMessage
+import com.aemtools.common.util.psiManager
+import com.aemtools.common.util.showErrorMessage
 import com.intellij.featureStatistics.FeatureUsageTracker
 import com.intellij.ide.scratch.ScratchFileType
 import com.intellij.openapi.actionSystem.DataContext

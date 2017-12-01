@@ -1,8 +1,8 @@
 package com.aemtools.completion.util
 
+import com.aemtools.common.constant.const
 import com.aemtools.completion.htl.model.declaration.DeclarationAttributeType
 import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
-import com.aemtools.constant.const
 import com.aemtools.lang.htl.psi.HtlAssignmentValue
 import com.aemtools.lang.htl.psi.HtlContextExpression
 import com.aemtools.lang.htl.psi.HtlExpression

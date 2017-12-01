@@ -1,7 +1,7 @@
-package com.aemtools.util
+package com.aemtools.common.util
 
-import com.aemtools.constant.const.htl.DECLARATION_ATTRIBUTES
-import com.aemtools.constant.const.htl.SINGLE_ATTRIBUTES
+import com.aemtools.common.constant.const.htl.DECLARATION_ATTRIBUTES
+import com.aemtools.common.constant.const.htl.SINGLE_ATTRIBUTES
 import com.intellij.codeInsight.completion.PrioritizedLookupElement
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.openapi.application.ApplicationManager

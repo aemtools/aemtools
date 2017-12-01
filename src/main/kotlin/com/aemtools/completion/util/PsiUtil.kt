@@ -2,7 +2,7 @@ package com.aemtools.completion.util
 
 import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.HtlPsiFile
-import com.aemtools.util.psiManager
+import com.aemtools.common.util.psiManager
 import com.intellij.lang.Language
 import com.intellij.lang.StdLanguages
 import com.intellij.openapi.application.runReadAction

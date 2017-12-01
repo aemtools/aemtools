@@ -1,6 +1,6 @@
 package com.aemtools.lang.html.annotator
 
-import com.aemtools.util.writeCommand
+import com.aemtools.common.util.writeCommand
 import com.intellij.testFramework.InspectionFixtureTestCase
 
 /**

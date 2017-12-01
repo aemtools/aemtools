@@ -1,10 +1,10 @@
 package com.aemtools.lang.htl.annotator
 
-import com.aemtools.constant.const.DOLLAR
+import com.aemtools.common.constant.const.DOLLAR
+import com.aemtools.common.util.writeCommand
 import com.aemtools.inspection.fix.VariableNameErrataIntentionAction
 import com.aemtools.test.util.notNull
 import com.aemtools.test.util.quickFix
-import com.aemtools.util.writeCommand
 import com.intellij.testFramework.InspectionFixtureTestCase
 import org.assertj.core.api.Assertions.assertThat
 

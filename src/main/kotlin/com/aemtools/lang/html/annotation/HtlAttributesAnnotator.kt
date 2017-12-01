@@ -1,15 +1,14 @@
 package com.aemtools.lang.html.annotation
 
-import com.aemtools.completion.util.getHtlFile
+import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
+import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
+import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
+import com.aemtools.common.constant.const.htl.DATA_SLY_USE
 import com.aemtools.completion.util.htlAttributeName
 import com.aemtools.completion.util.htlVariableName
 import com.aemtools.completion.util.incomingReferences
 import com.aemtools.completion.util.isHtlFile
 import com.aemtools.completion.util.nameRange
-import com.aemtools.constant.const.htl.DATA_SLY_LIST
-import com.aemtools.constant.const.htl.DATA_SLY_REPEAT
-import com.aemtools.constant.const.htl.DATA_SLY_TEST
-import com.aemtools.constant.const.htl.DATA_SLY_USE
 import com.aemtools.lang.common.highlight
 import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_ATTRIBUTE
 import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_VARIABLE_DECLARATION
