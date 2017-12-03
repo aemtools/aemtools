@@ -1,3 +1,4 @@
+import org.gradle.internal.impldep.org.apache.maven.model.Build
 import org.jetbrains.grammarkit.GrammarKitPluginExtension
 import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
@@ -112,3 +113,6 @@ task("generateGrammar") {
         add("generateHtlPsiAndParser")
     }
 }
+
+getTasksByName("compileKotlin", true).first()
+        .dependsOn("generateGrammar")
