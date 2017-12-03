@@ -1,9 +1,9 @@
 package com.aemtools.completion.htl.provider.option
 
+import com.aemtools.analysis.htl.callchain
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
+import com.aemtools.common.util.findParentByType
 import com.aemtools.completion.htl.inserthandler.HtlElAssignmentInsertHandler
-import com.aemtools.completion.util.findParentByType
-import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -20,12 +20,12 @@ object HtlDataSlyCallOptionCompletionProvider : CompletionProvider<CompletionPar
       context: ProcessingContext?,
       result: CompletionResultSet) {
     val currentPosition = parameters.position
-    val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
+    val hel = currentPosition.findParentByType(com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin::class.java)
         ?: return
 
     val outputType = hel
         .getMainPropertyAccess()
-        ?.callChain()
+        ?.callchain()
         ?.getLastOutputType()
         as? TemplateTypeDescriptor
         ?: return

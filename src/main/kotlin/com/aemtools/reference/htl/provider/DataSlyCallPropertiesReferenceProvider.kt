@@ -1,10 +1,9 @@
 package com.aemtools.reference.htl.provider
 
+import com.aemtools.analysis.htl.callchain
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
-import com.aemtools.completion.util.findParentByType
-import com.aemtools.completion.util.isOption
-import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
-import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
+import com.aemtools.common.util.findParentByType
+import com.aemtools.lang.util.isOption
 import com.aemtools.reference.htl.reference.HtlTemplateArgumentReference
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
@@ -18,19 +17,19 @@ import com.intellij.util.ProcessingContext
 object DataSlyCallPropertiesReferenceProvider : PsiReferenceProvider() {
   override fun getReferencesByElement(element: PsiElement,
                                       context: ProcessingContext): Array<PsiReference> {
-    val variableName = element as? VariableNameMixin
+    val variableName = element as? com.aemtools.lang.htl.psi.mixin.VariableNameMixin
         ?: return arrayOf()
 
     if (!variableName.isOption()) {
       return arrayOf()
     }
 
-    val hel = element.findParentByType(HtlElExpressionMixin::class.java)
+    val hel = element.findParentByType(com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin::class.java)
         ?: return arrayOf()
 
     val outputType = hel
         .getMainPropertyAccess()
-        ?.callChain()
+        ?.callchain()
         ?.getLastOutputType()
         as? TemplateTypeDescriptor
         ?: return arrayOf()

@@ -1,6 +1,6 @@
 package com.aemtools.completion.clientlib.provider
 
-import com.aemtools.completion.util.relativeTo
+import com.aemtools.common.util.relativeTo
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet

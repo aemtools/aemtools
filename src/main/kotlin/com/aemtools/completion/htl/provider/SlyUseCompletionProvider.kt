@@ -4,8 +4,8 @@ import com.aemtools.completion.htl.CompletionPriority.CLOSE_CLASS
 import com.aemtools.completion.htl.CompletionPriority.CLOSE_TEMPLATE
 import com.aemtools.completion.htl.CompletionPriority.FAR_CLASS
 import com.aemtools.completion.htl.CompletionPriority.FAR_TEMPLATE
-import com.aemtools.completion.util.normalizeToJcrRoot
-import com.aemtools.completion.util.relativeTo
+import com.aemtools.common.util.normalizeToJcrRoot
+import com.aemtools.common.util.relativeTo
 import com.aemtools.index.HtlIndexFacade.getTemplates
 import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.lang.java.JavaSearch

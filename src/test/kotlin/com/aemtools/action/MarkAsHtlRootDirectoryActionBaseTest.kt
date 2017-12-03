@@ -1,6 +1,6 @@
 package com.aemtools.action
 
-import com.aemtools.settings.HtlRootDirectories
+import com.aemtools.lang.settings.HtlRootDirectories
 import com.aemtools.test.util.mock
 import com.intellij.openapi.actionSystem.ActionPlaces
 import com.intellij.openapi.actionSystem.AnActionEvent

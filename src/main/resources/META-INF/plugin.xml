@@ -61,6 +61,28 @@
     <idea-version since-build="131"/>
 
     <extensions defaultExtensionNs="com.intellij">
+        <fileTypeFactory
+                implementation="com.aemtools.lang.clientlib.file.CdFileTypeFactory"/>
+        <lang.parserDefinition
+                language="Cd"
+                implementationClass="com.aemtools.lang.clientlib.CdParserDefinition"/>
+        <completion.contributor
+                language="Cd"
+                implementationClass="com.aemtools.completion.clientlib.CdCompletionContributor"/>
+
+        <lang.substitutor
+                language="TEXT"
+                implementationClass="com.aemtools.lang.clientlib.CdLanguageSubstitutor"/>
+        <psi.referenceContributor
+                language="Cd"
+                implementation="com.aemtools.reference.clientlib.CdReferenceContributor"/>
+        <lang.commenter
+                language="Cd"
+                implementationClass="com.aemtools.lang.clientlib.editor.CdCommenter"/>
+        <lang.syntaxHighlighterFactory
+                language="Cd"
+                implementationClass="com.aemtools.lang.clientlib.highlight.CdHighlighterFactory"/>
+
         <lang.documentationProvider language="HTML" order="first"
                                     implementationClass="com.aemtools.documentation.html.HtlAttributesDocumentationProvider"/>
         <lang.documentationProvider language="Htl" order="first"
@@ -144,10 +166,10 @@
                    implementationClass="com.aemtools.lang.html.inspection.RedundantELAnnotator"/>
 
         <annotator language="Htl"
-                   implementationClass="com.aemtools.lang.htl.highlight.HtlVariablesAnnotator"/>
+                   implementationClass="com.aemtools.codeinsight.htl.annotator.HtlVariablesAnnotator"/>
 
         <annotator language="Htl"
-                   implementationClass="com.aemtools.lang.htl.highlight.HtlOptionsAnnotator"/>
+                   implementationClass="com.aemtools.codeinsight.htl.annotator.HtlOptionsAnnotator"/>
 
         <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
                        order="before xmlAttribute"/>
@@ -175,8 +197,8 @@
                                       implementationClass="com.aemtools.ide.HtlStructureViewProvider"/>
 
         <projectService
-                serviceInterface="com.aemtools.settings.HtlRootDirectories"
-                serviceImplementation="com.aemtools.settings.HtlRootDirectories"/>
+                serviceInterface="com.aemtools.lang.settings.HtlRootDirectories"
+                serviceImplementation="com.aemtools.lang.settings.HtlRootDirectories"/>
 
         <additionalTextAttributes
                 scheme="Default"

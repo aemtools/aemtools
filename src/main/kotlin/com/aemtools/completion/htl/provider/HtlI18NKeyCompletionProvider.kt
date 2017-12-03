@@ -1,7 +1,7 @@
 package com.aemtools.completion.htl.provider
 
-import com.aemtools.completion.util.findChildrenByType
-import com.aemtools.completion.util.findParentByType
+import com.aemtools.common.util.findChildrenByType
+import com.aemtools.common.util.findParentByType
 import com.aemtools.index.HtlIndexFacade
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.intellij.codeInsight.completion.CompletionParameters

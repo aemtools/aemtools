@@ -1,7 +1,7 @@
 package com.aemtools.service.detection
 
 import com.aemtools.common.constant.const.JCR_ROOT
-import com.aemtools.settings.HtlRootDirectories
+import com.aemtools.lang.settings.HtlRootDirectories
 import com.aemtools.test.base.BaseLightTest
 import org.assertj.core.api.Assertions.assertThat
 

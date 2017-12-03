@@ -2,7 +2,7 @@ package com.aemtools.analysis.htl.callchain.typedescriptor.template
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.BaseTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
-import com.aemtools.completion.htl.model.declaration.HtlTemplateParameterDeclaration
+import com.aemtools.codeinsight.htl.model.HtlTemplateParameterDeclaration
 import com.intellij.codeInsight.lookup.LookupElement
 
 /**

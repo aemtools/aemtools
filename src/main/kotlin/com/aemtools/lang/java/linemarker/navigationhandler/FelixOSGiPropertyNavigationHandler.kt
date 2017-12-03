@@ -1,6 +1,6 @@
 package com.aemtools.lang.java.linemarker.navigationhandler
 
-import com.aemtools.completion.util.toNavigatable
+import com.aemtools.common.util.toNavigatable
 import com.aemtools.lang.java.linemarker.markerinfo.FelixOSGiPropertyDescriptor
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler
 import com.intellij.codeInsight.daemon.impl.PsiElementListNavigator

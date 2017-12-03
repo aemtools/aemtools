@@ -3,7 +3,7 @@ package com.aemtools.service.detection
 import com.aemtools.common.constant.const.JCR_ROOT
 import com.aemtools.common.constant.const.JCR_ROOT_SEPARATED
 import com.aemtools.common.util.OpenApiUtil.iAmTest
-import com.aemtools.settings.HtlRootDirectories
+import com.aemtools.lang.settings.HtlRootDirectories
 import com.intellij.openapi.project.Project
 
 /**

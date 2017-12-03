@@ -1,14 +1,14 @@
 package com.aemtools.completion.clientlib.provider
 
-import com.aemtools.completion.util.basePathElement
-import com.aemtools.completion.util.findParentByType
-import com.aemtools.completion.util.getPsi
-import com.aemtools.completion.util.relativeTo
-import com.aemtools.completion.util.toPsiFile
+import com.aemtools.common.util.findParentByType
+import com.aemtools.common.util.getPsi
+import com.aemtools.common.util.relativeTo
+import com.aemtools.common.util.toPsiFile
 import com.aemtools.lang.clientlib.CdLanguage
 import com.aemtools.lang.clientlib.psi.CdBasePath
 import com.aemtools.lang.clientlib.psi.CdInclude
 import com.aemtools.lang.clientlib.psi.CdPsiFile
+import com.aemtools.lang.util.basePathElement
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet

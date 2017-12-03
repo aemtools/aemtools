@@ -12,12 +12,12 @@ import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEXT
 import com.aemtools.common.constant.const.htl.DATA_SLY_UNWRAP
 import com.aemtools.common.constant.const.htl.DATA_SLY_USE
+import com.aemtools.common.util.findChildrenByType
+import com.aemtools.common.util.findParentByType
 import com.aemtools.completion.html.inserthandler.HtlExpressionInsertHandler
 import com.aemtools.completion.html.inserthandler.HtlIdentifierInsertHandler
 import com.aemtools.completion.html.inserthandler.HtlTemplateInsertHandler
-import com.aemtools.completion.util.findChildrenByType
-import com.aemtools.completion.util.findParentByType
-import com.aemtools.completion.util.isSlyTag
+import com.aemtools.lang.util.isSlyTag
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet

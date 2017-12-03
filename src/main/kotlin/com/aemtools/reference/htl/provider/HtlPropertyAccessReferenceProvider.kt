@@ -1,18 +1,17 @@
 package com.aemtools.reference.htl.provider
 
+import com.aemtools.analysis.htl.callchain
 import com.aemtools.analysis.htl.callchain.elements.BaseChainElement
 import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.elements.segment.BaseCallChainSegment
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateParameterTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
-import com.aemtools.completion.htl.model.declaration.HtlListHelperDeclaration
-import com.aemtools.completion.util.findChildrenByType
-import com.aemtools.completion.util.hasChild
+import com.aemtools.codeinsight.htl.model.HtlListHelperDeclaration
+import com.aemtools.common.util.findChildrenByType
+import com.aemtools.common.util.hasChild
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
 import com.aemtools.lang.htl.psi.HtlStringLiteral
-import com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
-import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.reference.common.reference.HtlPropertyAccessReference
 import com.aemtools.reference.htl.reference.HtlDeclarationReference
 import com.aemtools.reference.htl.reference.HtlListHelperReference
@@ -34,7 +33,7 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
       context: ProcessingContext): Array<PsiReference> {
     val propertyAccess = element as? PropertyAccessMixin ?: return arrayOf()
 
-    val chain = propertyAccess.callChain() ?: return arrayOf()
+    val chain = propertyAccess.callchain() ?: return arrayOf()
 
     val chainSegment = chain.callChainSegments.lastOrNull() as? BaseCallChainSegment ?: return arrayOf()
 
@@ -102,7 +101,7 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
 
   private fun extractTextRange(element: PsiElement): TextRange {
     return when (element) {
-      is AccessIdentifierMixin ->
+      is com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin ->
         if (element.hasChild(HtlArrayLikeAccess::class.java)
             && element.hasChild(HtlStringLiteral::class.java)) {
           val stringLiteral: PsiElement = element.findChildrenByType(
@@ -122,7 +121,7 @@ object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
           TextRange.EMPTY_RANGE
         }
 
-      is VariableNameMixin -> TextRange(
+      is com.aemtools.lang.htl.psi.mixin.VariableNameMixin -> TextRange(
           element.startOffsetInParent + 1,
           element.startOffsetInParent + element.variableName().length + 1)
 

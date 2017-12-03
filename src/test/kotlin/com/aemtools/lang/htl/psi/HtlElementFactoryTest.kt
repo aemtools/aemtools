@@ -8,28 +8,28 @@ import com.aemtools.test.base.BaseLightTest
 class HtlElementFactoryTest : BaseLightTest(false) {
 
   fun testDotAccessIdentifier() {
-    val accessIdentifier = HtlElementFactory.createDotAccessIdentifier("identifier", project)
+    val accessIdentifier = com.aemtools.lang.htl.psi.HtlElementFactory.createDotAccessIdentifier("identifier", project)
 
     assertEquals(".identifier", accessIdentifier?.text)
     assertEquals(HtlTypes.DOT_ACCESS, accessIdentifier?.elementType)
   }
 
   fun testArrayLikeAccessSinglequoted() {
-    val accessIdentifier = HtlElementFactory.createArrayLikeAccessSingleQuoted("identifier", project)
+    val accessIdentifier = com.aemtools.lang.htl.psi.HtlElementFactory.createArrayLikeAccessSingleQuoted("identifier", project)
 
     assertEquals("['identifier']", accessIdentifier?.text)
     assertEquals(HtlTypes.ARRAY_LIKE_ACCESS, accessIdentifier?.elementType)
   }
 
   fun testArrayLikeAccessDoubleQuoted() {
-    val accessIdentifier = HtlElementFactory.createArrayLikeAccessDoublequoted("identifier", project)
+    val accessIdentifier = com.aemtools.lang.htl.psi.HtlElementFactory.createArrayLikeAccessDoublequoted("identifier", project)
 
     assertEquals("[\"identifier\"]", accessIdentifier?.text)
     assertEquals(HtlTypes.ARRAY_LIKE_ACCESS, accessIdentifier?.elementType)
   }
 
   fun testOption() {
-    val option = HtlElementFactory.createOption("name", project)
+    val option = com.aemtools.lang.htl.psi.HtlElementFactory.createOption("name", project)
 
     assertEquals("name", option?.text)
     assertTrue(HtlVariableName::class.java.isAssignableFrom(option?.javaClass))

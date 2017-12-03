@@ -1,7 +1,7 @@
 package com.aemtools.completion.htl.provider.option
 
 import com.aemtools.completion.model.htl.HtlOption
-import com.aemtools.completion.util.findParentByType
+import com.aemtools.common.util.findParentByType
 import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.aemtools.service.repository.inmemory.HtlAttributesRepository
 import com.intellij.codeInsight.completion.CompletionParameters
@@ -18,7 +18,7 @@ object HtlOptionCompletionProvider : CompletionProvider<CompletionParameters>() 
                               context: ProcessingContext?,
                               result: CompletionResultSet) {
     val currentPosition = parameters.position
-    val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
+    val hel = currentPosition.findParentByType(com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin::class.java)
         ?: return
 
     val names = hel.getOptions().map { it.name() }

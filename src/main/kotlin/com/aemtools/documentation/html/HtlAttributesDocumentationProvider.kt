@@ -3,7 +3,7 @@ package com.aemtools.documentation.html
 import com.aemtools.completion.model.htl.HtlAttributeIdentifierDescription
 import com.aemtools.completion.model.htl.HtlAttributeMetaInfo
 import com.aemtools.completion.model.htl.HtlAttributeValueDescription
-import com.aemtools.completion.util.htlAttributeName
+import com.aemtools.lang.util.htlAttributeName
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.htlAttribute
 import com.aemtools.service.ServiceFacade
 import com.intellij.lang.documentation.AbstractDocumentationProvider

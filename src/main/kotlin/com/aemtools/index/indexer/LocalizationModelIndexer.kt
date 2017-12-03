@@ -1,7 +1,7 @@
 package com.aemtools.index.indexer
 
 import com.aemtools.common.constant.const
-import com.aemtools.completion.util.getXmlFile
+import com.aemtools.common.util.getXmlFile
 import com.aemtools.index.model.LocalizationModel
 import com.intellij.psi.xml.XmlTag
 import com.intellij.util.indexing.DataIndexer

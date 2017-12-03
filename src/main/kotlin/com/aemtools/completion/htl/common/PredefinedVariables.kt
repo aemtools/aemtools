@@ -50,7 +50,7 @@ object PredefinedVariables {
    * @param project the project
    * @return context object's type descriptor
    */
-  fun typeDescriptorByIdentifier(variableName: VariableNameMixin, project: Project): TypeDescriptor {
+  fun typeDescriptorByIdentifier(variableName: com.aemtools.lang.htl.psi.mixin.VariableNameMixin, project: Project): TypeDescriptor {
     val name = variableName.variableName()
     val classInfo = repository.findContextObject(name) ?: return TypeDescriptor.empty()
     val originalElement = variableName.originalElement

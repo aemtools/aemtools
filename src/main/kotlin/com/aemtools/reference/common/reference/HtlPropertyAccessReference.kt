@@ -15,12 +15,12 @@ import com.intellij.psi.PsiReferenceBase
  * @author Dmytro Troynikov
  */
 class HtlPropertyAccessReference(
-    val propertyAccess: PropertyAccessMixin,
+    val propertyAccess: com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin,
     val callChainElement: CallChainElement,
     textRange: TextRange,
     val referencedElement: PsiElement,
     soft: Boolean = true
-) : PsiReferenceBase<PropertyAccessMixin>(propertyAccess, textRange, soft) {
+) : PsiReferenceBase<com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin>(propertyAccess, textRange, soft) {
 
   override fun resolve(): PsiElement? = referencedElement
 
@@ -44,7 +44,7 @@ class HtlPropertyAccessReference(
       return propertyAccess
     }
 
-    val actualElement = callChainElement.element as? AccessIdentifierMixin
+    val actualElement = callChainElement.element as? com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
         ?: return propertyAccess
 
     val typeDescriptor = callChainElement.type
@@ -55,7 +55,7 @@ class HtlPropertyAccessReference(
   }
 
   private fun preprocessName(newName: String,
-                             actualElement: AccessIdentifierMixin,
+                             actualElement: com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin,
                              typeDescriptor: TypeDescriptor): String {
     if (typeDescriptor is JavaPsiClassTypeDescriptor) {
       val psiMember = typeDescriptor.psiMember

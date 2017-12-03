@@ -1,7 +1,7 @@
 package com.aemtools.action
 
 import com.aemtools.index.HtlTemplateIndex
-import com.aemtools.settings.HtlRootDirectories
+import com.aemtools.lang.settings.HtlRootDirectories
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.Presentation

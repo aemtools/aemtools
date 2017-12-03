@@ -1,10 +1,10 @@
 package com.aemtools.index.indexer
 
 import com.aemtools.common.constant.const
-import com.aemtools.completion.util.extractTemplateDefinition
-import com.aemtools.completion.util.findChildrenByType
-import com.aemtools.completion.util.getHtmlFile
+import com.aemtools.common.util.findChildrenByType
+import com.aemtools.common.util.getHtmlFile
 import com.aemtools.index.model.TemplateDefinition
+import com.aemtools.index.util.extractTemplateDefinition
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.util.indexing.DataIndexer
 import com.intellij.util.indexing.FileContent

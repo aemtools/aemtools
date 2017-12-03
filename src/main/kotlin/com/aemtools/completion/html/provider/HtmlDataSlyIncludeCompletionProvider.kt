@@ -1,7 +1,7 @@
 package com.aemtools.completion.html.provider
 
-import com.aemtools.completion.util.normalizeToJcrRoot
-import com.aemtools.completion.util.relativeTo
+import com.aemtools.common.util.normalizeToJcrRoot
+import com.aemtools.common.util.relativeTo
 import com.aemtools.index.HtlIndexFacade
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider

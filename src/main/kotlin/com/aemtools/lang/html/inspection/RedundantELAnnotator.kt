@@ -3,11 +3,11 @@ package com.aemtools.lang.html.inspection
 import com.aemtools.common.constant.const.htl.DATA_SLY_INCLUDE
 import com.aemtools.common.constant.const.htl.DATA_SLY_USE
 import com.aemtools.common.constant.messages.annotator.SIMPLIFY_EXPRESSION
-import com.aemtools.completion.util.hasChild
-import com.aemtools.completion.util.isInsideOF
+import com.aemtools.common.util.hasChild
 import com.aemtools.inspection.fix.SimplifyElIntentionAction
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.HtlStringLiteral
+import com.aemtools.lang.util.isInsideOF
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.psi.PsiElement

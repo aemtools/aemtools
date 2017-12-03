@@ -175,7 +175,7 @@ class ReferenceTest : BaseReferenceTest() {
         """)
     addHtml("$JCR_ROOT/apps/components/comp/file.html", "included")
 
-    shouldResolveTo(HtlPsiFile::class.java)
+    shouldResolveTo(com.aemtools.lang.htl.psi.HtlPsiFile::class.java)
     shouldContainText("included")
   }
 
@@ -185,7 +185,7 @@ class ReferenceTest : BaseReferenceTest() {
         """)
     addHtml("$JCR_ROOT/apps/components/comp/file.html", "included")
 
-    shouldResolveTo(HtlPsiFile::class.java)
+    shouldResolveTo(com.aemtools.lang.htl.psi.HtlPsiFile::class.java)
     shouldContainText("included")
   }
 
@@ -195,7 +195,7 @@ class ReferenceTest : BaseReferenceTest() {
         """)
     addHtml("$JCR_ROOT/apps/components/comp/file.html", "included")
 
-    shouldResolveTo(HtlPsiFile::class.java)
+    shouldResolveTo(com.aemtools.lang.htl.psi.HtlPsiFile::class.java)
     shouldContainText("included")
   }
 

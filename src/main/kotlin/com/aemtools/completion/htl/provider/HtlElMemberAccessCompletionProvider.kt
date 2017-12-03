@@ -1,8 +1,9 @@
 package com.aemtools.completion.htl.provider
 
+import com.aemtools.analysis.htl.callchain
 import com.aemtools.analysis.htl.callchain.elements.segment.resolveSelectedItem
+import com.aemtools.common.util.findParentByType
 import com.aemtools.completion.htl.model.ResolutionResult
-import com.aemtools.completion.util.findParentByType
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
@@ -38,7 +39,7 @@ object HtlElMemberAccessCompletionProvider : CompletionProvider<CompletionParame
     val propertyAccessElement = element.findParentByType(PropertyAccessMixin::class.java)
         ?: return ResolutionResult()
 
-    val chain = propertyAccessElement.callChain()
+    val chain = propertyAccessElement.callchain()
         ?: return ResolutionResult()
     val lastSegment = chain.callChainSegments.lastOrNull()
         ?: return ResolutionResult()

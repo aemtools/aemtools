@@ -1,7 +1,7 @@
 package com.aemtools.index.indexer
 
 import com.aemtools.common.constant.const.xml.JCR_PRIMARY_TYPE_CQ_COMPONENT
-import com.aemtools.completion.util.getXmlFile
+import com.aemtools.common.util.getXmlFile
 import com.aemtools.index.model.AemComponentDefinition
 import com.intellij.util.indexing.DataIndexer
 import com.intellij.util.indexing.FileContent

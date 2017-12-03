@@ -1,5 +1,6 @@
 package com.aemtools.analysis.htl.callchain.rawchainprocessor
 
+import com.aemtools.analysis.htl.RawChainUnit
 import com.aemtools.analysis.htl.callchain.elements.ArrayAccessIdentifierElement
 import com.aemtools.analysis.htl.callchain.elements.BaseChainElement
 import com.aemtools.analysis.htl.callchain.elements.CallChain
@@ -17,18 +18,17 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescri
 import com.aemtools.analysis.htl.callchain.typedescriptor.predefined.PredefinedTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateParameterTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
+import com.aemtools.codeinsight.htl.model.DeclarationAttributeType
+import com.aemtools.codeinsight.htl.model.DeclarationType
+import com.aemtools.codeinsight.htl.model.HtlListHelperDeclaration
+import com.aemtools.codeinsight.htl.model.HtlTemplateParameterDeclaration
+import com.aemtools.codeinsight.htl.model.HtlUseVariableDeclaration
+import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
+import com.aemtools.common.util.hasChild
 import com.aemtools.completion.htl.common.PredefinedVariables
-import com.aemtools.completion.htl.model.declaration.DeclarationAttributeType
-import com.aemtools.completion.htl.model.declaration.DeclarationType
-import com.aemtools.completion.htl.model.declaration.HtlListHelperDeclaration
-import com.aemtools.completion.htl.model.declaration.HtlTemplateDeclaration
-import com.aemtools.completion.htl.model.declaration.HtlTemplateParameterDeclaration
-import com.aemtools.completion.htl.model.declaration.HtlUseVariableDeclaration
-import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
 import com.aemtools.completion.htl.predefined.HtlELPredefined.LIST_AND_REPEAT_HELPER_OBJECT
-import com.aemtools.completion.util.hasChild
+import com.aemtools.index.model.HtlTemplateDeclaration
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
-import com.aemtools.lang.htl.psi.chain.RawChainUnit
 import com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.intellij.psi.PsiClass
@@ -127,7 +127,7 @@ object RawCallChainProcessor {
   private fun resolveFirstType(rawChainUnit: RawChainUnit): TypeDescriptor {
     val elements = rawChainUnit.myCallChain
     val firstElement = if (elements.isNotEmpty()) {
-      elements.first() as? VariableNameMixin
+      elements.first() as? com.aemtools.lang.htl.psi.mixin.VariableNameMixin
     } else {
       null
     }

@@ -1,8 +1,8 @@
 package com.aemtools.index.indexer
 
-import com.aemtools.completion.util.findChildrenByType
-import com.aemtools.completion.util.getXmlFile
-import com.aemtools.completion.util.normalizeToJcrRoot
+import com.aemtools.common.util.findChildrenByType
+import com.aemtools.common.util.getXmlFile
+import com.aemtools.common.util.normalizeToJcrRoot
 import com.aemtools.index.model.dialog.AemComponentTouchUIDialogDefinition
 import com.aemtools.index.model.dialog.parameter.TouchUIDialogParameterDeclaration
 import com.intellij.psi.xml.XmlTag

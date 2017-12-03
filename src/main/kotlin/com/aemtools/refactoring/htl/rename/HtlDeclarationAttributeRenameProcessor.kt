@@ -1,8 +1,8 @@
 package com.aemtools.refactoring.htl.rename
 
-import com.aemtools.completion.util.htlAttributeName
-import com.aemtools.completion.util.htlVariableName
-import com.aemtools.completion.util.isHtlDeclarationAttribute
+import com.aemtools.lang.util.htlAttributeName
+import com.aemtools.lang.util.htlVariableName
+import com.aemtools.lang.util.isHtlDeclarationAttribute
 import com.aemtools.reference.common.reference.HtlPropertyAccessReference
 import com.aemtools.reference.htl.reference.HtlDeclarationReference
 import com.aemtools.reference.htl.reference.HtlListHelperReference

@@ -1,6 +1,6 @@
 package com.aemtools.ide
 
-import com.aemtools.completion.util.getHtmlFile
+import com.aemtools.common.util.getHtmlFile
 import com.intellij.ide.structureView.StructureViewBuilder
 import com.intellij.ide.structureView.StructureViewModel
 import com.intellij.ide.structureView.StructureViewModelBase

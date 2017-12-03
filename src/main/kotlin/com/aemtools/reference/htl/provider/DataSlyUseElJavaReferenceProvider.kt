@@ -17,7 +17,7 @@ import com.intellij.util.ProcessingContext
  */
 object DataSlyUseElJavaReferenceProvider : JavaClassReferenceProvider() {
   override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<out PsiReference> {
-    val literal = element as? HtlStringLiteralMixin ?: return emptyArray()
+    val literal = element as? com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin ?: return emptyArray()
 
     val psiClass = JavaSearch.findClass(literal.name, literal.project) ?: return emptyArray()
 

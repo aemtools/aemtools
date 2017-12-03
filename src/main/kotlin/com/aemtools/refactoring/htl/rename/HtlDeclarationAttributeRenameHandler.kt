@@ -1,12 +1,11 @@
 package com.aemtools.refactoring.htl.rename
 
-import com.aemtools.completion.util.isHtlGlobalDeclarationAttribute
+import com.aemtools.lang.util.isHtlGlobalDeclarationAttribute
 import com.aemtools.refactoring.htl.rename.util.RenameUtil
 import com.aemtools.refactoring.htl.rename.util.RenameUtil.getElement
 import com.aemtools.refactoring.htl.rename.util.RenameUtil.rename
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.ScrollType
 import com.intellij.openapi.project.Project

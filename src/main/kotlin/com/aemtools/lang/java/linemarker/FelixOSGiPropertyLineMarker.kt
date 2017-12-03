@@ -1,7 +1,7 @@
 package com.aemtools.lang.java.linemarker
 
-import com.aemtools.completion.util.findChildrenByType
-import com.aemtools.completion.util.findParentByType
+import com.aemtools.common.util.findChildrenByType
+import com.aemtools.common.util.findParentByType
 import com.aemtools.index.model.OSGiConfiguration
 import com.aemtools.index.model.sortByMods
 import com.aemtools.index.search.OSGiConfigSearch

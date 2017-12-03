@@ -1,6 +1,6 @@
 package com.aemtools.completion.htl.provider.option
 
-import com.aemtools.completion.util.normalizeToJcrRoot
+import com.aemtools.common.util.normalizeToJcrRoot
 import com.aemtools.index.model.AemComponentDefinition.Companion.toLookupElement
 import com.aemtools.index.search.AemComponentSearch
 import com.intellij.codeInsight.completion.CompletionParameters

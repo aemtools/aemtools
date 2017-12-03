@@ -1,5 +1,6 @@
 package com.aemtools.inspection.fix
 
+import com.aemtools.common.intention.BaseHtlIntentionAction
 import com.aemtools.common.util.psiDocumentManager
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project

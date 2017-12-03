@@ -1,7 +1,7 @@
 package com.aemtools.refactoring.searchscope
 
-import com.aemtools.completion.util.getHtlFile
-import com.aemtools.completion.util.htlAttributeName
+import com.aemtools.lang.util.getHtlFile
+import com.aemtools.lang.util.htlAttributeName
 import com.intellij.psi.PsiElement
 import com.intellij.psi.search.LocalSearchScope
 import com.intellij.psi.search.SearchScope

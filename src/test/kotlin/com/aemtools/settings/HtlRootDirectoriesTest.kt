@@ -1,5 +1,6 @@
 package com.aemtools.settings
 
+import com.aemtools.lang.settings.HtlRootDirectories
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 

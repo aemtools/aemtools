@@ -35,6 +35,9 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8", kotlin_version))
+
+    //compile(project(":lang"))
+
     testImplementation("junit", "junit", "4.12")
 }
 

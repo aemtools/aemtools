@@ -1,10 +1,10 @@
 package com.aemtools.completion.htl.provider
 
+import com.aemtools.codeinsight.htl.model.DeclarationAttributeType
+import com.aemtools.codeinsight.htl.model.HtlUseVariableDeclaration
+import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
+import com.aemtools.codeinsight.htl.model.UseType
 import com.aemtools.completion.htl.common.FileVariablesResolver
-import com.aemtools.completion.htl.model.declaration.DeclarationAttributeType
-import com.aemtools.completion.htl.model.declaration.HtlUseVariableDeclaration
-import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
-import com.aemtools.completion.htl.model.declaration.UseType
 import com.aemtools.lang.htl.icons.HtlIcons
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider

@@ -1,7 +1,7 @@
 package com.aemtools.findusages
 
-import com.aemtools.completion.util.incomingReferences
-import com.aemtools.completion.util.isHtlDeclarationAttribute
+import com.aemtools.common.util.incomingReferences
+import com.aemtools.lang.util.isHtlDeclarationAttribute
 import com.aemtools.reference.htl.reference.HtlDeclarationReference
 import com.aemtools.reference.htl.reference.HtlListHelperReference
 import com.intellij.find.findUsages.FindUsagesHandler

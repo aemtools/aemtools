@@ -1,6 +1,6 @@
 package com.aemtools.codeinsight.osgiconfig
 
-import com.aemtools.completion.util.findChildrenByType
+import com.aemtools.common.util.findChildrenByType
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin
 import com.intellij.codeHighlighting.Pass

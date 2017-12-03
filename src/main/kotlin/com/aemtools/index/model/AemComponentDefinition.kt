@@ -7,7 +7,7 @@ import com.aemtools.common.constant.const.aem_component_declaration.COMPONENT_GR
 import com.aemtools.common.constant.const.aem_component_declaration.CQ_ICON
 import com.aemtools.common.constant.const.aem_component_declaration.IS_CONTAINER
 import com.aemtools.common.util.toStringBuilder
-import com.aemtools.completion.util.normalizeToJcrRoot
+import com.aemtools.common.util.normalizeToJcrRoot
 import com.aemtools.lang.htl.icons.HtlIcons
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder

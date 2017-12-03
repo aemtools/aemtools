@@ -4,6 +4,8 @@ import com.aemtools.lang.html.annotation.RedundantDataSlyUnwrapAnnotator.Compani
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 
 /**
+ * Test for [RedundantDataSlyUnwrapAnnotator].
+ *
  * @author Dmytro Troynikov
  */
 class RedundantDataSlyUnwrapAnnotatorTest : LightCodeInsightFixtureTestCase() {

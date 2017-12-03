@@ -11,7 +11,7 @@ import com.intellij.util.ProcessingContext
 object DataSlyIncludeElReferenceProvider : DataSlyIncludeReferenceProviderBase() {
 
   override fun name(element: PsiElement, context: ProcessingContext): String? {
-    val literal = element as? HtlStringLiteralMixin
+    val literal = element as? com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin
     return literal?.name
   }
 

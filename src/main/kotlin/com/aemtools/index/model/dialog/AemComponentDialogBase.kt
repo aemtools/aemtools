@@ -1,9 +1,9 @@
 package com.aemtools.index.model.dialog
 
-import com.aemtools.completion.util.findChildrenByType
-import com.aemtools.completion.util.normalizeToJcrRoot
-import com.aemtools.completion.util.toPsiFile
 import com.aemtools.common.util.OpenApiUtil
+import com.aemtools.common.util.findChildrenByType
+import com.aemtools.common.util.normalizeToJcrRoot
+import com.aemtools.common.util.toPsiFile
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlFile

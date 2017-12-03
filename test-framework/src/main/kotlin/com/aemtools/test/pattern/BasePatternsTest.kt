@@ -1,7 +1,7 @@
 package com.aemtools.test.pattern
 
 import com.aemtools.common.constant.const
-import com.aemtools.completion.util.getHtmlFile
+import com.aemtools.common.util.getHtmlFile
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.base.model.assertion.IAssertionContext
 import com.aemtools.test.base.model.fixture.ITestFixture

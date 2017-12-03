@@ -17,55 +17,55 @@ import javax.swing.Icon
 class HtlColorsAndFontsPage : ColorSettingsPage {
 
   private val previewTags: MutableMap<String, TextAttributesKey> = mutableMapOf(
-      "HTL_EL_BOOLEAN" to HtlColors.BOOLEAN,
-      "HTL_EL_STRING" to HtlColors.STRING,
-      "HTL_EL_INTEGER" to HtlColors.INTEGER,
-      "HTL_El_VARIABLE" to HtlColors.VARIABLE,
-      "HTL_El_AT" to HtlColors.DELIMITER,
-      "HTL_EL_BRACKET" to HtlColors.BRACKET,
-      "HTL_EL_OPERATOR" to HtlColors.OPERATOR,
-      "HTL_EL_IDENTIFIER" to HtlColors.IDENTIFIER,
-      "HTL_EL_TEMPLATE_ARGUMENT" to HtlColors.TEMPLATE_ARGUMENT,
-      "HTL_EL_TEMPLATE_PARAMETER" to HtlColors.TEMPLATE_PARAMETER,
-      "HTL_EL_STANDARD_OPTION" to HtlColors.STANDARD_OPTION,
-      "HTL_EL_OPTION" to HtlColors.OPTION,
-      "HTL_EL_NULL" to HtlColors.NULL,
-      "HTL_EL_PARENTHESES" to HtlColors.PARENTHESES,
+      "HTL_EL_BOOLEAN" to com.aemtools.lang.htl.colorscheme.HtlColors.BOOLEAN,
+      "HTL_EL_STRING" to com.aemtools.lang.htl.colorscheme.HtlColors.STRING,
+      "HTL_EL_INTEGER" to com.aemtools.lang.htl.colorscheme.HtlColors.INTEGER,
+      "HTL_El_VARIABLE" to com.aemtools.lang.htl.colorscheme.HtlColors.VARIABLE,
+      "HTL_El_AT" to com.aemtools.lang.htl.colorscheme.HtlColors.DELIMITER,
+      "HTL_EL_BRACKET" to com.aemtools.lang.htl.colorscheme.HtlColors.BRACKET,
+      "HTL_EL_OPERATOR" to com.aemtools.lang.htl.colorscheme.HtlColors.OPERATOR,
+      "HTL_EL_IDENTIFIER" to com.aemtools.lang.htl.colorscheme.HtlColors.IDENTIFIER,
+      "HTL_EL_TEMPLATE_ARGUMENT" to com.aemtools.lang.htl.colorscheme.HtlColors.TEMPLATE_ARGUMENT,
+      "HTL_EL_TEMPLATE_PARAMETER" to com.aemtools.lang.htl.colorscheme.HtlColors.TEMPLATE_PARAMETER,
+      "HTL_EL_STANDARD_OPTION" to com.aemtools.lang.htl.colorscheme.HtlColors.STANDARD_OPTION,
+      "HTL_EL_OPTION" to com.aemtools.lang.htl.colorscheme.HtlColors.OPTION,
+      "HTL_EL_NULL" to com.aemtools.lang.htl.colorscheme.HtlColors.NULL,
+      "HTL_EL_PARENTHESES" to com.aemtools.lang.htl.colorscheme.HtlColors.PARENTHESES,
 
-      "HTL_ATTRIBUTE" to HtlColors.HTL_ATTRIBUTE,
+      "HTL_ATTRIBUTE" to com.aemtools.lang.htl.colorscheme.HtlColors.HTL_ATTRIBUTE,
 
-      "HTL_VARIABLE_DECLARATION" to HtlColors.HTL_VARIABLE_DECLARATION,
-      "HTL_VARIABLE_UNUSED" to HtlColors.HTL_VARIABLE_UNUSED,
+      "HTL_VARIABLE_DECLARATION" to com.aemtools.lang.htl.colorscheme.HtlColors.HTL_VARIABLE_DECLARATION,
+      "HTL_VARIABLE_UNUSED" to com.aemtools.lang.htl.colorscheme.HtlColors.HTL_VARIABLE_UNUSED,
 
-      "HTL_EL_GLOBAL_VARIABLE" to HtlColors.HTL_EL_GLOBAL_VARIABLE,
-      "HTL_EL_LOCAL_VARIABLE" to HtlColors.HTL_EL_LOCAL_VARIABLE,
-      "HTL_EL_UNRESOLVED_VARIABLE" to HtlColors.HTL_EL_UNRESOLVED_VARIABLE
+      "HTL_EL_GLOBAL_VARIABLE" to com.aemtools.lang.htl.colorscheme.HtlColors.HTL_EL_GLOBAL_VARIABLE,
+      "HTL_EL_LOCAL_VARIABLE" to com.aemtools.lang.htl.colorscheme.HtlColors.HTL_EL_LOCAL_VARIABLE,
+      "HTL_EL_UNRESOLVED_VARIABLE" to com.aemtools.lang.htl.colorscheme.HtlColors.HTL_EL_UNRESOLVED_VARIABLE
   )
 
   private val attributes: Array<AttributesDescriptor> = arrayOf(
-      AttributesDescriptor("Boolean", HtlColors.BOOLEAN),
-      AttributesDescriptor("String", HtlColors.STRING),
-      AttributesDescriptor("Integer", HtlColors.INTEGER),
-      AttributesDescriptor("Variable", HtlColors.VARIABLE),
-      AttributesDescriptor("Delimiter", HtlColors.DELIMITER),
-      AttributesDescriptor("Bracket", HtlColors.BRACKET),
-      AttributesDescriptor("Operator", HtlColors.OPERATOR),
-      AttributesDescriptor("Identifier", HtlColors.IDENTIFIER),
-      AttributesDescriptor("Template Argument", HtlColors.TEMPLATE_ARGUMENT),
-      AttributesDescriptor("Template Parameter", HtlColors.TEMPLATE_PARAMETER),
-      AttributesDescriptor("Standard Option", HtlColors.STANDARD_OPTION),
-      AttributesDescriptor("Option", HtlColors.OPTION),
-      AttributesDescriptor("Null", HtlColors.NULL),
-      AttributesDescriptor("Parentheses", HtlColors.PARENTHESES),
+      AttributesDescriptor("Boolean", com.aemtools.lang.htl.colorscheme.HtlColors.BOOLEAN),
+      AttributesDescriptor("String", com.aemtools.lang.htl.colorscheme.HtlColors.STRING),
+      AttributesDescriptor("Integer", com.aemtools.lang.htl.colorscheme.HtlColors.INTEGER),
+      AttributesDescriptor("Variable", com.aemtools.lang.htl.colorscheme.HtlColors.VARIABLE),
+      AttributesDescriptor("Delimiter", com.aemtools.lang.htl.colorscheme.HtlColors.DELIMITER),
+      AttributesDescriptor("Bracket", com.aemtools.lang.htl.colorscheme.HtlColors.BRACKET),
+      AttributesDescriptor("Operator", com.aemtools.lang.htl.colorscheme.HtlColors.OPERATOR),
+      AttributesDescriptor("Identifier", com.aemtools.lang.htl.colorscheme.HtlColors.IDENTIFIER),
+      AttributesDescriptor("Template Argument", com.aemtools.lang.htl.colorscheme.HtlColors.TEMPLATE_ARGUMENT),
+      AttributesDescriptor("Template Parameter", com.aemtools.lang.htl.colorscheme.HtlColors.TEMPLATE_PARAMETER),
+      AttributesDescriptor("Standard Option", com.aemtools.lang.htl.colorscheme.HtlColors.STANDARD_OPTION),
+      AttributesDescriptor("Option", com.aemtools.lang.htl.colorscheme.HtlColors.OPTION),
+      AttributesDescriptor("Null", com.aemtools.lang.htl.colorscheme.HtlColors.NULL),
+      AttributesDescriptor("Parentheses", com.aemtools.lang.htl.colorscheme.HtlColors.PARENTHESES),
 
-      AttributesDescriptor("HTL Attribute", HtlColors.HTL_ATTRIBUTE),
+      AttributesDescriptor("HTL Attribute", com.aemtools.lang.htl.colorscheme.HtlColors.HTL_ATTRIBUTE),
 
-      AttributesDescriptor("Variable Declaration", HtlColors.HTL_VARIABLE_DECLARATION),
-      AttributesDescriptor("Unused Variable", HtlColors.HTL_VARIABLE_UNUSED),
+      AttributesDescriptor("Variable Declaration", com.aemtools.lang.htl.colorscheme.HtlColors.HTL_VARIABLE_DECLARATION),
+      AttributesDescriptor("Unused Variable", com.aemtools.lang.htl.colorscheme.HtlColors.HTL_VARIABLE_UNUSED),
 
-      AttributesDescriptor("Global Variable", HtlColors.HTL_EL_GLOBAL_VARIABLE),
-      AttributesDescriptor("Local Variable", HtlColors.HTL_EL_LOCAL_VARIABLE),
-      AttributesDescriptor("Unresolved Variable", HtlColors.HTL_EL_UNRESOLVED_VARIABLE)
+      AttributesDescriptor("Global Variable", com.aemtools.lang.htl.colorscheme.HtlColors.HTL_EL_GLOBAL_VARIABLE),
+      AttributesDescriptor("Local Variable", com.aemtools.lang.htl.colorscheme.HtlColors.HTL_EL_LOCAL_VARIABLE),
+      AttributesDescriptor("Unresolved Variable", com.aemtools.lang.htl.colorscheme.HtlColors.HTL_EL_UNRESOLVED_VARIABLE)
   )
 
   override fun getHighlighter(): SyntaxHighlighter

@@ -1,8 +1,8 @@
 package com.aemtools.reference.html.provider
 
-import com.aemtools.completion.util.findParentByType
-import com.aemtools.completion.util.isDataSlyUse
+import com.aemtools.common.util.findParentByType
 import com.aemtools.index.HtlIndexFacade
+import com.aemtools.lang.util.isDataSlyUse
 import com.aemtools.reference.common.reference.PsiFileReference
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement

@@ -1,9 +1,9 @@
 package com.aemtools.index.indexer
 
 import com.aemtools.common.constant.const.xml.JCR_PRIMARY_TYPE_CQ_DIALOG
-import com.aemtools.completion.util.findChildrenByType
-import com.aemtools.completion.util.getXmlFile
-import com.aemtools.completion.util.normalizeToJcrRoot
+import com.aemtools.common.util.findChildrenByType
+import com.aemtools.common.util.getXmlFile
+import com.aemtools.common.util.normalizeToJcrRoot
 import com.aemtools.index.model.dialog.AemComponentClassicDialogDefinition
 import com.aemtools.index.model.dialog.parameter.ClassicDialogParameterDeclaration
 import com.intellij.psi.xml.XmlTag

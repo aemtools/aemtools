@@ -4,7 +4,7 @@ import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.elements.segment.BaseCallChainSegment
 import com.aemtools.analysis.htl.callchain.elements.segment.CallChainSegment
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
-import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
+import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
 
 /**
  * Segment data holder.

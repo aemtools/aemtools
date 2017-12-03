@@ -2,7 +2,7 @@ package com.aemtools.analysis.htl.callchain.elements.segment
 
 import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
-import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
+import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
 
 /**
  * Base implementation of [CallChainSegment].

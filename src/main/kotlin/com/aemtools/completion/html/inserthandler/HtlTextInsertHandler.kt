@@ -1,6 +1,6 @@
 package com.aemtools.completion.html.inserthandler
 
-import com.aemtools.completion.util.hasText
+import com.aemtools.common.util.hasText
 import com.intellij.codeInsight.completion.InsertHandler
 import com.intellij.codeInsight.completion.InsertionContext
 import com.intellij.codeInsight.lookup.LookupElement

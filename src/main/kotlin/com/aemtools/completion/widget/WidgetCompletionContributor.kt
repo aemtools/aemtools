@@ -1,7 +1,6 @@
 package com.aemtools.completion.widget
 
 import com.aemtools.common.constant.const
-import com.aemtools.completion.util.WidgetDefinitionUtil
 import com.intellij.codeInsight.completion.CompletionContributor
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider

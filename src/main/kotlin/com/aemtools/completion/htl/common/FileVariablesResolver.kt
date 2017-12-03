@@ -1,12 +1,12 @@
 package com.aemtools.completion.htl.common
 
-import com.aemtools.completion.htl.model.declaration.HtlVariableDeclaration
-import com.aemtools.completion.util.extractDeclarations
-import com.aemtools.completion.util.filterForPosition
-import com.aemtools.completion.util.findChildrenByType
-import com.aemtools.completion.util.getHtlFile
-import com.aemtools.completion.util.getHtmlFile
-import com.aemtools.completion.util.htlAttributes
+import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
+import com.aemtools.codeinsight.htl.util.extractDeclarations
+import com.aemtools.codeinsight.htl.util.filterForPosition
+import com.aemtools.common.util.findChildrenByType
+import com.aemtools.common.util.getHtmlFile
+import com.aemtools.lang.util.getHtlFile
+import com.aemtools.lang.util.htlAttributes
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.lang.StdLanguages
 import com.intellij.psi.PsiElement

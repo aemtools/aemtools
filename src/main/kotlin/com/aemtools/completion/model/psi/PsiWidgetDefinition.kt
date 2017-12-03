@@ -2,7 +2,7 @@ package com.aemtools.completion.model.psi
 
 import com.aemtools.common.constant.const
 import com.aemtools.common.util.OpenApiUtil
-import com.aemtools.completion.util.findParentByType
+import com.aemtools.common.util.findParentByType
 import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.xml.XmlAttributeValueImpl
 import com.intellij.psi.xml.XmlAttribute

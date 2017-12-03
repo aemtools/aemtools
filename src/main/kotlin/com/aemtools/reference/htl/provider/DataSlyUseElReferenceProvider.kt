@@ -14,7 +14,7 @@ import com.intellij.util.ProcessingContext
  */
 object DataSlyUseElReferenceProvider : PsiReferenceProvider() {
   override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
-    val literal = element as? HtlStringLiteralMixin ?: return emptyArray()
+    val literal = element as? com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin ?: return emptyArray()
 
     val psiFile = HtlIndexFacade.resolveUseFile(literal.name,
         element.containingFile)

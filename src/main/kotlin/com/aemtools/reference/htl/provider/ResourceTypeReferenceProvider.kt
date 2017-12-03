@@ -1,9 +1,9 @@
 package com.aemtools.reference.htl.provider
 
-import com.aemtools.completion.util.toPsiDirectory
+import com.aemtools.common.util.OpenApiUtil
+import com.aemtools.common.util.toPsiDirectory
 import com.aemtools.index.search.AemComponentSearch
 import com.aemtools.reference.common.reference.PsiDirectoryReference
-import com.aemtools.common.util.OpenApiUtil
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference

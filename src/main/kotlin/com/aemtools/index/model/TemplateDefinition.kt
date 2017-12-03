@@ -1,15 +1,13 @@
 package com.aemtools.index.model
 
-import com.aemtools.completion.util.extractHtlHel
-import com.aemtools.completion.util.findChildrenByType
-import com.aemtools.completion.util.getHtmlFile
-import com.aemtools.completion.util.htlVariableName
-import com.aemtools.completion.util.normalizeToJcrRoot
-import com.aemtools.completion.util.toPsiFile
-import com.aemtools.lang.htl.psi.HtlPsiFile
-import com.aemtools.lang.htl.psi.HtlVariableName
-import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.aemtools.common.util.OpenApiUtil
+import com.aemtools.common.util.findChildrenByType
+import com.aemtools.common.util.getHtmlFile
+import com.aemtools.common.util.normalizeToJcrRoot
+import com.aemtools.common.util.toPsiFile
+import com.aemtools.lang.htl.psi.HtlVariableName
+import com.aemtools.lang.util.extractHtlHel
+import com.aemtools.lang.util.htlVariableName
 import com.intellij.openapi.project.Project
 import com.intellij.psi.xml.XmlAttribute
 import java.io.Serializable
@@ -47,7 +45,7 @@ data class TemplateDefinition(
    */
   fun declarationElement(project: Project): XmlAttribute? {
     val file = OpenApiUtil.findFileByRelativePath(normalizedPath, project)
-        ?.toPsiFile(project) as? HtlPsiFile
+        ?.toPsiFile(project) as? com.aemtools.lang.htl.psi.HtlPsiFile
         ?: return null
     val htmlFile = file.getHtmlFile() ?: return null
     return htmlFile.findChildrenByType(XmlAttribute::class.java).find {
@@ -66,7 +64,7 @@ data class TemplateDefinition(
     val declarationElement = declarationElement(project) as? XmlAttribute
         ?: return null
 
-    val hel = declarationElement.extractHtlHel() as? HtlElExpressionMixin
+    val hel = declarationElement.extractHtlHel() as? com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 
     return hel?.getOptions()
         ?.find {

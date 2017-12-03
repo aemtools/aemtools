@@ -1,7 +1,7 @@
 package com.aemtools.reference.clientlib.provider
 
-import com.aemtools.completion.util.basePathElement
 import com.aemtools.lang.clientlib.psi.CdInclude
+import com.aemtools.lang.util.basePathElement
 import com.aemtools.reference.common.reference.PsiFileReference
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiDirectory

@@ -25,7 +25,7 @@ class HtlVariableNameRenameProcessor : RenamePsiElementProcessor() {
       return
     }
 
-    val variableName = element as? VariableNameMixin
+    val variableName = element as? com.aemtools.lang.htl.psi.mixin.VariableNameMixin
         ?: return
 
     variableName.setName(newName)

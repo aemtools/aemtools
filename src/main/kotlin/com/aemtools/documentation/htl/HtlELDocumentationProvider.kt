@@ -1,7 +1,8 @@
 package com.aemtools.documentation.htl
 
+import com.aemtools.analysis.htl.callchain
+import com.aemtools.common.util.findParentByType
 import com.aemtools.completion.model.htl.HtlOption
-import com.aemtools.completion.util.findParentByType
 import com.aemtools.index.model.AemComponentDefinition.Companion.generateDoc
 import com.aemtools.index.search.AemComponentSearch
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
@@ -54,7 +55,7 @@ open class HtlELDocumentationProvider : AbstractDocumentationProvider() {
             ?: return super.generateDoc(element, originalElement)
         val variableNameMixin = originalElement.findParentByType(VariableNameMixin::class.java)
             ?: return super.generateDoc(element, originalElement)
-        val currentChainElement = propertyAccessMixin.callChain()?.findChainElement(variableNameMixin)
+        val currentChainElement = propertyAccessMixin.callchain()?.findChainElement(variableNameMixin)
             ?: return super.generateDoc(element, originalElement)
 
         currentChainElement.type.documentation()

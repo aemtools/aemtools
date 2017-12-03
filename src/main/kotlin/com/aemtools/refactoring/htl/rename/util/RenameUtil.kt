@@ -1,6 +1,6 @@
 package com.aemtools.refactoring.htl.rename.util
 
-import com.aemtools.completion.util.virtualFile
+import com.aemtools.common.util.virtualFile
 import com.aemtools.common.util.psiManager
 import com.aemtools.common.util.showErrorMessage
 import com.intellij.featureStatistics.FeatureUsageTracker

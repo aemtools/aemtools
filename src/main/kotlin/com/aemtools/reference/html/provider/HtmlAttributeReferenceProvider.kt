@@ -1,6 +1,6 @@
 package com.aemtools.reference.html.provider
 
-import com.aemtools.completion.util.isHtlAttribute
+import com.aemtools.lang.util.isHtlAttribute
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference

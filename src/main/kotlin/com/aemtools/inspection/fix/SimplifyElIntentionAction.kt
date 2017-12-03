@@ -1,8 +1,8 @@
 package com.aemtools.inspection.fix
 
-import com.aemtools.completion.util.findChildrenByType
+import com.aemtools.common.intention.BaseHtlIntentionAction
+import com.aemtools.common.util.findChildrenByType
 import com.aemtools.lang.htl.psi.HtlHtlEl
-import com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDocumentManager
@@ -20,7 +20,7 @@ class SimplifyElIntentionAction(private val pointer: SmartPsiElementPointer<HtlH
   override fun invoke(project: Project, editor: Editor, file: PsiFile) {
     val element = pointer.element ?: return
 
-    val newValue = element.findChildrenByType(HtlStringLiteralMixin::class.java)
+    val newValue = element.findChildrenByType(com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin::class.java)
         .firstOrNull()?.name ?: return
     val (start, end) = element.textRange.startOffset to element.textRange.endOffset
 
