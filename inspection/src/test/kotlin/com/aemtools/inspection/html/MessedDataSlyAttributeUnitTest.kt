@@ -31,12 +31,6 @@ class MessedDataSlyAttributeUnitTest {
 
   var tested: MessedDataSlyAttributeInspection = MessedDataSlyAttributeInspection()
 
-  @Before
-  fun init() {
-    `when`(project.picoContainer)
-        .thenReturn(picoContainer)
-  }
-
   @Test
   fun testFormat() {
     assertThat(tested.groupDisplayName)
@@ -55,25 +49,6 @@ attributes that take JavaScript as input (e.g. onclick, onmousemove, etc).
 </body>
 </html>
         """.trimIndent())
-  }
-
-  @Test
-  fun testStyle() {
-    val attr = "style"
-
-    `when`(attribute.name)
-        .thenReturn("data-sly-attribute.$attr")
-
-    `when`(attribute.value)
-        .thenReturn("\"\${'stub'}\"")
-
-    `when`(attribute.isValid)
-        .thenReturn(true)
-
-    `when`(attribute.project)
-        .thenReturn(project)
-
-    tested.checkAttribute(attribute, holder, false)
   }
 
 }

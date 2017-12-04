@@ -42,6 +42,7 @@ dependencies {
     compile(project(":common"))
     compile(project(":lang"))
 
+    testCompile(project(":test-framework"))
     testCompile("org.mockito:mockito-core:$mockito_version")
     testCompile("org.jmockit:jmockit:$jmockit_version")
     testCompile("org.assertj:assertj-core:$assertj_version")
