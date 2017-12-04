@@ -1,7 +1,6 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor.java
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
-import com.aemtools.common.constant.const
 import com.aemtools.common.util.allScope
 import com.aemtools.common.util.elFields
 import com.aemtools.common.util.elMethods
@@ -13,6 +12,7 @@ import com.aemtools.common.util.withPriority
 import com.aemtools.completion.htl.CompletionPriority
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.lang.java.JavaSearch
+import com.aemtools.lang.java.JavaUtilities
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.psi.PsiArrayType
@@ -35,19 +35,9 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
                                       open val originalType: PsiType? = null) : TypeDescriptor {
   override fun isArray(): Boolean = originalType is PsiArrayType
 
-  override fun isIterable(): Boolean {
-    val iterableInterface = JavaSearch.findClass("java.lang.Iterable", psiClass.project) ?: return false
+  override fun isIterable(): Boolean = JavaUtilities.isIterable(psiClass)
 
-    return this.psiClass.isInheritor(iterableInterface, true)
-        || this.psiClass.isEquivalentTo(iterableInterface)
-  }
-
-  override fun isMap(): Boolean {
-    val mapClass = JavaSearch.findClass("java.util.Map", psiClass.project) ?: return false
-
-    return this.psiClass.isInheritor(mapClass, true)
-        || this.psiClass.isEquivalentTo(mapClass)
-  }
+  override fun isMap(): Boolean = JavaUtilities.isMap(psiClass)
 
   override fun myVariants(): List<LookupElement> {
     val methods = psiClass.elMethods()
@@ -144,29 +134,16 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
                psiType: PsiType? = null): JavaPsiClassTypeDescriptor {
       return when (psiType) {
         is PsiClassReferenceType -> {
-          val iterable = JavaSearch.findClass(const.java.ITERABLE, psiClass.project)
-          val iterator = JavaSearch.findClass(const.java.ITERATOR, psiClass.project)
-          val map = JavaSearch.findClass(const.java.MAP, psiClass.project)
+          when {
+            JavaUtilities.isIterable(psiClass)
+                || JavaUtilities.isIterator(psiClass) ->
+              IterableJavaTypeDescriptor(psiClass, psiMember, psiType)
 
-          if (iterable != null && map != null && iterator != null) {
-            if (psiClass.isInheritor(iterable, true)
-                || psiClass.isEquivalentTo(iterable)) {
-              return IterableJavaTypeDescriptor(psiClass, psiMember, psiType)
-            }
+            JavaUtilities.isMap(psiClass) ->
+              MapJavaTypeDescriptor(psiClass, psiMember, psiType)
 
-            if (psiClass.isInheritor(iterator, true)
-                || psiClass.isEquivalentTo(iterator)) {
-              return IterableJavaTypeDescriptor(psiClass, psiMember, psiType)
-            }
-
-            if (psiClass.isInheritor(map, true)
-                || psiClass.isEquivalentTo(map)) {
-              return MapJavaTypeDescriptor(psiClass, psiMember, psiType)
-            }
-
+            else -> JavaPsiClassTypeDescriptor(psiClass, psiMember, psiType)
           }
-
-          JavaPsiClassTypeDescriptor(psiClass, psiMember, psiType)
         }
         is PsiClassType,
         is PsiPrimitiveType ->
