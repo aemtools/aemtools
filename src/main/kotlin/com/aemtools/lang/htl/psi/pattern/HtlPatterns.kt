@@ -27,6 +27,7 @@ import com.intellij.patterns.PlatformPatterns.or
 import com.intellij.patterns.PlatformPatterns.psiElement
 import com.intellij.patterns.PlatformPatterns.psiFile
 import com.intellij.patterns.PlatformPatterns.string
+import com.intellij.patterns.PsiElementPattern
 import com.intellij.patterns.XmlPatterns.xmlAttribute
 import com.intellij.patterns.XmlPatterns.xmlAttributeValue
 import com.intellij.psi.PsiElement
@@ -144,29 +145,6 @@ object HtlPatterns {
       namedOptionAssignement(const.htl.options.RESOURCE_TYPE)
 
   /**
-   * Create matcher for assignment of option with given name.
-   * e.g.:
-   *
-   * ```
-   * namedOptionAssignement("context") ->
-   *   will create pattern that will match:
-   *   ${@ context='<caret>'}
-   * ```
-   *
-   * @param option option name
-   * @return new element pattern
-   */
-  private fun namedOptionAssignement(option: String): ElementPattern<PsiElement> =
-      and(
-          stringLiteralValue,
-          psiElement().inside(psiElement(CONTEXT_EXPRESSION)),
-          psiElement().inside(
-              psiElement(ASSIGNMENT_VALUE)
-                  .afterSibling(psiElement(VARIABLE_NAME).withText(option))
-          )
-      )
-
-  /**
    * Matches the following:
    *
    * ```
@@ -234,11 +212,30 @@ object HtlPatterns {
    * ```
    */
   val mainVariableInsideOfDataSlyCall: ElementPattern<PsiElement> =
-      psiElement().inside(psiElement(HtlExpression::class.java))
-          .afterLeafSkipping(
-              psiElement(TokenType.WHITE_SPACE),
-              psiElement(EL_START))
+      mainVariable()
           .inside(psiElement().with(HtlTemplatePattern(DATA_SLY_CALL)))
+
+  /**
+   * Matches:
+   *
+   * ```
+   *    data-sly-list="${<caret>}"
+   * ```
+   */
+  val mainVariableInsideOfDataSlyList: ElementPattern<PsiElement> =
+      mainVariable()
+          .inside(psiElement().with(HtlTemplatePattern(DATA_SLY_LIST)))
+
+  /**
+   * Matches:
+   *
+   * ```
+   *    data-sly-repeat="${<caret>}"
+   * ```
+   */
+  val mainVariableInsideOfDataSlyRepeat: ElementPattern<PsiElement> =
+      mainVariable()
+          .inside(psiElement().with(HtlTemplatePattern(DATA_SLY_REPEAT)))
 
   /**
    * Matches the following:
@@ -309,5 +306,35 @@ object HtlPatterns {
               .inside(psiElement()
                   .with(HtlTemplatePattern(attribute)))
       )
+
+  /**
+   * Create matcher for assignment of option with given name.
+   * e.g.:
+   *
+   * ```
+   * namedOptionAssignement("context") ->
+   *   will create pattern that will match:
+   *   ${@ context='<caret>'}
+   * ```
+   *
+   * @param option option name
+   * @return new element pattern
+   */
+  private fun namedOptionAssignement(option: String): ElementPattern<PsiElement> =
+      and(
+          stringLiteralValue,
+          psiElement().inside(psiElement(CONTEXT_EXPRESSION)),
+          psiElement().inside(
+              psiElement(ASSIGNMENT_VALUE)
+                  .afterSibling(psiElement(VARIABLE_NAME).withText(option))
+          )
+      )
+
+  private fun mainVariable(): PsiElementPattern.Capture<PsiElement> {
+    return psiElement().inside(psiElement(HtlExpression::class.java))
+        .afterLeafSkipping(
+            psiElement(TokenType.WHITE_SPACE),
+            psiElement(EL_START))
+  }
 
 }

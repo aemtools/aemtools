@@ -12,6 +12,7 @@ import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiModifier
 import com.intellij.psi.PsiModifierListOwner
 import com.intellij.psi.PsiType
+import com.intellij.psi.util.PsiTypesUtil
 
 /**
  * @author Dmytro_Troynikov
@@ -144,3 +145,12 @@ fun PsiMethod.elName() = this.name.run {
     else -> this
   }
 }
+
+/**
+ * Convert current [PsiType] into [PsiClass] if possible.
+ *
+ * @receiver [PsiType]
+ * @return psi class
+ * @see [PsiTypesUtil.getPsiClass]
+ */
+fun PsiType.toPsiClass() = PsiTypesUtil.getPsiClass(this)

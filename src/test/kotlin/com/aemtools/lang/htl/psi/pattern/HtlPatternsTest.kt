@@ -1,6 +1,5 @@
 package com.aemtools.lang.htl.psi.pattern
 
-import com.aemtools.test.pattern.BasePatternsTest
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.contextOptionAssignment
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyCallOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyIncludeMainString
@@ -12,11 +11,14 @@ import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseNoEl
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.htlAttribute
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.localizationMainString
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.mainVariableInsideOfDataSlyCall
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.mainVariableInsideOfDataSlyList
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.mainVariableInsideOfDataSlyRepeat
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.memberAccess
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.optionName
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.resourceTypeOptionAssignment
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.stringLiteralValue
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.variableName
+import com.aemtools.test.pattern.BasePatternsTest
 import com.intellij.patterns.ElementPattern
 import com.intellij.psi.PsiElement
 
@@ -310,6 +312,18 @@ class HtlPatternsTest : BasePatternsTest() {
       localizationMainString,
       "$DOLLAR{'$CARET'}",
       false
+  )
+
+  fun testMainVariableInsideOfDataSlyList() = testHtlPattern(
+      mainVariableInsideOfDataSlyList,
+      """<div data-sly-list.item="$DOLLAR{$CARET}">""",
+      true
+  )
+
+  fun testMainVariableInsideOfDataSlyRepeat() = testHtlPattern(
+      mainVariableInsideOfDataSlyRepeat,
+      """<div data-sly-repeat.item="$DOLLAR{$CARET}">""",
+      true
   )
 
   private fun testHtlPattern(

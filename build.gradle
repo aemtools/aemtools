@@ -12,7 +12,7 @@ buildscript {
 
 plugins {
     id "org.jetbrains.intellij" version "0.2.17"
-    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC5-2"
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC5-4"
 }
 
 apply plugin: 'java'
@@ -82,8 +82,7 @@ dependencies {
 
     compile "com.google.code.gson:gson:$gson_version"
 
-    compile "commons-lang:commons-lang:$apache_commons_version"
-
+    compile "org.apache.commons:commons-lang3:$apache_commons_version"
     gen files('lib/grammar-kit-2.jar')
 
     gen 'de.jflex:jflex:1.6.1'
@@ -110,5 +109,5 @@ apply from: rootProject.file("config/lexerparser.gradle")
 apply from: rootProject.file("config/detekt.gradle")
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.2.1'
+    gradleVersion = '4.3.1'
 }
