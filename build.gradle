@@ -70,10 +70,6 @@ test {
     }
 }
 
-configurations {
-    gen
-}
-
 repositories {
     mavenLocal()
     jcenter()
@@ -101,15 +97,6 @@ dependencies {
     testImplementation "org.assertj:assertj-core:$assertj_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
 }
-
-//jar {
-//    from {
-//        configurations.compile
-//            .filter { it.name.contains("common")}
-//        .forEach { println(it)}
-//            .collect { it.isDirectory() ? it : zipTree(it)}
-//    }
-//}
 
 apply from: rootProject.file("config/idea.gradle")
 
