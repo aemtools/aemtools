@@ -21,6 +21,9 @@ object MessedDataSlyAttributeInspectionSpec : Spek({
       it ("should have correct group display name") {
         assertThat(tested.groupDisplayName)
             .isEqualTo("HTL")
+        assertThat(tested.groupDisplayName)
+            .isEqualTo("HTL")
+
       }
     }
 

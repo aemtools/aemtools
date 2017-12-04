@@ -1,20 +1,23 @@
 import org.jetbrains.intellij.IntelliJPlugin
 import org.jetbrains.intellij.IntelliJPluginExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-version = "0.8.1"
+import org.jetbrains.kotlin.utils.identity
 
 buildscript {
     var kotlin_version: String by extra
 
     repositories {
         mavenCentral()
+        jcenter()
+        mavenLocal()
+        maven {
+            setUrl("http://dl.bintray.com/jetbrains/intellij-plugin-service")
+        }
     }
-    
+
     dependencies {
         classpath(kotlin("gradle-plugin", kotlin_version))
     }
-    
 }
 
 apply {
@@ -25,20 +28,7 @@ apply {
 
 plugins {
     java
-}
-
-val kotlin_version: String by extra
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation(kotlin("stdlib-jdk8", kotlin_version))
-
-    //compile(project(":lang"))
-
-    testImplementation("junit", "junit", "4.12")
+    id("org.jetbrains.intellij") version "0.2.17"
 }
 
 configure<IntelliJPluginExtension> {
@@ -47,12 +37,3 @@ configure<IntelliJPluginExtension> {
             "IntelliLang"
     )
 }
-
-configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
-}
-

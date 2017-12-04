@@ -1,5 +1,10 @@
 package com.aemtools.completion.htl.model.declaration
 
+import com.aemtools.codeinsight.htl.model.DeclarationAttributeType
+import com.aemtools.codeinsight.htl.model.DeclarationType
+import com.aemtools.codeinsight.htl.model.HtlListHelperDeclaration
+import com.aemtools.codeinsight.htl.model.HtlUseVariableDeclaration
+import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
 import com.aemtools.test.util.mock
 import com.intellij.psi.xml.XmlAttribute
 import org.assertj.core.api.Assertions.assertThat
@@ -47,7 +52,7 @@ class HtlVariableDeclarationTest {
       ExpectedVariable(
           HtlVariableDeclaration::class.java,
           "item",
-           DeclarationAttributeType.DATA_SLY_LIST,
+          DeclarationAttributeType.DATA_SLY_LIST,
           DeclarationType.ITERABLE
       ),
       ExpectedVariable(
@@ -140,8 +145,8 @@ class HtlVariableDeclarationTest {
       val type: DeclarationType
   )
 
-  private fun attribute(name: String, value: String = "") : XmlAttribute
-    = mock<XmlAttribute>().apply {
+  private fun attribute(name: String, value: String = ""): XmlAttribute
+      = mock<XmlAttribute>().apply {
     `when`(this.name).thenReturn(name)
     `when`(this.value).thenReturn(value)
   }

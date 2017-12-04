@@ -1,4 +1,9 @@
 import org.gradle.internal.impldep.org.apache.maven.model.Build
+import org.gradle.kotlin.dsl.extra
+import org.gradle.kotlin.dsl.getValue
+import org.gradle.kotlin.dsl.kotlin
+import org.gradle.kotlin.dsl.maven
+import org.gradle.kotlin.dsl.repositories
 import org.jetbrains.grammarkit.GrammarKitPluginExtension
 import org.jetbrains.grammarkit.tasks.GenerateLexer
 import org.jetbrains.grammarkit.tasks.GenerateParser
@@ -6,13 +11,13 @@ import org.jetbrains.intellij.IntelliJPlugin
 import org.jetbrains.intellij.IntelliJPluginExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-version = "0.8.1"
-
 buildscript {
     var kotlin_version: String by extra
 
     repositories {
         mavenCentral()
+        jcenter()
+        mavenLocal()
         maven { setUrl("https://jitpack.io") }
     }
 
@@ -32,13 +37,10 @@ apply {
 
 plugins {
     java
+    id("org.jetbrains.intellij") version "0.2.17"
 }
 
 val kotlin_version: String by extra
-
-repositories {
-    mavenCentral()
-}
 
 configure<GrammarKitPluginExtension> {
     grammarKitRelease = "1.5.2"
@@ -49,12 +51,9 @@ java.sourceSets {
 }
 
 dependencies {
-    compile(kotlin("stdlib-jdk8", kotlin_version))
-
     compile(project(":common"))
 
     testCompile(project(":test-framework"))
-    testCompile("junit", "junit", "4.12")
 }
 
 configure<IntelliJPluginExtension> {

@@ -72,6 +72,24 @@ repositories {
     mavenCentral()
 }
 
+allprojects {
+    group = "com.aemtools"
+    version = aemtools_version
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven { url 'http://dl.bintray.com/jetbrains/spek' }
+        maven { url "https://jitpack.io" }
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'kotlin'
+    apply plugin: 'jacoco'
+    apply plugin: 'org.junit.platform.gradle.plugin'
+
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-runtime:$kotlin_version"
@@ -94,9 +112,14 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$mockito_version"
 }
 
-apply from: rootProject.file("config/idea.gradle")
-
-apply from: rootProject.file("config/detekt.gradle")
+    junitPlatform {
+        filters {
+            engines {
+                include 'spek', 'junit-jupiter', 'junit-vintage'
+            }
+        }
+    }
+}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.3.1'
