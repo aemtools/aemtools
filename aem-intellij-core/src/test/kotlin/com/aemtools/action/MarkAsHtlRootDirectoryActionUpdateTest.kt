@@ -1,6 +1,7 @@
 package com.aemtools.action
 
 import com.aemtools.lang.htl.icons.HtlIcons
+import com.aemtools.lang.settings.HtlRootDirectories
 import com.intellij.openapi.actionSystem.ActionPlaces
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import org.junit.Test
@@ -73,7 +74,7 @@ class MarkAsHtlRootDirectoryActionUpdateTest
   fun `should change presentation text for htl root directory`() {
     `when`(virtualFile.path)
         .thenReturn("/marked/directory")
-    `when`(picoContainer.getComponentInstance("com.aemtools.settings.HtlRootDirectories"))
+    `when`(picoContainer.getComponentInstance(HtlRootDirectories::class.qualifiedName))
         .thenReturn(rootDirectories)
     `when`(rootDirectories.directories)
         .thenReturn(mutableListOf("/marked/directory"))
