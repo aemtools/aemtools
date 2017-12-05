@@ -1,15 +1,13 @@
 package com.aemtools.lang.html.annotation
 
 import com.aemtools.common.constant.const.htl.DATA_SLY_UNWRAP
-import com.aemtools.common.util.hasParent
-import com.aemtools.lang.util.isHtlFile
 import com.aemtools.common.util.toSmartPointer
 import com.aemtools.inspection.fix.RemoveRedundantDataSlyUnwrapAction
+import com.aemtools.lang.util.isHtlFile
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
-import com.intellij.psi.xml.XmlTag
 
 /**
  * @author Dmytro Troynikov
@@ -19,9 +17,7 @@ class RedundantDataSlyUnwrapAnnotator : Annotator {
     if (element is XmlAttribute
         && element.containingFile.isHtlFile()
         && element.text == DATA_SLY_UNWRAP
-        && element.hasParent {
-      it is XmlTag && it.name.equals("sly", true)
-    }) {
+        && element.parent?.name?.equals("sly", true) == true) {
       holder.createWarningAnnotation(element, REDUNDANT_DATA_SLY_UNWRAP_MESSAGE)
           .registerFix(RemoveRedundantDataSlyUnwrapAction(element.toSmartPointer()))
     }
