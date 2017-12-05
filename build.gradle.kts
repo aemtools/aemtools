@@ -14,7 +14,7 @@ import org.junit.platform.gradle.plugin.EnginesExtension
 buildscript {
     val kotlin_version: String by extra
 
-    repositories{
+    repositories {
         mavenLocal()
         jcenter()
         mavenCentral()
@@ -35,6 +35,10 @@ allprojects {
     group = "aemtools"
 
     version = aemtools_version
+
+    apply {
+        plugin("jacoco")
+    }
 
     repositories {
         mavenCentral()
@@ -65,7 +69,33 @@ subprojects {
     apply {
         plugin("java")
         plugin("kotlin")
+        plugin("jacoco")
         plugin("org.junit.platform.gradle.plugin")
+    }
+
+    configure<JacocoPluginExtension> {
+        toolVersion = "0.7.6.201602180812"
+        reportsDir = file("$buildDir/jacocoReport")
+    }
+
+    afterEvaluate {
+        val junitPlatformTest: JavaExec by tasks
+        configure<JacocoPluginExtension> {
+            applyTo(junitPlatformTest)
+        }
+
+        task<JacocoReport>("junitPlatformJacoco") {
+            sourceDirectories = files("$projectDir/src/main")
+            classDirectories = files("$buildDir/classes/main")
+            reports {
+                xml.isEnabled = true
+                xml.destination =
+                        file("$buildDir/reports/jacoco/test/jacocoTestReport.xml")
+                csv.isEnabled = false
+                html.isEnabled = true
+            }
+            executionData(junitPlatformTest)
+        }
     }
 
     repositories {
@@ -110,6 +140,7 @@ subprojects {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     tasks.withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "1.8"
         kotlinOptions.languageVersion = "1.2"

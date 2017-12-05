@@ -7,9 +7,6 @@ env:
   global:
   - ORG_GRADLE_PROJECT_downloadIdeaSources=false
 
-install:
-  - ./gradlew generateGrammar
-  
 script: ./gradlew test jacocoTestReport
 
 after_success:
