@@ -7,6 +7,7 @@ import org.gradle.kotlin.dsl.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.junit.platform.gradle.plugin.JUnitPlatformExtension
 import org.gradle.api.plugins.ExtensionAware
+import org.gradle.wrapper.GradleWrapperMain
 
 import org.junit.platform.gradle.plugin.FiltersExtension
 import org.junit.platform.gradle.plugin.EnginesExtension
@@ -25,6 +26,7 @@ buildscript {
         dependencies {
             classpath(kotlin("gradle-plugin", kotlin_version))
             classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.2")
+            classpath("com.palantir:jacoco-coverage:0.4.0")
         }
     }
 }
@@ -35,10 +37,6 @@ allprojects {
     group = "aemtools"
 
     version = aemtools_version
-
-    apply {
-        plugin("jacoco")
-    }
 
     repositories {
         mavenCentral()
@@ -60,6 +58,10 @@ val mockito_version: String by extra
 
 plugins {
     java
+}
+
+apply {
+    plugin("com.palantir.jacoco-full-report")
 }
 
 subprojects {
@@ -85,8 +87,8 @@ subprojects {
         }
 
         task<JacocoReport>("junitPlatformJacoco") {
-            sourceDirectories = files("$projectDir/src/main")
-            classDirectories = files("$buildDir/classes/main")
+            sourceDirectories = files("$projectDir/src/main/kotlin")
+            classDirectories = files("$buildDir/classes/kotlin/main")
             reports {
                 xml.isEnabled = true
                 xml.destination =
@@ -145,4 +147,8 @@ subprojects {
         kotlinOptions.jvmTarget = "1.8"
         kotlinOptions.languageVersion = "1.2"
     }
+}
+
+task<Wrapper>("gradleWrapper") {
+    gradleVersion = "4.4"
 }
