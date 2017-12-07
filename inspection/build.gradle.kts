@@ -41,17 +41,12 @@ dependencies {
     testCompile(project(":test-framework"))
 }
 
+val ideaVersion: String by extra
+
 configure<IntelliJPluginExtension> {
-    version = "2017.2.5"
+    version = ideaVersion
     setPlugins(
             "IntelliLang"
     )
-}
-
-configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-}
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
 }
 

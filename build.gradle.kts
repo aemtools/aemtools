@@ -112,6 +112,7 @@ subprojects {
     dependencies {
         compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
         compile("org.jetbrains.kotlin:kotlin-runtime:$kotlin_version")
+        compile("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
         compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
 
         testCompile("com.github.markusbernhardt:proxy-vole:1.0.3")
