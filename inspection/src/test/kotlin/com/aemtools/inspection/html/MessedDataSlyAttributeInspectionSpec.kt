@@ -26,22 +26,20 @@ import org.picocontainer.PicoContainer
 object MessedDataSlyAttributeInspectionSpec : Spek({
   val tested = MessedDataSlyAttributeInspection()
 
-  given("the inspection") {
+  on("style check") {
+    it("should have correct group display name") {
+      assertThat(tested.groupDisplayName)
+          .isEqualTo("HTL")
+    }
 
-    on("style check") {
-      it("should have correct group display name") {
-        assertThat(tested.groupDisplayName)
-            .isEqualTo("HTL")
-      }
+    it("should have correct display name") {
+      assertThat(tested.displayName)
+          .isEqualTo("data-sly-attribute with prohibited attributes")
+    }
 
-      it("should have correct display name") {
-        assertThat(tested.displayName)
-            .isEqualTo("data-sly-attribute with prohibited attributes")
-      }
-
-      it("should have correct static description") {
-        assertThat(tested.staticDescription)
-            .isEqualTo("""
+    it("should have correct static description") {
+      assertThat(tested.staticDescription)
+          .isEqualTo("""
 <html>
 <body>
 This inspection verifies that <i>data-sly-attribute</i> is
@@ -49,9 +47,7 @@ This inspection verifies that <i>data-sly-attribute</i> is
 attributes that take JavaScript as input (e.g. onclick, onmousemove, etc).
 </body>
 </html>""".trimIndent())
-      }
     }
-
   }
 
   given("check attribute") {

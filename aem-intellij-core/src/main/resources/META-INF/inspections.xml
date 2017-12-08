@@ -7,5 +7,11 @@
                 hasStaticDescription="true"
                 implementationClass="com.aemtools.inspection.html.MessedDataSlyAttributeInspection"/>
 
+        <localInspection
+                language="HTML"
+                enabledByDefault="true"
+                hasStaticDescription="true"
+                implementationClass="com.aemtools.inspection.html.RedundantDataSlyUnwrapInspection"/>
+
     </extensions>
 </idea-plugin>

@@ -19,12 +19,20 @@ interface IInspectionService {
   fun validTarget(psiElement: PsiElement): Boolean
 
   /**
-   * Register "messed data sly attribute" problem.
+   * Register "messed data-sly-attribute" problem.
    *
    * @param holder the problem holder
    * @param attribute the "problematic" xml attribute
    * @param variableName the name of wrong attribute
    */
   fun messedDataSlyAttribute(holder: ProblemsHolder, attribute: XmlAttribute, variableName: String)
+
+  /**
+   * Register "redundant data-sly-unwrap" problem.
+   *
+   * @param holder the problem holder
+   * @param attribute the "problematic" xml attribute
+   */
+  fun redundantDataSlyUnwrap(holder: ProblemsHolder, attribute: XmlAttribute)
 
 }

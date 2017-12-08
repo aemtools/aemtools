@@ -159,8 +159,6 @@
         <customPropertyScopeProvider implementation="com.aemtools.findusages.HtlPropertyScopeProvider"/>
 
         <annotator language="HTML"
-                   implementationClass="com.aemtools.lang.html.annotation.RedundantDataSlyUnwrapAnnotator"/>
-        <annotator language="HTML"
                    implementationClass="com.aemtools.lang.html.annotation.HtlAttributesAnnotator"/>
         <annotator language="Htl"
                    implementationClass="com.aemtools.lang.html.inspection.RedundantELAnnotator"/>

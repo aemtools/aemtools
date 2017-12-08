@@ -1,8 +1,11 @@
 package com.aemtools.inspection.service
 
 import com.aemtools.common.util.toSmartPointer
+import com.aemtools.inspection.html.fix.RemoveRedundantDataSlyUnwrapAction
 import com.aemtools.inspection.html.fix.SubstituteWithRawAttributeIntentionAction
+import com.aemtools.inspection.message.InspectionMessages.REDUNDANT_DATA_SLY_UNWRAP_MESSAGE
 import com.intellij.codeInsight.daemon.impl.analysis.RemoveAttributeIntentionFix
+import com.intellij.codeInsight.daemon.impl.quickfix.RemoveRedundantArgumentsFix
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.openapi.components.ServiceManager
@@ -16,6 +19,15 @@ import com.intellij.psi.xml.XmlAttribute
 class InspectionService : IInspectionService {
 
   override fun validTarget(psiElement: PsiElement): Boolean = true
+
+  override fun redundantDataSlyUnwrap(holder: ProblemsHolder, attribute: XmlAttribute) {
+    holder.registerProblem(
+        attribute,
+        REDUNDANT_DATA_SLY_UNWRAP_MESSAGE,
+        ProblemHighlightType.WEAK_WARNING,
+        RemoveRedundantDataSlyUnwrapAction(attribute.toSmartPointer())
+    )
+  }
 
   override fun messedDataSlyAttribute(
       holder: ProblemsHolder,
