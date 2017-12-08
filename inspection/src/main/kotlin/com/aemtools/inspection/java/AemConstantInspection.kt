@@ -15,6 +15,21 @@ import com.intellij.psi.PsiLiteralExpression
  */
 class AemConstantInspection : LocalInspectionTool(), BatchSuppressableTool {
 
+  override fun getGroupDisplayName(): String = "AEM"
+
+  override fun getDisplayName(): String = "Hardcoded AEM specific literal"
+
+  override fun getStaticDescription(): String? {
+    return """
+<html>
+<body>
+This inspection verifies that predefined AEM constants are used instead of
+hardcode.
+</body>
+</html>
+    """.trimIndent()
+  }
+
   fun checkLiteral(psiLiteralExpression: PsiLiteralExpression, holder: ProblemsHolder) {
     if (!psiLiteralExpression.isJavaLangString()) {
       return
