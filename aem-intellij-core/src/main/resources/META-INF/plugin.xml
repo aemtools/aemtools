@@ -200,6 +200,10 @@
                 serviceInterface="com.aemtools.lang.settings.HtlRootDirectories"
                 serviceImplementation="com.aemtools.lang.settings.HtlRootDirectories"/>
 
+        <projectService
+                serviceInterface="com.aemtools.inspection.service.IInspectionService"
+                serviceImplementation="com.aemtools.inspection.service.InspectionService"/>
+
         <additionalTextAttributes
                 scheme="Default"
                 file="com/aemtools/ide/colorscheme/HtlDefault.xml"/>

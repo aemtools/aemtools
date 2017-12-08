@@ -122,6 +122,7 @@ subprojects {
         testCompile("org.jmockit:jmockit:$jmockit_version")
         testCompile("org.assertj:assertj-core:$assertj_version")
         testCompile("org.mockito:mockito-core:$mockito_version")
+        testCompile("com.nhaarman:mockito-kotlin:1.5.0")
 
         testCompile("org.jetbrains.spek:spek-api:1.1.5")
         testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.1.5")

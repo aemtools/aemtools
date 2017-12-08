@@ -1,11 +1,8 @@
 package com.aemtools.inspection.html
 
 import com.aemtools.common.constant.const
-import com.aemtools.common.util.toSmartPointer
-import com.aemtools.inspection.html.fix.SubstituteWithRawAttributeIntentionAction
+import com.aemtools.inspection.service.InspectionService
 import com.aemtools.lang.util.htlAttributeName
-import com.intellij.codeInsight.daemon.impl.analysis.RemoveAttributeIntentionFix
-import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.codeInspection.htmlInspections.HtmlLocalInspectionTool
 import com.intellij.psi.xml.XmlAttribute
@@ -36,6 +33,11 @@ attributes that take JavaScript as input (e.g. onclick, onmousemove, etc).
   public override fun checkAttribute(attribute: XmlAttribute,
                                      holder: ProblemsHolder,
                                      isOnTheFly: Boolean) {
+    val inspectionService = InspectionService.getInstance(attribute.project)
+    if (!inspectionService.validTarget(attribute)) {
+      return
+    }
+
     val htlAttributeName = attribute.htlAttributeName()
     if (htlAttributeName != const.htl.DATA_SLY_ATTRIBUTE) {
       return
@@ -43,17 +45,10 @@ attributes that take JavaScript as input (e.g. onclick, onmousemove, etc).
 
     val htlVariableName = attribute.name.substringAfter(".")
     if (htlVariableName == "style" || htlVariableName in const.html.JS_ATTRIBUTES) {
-      holder.registerProblem(
+      inspectionService.messedDataSlyAttribute(
+          holder,
           attribute,
-          "$htlVariableName is not allowed in data-sly-attribute",
-          ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
-          RemoveAttributeIntentionFix(
-              attribute.name, attribute
-          ),
-          SubstituteWithRawAttributeIntentionAction(
-              attribute.toSmartPointer(),
-              "Replace with: $htlVariableName=\"${attribute.value}\""
-          )
+          htlVariableName
       )
     }
   }
