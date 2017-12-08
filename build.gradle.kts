@@ -1,3 +1,4 @@
+import com.palantir.jacoco.JacocoFullReportExtension
 import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.include
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.getValue
@@ -152,4 +153,8 @@ subprojects {
 
 task<Wrapper>("gradleWrapper") {
     gradleVersion = "4.4"
+}
+
+configure<JacocoFullReportExtension> {
+    excludeProject(":test-framework")
 }
