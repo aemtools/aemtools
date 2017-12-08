@@ -4,14 +4,18 @@ import com.aemtools.common.constant.const.java.FELIX_PROPERTY_ANNOTATION
 import com.aemtools.common.constant.const.java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.common.constant.const.java.SLING_FILTER_ANNOTATION
 import com.aemtools.common.constant.const.java.SLING_SERVLET_ANNOTATION
+import com.intellij.openapi.module.ModuleUtil
 import com.intellij.psi.PsiAnnotation
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiField
+import com.intellij.psi.PsiLiteralExpression
+import com.intellij.psi.PsiManager
 import com.intellij.psi.PsiMember
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiModifier
 import com.intellij.psi.PsiModifierListOwner
 import com.intellij.psi.PsiType
+import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiTypesUtil
 
 /**
@@ -154,3 +158,20 @@ fun PsiMethod.elName() = this.name.run {
  * @see [PsiTypesUtil.getPsiClass]
  */
 fun PsiType.toPsiClass() = PsiTypesUtil.getPsiClass(this)
+
+/**
+ * Check if current [PsiLiteralExpression] is `java.lang.String` literal.
+ *
+ * @receiver [PsiLiteralExpression]
+ * @return *true* if current literal is java string literal,
+ * *false* otherwise
+ */
+fun PsiLiteralExpression.isJavaLangString(): Boolean {
+  val psiManager = PsiManager.getInstance(project)
+
+  val myModule = ModuleUtil.findModuleForPsiElement(this) ?: return false
+
+  return type == PsiType.getJavaLangString(
+      psiManager,
+      GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(myModule))
+}

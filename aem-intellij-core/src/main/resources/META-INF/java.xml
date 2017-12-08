@@ -26,5 +26,15 @@
                 language="JAVA"
                 implementationClass="com.aemtools.lang.java.linemarker.FelixOSGiPropertyLineMarker"/>
 
+        <projectService
+                serviceInterface="com.aemtools.inspection.service.IJavaInspectionService"
+                serviceImplementation="com.aemtools.inspection.service.JavaInspectionService"/>
+
+        <localInspection
+                language="JAVA"
+                enabledByDefault="true"
+                hasStaticDescription="true"
+                implementationClass="com.aemtools.inspection.java.AemConstantInspection"/>
+
     </extensions>
 </idea-plugin>
