@@ -1,5 +1,7 @@
 [Htl] OUTER_LANGUAGE ('<div>\n    ')
 [Htl] ${ ('${')
-[Htl] SINGLE_QUOTED_STRING (''string literal'')
+[Htl] ' (''')
+[Htl] STRING_CONTENT ('string literal')
+[Htl] ' (''')
 [Htl] } ('}')
 [Htl] OUTER_LANGUAGE ('\n</div>')

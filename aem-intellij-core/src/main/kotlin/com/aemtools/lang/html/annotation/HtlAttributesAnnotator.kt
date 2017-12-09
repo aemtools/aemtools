@@ -9,7 +9,7 @@ import com.aemtools.lang.util.htlVariableName
 import com.aemtools.common.util.incomingReferences
 import com.aemtools.lang.util.isHtlFile
 import com.aemtools.common.util.nameRange
-import com.aemtools.lang.common.highlight
+import com.aemtools.common.util.highlight
 import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_ATTRIBUTE
 import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_VARIABLE_DECLARATION
 import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_VARIABLE_UNUSED

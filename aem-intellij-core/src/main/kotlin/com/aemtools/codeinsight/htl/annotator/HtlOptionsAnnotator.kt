@@ -4,7 +4,7 @@ import com.aemtools.analysis.htl.callchain
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
 import com.aemtools.common.constant.const
 import com.aemtools.common.util.findParentByType
-import com.aemtools.lang.common.highlight
+import com.aemtools.common.util.highlight
 import com.aemtools.lang.util.isInsideOf
 import com.aemtools.lang.util.isOption
 import com.aemtools.service.repository.inmemory.HtlAttributesRepository

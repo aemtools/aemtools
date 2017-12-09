@@ -19,37 +19,43 @@ class HtlHighlighter : SyntaxHighlighterBase() {
 
   private fun map(tokenType: IElementType?) = when (tokenType) {
     HtlTypes.TRUE,
-    HtlTypes.FALSE -> com.aemtools.lang.htl.colorscheme.HtlColors.BOOLEAN
+    HtlTypes.FALSE -> HtlColors.BOOLEAN
 
-    HtlTypes.SINGLE_QUOTED_STRING,
-    HtlTypes.DOUBLE_QUOTED_STRING -> com.aemtools.lang.htl.colorscheme.HtlColors.STRING
+    HtlTypes.SINGLE_QUOTE,
+    HtlTypes.DOUBLE_QUOTE,
+    HtlTypes.STRING_CONTENT -> HtlColors.STRING
 
-    HtlTypes.INTEGER -> com.aemtools.lang.htl.colorscheme.HtlColors.INTEGER
+    HtlTypes.VALID_STRING_ESCAPE_TOKEN -> HtlColors.VALID_ESCAPE_SEQUENCE
 
-    HtlTypes.NULL_LITERAL_TOKEN -> com.aemtools.lang.htl.colorscheme.HtlColors.NULL
+    HtlTypes.INVALID_CHARACTER_ESCAPE_TOKEN,
+    HtlTypes.INVALID_UNICODE_ESCAPE_TOKEN -> HtlColors.INVALID_ESCAPE_SEQUENCE
 
-    HtlTypes.VARIABLE_NAME -> com.aemtools.lang.htl.colorscheme.HtlColors.VARIABLE
+    HtlTypes.INTEGER -> HtlColors.INTEGER
 
-    HtlTypes.AT -> com.aemtools.lang.htl.colorscheme.HtlColors.DELIMITER
+    HtlTypes.NULL_LITERAL_TOKEN -> HtlColors.NULL
+
+    HtlTypes.VARIABLE_NAME -> HtlColors.VARIABLE
+
+    HtlTypes.AT -> HtlColors.DELIMITER
 
     HtlTypes.LBRACE,
     HtlTypes.EL_START,
-    HtlTypes.RBRACE -> com.aemtools.lang.htl.colorscheme.HtlColors.DELIMITER
+    HtlTypes.RBRACE -> HtlColors.DELIMITER
 
     HtlTypes.LBRACKET,
-    HtlTypes.RBRACKET -> com.aemtools.lang.htl.colorscheme.HtlColors.PARENTHESES
+    HtlTypes.RBRACKET -> HtlColors.PARENTHESES
 
     HtlTypes.GT,
     HtlTypes.LT,
     HtlTypes.GTE,
     HtlTypes.LTE,
     HtlTypes.AND_AND,
-    HtlTypes.OR_OR -> com.aemtools.lang.htl.colorscheme.HtlColors.OPERATOR
+    HtlTypes.OR_OR -> HtlColors.OPERATOR
 
-    HtlTypes.VAR_NAME -> com.aemtools.lang.htl.colorscheme.HtlColors.IDENTIFIER
+    HtlTypes.VAR_NAME -> HtlColors.IDENTIFIER
 
     HtlTypes.LSQRBRACKET,
-    HtlTypes.RSQRBRACKET -> com.aemtools.lang.htl.colorscheme.HtlColors.BRACKET
+    HtlTypes.RSQRBRACKET -> HtlColors.BRACKET
 
     else -> null
   }

@@ -4,6 +4,7 @@ import com.aemtools.common.util.findChildrenByType
 import com.aemtools.common.util.hasChild
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
 import com.aemtools.lang.htl.psi.HtlElementFactory
+import com.aemtools.lang.htl.psi.HtlStringLiteral
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 
@@ -18,17 +19,17 @@ abstract class AccessIdentifierMixin(node: ASTNode) : com.aemtools.lang.htl.psi.
   override fun setName(name: String): PsiElement {
     val newElement = when {
       this.hasChild(HtlArrayLikeAccess::class.java) -> {
-        val stringLiteral = this.findChildrenByType(com.aemtools.lang.htl.psi.HtlStringLiteral::class.java)
+        val stringLiteral = this.findChildrenByType(HtlStringLiteral::class.java)
             .firstOrNull() ?: return this
 
-        if (stringLiteral.doubleQuotedString != null) {
-          com.aemtools.lang.htl.psi.HtlElementFactory.createArrayLikeAccessDoublequoted(name, project)
+        if (stringLiteral.text.startsWith("\"")) {
+          HtlElementFactory.createArrayLikeAccessDoublequoted(name, project)
         } else {
-          com.aemtools.lang.htl.psi.HtlElementFactory.createArrayLikeAccessSingleQuoted(name, project)
+          HtlElementFactory.createArrayLikeAccessSingleQuoted(name, project)
         }
       }
 
-      else -> com.aemtools.lang.htl.psi.HtlElementFactory.createDotAccessIdentifier(name, project)
+      else -> HtlElementFactory.createDotAccessIdentifier(name, project)
     }
     newElement?.let {
       node.replaceChild(node.firstChildNode, it)

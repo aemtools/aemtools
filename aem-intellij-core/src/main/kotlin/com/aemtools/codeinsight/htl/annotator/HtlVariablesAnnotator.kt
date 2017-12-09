@@ -8,7 +8,7 @@ import com.aemtools.completion.htl.common.FileVariablesResolver
 import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.model.htl.ContextObject
 import com.aemtools.inspection.fix.VariableNameErrataIntentionAction
-import com.aemtools.lang.common.highlight
+import com.aemtools.common.util.highlight
 import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_EL_GLOBAL_VARIABLE
 import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_EL_LOCAL_VARIABLE
 import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_EL_UNRESOLVED_VARIABLE

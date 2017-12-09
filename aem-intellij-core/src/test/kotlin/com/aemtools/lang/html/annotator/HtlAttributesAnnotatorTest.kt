@@ -3,6 +3,8 @@ package com.aemtools.lang.html.annotator
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 
 /**
+ * Test for [HtlAttributesAnnotator].
+ *
  * @author Dmytro Troynikov
  */
 class HtlAttributesAnnotatorTest : LightCodeInsightFixtureTestCase() {

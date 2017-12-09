@@ -10,7 +10,9 @@ import com.intellij.psi.PsiNamedElement
  * @author Dmytro_Troynikov
  */
 abstract class HtlStringLiteralMixin(node: ASTNode)
-  : com.aemtools.lang.htl.psi.HtlPsiBaseElement(node), HtlStringLiteral, PsiNamedElement {
+  : HtlPsiBaseElement(node), HtlStringLiteral, PsiNamedElement {
+
+  fun isSingleQuoted() : Boolean = text.startsWith("'")
 
   override fun setName(name: String): PsiElement {
     return this

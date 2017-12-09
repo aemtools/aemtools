@@ -268,9 +268,9 @@ object HtlPatterns {
   val localizationMainString: ElementPattern<PsiElement> =
       and(
           stringLiteralValue,
-          psiElement().afterLeafSkipping(
+          psiElement().withParent(psiElement().afterLeafSkipping(
               psiElement(TokenType.WHITE_SPACE),
-              psiElement(EL_START)),
+              psiElement(EL_START))),
           psiElement().withAncestor(7,
               psiElement(HtlHtlEl::class.java)
                   .withChild(psiElement()
@@ -287,11 +287,12 @@ object HtlPatterns {
   private fun mainStringInAttribute(attribute: String): ElementPattern<PsiElement> =
       and(
           stringLiteralValue,
-          psiElement().afterLeafSkipping(
+          psiElement().withParent(psiElement().afterLeafSkipping(
               psiElement(TokenType.WHITE_SPACE),
+
               psiElement(EL_START))
               .inside(psiElement().with(HtlTemplatePattern(attribute)))
-      )
+      ))
 
   /**
    * Create pattern which will match option name inside of given htl attribute.

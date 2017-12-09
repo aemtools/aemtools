@@ -8,6 +8,7 @@ HtlFile:emptySingleQuotedString.html
           HtlOperandImpl([Htl] OPERAND)
             HtlLiteralImpl([Htl] LITERAL)
               HtlStringLiteralImpl([Htl] STRING_LITERAL)
-                PsiElement([Htl] SINGLE_QUOTED_STRING)('''')
+                PsiElement([Htl] ')(''')
+                PsiElement([Htl] ')(''')
     HtlHelEndImpl([Htl] HEL_END)
       PsiElement([Htl] })('}')

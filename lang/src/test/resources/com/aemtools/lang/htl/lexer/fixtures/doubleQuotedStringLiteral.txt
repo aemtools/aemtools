@@ -1,3 +1,5 @@
 [Htl] ${ ('${')
-[Htl] DOUBLE_QUOTED_STRING ('"string literal"')
+[Htl] " ('"')
+[Htl] STRING_CONTENT ('string literal')
+[Htl] " ('"')
 [Htl] } ('}')

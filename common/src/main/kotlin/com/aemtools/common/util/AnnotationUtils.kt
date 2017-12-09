@@ -1,14 +1,10 @@
-package com.aemtools.lang.common
+package com.aemtools.common.util
 
 import com.intellij.lang.annotation.Annotation
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
-
-/**
- * @author Dmytro Troynikov
- */
 
 /**
  * Create info annotation in current annotation holder using given text range.
