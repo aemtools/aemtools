@@ -26,18 +26,32 @@ import static com.intellij.psi.TokenType.WHITE_SPACE;
 
 %state EL
 %state COMMENT
+%state SQ
+%state DQ
 
 WHITE_SPACE_CHARS=[ \n\r\t\f]+
 
 EL_START= "${"
 
-DOUBLE_QUOTED_STRING=\"((\\[\"btnfr])|[^\"\n])*\"?
-SINGLE_QUOTED_STRING='((\\['btnfr])|[^'\n])*'?
 INTEGER=[0-9]+
 VAR_NAME=[\w\d:]+
 COMMENT_START="<!--/*"
 COMMENT_END="*/-->"
-COMMENT_TOKEN=.
+
+DOUBLE_QUOTED_STRING_BOUNDARY="\""
+SINGLE_QUOTED_STRING_BOUNDARY="'"
+
+VALID_ESCAPE=(\\t)|(\\b)|(\\n)|(\\r)|(\\f)|(\\\\)
+
+UNICODE_ESCAPE=(\\u[\da-f]{4})
+
+SQ_QUOTE_ESCAPE=(\\')
+DQ_QUOTE_ESCAPE=(\\\")
+
+INVALID_UNICODE_ESCAPE=(\\u[0-9a-f]{3}?)
+INVALID_CHARACTER_ESCAPE=(\\\w)
+
+STRING_CONTENT=.
 
 %%
 
@@ -89,16 +103,81 @@ COMMENT_TOKEN=.
      "&&"                        { return AND_AND; }
      "||"                        { return OR_OR; }
      "@"                         { return AT; }
-     "'"                         { return SQUOT; }
      "true"                      { return TRUE; }
      "false"                     { return FALSE; }
      "null"                      { return NULL_LITERAL_TOKEN; }
-     "DIVIDE"                    { return DIVIDE; }
-
-     {DOUBLE_QUOTED_STRING}      { return DOUBLE_QUOTED_STRING; }
-     {SINGLE_QUOTED_STRING}      { return SINGLE_QUOTED_STRING; }
+     {DOUBLE_QUOTED_STRING_BOUNDARY} {
+        yybegin(DQ); return DOUBLE_QUOTE;
+     }
+     {SINGLE_QUOTED_STRING_BOUNDARY} {
+        yybegin(SQ); return SINGLE_QUOTE;
+     }
      {INTEGER}                   { return INTEGER; }
      {VAR_NAME}                  { return VAR_NAME; }
 
      [^]                         { yybegin(YYINITIAL); return OUTER_LANGUAGE; }
+}
+
+<DQ> {
+    {VALID_ESCAPE} {
+        return VALID_STRING_ESCAPE_TOKEN;
+    }
+    {UNICODE_ESCAPE} {
+        return VALID_STRING_ESCAPE_TOKEN;
+    }
+    {DQ_QUOTE_ESCAPE} {
+        return VALID_STRING_ESCAPE_TOKEN;
+    }
+    {INVALID_UNICODE_ESCAPE} {
+        return INVALID_UNICODE_ESCAPE_TOKEN;
+    }
+    {SQ_QUOTE_ESCAPE} {
+        return INVALID_CHARACTER_ESCAPE_TOKEN;
+    }
+    {INVALID_CHARACTER_ESCAPE} {
+        return INVALID_CHARACTER_ESCAPE_TOKEN;
+    }
+    {DOUBLE_QUOTED_STRING_BOUNDARY} {
+        yybegin(EL);
+        return DOUBLE_QUOTE;
+    }
+    {STRING_CONTENT} {
+        return STRING_CONTENT;
+    }
+    [^] {
+        yypushback(1);
+        yybegin(EL);
+    }
+}
+
+<SQ> {
+    {VALID_ESCAPE} {
+        return VALID_STRING_ESCAPE_TOKEN;
+    }
+    {UNICODE_ESCAPE} {
+        return VALID_STRING_ESCAPE_TOKEN;
+    }
+    {SQ_QUOTE_ESCAPE} {
+        return VALID_STRING_ESCAPE_TOKEN;
+    }
+    {INVALID_UNICODE_ESCAPE} {
+        return INVALID_UNICODE_ESCAPE_TOKEN;
+    }
+    {DQ_QUOTE_ESCAPE} {
+        return INVALID_CHARACTER_ESCAPE_TOKEN;
+    }
+    {INVALID_CHARACTER_ESCAPE} {
+        return INVALID_CHARACTER_ESCAPE_TOKEN;
+    }
+    {SINGLE_QUOTED_STRING_BOUNDARY} {
+        yybegin(EL);
+        return SINGLE_QUOTE;
+    }
+    {STRING_CONTENT} {
+        return STRING_CONTENT;
+    }
+    [^] {
+        yypushback(1);
+        yybegin(EL);
+    }
 }

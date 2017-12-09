@@ -11,7 +11,9 @@
     elementTypeClass="com.aemtools.lang.htl.psi.HtlElement"
     tokenTypeClass="com.aemtools.lang.htl.psi.HtlToken"
 
-    parserImports='static com.aemtools.lang.htl.psi.HtlTypes.*'
+    parserImports=[
+        'static com.aemtools.lang.htl.psi.HtlTypes.*'
+    ]
 
     tokens = [
         LBRACE      = '{'
@@ -50,9 +52,15 @@
         COMMENT_START = ''
         COMMENT_END = ''
         COMMENT_TOKEN =''
+
         INTEGER     = 'regexp:\d+'
         VAR_NAME    = 'regexp:[\w\d:]+'
-
+        STRING_CONTENT = ''
+        DOUBLE_QUOTE = '"'
+        SINGLE_QUOTE = "'"
+        VALID_STRING_ESCAPE_TOKEN = ''
+        INVALID_UNICODE_ESCAPE_TOKEN = ''
+        INVALID_CHARACTER_ESCAPE_TOKEN = ''
     ]
 
     mixin       ("property_access") = "com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin"
@@ -147,7 +155,11 @@ literal ::= string_literal
 
 array_literal ::= LSQRBRACKET array_statement [(COMMA array_statement)+] RSQRBRACKET
 
-string_literal ::= SINGLE_QUOTED_STRING | DOUBLE_QUOTED_STRING {implements="com.intellij.psi.ContributedReferenceHost" mixin="com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin"}
+string_literal ::= single_quoted_string | double_quoted_string {implements="com.intellij.psi.ContributedReferenceHost" mixin="com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin"}
+
+private single_quoted_string ::= DOUBLE_QUOTE (STRING_CONTENT | VALID_STRING_ESCAPE_TOKEN | INVALID_UNICODE_ESCAPE_TOKEN | INVALID_CHARACTER_ESCAPE_TOKEN)* DOUBLE_QUOTE
+
+private double_quoted_string ::= SINGLE_QUOTE (STRING_CONTENT | VALID_STRING_ESCAPE_TOKEN | INVALID_UNICODE_ESCAPE_TOKEN | INVALID_CHARACTER_ESCAPE_TOKEN)* SINGLE_QUOTE
 
 boolean_literal ::= TRUE | FALSE
 
