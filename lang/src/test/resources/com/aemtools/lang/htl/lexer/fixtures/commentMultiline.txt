@@ -1,0 +1,8 @@
+[Htl] COMMENT_START ('<!--/*')
+[Htl]  ('\n I'm multiline comment\n')
+[Htl] COMMENT_END ('*/-->')
+[Htl] OUTER_LANGUAGE ('\n')
+[Htl] ${ ('${')
+[Htl] DOUBLE_QUOTED_STRING ('"Not comment"')
+[Htl] } ('}')
+[Htl] OUTER_LANGUAGE (' <div></div>')

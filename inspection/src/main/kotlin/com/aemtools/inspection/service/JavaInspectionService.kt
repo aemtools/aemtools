@@ -24,7 +24,7 @@ class JavaInspectionService : IJavaInspectionService {
     val fixes = constantDescriptors.map { constant ->
       ReplaceHardcodedLiteralWithFqnAction(
           "Replace with ${constant.containerClass}",
-          constant.containerClass,
+          constant,
           literal.toSmartPointer()
       )
     }

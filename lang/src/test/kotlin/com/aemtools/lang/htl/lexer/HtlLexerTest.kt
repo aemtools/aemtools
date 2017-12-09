@@ -45,6 +45,9 @@ class HtlLexerTest : LexerBaseTest(), HtlTestCase {
   fun testUnclosedEl() = doTest()
   fun testEmptyEl() = doTest()
 
+  fun testComment() = doTest()
+  fun testCommentMultiline() = doTest()
+
   override fun getDirPath(): String? = "com.aemtools.lang.htl.lexer"
 
 }

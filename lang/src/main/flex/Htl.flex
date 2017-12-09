@@ -25,6 +25,7 @@ import static com.intellij.psi.TokenType.WHITE_SPACE;
 //%debug
 
 %state EL
+%state COMMENT
 
 WHITE_SPACE_CHARS=[ \n\r\t\f]+
 
@@ -34,6 +35,9 @@ DOUBLE_QUOTED_STRING=\"((\\[\"btnfr])|[^\"\n])*\"?
 SINGLE_QUOTED_STRING='((\\['btnfr])|[^'\n])*'?
 INTEGER=[0-9]+
 VAR_NAME=[\w\d:]+
+COMMENT_START="<!--/*"
+COMMENT_END="*/-->"
+COMMENT_TOKEN=.
 
 %%
 
@@ -42,7 +46,20 @@ VAR_NAME=[\w\d:]+
     return EL_START;
 }
 
+<YYINITIAL> {COMMENT_START} {
+    yybegin(COMMENT);
+    return COMMENT_START;
+}
+
 <YYINITIAL> [^] { return OUTER_LANGUAGE; }
+<COMMENT> {COMMENT_END} {
+    yybegin(YYINITIAL);
+    return COMMENT_END;
+}
+
+<COMMENT> [^] {
+    return COMMENT_TOKEN;
+}
 
 <EL> "}" { yybegin(YYINITIAL); return RBRACE; }
 <EL> {

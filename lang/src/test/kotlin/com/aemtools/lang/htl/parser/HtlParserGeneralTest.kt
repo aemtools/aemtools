@@ -33,4 +33,7 @@ class HtlParserGeneralTest
   fun testTernaryOperator() = doTest()
   fun testTernaryOperatorWithLogicalOperator() = doTest()
   fun testTernaryOperatorWithThreeElements() = doTest()
+
+  fun testComment() = doTest()
+  fun testCommentMultiline() = doTest()
 }

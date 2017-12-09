@@ -47,7 +47,9 @@
         SQUOT       = "'"
         TRUE        = 'true'
         FALSE       = 'false'
-
+        COMMENT_START = ''
+        COMMENT_END = ''
+        COMMENT_TOKEN =''
         INTEGER     = 'regexp:\d+'
         VAR_NAME    = 'regexp:[\w\d:]+'
 
@@ -59,9 +61,11 @@
 
 }
 
-root ::= ( htl_el | outer_lang )*
+root ::= ( htl_el | outer_lang | comment)*
 
-private recover_rule ::= !(OUTER_LANGUAGE | EL_START)
+comment ::= COMMENT_START COMMENT_TOKEN? COMMENT_END
+
+private recover_rule ::= !(OUTER_LANGUAGE | EL_START | COMMENT_START)
 
 outer_lang ::= OUTER_LANGUAGE+ { implements="com.intellij.psi.templateLanguages.OuterLanguageElement"}
 
