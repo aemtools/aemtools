@@ -31,8 +31,11 @@ plugins {
     id("org.jetbrains.intellij") version "0.2.17"
 }
 
+val ideaVersion: String by extra
+
 configure<IntelliJPluginExtension> {
-    version = "2017.2.5"
+    version = ideaVersion
+
     setPlugins(
             "IntelliLang"
     )

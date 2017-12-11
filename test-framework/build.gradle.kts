@@ -51,7 +51,9 @@ dependencies {
     compile("org.mockito:mockito-core:$mockito_version")
 }
 
+val ideaVersion: String by extra
+
 configure<IntelliJPluginExtension> {
-    version = "2017.2.5"
+    version = ideaVersion
     setPlugins("IntelliLang")
 }

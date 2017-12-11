@@ -36,7 +36,7 @@ hardcode.
     }
 
     val project = psiLiteralExpression.project
-    val javaInspectionService = JavaInspectionService.getInstance(project)
+    val javaInspectionService = JavaInspectionService.getInstance(project) ?: return
     val module = ModuleUtil.findModuleForPsiElement(psiLiteralExpression) ?: return
     val literalValue = psiLiteralExpression.value
     val allConstants = javaInspectionService.standardConstants(project, module)

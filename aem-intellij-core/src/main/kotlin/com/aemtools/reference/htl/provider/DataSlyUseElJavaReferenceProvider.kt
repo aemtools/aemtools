@@ -30,7 +30,8 @@ object DataSlyUseElJavaReferenceProvider : JavaClassReferenceProvider() {
    * declared as a dependency for current module, resulting in non-resolvable reference.
    * @see com.intellij.psi.impl.source.resolve.reference.impl.providers.JavaClassReference.getScope
    */
-  override fun getScope(project: Project?): GlobalSearchScope? {
-    return project?.allScope()
+  override fun getScope(project: Project): GlobalSearchScope? {
+    return project.allScope()
   }
+
 }

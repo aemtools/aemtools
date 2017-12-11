@@ -59,7 +59,7 @@ class JavaInspectionService : IJavaInspectionService {
   }
 
   companion object {
-    fun getInstance(project: Project): IJavaInspectionService {
+    fun getInstance(project: Project): IJavaInspectionService? {
       return ServiceManager.getService(project, IJavaInspectionService::class.java)
     }
   }
