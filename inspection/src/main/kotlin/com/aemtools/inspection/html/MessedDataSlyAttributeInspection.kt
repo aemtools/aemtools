@@ -34,6 +34,7 @@ attributes that take JavaScript as input (e.g. onclick, onmousemove, etc).
                                      holder: ProblemsHolder,
                                      isOnTheFly: Boolean) {
     val inspectionService = InspectionService.getInstance(attribute.project)
+        ?: return
     if (!inspectionService.validTarget(attribute)) {
       return
     }

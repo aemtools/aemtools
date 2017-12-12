@@ -26,9 +26,20 @@ interface IJavaInspectionService {
    * @param literal the problematic literal
    * @param constantDescriptors constant descriptors
    */
-  fun hardcodedConstant(
+  fun reportHardcodedConstant(
       holder: ProblemsHolder,
       literal: PsiLiteralExpression,
       constantDescriptors: List<ConstantDescriptor>)
+
+  /**
+   * Check if given [PsiLiteralExpression] is `java.lang.String`.
+   *
+   * @param psiLiteralExpression literal to check
+   * @return *true* if given literal is `lava.lang.String`,
+   * *false* otherwise
+   */
+  fun isJavaLangString(
+      psiLiteralExpression: PsiLiteralExpression
+  ) : Boolean
 
 }

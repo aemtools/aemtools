@@ -1,5 +1,6 @@
 package com.aemtools.inspection.service
 
+import com.aemtools.common.util.isJavaLangString
 import com.aemtools.common.util.toSmartPointer
 import com.aemtools.inspection.java.constants.ConstantClasses
 import com.aemtools.inspection.java.constants.ConstantDescriptor
@@ -18,9 +19,9 @@ import com.intellij.psi.search.GlobalSearchScope
  */
 class JavaInspectionService : IJavaInspectionService {
 
-  override fun hardcodedConstant(holder: ProblemsHolder,
-                                 literal: PsiLiteralExpression,
-                                 constantDescriptors: List<ConstantDescriptor>) {
+  override fun reportHardcodedConstant(holder: ProblemsHolder,
+                                       literal: PsiLiteralExpression,
+                                       constantDescriptors: List<ConstantDescriptor>) {
     val fixes = constantDescriptors.map { constant ->
       ReplaceHardcodedLiteralWithFqnAction(
           "Replace with ${constant.containerClass}",
@@ -56,6 +57,10 @@ class JavaInspectionService : IJavaInspectionService {
       }
     }
     return variants
+  }
+
+  override fun isJavaLangString(psiLiteralExpression: PsiLiteralExpression): Boolean {
+    return psiLiteralExpression.isJavaLangString()
   }
 
   companion object {

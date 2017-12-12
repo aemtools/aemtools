@@ -1,6 +1,7 @@
 package com.aemtools.inspection.service
 
 import com.intellij.codeInspection.ProblemsHolder
+import com.intellij.openapi.module.Module
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 
@@ -34,5 +35,15 @@ interface IInspectionService {
    * @param attribute the "problematic" xml attribute
    */
   fun redundantDataSlyUnwrap(holder: ProblemsHolder, attribute: XmlAttribute)
+
+
+  /**
+   * Find [Module] for given [PsiElement].
+   *
+   * @param psiElement element to find module against
+   * @return the module
+   */
+  fun moduleForPsiElement(psiElement: PsiElement): Module?
+
 
 }

@@ -1,11 +1,10 @@
 package com.aemtools.inspection.java
 
-import com.aemtools.common.util.isJavaLangString
+import com.aemtools.inspection.service.InspectionService
 import com.aemtools.inspection.service.JavaInspectionService
 import com.intellij.codeInspection.BatchSuppressableTool
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
-import com.intellij.openapi.module.ModuleUtil
 import com.intellij.psi.JavaElementVisitor
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiLiteralExpression
@@ -31,14 +30,19 @@ hardcode.
   }
 
   fun checkLiteral(psiLiteralExpression: PsiLiteralExpression, holder: ProblemsHolder) {
-    if (!psiLiteralExpression.isJavaLangString()) {
+    val project = psiLiteralExpression.project
+    val inspectionService = InspectionService.getInstance(project) ?: return
+    val javaInspectionService = JavaInspectionService.getInstance(project) ?: return
+
+    if (!inspectionService.validTarget(psiLiteralExpression)
+        || !javaInspectionService.isJavaLangString(psiLiteralExpression)) {
       return
     }
 
-    val project = psiLiteralExpression.project
-    val javaInspectionService = JavaInspectionService.getInstance(project) ?: return
-    val module = ModuleUtil.findModuleForPsiElement(psiLiteralExpression) ?: return
     val literalValue = psiLiteralExpression.value
+    val module = inspectionService.moduleForPsiElement(psiLiteralExpression)
+        ?: return
+
     val allConstants = javaInspectionService.standardConstants(project, module)
 
     val filteredConstants = allConstants.filter { constant ->
@@ -46,7 +50,7 @@ hardcode.
     }
 
     if (filteredConstants.isNotEmpty()) {
-      javaInspectionService.hardcodedConstant(
+      javaInspectionService.reportHardcodedConstant(
           holder,
           psiLiteralExpression,
           filteredConstants)

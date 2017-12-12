@@ -28,7 +28,8 @@ This inspection verifies that <i>data-sly-unwrap</i> is
 
   public override fun checkAttribute(attribute: XmlAttribute, holder: ProblemsHolder, isOnTheFly: Boolean) {
     val inspectionService = InspectionService.getInstance(attribute.project)
-    if(!inspectionService.validTarget(attribute)) {
+        ?: return
+    if (!inspectionService.validTarget(attribute)) {
       return
     }
 
