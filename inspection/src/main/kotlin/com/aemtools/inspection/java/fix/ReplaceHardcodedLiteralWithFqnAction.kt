@@ -24,12 +24,12 @@ class ReplaceHardcodedLiteralWithFqnAction(
 ) {
   override fun invoke(project: Project, editor: Editor?, file: PsiFile) {
     val element = psiLiteral.element ?: return
-
-    val document = PsiDocumentManager.getInstance(project).getDocument(file)
+    val psiDocumentManager = PsiDocumentManager.getInstance(project)
+    val document = psiDocumentManager.getDocument(file)
         ?: return
 
     val (start, end) = element.textRange.startOffset to element.textRange.endOffset
     document.replaceString(start, end, "${cd.containerClass}.${cd.name}")
-    PsiDocumentManager.getInstance(project).commitDocument(document)
+    psiDocumentManager.commitDocument(document)
   }
 }

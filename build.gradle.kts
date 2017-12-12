@@ -126,6 +126,7 @@ subprojects {
 
         testCompile("org.jetbrains.spek:spek-api:1.1.5")
         testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.1.5")
+        testCompile("org.jetbrains.spek:spek-subject-extension:1.1.5")
         testCompile("org.junit.jupiter:junit-jupiter-api:5.0.2")
         testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.2")
         testRuntime("org.junit.vintage:junit-vintage-engine:4.12.2")
