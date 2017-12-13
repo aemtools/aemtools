@@ -17,14 +17,16 @@ import com.intellij.psi.SmartPsiElementPointer
 class ReplaceHardcodedLiteralWithFqnAction(
     message: String,
     val cd: ConstantDescriptor,
-    val psiLiteral: SmartPsiElementPointer<PsiLiteralExpression>
+    private val psiLiteral: SmartPsiElementPointer<PsiLiteralExpression>
 ) : BaseAemIntellijIntentionAction(
     { message },
     "AEM Inspections"
 ) {
   override fun invoke(project: Project, editor: Editor?, file: PsiFile) {
     val element = psiLiteral.element ?: return
+
     val psiDocumentManager = PsiDocumentManager.getInstance(project)
+        ?: return
     val document = psiDocumentManager.getDocument(file)
         ?: return
 

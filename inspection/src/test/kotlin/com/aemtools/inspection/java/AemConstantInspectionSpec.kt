@@ -14,9 +14,9 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
-import org.jetbrains.spek.api.dsl.xit
 import org.jetbrains.spek.api.lifecycle.CachingMode
 import org.mockito.ArgumentMatchers.anyList
 import org.picocontainer.PicoContainer
@@ -51,24 +51,19 @@ hardcode.
 </html>""".trimIndent())
     }
   }
-
-  on("check literal") {
+  describe("check literal") {
     val psiLiteralExpression by memoized(CachingMode.TEST) {
       mock<PsiLiteralExpression>()
     }
-
     val project by memoized(CachingMode.TEST) {
       mock<Project>()
     }
-
     val inspectionService by memoized(CachingMode.TEST) {
       mock<IInspectionService>()
     }
-
     val javaInspectionService by memoized(CachingMode.TEST) {
       mock<IJavaInspectionService>()
     }
-
     val module by memoized(CachingMode.TEST) {
       mock<Module>()
     }
@@ -78,40 +73,39 @@ hardcode.
     val picoContainer by memoized(CachingMode.TEST) {
       mock<PicoContainer>()
     }
-    whenever(picoContainer.getComponentInstance(IJavaInspectionService::class.java.name))
-        .thenReturn(javaInspectionService)
-    whenever(picoContainer.getComponentInstance(IInspectionService::class.java.name))
-        .thenReturn(inspectionService)
-    whenever(project.picoContainer)
-        .thenReturn(picoContainer)
-    whenever(psiLiteralExpression.project)
-        .thenReturn(project)
 
-    whenever(inspectionService.validTarget(any()))
-        .thenReturn(true)
+    beforeEachTest {
+      whenever(picoContainer.getComponentInstance(IJavaInspectionService::class.java.name))
+          .thenReturn(javaInspectionService)
+      whenever(picoContainer.getComponentInstance(IInspectionService::class.java.name))
+          .thenReturn(inspectionService)
+      whenever(project.picoContainer)
+          .thenReturn(picoContainer)
+      whenever(psiLiteralExpression.project)
+          .thenReturn(project)
+      whenever(inspectionService.validTarget(any()))
+          .thenReturn(true)
+      whenever(javaInspectionService.isJavaLangString(any()))
+          .thenReturn(true)
+      whenever(psiLiteralExpression.value)
+          .thenReturn("com.test.Bean")
+      whenever(inspectionService.moduleForPsiElement(psiLiteralExpression))
+          .thenReturn(module)
 
-    whenever(javaInspectionService.isJavaLangString(psiLiteralExpression))
-        .thenReturn(true)
-
-    whenever(psiLiteralExpression.value)
-        .thenReturn("com.test.Bean")
-
-    whenever(inspectionService.moduleForPsiElement(psiLiteralExpression))
-        .thenReturn(module)
-
-    whenever(javaInspectionService.standardConstants(project, module))
-        .thenReturn(listOf(
-            ConstantDescriptor(
-                "com.test.Constants1",
-                "Name1",
-                "value1"
-            ),
-            ConstantDescriptor(
-                "com.test.Constants2",
-                "Name2",
-                "value2"
-            )
-        ))
+      whenever(javaInspectionService.standardConstants(project, module))
+          .thenReturn(listOf(
+              ConstantDescriptor(
+                  "com.test.Constants1",
+                  "Name1",
+                  "value1"
+              ),
+              ConstantDescriptor(
+                  "com.test.Constants2",
+                  "Name2",
+                  "value2"
+              )
+          ))
+    }
 
     it("should return if target is invalid") {
       whenever(inspectionService.validTarget(psiLiteralExpression))
@@ -153,7 +147,7 @@ hardcode.
           )
     }
 
-    xit("should report matched standard constant") {
+    it("should report matched standard constant") {
       whenever(psiLiteralExpression.value)
           .thenReturn("value1")
 
