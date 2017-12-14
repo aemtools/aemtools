@@ -4,6 +4,7 @@ import com.aemtools.common.util.toSmartPointer
 import com.aemtools.inspection.html.fix.RemoveRedundantDataSlyUnwrapAction
 import com.aemtools.inspection.html.fix.SubstituteWithRawAttributeIntentionAction
 import com.aemtools.inspection.message.InspectionMessages.REDUNDANT_DATA_SLY_UNWRAP_MESSAGE
+import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.intellij.codeInsight.daemon.impl.analysis.RemoveAttributeIntentionFix
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
@@ -51,6 +52,10 @@ class InspectionService : IInspectionService {
 
   override fun moduleForPsiElement(psiElement: PsiElement): Module? {
     return ModuleUtil.findModuleForPsiElement(psiElement)
+  }
+
+  override fun reportRedundantEl(element: HtlHtlEl, problemsHolder: ProblemsHolder) {
+
   }
 
   companion object {

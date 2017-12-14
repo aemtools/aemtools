@@ -1,6 +1,7 @@
 package com.aemtools.inspection.html
 
 import com.aemtools.inspection.service.IInspectionService
+import com.aemtools.test.util.memo
 import com.aemtools.test.util.mock
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.openapi.project.Project
@@ -51,12 +52,11 @@ attributes that take JavaScript as input (e.g. onclick, onmousemove, etc).
   }
 
   given("check attribute") {
-
-    val project by memoized(CachingMode.TEST) { mock<Project>() }
-    val attribute: XmlAttribute = mock()
-    val holder: ProblemsHolder = mock()
-    val picoContainer: PicoContainer = mock()
-    val inspectionService: IInspectionService by memoized(CachingMode.TEST) { mock<IInspectionService>() }
+    val project: Project by memo()
+    val attribute: XmlAttribute by memo()
+    val holder: ProblemsHolder by memo()
+    val picoContainer: PicoContainer by memo()
+    val inspectionService: IInspectionService by memo()
     beforeGroup {
       whenever(project.picoContainer)
           .thenReturn(picoContainer)

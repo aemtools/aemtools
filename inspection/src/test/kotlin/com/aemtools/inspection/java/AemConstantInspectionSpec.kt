@@ -3,12 +3,12 @@ package com.aemtools.inspection.java
 import com.aemtools.inspection.java.constants.ConstantDescriptor
 import com.aemtools.inspection.service.IInspectionService
 import com.aemtools.inspection.service.IJavaInspectionService
+import com.aemtools.test.util.memo
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiLiteralExpression
 import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
@@ -17,7 +17,6 @@ import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
-import org.jetbrains.spek.api.lifecycle.CachingMode
 import org.mockito.ArgumentMatchers.anyList
 import org.picocontainer.PicoContainer
 
@@ -52,27 +51,13 @@ hardcode.
     }
   }
   describe("check literal") {
-    val psiLiteralExpression by memoized(CachingMode.TEST) {
-      mock<PsiLiteralExpression>()
-    }
-    val project by memoized(CachingMode.TEST) {
-      mock<Project>()
-    }
-    val inspectionService by memoized(CachingMode.TEST) {
-      mock<IInspectionService>()
-    }
-    val javaInspectionService by memoized(CachingMode.TEST) {
-      mock<IJavaInspectionService>()
-    }
-    val module by memoized(CachingMode.TEST) {
-      mock<Module>()
-    }
-    val problemsHolder by memoized(CachingMode.TEST) {
-      mock<ProblemsHolder>()
-    }
-    val picoContainer by memoized(CachingMode.TEST) {
-      mock<PicoContainer>()
-    }
+    val psiLiteralExpression: PsiLiteralExpression by memo()
+    val project: Project by memo()
+    val inspectionService: IInspectionService by memo()
+    val javaInspectionService: IJavaInspectionService by memo()
+    val module: Module by memo()
+    val problemsHolder: ProblemsHolder by memo()
+    val picoContainer: PicoContainer by memo()
 
     beforeEachTest {
       whenever(picoContainer.getComponentInstance(IJavaInspectionService::class.java.name))

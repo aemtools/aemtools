@@ -1,5 +1,6 @@
 package com.aemtools.inspection.service
 
+import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.openapi.module.Module
 import com.intellij.psi.PsiElement
@@ -44,6 +45,14 @@ interface IInspectionService {
    * @return the module
    */
   fun moduleForPsiElement(psiElement: PsiElement): Module?
+
+  /**
+   * Report redundant EL.
+   *
+   * @param element element - holder of redundant expression
+   * @param problemsHolder the problems holder
+   */
+  fun reportRedundantEl(element: HtlHtlEl, problemsHolder: ProblemsHolder)
 
 
 }
