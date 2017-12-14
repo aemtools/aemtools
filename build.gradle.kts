@@ -110,6 +110,12 @@ subprojects {
         }
     }
 
+    val mockito_kotlin_version: String by extra
+    val spek_version: String by extra
+    val junit_jupiter_api_version: String by extra
+    val junit_jupiter_engine_version: String by extra
+    val junit_vintage_engine_version: String by extra
+
     dependencies {
         compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
         compile("org.jetbrains.kotlin:kotlin-runtime:$kotlin_version")
@@ -122,18 +128,19 @@ subprojects {
         testCompile("org.jmockit:jmockit:$jmockit_version")
         testCompile("org.assertj:assertj-core:$assertj_version")
         testCompile("org.mockito:mockito-core:$mockito_version")
-        testCompile("com.nhaarman:mockito-kotlin:1.5.0")
+        testCompile("com.nhaarman:mockito-kotlin:$mockito_kotlin_version")
 
-        testCompile("org.jetbrains.spek:spek-api:1.1.5")
-        testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.1.5")
-        testCompile("org.jetbrains.spek:spek-subject-extension:1.1.5")
-        testCompile("org.junit.jupiter:junit-jupiter-api:5.0.2")
-        testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.2")
-        testRuntime("org.junit.vintage:junit-vintage-engine:4.12.2")
+        testCompile("org.jetbrains.spek:spek-api:$spek_version")
+        testRuntime("org.jetbrains.spek:spek-junit-platform-engine:$spek_version")
+        testCompile("org.jetbrains.spek:spek-subject-extension:$spek_version")
+        testCompile("org.junit.jupiter:junit-jupiter-api:$junit_jupiter_api_version")
+        testRuntime("org.junit.jupiter:junit-jupiter-engine:$junit_jupiter_engine_version")
+        testRuntime("org.junit.vintage:junit-vintage-engine:$junit_vintage_engine_version")
     }
 
+    val junit_platform_version: String by extra
     configure<JUnitPlatformExtension> {
-        platformVersion = "1.0.2"
+        platformVersion = junit_platform_version
 
         filters {
             engines {

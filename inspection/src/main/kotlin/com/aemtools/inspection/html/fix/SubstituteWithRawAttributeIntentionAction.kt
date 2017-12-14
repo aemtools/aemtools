@@ -23,10 +23,7 @@ import com.intellij.psi.xml.XmlAttribute
 class SubstituteWithRawAttributeIntentionAction(
     private val pointer: SmartPsiElementPointer<XmlAttribute>,
     private val message: String
-) : BaseHtlIntentionAction({ message }), LocalQuickFix {
-  override fun applyFix(project: Project, descriptor: ProblemDescriptor) {
-    invoke(project, null, null)
-  }
+) : BaseHtlIntentionAction({ message }) {
 
   override fun invoke(project: Project, editor: Editor?, file: PsiFile?) {
     val attribute = pointer.element ?: return
