@@ -13,5 +13,11 @@
                 hasStaticDescription="true"
                 implementationClass="com.aemtools.inspection.html.RedundantDataSlyUnwrapInspection"/>
 
+        <localInspection
+                language="HTML"
+                enabledByDefault="true"
+                hasStaticDescription="true"
+                implementationClass="com.aemtools.inspection.html.RedundantElInspection"/>
+
     </extensions>
 </idea-plugin>

@@ -160,8 +160,6 @@
 
         <annotator language="HTML"
                    implementationClass="com.aemtools.lang.html.annotation.HtlAttributesAnnotator"/>
-        <annotator language="Htl"
-                   implementationClass="com.aemtools.lang.html.inspection.RedundantELAnnotator"/>
 
         <annotator language="Htl"
                    implementationClass="com.aemtools.codeinsight.htl.annotator.HtlVariablesAnnotator"/>

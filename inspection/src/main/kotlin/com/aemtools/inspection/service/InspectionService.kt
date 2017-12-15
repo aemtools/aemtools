@@ -2,6 +2,7 @@ package com.aemtools.inspection.service
 
 import com.aemtools.common.util.toSmartPointer
 import com.aemtools.inspection.html.fix.RemoveRedundantDataSlyUnwrapAction
+import com.aemtools.inspection.html.fix.SimplifyElIntentionAction
 import com.aemtools.inspection.html.fix.SubstituteWithRawAttributeIntentionAction
 import com.aemtools.inspection.message.InspectionMessages.REDUNDANT_DATA_SLY_UNWRAP_MESSAGE
 import com.aemtools.lang.htl.psi.HtlHtlEl
@@ -31,6 +32,15 @@ class InspectionService : IInspectionService {
     )
   }
 
+  override fun reportRedundantEl(element: HtlHtlEl, problemsHolder: ProblemsHolder) {
+    problemsHolder.registerProblem(
+        element,
+        "Redundant expression",
+        ProblemHighlightType.WEAK_WARNING,
+        SimplifyElIntentionAction(element.toSmartPointer())
+    )
+  }
+
   override fun messedDataSlyAttribute(
       holder: ProblemsHolder,
       attribute: XmlAttribute,
@@ -52,10 +62,6 @@ class InspectionService : IInspectionService {
 
   override fun moduleForPsiElement(psiElement: PsiElement): Module? {
     return ModuleUtil.findModuleForPsiElement(psiElement)
-  }
-
-  override fun reportRedundantEl(element: HtlHtlEl, problemsHolder: ProblemsHolder) {
-
   }
 
   companion object {
