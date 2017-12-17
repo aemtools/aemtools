@@ -1,0 +1,5 @@
+[Htl] ${ ('${')
+[Htl] " ('"')
+[Htl] STRING_CONTENT ('string literal')
+[Htl] " ('"')
+[Htl] } ('}')
