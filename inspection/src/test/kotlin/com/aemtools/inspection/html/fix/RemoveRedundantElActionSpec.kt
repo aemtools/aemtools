@@ -1,8 +1,9 @@
 package com.aemtools.inspection.html.fix
 
-import com.aemtools.lang.htl.psi.HtlHtlEl
+import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin
 import com.aemtools.test.util.memo
+import com.aemtools.test.util.mockComponent
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
@@ -20,15 +21,15 @@ import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 
 /**
- * Specification for [SimplifyElIntentionAction].
+ * Specification for [RemoveRedundantElAction].
  *
  * @author Dmytro Troynikov
  */
-object SimplifyElIntentionActionSpec : Spek({
-  val htlHtlElPointer: SmartPsiElementPointer<HtlHtlEl> by memo()
-  val element: HtlHtlEl by memo()
-  val tested: SimplifyElIntentionAction by memo {
-    SimplifyElIntentionAction(htlHtlElPointer)
+object RemoveRedundantElActionSpec : Spek({
+  val htlHtlElPointer: SmartPsiElementPointer<HtlElExpressionMixin> by memo()
+  val element: HtlElExpressionMixin by memo()
+  val tested: RemoveRedundantElAction by memo {
+    RemoveRedundantElAction(htlHtlElPointer)
   }
 
   on("style check") {
@@ -37,9 +38,9 @@ object SimplifyElIntentionActionSpec : Spek({
           .isEqualTo("HTL Intentions")
     }
 
-    it ("should have correct text") {
+    it("should have correct text") {
       assertThat(tested.text)
-          .isEqualTo("Simplify expression")
+          .isEqualTo("Remove redundant expression.")
     }
   }
 
@@ -98,8 +99,3 @@ object SimplifyElIntentionActionSpec : Spek({
     }
   }
 })
-
-private inline fun <reified SERVICE> mockComponent(project: Project, service: SERVICE) {
-  whenever(project.getComponent(SERVICE::class.java))
-      .thenReturn(service)
-}

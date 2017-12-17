@@ -5,7 +5,7 @@ import com.aemtools.test.base.BaseLightTest
 /**
  * @author Dmytro Troynikov
  */
-class HtlOptionsAnnotatorTest : BaseLightTest(false) {
+class HtlOptionsAnnotatorTest : BaseLightTest() {
 
   fun testContext() = testStandardOptionHighlight("context")
   fun testFormat() = testStandardOptionHighlight("format")

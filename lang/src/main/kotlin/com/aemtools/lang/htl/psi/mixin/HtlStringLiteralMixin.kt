@@ -2,8 +2,10 @@ package com.aemtools.lang.htl.psi.mixin
 
 import com.aemtools.lang.htl.psi.HtlPsiBaseElement
 import com.aemtools.lang.htl.psi.HtlStringLiteral
+import com.aemtools.lang.htl.psi.visitor.HtlElementVisitor
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiNamedElement
 
 /**
@@ -11,6 +13,14 @@ import com.intellij.psi.PsiNamedElement
  */
 abstract class HtlStringLiteralMixin(node: ASTNode)
   : HtlPsiBaseElement(node), HtlStringLiteral, PsiNamedElement {
+
+  override fun accept(visitor: PsiElementVisitor) {
+    if (visitor is HtlElementVisitor) {
+      return visitor.visitString(this)
+    } else {
+      super.accept(visitor)
+    }
+  }
 
   fun isSingleQuoted() : Boolean = text.startsWith("'")
 

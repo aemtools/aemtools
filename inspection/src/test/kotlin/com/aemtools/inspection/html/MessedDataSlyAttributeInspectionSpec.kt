@@ -57,7 +57,7 @@ attributes that take JavaScript as input (e.g. onclick, onmousemove, etc).
     val holder: ProblemsHolder by memo()
     val picoContainer: PicoContainer by memo()
     val inspectionService: IInspectionService by memo()
-    beforeGroup {
+    beforeEachTest {
       whenever(project.picoContainer)
           .thenReturn(picoContainer)
       whenever(picoContainer.getComponentInstance(IInspectionService::class.java.name))

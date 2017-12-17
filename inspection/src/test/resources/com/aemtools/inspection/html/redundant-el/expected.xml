@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <problems>
-
+    <problem>
+        <file>input.html</file>
+        <line>1</line>
+        <entry_point TYPE="file" FQNAME="input.html" />
+        <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Redundant HTL expression</problem_class>
+        <description>Redundant expression</description>
+    </problem>
+    <problem>
+        <file>input.html</file>
+        <line>2</line>
+        <entry_point TYPE="file" FQNAME="input.html" />
+        <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Redundant HTL expression</problem_class>
+        <description>Redundant expression</description>
+    </problem>
 </problems>

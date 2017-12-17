@@ -2,10 +2,10 @@ package com.aemtools.inspection.service
 
 import com.aemtools.common.util.toSmartPointer
 import com.aemtools.inspection.html.fix.RemoveRedundantDataSlyUnwrapAction
-import com.aemtools.inspection.html.fix.SimplifyElIntentionAction
+import com.aemtools.inspection.html.fix.RemoveRedundantElAction
 import com.aemtools.inspection.html.fix.SubstituteWithRawAttributeIntentionAction
 import com.aemtools.inspection.message.InspectionMessages.REDUNDANT_DATA_SLY_UNWRAP_MESSAGE
-import com.aemtools.lang.htl.psi.HtlHtlEl
+import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.intellij.codeInsight.daemon.impl.analysis.RemoveAttributeIntentionFix
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
@@ -32,12 +32,12 @@ class InspectionService : IInspectionService {
     )
   }
 
-  override fun reportRedundantEl(element: HtlHtlEl, problemsHolder: ProblemsHolder) {
+  override fun reportRedundantEl(element: HtlElExpressionMixin, problemsHolder: ProblemsHolder) {
     problemsHolder.registerProblem(
         element,
         "Redundant expression",
         ProblemHighlightType.WEAK_WARNING,
-        SimplifyElIntentionAction(element.toSmartPointer())
+        RemoveRedundantElAction(element.toSmartPointer())
     )
   }
 

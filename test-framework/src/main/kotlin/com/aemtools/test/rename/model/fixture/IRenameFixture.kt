@@ -6,7 +6,7 @@ package com.aemtools.test.rename.model.fixture
 interface IRenameFixture {
 
   /**
-   * Set the state which should be before the rename
+   * Set the state which should be before the rename.
    *
    * @param state the "before" state
    */

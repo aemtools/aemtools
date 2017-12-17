@@ -3,16 +3,17 @@ package com.aemtools.codeinsight.htl.annotator
 import com.aemtools.common.util.closest
 import com.aemtools.common.util.distanceTo
 import com.aemtools.common.util.hasParentOfType
+import com.aemtools.common.util.highlight
 import com.aemtools.common.util.toSmartPointer
 import com.aemtools.completion.htl.common.FileVariablesResolver
 import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.model.htl.ContextObject
 import com.aemtools.inspection.fix.VariableNameErrataIntentionAction
-import com.aemtools.common.util.highlight
 import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_EL_GLOBAL_VARIABLE
 import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_EL_LOCAL_VARIABLE
 import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_EL_UNRESOLVED_VARIABLE
 import com.aemtools.lang.htl.psi.HtlAccessIdentifier
+import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.util.isOption
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
@@ -25,7 +26,7 @@ import com.intellij.psi.PsiElement
  */
 class HtlVariablesAnnotator : Annotator {
   override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-    if (element !is com.aemtools.lang.htl.psi.mixin.VariableNameMixin
+    if (element !is VariableNameMixin
         || element.isOption()
         || element.hasParentOfType(HtlAccessIdentifier::class.java)) {
       return

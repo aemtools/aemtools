@@ -3,7 +3,7 @@ package com.aemtools.inspection.html.fix
 import com.aemtools.common.intention.BaseHtlIntentionAction
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.common.util.psiDocumentManager
-import com.aemtools.lang.htl.psi.HtlHtlEl
+import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
@@ -13,9 +13,9 @@ import com.intellij.psi.SmartPsiElementPointer
 /**
  * @author Dmytro Troynikov
  */
-class SimplifyElIntentionAction(private val pointer: SmartPsiElementPointer<HtlHtlEl>)
+class RemoveRedundantElAction(private val pointer: SmartPsiElementPointer<HtlElExpressionMixin>)
   : BaseHtlIntentionAction(
-    text = { "Simplify expression" }
+    text = { "Remove redundant expression." }
 ) {
 
   override fun invoke(project: Project, editor: Editor, file: PsiFile) {

@@ -5,6 +5,9 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeD
 import com.aemtools.common.constant.const
 import com.aemtools.common.util.findParentByType
 import com.aemtools.common.util.highlight
+import com.aemtools.lang.htl.colorscheme.HtlColors
+import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
+import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.util.isInsideOf
 import com.aemtools.lang.util.isOption
 import com.aemtools.service.repository.inmemory.HtlAttributesRepository
@@ -17,13 +20,13 @@ import com.intellij.psi.PsiElement
  */
 class HtlOptionsAnnotator : Annotator {
   override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-    if (element !is com.aemtools.lang.htl.psi.mixin.VariableNameMixin
+    if (element !is VariableNameMixin
         || !element.isOption()) {
       return
     }
 
     if (element.isInsideOf(const.htl.DATA_SLY_CALL)) {
-      val hel = element.findParentByType(com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin::class.java)
+      val hel = element.findParentByType(HtlElExpressionMixin::class.java)
           ?: return
 
       val outputType = hel
@@ -35,13 +38,13 @@ class HtlOptionsAnnotator : Annotator {
 
       val templateParameters = outputType.parameters()
       if (templateParameters.any { it == element.variableName() }) {
-        holder.highlight(element, com.aemtools.lang.htl.colorscheme.HtlColors.TEMPLATE_ARGUMENT, "Template Argument")
+        holder.highlight(element, HtlColors.TEMPLATE_ARGUMENT, "Template Argument")
       }
       return
     }
 
     if (element.isInsideOf(const.htl.DATA_SLY_TEMPLATE)) {
-      holder.highlight(element, com.aemtools.lang.htl.colorscheme.HtlColors.TEMPLATE_PARAMETER, "Template Parameter")
+      holder.highlight(element, HtlColors.TEMPLATE_PARAMETER, "Template Parameter")
     }
 
     if (element.isInsideOf(const.htl.DATA_SLY_USE)) {
@@ -50,7 +53,7 @@ class HtlOptionsAnnotator : Annotator {
 
     if (HtlAttributesRepository.getHtlOptions()
         .any { it.name == element.variableName() }) {
-      holder.highlight(element, com.aemtools.lang.htl.colorscheme.HtlColors.STANDARD_OPTION, "Standard Option")
+      holder.highlight(element, HtlColors.STANDARD_OPTION, "Standard Option")
     }
   }
 
