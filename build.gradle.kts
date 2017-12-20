@@ -47,11 +47,6 @@ allprojects {
         id("io.gitlab.arturbosch.detekt").version("1.0.0.RC5-6")
     }
 
-//    configure<DetektPlugin> {
-//        version = "1.0.0.RC5.6"
-//        profile
-//    }
-
     repositories {
         mavenCentral()
         mavenLocal()

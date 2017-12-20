@@ -2,7 +2,7 @@ import org.jetbrains.intellij.IntelliJPluginExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
-    var kotlin_version: String by extra
+    val kotlin_version: String by extra
 
     repositories {
         mavenCentral()

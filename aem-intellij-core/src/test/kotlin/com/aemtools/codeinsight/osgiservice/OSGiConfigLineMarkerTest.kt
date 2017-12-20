@@ -11,9 +11,10 @@ import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
 
 /**
+ * Test for [OSGiConfigLineMarker].
+ *
  * @author Dmytro_Troynikov
  */
-
 class OSGiConfigLineMarkerTest : BaseLightTest(),
     OSGiConfigFixtureMixin,
     OSGiFelixAnnotationsMixin {
@@ -26,13 +27,13 @@ class OSGiConfigLineMarkerTest : BaseLightTest(),
   fun testFelixServiceShouldBeMarked() = fileCase {
     addFelixServiceAnnotation()
     addClass("MyService.java", """
-            package com.test;
+        package com.test;
 
-            import $FELIX_SERVICE_ANNOTATION;
+        import $FELIX_SERVICE_ANNOTATION;
 
-            @Service
-            public class MyService {}
-        """)
+        @Service
+        public class MyService {}
+    """)
     addEmptyOSGiConfigs("/config/com.test.MyService.xml")
 
     verify {
