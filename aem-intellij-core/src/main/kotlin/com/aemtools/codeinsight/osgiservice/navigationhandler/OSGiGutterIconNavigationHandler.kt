@@ -1,4 +1,4 @@
-package com.aemtools.lang.java.linemarker.navigationhandler
+package com.aemtools.codeinsight.osgiservice.navigationhandler
 
 import com.aemtools.index.model.OSGiConfiguration
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler

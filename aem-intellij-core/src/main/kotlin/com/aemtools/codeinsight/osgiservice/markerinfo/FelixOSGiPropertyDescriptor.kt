@@ -1,6 +1,7 @@
-package com.aemtools.lang.java.linemarker.markerinfo
+package com.aemtools.codeinsight.osgiservice.markerinfo
 
 import com.intellij.psi.xml.XmlAttribute
+import com.intellij.psi.xml.XmlFile
 
 /**
  * Descriptor of single OSGi property.
@@ -19,5 +20,10 @@ data class FelixOSGiPropertyDescriptor(
         /**
          * Xml Attribute - declaration of property.
          */
-        val xmlAttribute: XmlAttribute
+        val xmlAttribute: XmlAttribute?,
+
+        /**
+         * OSGi configuration XML file.
+         */
+        val osgiConfigFIle: XmlFile
 )

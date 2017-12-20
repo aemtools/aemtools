@@ -1,8 +1,8 @@
-package com.aemtools.lang.java.linemarker
+package com.aemtools.codeinsight.osgiservice
 
+import com.aemtools.codeinsight.osgiservice.navigationhandler.OSGiGutterIconNavigationHandler
 import com.aemtools.common.constant.const.java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.lang.java.JavaSearch
-import com.aemtools.lang.java.linemarker.navigationhandler.OSGiGutterIconNavigationHandler
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin
 import com.aemtools.test.fixture.OSGiFelixAnnotationsMixin

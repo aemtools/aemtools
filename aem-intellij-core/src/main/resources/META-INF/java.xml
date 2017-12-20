@@ -12,7 +12,7 @@
 
         <codeInsight.lineMarkerProvider
                 language="JAVA"
-                implementationClass="com.aemtools.lang.java.linemarker.OSGiConfigLineMarker"/>
+                implementationClass="com.aemtools.codeinsight.osgiservice.OSGiConfigLineMarker"/>
 
         <codeInsight.lineMarkerProvider
                 language="XML"
@@ -24,7 +24,7 @@
 
         <codeInsight.lineMarkerProvider
                 language="JAVA"
-                implementationClass="com.aemtools.lang.java.linemarker.FelixOSGiPropertyLineMarker"/>
+                implementationClass="com.aemtools.codeinsight.osgiservice.FelixOSGiPropertyLineMarker"/>
 
         <projectService
                 serviceInterface="com.aemtools.inspection.service.IJavaInspectionService"

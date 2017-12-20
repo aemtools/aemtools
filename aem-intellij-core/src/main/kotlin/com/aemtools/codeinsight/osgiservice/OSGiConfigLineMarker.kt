@@ -1,8 +1,8 @@
-package com.aemtools.lang.java.linemarker
+package com.aemtools.codeinsight.osgiservice
 
 import com.aemtools.index.model.sortByMods
 import com.aemtools.index.search.OSGiConfigSearch
-import com.aemtools.lang.java.linemarker.markerinfo.OSGiServiceConfigMarkerInfo
+import com.aemtools.codeinsight.osgiservice.markerinfo.OSGiServiceConfigMarkerInfo
 import com.aemtools.common.util.isOSGiService
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerProvider

@@ -1,6 +1,6 @@
-package com.aemtools.lang.java.linemarker.markerinfo
+package com.aemtools.codeinsight.osgiservice.markerinfo
 
-import com.aemtools.lang.java.linemarker.navigationhandler.FelixOSGiPropertyNavigationHandler
+import com.aemtools.codeinsight.osgiservice.navigationhandler.FelixOSGiPropertyNavigationHandler
 import com.intellij.codeHighlighting.Pass
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.icons.AllIcons
@@ -23,6 +23,6 @@ class FelixOSGiPropertyMarkerInfo(
         AllIcons.Nodes.PropertyRead,
         Pass.LINE_MARKERS,
         Function { "OSGi Property" },
-        FelixOSGiPropertyNavigationHandler(propertyDescriptors),
+    FelixOSGiPropertyNavigationHandler(propertyDescriptors),
         GutterIconRenderer.Alignment.CENTER
 )

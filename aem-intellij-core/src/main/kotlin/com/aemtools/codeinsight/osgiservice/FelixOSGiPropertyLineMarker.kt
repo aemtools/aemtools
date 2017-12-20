@@ -1,5 +1,7 @@
-package com.aemtools.lang.java.linemarker
+package com.aemtools.codeinsight.osgiservice
 
+import com.aemtools.codeinsight.osgiservice.markerinfo.FelixOSGiPropertyDescriptor
+import com.aemtools.codeinsight.osgiservice.markerinfo.FelixOSGiPropertyMarkerInfo
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.common.util.findParentByType
 import com.aemtools.common.util.isFelixProperty
@@ -7,8 +9,6 @@ import com.aemtools.common.util.isOSGiService
 import com.aemtools.index.model.OSGiConfiguration
 import com.aemtools.index.model.sortByMods
 import com.aemtools.index.search.OSGiConfigSearch
-import com.aemtools.lang.java.linemarker.markerinfo.FelixOSGiPropertyDescriptor
-import com.aemtools.lang.java.linemarker.markerinfo.FelixOSGiPropertyMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerProvider
 import com.intellij.psi.PsiClass
@@ -61,18 +61,18 @@ class FelixOSGiPropertyLineMarker : LineMarkerProvider {
   private fun propertyDescriptors(configs: List<OSGiConfiguration>, value: String): List<FelixOSGiPropertyDescriptor> {
     return configs.sortByMods()
         .mapNotNull { config ->
-          val file = config.xmlFile
+          val file = config.xmlFile ?: return@mapNotNull null
           val attribute = file
               .findChildrenByType(XmlAttribute::class.java)
               .find { it.name == value }
-              ?: return@mapNotNull null
 
-          val attributeValue = attribute.value ?: return@mapNotNull null
+          val attributeValue = attribute?.value ?: "<No Value Set>"
 
           FelixOSGiPropertyDescriptor(
               config.mods.joinToString { it },
               attributeValue,
-              attribute
+              attribute,
+              file
           )
         }
         .let { propertyDescriptors ->
