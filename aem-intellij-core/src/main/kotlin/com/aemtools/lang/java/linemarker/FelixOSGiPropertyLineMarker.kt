@@ -2,13 +2,13 @@ package com.aemtools.lang.java.linemarker
 
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.common.util.findParentByType
+import com.aemtools.common.util.isFelixProperty
+import com.aemtools.common.util.isOSGiService
 import com.aemtools.index.model.OSGiConfiguration
 import com.aemtools.index.model.sortByMods
 import com.aemtools.index.search.OSGiConfigSearch
 import com.aemtools.lang.java.linemarker.markerinfo.FelixOSGiPropertyDescriptor
 import com.aemtools.lang.java.linemarker.markerinfo.FelixOSGiPropertyMarkerInfo
-import com.aemtools.common.util.isFelixProperty
-import com.aemtools.common.util.isOSGiService
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerProvider
 import com.intellij.psi.PsiClass
@@ -62,7 +62,8 @@ class FelixOSGiPropertyLineMarker : LineMarkerProvider {
     return configs.sortByMods()
         .mapNotNull { config ->
           val file = config.xmlFile
-          val attribute = file.findChildrenByType(XmlAttribute::class.java)
+          val attribute = file
+              .findChildrenByType(XmlAttribute::class.java)
               .find { it.name == value }
               ?: return@mapNotNull null
 

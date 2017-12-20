@@ -11,8 +11,18 @@ import com.intellij.psi.PsiElementVisitor
  */
 abstract class HtlElementVisitor : PsiElementVisitor() {
 
+  /**
+   * Visit [HtlStringLiteral].
+   *
+   * @param string htl string literal
+   */
   open fun visitString(string: HtlStringLiteral) {}
 
+  /**
+   * Visit [HtlElExpressionMixin].
+   *
+   * @param htlExpression htl el expression mixin
+   */
   open fun visitHtlExpression(htlExpression: HtlElExpressionMixin) {}
 
 }

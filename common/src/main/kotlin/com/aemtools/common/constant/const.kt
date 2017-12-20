@@ -101,6 +101,9 @@ object const {
     }
   }
 
+  /**
+   * HTML related constants.
+   */
   object html {
 
     val WINDOW_EVENT_ATTRIBUTES = listOf(

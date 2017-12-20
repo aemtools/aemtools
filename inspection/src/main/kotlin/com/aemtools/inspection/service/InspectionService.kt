@@ -65,9 +65,17 @@ class InspectionService : IInspectionService {
   }
 
   companion object {
+
+    /**
+     * Get instance of [IInspectionService].
+     *
+     * @param project the project
+     * @return instance of inspection service
+     */
     fun getInstance(project: Project): IInspectionService? {
       return ServiceManager.getService(project, IInspectionService::class.java)
     }
+
   }
 
 }

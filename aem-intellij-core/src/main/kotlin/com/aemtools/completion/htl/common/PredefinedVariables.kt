@@ -6,6 +6,7 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor.Co
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.predefined.PredefinedTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.properties.PropertiesTypeDescriptor
+import com.aemtools.completion.model.htl.ContextObject
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.java.JavaSearch
 import com.aemtools.service.ServiceFacade
@@ -27,7 +28,7 @@ object PredefinedVariables {
    *
    * @return list of context objects
    */
-  fun allContextObjects() = repository.getContextObjects()
+  fun allContextObjects(): List<ContextObject> = repository.getContextObjects()
 
   /**
    * Create lookup elements for global context objects.
@@ -50,7 +51,7 @@ object PredefinedVariables {
    * @param project the project
    * @return context object's type descriptor
    */
-  fun typeDescriptorByIdentifier(variableName: com.aemtools.lang.htl.psi.mixin.VariableNameMixin, project: Project): TypeDescriptor {
+  fun typeDescriptorByIdentifier(variableName: VariableNameMixin, project: Project): TypeDescriptor {
     val name = variableName.variableName()
     val classInfo = repository.findContextObject(name) ?: return TypeDescriptor.empty()
     val originalElement = variableName.originalElement

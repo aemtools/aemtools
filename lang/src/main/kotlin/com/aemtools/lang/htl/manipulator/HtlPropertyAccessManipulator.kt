@@ -15,7 +15,7 @@ class HtlPropertyAccessManipulator : AbstractElementManipulator<HtlPropertyAcces
       element: HtlPropertyAccess,
       range: TextRange,
       newContent: String): HtlPropertyAccess {
-    val propertyAccessMixin = element as? com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
+    val propertyAccessMixin = element as? PropertyAccessMixin
         ?: throw IncorrectOperationException("Cannot rename: $element")
 
     val originalName = propertyAccessMixin.text.substring(range.startOffset, range.endOffset)
@@ -24,7 +24,7 @@ class HtlPropertyAccessManipulator : AbstractElementManipulator<HtlPropertyAcces
 
     val oldText = propertyAccessMixin.text
     val newText = "${oldText.substring(0, range.startOffset)}$newName${oldText.substring(range.endOffset)}"
-    val newElement = com.aemtools.lang.htl.psi.HtlElementFactory.createPropertyAccess(newText, propertyAccessMixin.project)
+    val newElement = HtlElementFactory.createPropertyAccess(newText, propertyAccessMixin.project)
         ?: return element
 
     val oldNode = propertyAccessMixin.node.firstChildNode

@@ -3,6 +3,8 @@ package com.aemtools.completion.htl.smart
 import com.aemtools.test.completion.CompletionBaseLightTest
 
 /**
+ * Test for [com.aemtools.completion.htl.provider.HtlListSmartCompletionProvider].
+ *
  * @author Dmytro Troynikov
  */
 class DataSlyListSmartCompletionTest : CompletionBaseLightTest(true) {
@@ -36,10 +38,6 @@ class DataSlyListSmartCompletionTest : CompletionBaseLightTest(true) {
         "bean.stringList",
         "bean.innerModel.innerModelList"
     )
-
-    verify {
-
-    }
   }
 
 }

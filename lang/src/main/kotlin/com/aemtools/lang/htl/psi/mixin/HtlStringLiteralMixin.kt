@@ -22,8 +22,6 @@ abstract class HtlStringLiteralMixin(node: ASTNode)
     }
   }
 
-  fun isSingleQuoted() : Boolean = text.startsWith("'")
-
   override fun setName(name: String): PsiElement {
     return this
   }

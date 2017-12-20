@@ -29,6 +29,15 @@ hardcode.
     """.trimIndent()
   }
 
+  /**
+   * Check if given [PsiLiteralExpression] contains string contained in one of
+   * OOTB platform constant-holder classes.
+   * If any replacement candidates for hardcoded literal is found, will delegate
+   * problem reporting to [JavaInspectionService].
+   *
+   * @param psiLiteralExpression literal to inspect
+   * @param holder the problems holder
+   */
   fun checkLiteral(psiLiteralExpression: PsiLiteralExpression, holder: ProblemsHolder) {
     val project = psiLiteralExpression.project
     val inspectionService = InspectionService.getInstance(project) ?: return

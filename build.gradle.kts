@@ -12,6 +12,8 @@ import org.gradle.wrapper.GradleWrapperMain
 
 import org.junit.platform.gradle.plugin.FiltersExtension
 import org.junit.platform.gradle.plugin.EnginesExtension
+import io.gitlab.arturbosch.detekt.*
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 
 buildscript {
     val kotlin_version: String by extra
@@ -28,16 +30,27 @@ buildscript {
             classpath(kotlin("gradle-plugin", kotlin_version))
             classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.2")
             classpath("com.palantir:jacoco-coverage:0.4.0")
+            classpath("gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0.RC5-6")
         }
     }
 }
 
 val aemtools_version: String by extra
 
+
 allprojects {
     group = "aemtools"
 
     version = aemtools_version
+
+    plugins {
+        id("io.gitlab.arturbosch.detekt").version("1.0.0.RC5-6")
+    }
+
+//    configure<DetektPlugin> {
+//        version = "1.0.0.RC5.6"
+//        profile
+//    }
 
     repositories {
         mavenCentral()
@@ -59,6 +72,7 @@ val mockito_version: String by extra
 
 plugins {
     java
+    id("io.gitlab.arturbosch.detekt").version("1.0.0.RC5-6")
 }
 
 apply {
@@ -166,4 +180,14 @@ task<Wrapper>("gradleWrapper") {
 
 configure<JacocoFullReportExtension> {
     excludeProject(":test-framework")
+}
+
+configure<DetektExtension> {
+    version = "1.0.0.RC5-6"
+    profile("main", Action {
+        input = rootProject.projectDir.absolutePath
+        config = "$projectDir/config/detekt.yml"
+        filters = "com.aemtools.test.*,.*test.*,"
+        parallel = true
+    })
 }

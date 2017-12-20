@@ -63,7 +63,7 @@ object VirtualChainResolver {
 
   private fun VirtualCallChainElement.subtypes(): List<VirtualCallChainElement> {
     return type.myVariants().filterNot {
-      it.lookupString in listOf<String>(
+      it.lookupString in listOf(
           "class", "toString", "parallelStream",
           "stream", "toArray"
       )

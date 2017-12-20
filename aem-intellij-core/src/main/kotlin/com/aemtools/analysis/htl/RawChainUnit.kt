@@ -32,6 +32,12 @@ open class RawChainUnit(
 
 }
 
+/**
+ * Extract list of [RawChainUnit]'s from current [PropertyAccessMixin].
+ *
+ * @receiver [PropertyAccessMixin]
+ * @return list of raw chain units
+ */
 fun PropertyAccessMixin.rawCallChain(): LinkedList<RawChainUnit> {
   var result = LinkedList<RawChainUnit>()
 
