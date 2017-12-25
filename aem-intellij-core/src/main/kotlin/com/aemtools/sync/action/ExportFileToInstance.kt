@@ -1,6 +1,7 @@
 package com.aemtools.sync.action
 
 import com.aemtools.sync.logger.CRXStatusLogger
+import com.aemtools.sync.packmgr.uninstall.PackageUninstaller
 import com.aemtools.sync.util.SyncConstants
 import com.aemtools.sync.util.getPathOnAEMInstance
 import com.aemtools.sync.util.isUnderAEMRoot
@@ -64,6 +65,9 @@ class ExportFileToInstance : AnAction() {
     val logger = CRXStatusLogger()
     val packageInstaller = PackageInstaller(props, logger)
     packageInstaller.installFile(packageFile)
+
+    val uninstallerPackage = PackageUninstaller(props, logger)
+    uninstallerPackage.uninstallFile(SyncConstants.TMP_NAME)
   }
 
 }
