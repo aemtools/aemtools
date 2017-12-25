@@ -64,6 +64,8 @@ val junit_version: String by extra
 val jmockit_version: String by extra
 val assertj_version: String by extra
 val mockito_version: String by extra
+val content_package_builder_version: String by extra
+val crx_packmgr_helper: String by extra
 
 plugins {
     java
@@ -130,6 +132,8 @@ subprojects {
         compile("org.jetbrains.kotlin:kotlin-runtime:$kotlin_version")
         compile("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
         compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
+        compile("io.wcm.tooling.commons:io.wcm.tooling.commons.content-package-builder:$content_package_builder_version")
+        compile("io.wcm.tooling.commons:io.wcm.tooling.commons.crx-packmgr-helper:$crx_packmgr_helper")
 
         testCompile("com.github.markusbernhardt:proxy-vole:1.0.3")
 

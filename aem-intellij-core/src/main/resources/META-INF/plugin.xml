@@ -267,6 +267,17 @@
                 description="HTML files under this directory will be considered as HTL files">
             <add-to-group group-id="MarkRootGroup" anchor="last"/>
         </action>
+        <group id="AEMToolsGroup"
+               class="com.aemtools.sync.action.AEMToolsActionGroup"
+               text="AEM Tools"
+               popup="true">
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorPopupMenu"/>
+            <action id="ExportFileToInstance"
+                    class="com.aemtools.sync.action.ExportFileToInstance"
+                    text="Export file"
+                    description="Export file to AEM instance">
+            </action>
+        </group>
     </actions>
 
 </idea-plugin>
