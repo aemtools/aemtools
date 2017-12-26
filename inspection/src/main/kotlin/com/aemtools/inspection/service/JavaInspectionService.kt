@@ -24,7 +24,7 @@ class JavaInspectionService : IJavaInspectionService {
                                        constantDescriptors: List<ConstantDescriptor>) {
     val fixes = constantDescriptors.map { constant ->
       ReplaceHardcodedLiteralWithFqnAction(
-          "Replace with ${constant.containerClass}",
+          "Replace with '${constant.containerClass}.${constant.name}'",
           constant,
           literal.toSmartPointer()
       )
@@ -55,7 +55,10 @@ class JavaInspectionService : IJavaInspectionService {
             fieldValue
         )
       }
+    }.filterNot {
+      it.value in ConstantClasses.EXLUSIONS
     }
+
     return variants
   }
 

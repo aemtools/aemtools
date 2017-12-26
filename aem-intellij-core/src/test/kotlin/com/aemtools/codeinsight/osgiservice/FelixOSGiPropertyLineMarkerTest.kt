@@ -5,6 +5,7 @@ import com.aemtools.common.constant.const.java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin
 import com.aemtools.test.fixture.OSGiFelixAnnotationsMixin
+import com.intellij.icons.AllIcons
 import org.assertj.core.api.Assertions.assertThat
 
 /**
@@ -13,8 +14,8 @@ import org.assertj.core.api.Assertions.assertThat
  * @author Dmytro Troynikov
  */
 class FelixOSGiPropertyLineMarkerTest : BaseLightTest(),
-OSGiConfigFixtureMixin,
-OSGiFelixAnnotationsMixin{
+    OSGiConfigFixtureMixin,
+    OSGiFelixAnnotationsMixin {
 
   fun testFelixPropertiesShouldBeMarked() = fileCase {
     addFelixServiceAnnotation()
@@ -48,6 +49,14 @@ OSGiFelixAnnotationsMixin{
 
       assertThat(gutters.size)
           .isEqualTo(1)
+
+      val gutter = gutters.first()
+
+      assertThat(gutter.icon)
+          .isEqualTo(AllIcons.FileTypes.Config)
+
+      assertThat(gutter.tooltipText)
+          .isEqualTo("OSGi configs found")
     }
   }
 
