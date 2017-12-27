@@ -277,6 +277,11 @@
                     text="Export file"
                     description="Export file to AEM instance">
             </action>
+            <action id="ImportFileFromInstance"
+                    class="com.aemtools.sync.action.ImportFileFromInstance"
+                    text="Import file"
+                    description="Import file from AEM instance">
+            </action>
         </group>
     </actions>
 

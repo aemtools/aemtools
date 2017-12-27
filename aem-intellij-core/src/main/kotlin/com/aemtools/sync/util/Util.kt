@@ -13,3 +13,6 @@ fun VirtualFile.isUnderAEMRoot() : Boolean =
 
 fun VirtualFile.getPathOnAEMInstance() : String =
         this.path.substringAfter("/$JCR_ROOT")
+
+fun VirtualFile.getRootOfFile() : String =
+        this.path.substringBefore("/$JCR_ROOT")
