@@ -13,6 +13,7 @@ class RemoveRedundantElFixTest : BaseFixTest() {
   fun testUse() = fixTest {
     inspection = RedundantElInspection::class.java
     fixName = "Remove redundant expression."
+
     before = html("test.html", """
         <div data-sly-use.bean="$DOLLAR{'com.test.${CARET}Bean'}"></div>
     """)
@@ -25,6 +26,7 @@ class RemoveRedundantElFixTest : BaseFixTest() {
   fun testInclude() = fixTest {
     inspection = RedundantElInspection::class.java
     fixName = "Remove redundant expression."
+
     before = html("test.html", """
         <div data-sly-include="$DOLLAR{'path/to/${CARET}include'}"></div>
     """)
