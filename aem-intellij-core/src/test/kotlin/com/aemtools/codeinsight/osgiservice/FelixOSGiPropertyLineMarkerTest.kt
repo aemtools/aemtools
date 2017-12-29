@@ -3,6 +3,7 @@ package com.aemtools.codeinsight.osgiservice
 import com.aemtools.common.constant.const.java.FELIX_PROPERTY_ANNOTATION
 import com.aemtools.common.constant.const.java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.test.base.BaseLightTest
+import com.aemtools.test.fixture.JavaMixin
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin
 import com.aemtools.test.fixture.OSGiFelixAnnotationsMixin
 import com.intellij.icons.AllIcons
@@ -15,11 +16,15 @@ import org.assertj.core.api.Assertions.assertThat
  */
 class FelixOSGiPropertyLineMarkerTest : BaseLightTest(),
     OSGiConfigFixtureMixin,
-    OSGiFelixAnnotationsMixin {
+    OSGiFelixAnnotationsMixin,
+    JavaMixin {
 
   fun testFelixPropertiesShouldBeMarked() = fileCase {
     addFelixServiceAnnotation()
     addFelixPropertyAnnotation()
+
+    javaLangString()
+
     addClass("MyService.java", """
         package com.test;
 
@@ -30,8 +35,7 @@ class FelixOSGiPropertyLineMarkerTest : BaseLightTest(),
         public class MyService {
 
             @Property
-            private static final String =
-                ${CARET}TEST = "test.property"
+            private static final String ${CARET}TEST = "test.property"
 
         }
     """)
@@ -48,7 +52,7 @@ class FelixOSGiPropertyLineMarkerTest : BaseLightTest(),
       val gutters = myFixture.findAllGutters()
 
       assertThat(gutters.size)
-          .isEqualTo(1)
+          .isEqualTo(2)
 
       val gutter = gutters.first()
 

@@ -66,7 +66,7 @@ class FelixOSGiPropertyLineMarker : LineMarkerProvider {
               .findChildrenByType(XmlAttribute::class.java)
               .find { it.name == value }
 
-          val attributeValue = attribute?.value ?: "<No Value Set>"
+          val attributeValue = attribute?.value ?: "<no value set>"
 
           FelixOSGiPropertyDescriptor(
               config.mods.joinToString { it },

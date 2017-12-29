@@ -43,6 +43,11 @@ interface OSGiFelixAnnotationsMixin {
         public @interface SlingServlet {}
       """)
 
+  /**
+   * Add `org.apache.felix.scr.annotations.Property` annotation to current fixture.
+   *
+   * @receiver [ITestFixture]
+   */
   fun ITestFixture.addFelixPropertyAnnotation() =
       this.addClass("org/apache/felix/scr/annotations/Property.java", """
         package org.apache.felix.scr.annotations;
