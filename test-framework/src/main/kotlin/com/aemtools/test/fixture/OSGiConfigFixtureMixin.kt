@@ -15,6 +15,15 @@ interface OSGiConfigFixtureMixin {
   fun emptyOSGiConfig(): String = "".wrapInOSGiConfig()
 
   /**
+   * Create OSGi configuration file.
+   *
+   * @param name the name of file
+   * @param content content of file
+   * @receiver [ITestFixture]
+   */
+  fun ITestFixture.osgiConfig(name: String, content: String) = addXml(name, content.wrapInOSGiConfig())
+
+  /**
    * Wrap current String into OSGi config therefore,
    * the String should contain OSGi parameters in form of
    *

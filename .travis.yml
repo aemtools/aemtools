@@ -7,10 +7,7 @@ env:
   global:
   - ORG_GRADLE_PROJECT_downloadIdeaSources=false
 
-install:
-  - ./gradlew generateGrammar
-  
-script: ./gradlew test jacocoTestReport
+script: ./gradlew test jacocoFullReport detektCheck
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

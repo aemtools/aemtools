@@ -1,0 +1,40 @@
+<idea-plugin url="https://www.jetbrains.com/idea">
+    <extensions defaultExtensionNs="com.intellij">
+        <fileBasedIndex implementation="com.aemtools.index.OSGiConfigIndex"/>
+
+        <psi.referenceContributor
+                language="HTML"
+                implementation="com.aemtools.reference.html.HtmlToJavaReferenceContributor"/>
+
+        <psi.referenceContributor
+                language="Htl"
+                implementation="com.aemtools.reference.htl.contributor.HtlToJavaReferenceContributor"/>
+
+        <codeInsight.lineMarkerProvider
+                language="JAVA"
+                implementationClass="com.aemtools.codeinsight.osgiservice.OSGiConfigLineMarker"/>
+
+        <codeInsight.lineMarkerProvider
+                language="XML"
+                implementationClass="com.aemtools.codeinsight.osgiconfig.OSGiConfigGotoClassLineMarkerProvider"/>
+
+        <applicationService
+                serviceInterface="com.aemtools.service.IJavaSearchService"
+                serviceImplementation="com.aemtools.service.JavaSearchService"/>
+
+        <codeInsight.lineMarkerProvider
+                language="JAVA"
+                implementationClass="com.aemtools.codeinsight.osgiservice.FelixOSGiPropertyLineMarker"/>
+
+        <projectService
+                serviceInterface="com.aemtools.inspection.service.IJavaInspectionService"
+                serviceImplementation="com.aemtools.inspection.service.JavaInspectionService"/>
+
+        <localInspection
+                language="JAVA"
+                enabledByDefault="true"
+                hasStaticDescription="true"
+                implementationClass="com.aemtools.inspection.java.AemConstantInspection"/>
+
+    </extensions>
+</idea-plugin>

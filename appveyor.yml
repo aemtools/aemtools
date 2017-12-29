@@ -2,10 +2,10 @@ build:
   verbosity: detailed
   
 build_script:
-  - gradlew.bat generateGrammar buildPlugin --info --no-daemon
+  - gradlew.bat buildPlugin --info --no-daemon
 
 test_script:
-  - gradlew.bat test jacocoTestReport --info --no-daemon
+  - gradlew.bat test jacocoFullReport --info --no-daemon
 
 environment:
   matrix:

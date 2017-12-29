@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problems>
+    <problem>
+        <file>input.html</file>
+        <line>3</line>
+        <entry_point TYPE="file" FQNAME="input.html" />
+        <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">data-sly-unwrap is redundant inside sly tag</problem_class>
+        <description>The data-sly-unwrap attribute is redundant in sly tag.</description>
+    </problem>
+</problems>
