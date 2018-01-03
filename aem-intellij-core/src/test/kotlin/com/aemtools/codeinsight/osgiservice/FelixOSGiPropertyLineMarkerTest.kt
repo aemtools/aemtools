@@ -1,12 +1,13 @@
 package com.aemtools.codeinsight.osgiservice
 
+import com.aemtools.codeinsight.osgiservice.markerinfo.FelixOSGiPropertyMarkerInfo
 import com.aemtools.common.constant.const.java.FELIX_PROPERTY_ANNOTATION
 import com.aemtools.common.constant.const.java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.JavaMixin
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin
 import com.aemtools.test.fixture.OSGiFelixAnnotationsMixin
-import com.intellij.icons.AllIcons
+import com.intellij.codeInsight.daemon.LineMarkerInfo
 import org.assertj.core.api.Assertions.assertThat
 
 /**
@@ -26,18 +27,18 @@ class FelixOSGiPropertyLineMarkerTest : BaseLightTest(),
     javaLangString()
 
     addClass("MyService.java", """
-        package com.test;
+      package com.test;
 
-        import $FELIX_SERVICE_ANNOTATION;
-        import $FELIX_PROPERTY_ANNOTATION;
+      import $FELIX_SERVICE_ANNOTATION;
+      import $FELIX_PROPERTY_ANNOTATION;
 
-        @Service
-        public class MyService {
+      @Service
+      public class MyService {
 
-            @Property
-            private static final String ${CARET}TEST = "test.property"
+        @Property
+        private static final String ${CARET}TEST = "test.property"
 
-        }
+      }
     """)
 
     addEmptyOSGiConfigs(
@@ -51,16 +52,15 @@ class FelixOSGiPropertyLineMarkerTest : BaseLightTest(),
     verify {
       val gutters = myFixture.findAllGutters()
 
-      assertThat(gutters.size)
-          .isEqualTo(2)
+      val felixGutter = gutters.mapNotNull {
+        it as? LineMarkerInfo.LineMarkerGutterIconRenderer<*>
+      }.find {
+        it.lineMarkerInfo is FelixOSGiPropertyMarkerInfo
+      }?.lineMarkerInfo ?: throw AssertionError("Unable to find Felix gutter")
 
-      val gutter = gutters.first()
+      assertThat(felixGutter.lineMarkerTooltip)
+          .isEqualTo("OSGi Property")
 
-      assertThat(gutter.icon)
-          .isEqualTo(AllIcons.FileTypes.Config)
-
-      assertThat(gutter.tooltipText)
-          .isEqualTo("OSGi configs found")
     }
   }
 
