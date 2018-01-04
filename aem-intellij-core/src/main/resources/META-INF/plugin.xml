@@ -9,7 +9,8 @@
     </vendor>
 
     <description><![CDATA[
-        AEM Tools is a plugin which contains set of AEM related extensions and features
+        AEM Tools is an IntelliJ Platform plugin that provides set of
+        <i>Adobe Experience Manager</i> related extensions and features
        <ul>
         <li><b>HTL</b>(<b>Sightly</b>) support:
             <ul>
@@ -28,24 +29,63 @@
 
         <li><b>OSGi</b>
             <ul>
-                <li><b>Resolve OSGi configs for OSGi services (Felix only)</b> (configs presented via gutter icon)</li>
+                <li><b>Resolves OSGi configs (Felix)</b></li>
+                <li><b>Resolves OSGi properties (Felix)</b></li>
             </ul>
         </li>
         <li>dialog.xml completion for <b>Classic UI</b></li>
+        <li><b>HTL & OSGi & AEM Inspections</b></li>
+        <li><b>Implementation of
+            <a href="https://github.com/Cognifide/AEM-Rules-for-SonarQube">
+            Cognifide AEM Rules for SonarQube</a> as IntelliJ inspections
+        </li>
        </ul>
     ]]></description>
 
     <change-notes><![CDATA[
         <ul>
             <li>
-                Added "Mark As -> HTL Root" action which allows to mark
-                any folder as HTL Root, all HTML files under HTL roots will be
-                considered as HTL files.
+                Added Cognifide
+                <a href="https://github.com/Cognifide/AEM-Rules-for-SonarQube#good-practices">AEM-1 & AEM-2</a> rules as
+                IntelliJ inspections.
             </li>
             <li>
-                Added localization keys completion: ${'&lt;caret>' @ i18n} in this
-                example under caret all available in project i18n keys will be
-                proposed as completion variants.
+                "Unnecessary expression inspection". Reports redundant HTL expression inside of
+                <i>data-sly-use</i> and <i>data-sly-include</i> as a warning.
+            </li>
+            <li>
+                Present available OSGi properties right in the Java editor via gutter icon.
+            </li>
+            <li>
+                "Associated OSGi service" gutter icon in <b>sling:OsgiConfig</b> configuration files
+                that links to corresponding OSGi service.
+            </li>
+            <li>
+                Inspection that warns on wrong data-sly-attribute usage. It can not be used
+                with event handler attributes "on*" and the "style" attribute (for more info see the
+                <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#223-attribute">spec</a>).
+            </li>
+            <li>
+                HTL: Syntax highlighting for escape sequences within string literals.
+            </li>
+            <li>
+                HTL: Color Scheme Settings Page (<i>settings -> HTML Markup Language</li>).
+            </li>
+            <li>
+                HTL: Special highlighting for template parameters&arguments.
+            </li>
+            <li>
+                HTL: Smart completion for <i>data-sly-list</i> & <i>data-sly-repeat</i>.
+                Completion suggests the most relevant variant.
+            <li>
+            <li>
+                HTL: Improved completion for <i>i18n</li> expressions (e.g. ${'&lt;caret&gt;' @ i18n}).
+            </li>
+            <li>
+                HTL: fixed wrong syntax highlighting within HTl comments.
+            </li>
+            <li>
+                HTL: bug fixes and improvements.
             </li>
         </ul>
     ]]>
