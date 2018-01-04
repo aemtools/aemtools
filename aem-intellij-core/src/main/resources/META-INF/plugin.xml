@@ -77,7 +77,7 @@
             <li>
                 HTL: Smart completion for <i>data-sly-list</i> & <i>data-sly-repeat</i>.
                 Completion suggests the most relevant variant.
-            <li>
+            </li>
             <li>
                 HTL: Improved completion for <i>i18n</li> expressions (e.g. ${'&lt;caret&gt;' @ i18n}).
             </li>
