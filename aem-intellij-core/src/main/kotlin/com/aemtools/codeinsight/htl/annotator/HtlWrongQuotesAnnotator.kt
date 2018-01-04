@@ -62,31 +62,7 @@ class HtlWrongQuotesLiteralFixIntentionAction(
     val document = project.psiDocumentManager().getDocument(file)
         ?: return
 
-    val newValue = if (element.isDoubleQuoted()) {
-      element.text
-          // "input ' \" " -> 'input \' " '
-          // escape singlequotes inside the literal
-          .replace("'", "\\'")
-
-          // unescape doublequotes inside the literal
-          .replace("\\\"", "\"")
-
-          // swap quotes
-          .replaceFirst("\"", "'")
-          .replaceLast("\"", "'")
-    } else {
-      element.text
-          // 'input " \' ' -> "input \" ' "
-          // escape doublequotes inside the literal
-          .replace("\"", "\\\"")
-
-          // unescape singlequotes inside the literal
-          .replace("\\'", "'")
-
-          // swap quotes
-          .replaceFirst("'", "\"")
-          .replaceLast("'", "\"")
-    }
+    val newValue = element.swapQuotes()
 
     val (start, end) = element.textRange.startOffset to element.textRange.endOffset
 
@@ -94,14 +70,4 @@ class HtlWrongQuotesLiteralFixIntentionAction(
     project.psiDocumentManager().commitDocument(document)
   }
 
-  private fun String.replaceLast(oldValue: String, newValue: String, ignoreCase: Boolean = false): String =
-      reversed()
-          .replaceFirst(oldValue, newValue, ignoreCase)
-          .reversed()
-
-}
-
-
-private fun HtlStringLiteralMixin.isDoubleQuoted(): Boolean {
-  return this.text.startsWith("\"")
 }
