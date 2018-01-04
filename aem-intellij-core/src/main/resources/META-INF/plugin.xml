@@ -207,6 +207,9 @@
         <annotator language="Htl"
                    implementationClass="com.aemtools.codeinsight.htl.annotator.HtlOptionsAnnotator"/>
 
+        <annotator language="Htl"
+                   implementationClass="com.aemtools.codeinsight.htl.annotator.HtlWrongQuotesAnnotator"/>
+
         <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
                        order="before xmlAttribute"/>
 
