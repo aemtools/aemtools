@@ -189,6 +189,7 @@
 
         <lang.commenter language="Htl" implementationClass="com.aemtools.lang.htl.editor.comments.HtlCommenter"/>
         <lang.quoteHandler language="Htl" implementationClass="com.aemtools.lang.htl.editor.HtlQuoteHandler"/>
+        <backspaceHandlerDelegate implementation="com.aemtools.lang.htl.editor.HtlBackspaceHandler"/>
 
         <applicationService serviceInterface="com.aemtools.service.repository.IRepositoryService"
                             serviceImplementation="com.aemtools.service.repository.impl.RepositoryService"
