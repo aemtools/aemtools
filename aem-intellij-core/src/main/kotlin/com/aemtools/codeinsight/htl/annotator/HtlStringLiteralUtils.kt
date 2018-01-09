@@ -13,6 +13,7 @@ fun HtlStringLiteralMixin.toSingleQuoted(): String {
     text
         // "input ' \" " -> 'input \' " '
         // escape singlequotes inside the literal
+        .replace("\\'", "'")
         .replace("'", "\\'")
 
         // unescape doublequotes inside the literal
@@ -37,6 +38,7 @@ fun HtlStringLiteralMixin.toDoubleQuoted(): String {
     text
         // 'input " \' ' -> "input \" ' "
         // escape doublequotes inside the literal
+        .replace("\\\"", "\"")
         .replace("\"", "\\\"")
 
         // unescape singlequotes inside the literal

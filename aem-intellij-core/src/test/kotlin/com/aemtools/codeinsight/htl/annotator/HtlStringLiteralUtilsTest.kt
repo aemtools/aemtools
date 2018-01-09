@@ -37,6 +37,18 @@ class HtlStringLiteralUtilsTest {
   }
 
   @Test
+  fun `toDoubleQuoted should not apply double escape`() {
+    val literal = literal("""
+       'shouldn\'t \" escape'
+    """)
+
+    val result = literal.toDoubleQuoted()
+
+    assertThat(result)
+        .isEqualTo("\"shouldn't \\\" escape\"")
+  }
+
+  @Test
   fun testToSingleQuoted() {
     val literal = literal("""
        "' \" \b\t"
@@ -58,6 +70,18 @@ class HtlStringLiteralUtilsTest {
 
     assertThat(result)
         .isEqualTo("'\\' \"'")
+  }
+
+  @Test
+  fun `toSingleQuoted should not apply double escape`(){
+    val literal = literal("""
+       "shouldn\'t \" escape"
+    """)
+
+    val result = literal.toSingleQuoted()
+
+    assertThat(result)
+        .isEqualTo("'shouldn\\'t \" escape'")
   }
 
   @Test
