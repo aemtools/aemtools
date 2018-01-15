@@ -4,7 +4,7 @@
     <version>@version@</version>
     <category>Framework integration</category>
     <vendor email="dmytrotroynikov@gmail.com"
-            url="https://github.com/DmytroTroynikov/aemtools">
+            url="https://github.com/aemtools/aemtools">
         Dmytro Troynikov
     </vendor>
 
@@ -82,10 +82,10 @@
                 HTL: Improved completion for <i>i18n</li> expressions (e.g. ${'&lt;caret&gt;' @ i18n}).
             </li>
             <li>
-                HTL: fixed wrong syntax highlighting within HTl comments.
+                HTL: Fixed wrong syntax highlighting within HTL comments.
             </li>
             <li>
-                HTL: bug fixes and improvements.
+                HTL: Bug fixes and improvements.
             </li>
         </ul>
     ]]>
