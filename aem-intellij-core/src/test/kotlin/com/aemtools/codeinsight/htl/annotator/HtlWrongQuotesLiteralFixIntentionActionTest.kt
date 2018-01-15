@@ -2,13 +2,14 @@ package com.aemtools.codeinsight.htl.annotator
 
 import com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin
 import com.aemtools.test.junit.MockitoExtension
-import com.intellij.openapi.components.ComponentManager
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiFile
 import com.intellij.psi.SmartPsiElementPointer
+import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
@@ -35,25 +36,30 @@ class HtlWrongQuotesLiteralFixIntentionActionTest {
   @Mock lateinit var document: Document
 
   lateinit var tested: HtlWrongQuotesLiteralFixIntentionAction
+
   @BeforeEach
   fun init() {
     whenever(pointer.element)
         .thenReturn(literal)
 
-    project.mockComponent(psiDocumentManager)
+    whenever(project.getComponent(PsiDocumentManager::class.java))
+        .thenReturn(psiDocumentManager)
+
+    whenever(psiDocumentManager.getDocument(file))
+        .thenReturn(document)
+
+    whenever(literal.text)
+        .thenReturn("''")
+    whenever(literal.textRange)
+        .thenReturn(TextRange(0, 2))
 
     tested = HtlWrongQuotesLiteralFixIntentionAction(pointer)
-  }
-
-  private fun ComponentManager.mockComponent(component: Any) {
-    whenever(getComponent(component.javaClass))
-        .thenReturn(component)
   }
 
   @Test
   fun testFormat() {
     assertThat(tested.text)
-        .isEqualTo("Invert HTL Literal quotes.")
+        .isEqualTo("Invert HTL Literal quotes")
 
     assertThat(tested.familyName)
         .isEqualTo("HTL Intentions")
@@ -71,6 +77,27 @@ class HtlWrongQuotesLiteralFixIntentionActionTest {
 
     verify(project, never())
         .getComponent(PsiDocumentManager::class.java)
+  }
+
+  @Test
+  fun `should return if document is null`() {
+    whenever(psiDocumentManager.getDocument(file))
+        .thenReturn(null)
+
+    tested.invoke(project, editor, file)
+
+    verify(literal, never())
+        .text
+  }
+
+  @Test
+  fun `should swap quotes if everything is fine`() {
+    tested.invoke(project, editor, file)
+
+    verify(document)
+        .replaceString(eq(0), eq(2), eq("\"\""))
+    verify(psiDocumentManager)
+        .commitDocument(document)
   }
 
 }
