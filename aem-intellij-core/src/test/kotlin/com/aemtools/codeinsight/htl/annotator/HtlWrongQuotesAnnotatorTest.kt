@@ -25,4 +25,20 @@ class HtlWrongQuotesAnnotatorTest : BaseLightTest() {
     myFixture.checkHighlighting()
   }
 
+  fun testWrongDoubleQuotes() {
+    myFixture.configureByText("test.html", """
+      <div attribute="$DOLLAR{<error descr="Incorrect quotes">"wrong"</error>}"></div>
+    """)
+
+    myFixture.checkHighlighting()
+  }
+
+  fun testWrongDoubleQuotesInSecondExpression() {
+    myFixture.configureByText("test.html", """
+      <div attribute="$DOLLAR{'correct'} $DOLLAR{<error descr="Incorrect quotes">"wrong"</error>}"></div>
+    """)
+
+    myFixture.checkHighlighting()
+  }
+
 }
