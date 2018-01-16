@@ -4,7 +4,7 @@
     <version>@version@</version>
     <category>Framework integration</category>
     <vendor email="dmytrotroynikov@gmail.com"
-            url="https://github.com/DmytroTroynikov/aemtools">
+            url="https://github.com/aemtools/aemtools">
         Dmytro Troynikov
     </vendor>
 
@@ -82,10 +82,10 @@
                 HTL: Improved completion for <i>i18n</li> expressions (e.g. ${'&lt;caret&gt;' @ i18n}).
             </li>
             <li>
-                HTL: fixed wrong syntax highlighting within HTl comments.
+                HTL: Fixed wrong syntax highlighting within HTL comments.
             </li>
             <li>
-                HTL: bug fixes and improvements.
+                HTL: Bug fixes and improvements.
             </li>
         </ul>
     ]]>
@@ -189,6 +189,7 @@
 
         <lang.commenter language="Htl" implementationClass="com.aemtools.lang.htl.editor.comments.HtlCommenter"/>
         <lang.quoteHandler language="Htl" implementationClass="com.aemtools.lang.htl.editor.HtlQuoteHandler"/>
+        <backspaceHandlerDelegate implementation="com.aemtools.lang.htl.editor.HtlBackspaceHandler"/>
 
         <applicationService serviceInterface="com.aemtools.service.repository.IRepositoryService"
                             serviceImplementation="com.aemtools.service.repository.impl.RepositoryService"
@@ -206,6 +207,9 @@
 
         <annotator language="Htl"
                    implementationClass="com.aemtools.codeinsight.htl.annotator.HtlOptionsAnnotator"/>
+
+        <annotator language="Htl"
+                   implementationClass="com.aemtools.codeinsight.htl.annotator.HtlWrongQuotesAnnotator"/>
 
         <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
                        order="before xmlAttribute"/>

@@ -112,6 +112,21 @@ fun xmlAttributeMatcher(name: String, value: String? = null): XmlAttributeMatche
     }
 
 /**
+ * Check if current [XmlAttribute] is doublequoted attributed. e.g.:
+ *
+ * ```
+ * attribute="value" -> true
+ * attribute='value' -> false
+ * ```
+ *
+ * @receiver [XmlAttribute]
+ * @return *true* if current attribute is doublequoted, *false* otherwise
+ */
+fun XmlAttribute.isDoubleQuoted() : Boolean {
+  return this.valueElement?.text?.startsWith("\"") ?: false
+}
+
+/**
  * Extract text range of name element.
  *
  * @receiver [XmlAttribute]

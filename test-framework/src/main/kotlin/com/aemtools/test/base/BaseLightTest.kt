@@ -6,6 +6,7 @@ import com.aemtools.test.fixture.UberJarFixtureMixin
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture.CARET_MARKER
+import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 import java.io.File
 
@@ -15,6 +16,9 @@ import java.io.File
 abstract class BaseLightTest(val withAemUberJar: Boolean = false)
   : LightCodeInsightFixtureTestCase(),
     UberJarFixtureMixin {
+
+  val fixture: JavaCodeInsightTestFixture
+    get() = super.myFixture
 
   public override fun getProject(): Project {
     return super.getProject()
