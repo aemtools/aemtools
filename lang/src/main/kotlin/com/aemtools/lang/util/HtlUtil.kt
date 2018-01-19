@@ -14,6 +14,7 @@ import com.aemtools.lang.htl.psi.HtlContextExpression
 import com.aemtools.lang.htl.psi.HtlExpression
 import com.aemtools.lang.htl.psi.HtlHel
 import com.aemtools.lang.htl.psi.HtlHtlEl
+import com.aemtools.lang.htl.psi.HtlPsiBaseElement
 import com.aemtools.lang.htl.psi.HtlPsiFile
 import com.aemtools.lang.htl.psi.HtlStringLiteral
 import com.aemtools.lang.htl.psi.HtlVariableName
@@ -135,6 +136,21 @@ fun HtlHtlEl.isInsideOF(attributeName: String): Boolean {
 fun PsiElement.isInsideOf(attributeName: String): Boolean {
   val htlHtlEl = findParentByType(HtlHtlEl::class.java) ?: return false
   return htlHtlEl.isInsideOF(attributeName)
+}
+
+/**
+ * Retrieve container [XmlAttribute] for current [HtlPsiBaseElement].
+ *
+ * @receiver [HtlPsiBaseElement]
+ * @return container xml attribute, *null* if no container attribute exists
+ */
+fun HtlPsiBaseElement.containerAttribute(): XmlAttribute? {
+  val htlHtlEl = findParentByType(HtlHtlEl::class.java) ?: return null
+
+  val html = containingFile.getHtmlFile() ?: return null
+
+  return html.findElementAt(htlHtlEl.textOffset - 1)
+      .findParentByType(XmlAttribute::class.java)
 }
 
 /**

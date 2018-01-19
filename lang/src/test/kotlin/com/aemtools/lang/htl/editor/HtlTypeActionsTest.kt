@@ -1,16 +1,14 @@
 package com.aemtools.lang.htl.editor
 
 import com.aemtools.test.action.TypeActionTest
-import com.aemtools.test.base.BaseLightTest.Companion.CARET
-import com.aemtools.test.base.BaseLightTest.Companion.DOLLAR
-import com.aemtools.test.base.BasePlatformLightTest
+import com.aemtools.test.base.BaseLightTest
 
 /**
  * Test for [HtlBraceMatcher], [HtlQuoteHandler], [HtlBackspaceHandler]
  *
  * @author Dmytro Troynikov
  */
-class HtlTypeActionsTest : BasePlatformLightTest(),
+class HtlTypeActionsTest : BaseLightTest(),
     TypeActionTest {
 
   fun `test should close expression`() = htlTypeTest(

@@ -177,7 +177,7 @@ configure<JacocoFullReportExtension> {
     excludeProject(":test-framework")
 }
 
-configure<DetektExtension> {
+detekt {
     version = "1.0.0.RC5-6"
     profile("main", Action {
         input = rootProject.projectDir.absolutePath

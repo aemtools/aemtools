@@ -1,7 +1,9 @@
 package com.aemtools.test.fix
 
+import com.aemtools.common.util.writeCommand
 import com.aemtools.test.base.BaseLightTest
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.openapi.application.runWriteAction
 import junit.framework.TestCase
 import org.intellij.lang.annotations.Language
 
@@ -29,9 +31,26 @@ abstract class BaseFixTest : BaseLightTest() {
 
     myFixture.launchAction(intentionAction!!)
 
+    myFixture.checkResult(fix.after!!.content)
+  }
+
+  fun annotationFixTest(annotatorFixDsl: AnnotatorFixDsl.() -> Unit) {
+    val fix = AnnotatorFixDsl().apply(annotatorFixDsl)
+
+    myFixture.configureByText(
+        fix.before!!.name,
+        fix.before!!.content
+    )
+
+    val quickFix = myFixture.getAllQuickFixes(fix.before!!.name)
+        .find { it.text == fix.fixName }
+        ?: throw AssertionError("Unable to find quick fix with name: ${fix.fixName}")
+
+    writeCommand(project) {
+      quickFix.invoke(project, editor, myFixture.file)
+    }
 
     myFixture.checkResult(fix.after!!.content)
-
   }
 
 }
@@ -47,6 +66,18 @@ class QuickFixDsl {
   var fixName: String? = null
   var before: FileDescriptor? = null
 
+  var after: FileDescriptor? = null
+
+  fun html(name: String, @Language("HTML") text: String) =
+      FileDescriptor(name, text)
+
+}
+
+class AnnotatorFixDsl {
+
+  var fixName: String? = null
+
+  var before: FileDescriptor? = null
   var after: FileDescriptor? = null
 
   fun html(name: String, @Language("HTML") text: String) =

@@ -41,6 +41,8 @@ val jmockit_version: String by extra
 val assertj_version: String by extra
 val mockito_version: String by extra
 val spek_version: String by extra
+val junit_jupiter_api_version: String by extra
+val junit_jupiter_engine_version: String by extra
 
 dependencies {
     compile(project(":aem-intellij-core"))
@@ -51,6 +53,9 @@ dependencies {
     compile("org.assertj:assertj-core:$assertj_version")
     compile("org.mockito:mockito-core:$mockito_version")
     compile("org.jetbrains.spek:spek-api:$spek_version")
+
+    compile("org.junit.jupiter:junit-jupiter-api:$junit_jupiter_api_version")
+    compile("org.junit.jupiter:junit-jupiter-engine:$junit_jupiter_engine_version")
 }
 
 val ideaVersion: String by extra
