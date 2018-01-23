@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <problems>
     <problem>
-        <file>Test.java</file>
-        <line>6</line>
+        <file>TestModel.java</file>
+        <line>11</line>
         <package>com.test</package>
-        <entry_point TYPE="file" FQNAME="Test.java" />
-        <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Hardcoded AEM specific literal</problem_class>
-        <description>Hardcode of predefined constant</description>
-    </problem>
-
-    <problem>
-        <file>JcrConstants.java</file>
-        <line>4</line>
-        <package>com.day.cq.commons.jcr</package>
-        <entry_point TYPE="file" FQNAME="JcrConstants.java" />
-        <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Hardcoded AEM specific literal</problem_class>
-        <description>Hardcode of predefined constant</description>
+        <entry_point TYPE="file" FQNAME="TestModel.java" />
+        <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Default Injection Strategy</problem_class>
+        <description>Redundant annotation</description>
     </problem>
 </problems>

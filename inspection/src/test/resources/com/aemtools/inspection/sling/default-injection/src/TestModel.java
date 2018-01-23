@@ -4,7 +4,7 @@ import org.apache.sling.models.annotations.*;
 import org.apache.sling.models.*;
 
 @Model(
-defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL
+    defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL
 )
 class TestModel {
 
