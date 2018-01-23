@@ -6,6 +6,7 @@ import com.aemtools.common.util.findParentByType
 import com.aemtools.inspection.common.AemIntellijInspection
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
+import com.intellij.codeInspection.RemoveAnnotationQuickFix
 import com.intellij.psi.JavaElementVisitor
 import com.intellij.psi.PsiAnnotation
 import com.intellij.psi.PsiClass
@@ -44,7 +45,10 @@ class DefaultInjectionStrategyInspection : AemIntellijInspection(
       holder.registerProblem(
           annotation,
           "Redundant annotation",
-          ProblemHighlightType.LIKE_UNUSED_SYMBOL
+          ProblemHighlightType.LIKE_UNUSED_SYMBOL,
+          RemoveAnnotationQuickFix(
+              annotation, null
+          )
       )
     }
   }
