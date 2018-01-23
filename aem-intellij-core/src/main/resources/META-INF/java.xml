@@ -36,5 +36,11 @@
                 hasStaticDescription="true"
                 implementationClass="com.aemtools.inspection.java.AemConstantInspection"/>
 
+        <localInspection
+            language="JAVA"
+            enabledByDefault="true"
+            hasStaticDescription="true"
+            implementationClass="com.aemtools.inspection.sling.DefaultInjectionStrategyInspection"/>
+
     </extensions>
 </idea-plugin>
