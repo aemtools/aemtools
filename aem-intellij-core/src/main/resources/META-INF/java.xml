@@ -30,13 +30,13 @@
                 serviceInterface="com.aemtools.inspection.service.IJavaInspectionService"
                 serviceImplementation="com.aemtools.inspection.service.JavaInspectionService"/>
 
-        <completion.confidence
-            implementationClass="com.aemtools.codeinsight.sling.SlingModelAnnotationsConfidence"
-            language="JAVA"/>
+        <!--<completion.confidence-->
+        <!--implementationClass="com.aemtools.codeinsight.sling.SlingModelAnnotationsConfidence"-->
+        <!--language="JAVA"/>-->
 
-        <weigher
-            implementationClass="com.aemtools.codeinsight.sling.SlingModelAnnotationsCompletionWeighter"
-            key="proximity" />
+        <!--<weigher-->
+        <!--implementationClass="com.aemtools.codeinsight.sling.SlingModelAnnotationsCompletionWeighter"-->
+        <!--key="proximity" />-->
 
         <localInspection
                 language="JAVA"
@@ -45,10 +45,16 @@
                 implementationClass="com.aemtools.inspection.java.AemConstantInspection"/>
 
         <localInspection
-            language="JAVA"
-            enabledByDefault="true"
-            hasStaticDescription="true"
-            implementationClass="com.aemtools.inspection.sling.DefaultInjectionStrategyInspection"/>
+                language="JAVA"
+                enabledByDefault="true"
+                hasStaticDescription="true"
+                implementationClass="com.aemtools.inspection.sling.DefaultInjectionStrategyInspection"/>
+
+        <localInspection
+                language="JAVA"
+                enabledByDefault="true"
+                hasStaticDescription="true"
+                implementationClass="com.aemtools.inspection.java.ThreadSafeFieldInspection"/>
 
     </extensions>
 </idea-plugin>
