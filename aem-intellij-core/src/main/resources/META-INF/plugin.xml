@@ -252,6 +252,9 @@
                 file="com/aemtools/ide/colorscheme/HtlDarcula.xml"/>
         <colorSettingsPage implementation="com.aemtools.ide.htl.HtlColorsAndFontsPage"/>
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
+
+        <applicationConfigurable groupId="tools" displayName="AEM Tools" id="preference.AEMTools"
+                                 instance="com.aemtools.sync.settings.SyncSettings"/>
     </extensions>
 
     <application-components>
