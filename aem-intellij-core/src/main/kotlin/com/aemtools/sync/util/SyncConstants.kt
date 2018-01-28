@@ -16,4 +16,7 @@ object SyncConstants {
 
   val TMP_FILE_NAME_DOWNLOAD_PACKAGE = "/home/dmytro/simple/pack.zip"
 
+  val SETTINGS_ID = "preference.AEMTools"
+
+  val DISPLAY_NAME_SETTINGS = "AEM Tools"
 }

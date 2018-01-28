@@ -244,6 +244,10 @@
                 serviceInterface="com.aemtools.inspection.service.IInspectionService"
                 serviceImplementation="com.aemtools.inspection.service.InspectionService"/>
 
+        <projectService
+                serviceInterface="com.aemtools.sync.settings.InstanceInfoService"
+                serviceImplementation="com.aemtools.sync.settings.InstanceInfoService"/>
+
         <additionalTextAttributes
                 scheme="Default"
                 file="com/aemtools/ide/colorscheme/HtlDefault.xml"/>
