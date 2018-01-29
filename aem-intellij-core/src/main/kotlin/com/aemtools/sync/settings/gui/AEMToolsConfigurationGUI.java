@@ -12,7 +12,7 @@ import java.awt.*;
 /**
  * @author Dmytro Liakhov
  */
-public class AEMToolsConfigurationJavaGUI {
+public class AEMToolsConfigurationGUI {
     private JCheckBox enableAEMSyncingFilesCheckBox;
     private JTextField urlInputText;
     private JTextArea loginTextInput;
@@ -21,6 +21,22 @@ public class AEMToolsConfigurationJavaGUI {
 
     public JPanel getRootPanel() {
         return rootPanel;
+    }
+
+    public boolean isAEMSyncEnabled() {
+        return enableAEMSyncingFilesCheckBox.isSelected();
+    }
+
+    public String getLogin() {
+        return loginTextInput.getText();
+    }
+
+    public String getPassword() {
+        return passwordTextInput.getText();
+    }
+
+    public String getUrlInstance() {
+        return urlInputText.getText();
     }
 
     {

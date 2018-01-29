@@ -12,7 +12,7 @@ import javax.swing.JComponent
 /**
  * @author Dmytro Liakhov
  */
-class SyncSettings(val project: Project) : SearchableConfigurable {
+class SyncSettings : SearchableConfigurable {
 
   private var configGUI: AEMToolsConfigurationGUI? = null
 
@@ -23,15 +23,12 @@ class SyncSettings(val project: Project) : SearchableConfigurable {
   override fun getDisplayName(): String = DISPLAY_NAME_SETTINGS
 
   override fun apply() {
-    val login: String = configGUI?.login ?: ""
+    val login = configGUI?.login ?: ""
     val password = configGUI?.password ?: ""
     val url = configGUI?.urlInstance ?: ""
-    val enabled = configGUI?.enabled ?: false
+    val enabled = configGUI?.isAEMSyncEnabled ?: false
 
     val instanceInfo = InstanceInfoModel(enabled, url, login, password)
-    val instanceService = InstanceInfoService.getInstance(project)
-
-    instanceService.instanceInfoModel = instanceInfo
   }
 
   override fun reset() {

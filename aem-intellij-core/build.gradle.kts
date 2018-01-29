@@ -1,4 +1,5 @@
 import org.jetbrains.intellij.IntelliJPluginExtension
+import org.jetbrains.kotlin.cli.jvm.main
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
@@ -22,6 +23,11 @@ apply {
 plugins {
     java
     id("org.jetbrains.intellij") version "0.2.17"
+}
+
+
+java.sourceSets {
+    getByName("main").java.srcDirs("src/main/kotlin")
 }
 
 val kotlin_version: String by extra
