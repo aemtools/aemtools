@@ -1,7 +1,7 @@
 package com.aemtools.sync.settings
 
 import com.aemtools.sync.settings.gui.AEMToolsConfigurationGUI
-import com.aemtools.sync.util.SyncConstants.DISPLAY_NAME_SETTINGS
+import com.aemtools.sync.util.SyncConstants
 import com.aemtools.sync.util.SyncConstants.SETTINGS_ID
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.options.SearchableConfigurable
@@ -15,11 +15,11 @@ class SyncSettings(val project: Project) : SearchableConfigurable {
 
   private var configGUI: AEMToolsConfigurationGUI? = null
 
-  override fun getId(): String = SETTINGS_ID
+  override fun getId(): String = SyncConstants.SETTINGS_ID
 
   override fun isModified(): Boolean = true
 
-  override fun getDisplayName(): String = DISPLAY_NAME_SETTINGS
+  override fun getDisplayName(): String = SyncConstants.DISPLAY_NAME_SETTINGS
 
   override fun apply() {
     val instanceInfo = InstanceInfo.getInstance(project)
@@ -32,8 +32,8 @@ class SyncSettings(val project: Project) : SearchableConfigurable {
 
   override fun createComponent(): JComponent? {
     configGUI = AEMToolsConfigurationGUI()
-    val instanceInfo = InstanceInfo.getInstance(project)
-    configGUI?.setUpForm(instanceInfo.instanceInfoModel)
+    val instanceInfoModel = InstanceInfo.getInstance(project).instanceInfoModel ?: SyncConstants.DEFAULT_INSTANCE_INFO
+    configGUI?.setUpForm(instanceInfoModel)
     return configGUI?.getRootPanel()
   }
 

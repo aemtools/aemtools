@@ -1,5 +1,7 @@
 package com.aemtools.sync.util
 
+import com.aemtools.sync.settings.model.InstanceInfoModel
+
 /**
  * @author Dmytro Liakhov
  */
@@ -24,5 +26,7 @@ object SyncConstants {
   val DEFAULT_PASSWORD = "admin"
   val DEFAULT_URL_INSTANCE = "http://localhost:4502"
   val DEFAULT_IS_ENABLED_SYNC = false
+
+  val DEFAULT_INSTANCE_INFO = InstanceInfoModel(DEFAULT_IS_ENABLED_SYNC, DEFAULT_URL_INSTANCE, DEFAULT_LOGIN, DEFAULT_PASSWORD)
 
 }

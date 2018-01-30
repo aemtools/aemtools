@@ -4,7 +4,7 @@ import com.aemtools.sync.settings.model.InstanceInfoModel;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,7 +55,7 @@ public class AEMToolsConfigurationGUI {
         this.passwordField.setText(password);
     }
 
-    public void setUpForm(@Nullable InstanceInfoModel instanceInfoModel) {
+    public void setUpForm(@NotNull InstanceInfoModel instanceInfoModel) {
         this.setPassword(instanceInfoModel.getPassword());
         this.setLogin(instanceInfoModel.getLogin());
         this.setUrlInstance(instanceInfoModel.getUrl());
