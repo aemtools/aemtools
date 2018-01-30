@@ -1,8 +1,10 @@
 package com.aemtools.sync.settings.gui;
 
+import com.aemtools.sync.settings.model.InstanceInfoModel;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,36 +23,48 @@ public class AEMToolsConfigurationGUI {
         return rootPanel;
     }
 
-    public boolean isAEMSyncEnabled() {
+    private boolean isAEMSyncEnabled() {
         return enableAEMSyncingFilesCheckBox.isSelected();
     }
 
-    public String getLogin() {
+    private String getLogin() {
         return loginTextField.getText();
     }
 
-    public String getPassword() {
+    private String getPassword() {
         return String.valueOf(passwordField.getPassword());
     }
 
-    public String getUrlInstance() {
+    private String getUrlInstance() {
         return urlTextField.getText();
     }
 
-    public void setAEMSyncEnabled(boolean enabled) {
+    private void setAEMSyncEnabled(boolean enabled) {
         this.enableAEMSyncingFilesCheckBox.setSelected(enabled);
     }
 
-    public void setUrlInstance(String urlInstance) {
+    private void setUrlInstance(String urlInstance) {
         this.urlTextField.setText(urlInstance);
     }
 
-    public void setLogin(String login) {
+    private void setLogin(String login) {
         this.loginTextField.setText(login);
     }
 
-    public void setPassword(String password) {
+    private void setPassword(String password) {
         this.passwordField.setText(password);
+    }
+
+    public void setUpForm(@Nullable InstanceInfoModel instanceInfoModel) {
+        this.setPassword(instanceInfoModel.getPassword());
+        this.setLogin(instanceInfoModel.getLogin());
+        this.setUrlInstance(instanceInfoModel.getUrl());
+        this.setAEMSyncEnabled(instanceInfoModel.getEnabled());
+    }
+
+    public InstanceInfoModel getInstanceInfoModel() {
+        return new InstanceInfoModel(this.isAEMSyncEnabled(), this.getUrlInstance(),
+                this.getLogin(), this.getPassword());
     }
 
     {
@@ -105,4 +119,5 @@ public class AEMToolsConfigurationGUI {
     public JComponent $$$getRootComponent$$$() {
         return rootPanel;
     }
+
 }

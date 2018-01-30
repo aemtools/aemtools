@@ -1,8 +1,6 @@
 package com.aemtools.sync.settings
 
 import com.aemtools.sync.settings.gui.AEMToolsConfigurationGUI
-import com.aemtools.sync.settings.model.InstanceInfoModel
-import com.aemtools.sync.util.SyncConstants
 import com.aemtools.sync.util.SyncConstants.DISPLAY_NAME_SETTINGS
 import com.aemtools.sync.util.SyncConstants.SETTINGS_ID
 import com.intellij.openapi.components.ServiceManager
@@ -13,7 +11,7 @@ import javax.swing.JComponent
 /**
  * @author Dmytro Liakhov
  */
-class SyncSettings : SearchableConfigurable {
+class SyncSettings(val project: Project) : SearchableConfigurable {
 
   private var configGUI: AEMToolsConfigurationGUI? = null
 
@@ -24,25 +22,18 @@ class SyncSettings : SearchableConfigurable {
   override fun getDisplayName(): String = DISPLAY_NAME_SETTINGS
 
   override fun apply() {
-    val login = configGUI?.login ?: ""
-    val password = configGUI?.password ?: ""
-    val url = configGUI?.urlInstance ?: ""
-    val enabled = configGUI?.isAEMSyncEnabled ?: false
-
-    val instanceInfo = InstanceInfoModel(enabled, url, login, password)
+    val instanceInfo = InstanceInfo.getInstance(project)
+    instanceInfo.instanceInfoModel = configGUI?.instanceInfoModel
   }
 
-  override fun reset() {
-    configGUI?.password = SyncConstants.DEFAULT_PASSWORD
-    configGUI?.login = SyncConstants.DEFAULT_LOGIN
-    configGUI?.urlInstance = SyncConstants.DEFAULT_URL_INSTANCE
-    configGUI?.isAEMSyncEnabled = SyncConstants.DEFAULT_IS_ENABLED_SYNC
-  }
+  override fun reset() {}
 
   override fun getHelpTopic(): String? = SETTINGS_ID
 
   override fun createComponent(): JComponent? {
     configGUI = AEMToolsConfigurationGUI()
+    val instanceInfo = InstanceInfo.getInstance(project)
+    configGUI?.setUpForm(instanceInfo.instanceInfoModel)
     return configGUI?.getRootPanel()
   }
 
