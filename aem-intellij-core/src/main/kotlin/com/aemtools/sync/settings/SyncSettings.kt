@@ -2,6 +2,7 @@ package com.aemtools.sync.settings
 
 import com.aemtools.sync.settings.gui.AEMToolsConfigurationGUI
 import com.aemtools.sync.settings.model.InstanceInfoModel
+import com.aemtools.sync.util.SyncConstants
 import com.aemtools.sync.util.SyncConstants.DISPLAY_NAME_SETTINGS
 import com.aemtools.sync.util.SyncConstants.SETTINGS_ID
 import com.intellij.openapi.components.ServiceManager
@@ -32,7 +33,10 @@ class SyncSettings : SearchableConfigurable {
   }
 
   override fun reset() {
-    println("Reset")
+    configGUI?.password = SyncConstants.DEFAULT_PASSWORD
+    configGUI?.login = SyncConstants.DEFAULT_LOGIN
+    configGUI?.urlInstance = SyncConstants.DEFAULT_URL_INSTANCE
+    configGUI?.isAEMSyncEnabled = SyncConstants.DEFAULT_IS_ENABLED_SYNC
   }
 
   override fun getHelpTopic(): String? = SETTINGS_ID

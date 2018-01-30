@@ -3,8 +3,6 @@ package com.aemtools.sync.settings.gui;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,9 +12,9 @@ import java.awt.*;
  */
 public class AEMToolsConfigurationGUI {
     private JCheckBox enableAEMSyncingFilesCheckBox;
-    private JTextField urlInputText;
-    private JTextArea loginTextInput;
-    private JTextArea passwordTextInput;
+    private JTextField urlTextField;
+    private JTextField loginTextField;
+    private JPasswordField passwordField;
     private JPanel rootPanel;
 
     public JPanel getRootPanel() {
@@ -28,15 +26,31 @@ public class AEMToolsConfigurationGUI {
     }
 
     public String getLogin() {
-        return loginTextInput.getText();
+        return loginTextField.getText();
     }
 
     public String getPassword() {
-        return passwordTextInput.getText();
+        return String.valueOf(passwordField.getPassword());
     }
 
     public String getUrlInstance() {
-        return urlInputText.getText();
+        return urlTextField.getText();
+    }
+
+    public void setAEMSyncEnabled(boolean enabled) {
+        this.enableAEMSyncingFilesCheckBox.setSelected(enabled);
+    }
+
+    public void setUrlInstance(String urlInstance) {
+        this.urlTextField.setText(urlInstance);
+    }
+
+    public void setLogin(String login) {
+        this.loginTextField.setText(login);
+    }
+
+    public void setPassword(String password) {
+        this.passwordField.setText(password);
     }
 
     {
@@ -59,35 +73,30 @@ public class AEMToolsConfigurationGUI {
         enableAEMSyncingFilesCheckBox = new JCheckBox();
         enableAEMSyncingFilesCheckBox.setText("Enable AEM syncing files");
         rootPanel.add(enableAEMSyncingFilesCheckBox, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final Spacer spacer1 = new Spacer();
-        rootPanel.add(spacer1, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(4, 2, new Insets(0, 0, 0, 0), -1, -1));
         rootPanel.add(panel1, new GridConstraints(1, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panel1.setBorder(BorderFactory.createTitledBorder("Configurations"));
-        final JPanel panel2 = new JPanel();
-        panel2.setLayout(new FormLayout("fill:d:grow", "center:d:grow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:max(d;4px):noGrow,top:4dlu:noGrow,center:d:grow"));
-        panel1.add(panel2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        panel2.setBorder(BorderFactory.createTitledBorder("URL Instance"));
-        urlInputText = new JTextField();
-        urlInputText.setText("http://localhost:4502");
-        CellConstraints cc = new CellConstraints();
-        panel2.add(urlInputText, cc.xy(1, 3, CellConstraints.FILL, CellConstraints.DEFAULT));
-        final JPanel panel3 = new JPanel();
-        panel3.setLayout(new FormLayout("fill:d:grow", "center:d:grow,top:4dlu:noGrow,center:d:grow"));
-        panel2.add(panel3, cc.xy(1, 5));
-        panel3.setBorder(BorderFactory.createTitledBorder("Login"));
-        loginTextInput = new JTextArea();
-        loginTextInput.setText("admin");
-        panel3.add(loginTextInput, cc.xy(1, 3, CellConstraints.FILL, CellConstraints.FILL));
         final JLabel label1 = new JLabel();
-        label1.setText("Password");
-        panel2.add(label1, cc.xy(1, 7));
-        passwordTextInput = new JTextArea();
-        passwordTextInput.setText("admin");
-        panel2.add(passwordTextInput, cc.xy(1, 9, CellConstraints.FILL, CellConstraints.FILL));
-        final Spacer spacer2 = new Spacer();
-        panel1.add(spacer2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        label1.setText("URL Instance");
+        panel1.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer1 = new Spacer();
+        panel1.add(spacer1, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        urlTextField = new JTextField();
+        urlTextField.setText("http://localhost:4502");
+        panel1.add(urlTextField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label2 = new JLabel();
+        label2.setText("Login");
+        panel1.add(label2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        loginTextField = new JTextField();
+        loginTextField.setText("admin");
+        panel1.add(loginTextField, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label3 = new JLabel();
+        label3.setText("Password");
+        panel1.add(label3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        passwordField = new JPasswordField();
+        passwordField.setText("admin");
+        panel1.add(passwordField, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
     }
 
     /**
