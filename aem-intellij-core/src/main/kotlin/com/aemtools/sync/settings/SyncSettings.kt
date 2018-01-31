@@ -2,7 +2,6 @@ package com.aemtools.sync.settings
 
 import com.aemtools.sync.settings.gui.AEMToolsConfigurationGUI
 import com.aemtools.sync.util.SyncConstants
-import com.aemtools.sync.util.SyncConstants.SETTINGS_ID
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.options.SearchableConfigurable
 import com.intellij.openapi.project.Project
@@ -28,7 +27,7 @@ class SyncSettings(val project: Project) : SearchableConfigurable {
 
   override fun reset() {}
 
-  override fun getHelpTopic(): String? = SETTINGS_ID
+  override fun getHelpTopic(): String? = SyncConstants.SETTINGS_ID
 
   override fun createComponent(): JComponent? {
     configGUI = AEMToolsConfigurationGUI()

@@ -21,7 +21,7 @@ class AEMToolsActionGroup : DefaultActionGroup() {
             ?.firstOrNull()
     val presentation = event.presentation
 
-    presentation.isEnabled = file != null && file.isUnderAEMRoot() && isAEMSyncEnabled(project)
+    presentation.isEnabledAndVisible = file != null && file.isUnderAEMRoot() && isAEMSyncEnabled(project)
   }
 
   private fun isAEMSyncEnabled(project: Project): Boolean {
