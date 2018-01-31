@@ -21,12 +21,12 @@ class AEMToolsActionGroup : DefaultActionGroup() {
             ?.firstOrNull()
     val presentation = event.presentation
 
-    presentation.isEnabledAndVisible = file != null && file.isUnderAEMRoot() && isAEMSyncEnabled(project)
+    presentation.isEnabled = file != null && file.isUnderAEMRoot() && isAEMSyncEnabled(project)
   }
 
   private fun isAEMSyncEnabled(project: Project): Boolean {
-    val instanceInfoModel = InstanceInfo.getInstance(project).instanceInfoModel
-    return instanceInfoModel?.enabled ?: false
+    val instanceInfo = InstanceInfo.getInstance(project)
+    return instanceInfo.enabled ?: false
   }
 
 }

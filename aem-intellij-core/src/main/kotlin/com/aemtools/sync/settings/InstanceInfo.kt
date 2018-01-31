@@ -1,11 +1,7 @@
 package com.aemtools.sync.settings
 
-import com.aemtools.sync.settings.model.InstanceInfoModel
-import com.intellij.openapi.components.PersistentStateComponent
-import com.intellij.openapi.components.ServiceManager
-import com.intellij.openapi.components.State
-import com.intellij.openapi.components.Storage
-import com.intellij.openapi.components.StoragePathMacros
+import com.aemtools.sync.util.SyncConstants
+import com.intellij.openapi.components.*
 import com.intellij.openapi.project.Project
 import com.intellij.util.xmlb.annotations.Tag
 
@@ -20,30 +16,53 @@ import com.intellij.util.xmlb.annotations.Tag
 class InstanceInfo : PersistentStateComponent<InstanceInfo> {
 
   @Tag
-  private var enabled: Boolean? = null
+  var enabled: Boolean? = null
 
   @Tag
-  private var url: String? = null
+  var url: String? = null
 
   @Tag
-  private var login: String? = null
+  var login: String? = null
 
   @Tag
-  private var password: String? = null
-
-  var instanceInfoModel: InstanceInfoModel? = null
+  var password: String? = null
 
   override fun getState(): InstanceInfo? = this
 
   override fun loadState(state: InstanceInfo?) {
     state?.let {
-      instanceInfoModel = InstanceInfoModel(state.enabled, state.url, state.login, state.password)
+      setInstanceInfo(state)
     }
+  }
+
+  private fun isEmpty(): Boolean {
+    return (enabled == null || enabled == false) && url.isNullOrBlank()
+        && login.isNullOrBlank() && password.isNullOrBlank()
+  }
+
+  private fun setInstanceInfo(state: InstanceInfo) {
+    enabled = state.enabled
+    url = state.url
+    login = state.login
+    password = state.password
+  }
+
+  private fun setDefaultInstanceInfo() {
+    enabled = SyncConstants.DEFAULT_IS_ENABLED_SYNC
+    url = SyncConstants.DEFAULT_URL_INSTANCE
+    login = SyncConstants.DEFAULT_LOGIN
+    password = SyncConstants.DEFAULT_PASSWORD
   }
 
   companion object {
 
-    fun getInstance(project: Project): InstanceInfo = ServiceManager.getService(project, InstanceInfo::class.java)
+    fun getInstance(project: Project): InstanceInfo {
+      val instanceInfo = ServiceManager.getService(project, InstanceInfo::class.java)
+      if (instanceInfo.isEmpty()) {
+        instanceInfo.setDefaultInstanceInfo()
+      }
+      return instanceInfo
+    }
 
   }
 

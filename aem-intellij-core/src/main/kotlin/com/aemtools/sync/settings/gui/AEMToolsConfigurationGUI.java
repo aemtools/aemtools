@@ -1,6 +1,6 @@
 package com.aemtools.sync.settings.gui;
 
-import com.aemtools.sync.settings.model.InstanceInfoModel;
+import com.aemtools.sync.settings.InstanceInfo;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -23,7 +23,21 @@ public class AEMToolsConfigurationGUI {
         return rootPanel;
     }
 
-    private boolean isAEMSyncEnabled() {
+    public void initModel(@NotNull InstanceInfo instanceInfo) {
+        instanceInfo.setEnabled(this.isEnabled());
+        instanceInfo.setLogin(this.getLogin());
+        instanceInfo.setUrl(this.getUrl());
+        instanceInfo.setPassword(this.getPassword());
+    }
+
+    public void setUpForm(@NotNull InstanceInfo instanceInfo) {
+        this.setPassword(instanceInfo.getPassword());
+        this.setLogin(instanceInfo.getLogin());
+        this.setUrlInstance(instanceInfo.getUrl());
+        this.setAEMSyncEnabled(instanceInfo.getEnabled());
+    }
+
+    private boolean isEnabled() {
         return enableAEMSyncingFilesCheckBox.isSelected();
     }
 
@@ -35,7 +49,7 @@ public class AEMToolsConfigurationGUI {
         return String.valueOf(passwordField.getPassword());
     }
 
-    private String getUrlInstance() {
+    private String getUrl() {
         return urlTextField.getText();
     }
 
@@ -53,18 +67,6 @@ public class AEMToolsConfigurationGUI {
 
     private void setPassword(String password) {
         this.passwordField.setText(password);
-    }
-
-    public void setUpForm(@NotNull InstanceInfoModel instanceInfoModel) {
-        this.setPassword(instanceInfoModel.getPassword());
-        this.setLogin(instanceInfoModel.getLogin());
-        this.setUrlInstance(instanceInfoModel.getUrl());
-        this.setAEMSyncEnabled(instanceInfoModel.getEnabled());
-    }
-
-    public InstanceInfoModel getInstanceInfoModel() {
-        return new InstanceInfoModel(this.isAEMSyncEnabled(), this.getUrlInstance(),
-                this.getLogin(), this.getPassword());
     }
 
     {

@@ -23,7 +23,7 @@ class SyncSettings(val project: Project) : SearchableConfigurable {
 
   override fun apply() {
     val instanceInfo = InstanceInfo.getInstance(project)
-    instanceInfo.instanceInfoModel = configGUI?.instanceInfoModel
+    configGUI?.initModel(instanceInfo)
   }
 
   override fun reset() {}
@@ -32,8 +32,8 @@ class SyncSettings(val project: Project) : SearchableConfigurable {
 
   override fun createComponent(): JComponent? {
     configGUI = AEMToolsConfigurationGUI()
-    val instanceInfoModel = InstanceInfo.getInstance(project).instanceInfoModel ?: SyncConstants.DEFAULT_INSTANCE_INFO
-    configGUI?.setUpForm(instanceInfoModel)
+    val instanceInfo = InstanceInfo.getInstance(project)
+    configGUI?.setUpForm(instanceInfo)
     return configGUI?.getRootPanel()
   }
 
