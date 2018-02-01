@@ -12,17 +12,24 @@ import javax.swing.JComponent
  */
 class SyncSettings(val project: Project) : SearchableConfigurable {
 
+  private var initializedInstanceInfo: InstanceInfo? = null
+
   private var configGUI: AEMToolsConfigurationGUI? = null
 
   override fun getId(): String = SyncConstants.SETTINGS_ID
 
-  override fun isModified(): Boolean = true
+  override fun isModified(): Boolean {
+    val instanceInfo = InstanceInfo.getInstance(project)
+    configGUI?.initModel(instanceInfo)
+    return initializedInstanceInfo != instanceInfo
+  }
 
   override fun getDisplayName(): String = SyncConstants.DISPLAY_NAME_SETTINGS
 
   override fun apply() {
     val instanceInfo = InstanceInfo.getInstance(project)
     configGUI?.initModel(instanceInfo)
+    initializedInstanceInfo = instanceInfo.copy()
   }
 
   override fun reset() {}
@@ -32,12 +39,15 @@ class SyncSettings(val project: Project) : SearchableConfigurable {
   override fun createComponent(): JComponent? {
     configGUI = AEMToolsConfigurationGUI()
     val instanceInfo = InstanceInfo.getInstance(project)
+
+    initializedInstanceInfo = instanceInfo.copy()
     configGUI?.setUpForm(instanceInfo)
     return configGUI?.getRootPanel()
   }
 
   override fun disposeUIResources() {
     configGUI = null
+    initializedInstanceInfo = null
   }
 
   companion object {

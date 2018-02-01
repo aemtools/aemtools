@@ -58,6 +58,17 @@ class InstanceInfo : PersistentStateComponent<InstanceInfo> {
     password = SyncConstants.DEFAULT_PASSWORD
   }
 
+
+  fun copy(): InstanceInfo {
+    val instanceInfo = InstanceInfo()
+    instanceInfo.enabled = enabled
+    instanceInfo.url = url
+    instanceInfo.login = login
+    instanceInfo.password = password
+
+    return instanceInfo
+  }
+
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
     if (javaClass != other?.javaClass) return false
