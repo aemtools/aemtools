@@ -1,7 +1,11 @@
 package com.aemtools.sync.settings
 
 import com.aemtools.sync.util.SyncConstants
-import com.intellij.openapi.components.*
+import com.intellij.openapi.components.PersistentStateComponent
+import com.intellij.openapi.components.ServiceManager
+import com.intellij.openapi.components.State
+import com.intellij.openapi.components.Storage
+import com.intellij.openapi.components.StoragePathMacros
 import com.intellij.openapi.project.Project
 import com.intellij.util.xmlb.annotations.Tag
 
@@ -52,6 +56,28 @@ class InstanceInfo : PersistentStateComponent<InstanceInfo> {
     url = SyncConstants.DEFAULT_URL_INSTANCE
     login = SyncConstants.DEFAULT_LOGIN
     password = SyncConstants.DEFAULT_PASSWORD
+  }
+
+  override fun equals(other: Any?): Boolean {
+    if (this === other) return true
+    if (javaClass != other?.javaClass) return false
+
+    other as InstanceInfo
+
+    if (enabled != other.enabled) return false
+    if (url != other.url) return false
+    if (login != other.login) return false
+    if (password != other.password) return false
+
+    return true
+  }
+
+  override fun hashCode(): Int {
+    var result = enabled?.hashCode() ?: 0
+    result = 31 * result + (url?.hashCode() ?: 0)
+    result = 31 * result + (login?.hashCode() ?: 0)
+    result = 31 * result + (password?.hashCode() ?: 0)
+    return result
   }
 
   companion object {
