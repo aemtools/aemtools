@@ -245,8 +245,8 @@
                 serviceImplementation="com.aemtools.inspection.service.InspectionService"/>
 
         <projectService
-                serviceInterface="com.aemtools.sync.settings.InstanceInfo"
-                serviceImplementation="com.aemtools.sync.settings.InstanceInfo"/>
+                serviceInterface="com.aemtools.sync.settings.AemToolsProjectConfiguration"
+                serviceImplementation="com.aemtools.sync.settings.AemToolsProjectConfiguration"/>
 
         <additionalTextAttributes
                 scheme="Default"
@@ -275,7 +275,7 @@
             <add-to-group group-id="MarkRootGroup" anchor="last"/>
         </action>
         <group id="AEMToolsGroup"
-               class="com.aemtools.sync.action.AEMToolsActionGroup"
+               class="com.aemtools.sync.action.AemToolsActionGroup"
                text="AEM Tools"
                popup="true">
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorPopupMenu"/>

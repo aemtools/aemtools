@@ -1,8 +1,8 @@
 package com.aemtools.sync.action
 
-import com.aemtools.sync.logger.CRXStatusLogger
+import com.aemtools.sync.logger.CrxStatusLogger
 import com.aemtools.sync.packmgr.uninstall.PackageUninstaller
-import com.aemtools.sync.settings.InstanceInfo
+import com.aemtools.sync.settings.AemToolsProjectConfiguration
 import com.aemtools.sync.util.SyncConstants
 import com.aemtools.sync.util.getPathOnAEMInstance
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -30,7 +30,7 @@ class ExportFileToInstance : AbstractSyncAction() {
 
     val pathOnAEMInstance = virtualFile.getPathOnAEMInstance()
     val rootPath = pathOnAEMInstance.substringBeforeLast("/")
-    val instanceInfo = InstanceInfo.getInstance(project)
+    val projectConfiguration = AemToolsProjectConfiguration.getInstance(project)
 
     val builder = ContentPackageBuilder()
             .name(SyncConstants.TMP_NAME)
@@ -43,15 +43,17 @@ class ExportFileToInstance : AbstractSyncAction() {
     }
 
     val props = PackageManagerProperties()
-    props.userId = instanceInfo.login
-    props.password = instanceInfo.password
-    props.packageManagerUrl = "${instanceInfo.url}/${VendorInstallerFactory.CRX_URL}";
+
+    val instance = projectConfiguration.instances.get(0)
+    props.userId = instance.credentials.login
+    props.password = instance.credentials.password
+    props.packageManagerUrl = "${instance.urlAddress}/${VendorInstallerFactory.CRX_URL}";
 
     val packageFile = PackageFile()
     packageFile.file = zipFile
     packageFile.setForce(true)
 
-    val logger = CRXStatusLogger()
+    val logger = CrxStatusLogger()
     val packageInstaller = PackageInstaller(props, logger)
     packageInstaller.installFile(packageFile)
 

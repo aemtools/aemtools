@@ -1,6 +1,6 @@
 package com.aemtools.sync.action
 
-import com.aemtools.sync.settings.InstanceInfo
+import com.aemtools.sync.settings.AemToolsProjectConfiguration
 import com.aemtools.sync.util.isUnderAEMRoot
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -23,8 +23,8 @@ abstract class AbstractSyncAction : AnAction() {
   }
 
   private fun isAEMSyncEnabled(project: Project): Boolean {
-    val instanceInfo = InstanceInfo.getInstance(project)
-    return instanceInfo.enabled ?: false
+    val instanceInfo = AemToolsProjectConfiguration.getInstance(project)
+    return instanceInfo.isSyncEnabled
   }
 
 }

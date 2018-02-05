@@ -5,7 +5,7 @@ import io.wcm.tooling.commons.packmgr.Logger
 /**
  * @author Dmytro Liakhov
  */
-class CRXStatusLogger : Logger {
+class CrxStatusLogger : Logger {
 
   override fun warn(message: CharSequence?) = println(message)
 

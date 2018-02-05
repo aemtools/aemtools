@@ -1,6 +1,6 @@
 package com.aemtools.sync.settings
 
-import com.aemtools.sync.settings.gui.AEMToolsConfigurationGUI
+import com.aemtools.sync.settings.gui.AemToolsConfigurationGUI
 import com.aemtools.sync.util.SyncConstants
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.options.SearchableConfigurable
@@ -12,23 +12,17 @@ import javax.swing.JComponent
  */
 class SyncSettings(val project: Project) : SearchableConfigurable {
 
-  private var initializedInstanceInfo: InstanceInfo? = null
-
-  private var configGUI: AEMToolsConfigurationGUI? = null
+  private var configGUI: AemToolsConfigurationGUI? = null
 
   override fun getId(): String = SyncConstants.SETTINGS_ID
 
-  override fun isModified(): Boolean {
-    val instanceInfo = configGUI?.initModel(InstanceInfo.getInstance(project))
-    return initializedInstanceInfo != instanceInfo
-  }
+  override fun isModified(): Boolean = true
 
   override fun getDisplayName(): String = SyncConstants.DISPLAY_NAME_SETTINGS
 
   override fun apply() {
-    val instanceInfo = InstanceInfo.getInstance(project)
+    val instanceInfo = AemToolsProjectConfiguration.getInstance(project)
     configGUI?.initModel(instanceInfo)
-    initializedInstanceInfo = instanceInfo.copy()
   }
 
   override fun reset() {}
@@ -36,18 +30,15 @@ class SyncSettings(val project: Project) : SearchableConfigurable {
   override fun getHelpTopic(): String? = SyncConstants.SETTINGS_ID
 
   override fun createComponent(): JComponent? {
-    configGUI = AEMToolsConfigurationGUI()
-    val instanceInfo = InstanceInfo.getInstance(project)
+    configGUI = AemToolsConfigurationGUI()
+    val instanceInfo = AemToolsProjectConfiguration.getInstance(project)
 
-
-    initializedInstanceInfo = instanceInfo.copy()
     configGUI?.setUpForm(instanceInfo)
     return configGUI?.getRootPanel()
   }
 
   override fun disposeUIResources() {
     configGUI = null
-    initializedInstanceInfo = null
   }
 
   companion object {

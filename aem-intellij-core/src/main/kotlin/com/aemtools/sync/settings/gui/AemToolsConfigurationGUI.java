@@ -1,6 +1,9 @@
 package com.aemtools.sync.settings.gui;
 
-import com.aemtools.sync.settings.InstanceInfo;
+import com.aemtools.sync.settings.AemToolsProjectConfiguration;
+import com.aemtools.sync.settings.model.AemCredentials;
+import com.aemtools.sync.settings.model.AemInstance;
+import com.aemtools.sync.util.SyncConstants;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -12,7 +15,7 @@ import java.awt.*;
 /**
  * @author Dmytro Liakhov
  */
-public class AEMToolsConfigurationGUI {
+public class AemToolsConfigurationGUI {
     private JCheckBox enableAEMSyncingFilesCheckBox;
     private JTextField urlTextField;
     private JTextField loginTextField;
@@ -23,19 +26,22 @@ public class AEMToolsConfigurationGUI {
         return rootPanel;
     }
 
-    public InstanceInfo initModel(@NotNull InstanceInfo instanceInfo) {
-        instanceInfo.setEnabled(this.isEnabled());
-        instanceInfo.setLogin(this.getLogin());
-        instanceInfo.setUrl(this.getUrl());
-        instanceInfo.setPassword(this.getPassword());
-        return instanceInfo;
+    public AemToolsProjectConfiguration initModel(@NotNull AemToolsProjectConfiguration aemToolsProjectConfiguration) {
+        aemToolsProjectConfiguration.setSyncEnabled(this.isEnabled());
+        AemCredentials credentials = new AemCredentials(this.getLogin(), this.getPassword());
+        AemInstance instance = new AemInstance(SyncConstants.INSTANCE.getDEFAULT_INSTANCE_NAME(),
+                this.getUrl(), SyncConstants.INSTANCE.getDEFAULT_INSTANCE_GROUP(), credentials);
+
+        aemToolsProjectConfiguration.getInstances().set(0, instance);
+        return aemToolsProjectConfiguration;
     }
 
-    public void setUpForm(@NotNull InstanceInfo instanceInfo) {
-        this.setPassword(instanceInfo.getPassword());
-        this.setLogin(instanceInfo.getLogin());
-        this.setUrlInstance(instanceInfo.getUrl());
-        this.setAEMSyncEnabled(instanceInfo.getEnabled());
+    public void setUpForm(@NotNull AemToolsProjectConfiguration aemToolsProjectConfiguration) {
+        AemInstance aemInstance = aemToolsProjectConfiguration.getInstances().get(0);
+        this.setPassword(aemInstance.getCredentials().getPassword());
+        this.setLogin(aemInstance.getCredentials().getLogin());
+        this.setUrlInstance(aemInstance.getUrlAddress());
+        this.setAEMSyncEnabled(aemToolsProjectConfiguration.isSyncEnabled());
     }
 
     private boolean isEnabled() {

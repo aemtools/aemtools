@@ -13,8 +13,8 @@ class SyncSettingsTest: BaseLightTest(false) {
   override fun setUp() {
     super.setUp()
     syncSettings = SyncSettings(project)
-    val instanceInfo = InstanceInfo()
-    project.registerServiceInstance(InstanceInfo::class.java, instanceInfo)
+    val instanceInfo = AemToolsProjectConfiguration()
+    project.registerServiceInstance(AemToolsProjectConfiguration::class.java, instanceInfo)
   }
 
   @Test
