@@ -23,11 +23,12 @@ public class AEMToolsConfigurationGUI {
         return rootPanel;
     }
 
-    public void initModel(@NotNull InstanceInfo instanceInfo) {
+    public InstanceInfo initModel(@NotNull InstanceInfo instanceInfo) {
         instanceInfo.setEnabled(this.isEnabled());
         instanceInfo.setLogin(this.getLogin());
         instanceInfo.setUrl(this.getUrl());
         instanceInfo.setPassword(this.getPassword());
+        return instanceInfo;
     }
 
     public void setUpForm(@NotNull InstanceInfo instanceInfo) {
