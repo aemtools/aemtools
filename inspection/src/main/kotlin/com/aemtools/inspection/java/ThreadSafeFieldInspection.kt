@@ -1,5 +1,6 @@
 package com.aemtools.inspection.java
 
+import com.aemtools.common.util.annotations
 import com.aemtools.common.util.resolveReturnType
 import com.aemtools.common.util.toPsiClass
 import com.aemtools.inspection.common.AemIntellijInspection
@@ -12,7 +13,6 @@ import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiField
 import com.intellij.psi.search.GlobalSearchScope
-import org.jetbrains.uast.java.annotations
 
 /**
  * AEM 3 rule implementation.
@@ -53,7 +53,7 @@ class ThreadSafeFieldInspection : AemIntellijInspection(
       jpf.findClass(inter, GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(module))
     }
 
-    return psiClass.annotations.any { annotation ->
+    return psiClass.annotations().any { annotation ->
       annotation.qualifiedName in vulnerableAnnotations
     } || interfaces.any { psiClass.isInheritorDeep(it, null) }
   }

@@ -57,8 +57,7 @@ fun PsiField.isFelixProperty(): Boolean =
  * @return list of annotations
  */
 fun PsiModifierListOwner.annotations(): List<PsiAnnotation> =
-    modifierList?.children?.mapNotNull { it as? PsiAnnotation }
-        ?: emptyList()
+    modifierList?.annotations?.toList() ?: emptyList()
 
 /**
  * Find all methods which may used from EL
