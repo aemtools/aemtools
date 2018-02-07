@@ -79,6 +79,7 @@ class ThreadSafeFieldInspection : AemIntellijInspection(
         "org.apache.jackrabbit.api.security.user.User",
         "org.apache.jackrabbit.api.security.user.UserManager"
     )
+
     val vulnerableInterfaces = setOf(
         "javax.servlet.Servlet",
         "javax.servlet.Filter",
