@@ -23,7 +23,7 @@ class ThreadSafeFieldInspection : AemIntellijInspection(
     name = "Thread-safe field inspection",
     groupName = "AEM",
     description = """
-      This inspection checks that <b>Non</b>threadsave
+      This inspection checks that <b>Non</b>-threadsafe
       classes aren't used as fields in singleton classes.
       (e.g. filters or servlets)
     """

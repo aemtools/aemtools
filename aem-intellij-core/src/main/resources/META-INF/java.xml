@@ -30,14 +30,6 @@
                 serviceInterface="com.aemtools.inspection.service.IJavaInspectionService"
                 serviceImplementation="com.aemtools.inspection.service.JavaInspectionService"/>
 
-        <!--<completion.confidence-->
-        <!--implementationClass="com.aemtools.codeinsight.sling.SlingModelAnnotationsConfidence"-->
-        <!--language="JAVA"/>-->
-
-        <!--<weigher-->
-        <!--implementationClass="com.aemtools.codeinsight.sling.SlingModelAnnotationsCompletionWeighter"-->
-        <!--key="proximity" />-->
-
         <localInspection
                 language="JAVA"
                 enabledByDefault="true"
