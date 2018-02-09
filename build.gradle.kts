@@ -16,7 +16,7 @@ import io.gitlab.arturbosch.detekt.*
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 
 buildscript {
-    val kotlin_version: String by extra
+    val kotlinVersion: String by extra
 
     repositories {
         mavenLocal()
@@ -27,7 +27,7 @@ buildscript {
         }
 
         dependencies {
-            classpath(kotlin("gradle-plugin", kotlin_version))
+            classpath(kotlin("gradle-plugin", kotlinVersion))
             classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.2")
             classpath("com.palantir:jacoco-coverage:0.4.0")
             classpath("gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0.RC5-6")
@@ -35,13 +35,13 @@ buildscript {
     }
 }
 
-val aemtools_version: String by extra
+val aemtoolsVersion: String by extra
 
 
 allprojects {
     group = "aemtools"
 
-    version = aemtools_version
+    version = aemtoolsVersion
 
     plugins {
         id("io.gitlab.arturbosch.detekt").version("1.0.0.RC5-6")
@@ -59,11 +59,11 @@ allprojects {
     }
 }
 
-val kotlin_version: String by extra
-val junit_version: String by extra
-val jmockit_version: String by extra
-val assertj_version: String by extra
-val mockito_version: String by extra
+val kotlinVersion: String by extra
+val junitVersion: String by extra
+val jmockitVersion: String by extra
+val assertjVersion: String by extra
+val mockitoVersion: String by extra
 
 plugins {
     java
@@ -119,37 +119,37 @@ subprojects {
         }
     }
 
-    val mockito_kotlin_version: String by extra
-    val spek_version: String by extra
-    val junit_jupiter_api_version: String by extra
-    val junit_jupiter_engine_version: String by extra
-    val junit_vintage_engine_version: String by extra
+    val mockitoKotlinVersion: String by extra
+    val spekVersion: String by extra
+    val junitJupiterApiVersion: String by extra
+    val junitJupiterEngineVersion: String by extra
+    val junitVintageEngineVersion: String by extra
 
     dependencies {
-        compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-        compile("org.jetbrains.kotlin:kotlin-runtime:$kotlin_version")
-        compile("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
-        compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
+        compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+        compile("org.jetbrains.kotlin:kotlin-runtime:$kotlinVersion")
+        compile("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+        compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
 
         testCompile("com.github.markusbernhardt:proxy-vole:1.0.3")
 
-        testCompile("junit:junit:$junit_version")
-        testCompile("org.jmockit:jmockit:$jmockit_version")
-        testCompile("org.assertj:assertj-core:$assertj_version")
-        testCompile("org.mockito:mockito-core:$mockito_version")
-        testCompile("com.nhaarman:mockito-kotlin:$mockito_kotlin_version")
+        testCompile("junit:junit:$junitVersion")
+        testCompile("org.jmockit:jmockit:$jmockitVersion")
+        testCompile("org.assertj:assertj-core:$assertjVersion")
+        testCompile("org.mockito:mockito-core:$mockitoVersion")
+        testCompile("com.nhaarman:mockito-kotlin:$mockitoKotlinVersion")
 
-        testCompile("org.jetbrains.spek:spek-api:$spek_version")
-        testRuntime("org.jetbrains.spek:spek-junit-platform-engine:$spek_version")
-        testCompile("org.jetbrains.spek:spek-subject-extension:$spek_version")
-        testCompile("org.junit.jupiter:junit-jupiter-api:$junit_jupiter_api_version")
-        testRuntime("org.junit.jupiter:junit-jupiter-engine:$junit_jupiter_engine_version")
-        testRuntime("org.junit.vintage:junit-vintage-engine:$junit_vintage_engine_version")
+        testCompile("org.jetbrains.spek:spek-api:$spekVersion")
+        testRuntime("org.jetbrains.spek:spek-junit-platform-engine:$spekVersion")
+        testCompile("org.jetbrains.spek:spek-subject-extension:$spekVersion")
+        testCompile("org.junit.jupiter:junit-jupiter-api:$junitJupiterApiVersion")
+        testRuntime("org.junit.jupiter:junit-jupiter-engine:$junitJupiterEngineVersion")
+        testRuntime("org.junit.vintage:junit-vintage-engine:$junitVintageEngineVersion")
     }
 
-    val junit_platform_version: String by extra
+    val junitPlatformVersion: String by extra
     configure<JUnitPlatformExtension> {
-        platformVersion = junit_platform_version
+        platformVersion = junitPlatformVersion
 
         filters {
             engines {
@@ -170,7 +170,7 @@ subprojects {
 }
 
 task<Wrapper>("gradleWrapper") {
-    gradleVersion = "4.4"
+    gradleVersion = "4.5.1"
 }
 
 configure<JacocoFullReportExtension> {

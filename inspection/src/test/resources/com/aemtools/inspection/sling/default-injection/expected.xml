@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problems>
+    <problem>
+        <file>TestModel.java</file>
+        <line>11</line>
+        <package>com.test</package>
+        <entry_point TYPE="file" FQNAME="TestModel.java" />
+        <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Default Injection Strategy</problem_class>
+        <description>Redundant annotation</description>
+    </problem>
+</problems>
