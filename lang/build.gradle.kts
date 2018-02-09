@@ -12,7 +12,7 @@ import org.jetbrains.intellij.IntelliJPluginExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
-    var kotlin_version: String by extra
+    var kotlinVersion: String by extra
 
     repositories {
         mavenCentral()
@@ -22,7 +22,7 @@ buildscript {
     }
 
     dependencies {
-        classpath(kotlin("gradle-plugin", kotlin_version))
+        classpath(kotlin("gradle-plugin", kotlinVersion))
         classpath("com.github.hurricup:gradle-grammar-kit-plugin:2017.1.1")
     }
 
@@ -40,7 +40,7 @@ plugins {
     id("org.jetbrains.intellij") version "0.2.17"
 }
 
-val kotlin_version: String by extra
+val kotlinVersion: String by extra
 
 configure<GrammarKitPluginExtension> {
     grammarKitRelease = "1.5.2"

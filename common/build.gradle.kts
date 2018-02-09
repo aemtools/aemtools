@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.utils.identity
 
 buildscript {
-    var kotlin_version: String by extra
+    val kotlinVersion: String by extra
 
     repositories {
         mavenCentral()
@@ -16,7 +16,7 @@ buildscript {
     }
 
     dependencies {
-        classpath(kotlin("gradle-plugin", kotlin_version))
+        classpath(kotlin("gradle-plugin", kotlinVersion))
     }
 }
 
