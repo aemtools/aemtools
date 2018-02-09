@@ -3,14 +3,14 @@ import org.jetbrains.kotlin.cli.jvm.main
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
-    val kotlin_version: String by extra
+    val kotlinVersion: String by extra
 
     repositories {
         mavenCentral()
     }
     
     dependencies {
-        classpath(kotlin("gradle-plugin", kotlin_version))
+        classpath(kotlin("gradle-plugin", kotlinVersion))
     }
 }
 
@@ -25,22 +25,21 @@ plugins {
     id("org.jetbrains.intellij") version "0.2.17"
 }
 
-
 java.sourceSets {
     getByName("main").java.srcDirs("src/main/kotlin")
 }
 
-val kotlin_version: String by extra
-val gson_version: String by extra
-val apache_commons_version: String by extra
+val kotlinVersion: String by extra
+val gsonVersion: String by extra
+val apacheCommonsVersion: String by extra
 
 dependencies {
     compile(project(":lang"))
     compile(project(":common"))
     compile(project(":inspection"))
 
-    compile("com.google.code.gson:gson:$gson_version")
-    compile("org.apache.commons:commons-lang3:$apache_commons_version")
+    compile("com.google.code.gson:gson:$gsonVersion")
+    compile("org.apache.commons:commons-lang3:$apacheCommonsVersion")
 
     testCompile(project(":test-framework"))
 }

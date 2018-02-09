@@ -49,15 +49,6 @@ class HtlRootDirectoriesTest {
   }
 
   @Test
-  fun `loadState with null argument should clear roots`() {
-    tested.addRoot("/test/root")
-    tested.loadState(null)
-
-    assertThat(tested.directories)
-        .isEmpty()
-  }
-
-  @Test
   fun `getState should return this`() {
     assertThat(tested.state)
         .isEqualTo(tested)

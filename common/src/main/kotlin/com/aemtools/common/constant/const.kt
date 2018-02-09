@@ -229,6 +229,7 @@ object const {
     val POJO_USE = "org.apache.sling.scripting.sightly.pojo.Use"
 
     val SLING_MODEL = "org.apache.sling.models.annotations.Model"
+    val OPTIONAL = "org.apache.sling.models.annotations.Optional"
 
     val VALUE_MAP = "org.apache.sling.api.resource.ValueMap"
 
