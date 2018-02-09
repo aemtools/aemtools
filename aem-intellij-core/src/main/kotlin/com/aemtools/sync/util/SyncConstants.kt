@@ -20,7 +20,6 @@ object SyncConstants {
   val DEFAULT_LOGIN = "admin"
   val DEFAULT_PASSWORD = "admin"
   val DEFAULT_URL_INSTANCE = "http://localhost:4502"
-  val DEFAULT_IS_ENABLED_SYNC = false
 
   val DEFAULT_INSTANCE_NAME = "author"
   val DEFAULT_INSTANCE_GROUP = "local"

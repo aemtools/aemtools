@@ -47,7 +47,7 @@ class ExportFileToInstance : AbstractSyncAction() {
     val instance = projectConfiguration.instances.get(0)
     props.userId = instance.credentials.login
     props.password = instance.credentials.password
-    props.packageManagerUrl = "${instance.urlAddress}/${VendorInstallerFactory.CRX_URL}";
+    props.packageManagerUrl = "${instance.urlAddress}/${VendorInstallerFactory.CRX_URL}"
 
     val packageFile = PackageFile()
     packageFile.file = zipFile
