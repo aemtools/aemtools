@@ -171,6 +171,7 @@ subprojects {
 
 task<Wrapper>("gradleWrapper") {
     gradleVersion = "4.5.1"
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 configure<JacocoFullReportExtension> {

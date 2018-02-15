@@ -18,28 +18,28 @@ class MockitoExtension : TestInstancePostProcessor, ParameterResolver {
 
   override fun supportsParameter(parameterContext: ParameterContext,
                                  extensionContext: ExtensionContext): Boolean {
-    return parameterContext.getParameter().isAnnotationPresent(Mock::class.java)
+    return parameterContext.parameter.isAnnotationPresent(Mock::class.java)
   }
 
   override fun resolveParameter(parameterContext: ParameterContext,
                                 extensionContext: ExtensionContext): Any {
-    return getMock(parameterContext.getParameter(), extensionContext)
+    return getMock(parameterContext.parameter, extensionContext)
   }
 
   private fun getMock(
       parameter: Parameter, extensionContext: ExtensionContext): Any {
 
-    val mockType = parameter.getType()
+    val mockType = parameter.type
     val mocks = extensionContext.getStore(ExtensionContext.Namespace.create(
         MockitoExtension::class.java, mockType))
     val mockName = getMockName(parameter)
 
     return if (mockName != null) {
       mocks.getOrComputeIfAbsent(
-          mockName, { key -> mock(mockType, mockName) })
+          mockName, { mock(mockType, mockName) })
     } else {
       mocks.getOrComputeIfAbsent(
-          mockType.getCanonicalName(), { key -> mock(mockType) })
+          mockType.canonicalName, { mock(mockType) })
     }
   }
 
@@ -48,8 +48,8 @@ class MockitoExtension : TestInstancePostProcessor, ParameterResolver {
         .name.trim()
     if (!explicitMockName.isEmpty()) {
       return explicitMockName
-    } else if (parameter.isNamePresent()) {
-      return parameter.getName()
+    } else if (parameter.isNamePresent) {
+      return parameter.name
     }
     return null
   }

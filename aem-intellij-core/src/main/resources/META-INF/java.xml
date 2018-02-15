@@ -48,5 +48,11 @@
                 hasStaticDescription="true"
                 implementationClass="com.aemtools.inspection.java.ThreadSafeFieldInspection"/>
 
+        <localInspection
+                language="JAVA"
+                enabledByDefault="true"
+                hasStaticDescription="true"
+                implementationClass="com.aemtools.inspection.java.UnreleasedResourceResolverInspection"/>
+
     </extensions>
 </idea-plugin>

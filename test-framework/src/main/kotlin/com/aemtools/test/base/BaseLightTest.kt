@@ -13,7 +13,7 @@ import java.io.File
 /**
  * @author Dmytro Troynikov
  */
-abstract class BaseLightTest(val withAemUberJar: Boolean = false)
+abstract class BaseLightTest(private val withAemUberJar: Boolean = false)
   : LightCodeInsightFixtureTestCase(),
     UberJarFixtureMixin {
 

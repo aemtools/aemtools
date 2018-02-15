@@ -1,4 +1,5 @@
 import org.jetbrains.intellij.IntelliJPluginExtension
+import org.jetbrains.intellij.tasks.RunIdeaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
@@ -47,5 +48,12 @@ configure<IntelliJPluginExtension> {
     updateSinceUntilBuild = false
     setPlugins(
             "IntelliLang"
+    )
+}
+
+tasks.withType<RunIdeaTask> {
+    systemProperty(
+            "idea.ProcessCanceledException",
+            "disabled"
     )
 }

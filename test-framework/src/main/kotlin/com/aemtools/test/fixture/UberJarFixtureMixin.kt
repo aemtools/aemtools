@@ -556,6 +556,46 @@ interface UberJarFixtureMixin : OSGiFelixAnnotationsMixin {
                 }
             }
         """)
+
+    addClass("""
+        package org.apache.sling.api.resource;
+
+        import java.util.Map;
+
+        public interface ResourceResolverFactory {
+            String USER = "user.name";
+            String PASSWORD = "user.password";
+            String NEW_PASSWORD = "user.newpassword";
+            String USER_IMPERSONATION = "user.impersonation";
+            String SUBSERVICE = "sling.service.subservice";
+
+            ResourceResolver getResourceResolver(Map<String, Object> var);
+
+            ResourceResolver getAdministrativeResourceResolver(Map<String, Object> var);
+
+            ResourceResolver getServiceResourceResolver(Map<String, Object> var);
+
+            ResourceResolver getThreadResourceResolver();
+        }
+    """)
+
+    addClass("""
+      package org.apache.sling.api.resource;
+
+      interface ResourceResolver {
+        void close();
+      }
+        """)
+    addClass("""
+      package javax.jcr;
+
+      interface Session {}
+      """)
+    addClass("""
+      package javax.servlet;
+
+      interface Servlet {}
+        """)
   }
 
 }

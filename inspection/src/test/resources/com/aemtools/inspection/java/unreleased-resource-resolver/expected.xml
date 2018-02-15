@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problems>
+    <problem>
+        <file>Test.java</file>
+        <line>14</line>
+        <package>com.test</package>
+        <entry_point TYPE="method" FQNAME="com.test.Test org.apache.sling.api.resource.ResourceResolver simpleCase()" />
+        <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unrealeased ResourceResolver inspection</problem_class>
+        <description>Unclosed ResourceResolver</description>
+    </problem>
+
+    <problem>
+        <file>Test.java</file>
+        <line>21</line>
+        <package>com.test</package>
+        <entry_point TYPE="method" FQNAME="com.test.Test org.apache.sling.api.resource.ResourceResolver simpleCase()" />
+        <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unrealeased ResourceResolver inspection</problem_class>
+        <description>Unclosed ResourceResolver</description>
+    </problem>
+</problems>

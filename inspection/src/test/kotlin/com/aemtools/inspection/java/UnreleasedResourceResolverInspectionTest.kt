@@ -8,25 +8,25 @@ import com.intellij.testFramework.LightProjectDescriptor
 import java.io.File
 
 /**
- * Test for [ThreadSafeFieldInspection].
+ * Test for [UnreleasedResourceResolverInspection].
  *
  * @author Dmytro Troynikov
  */
-class ThreadSafeFieldInspectionTest : BaseLightTest(true) {
+class UnreleasedResourceResolverInspectionTest : BaseLightTest(true) {
 
   override fun getTestDataPath(): String {
     return File(HtlTestCase.testResourcesPath).absolutePath
   }
 
-  fun testThreadSafeFieldInspection() {
-    myFixture.enableInspections(ThreadSafeFieldInspection())
-
-    myFixture.testInspection("com/aemtools/inspection/java/thread-safe-field",
-        LocalInspectionToolWrapper(ThreadSafeFieldInspection()))
-  }
-
   override fun getProjectDescriptor(): LightProjectDescriptor {
     return JdkProjectDescriptor()
+  }
+
+  fun testUnreleasedResourceResolverInspection() {
+    myFixture.enableInspections(UnreleasedResourceResolverInspection())
+
+    myFixture.testInspection("com/aemtools/inspection/java/unreleased-resource-resolver",
+        LocalInspectionToolWrapper(UnreleasedResourceResolverInspection()))
   }
 
 }
