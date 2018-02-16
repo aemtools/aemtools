@@ -21,6 +21,7 @@ import com.intellij.psi.PsiField
 import com.intellij.psi.PsiLambdaExpression
 import com.intellij.psi.PsiLocalVariable
 import com.intellij.psi.PsiMember
+import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiMethodCallExpression
 import com.intellij.psi.PsiReferenceExpression
 import com.intellij.psi.PsiReturnStatement
@@ -136,20 +137,26 @@ class UnreleasedResourceResolverInspection : AemIntellijInspection(
   private fun isResourceClosed(variable: PsiVariable, containerClass: PsiClass): Boolean {
     val refs = ReferencesSearch.search(variable).findAll()
 
-    if (refs.any { reference ->
-          val methodCallExpression = reference.element.findParentByType(
-              PsiMethodCallExpression::class.java
-          ) ?: return@any false
+    refs.mapNotNull { it.element.findParentByType(PsiMethodCallExpression::class.java) }
+        .forEach {
 
-          val callExpression = methodCallExpression.methodExpression
-          val methodName = callExpression.referenceName
+          val methodExpression = it.methodExpression
+          // check if the variable is closed in current method
+          if (closeInvocation(methodExpression)) {
+            return true
+          }
 
-          "close" == methodName
-        }) {
-      return true
-    }
+          val resolved = methodExpression.resolve() as? PsiMethod
+              ?: return@forEach
+
+          resolved
+        }
 
     return false
+  }
+
+  private fun closeInvocation(expression: PsiReferenceExpression): Boolean {
+    return "close" == expression.referenceName
   }
 
   private fun isResourceResolverCreation(expression: PsiExpression): Boolean {
