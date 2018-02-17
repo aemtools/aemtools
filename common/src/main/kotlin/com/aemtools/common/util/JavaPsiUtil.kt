@@ -14,6 +14,7 @@ import com.intellij.psi.PsiMember
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiModifier
 import com.intellij.psi.PsiModifierListOwner
+import com.intellij.psi.PsiParameter
 import com.intellij.psi.PsiType
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiTypesUtil
@@ -173,4 +174,17 @@ fun PsiLiteralExpression.isJavaLangString(): Boolean {
   return type == PsiType.getJavaLangString(
       psiManager,
       GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(myModule))
+}
+
+/**
+ * Find parameter by FQN.
+ *
+ * @param fqn fully qualified name of parameter's type
+ * @receiver [PsiMethod]
+ * @return parameter with given type
+ */
+fun PsiMethod.parameterOfType(fqn: String): PsiParameter? {
+  return parameters.find {
+    (it as? PsiParameter)?.type?.canonicalText == fqn
+  } as? PsiParameter
 }

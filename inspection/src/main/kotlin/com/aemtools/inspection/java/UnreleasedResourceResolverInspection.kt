@@ -1,6 +1,7 @@
 package com.aemtools.inspection.java
 
 import com.aemtools.common.util.findParentByType
+import com.aemtools.common.util.parameterOfType
 import com.aemtools.inspection.common.AemIntellijInspection
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
@@ -99,7 +100,7 @@ class UnreleasedResourceResolverInspection : AemIntellijInspection(
             ?: return
 
         if (!isResourceEscapesCurrentMethod(expression, variable)
-            && !isResourceClosed(variable, containerClass)) {
+            && !isResourceClosed(variable)) {
           registerWarning(holder, expression)
         }
       }
@@ -134,7 +135,7 @@ class UnreleasedResourceResolverInspection : AemIntellijInspection(
     return false
   }
 
-  private fun isResourceClosed(variable: PsiVariable, containerClass: PsiClass): Boolean {
+  private fun isResourceClosed(variable: PsiElement): Boolean {
     val refs = ReferencesSearch.search(variable).findAll()
 
     refs.mapNotNull { it.element.findParentByType(PsiMethodCallExpression::class.java) }
@@ -149,7 +150,10 @@ class UnreleasedResourceResolverInspection : AemIntellijInspection(
           val resolved = methodExpression.resolve() as? PsiMethod
               ?: return@forEach
 
-          resolved
+          val param = resolved.parameterOfType("org.apache.sling.api.resource.ResourceResolver")
+          if (param != null && isResourceClosed(param)) {
+            return true
+          }
         }
 
     return false
