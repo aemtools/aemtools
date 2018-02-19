@@ -2,6 +2,7 @@ package com.test;
 
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.SlingHttpServletRequest;
 
 public class Test {
 
@@ -28,10 +29,11 @@ public class Test {
         // this should not be reported
         this.resolver = createResolver();
         resolver = createResolver();
+        ResourceResolver resolver4 = resolverFromRequest2(null);
 
         // this should not be reported
-        ResourceResolver resolver4 = createResolver();
-        resolver4.close()
+        ResourceResolver resolver5 = createResolver();
+        resolver5.close()
 
         return resolver1;
     }
@@ -69,6 +71,15 @@ public class Test {
 
     private ResourceResolver createResolver() {
         return factory.getResourceResolver(null);
+    }
+
+    private void resolverFromRequest(SlingHttpServletRequest request) {
+        // should not be reported
+        ResourceResolver resolver = request.getResourceResolver();
+    }
+
+    private ResourceResolver resolverFromRequest2(SlingHttpServletRequest request) {
+        return request.getResourceResolver();
     }
 
 }
