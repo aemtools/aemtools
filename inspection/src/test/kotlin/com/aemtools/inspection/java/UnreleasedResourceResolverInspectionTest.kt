@@ -22,10 +22,17 @@ class UnreleasedResourceResolverInspectionTest : BaseLightTest(true) {
     return JdkProjectDescriptor()
   }
 
-  fun testUnreleasedResourceResolverInspection() {
+  fun testUnreleasedResourceResolverCommon() {
     myFixture.enableInspections(UnreleasedResourceResolverInspection())
 
-    myFixture.testInspection("com/aemtools/inspection/java/unreleased-resource-resolver",
+    myFixture.testInspection("com/aemtools/inspection/java/unreleased-resource-resolver/common",
+        LocalInspectionToolWrapper(UnreleasedResourceResolverInspection()))
+  }
+
+  fun testUnreleasedResourceResolverExclusions() {
+    myFixture.enableInspections(UnreleasedResourceResolverInspection())
+
+    myFixture.testInspection("com/aemtools/inspection/java/unreleased-resource-resolver/exclusions",
         LocalInspectionToolWrapper(UnreleasedResourceResolverInspection()))
   }
 
