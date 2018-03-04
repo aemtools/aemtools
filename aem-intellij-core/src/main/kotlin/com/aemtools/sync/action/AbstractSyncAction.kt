@@ -1,7 +1,7 @@
 package com.aemtools.sync.action
 
 import com.aemtools.sync.settings.AemToolsProjectConfiguration
-import com.aemtools.sync.util.isUnderAEMRoot
+import com.aemtools.sync.util.isUnderJcrRoot
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
@@ -16,7 +16,7 @@ abstract class AbstractSyncAction : AnAction() {
     val file = event.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
             ?.firstOrNull()
 
-    if (file != null && file.isUnderAEMRoot()) {
+    if (file != null && file.isUnderJcrRoot()) {
       val project = event.project ?: return
       event.presentation.isEnabledAndVisible = isAEMSyncEnabled(project)
     }

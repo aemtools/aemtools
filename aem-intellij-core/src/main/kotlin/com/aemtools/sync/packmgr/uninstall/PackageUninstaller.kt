@@ -12,11 +12,8 @@ import java.io.IOException
  */
 class PackageUninstaller (private val props: PackageManagerProperties,
                           private val log: Logger) {
-  val pkgmgr: PackageManagerHelper
 
-  init {
-    pkgmgr = PackageManagerHelper(props, log)
-  }
+  private val pkgmgr: PackageManagerHelper = PackageManagerHelper(props, log)
 
   /**
    * Uninstall package via package manager.

@@ -267,7 +267,9 @@
         <colorSettingsPage implementation="com.aemtools.ide.htl.HtlColorsAndFontsPage"/>
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
 
-        <projectConfigurable groupId="tools" displayName="AEM Tools" id="preference.AEMTools"
+        <projectConfigurable groupId="tools"
+                             displayName="AEM Tools"
+                             id="preference.AEMTools"
                              instance="com.aemtools.sync.settings.SyncSettings"/>
     </extensions>
 

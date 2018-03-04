@@ -29,8 +29,8 @@ public class AemToolsConfigurationGUI {
     public AemToolsProjectConfiguration initModel(@NotNull AemToolsProjectConfiguration aemToolsProjectConfiguration) {
         aemToolsProjectConfiguration.setSyncEnabled(this.isEnabled());
         AemCredentials credentials = new AemCredentials(this.getLogin(), this.getPassword());
-        AemInstance instance = new AemInstance(SyncConstants.INSTANCE.getDEFAULT_INSTANCE_NAME(),
-                this.getUrl(), SyncConstants.INSTANCE.getDEFAULT_INSTANCE_GROUP(), credentials);
+        AemInstance instance = new AemInstance(SyncConstants.DEFAULT_INSTANCE_NAME,
+                this.getUrl(), SyncConstants.DEFAULT_INSTANCE_GROUP, credentials);
 
         aemToolsProjectConfiguration.getInstances().set(0, instance);
         return aemToolsProjectConfiguration;

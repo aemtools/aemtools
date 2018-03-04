@@ -4,7 +4,7 @@ import com.aemtools.sync.logger.CrxStatusLogger
 import com.aemtools.sync.packmgr.uninstall.PackageUninstaller
 import com.aemtools.sync.settings.AemToolsProjectConfiguration
 import com.aemtools.sync.util.SyncConstants
-import com.aemtools.sync.util.getPathOnAEMInstance
+import com.aemtools.sync.util.getJcrPath
 import com.aemtools.sync.util.getRootOfFile
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
@@ -30,7 +30,7 @@ class ImportFileFromInstance : AbstractSyncAction() {
     }
     val project = event.project ?: return
 
-    val pathOnAEMInstance = virtualFile.getPathOnAEMInstance()
+    val pathOnAEMInstance = virtualFile.getJcrPath()
     val rootPath = pathOnAEMInstance.substringBeforeLast("/")
     val projectConfiguration = AemToolsProjectConfiguration.getInstance(project)
 

@@ -15,8 +15,7 @@ import com.intellij.util.xmlb.annotations.Tag
  */
 @State(
     name = "AemToolsProjectConfiguration",
-    storages = arrayOf(
-        Storage(StoragePathMacros.WORKSPACE_FILE))
+    storages = [(Storage(StoragePathMacros.WORKSPACE_FILE))]
 )
 class AemToolsProjectConfiguration : PersistentStateComponent<AemToolsProjectConfiguration> {
 
@@ -29,25 +28,41 @@ class AemToolsProjectConfiguration : PersistentStateComponent<AemToolsProjectCon
 
   override fun getState(): AemToolsProjectConfiguration? = this
 
+  /**
+   * Add an AEM instance to the storage.
+   *
+   * @param instance the instance to add
+   */
   fun addInstance(instance: AemInstance) {
     instances.add(instance)
   }
 
+  /**
+   * Remove an AEM instance from the storage.
+   *
+   * @param instance the instance to remove
+   */
   fun removeInstance(instance: AemInstance) {
     instances.remove(instance)
   }
 
-  override fun loadState(state: AemToolsProjectConfiguration?) {
-    state?.let {
-      instances.addAll(state.instances)
-      this.isSyncEnabled = state.isSyncEnabled
-    }
+  override fun loadState(state: AemToolsProjectConfiguration) {
+    instances.addAll(state.instances)
+    this.isSyncEnabled = state.isSyncEnabled
   }
 
   companion object {
 
+    /**
+     * Get the instance of [AemToolsProjectConfiguration] associated
+     * with given [Project].
+     *
+     * @param project the project
+     */
     fun getInstance(project: Project): AemToolsProjectConfiguration {
-      val instanceInfo = ServiceManager.getService(project, AemToolsProjectConfiguration::class.java)
+      val instanceInfo = ServiceManager.getService(
+          project,
+          AemToolsProjectConfiguration::class.java)
       if (instanceInfo.instances.isEmpty()) {
         instanceInfo.instances.add(AemInstance.default)
       }

@@ -34,7 +34,7 @@ class SyncSettings(val project: Project) : SearchableConfigurable {
     val instanceInfo = AemToolsProjectConfiguration.getInstance(project)
 
     configGUI?.setUpForm(instanceInfo)
-    return configGUI?.getRootPanel()
+    return configGUI?.rootPanel
   }
 
   override fun disposeUIResources() {
@@ -42,6 +42,12 @@ class SyncSettings(val project: Project) : SearchableConfigurable {
   }
 
   companion object {
+
+    /**
+     * Get instance of [SyncSettings] associated with given project.
+     *
+     * @param project the project
+     */
     fun getInstance(project: Project): SyncSettings = ServiceManager.getService(project, SyncSettings::class.java)
   }
 

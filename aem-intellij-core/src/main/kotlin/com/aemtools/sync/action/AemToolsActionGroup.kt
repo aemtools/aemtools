@@ -1,7 +1,7 @@
 package com.aemtools.sync.action
 
 import com.aemtools.sync.settings.AemToolsProjectConfiguration
-import com.aemtools.sync.util.isUnderAEMRoot
+import com.aemtools.sync.util.isUnderJcrRoot
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.DefaultActionGroup
@@ -21,7 +21,7 @@ class AemToolsActionGroup : DefaultActionGroup() {
             ?.firstOrNull()
     val presentation = event.presentation
 
-    presentation.isEnabledAndVisible = file != null && file.isUnderAEMRoot() && isAEMSyncEnabled(project)
+    presentation.isEnabledAndVisible = file != null && file.isUnderJcrRoot() && isAEMSyncEnabled(project)
   }
 
   private fun isAEMSyncEnabled(project: Project): Boolean {
