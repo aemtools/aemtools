@@ -170,7 +170,7 @@ subprojects {
 }
 
 task<Wrapper>("gradleWrapper") {
-    gradleVersion = "4.5.1"
+    gradleVersion = "4.6"
 }
 
 configure<JacocoFullReportExtension> {

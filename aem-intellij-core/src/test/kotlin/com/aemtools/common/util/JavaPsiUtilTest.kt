@@ -3,6 +3,7 @@ package com.aemtools.common.util
 import com.aemtools.common.constant.const.java.FELIX_PROPERTY_ANNOTATION
 import com.aemtools.common.constant.const.java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.common.constant.const.java.SLING_FILTER_ANNOTATION
+import com.aemtools.common.constant.const.java.SLING_HEALTH_CHECK_ANNOTATION
 import com.aemtools.common.constant.const.java.SLING_SERVLET_ANNOTATION
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.JavaSearchMixin
@@ -71,6 +72,26 @@ class JavaPsiUtilTest : BaseLightTest(),
       val psiClass = psiClass("com.test.MyFilter")
 
       assertTrue("The class annotated with SlingFilter annotation should be determined as OSGi service",
+          psiClass.isOSGiService())
+    }
+  }
+
+  fun `test SlingHealthCheck is OSGi service`() = fileCase {
+    addSlingHealthCheckAnnotation()
+
+    addClass("MyHealthCheck.java", """
+      package com.test;
+
+      import $SLING_HEALTH_CHECK_ANNOTATION;
+
+      @SlingHealthCheck
+      public class Test {}
+    """)
+
+    verify {
+      val psiClass = psiClass("com.test.Test")
+
+      assertTrue("The class annotated with SlingHealthCheck should be determined as OSGi service",
           psiClass.isOSGiService())
     }
   }
