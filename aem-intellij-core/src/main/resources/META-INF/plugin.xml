@@ -135,6 +135,8 @@
 
         <lang.documentationProvider language="HTML" order="first"
                                     implementationClass="com.aemtools.documentation.html.HtlAttributesDocumentationProvider"/>
+        <lang.documentationProvider language="HTML" order="first"
+                                    implementationClass="com.aemtools.documentation.html.HtmlLinkCheckerDocumentationProvider"/>
         <lang.documentationProvider language="Htl" order="first"
                                     implementationClass="com.aemtools.documentation.htl.HtlELDocumentationProvider"/>
         <lang.documentationProvider language="XML" order="first"
