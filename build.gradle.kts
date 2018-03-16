@@ -14,6 +14,7 @@ import org.junit.platform.gradle.plugin.FiltersExtension
 import org.junit.platform.gradle.plugin.EnginesExtension
 import io.gitlab.arturbosch.detekt.*
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import org.junit.platform.console.options.Details
 
 buildscript {
     val kotlinVersion: String by extra
@@ -124,6 +125,7 @@ subprojects {
     val junitJupiterApiVersion: String by extra
     val junitJupiterEngineVersion: String by extra
     val junitVintageEngineVersion: String by extra
+    val junitPlatformVersion: String by extra
 
     dependencies {
         compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
@@ -142,15 +144,20 @@ subprojects {
         testCompile("org.jetbrains.spek:spek-api:$spekVersion")
         testRuntime("org.jetbrains.spek:spek-junit-platform-engine:$spekVersion")
         testCompile("org.jetbrains.spek:spek-subject-extension:$spekVersion")
+
         testCompile("org.junit.jupiter:junit-jupiter-api:$junitJupiterApiVersion")
-        testRuntime("org.junit.jupiter:junit-jupiter-engine:$junitJupiterEngineVersion")
-        testRuntime("org.junit.vintage:junit-vintage-engine:$junitVintageEngineVersion")
+        testCompile("org.junit.jupiter:junit-jupiter-engine:$junitJupiterEngineVersion")
+        testCompile("org.junit.jupiter:junit-jupiter-params:$junitJupiterApiVersion")
+
+        testCompile("org.junit.platform:junit-platform-launcher:$junitPlatformVersion")
+        testCompile("org.junit.platform:junit-platform-console:$junitPlatformVersion")
+
+        testCompile("org.junit.vintage:junit-vintage-engine:$junitVintageEngineVersion")
     }
 
-    val junitPlatformVersion: String by extra
     configure<JUnitPlatformExtension> {
         platformVersion = junitPlatformVersion
-
+        details = Details.TREE
         filters {
             engines {
                 include("spek", "junit-vintage", "junit-jupiter")
@@ -171,6 +178,7 @@ subprojects {
 
 task<Wrapper>("gradleWrapper") {
     gradleVersion = "4.6"
+    // distributionType =
 }
 
 configure<JacocoFullReportExtension> {
