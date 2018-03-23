@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problems>
+    <problem>
+        <file>input.html</file>
+        <line>1</line>
+        <entry_point TYPE="file" FQNAME="input.html" />
+        <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">data-sly-attribute with prohibited attributes</problem_class>
+        <description>style is not allowed in data-sly-attribute</description>
+    </problem>
+</problems>

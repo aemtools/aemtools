@@ -1,0 +1,286 @@
+<idea-plugin>
+    <id>com.aemtools</id>
+    <name>AEM Tools</name>
+    <version>@version@</version>
+    <category>Framework integration</category>
+    <vendor email="dmytrotroynikov@gmail.com"
+            url="https://github.com/aemtools/aemtools">
+        Dmytro Troynikov
+    </vendor>
+
+    <description><![CDATA[
+        AEM Tools is an IntelliJ Platform plugin that provides set of
+        <i>Adobe Experience Manager</i> related extensions and features
+       <ul>
+        <li><b>HTL</b>(<b>Sightly</b>) support:
+            <ul>
+                <li><b>Syntax Highlighting</b></li>
+                <li><b>Code Completion</b></li>
+                <li><b>Code Navigation</b></li>
+                <li><b>Rename Refactoring</li>
+                <li><b>Quick Documentation</b> (ctrl+q)</li>
+                <li><b>Java Use API support (Sling Models & Use Classes)</b></li>
+            </ul>
+            <i>
+            Note: to make the completion work, AEM dependencies should be present in
+            project's POM, the project should be indexed
+            </i>
+        </li>
+
+        <li><b>OSGi</b>
+            <ul>
+                <li><b>Resolves OSGi configs (Felix)</b></li>
+                <li><b>Resolves OSGi properties (Felix)</b></li>
+            </ul>
+        </li>
+        <li>dialog.xml completion for <b>Classic UI</b></li>
+        <li><b>HTL & OSGi & AEM Inspections</b></li>
+        <li><b>Implementation of
+            <a href="https://github.com/Cognifide/AEM-Rules-for-SonarQube">
+            Cognifide AEM Rules for SonarQube</a> as IntelliJ inspections
+        </li>
+       </ul>
+    ]]></description>
+
+    <change-notes><![CDATA[
+        <ul>
+            <li>
+                Added Cognifide
+                <a href="https://github.com/Cognifide/AEM-Rules-for-SonarQube#good-practices">AEM-1</a> rule as
+                IntelliJ inspection.
+            </li>
+            <li>
+                Added Cognifide
+                <a href="https://github.com/Cognifide/AEM-Rules-for-SonarQube#good-practices">AEM-2</a> rule as
+                IntelliJ inspection.
+            </li>
+            <li>
+                Added Cognifide
+                <a href="https://github.com/Cognifide/AEM-Rules-for-SonarQube#sling-models-related">AEM-16</a>
+                rule as IntelliJ inspection.
+            </li>
+            <li>
+                "Unnecessary expression inspection". Reports redundant HTL expression inside of
+                <i>data-sly-use</i> and <i>data-sly-include</i> as a warning.
+            </li>
+            <li>
+                Present available OSGi properties right in the Java editor via gutter icon.
+            </li>
+            <li>
+                "Associated OSGi service" gutter icon in <b>sling:OsgiConfig</b> configuration files
+                that links to corresponding OSGi service.
+            </li>
+            <li>
+                Inspection that warns on wrong data-sly-attribute usage. It can not be used
+                with event handler attributes "on*" and the "style" attribute (for more info see the
+                <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#223-attribute">spec</a>).
+            </li>
+            <li>
+                Added HTL Color Scheme Settings Page (<i>settings -> HTML Markup Language</i>).
+            </li>
+            <li>
+                HTL: Syntax highlighting for escape sequences within string literals.
+            </li>
+            <li>
+                HTL: Special highlighting for template parameters&arguments.
+            </li>
+            <li>
+                HTL: Smart completion for <i>data-sly-list</i> & <i>data-sly-repeat</i>.
+                Completion suggests the most relevant variant.
+            </li>
+            <li>
+                HTL: Improved completion for <i>i18n</i> expressions (e.g. ${'&lt;caret&gt;' @ i18n}).
+            </li>
+            <li>
+                HTL: Fixed wrong syntax highlighting within HTL comments.
+            </li>
+            <li>
+                HTL: Bug fixes and improvements.
+            </li>
+        </ul>
+    ]]>
+    </change-notes>
+
+    <depends>com.intellij.modules.lang</depends>
+
+    <depends optional="true" config-file="java.xml">com.intellij.modules.java</depends>
+
+    <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
+    <depends optional="true" config-file="inspections.xml">com.intellij.modules.lang</depends>
+
+    <idea-version since-build="131"/>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileTypeFactory
+                implementation="com.aemtools.lang.clientlib.file.CdFileTypeFactory"/>
+        <lang.parserDefinition
+                language="Cd"
+                implementationClass="com.aemtools.lang.clientlib.CdParserDefinition"/>
+        <completion.contributor
+                language="Cd"
+                implementationClass="com.aemtools.completion.clientlib.CdCompletionContributor"/>
+
+        <lang.substitutor
+                language="TEXT"
+                implementationClass="com.aemtools.lang.clientlib.CdLanguageSubstitutor"/>
+        <psi.referenceContributor
+                language="Cd"
+                implementation="com.aemtools.reference.clientlib.CdReferenceContributor"/>
+        <lang.commenter
+                language="Cd"
+                implementationClass="com.aemtools.lang.clientlib.editor.CdCommenter"/>
+        <lang.syntaxHighlighterFactory
+                language="Cd"
+                implementationClass="com.aemtools.lang.clientlib.highlight.CdHighlighterFactory"/>
+
+        <lang.documentationProvider language="HTML" order="first"
+                                    implementationClass="com.aemtools.documentation.html.HtlAttributesDocumentationProvider"/>
+        <lang.documentationProvider language="HTML" order="first"
+                                    implementationClass="com.aemtools.documentation.html.HtmlLinkCheckerDocumentationProvider"/>
+        <lang.documentationProvider language="Htl" order="first"
+                                    implementationClass="com.aemtools.documentation.htl.HtlELDocumentationProvider"/>
+        <lang.documentationProvider language="XML" order="first"
+                                    implementationClass="com.aemtools.documentation.widget.WidgetDocumentationProvider"/>
+
+        <!-- widget.xml completion -->
+        <completion.contributor language="XML"
+                                implementationClass="com.aemtools.completion.widget.WidgetCompletionContributor"/>
+
+        <!-- _cq_editConfig.xml completion -->
+        <completion.contributor language="XML"
+                                implementationClass="com.aemtools.completion.editconfig.EditConfigCompletionContributor"/>
+
+        <!-- _rep_policy.xml completion -->
+        <completion.contributor language="XML"
+                                implementationClass="com.aemtools.completion.reppolicy.RepPolicyCompletionContributor"/>
+
+        <!-- Htl -->
+        <iconProvider implementation="com.aemtools.lang.htl.file.HtlFileIconProvider"/>
+
+        <lang.formatter language="Htl" implementationClass="com.aemtools.lang.htl.formatter.HtlFormattingModelBuilder"/>
+        <psi.referenceContributor language="HTML"
+                                  implementation="com.aemtools.reference.html.HtmlReferenceContributor"/>
+        <psi.referenceContributor language="Htl"
+                                  implementation="com.aemtools.reference.htl.contributor.HtlReferenceContributor"/>
+
+        <fileTypeFactory implementation="com.aemtools.lang.htl.file.HtlFileTypeFactory"/>
+
+        <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>
+
+        <fileBasedIndex implementation="com.aemtools.index.AemComponentDeclarationIndex"/>
+        <fileBasedIndex implementation="com.aemtools.index.AemComponentClassicDialogIndex"/>
+        <fileBasedIndex implementation="com.aemtools.index.AemComponentTouchUIDialogIndex"/>
+
+        <fileBasedIndex implementation="com.aemtools.index.LocalizationIndex"/>
+
+        <extendWordSelectionHandler implementation="com.aemtools.ide.htl.HtlStringLiteralWordSelectioner"/>
+
+        <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlStringLiteralManipulator"
+                                 forClass="com.aemtools.lang.htl.psi.HtlStringLiteral"/>
+        <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlPropertyAccessManipulator"
+                                 forClass="com.aemtools.lang.htl.psi.HtlPropertyAccess"/>
+        <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlVariableNameManipulator"
+                                 forClass="com.aemtools.lang.htl.psi.HtlVariableName"/>
+
+        <lang.fileViewProviderFactory language="Htl"
+                                      implementationClass="com.aemtools.lang.htl.file.HtlViewProviderFactory"/>
+
+        <lang.syntaxHighlighterFactory language="Htl"
+                                       implementationClass="com.aemtools.lang.htl.highlight.HtlHighlighterFactory"/>
+
+        <!-- Htl Completion Contributor  -->
+        <completion.contributor language="HTML"
+                                implementationClass="com.aemtools.completion.html.HtmlCompletionContributor"/>
+
+        <completion.contributor language="Htl"
+                                implementationClass="com.aemtools.completion.htl.HtlElCompletionContributor"/>
+        <lang.braceMatcher language="Htl" implementationClass="com.aemtools.lang.htl.editor.HtlBraceMatcher"/>
+
+        <lang.parserDefinition language="Htl"
+                               implementationClass="com.aemtools.lang.htl.HtlParserDefinition"/>
+
+        <lang.commenter language="Htl" implementationClass="com.aemtools.lang.htl.editor.comments.HtlCommenter"/>
+        <lang.quoteHandler language="Htl" implementationClass="com.aemtools.lang.htl.editor.HtlQuoteHandler"/>
+        <backspaceHandlerDelegate implementation="com.aemtools.lang.htl.editor.HtlBackspaceHandler"/>
+
+        <applicationService serviceInterface="com.aemtools.service.repository.IRepositoryService"
+                            serviceImplementation="com.aemtools.service.repository.impl.RepositoryService"
+                            id="aemtools.repository-service"/>
+
+        <internalFileTemplate name="_rep_policy"/>
+
+        <customPropertyScopeProvider implementation="com.aemtools.findusages.HtlPropertyScopeProvider"/>
+
+        <annotator language="HTML"
+                   implementationClass="com.aemtools.lang.html.annotation.HtlAttributesAnnotator"/>
+
+        <annotator language="Htl"
+                   implementationClass="com.aemtools.codeinsight.htl.annotator.HtlVariablesAnnotator"/>
+
+        <annotator language="Htl"
+                   implementationClass="com.aemtools.codeinsight.htl.annotator.HtlOptionsAnnotator"/>
+
+        <annotator language="Htl"
+                   implementationClass="com.aemtools.codeinsight.htl.annotator.HtlWrongQuotesAnnotator"/>
+
+        <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
+                       order="before xmlAttribute"/>
+
+        <renamePsiElementProcessor
+                implementation="com.aemtools.refactoring.htl.rename.HtlVariableNameRenameProcessor"/>
+        <referencesSearch
+                order="first"
+                implementation="com.aemtools.reference.html.HtlAttributeReferencesSearch"/>
+        <renamePsiElementProcessor
+                order="first"
+                implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameProcessor"/>
+        <useScopeEnlarger implementation="com.aemtools.refactoring.searchscope.HtlDeclarationSearchScopeEnlarger"/>
+        <useScopeOptimizer implementation="com.aemtools.refactoring.searchscope.HtlDeclarationSearchScopeOptimizer"/>
+        <targetElementEvaluator
+                implementationClass="com.aemtools.refactoring.htl.rename.HtlAttributeTargetElementEvaluator"
+                language="Htl"/>
+        <findUsagesHandlerFactory implementation="com.aemtools.findusages.HtmlAttributeUsagesProvider"/>
+
+        <xml.attributeDescriptorsProvider
+                order="first"
+                implementation="com.aemtools.findusages.HtlAttributesDescriptorsProvider"/>
+
+        <lang.psiStructureViewFactory language="Htl"
+                                      implementationClass="com.aemtools.ide.HtlStructureViewProvider"/>
+
+        <projectService
+                serviceInterface="com.aemtools.lang.settings.HtlRootDirectories"
+                serviceImplementation="com.aemtools.lang.settings.HtlRootDirectories"/>
+
+        <projectService
+                serviceInterface="com.aemtools.inspection.service.IInspectionService"
+                serviceImplementation="com.aemtools.inspection.service.InspectionService"/>
+
+        <additionalTextAttributes
+                scheme="Default"
+                file="com/aemtools/ide/colorscheme/HtlDefault.xml"/>
+        <additionalTextAttributes
+                scheme="Darcula"
+                file="com/aemtools/ide/colorscheme/HtlDarcula.xml"/>
+        <colorSettingsPage implementation="com.aemtools.ide.htl.HtlColorsAndFontsPage"/>
+
+        <postStartupActivity implementation="com.aemtools.init.AemIntellijStartupActivity"/>
+        <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
+    </extensions>
+
+    <application-components>
+    </application-components>
+
+    <project-components>
+    </project-components>
+
+    <actions>
+        <action id="MarkAsHtlRootDirectory"
+                class="com.aemtools.action.MarkAsHtlRootDirectoryAction"
+                text="HTL Root"
+                description="HTML files under this directory will be considered as HTL files">
+            <add-to-group group-id="MarkRootGroup" anchor="last"/>
+        </action>
+    </actions>
+
+</idea-plugin>

@@ -11,8 +11,10 @@ jacocoTestReport {
     }
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it,
-                    exclude: ['src/main/gen/**', '**/generated/psi/impl/**'])
+            fileTree(
+                    dir: it,
+                    exclude: ['src/main/gen/**', '**/generated/psi/impl/**']
+            )
         })
     }
 }
