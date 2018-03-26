@@ -29,14 +29,10 @@ class HtlDeclarationAttributeRenameProcessor : RenamePsiElementProcessor() {
   }
 
   override fun renameElement(
-      element: PsiElement?,
-      newName: String?,
-      usages: Array<out UsageInfo>?,
+      element: PsiElement,
+      newName: String,
+      usages: Array<out UsageInfo>,
       listener: RefactoringElementListener?) {
-    if (element == null || newName == null) {
-      return
-    }
-
     val attribute = element as? XmlAttribute
         ?: return
 
@@ -48,9 +44,9 @@ class HtlDeclarationAttributeRenameProcessor : RenamePsiElementProcessor() {
     val htlDeclarationUsages: ArrayList<UsageInfo> = ArrayList()
     val htlListHelperUsages: ArrayList<UsageInfo> = ArrayList()
     val propertyAccessUsages: ArrayList<UsageInfo> = ArrayList()
-    usages?.filterTo(htlDeclarationUsages, { it.reference is HtlDeclarationReference })
-    usages?.filterTo(htlListHelperUsages, { it.reference is HtlListHelperReference })
-    usages?.filterTo(propertyAccessUsages, { it.reference is HtlPropertyAccessReference })
+    usages.filterTo(htlDeclarationUsages, { it.reference is HtlDeclarationReference })
+    usages.filterTo(htlListHelperUsages, { it.reference is HtlListHelperReference })
+    usages.filterTo(propertyAccessUsages, { it.reference is HtlPropertyAccessReference })
 
     htlListHelperUsages.forEach {
       it.reference?.handleElementRename("${newName}List")
@@ -71,14 +67,10 @@ class HtlDeclarationAttributeRenameProcessor : RenamePsiElementProcessor() {
     return true
   }
 
-  override fun createRenameDialog(project: Project?,
-                                  element: PsiElement?,
+  override fun createRenameDialog(project: Project,
+                                  element: PsiElement,
                                   nameSuggestionContext: PsiElement?,
                                   editor: Editor?): RenameDialog {
-    if (project == null || element == null) {
-      throw IllegalArgumentException("project and element should be not null")
-    }
-
     return HtlAttributeRenameDialog(project,
         element,
         nameSuggestionContext,
@@ -107,8 +99,8 @@ class HtlAttributeRenameDialog(project: Project,
       it.components.filter {
         it is JCheckBox
       }.forEach {
-        it.isVisible = false
-      }
+            it.isVisible = false
+          }
     }
   }
 

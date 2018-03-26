@@ -6,7 +6,7 @@ import org.jetbrains.intellij.IntelliJPluginExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
-    val kotlin_version: String by extra
+    val kotlinVersion: String by extra
 
     repositories {
         mavenCentral()
@@ -18,7 +18,7 @@ buildscript {
     }
 
     dependencies {
-        classpath(kotlin("gradle-plugin", kotlin_version))
+        classpath(kotlin("gradle-plugin", kotlinVersion))
     }
 }
 
@@ -36,26 +36,26 @@ repositories {
     mavenCentral()
 }
 
-val junit_version: String by extra
-val jmockit_version: String by extra
-val assertj_version: String by extra
-val mockito_version: String by extra
-val spek_version: String by extra
-val junit_jupiter_api_version: String by extra
-val junit_jupiter_engine_version: String by extra
+val junitVersion: String by extra
+val jmockitVersion: String by extra
+val assertjVersion: String by extra
+val mockitoVersion: String by extra
+val spekVersion: String by extra
+val junitJupiterApiVersion: String by extra
+val junitJupiterEngineVersion: String by extra
 
 dependencies {
     compile(project(":aem-intellij-core"))
     compile(project(":common"))
 
-    compile("junit:junit:$junit_version")
-    compile("org.jmockit:jmockit:$jmockit_version")
-    compile("org.assertj:assertj-core:$assertj_version")
-    compile("org.mockito:mockito-core:$mockito_version")
-    compile("org.jetbrains.spek:spek-api:$spek_version")
+    compile("junit:junit:$junitVersion")
+    compile("org.jmockit:jmockit:$jmockitVersion")
+    compile("org.assertj:assertj-core:$assertjVersion")
+    compile("org.mockito:mockito-core:$mockitoVersion")
+    compile("org.jetbrains.spek:spek-api:$spekVersion")
 
-    compile("org.junit.jupiter:junit-jupiter-api:$junit_jupiter_api_version")
-    compile("org.junit.jupiter:junit-jupiter-engine:$junit_jupiter_engine_version")
+    compile("org.junit.jupiter:junit-jupiter-api:$junitJupiterApiVersion")
+    compile("org.junit.jupiter:junit-jupiter-engine:$junitJupiterEngineVersion")
 }
 
 val ideaVersion: String by extra

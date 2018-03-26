@@ -10,7 +10,7 @@ import com.intellij.xml.impl.XmlAttributeDescriptorEx
 /**
  * @author Dmytro Troynikov
  */
-class HtlAttributeDescriptor(val attributeName: String, val parentTag: XmlTag)
+class HtlAttributeDescriptor(val attributeName: String, private val parentTag: XmlTag)
   : BasicXmlAttributeDescriptor(), XmlAttributeDescriptorEx {
   override fun getDefaultValue(): String? {
     return ""

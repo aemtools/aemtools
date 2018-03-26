@@ -24,11 +24,11 @@ jobs:
   include:
     - stage: Build and Test
       env: ORG_GRADLE_PROJECT_ideaVersion=LATEST-EAP-SNAPSHOT
-    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.2.5
+    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.3.5
     - env: ORG_GRADLE_PROJECT_ideaVersion=2017.1.5
     - stage: Deploy new Release
       script: skip
-      env: ORG_GRADLE_PROJECT_ideaVersion=2017.2.5
+      env: ORG_GRADLE_PROJECT_ideaVersion=2017.3.4
       deploy:
         - provider: script
           script: ./gradlew publishPlugin

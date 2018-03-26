@@ -44,11 +44,10 @@ class HtlRootDirectories : PersistentStateComponent<HtlRootDirectories> {
     directories.remove(folder)
   }
 
-  override fun loadState(state: HtlRootDirectories?) {
+  override fun loadState(state: HtlRootDirectories) {
     directories.clear()
-    state?.let {
-      directories.addAll(state.directories)
-    }
+
+    directories.addAll(state.directories)
   }
 
   override fun getState(): HtlRootDirectories? = this

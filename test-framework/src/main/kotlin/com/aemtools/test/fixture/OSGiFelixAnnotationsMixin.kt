@@ -55,4 +55,16 @@ interface OSGiFelixAnnotationsMixin {
         public @interface Property {}
       """)
 
+  /**
+   * Add `org.apache.sling.hc.annotations.SlingHealthCheck` annotation to current fixture.
+   *
+   * @receiver [ITestFixture]
+   */
+  fun ITestFixture.addSlingHealthCheckAnnotation() =
+      addClass("org/apache/sling/hc/annotations/SlingHealthCheck.java", """
+        package org.apache.sling.hc.annotations;
+
+        public @interface SlingHealthCheck {}
+      """)
+
 }

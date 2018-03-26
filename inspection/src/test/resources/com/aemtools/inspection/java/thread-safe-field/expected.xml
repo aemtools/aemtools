@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problems>
+    <problem>
+        <file>Test.java</file>
+        <line>5</line>
+        <package>com.test</package>
+        <entry_point TYPE="file" FQNAME="Test.java" />
+        <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Thread-safe field inspection</problem_class>
+        <description>Non-thread safe field.</description>
+    </problem>
+
+    <problem>
+        <file>Test.java</file>
+        <line>7</line>
+        <package>com.test</package>
+        <entry_point TYPE="file" FQNAME="Test.java" />
+        <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Thread-safe field inspection</problem_class>
+        <description>Non-thread safe field.</description>
+    </problem>
+</problems>

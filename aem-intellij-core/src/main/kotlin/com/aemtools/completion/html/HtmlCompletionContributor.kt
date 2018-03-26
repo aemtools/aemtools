@@ -3,15 +3,15 @@ package com.aemtools.completion.html
 import com.aemtools.completion.html.provider.HtmlAttributeCompletionProvider
 import com.aemtools.completion.html.provider.HtmlDataSlyIncludeCompletionProvider
 import com.aemtools.completion.html.provider.HtmlDataSlyUseCompletionProvider
-import com.aemtools.lang.htl.psi.pattern.HtlFilePattern
+import com.aemtools.completion.html.provider.HtmlHrefLinkCheckerCompletionProvider
+import com.aemtools.completion.html.provider.HtmlLinkCheckerValueCompletionProvider
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyIncludeNoEl
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseNoEl
+import com.aemtools.lang.html.psi.pattern.HtmlPatterns.aInHtlFile
+import com.aemtools.lang.html.psi.pattern.HtmlPatterns.attributeInHtlFile
+import com.aemtools.lang.html.psi.pattern.HtmlPatterns.valueOfXLinkChecker
 import com.intellij.codeInsight.completion.CompletionContributor
 import com.intellij.codeInsight.completion.CompletionType
-import com.intellij.patterns.PlatformPatterns
-import com.intellij.patterns.PlatformPatterns.psiElement
-import com.intellij.patterns.XmlPatterns.xmlAttribute
-import com.intellij.psi.xml.XmlTokenType
 
 /**
  * Completion contributor for HTML related completions.
@@ -28,10 +28,18 @@ class HtmlCompletionContributor : CompletionContributor() { init {
       HtmlDataSlyUseCompletionProvider)
 
   extend(CompletionType.BASIC,
-      psiElement(XmlTokenType.XML_NAME)
-          .inside(xmlAttribute())
-          .inFile(PlatformPatterns.psiFile().with(HtlFilePattern)),
+      attributeInHtlFile,
       HtmlAttributeCompletionProvider)
+
+  extend(CompletionType.BASIC,
+      aInHtlFile,
+      HtmlHrefLinkCheckerCompletionProvider
+  )
+
+  extend(CompletionType.BASIC,
+      valueOfXLinkChecker,
+      HtmlLinkCheckerValueCompletionProvider
+  )
 
   extend(CompletionType.BASIC,
       dataSlyIncludeNoEl,

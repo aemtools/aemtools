@@ -10,6 +10,8 @@ import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiLiteralExpression
 
 /**
+ * AEM-1 & AEM-2 implementation.
+ *
  * @author Dmytro Troynikov
  */
 class AemConstantInspection : LocalInspectionTool(), BatchSuppressableTool {

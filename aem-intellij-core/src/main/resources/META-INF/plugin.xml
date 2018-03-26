@@ -46,8 +46,18 @@
         <ul>
             <li>
                 Added Cognifide
-                <a href="https://github.com/Cognifide/AEM-Rules-for-SonarQube#good-practices">AEM-1 & AEM-2</a> rules as
-                IntelliJ inspections.
+                <a href="https://github.com/Cognifide/AEM-Rules-for-SonarQube#good-practices">AEM-1</a> rule as
+                IntelliJ inspection.
+            </li>
+            <li>
+                Added Cognifide
+                <a href="https://github.com/Cognifide/AEM-Rules-for-SonarQube#good-practices">AEM-2</a> rule as
+                IntelliJ inspection.
+            </li>
+            <li>
+                Added Cognifide
+                <a href="https://github.com/Cognifide/AEM-Rules-for-SonarQube#sling-models-related">AEM-16</a>
+                rule as IntelliJ inspection.
             </li>
             <li>
                 "Unnecessary expression inspection". Reports redundant HTL expression inside of
@@ -66,10 +76,10 @@
                 <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#223-attribute">spec</a>).
             </li>
             <li>
-                HTL: Syntax highlighting for escape sequences within string literals.
+                Added HTL Color Scheme Settings Page (<i>settings -> HTML Markup Language</i>).
             </li>
             <li>
-                HTL: Color Scheme Settings Page (<i>settings -> HTML Markup Language</li>).
+                HTL: Syntax highlighting for escape sequences within string literals.
             </li>
             <li>
                 HTL: Special highlighting for template parameters&arguments.
@@ -79,7 +89,7 @@
                 Completion suggests the most relevant variant.
             </li>
             <li>
-                HTL: Improved completion for <i>i18n</li> expressions (e.g. ${'&lt;caret&gt;' @ i18n}).
+                HTL: Improved completion for <i>i18n</i> expressions (e.g. ${'&lt;caret&gt;' @ i18n}).
             </li>
             <li>
                 HTL: Fixed wrong syntax highlighting within HTL comments.
@@ -128,6 +138,8 @@
 
         <lang.documentationProvider language="HTML" order="first"
                                     implementationClass="com.aemtools.documentation.html.HtlAttributesDocumentationProvider"/>
+        <lang.documentationProvider language="HTML" order="first"
+                                    implementationClass="com.aemtools.documentation.html.HtmlLinkCheckerDocumentationProvider"/>
         <lang.documentationProvider language="Htl" order="first"
                                     implementationClass="com.aemtools.documentation.htl.HtlELDocumentationProvider"/>
         <lang.documentationProvider language="XML" order="first"
@@ -255,6 +267,8 @@
                 scheme="Darcula"
                 file="com/aemtools/ide/colorscheme/HtlDarcula.xml"/>
         <colorSettingsPage implementation="com.aemtools.ide.htl.HtlColorsAndFontsPage"/>
+
+        <postStartupActivity implementation="com.aemtools.init.AemIntellijStartupActivity"/>
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
     </extensions>
 

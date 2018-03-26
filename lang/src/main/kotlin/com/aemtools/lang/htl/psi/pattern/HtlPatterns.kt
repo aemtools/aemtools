@@ -97,7 +97,7 @@ object HtlPatterns {
    *
    * ```
    *    ${<caret>}
-   *    ${@ option=<caret>
+   *    ${@ option=<caret>}
    *    ${ [<caret>, ...] }
    *    ${variable[<caret>]}
    * ```
@@ -116,7 +116,7 @@ object HtlPatterns {
    * Matches the following:
    *
    * ```
-   *    ${'<caret'}
+   *    ${'<caret>'}
    *    ${"<caret>"}
    *    ${@ option='<caret>'}
    * ```
@@ -132,7 +132,7 @@ object HtlPatterns {
    * ```
    */
   val contextOptionAssignment: ElementPattern<PsiElement> =
-      namedOptionAssignement(const.htl.options.CONTEXT)
+      namedOptionAssignment(const.htl.options.CONTEXT)
 
   /**
    * Matches the following:
@@ -142,7 +142,7 @@ object HtlPatterns {
    * ```
    */
   val resourceTypeOptionAssignment: ElementPattern<PsiElement> =
-      namedOptionAssignement(const.htl.options.RESOURCE_TYPE)
+      namedOptionAssignment(const.htl.options.RESOURCE_TYPE)
 
   /**
    * Matches the following:
@@ -313,7 +313,7 @@ object HtlPatterns {
    * e.g.:
    *
    * ```
-   * namedOptionAssignement("context") ->
+   * namedOptionAssignment("context") ->
    *   will create pattern that will match:
    *   ${@ context='<caret>'}
    * ```
@@ -321,7 +321,7 @@ object HtlPatterns {
    * @param option option name
    * @return new element pattern
    */
-  private fun namedOptionAssignement(option: String): ElementPattern<PsiElement> =
+  private fun namedOptionAssignment(option: String): ElementPattern<PsiElement> =
       and(
           stringLiteralValue,
           psiElement().inside(psiElement(CONTEXT_EXPRESSION)),

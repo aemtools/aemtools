@@ -3,6 +3,7 @@ package com.aemtools.common.util
 import com.aemtools.common.constant.const.java.FELIX_PROPERTY_ANNOTATION
 import com.aemtools.common.constant.const.java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.common.constant.const.java.SLING_FILTER_ANNOTATION
+import com.aemtools.common.constant.const.java.SLING_HEALTH_CHECK_ANNOTATION
 import com.aemtools.common.constant.const.java.SLING_SERVLET_ANNOTATION
 import com.intellij.openapi.module.ModuleUtil
 import com.intellij.psi.PsiAnnotation
@@ -32,9 +33,12 @@ fun PsiClass.isOSGiService(): Boolean {
 
   // TODO add check for OSGi declarative service
   return annotations().any {
-    it.qualifiedName in listOf(FELIX_SERVICE_ANNOTATION,
+    it.qualifiedName in listOf(
+        FELIX_SERVICE_ANNOTATION,
         SLING_SERVLET_ANNOTATION,
-        SLING_FILTER_ANNOTATION)
+        SLING_FILTER_ANNOTATION,
+        SLING_HEALTH_CHECK_ANNOTATION
+    )
   }
 }
 
@@ -57,8 +61,7 @@ fun PsiField.isFelixProperty(): Boolean =
  * @return list of annotations
  */
 fun PsiModifierListOwner.annotations(): List<PsiAnnotation> =
-    modifierList?.children?.mapNotNull { it as? PsiAnnotation }
-        ?: emptyList()
+    modifierList?.annotations?.toList() ?: emptyList()
 
 /**
  * Find all methods which may used from EL

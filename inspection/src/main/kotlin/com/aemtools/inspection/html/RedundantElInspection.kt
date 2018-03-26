@@ -25,7 +25,7 @@ class RedundantElInspection : AemIntellijInspection(
       This inspection checks if HTL expression is used in `data-sly-use` or `data-sly-include` attributes
       without reason. Expression may be required in case if there is necessity to pass some arguments
       via "option" arguments, otherwise expression is redundant
-    """
+    """.trimIndent()
 ) {
   override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
     return object : HtlElementVisitor() {

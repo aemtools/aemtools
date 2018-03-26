@@ -229,12 +229,14 @@ object const {
     val POJO_USE = "org.apache.sling.scripting.sightly.pojo.Use"
 
     val SLING_MODEL = "org.apache.sling.models.annotations.Model"
+    val OPTIONAL = "org.apache.sling.models.annotations.Optional"
 
     val VALUE_MAP = "org.apache.sling.api.resource.ValueMap"
 
     val FELIX_SERVICE_ANNOTATION = "org.apache.felix.scr.annotations.Service"
     val SLING_SERVLET_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingServlet"
     val SLING_FILTER_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingFilter"
+    val SLING_HEALTH_CHECK_ANNOTATION = "org.apache.sling.hc.annotations.SlingHealthCheck"
 
     val FELIX_PROPERTY_ANNOTATION = "org.apache.felix.scr.annotations.Property"
   }
