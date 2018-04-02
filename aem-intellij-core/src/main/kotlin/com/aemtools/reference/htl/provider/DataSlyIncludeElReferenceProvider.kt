@@ -1,6 +1,5 @@
 package com.aemtools.reference.htl.provider
 
-import com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin
 import com.aemtools.reference.common.provider.DataSlyIncludeReferenceProviderBase
 import com.intellij.psi.PsiElement
 import com.intellij.util.ProcessingContext

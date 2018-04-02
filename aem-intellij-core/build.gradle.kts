@@ -21,7 +21,7 @@ apply {
 
 plugins {
     java
-    id("org.jetbrains.intellij") version "0.2.17"
+    id("org.jetbrains.intellij") version "0.3.0"
 }
 
 val kotlinVersion: String by extra
@@ -44,6 +44,7 @@ val ideaVersion: String by extra
 configure<IntelliJPluginExtension> {
     pluginName = "aemtools"
     version = ideaVersion
+    downloadSources = true
     updateSinceUntilBuild = false
     setPlugins(
             "IntelliLang"
