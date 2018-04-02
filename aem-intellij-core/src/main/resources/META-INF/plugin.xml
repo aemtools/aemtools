@@ -120,6 +120,10 @@
                 language="Cd"
                 implementationClass="com.aemtools.completion.clientlib.CdCompletionContributor"/>
 
+        <lang.parserDefinition
+            language="JcrProperty"
+            implementationClass="com.aemtools.lang.jcrproperty.JcrPropertyParserDefinition" />
+
         <lang.substitutor
                 language="TEXT"
                 implementationClass="com.aemtools.lang.clientlib.CdLanguageSubstitutor"/>
@@ -172,6 +176,8 @@
         <fileBasedIndex implementation="com.aemtools.index.AemComponentTouchUIDialogIndex"/>
 
         <fileBasedIndex implementation="com.aemtools.index.LocalizationIndex"/>
+
+        <fileBasedIndex implementation="com.aemtools.index.ClientlibraryIndex" />
 
         <extendWordSelectionHandler implementation="com.aemtools.ide.htl.HtlStringLiteralWordSelectioner"/>
 

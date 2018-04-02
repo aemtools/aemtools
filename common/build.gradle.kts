@@ -31,6 +31,10 @@ plugins {
     id("org.jetbrains.intellij") version "0.2.17"
 }
 
+dependencies {
+    testCompile(project(":test-framework"))
+}
+
 val ideaVersion: String by extra
 
 configure<IntelliJPluginExtension> {

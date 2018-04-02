@@ -10,6 +10,9 @@ curly_bracket_next_line=true
 indent_size=2
 continuation_indent_size=4
 
+[*.bnf]
+indent_size=2
+
 [*.json]
 
 indent_size=2

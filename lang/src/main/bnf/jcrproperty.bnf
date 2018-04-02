@@ -1,0 +1,51 @@
+{
+  parserClass="com.aemtools.lang.jcrproperty.JcrPropertyParser"
+  psiPackage="com.aemtools.lang.jcrproperty.psi"
+
+  extends="com.aemtools.lang.jcrproperty.psi.JcrPropertyBaseElement"
+
+  psiClassPrefix="Jp"
+
+  elementTypeHolderClass="com.aemtools.lang.jcrproperty.psi.JpTypes"
+
+  elementTypeClass="com.aemtools.lang.jcrproperty.psi.JpElement"
+  tokenTypeClass="com.aemtools.lang.jcrproperty.psi.JpToken"
+
+  parserImports="static com.aemtools.lang.jcrproperty.psi.JpTypes.*"
+
+  tokens = [
+    STRING    = 'String'
+    BINARY    = 'Binary'
+    LONG      = 'Long'
+    DOUBLE    = 'Double'
+    DECIMAL   = 'Decimal'
+    DATE      = 'Date'
+    BOOLEAN   = 'Boolean'
+    NAME      = 'Name'
+    PATH      = 'Path'
+    REFERENCE = 'Reference'
+    WEAK_REFERENCE = 'WeakReference'
+    URI       = 'URI'
+
+    LBRACE    = '{'
+    RBRACE    = '}'
+    LBRACKET  = '['
+    RBRACKET  = ']'
+    COMMA     = ','
+
+    VALUE_TOKEN = 'regexp:[^\[\]{}]*'
+  ]
+}
+
+root ::= type? array | single
+
+type ::= LBRACE (
+  STRING | BINARY | LONG | DOUBLE | DECIMAL |
+  DATE | BOOLEAN | NAME | PATH | REFERENCE |
+  WEAK_REFERENCE | URI
+) RBRACE
+
+array ::= LBRACKET single RBRACKET
+  | LBRACKET single (COMMA single)* RBRACKET
+
+single ::= VALUE_TOKEN

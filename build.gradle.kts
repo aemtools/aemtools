@@ -38,7 +38,6 @@ buildscript {
 
 val aemtoolsVersion: String by extra
 
-
 allprojects {
     group = "aemtools"
 
@@ -178,7 +177,7 @@ subprojects {
 
 task<Wrapper>("gradleWrapper") {
     gradleVersion = "4.6"
-    // distributionType =
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 configure<JacocoFullReportExtension> {

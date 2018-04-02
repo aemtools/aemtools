@@ -87,6 +87,14 @@ task<GenerateLexer>("generateCdLexer") {
     purgeOldFiles = true
 }
 
+task<GenerateLexer>("generateJpLexer") {
+    group = "grammar"
+    source = "src/main/flex/JcrPropertyLexer.flex"
+    targetDir = "src/main/gen/com/aemtools/lang/jcrproperty"
+    targetClass = "_JcrPropertyLexer"
+    purgeOldFiles = true
+}
+
 task<GenerateParser>("generateHtlPsiAndParser") {
     group = "grammar"
     source = "src/main/bnf/Htl.bnf"
@@ -105,13 +113,26 @@ task<GenerateParser>("generateCdPsiAndParser") {
     purgeOldFiles = true
 }
 
+task<GenerateParser>("generateJpPsiAndParser") {
+    group = "grammar"
+    source = "src/main/bnf/jcrproperty.bnf"
+    targetRoot = "src/main/gen"
+    pathToParser = "/com/aemtools/lang/jcrproperty/JcrPropertyParser.java"
+    pathToPsiRoot = "/com/aemtools/lang/jcrproperty/psi"
+    purgeOldFiles = true
+}
+
 task("generateGrammar") {
     group = "grammar"
     dependsOn.run {
         add("generateCdLexer")
         add("generateCdPsiAndParser")
+
         add("generateHtlLexer")
         add("generateHtlPsiAndParser")
+
+        add("generateJpLexer")
+        add("generateJpPsiAndParser")
     }
 }
 
