@@ -1,0 +1,7 @@
+JpFile:path.in
+  JpTypeImpl([Jp] TYPE)
+    PsiElement([Jp] {)('{')
+    PsiElement([Jp] Path)('Path')
+    PsiElement([Jp] })('}')
+  JpSingleImpl([Jp] SINGLE)
+    PsiElement([Jp] VALUE_TOKEN)('path')

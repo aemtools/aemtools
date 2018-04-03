@@ -1,1 +1,4 @@
-[Cd] VALUE_TOKEN ('{WeakReference}weak reference')
+[Cd] { ('{')
+[Cd] WeakReference ('WeakReference')
+[Cd] } ('}')
+[Cd] VALUE_TOKEN ('weak reference')

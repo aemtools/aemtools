@@ -1,1 +1,4 @@
-[Cd] VALUE_TOKEN ('{URI}uri')
+[Cd] { ('{')
+[Cd] URI ('URI')
+[Cd] } ('}')
+[Cd] VALUE_TOKEN ('uri')

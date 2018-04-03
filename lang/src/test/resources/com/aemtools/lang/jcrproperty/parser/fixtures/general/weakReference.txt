@@ -1,0 +1,7 @@
+JpFile:weakReference.in
+  JpTypeImpl([Jp] TYPE)
+    PsiElement([Jp] {)('{')
+    PsiElement([Jp] WeakReference)('WeakReference')
+    PsiElement([Jp] })('}')
+  JpSingleImpl([Jp] SINGLE)
+    PsiElement([Jp] VALUE_TOKEN)('weak reference')

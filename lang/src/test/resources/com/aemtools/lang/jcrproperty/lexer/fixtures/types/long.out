@@ -1,1 +1,4 @@
-[Cd] VALUE_TOKEN ('{Long}long')
+[Cd] { ('{')
+[Cd] Long ('Long')
+[Cd] } ('}')
+[Cd] VALUE_TOKEN ('long')

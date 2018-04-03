@@ -1,0 +1,7 @@
+JpFile:binary.in
+  JpTypeImpl([Jp] TYPE)
+    PsiElement([Jp] {)('{')
+    PsiElement([Jp] Binary)('Binary')
+    PsiElement([Jp] })('}')
+  JpSingleImpl([Jp] SINGLE)
+    PsiElement([Jp] VALUE_TOKEN)('binary')

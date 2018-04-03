@@ -1,4 +1,5 @@
 import org.jetbrains.intellij.IntelliJPluginExtension
+import org.jetbrains.intellij.tasks.RunIdeTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
@@ -49,4 +50,8 @@ configure<IntelliJPluginExtension> {
     setPlugins(
             "IntelliLang"
     )
+}
+
+tasks.withType<RunIdeTask> {
+    jvmArgs.add("-Didea.ProcessCanceledException=disabled")
 }

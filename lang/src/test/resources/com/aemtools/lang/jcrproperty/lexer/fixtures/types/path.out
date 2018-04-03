@@ -1,1 +1,4 @@
-[Cd] VALUE_TOKEN ('{Path}path')
+[Cd] { ('{')
+[Cd] Path ('Path')
+[Cd] } ('}')
+[Cd] VALUE_TOKEN ('path')

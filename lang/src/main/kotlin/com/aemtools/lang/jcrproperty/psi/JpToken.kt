@@ -8,6 +8,6 @@ import com.intellij.psi.tree.IElementType
  */
 class JpToken(debugName: String) : IElementType(debugName, JcrPropertyLanguage) {
 
-  override fun toString(): String = "[Cd] ${super.toString()}"
+  override fun toString(): String = "[Jp] ${super.toString()}"
 
 }

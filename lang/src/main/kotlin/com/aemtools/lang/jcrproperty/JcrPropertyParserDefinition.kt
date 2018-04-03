@@ -1,6 +1,7 @@
 package com.aemtools.lang.jcrproperty
 
 import com.aemtools.lang.jcrproperty.file.JpFileElementType
+import com.aemtools.lang.jcrproperty.file.JpPsiFile
 import com.aemtools.lang.jcrproperty.lexer.JpLexer
 import com.aemtools.lang.jcrproperty.parser.JpParser
 import com.aemtools.lang.jcrproperty.psi.JpTypes
@@ -24,10 +25,11 @@ class JcrPropertyParserDefinition : ParserDefinition {
   override fun createLexer(project: Project?): Lexer = JpLexer()
   override fun createParser(project: Project?): PsiParser = JpParser()
 
-  override fun createFile(viewProvider: FileViewProvider?): PsiFile =
-      throw UnsupportedOperationException()
+  override fun createFile(viewProvider: FileViewProvider): PsiFile =
+      JpPsiFile(viewProvider)
 
-  override fun spaceExistanceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements = ParserDefinition.SpaceRequirements.MAY
+  override fun spaceExistanceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements
+      = ParserDefinition.SpaceRequirements.MAY
 
   override fun getStringLiteralElements(): TokenSet = TokenSet.EMPTY
 

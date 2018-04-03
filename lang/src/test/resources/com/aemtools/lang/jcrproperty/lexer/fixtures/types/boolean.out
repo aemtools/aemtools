@@ -1,1 +1,4 @@
-[Cd] VALUE_TOKEN ('{Boolean}false')
+[Cd] { ('{')
+[Cd] Boolean ('Boolean')
+[Cd] } ('}')
+[Cd] VALUE_TOKEN ('false')

@@ -1,1 +1,4 @@
-[Cd] VALUE_TOKEN ('{Name}name')
+[Cd] { ('{')
+[Cd] Name ('Name')
+[Cd] } ('}')
+[Cd] VALUE_TOKEN ('name')

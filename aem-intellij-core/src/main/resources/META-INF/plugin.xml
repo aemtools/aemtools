@@ -124,6 +124,8 @@
             language="JcrProperty"
             implementationClass="com.aemtools.lang.jcrproperty.JcrPropertyParserDefinition" />
 
+        <multiHostInjector implementation="com.aemtools.lang.jcrproperty.JcrPropertyInjector" />
+
         <lang.substitutor
                 language="TEXT"
                 implementationClass="com.aemtools.lang.clientlib.CdLanguageSubstitutor"/>
