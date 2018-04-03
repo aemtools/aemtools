@@ -121,10 +121,14 @@
                 implementationClass="com.aemtools.completion.clientlib.CdCompletionContributor"/>
 
         <lang.parserDefinition
-            language="JcrProperty"
-            implementationClass="com.aemtools.lang.jcrproperty.JcrPropertyParserDefinition" />
+                language="JcrProperty"
+                implementationClass="com.aemtools.lang.jcrproperty.JcrPropertyParserDefinition"/>
 
-        <multiHostInjector implementation="com.aemtools.lang.jcrproperty.JcrPropertyInjector" />
+        <lang.syntaxHighlighterFactory
+                language="JcrProperty"
+                implementationClass="com.aemtools.lang.jcrproperty.highlight.JpHighlighterFactory"/>
+
+        <multiHostInjector implementation="com.aemtools.lang.jcrproperty.JcrPropertyInjector"/>
 
         <lang.substitutor
                 language="TEXT"
@@ -179,7 +183,7 @@
 
         <fileBasedIndex implementation="com.aemtools.index.LocalizationIndex"/>
 
-        <fileBasedIndex implementation="com.aemtools.index.ClientlibraryIndex" />
+        <fileBasedIndex implementation="com.aemtools.index.ClientlibraryIndex"/>
 
         <extendWordSelectionHandler implementation="com.aemtools.ide.htl.HtlStringLiteralWordSelectioner"/>
 

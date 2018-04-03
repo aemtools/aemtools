@@ -34,6 +34,7 @@ class JcrPropertyInjector : MultiHostInjector {
           context,
           TextRange.create(1, attributeValue.text.length - 1)
       )
+      registrar.doneInjecting()
     }
   }
 
