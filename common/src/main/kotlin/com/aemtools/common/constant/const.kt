@@ -5,60 +5,62 @@ package com.aemtools.common.constant
  */
 object const {
 
-  val AEMTOOLS: String = "aemtools"
+  const val AEMTOOLS: String = "aemtools"
 
-  val DOLLAR: String = "$"
+  const val DOLLAR: String = "$"
 
-  val JCR_ROOT: String = "jcr_root"
+  const val JCR_ROOT: String = "jcr_root"
 
-  val JCR_ROOT_SEPARATED: String = "/${JCR_ROOT}/"
+  const val JCR_ROOT_SEPARATED: String = "/$JCR_ROOT/"
 
-  val IDEA_STRING_CARET_PLACEHOLDER: String = "IntellijIdeaRulezzz"
+  const val IDEA_STRING_CARET_PLACEHOLDER: String = "IntellijIdeaRulezzz"
 
-  val XTYPE: String = "xtype"
+  const val XTYPE: String = "xtype"
 
-  val JCR_PRIMARY_TYPE: String = "jcr:primaryType"
-  val JCR_TITLE: String = "jcr:title"
-  val JCR_DESCRIPTION: String = "jcr:description"
-  val SLING_RESOURCE_SUPER_TYPE: String = "sling:resourceSuperType"
+  const val JCR_PRIMARY_TYPE: String = "jcr:primaryType"
+  const val JCR_TITLE: String = "jcr:title"
+  const val JCR_DESCRIPTION: String = "jcr:description"
+  const val SLING_RESOURCE_SUPER_TYPE: String = "sling:resourceSuperType"
 
-  val DIALOG_XML: String = "dialog.xml"
+  const val DIALOG_XML: String = "dialog.xml"
 
-  val CQ_EDITCONFIG_XML: String = "_cq_editConfig.xml"
+  const val CQ_EDITCONFIG_XML: String = "_cq_editConfig.xml"
 
-  val REP_POLICY: String = "_rep_policy.xml"
+  const val REP_POLICY: String = "_rep_policy.xml"
 
-  val SLY_TAG: String = "sly"
+  const val SLY_TAG: String = "sly"
+
+  const val CLIENTLIB_TEMPLATE: String = "/libs/granite/sightly/templates/clientlib.html"
 
   /**
    * Constants specific for `.content.xml` files of `cq:Component` type.
    */
   object aem_component_declaration {
 
-    val COMPONENT_GROUP: String = "componentGroup"
+    const val COMPONENT_GROUP: String = "componentGroup"
 
-    val IS_CONTAINER: String = "cq:isContainer"
+    const val IS_CONTAINER: String = "cq:isContainer"
 
-    val CQ_ICON: String = "cq:icon"
+    const val CQ_ICON: String = "cq:icon"
   }
 
   /**
    * Htl constants.
    */
   object htl {
-    private val HTL_PREFIX = "data-sly-"
-    val DATA_SLY_USE = "${HTL_PREFIX}use"
-    val DATA_SLY_TEST = "${HTL_PREFIX}test"
-    val DATA_SLY_REPEAT = "${HTL_PREFIX}repeat"
-    val DATA_SLY_LIST = "${HTL_PREFIX}list"
-    val DATA_SLY_TEMPLATE = "${HTL_PREFIX}template"
-    val DATA_SLY_ATTRIBUTE = "${HTL_PREFIX}attribute"
-    val DATA_SLY_ELEMENT = "${HTL_PREFIX}element"
-    val DATA_SLY_CALL = "${HTL_PREFIX}call"
-    val DATA_SLY_INCLUDE = "${HTL_PREFIX}include"
-    val DATA_SLY_UNWRAP = "${HTL_PREFIX}unwrap"
-    val DATA_SLY_TEXT = "${HTL_PREFIX}text"
-    val DATA_SLY_RESOURCE = "${HTL_PREFIX}resource"
+    private const val HTL_PREFIX = "data-sly-"
+    const val DATA_SLY_USE = "${HTL_PREFIX}use"
+    const val DATA_SLY_TEST = "${HTL_PREFIX}test"
+    const val DATA_SLY_REPEAT = "${HTL_PREFIX}repeat"
+    const val DATA_SLY_LIST = "${HTL_PREFIX}list"
+    const val DATA_SLY_TEMPLATE = "${HTL_PREFIX}template"
+    const val DATA_SLY_ATTRIBUTE = "${HTL_PREFIX}attribute"
+    const val DATA_SLY_ELEMENT = "${HTL_PREFIX}element"
+    const val DATA_SLY_CALL = "${HTL_PREFIX}call"
+    const val DATA_SLY_INCLUDE = "${HTL_PREFIX}include"
+    const val DATA_SLY_UNWRAP = "${HTL_PREFIX}unwrap"
+    const val DATA_SLY_TEXT = "${HTL_PREFIX}text"
+    const val DATA_SLY_RESOURCE = "${HTL_PREFIX}resource"
     val HTL_ATTRIBUTES = listOf(
         DATA_SLY_USE,
         DATA_SLY_TEST,
@@ -95,9 +97,9 @@ object const {
      * Options constants.
      */
     object options {
-      val CONTEXT = "context"
-      val RESOURCE_TYPE = "resourceType"
-      val I18N = "i18n"
+      const val CONTEXT = "context"
+      const val RESOURCE_TYPE = "resourceType"
+      const val I18N = "i18n"
     }
   }
 
@@ -106,7 +108,7 @@ object const {
    */
   object html {
 
-    val WINDOW_EVENT_ATTRIBUTES = listOf(
+    private val WINDOW_EVENT_ATTRIBUTES = listOf(
         "onafterprint",
         "onbeforeprint",
         "onbeforeunload",
@@ -124,7 +126,7 @@ object const {
         "onunload"
     )
 
-    val FORM_EVENTS = listOf(
+    private val FORM_EVENTS = listOf(
         "onblur",
         "onchange",
         "oncontextmenu",
@@ -137,13 +139,13 @@ object const {
         "onsubmit"
     )
 
-    val KEYBOARD_EVENTS = listOf(
+    private val KEYBOARD_EVENTS = listOf(
         "onkeydown",
         "onkeypress",
         "onkeyup"
     )
 
-    val MOUSE_EVENTS = listOf(
+    private val MOUSE_EVENTS = listOf(
         "onclick",
         "ondblclick",
         "onmousedown",
@@ -155,7 +157,7 @@ object const {
         "onwheel"
     )
 
-    val DRAG_EVENTS = listOf(
+    private val DRAG_EVENTS = listOf(
         "ondrag",
         "ondragend",
         "ondragenter",
@@ -166,13 +168,13 @@ object const {
         "onscroll"
     )
 
-    val CLIPBOARD_EVENTS = listOf(
+    private val CLIPBOARD_EVENTS = listOf(
         "oncopy",
         "oncut",
         "onpaste"
     )
 
-    val MEDIA_EVENTS = listOf(
+    private val MEDIA_EVENTS = listOf(
         "onabort",
         "oncanplay",
         "oncanplaythrough",
@@ -198,7 +200,7 @@ object const {
         "onwaiting"
     )
 
-    val MISC_EVENTS = listOf(
+    private val MISC_EVENTS = listOf(
         "onshow",
         "ontoggle"
     )
@@ -220,46 +222,47 @@ object const {
    * Java related constants.
    */
   object java {
-    val ITERABLE = "java.lang.Iterable"
-    val ITERATOR = "java.util.Iterator"
-    val MAP = "java.util.Map"
+    const val ITERABLE = "java.lang.Iterable"
+    const val ITERATOR = "java.util.Iterator"
+    const val MAP = "java.util.Map"
 
-    val USE_INTERFACE = "io.sightly.java.api.Use"
-    val WCM_USE_CLASS = "com.adobe.cq.sightly.WCMUse"
-    val POJO_USE = "org.apache.sling.scripting.sightly.pojo.Use"
+    const val USE_INTERFACE = "io.sightly.java.api.Use"
+    const val WCM_USE_CLASS = "com.adobe.cq.sightly.WCMUse"
+    const val POJO_USE = "org.apache.sling.scripting.sightly.pojo.Use"
 
-    val SLING_MODEL = "org.apache.sling.models.annotations.Model"
-    val OPTIONAL = "org.apache.sling.models.annotations.Optional"
+    const val SLING_MODEL = "org.apache.sling.models.annotations.Model"
+    const val OPTIONAL = "org.apache.sling.models.annotations.Optional"
 
     val VALUE_MAP = "org.apache.sling.api.resource.ValueMap"
 
-    val FELIX_SERVICE_ANNOTATION = "org.apache.felix.scr.annotations.Service"
-    val SLING_SERVLET_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingServlet"
-    val SLING_FILTER_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingFilter"
-    val SLING_HEALTH_CHECK_ANNOTATION = "org.apache.sling.hc.annotations.SlingHealthCheck"
+    const val FELIX_SERVICE_ANNOTATION = "org.apache.felix.scr.annotations.Service"
+    const val SLING_SERVLET_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingServlet"
+    const val SLING_FILTER_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingFilter"
+    const val SLING_HEALTH_CHECK_ANNOTATION = "org.apache.sling.hc.annotations.SlingHealthCheck"
 
-    val FELIX_PROPERTY_ANNOTATION = "org.apache.felix.scr.annotations.Property"
+    const val FELIX_PROPERTY_ANNOTATION = "org.apache.felix.scr.annotations.Property"
   }
 
   /**
    * Xml related constants.
    */
   object xml {
-    val XML_ATTRIBUTE_NAME: String = "XML_NAME"
-    val XML_ATTRIBUTE_VALUE: String = "XML_ATTRIBUTE_VALUE_TOKEN"
-    val XML_TAG_NAME: String = "XML_TAG_NAME"
+    const val XML_ATTRIBUTE_NAME: String = "XML_NAME"
+    const val XML_ATTRIBUTE_VALUE: String = "XML_ATTRIBUTE_VALUE_TOKEN"
+    const val XML_TAG_NAME: String = "XML_TAG_NAME"
 
-    val SLING_OSGI_CONFIG: String = "sling:OsgiConfig"
-    val CQ_COMPONENT: String = "cq:Component"
-    val CQ_DIALOG: String = "cq:Dialog"
-    val JCR_PRIMARY_TYPE_OSGI_CONFIG: String = "${JCR_PRIMARY_TYPE}=\"${SLING_OSGI_CONFIG}\""
-    val JCR_PRIMARY_TYPE_CQ_COMPONENT: String = "${JCR_PRIMARY_TYPE}=\"${CQ_COMPONENT}\""
-    val JCR_PRIMARY_TYPE_CQ_DIALOG: String = "${JCR_PRIMARY_TYPE}=\"${CQ_DIALOG}\""
-    val JCR_LANGUAGE: String = "jcr:language"
-    val SLING_KEY: String = "sling:key"
-    val SLING_MESSAGE: String = "sling:message"
-    val JCR_MIXIN_TYPES: String = "jcr:mixinTypes"
-    val LANGUAGE_MIXIN: String = "mix:language"
+    const val SLING_OSGI_CONFIG: String = "sling:OsgiConfig"
+    const val CQ_COMPONENT: String = "cq:Component"
+    const val CQ_DIALOG: String = "cq:Dialog"
+    const val CQ_CLIENTLIBRARY_FOLDER = "cq:ClientLibraryFolder"
+    const val JCR_PRIMARY_TYPE_OSGI_CONFIG: String = "$JCR_PRIMARY_TYPE=\"$SLING_OSGI_CONFIG\""
+    const val JCR_PRIMARY_TYPE_CQ_COMPONENT: String = "$JCR_PRIMARY_TYPE=\"$CQ_COMPONENT\""
+    const val JCR_PRIMARY_TYPE_CQ_DIALOG: String = "$JCR_PRIMARY_TYPE=\"$CQ_DIALOG\""
+    const val JCR_LANGUAGE: String = "jcr:language"
+    const val SLING_KEY: String = "sling:key"
+    const val SLING_MESSAGE: String = "sling:message"
+    const val JCR_MIXIN_TYPES: String = "jcr:mixinTypes"
+    const val LANGUAGE_MIXIN: String = "mix:language"
   }
 
 }

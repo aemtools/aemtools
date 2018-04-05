@@ -111,6 +111,11 @@
     <idea-version since-build="131"/>
 
     <extensions defaultExtensionNs="com.intellij">
+
+        <completion.contributor
+                language="XML"
+                implementationClass="com.aemtools.completion.small.clientlibraryfolder.ClientLibraryFolderCompletionContributor"/>
+
         <fileTypeFactory
                 implementation="com.aemtools.lang.clientlib.file.CdFileTypeFactory"/>
         <lang.parserDefinition

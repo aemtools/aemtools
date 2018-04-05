@@ -1,5 +1,7 @@
 package com.aemtools.lang.htl.psi.pattern
 
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.categoriesOptionAssignment
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.categoriesOptionAssignmentViaArray
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.contextOptionAssignment
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyCallOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyIncludeMainString
@@ -23,7 +25,9 @@ import com.intellij.patterns.ElementPattern
 import com.intellij.psi.PsiElement
 
 /**
- * @author Dmytro Troynikov
+ * Test for [HtlPatterns].
+ *
+ * @author Dmytro Primshyts
  */
 class HtlPatternsTest : BasePatternsTest() {
 
@@ -324,6 +328,36 @@ class HtlPatternsTest : BasePatternsTest() {
       mainVariableInsideOfDataSlyRepeat,
       """<div data-sly-repeat.item="$DOLLAR{$CARET}">""",
       true
+  )
+
+  fun testCategoriesOptionAssignment() = testHtlPattern(
+      categoriesOptionAssignment,
+      """$DOLLAR{@ categories='$CARET'}""",
+      true
+  )
+
+  fun testCategoriesOptionAssignmentNegative() = testHtlPattern(
+      categoriesOptionAssignment,
+      """$DOLLAR{@ cats='$CARET'}""",
+          false
+  )
+
+  fun testCategoriesOptionAssignmentViaArray() = testHtlPattern(
+      categoriesOptionAssignmentViaArray,
+      """$DOLLAR{@ categories=['$CARET']}""",
+      true
+  )
+
+  fun testCategoriesOptionAssignmentViaArraySecondPosition() = testHtlPattern(
+      categoriesOptionAssignmentViaArray,
+      """$DOLLAR{@ categories=['first', '$CARET']}""",
+      true
+  )
+
+  fun testCategoriesOptionAssignmentViaArrayNegative() = testHtlPattern(
+      categoriesOptionAssignmentViaArray,
+      """$DOLLAR{@ cats=['$CARET']}""",
+      false
   )
 
   private fun testHtlPattern(

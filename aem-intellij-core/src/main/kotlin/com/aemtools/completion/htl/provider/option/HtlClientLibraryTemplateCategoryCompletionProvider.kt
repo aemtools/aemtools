@@ -2,8 +2,10 @@ package com.aemtools.completion.htl.provider.option
 
 import com.aemtools.analysis.htl.callchain
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
+import com.aemtools.common.constant.const
 import com.aemtools.common.util.findParentByType
-import com.aemtools.completion.htl.inserthandler.HtlElAssignmentInsertHandler
+import com.aemtools.common.util.withPriority
+import com.aemtools.index.HtlIndexFacade
 import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
@@ -13,13 +15,17 @@ import com.intellij.icons.AllIcons
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
-object HtlDataSlyCallOptionCompletionProvider : CompletionProvider<CompletionParameters>() {
+object HtlClientLibraryTemplateCategoryCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(
       parameters: CompletionParameters,
       context: ProcessingContext?,
       result: CompletionResultSet) {
+    if (result.isStopped) {
+      return
+    }
+
     val currentPosition = parameters.position
     val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
         ?: return
@@ -28,25 +34,30 @@ object HtlDataSlyCallOptionCompletionProvider : CompletionProvider<CompletionPar
         .getMainPropertyAccess()
         ?.callchain()
         ?.getLastOutputType()
-        as? TemplateTypeDescriptor
+        as? TemplateTypeDescriptor // verify that the descriptor is correct
         ?: return
 
-    val templateParameters = outputType.parameters()
+    if (outputType.template.fullName != const.CLIENTLIB_TEMPLATE) {
+      return
+    }
 
-    val presentOptions = hel.getOptions()
-        .map { it.name() }
-        .filterNot { it == "" }
+    val models = HtlIndexFacade.getAllClientLibraryModels(currentPosition.project)
 
-    val variants = templateParameters
-        .filterNot { presentOptions.contains(it) }
-        .map {
-          LookupElementBuilder.create(it)
-              .withIcon(AllIcons.Nodes.Parameter)
-              .withTypeText("HTL Template Parameter")
-              .withInsertHandler(HtlElAssignmentInsertHandler())
+    models.flatMap { clientLibraryModel ->
+      clientLibraryModel.categories.map { category ->
+        LookupElementBuilder.create(category)
+            .withIcon(if (outputType.template.name == "css") {
+              AllIcons.FileTypes.Css
+            } else {
+              AllIcons.FileTypes.JavaScript
+            })
+            .withPriority(clientLibraryModel.embed.size.toDouble())
+      }
+    }
+        .apply {
+          result.addAllElements(this)
+          result.stopHere()
         }
-
-    result.addAllElements(variants)
-    result.stopHere()
   }
+
 }

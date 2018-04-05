@@ -61,7 +61,7 @@ data class TemplateDefinition(
    * @return htl variable name
    */
   fun parameterDeclarationElement(project: Project, parameter: String): HtlVariableName? {
-    val declarationElement = declarationElement(project) as? XmlAttribute
+    val declarationElement = declarationElement(project)
         ?: return null
 
     val hel = declarationElement.extractHtlHel() as? com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
