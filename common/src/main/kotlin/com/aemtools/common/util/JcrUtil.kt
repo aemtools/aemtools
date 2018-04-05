@@ -35,16 +35,25 @@ inline fun <reified T> XmlTag.jcrProperty(name: String): T? {
  * Read an [XmlAttribute] value as jcr property array.
  *
  * @param name name of jcr property
- * @param T the type of the jcr property
  *
  * @receiver [XmlTag]
  * @return list with jcr values, (_empty_ list if no property with given name found or
  * if the property is empty)
  */
-inline fun <reified T> XmlTag.jcrPropertyArray(name: String): List<T> {
-  val unary = jcrProperty<T>(name)
+fun XmlTag.jcrPropertyArray(name: String): List<String> {
+  val unary = jcrProperty<String>(name)
   if (unary != null) {
     return listOf(unary)
+  }
+
+  val value = getAttribute(name)?.value ?: return emptyList()
+
+  if (value.contains('[') && value.contains(']')) {
+    return value.substringAfter('[')
+        .substringBefore(']')
+        .split(',')
+        .map { it.trim() }
+        .filterNot { it.isEmpty() }
   }
 
   return emptyList()

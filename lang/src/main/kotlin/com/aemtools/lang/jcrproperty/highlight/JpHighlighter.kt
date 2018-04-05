@@ -1,8 +1,22 @@
 package com.aemtools.lang.jcrproperty.highlight
 
 import com.aemtools.lang.jcrproperty.colorscheme.JpColors
-import com.aemtools.lang.jcrproperty.psi.JpTypes
 import com.aemtools.lang.jcrproperty.psi.JpTypes.BINARY
+import com.aemtools.lang.jcrproperty.psi.JpTypes.BOOLEAN
+import com.aemtools.lang.jcrproperty.psi.JpTypes.DATE
+import com.aemtools.lang.jcrproperty.psi.JpTypes.DECIMAL
+import com.aemtools.lang.jcrproperty.psi.JpTypes.DOUBLE
+import com.aemtools.lang.jcrproperty.psi.JpTypes.LBRACE
+import com.aemtools.lang.jcrproperty.psi.JpTypes.LBRACKET
+import com.aemtools.lang.jcrproperty.psi.JpTypes.LONG
+import com.aemtools.lang.jcrproperty.psi.JpTypes.NAME
+import com.aemtools.lang.jcrproperty.psi.JpTypes.PATH
+import com.aemtools.lang.jcrproperty.psi.JpTypes.RBRACE
+import com.aemtools.lang.jcrproperty.psi.JpTypes.RBRACKET
+import com.aemtools.lang.jcrproperty.psi.JpTypes.REFERENCE
+import com.aemtools.lang.jcrproperty.psi.JpTypes.STRING
+import com.aemtools.lang.jcrproperty.psi.JpTypes.URI
+import com.aemtools.lang.jcrproperty.psi.JpTypes.WEAK_REFERENCE
 import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
@@ -19,18 +33,18 @@ class JpHighlighter : SyntaxHighlighterBase() {
   override fun getHighlightingLexer(): Lexer = JpHighlightingLexer()
 
   private fun map(tokenType: IElementType?) = when (tokenType) {
-    JpTypes.LBRACE,
-    JpTypes.RBRACE -> JpColors.DELIMITER
+    LBRACE,
+    RBRACE -> JpColors.DELIMITER
 
-    JpTypes.LBRACE,
-    JpTypes.RBRACE -> JpColors.BRACES
+    LBRACKET,
+    RBRACKET -> JpColors.BRACES
 
-    BINARY, JpTypes.BOOLEAN,
-    JpTypes.DATE, JpTypes.DECIMAL,
-    JpTypes.DOUBLE, JpTypes.LONG,
-    JpTypes.NAME, JpTypes.PATH,
-    JpTypes.STRING, JpTypes.URI, JpTypes.REFERENCE,
-    JpTypes.WEAK_REFERENCE -> JpColors.TYPE
+    BINARY, BOOLEAN,
+    DATE, DECIMAL,
+    DOUBLE, LONG,
+    NAME, PATH,
+    STRING, URI, REFERENCE,
+    WEAK_REFERENCE -> JpColors.TYPE
     else -> null
   }
 

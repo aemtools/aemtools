@@ -4,6 +4,7 @@ import com.aemtools.index.dataexternalizer.ClientlibraryExternalizer
 import com.aemtools.index.indexer.ClientlibraryIndexer
 import com.aemtools.index.model.ClientlibraryModel
 import com.intellij.util.indexing.DataIndexer
+import com.intellij.util.indexing.FileBasedIndex
 import com.intellij.util.indexing.FileContent
 import com.intellij.util.indexing.ID
 import com.intellij.util.io.DataExternalizer
@@ -22,5 +23,11 @@ class ClientlibraryIndex : XmlIndex<ClientlibraryModel>() {
   override fun getName(): ID<String, ClientlibraryModel> = CLIENTLIBRARY_ID
 
   override fun getIndexer(): DataIndexer<String, ClientlibraryModel, FileContent> = ClientlibraryIndexer
+
+  override fun getInputFilter(): FileBasedIndex.InputFilter {
+    return FileBasedIndex.InputFilter {
+      it.name == ".content.xml"
+    }
+  }
 
 }

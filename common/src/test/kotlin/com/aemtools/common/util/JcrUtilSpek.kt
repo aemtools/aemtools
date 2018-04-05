@@ -60,4 +60,26 @@ object JcrUtilSpek : Spek({
 
   }
 
+  describe("XmlTag.jcrPropertyArray") {
+    group("with string") {
+      val inputs = mapOf(
+          "[]" to emptyList<String>(),
+          "[value]" to listOf("value"),
+          "[value1, value2]" to listOf("value1", "value2"),
+          "{String}[value1, value2]" to listOf("value1", "value2")
+      )
+
+      inputs.forEach { input, expected ->
+        it("$input -> $expected") {
+          val tag = mock<XmlTag>().apply {
+            mockAttribute("test", input)
+          }
+
+          assertThat(tag.jcrPropertyArray("test"))
+              .containsSequence(expected)
+        }
+      }
+    }
+  }
+
 })

@@ -27,10 +27,15 @@ class JcrPropertyInjector : MultiHostInjector {
     }
 
     if (context is PsiLanguageInjectionHost
-        && attributeName.name in listOf("embed", "categories", "channels")) {
+        && attributeName.name in listOf(
+            "embed",
+            "categories",
+            "channels",
+            "dependencies"
+            )) {
       registrar.startInjecting(JcrPropertyLanguage)
       registrar.addPlace(
-          "prefix", "suffix",
+          null, null,
           context,
           TextRange.create(1, attributeValue.text.length - 1)
       )

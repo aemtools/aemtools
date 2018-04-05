@@ -10,8 +10,10 @@ import com.aemtools.common.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.common.constant.const.htl.DATA_SLY_USE
 import com.aemtools.common.constant.const.htl.HTL_ATTRIBUTES
+import com.aemtools.lang.htl.psi.HtlArrayExpression
 import com.aemtools.lang.htl.psi.HtlExpression
 import com.aemtools.lang.htl.psi.HtlHtlEl
+import com.aemtools.lang.htl.psi.HtlStringLiteral
 import com.aemtools.lang.htl.psi.HtlTypes.ACCESS_IDENTIFIER
 import com.aemtools.lang.htl.psi.HtlTypes.ARRAY_LIKE_ACCESS
 import com.aemtools.lang.htl.psi.HtlTypes.ASSIGNMENT
@@ -28,6 +30,7 @@ import com.intellij.patterns.PlatformPatterns.psiElement
 import com.intellij.patterns.PlatformPatterns.psiFile
 import com.intellij.patterns.PlatformPatterns.string
 import com.intellij.patterns.PsiElementPattern
+import com.intellij.patterns.StandardPatterns
 import com.intellij.patterns.XmlPatterns.xmlAttribute
 import com.intellij.patterns.XmlPatterns.xmlAttributeValue
 import com.intellij.psi.PsiElement
@@ -143,6 +146,30 @@ object HtlPatterns {
    */
   val resourceTypeOptionAssignment: ElementPattern<PsiElement> =
       namedOptionAssignment(const.htl.options.RESOURCE_TYPE)
+
+  /**
+   * Matches the following:
+   *
+   * ```
+   *    ${@ categories='<caret>'}
+   * ```
+   */
+  val categoriesOptionAssignment: ElementPattern<PsiElement> =
+      namedOptionAssignment("categories")
+
+  /**
+   * Matches the following:
+   *
+   * ```
+   *    ${@ categories=['<caret>', 'blah']}
+   * ```
+   */
+  val categoriesOptionAssignmentViaArray: ElementPattern<PsiElement> =
+      StandardPatterns.and(
+          categoriesOptionAssignment,
+          psiElement(HtlStringLiteral::class.java)
+              .inside(psiElement(HtlArrayExpression::class.java))
+      )
 
   /**
    * Matches the following:
@@ -292,7 +319,7 @@ object HtlPatterns {
 
               psiElement(EL_START))
               .inside(psiElement().with(HtlTemplatePattern(attribute)))
-      ))
+          ))
 
   /**
    * Create pattern which will match option name inside of given htl attribute.

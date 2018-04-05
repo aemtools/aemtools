@@ -1,15 +1,16 @@
 package com.aemtools.completion.htl.provider
 
+import com.aemtools.common.constant.const
+import com.aemtools.common.util.normalizeToJcrRoot
+import com.aemtools.common.util.relativeTo
+import com.aemtools.common.util.withPriority
 import com.aemtools.completion.htl.CompletionPriority.CLOSE_CLASS
 import com.aemtools.completion.htl.CompletionPriority.CLOSE_TEMPLATE
 import com.aemtools.completion.htl.CompletionPriority.FAR_CLASS
 import com.aemtools.completion.htl.CompletionPriority.FAR_TEMPLATE
-import com.aemtools.common.util.normalizeToJcrRoot
-import com.aemtools.common.util.relativeTo
 import com.aemtools.index.HtlIndexFacade.getTemplates
 import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.lang.java.JavaSearch
-import com.aemtools.common.util.withPriority
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -63,7 +64,13 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
 
     val templates = extractTemplates(parameters)
 
-    return allClasses + templates
+    return allClasses + templates + listOf(LookupElementBuilder
+        .create(const.CLIENTLIB_TEMPLATE)
+        .withIcon(AllIcons.FileTypes.Html)
+        .withTypeText("HTL Template")
+        .withTailText("(${const.CLIENTLIB_TEMPLATE})", true)
+        .withPresentableText("clientlib.html")
+    )
   }
 
   private fun closeName(normalizedClassName: String, currentFileName: String): Boolean {
@@ -78,7 +85,7 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
   private fun normalizedFileName(parameters: CompletionParameters): String =
       parameters.originalFile.parent?.name?.toLowerCase()
           ?: parameters.originalFile.name.toLowerCase()
-          .let { it.replace("-", "") }
+              .let { it.replace("-", "") }
 
   private fun extractCompletions(
       classes: List<PsiClass>,
