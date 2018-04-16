@@ -34,7 +34,7 @@ object HtlClientLibraryTemplateCategoryCompletionProvider : CompletionProvider<C
         .getMainPropertyAccess()
         ?.callchain()
         ?.getLastOutputType()
-        as? TemplateTypeDescriptor // verify that the descriptor is correct
+        as? TemplateTypeDescriptor
         ?: return
 
     if (outputType.template.fullName != const.CLIENTLIB_TEMPLATE) {
