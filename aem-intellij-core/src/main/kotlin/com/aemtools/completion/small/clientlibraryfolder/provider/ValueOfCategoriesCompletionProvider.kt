@@ -1,6 +1,10 @@
 package com.aemtools.completion.small.clientlibraryfolder.provider
 
+import com.aemtools.common.util.findChildrenByType
+import com.aemtools.common.util.findParentByType
 import com.aemtools.index.HtlIndexFacade.getAllClientLibraryModels
+import com.aemtools.lang.jcrproperty.psi.JpArray
+import com.aemtools.lang.jcrproperty.psi.JpArrayValue
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -19,11 +23,18 @@ object ValueOfCategoriesCompletionProvider : CompletionProvider<CompletionParame
       return
     }
     val position = parameters.position
+    val siblings = position.findParentByType(JpArray::class.java)
+        ?.findChildrenByType(JpArrayValue::class.java)
+        ?.map { it.text }
+        ?: emptyList()
+
     val models = getAllClientLibraryModels(position.project)
 
     result.addAllElements(models.flatMap {
       it.categories
-    }.map { LookupElementBuilder.create(it) })
+    }
+        .filterNot { it in siblings }
+        .map { LookupElementBuilder.create(it) })
     result.stopHere()
   }
 
