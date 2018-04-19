@@ -1,4 +1,4 @@
-[Cd] { ('{')
-[Cd] Date ('Date')
-[Cd] } ('}')
-[Cd] VALUE_TOKEN ('date')
+[Jp] { ('{')
+[Jp] Date ('Date')
+[Jp] } ('}')
+[Jp] VALUE_TOKEN ('date')

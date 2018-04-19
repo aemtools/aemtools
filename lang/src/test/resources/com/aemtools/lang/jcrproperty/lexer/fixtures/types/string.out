@@ -1,4 +1,4 @@
-[Cd] { ('{')
-[Cd] String ('String')
-[Cd] } ('}')
-[Cd] VALUE_TOKEN ('string')
+[Jp] { ('{')
+[Jp] String ('String')
+[Jp] } ('}')
+[Jp] VALUE_TOKEN ('string')

@@ -18,5 +18,6 @@ class JpLexerTest : LexerBaseTest() {
   override fun getOutExtension(): String = "out"
 
   fun testValue() = doTest()
+  fun testArray() = doTest()
 
 }

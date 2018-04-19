@@ -22,10 +22,13 @@ import static com.aemtools.lang.jcrproperty.psi.JpTypes.*;
 %type IElementType
 %unicode
 
+%state ARRAY
+
 EOL=\R
 WHITE_SPACE=\s+
 
 VALUE_TOKEN=[^\[\]{}]+
+ARRAY_VALUE_TOKEN=[^\[\]{},]+
 
 %%
 <YYINITIAL> {
@@ -45,12 +48,41 @@ VALUE_TOKEN=[^\[\]{}]+
   "URI"                { return URI; }
   "{"                  { return LBRACE; }
   "}"                  { return RBRACE; }
-  "["                  { return LBRACKET; }
+  "["                  {
+    yybegin(ARRAY);
+    return LBRACKET;
+  }
   "]"                  { return RBRACKET; }
   ","                  { return COMMA; }
 
   {VALUE_TOKEN}        { return VALUE_TOKEN; }
 
+}
+
+<ARRAY> {
+{WHITE_SPACE}        { return WHITE_SPACE; }
+
+  "String"             { return STRING; }
+  "Binary"             { return BINARY; }
+  "Long"               { return LONG; }
+  "Double"             { return DOUBLE; }
+  "Decimal"            { return DECIMAL; }
+  "Date"               { return DATE; }
+  "Boolean"            { return BOOLEAN; }
+  "Name"               { return NAME; }
+  "Path"               { return PATH; }
+  "Reference"          { return REFERENCE; }
+  "WeakReference"      { return WEAK_REFERENCE; }
+  "URI"                { return URI; }
+  "{"                  { return LBRACE; }
+  "}"                  { return RBRACE; }
+  "["                  { return LBRACKET; }
+  "]"                  {
+    yybegin(YYINITIAL);
+    return RBRACKET;
+  }
+  ","                  { return COMMA; }
+  {ARRAY_VALUE_TOKEN}  { return ARRAY_VALUE_TOKEN; }
 }
 
 [^] { return BAD_CHARACTER; }

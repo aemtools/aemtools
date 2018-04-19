@@ -133,6 +133,10 @@
                 language="JcrProperty"
                 implementationClass="com.aemtools.lang.jcrproperty.highlight.JpHighlighterFactory"/>
 
+        <completion.contributor
+            language="JcrProperty"
+            implementationClass="com.aemtools.completion.small.clientlibraryfolder.JcrClientLibraryFolderCompletionContributor"/>
+
         <multiHostInjector implementation="com.aemtools.lang.jcrproperty.JcrPropertyInjector"/>
 
         <lang.substitutor

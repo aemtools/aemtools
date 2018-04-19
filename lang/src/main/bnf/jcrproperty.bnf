@@ -34,6 +34,7 @@
     COMMA     = ','
 
     VALUE_TOKEN = 'regexp:[^\[\]{}]*'
+    ARRAY_VALUE_TOKEN = 'regexp:[^\[\]{},]*'
   ]
 }
 
@@ -45,7 +46,9 @@ type ::= LBRACE (
   WEAK_REFERENCE | URI
 ) RBRACE
 
-array ::= LBRACKET single RBRACKET
-  | LBRACKET single (COMMA single)* RBRACKET
+array ::= LBRACKET array_value RBRACKET
+  | LBRACKET array_value (COMMA array_value)* RBRACKET
 
 single ::= VALUE_TOKEN
+
+array_value ::= ARRAY_VALUE_TOKEN
