@@ -139,6 +139,9 @@
 
         <multiHostInjector implementation="com.aemtools.lang.jcrproperty.JcrPropertyInjector"/>
 
+        <lang.braceMatcher language="JcrProperty"
+                           implementationClass="com.aemtools.lang.jcrproperty.editor.JpBraceMatcher"/>
+
         <lang.substitutor
                 language="TEXT"
                 implementationClass="com.aemtools.lang.clientlib.CdLanguageSubstitutor"/>
