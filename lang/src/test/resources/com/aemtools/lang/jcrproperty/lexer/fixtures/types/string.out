@@ -1,4 +1,4 @@
-[Jp] { ('{')
-[Jp] String ('String')
-[Jp] } ('}')
-[Jp] VALUE_TOKEN ('string')
+{ ('{')
+String ('String')
+} ('}')
+VALUE_TOKEN ('string')

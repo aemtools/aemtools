@@ -28,7 +28,7 @@ EOL=\R
 WHITE_SPACE=\s+
 
 VALUE_TOKEN=[^\[\]{}]+
-ARRAY_VALUE_TOKEN=[\w:-]+
+ARRAY_VALUE_TOKEN=[\w:.-]+
 
 %%
 <YYINITIAL> {

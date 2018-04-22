@@ -1,7 +1,7 @@
 JpFile:decimal.in
-  JpTypeImpl([Jp] TYPE)
-    PsiElement([Jp] {)('{')
-    PsiElement([Jp] Decimal)('Decimal')
-    PsiElement([Jp] })('}')
-  JpSingleImpl([Jp] SINGLE)
-    PsiElement([Jp] VALUE_TOKEN)('decimal')
+  JpTypeImpl(TYPE)
+    PsiElement({)('{')
+    PsiElement(Decimal)('Decimal')
+    PsiElement(})('}')
+  JpSingleImpl(SINGLE)
+    PsiElement(VALUE_TOKEN)('decimal')

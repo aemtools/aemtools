@@ -1,4 +1,4 @@
-[Jp] { ('{')
-[Jp] Boolean ('Boolean')
-[Jp] } ('}')
-[Jp] VALUE_TOKEN ('false')
+{ ('{')
+Boolean ('Boolean')
+} ('}')
+VALUE_TOKEN ('false')

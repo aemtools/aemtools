@@ -1,4 +1,4 @@
-[Jp] { ('{')
-[Jp] WeakReference ('WeakReference')
-[Jp] } ('}')
-[Jp] VALUE_TOKEN ('weak reference')
+{ ('{')
+WeakReference ('WeakReference')
+} ('}')
+VALUE_TOKEN ('weak reference')

@@ -1,7 +1,7 @@
 JpFile:reference.in
-  JpTypeImpl([Jp] TYPE)
-    PsiElement([Jp] {)('{')
-    PsiElement([Jp] Reference)('Reference')
-    PsiElement([Jp] })('}')
-  JpSingleImpl([Jp] SINGLE)
-    PsiElement([Jp] VALUE_TOKEN)('reference')
+  JpTypeImpl(TYPE)
+    PsiElement({)('{')
+    PsiElement(Reference)('Reference')
+    PsiElement(})('}')
+  JpSingleImpl(SINGLE)
+    PsiElement(VALUE_TOKEN)('reference')

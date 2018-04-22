@@ -56,6 +56,13 @@ object JcrPatterns {
         }
       })
 
+  /**
+   * Matches jcr type.
+   */
+  val jcrType: PsiElementPattern.Capture<PsiElement> = PlatformPatterns.psiElement()
+      .afterLeaf("{")
+      .beforeLeaf(PlatformPatterns.psiElement(JpTypes.RBRACE))
+
 }
 
 /**

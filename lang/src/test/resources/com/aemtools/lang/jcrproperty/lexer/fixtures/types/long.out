@@ -1,4 +1,4 @@
-[Jp] { ('{')
-[Jp] Long ('Long')
-[Jp] } ('}')
-[Jp] VALUE_TOKEN ('long')
+{ ('{')
+Long ('Long')
+} ('}')
+VALUE_TOKEN ('long')

@@ -1,7 +1,7 @@
 JpFile:string.in
-  JpTypeImpl([Jp] TYPE)
-    PsiElement([Jp] {)('{')
-    PsiElement([Jp] String)('String')
-    PsiElement([Jp] })('}')
-  JpSingleImpl([Jp] SINGLE)
-    PsiElement([Jp] VALUE_TOKEN)('string')
+  JpTypeImpl(TYPE)
+    PsiElement({)('{')
+    PsiElement(String)('String')
+    PsiElement(})('}')
+  JpSingleImpl(SINGLE)
+    PsiElement(VALUE_TOKEN)('string')

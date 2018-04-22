@@ -1,4 +1,4 @@
-[Jp] { ('{')
-[Jp] Name ('Name')
-[Jp] } ('}')
-[Jp] VALUE_TOKEN ('name')
+{ ('{')
+Name ('Name')
+} ('}')
+VALUE_TOKEN ('name')

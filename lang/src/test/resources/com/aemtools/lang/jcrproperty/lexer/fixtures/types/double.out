@@ -1,4 +1,4 @@
-[Jp] { ('{')
-[Jp] Double ('Double')
-[Jp] } ('}')
-[Jp] VALUE_TOKEN ('double')
+{ ('{')
+Double ('Double')
+} ('}')
+VALUE_TOKEN ('double')

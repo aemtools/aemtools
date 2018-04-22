@@ -1,4 +1,4 @@
-[Jp] { ('{')
-[Jp] Binary ('Binary')
-[Jp] } ('}')
-[Jp] VALUE_TOKEN ('binary')
+{ ('{')
+Binary ('Binary')
+} ('}')
+VALUE_TOKEN ('binary')

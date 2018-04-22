@@ -1,4 +1,4 @@
-[Jp] { ('{')
-[Jp] Reference ('Reference')
-[Jp] } ('}')
-[Jp] VALUE_TOKEN ('reference')
+{ ('{')
+Reference ('Reference')
+} ('}')
+VALUE_TOKEN ('reference')

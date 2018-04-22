@@ -1,4 +1,4 @@
-[Jp] { ('{')
-[Jp] URI ('URI')
-[Jp] } ('}')
-[Jp] VALUE_TOKEN ('uri')
+{ ('{')
+URI ('URI')
+} ('}')
+VALUE_TOKEN ('uri')

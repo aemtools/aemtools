@@ -1,7 +1,7 @@
 JpFile:uri.in
-  JpTypeImpl([Jp] TYPE)
-    PsiElement([Jp] {)('{')
-    PsiElement([Jp] URI)('URI')
-    PsiElement([Jp] })('}')
-  JpSingleImpl([Jp] SINGLE)
-    PsiElement([Jp] VALUE_TOKEN)('uri')
+  JpTypeImpl(TYPE)
+    PsiElement({)('{')
+    PsiElement(URI)('URI')
+    PsiElement(})('}')
+  JpSingleImpl(SINGLE)
+    PsiElement(VALUE_TOKEN)('uri')

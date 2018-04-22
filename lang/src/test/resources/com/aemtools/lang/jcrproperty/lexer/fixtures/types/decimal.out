@@ -1,4 +1,4 @@
-[Jp] { ('{')
-[Jp] Decimal ('Decimal')
-[Jp] } ('}')
-[Jp] VALUE_TOKEN ('decimal')
+{ ('{')
+Decimal ('Decimal')
+} ('}')
+VALUE_TOKEN ('decimal')
