@@ -1,18 +1,15 @@
-package com.aemtools.completion.reppolicy
+package com.aemtools.completion.small.reppolicy.provider
 
 import com.aemtools.common.constant.const
-import com.aemtools.completion.model.editconfig.XmlAttributeDefinition
 import com.aemtools.common.util.findParentByType
+import com.aemtools.completion.model.editconfig.XmlAttributeDefinition
 import com.aemtools.service.ServiceFacade
-import com.intellij.codeInsight.completion.CompletionContributor
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
-import com.intellij.codeInsight.completion.CompletionType
 import com.intellij.codeInsight.completion.XmlAttributeInsertHandler
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.patterns.PlatformPatterns
 import com.intellij.psi.impl.source.xml.XmlTagImpl
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
@@ -20,17 +17,9 @@ import com.intellij.psi.xml.XmlToken
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro Troynikov.
+ * @author Dmytro Primshyts
  */
-class RepPolicyCompletionContributor : CompletionContributor {
-
-  constructor() {
-    extend(CompletionType.BASIC, PlatformPatterns.psiElement(), RepPolicyCompletionProvider())
-  }
-
-}
-
-private class RepPolicyCompletionProvider : CompletionProvider<CompletionParameters>() {
+object RepPolicyCompletionProvider : CompletionProvider<CompletionParameters>() {
 
   private val repPolicyRepository = ServiceFacade.getRepPolicyRepository()
 

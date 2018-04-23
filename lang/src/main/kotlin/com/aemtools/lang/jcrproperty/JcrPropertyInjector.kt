@@ -13,8 +13,7 @@ import com.intellij.psi.xml.XmlAttributeValue
  * @author Dmytro Primshyts
  */
 class JcrPropertyInjector : MultiHostInjector {
-  override fun elementsToInjectIn(): MutableList<out Class<out PsiElement>>
-      = mutableListOf(XmlAttributeValue::class.java)
+  override fun elementsToInjectIn(): MutableList<out Class<out PsiElement>> = mutableListOf(XmlAttributeValue::class.java)
 
   override fun getLanguagesToInject(registrar: MultiHostRegistrar, context: PsiElement) {
     val attributeValue = context as? XmlAttributeValue ?: return
@@ -22,25 +21,39 @@ class JcrPropertyInjector : MultiHostInjector {
     val attributeName = attributeValue.findParentByType(XmlAttribute::class.java)
         ?: return
 
-    if (context.containingFile.name != ".content.xml") {
+    val psiLanguageInjectionHost = context
+        as? PsiLanguageInjectionHost
+        ?: return
+
+    if (psiLanguageInjectionHost.containingFile.name == ".content.xml") {
+      if (attributeName.name in listOf(
+              "embed",
+              "categories",
+              "channels",
+              "dependencies"
+          )) {
+        inject(registrar, context, attributeValue)
+      }
       return
     }
 
-    if (context is PsiLanguageInjectionHost
-        && attributeName.name in listOf(
-            "embed",
-            "categories",
-            "channels",
-            "dependencies"
-            )) {
-      registrar.startInjecting(JcrPropertyLanguage)
-      registrar.addPlace(
-          null, null,
-          context,
-          TextRange.create(1, attributeValue.text.length - 1)
-      )
-      registrar.doneInjecting()
+    if (psiLanguageInjectionHost.containingFile.name == "_rep_policy.xml") {
+      if (attributeName.name in listOf(
+              "jcr:primaryType"
+          )) {
+        inject(registrar, context, attributeValue)
+      }
     }
+  }
+
+  private fun inject(registrar: MultiHostRegistrar, context: PsiLanguageInjectionHost, attributeValue: XmlAttributeValue) {
+    registrar.startInjecting(JcrPropertyLanguage)
+    registrar.addPlace(
+        null, null,
+        context,
+        TextRange.create(1, attributeValue.text.length - 1)
+    )
+    registrar.doneInjecting()
   }
 
 }

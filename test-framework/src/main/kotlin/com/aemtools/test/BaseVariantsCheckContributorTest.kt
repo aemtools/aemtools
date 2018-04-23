@@ -55,6 +55,7 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
         "wcmmode",
         "xssAPI"
     ).sorted()
+
     /**
      * Values available as the 'context' option value (${@ context='<caret>'})
      */
@@ -190,7 +191,6 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
   val fixture: JavaCodeInsightTestFixture
     get() = myFixture
 
-  override fun getProjectDescriptor(): LightProjectDescriptor
-      = LightCodeInsightFixtureTestCase.JAVA_8
+  override fun getProjectDescriptor(): LightProjectDescriptor = LightCodeInsightFixtureTestCase.JAVA_8
 
 }

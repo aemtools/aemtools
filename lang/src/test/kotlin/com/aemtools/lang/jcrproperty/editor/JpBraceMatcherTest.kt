@@ -13,7 +13,7 @@ class JpBraceMatcherTest : BaseLightTest(),
     TypeActionTest {
 
   fun `test should close brace`() = jpTypeTest(
-      "$CARET",
+      CARET,
       "{",
       "{$CARET}"
   )
@@ -31,7 +31,7 @@ class JpBraceMatcherTest : BaseLightTest(),
   )
 
   fun `test should close bracket`() = jpTypeTest(
-      "$CARET",
+      CARET,
       "[",
       "[$CARET]"
   )

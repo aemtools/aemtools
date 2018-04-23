@@ -174,7 +174,7 @@
 
         <!-- _rep_policy.xml completion -->
         <completion.contributor language="XML"
-                                implementationClass="com.aemtools.completion.reppolicy.RepPolicyCompletionContributor"/>
+                                implementationClass="com.aemtools.completion.small.reppolicy.RepPolicyCompletionContributor"/>
 
         <!-- Htl -->
         <iconProvider implementation="com.aemtools.lang.htl.file.HtlFileIconProvider"/>

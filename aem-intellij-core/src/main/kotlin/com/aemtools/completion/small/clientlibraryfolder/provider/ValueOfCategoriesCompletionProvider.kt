@@ -12,6 +12,9 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.util.ProcessingContext
 
 /**
+ * Provides completion for `categories` attribute inside
+ * of client library folder.
+ *
  * @author Dmytro Primshyts
  */
 object ValueOfCategoriesCompletionProvider : CompletionProvider<CompletionParameters>() {
