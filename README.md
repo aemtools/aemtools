@@ -2,7 +2,6 @@
 
 
 Intellij IDEA plugin containing AEM (Adobe Experience Manager) related features. The goal of the plugin is to make the development of AEM projects faster and more convenient by leveraging features which IDE can provide.
-The project is in beta now, but it is already usable. 
 
 ## Installation 
 The plugin is available in official JetBrains repository:
