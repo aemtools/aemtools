@@ -176,6 +176,8 @@
         <completion.contributor language="XML"
                                 implementationClass="com.aemtools.completion.small.reppolicy.RepPolicyCompletionContributor"/>
 
+        <completion.contributor language="JcrProperty"
+                                implementationClass="com.aemtools.completion.small.reppolicy.RepPolicyCompletionContributor"/>
         <!-- Htl -->
         <iconProvider implementation="com.aemtools.lang.htl.file.HtlFileIconProvider"/>
 

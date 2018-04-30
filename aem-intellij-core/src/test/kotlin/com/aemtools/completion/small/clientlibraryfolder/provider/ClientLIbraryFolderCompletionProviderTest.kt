@@ -7,7 +7,7 @@ import com.aemtools.test.completion.CompletionBaseLightTest
  *
  * @author Dmytro Primshyts
  */
-class ClientLIbraryFolderCompletionProviderTest : CompletionBaseLightTest() {
+class ClientLIbraryFolderCompletionProviderTest : CompletionBaseLightTest(false) {
 
   fun testFullCompletion() = completionTest {
     addXml(".content.xml", """

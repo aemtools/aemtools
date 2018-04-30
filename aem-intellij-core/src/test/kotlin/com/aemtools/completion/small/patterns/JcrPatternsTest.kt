@@ -11,6 +11,8 @@ import com.intellij.psi.PsiElement
 import org.intellij.lang.annotations.Language
 
 /**
+ * Test for [JcrPatterns].
+ *
  * @author Dmytro Primshyts
  */
 class JcrPatternsTest : BasePatternsTest() {

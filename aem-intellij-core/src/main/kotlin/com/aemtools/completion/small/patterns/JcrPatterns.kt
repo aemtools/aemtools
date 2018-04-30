@@ -6,7 +6,6 @@ import com.aemtools.lang.jcrproperty.psi.JpTypes
 import com.intellij.patterns.PatternCondition
 import com.intellij.patterns.PlatformPatterns
 import com.intellij.patterns.PsiElementPattern
-import com.intellij.patterns.XmlPatterns.psiElement
 import com.intellij.patterns.XmlPatterns.xmlFile
 import com.intellij.patterns.XmlPatterns.xmlTag
 import com.intellij.psi.PsiElement
@@ -21,10 +20,23 @@ import com.intellij.util.ProcessingContext
  */
 object JcrPatterns {
 
+  /**
+   * Matches `jcr:root` tag with `cq:ClientLibraryFolder` `jcr:primaryType`.
+   */
   val clientLibraryRootTag = xmlTag().withName("jcr:root").with(xmlTagWithAttribute(
       "jcr:primaryType", "cq:ClientLibraryFolder"))
 
+  /**
+   * Matches `jcr:root` tag with `rep:ACL` `jcr:primaryType`.
+   */
+  val aclRootTag = xmlTag().withName("jcr:root")
+      .with(xmlTagWithAttribute(
+          "jcr:primaryType", "rep:ACL"
+      ))
+
   val contentXmlFile = xmlFile().withName(".content.xml")
+
+  val repPolicyFile = xmlFile().withName("_rep_policy.xml")
 
   /**
    * Matches an attribute of `jcr:root` tag with
@@ -45,12 +57,12 @@ object JcrPatterns {
    * Matcher for jcr value of `categories` attribute.
    */
   val jcrArrayValueOfCategories = jcrArrayValue
-      .with(object: PatternCondition<PsiElement?>("XmlAttribute with name") {
+      .with(object : PatternCondition<PsiElement?>("XmlAttribute with name") {
         override fun accepts(t: PsiElement, context: ProcessingContext?): Boolean {
           val host = findInjectionHost(t)
           return host.findParentByType(XmlAttribute::class.java)
               ?.name == "categories"
-          && PlatformPatterns.psiElement().inside(clientLibraryRootTag)
+              && PlatformPatterns.psiElement().inside(clientLibraryRootTag)
               .inFile(contentXmlFile)
               .accepts(host)
         }
