@@ -1,6 +1,8 @@
 package com.aemtools.completion.small.patterns
 
+import com.aemtools.completion.small.patterns.RepPolicyPatterns.attributeNameUnderAcl
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.primaryTypeInAcl
+import com.aemtools.completion.small.patterns.RepPolicyPatterns.privilegesValue
 import com.aemtools.test.pattern.BasePatternsTest
 import com.intellij.patterns.ElementPattern
 import com.intellij.psi.PsiElement
@@ -21,7 +23,40 @@ class RepPolicyPatternsTest : BasePatternsTest() {
     <unknownName jcr:primaryType="$CARET"
 </jcr:root>
       """,
-       true
+      true
+  )
+
+  fun testAttributeNameUnderAcl() = xmlPattern(
+      attributeNameUnderAcl,
+      """
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:rep="internal"
+      jcr:primaryType="rep:ACL">
+    <unknownName $CARET
+</jcr:root>
+      """,
+      true
+  )
+
+  fun testPrivilegesValue() = xmlPattern(
+      privilegesValue,
+      """
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:rep="internal"
+      jcr:primaryType="rep:ACL">
+    <unknownName rep:privileges="{Name}[$CARET]"
+</jcr:root>
+      """,
+      true
+  )
+
+  fun testPrivilegesValueSecondPosition() = xmlPattern(
+      privilegesValue,
+      """
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:rep="internal"
+      jcr:primaryType="rep:ACL">
+    <unknownName rep:privileges="{Name}[write, $CARET]"
+</jcr:root>
+      """,
+      true
   )
 
   private fun xmlPattern(

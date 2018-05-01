@@ -5,7 +5,7 @@ import com.aemtools.test.completion.model.ICompletionTestFixture
 import org.intellij.lang.annotations.Language
 
 /**
- * Test for [RepPolicyCompletionProvider].
+ * Test for [RepPolicyCompletionContributor].
  *
  * @author Dmytro Primshyts
  */
