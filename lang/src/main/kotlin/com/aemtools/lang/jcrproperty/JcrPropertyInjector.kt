@@ -16,9 +16,12 @@ import com.intellij.psi.xml.XmlTag
  * @author Dmytro Primshyts
  */
 class JcrPropertyInjector : MultiHostInjector {
-  override fun elementsToInjectIn(): MutableList<out Class<out PsiElement>> = mutableListOf(XmlAttributeValue::class.java)
+  override fun elementsToInjectIn()
+      : MutableList<out Class<out PsiElement>> = mutableListOf(XmlAttributeValue::class.java)
 
-  override fun getLanguagesToInject(registrar: MultiHostRegistrar, context: PsiElement) {
+  override fun getLanguagesToInject(
+      registrar: MultiHostRegistrar,
+      context: PsiElement) {
     val attributeValue = context as? XmlAttributeValue ?: return
 
     val attributeName = attributeValue.findParentByType(XmlAttribute::class.java)
@@ -61,7 +64,10 @@ class JcrPropertyInjector : MultiHostInjector {
     }
   }
 
-  private fun inject(registrar: MultiHostRegistrar, context: PsiLanguageInjectionHost, attributeValue: XmlAttributeValue) {
+  private fun inject(
+      registrar: MultiHostRegistrar,
+      context: PsiLanguageInjectionHost,
+      attributeValue: XmlAttributeValue) {
     registrar.startInjecting(JcrPropertyLanguage)
     registrar.addPlace(
         null, null,

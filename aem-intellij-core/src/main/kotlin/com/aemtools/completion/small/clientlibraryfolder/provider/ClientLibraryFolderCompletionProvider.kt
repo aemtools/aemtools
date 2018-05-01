@@ -7,7 +7,6 @@ import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
 import com.intellij.util.ProcessingContext
 
@@ -16,7 +15,10 @@ import com.intellij.util.ProcessingContext
  */
 object ClientLibraryFolderCompletionProvider : CompletionProvider<CompletionParameters>() {
 
-  override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext?, result: CompletionResultSet) {
+  override fun addCompletions(
+      parameters: CompletionParameters,
+      context: ProcessingContext?,
+      result: CompletionResultSet) {
     if (result.isStopped) {
       return
     }
