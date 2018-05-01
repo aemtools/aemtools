@@ -14,11 +14,11 @@ import com.intellij.testFramework.fixtures.CodeInsightTestFixture
 import junit.framework.TestCase
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class BasePatternsTest : BaseLightTest() {
 
-  fun testPattern(pattern: ElementPattern<PsiElement>,
+  fun testPattern(pattern: ElementPattern<out PsiElement>,
                   text: String,
                   result: Boolean,
                   addCompletionPlaceholder: Boolean = true,
@@ -59,7 +59,7 @@ abstract class BasePatternsTest : BaseLightTest() {
         textToAdd
       }
 
-  private fun assertionMessage(pattern: ElementPattern<PsiElement>,
+  private fun assertionMessage(pattern: ElementPattern<out PsiElement>,
                                file: PsiFile,
                                text: String): String {
     val builder = StringBuilder()

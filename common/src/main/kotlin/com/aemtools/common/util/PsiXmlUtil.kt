@@ -1,5 +1,6 @@
 package com.aemtools.common.util
 
+import com.aemtools.common.constant.const.IDEA_STRING_CARET_PLACEHOLDER
 import com.intellij.openapi.util.Conditions
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
@@ -21,18 +22,30 @@ fun <T : PsiElement> PsiElement?.findChildrenByType(type: Class<T>): Collection<
 /**
  * Searches for parent PSI element of specified class.
  *
+ * @param type type to look for
+ * @param strict `true` means that **current** element should be skipped
  * @receiver [PsiElement]
  * @see [PsiTreeUtil.findFirstParent]
  */
 @Suppress("UNCHECKED_CAST")
-fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>): T? {
-  return PsiTreeUtil.findFirstParent(this, Conditions.instanceOf(type)) as? T?
+fun <T : PsiElement> PsiElement?.findParentByType(
+    type: Class<T>,
+    strict: Boolean = false): T? {
+  return PsiTreeUtil.findFirstParent(
+      this,
+      strict,
+      Conditions.instanceOf(type)) as? T?
 }
 
-private fun <T : PsiElement> PsiElement?.findParentsByType(type: Class<T>): List<T> {
+private fun <T : PsiElement> PsiElement?.findParentsByType(
+    type: Class<T>,
+    strict: Boolean = false): List<T> {
   var element: T? = null
   return generateSequence {
-    val next = (this ?: element).findParentByType(type)
+    val next = (element ?: this).findParentByType(type, strict)
+    if (next?.text?.contains(IDEA_STRING_CARET_PLACEHOLDER) == true) {
+      element = next.findParentByType(type, strict)
+    }
     element = next
     element
   }
@@ -44,11 +57,15 @@ private fun <T : PsiElement> PsiElement?.findParentsByType(type: Class<T>): List
  *
  * @param type the type of parent
  * @param predicate the predicate
+ * @param strict `true` means that **current** element should be skipped (`false` by default)
  * @receiver [PsiElement]
  * @return the element
  */
-fun <T : PsiElement> PsiElement?.findParentByType(type: Class<T>, predicate: (T) -> Boolean): T? =
-    this.findParentsByType(type).firstOrNull { predicate.invoke(it) }
+fun <T : PsiElement> PsiElement?.findParentByType(
+    type: Class<T>,
+    predicate: (T) -> Boolean,
+    strict: Boolean = false): T? =
+    this.findParentsByType(type, strict).firstOrNull { predicate.invoke(it) }
 
 /**
  * Check if current [PsiElement] has parent of specified class.
@@ -122,7 +139,7 @@ fun xmlAttributeMatcher(name: String, value: String? = null): XmlAttributeMatche
  * @receiver [XmlAttribute]
  * @return *true* if current attribute is doublequoted, *false* otherwise
  */
-fun XmlAttribute.isDoubleQuoted() : Boolean {
+fun XmlAttribute.isDoubleQuoted(): Boolean {
   return this.valueElement?.text?.startsWith("\"") ?: false
 }
 

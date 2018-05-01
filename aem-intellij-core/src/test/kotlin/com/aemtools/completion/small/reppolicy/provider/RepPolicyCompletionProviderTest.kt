@@ -137,7 +137,8 @@ class RepPolicyCompletionProviderTest : CompletionBaseLightTest(false) {
            <a$CARET
         """)
     shouldContain(
-        "allow2"
+        "allow",
+        "allow0"
     )
   }
 

@@ -4,6 +4,7 @@ import com.aemtools.completion.small.patterns.RepPolicyPatterns.attributeNameUnd
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.primaryTypeInAcl
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.privilegesValue
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.repRestrictionAttributeName
+import com.aemtools.completion.small.patterns.RepPolicyPatterns.tagUnderAclRoot
 import com.aemtools.test.pattern.BasePatternsTest
 import com.intellij.patterns.ElementPattern
 import com.intellij.psi.PsiElement
@@ -73,8 +74,19 @@ class RepPolicyPatternsTest : BasePatternsTest() {
       true
   )
 
+  fun testTagUnderAclRoot() = xmlPattern(
+      tagUnderAclRoot,
+      """
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:rep="internal"
+      jcr:primaryType="rep:ACL">
+    <a$CARET
+</jcr:root>
+      """,
+      true
+  )
+
   private fun xmlPattern(
-      pattern: ElementPattern<PsiElement>,
+      pattern: ElementPattern<out PsiElement>,
       @Language("XML") text: String,
       result: Boolean,
       fileName: String = "_rep_policy.xml",

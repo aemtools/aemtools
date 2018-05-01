@@ -36,6 +36,14 @@ object RepPolicyPatterns {
       })
 
   /**
+   * Matches tag - direct child of [aclRootTag].
+   */
+  val tagUnderAclRoot = psiElement(XML_NAME)
+      .afterLeaf("<")
+      .inside(aclRootTag)
+      .inFile(repPolicyFile)
+
+  /**
    * Matches attribute name in [aclRootTag] subtag.
    */
   val attributeNameUnderAcl = psiElement(XML_NAME)
