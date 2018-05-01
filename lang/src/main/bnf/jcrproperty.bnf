@@ -46,8 +46,9 @@ type ::= LBRACE (
   WEAK_REFERENCE | URI
 ) RBRACE
 
-array ::= LBRACKET array_value RBRACKET
-  | LBRACKET array_value (COMMA array_value)* RBRACKET
+array ::= LBRACKET array_value (COMMA array_value)* RBRACKET
+  | LBRACKET array_value RBRACKET
+  | LBRACKET RBRACKET
 
 single ::= VALUE_TOKEN
 

@@ -15,6 +15,7 @@ class JpParserTest :
 
   fun testValue() = doTest()
   fun testArray() = doTest()
+  fun testEmptyArray() = doTest()
   fun testTypedArray() = doTest()
 
   fun testBinary() = doTest()
