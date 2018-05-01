@@ -3,6 +3,7 @@ package com.aemtools.completion.small.patterns
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.attributeNameUnderAcl
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.primaryTypeInAcl
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.privilegesValue
+import com.aemtools.completion.small.patterns.RepPolicyPatterns.repRestrictionAttributeName
 import com.aemtools.test.pattern.BasePatternsTest
 import com.intellij.patterns.ElementPattern
 import com.intellij.psi.PsiElement
@@ -54,6 +55,19 @@ class RepPolicyPatternsTest : BasePatternsTest() {
 <jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:rep="internal"
       jcr:primaryType="rep:ACL">
     <unknownName rep:privileges="{Name}[write, $CARET]"
+</jcr:root>
+      """,
+      true
+  )
+
+  fun testRepRestrictionAttributeName() = xmlPattern(
+      repRestrictionAttributeName,
+      """
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:rep="internal"
+      jcr:primaryType="rep:ACL">
+    <allow>
+        <rep:restrictions $CARET
+    </allow>
 </jcr:root>
       """,
       true

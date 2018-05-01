@@ -1,10 +1,15 @@
 package com.aemtools.completion.small.reppolicy
 
+import com.aemtools.common.util.findChildrenByType
+import com.aemtools.common.util.findParentByType
 import com.aemtools.common.util.lookupElement
+import com.aemtools.completion.small.patterns.RepPolicyPatterns
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.attributeNameUnderAcl
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.primaryTypeInAcl
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.privilegesValue
 import com.aemtools.completion.small.reppolicy.provider.FunctionalCompletionProvider
+import com.aemtools.lang.jcrproperty.psi.JpArray
+import com.aemtools.lang.jcrproperty.psi.JpArrayValue
 import com.intellij.codeInsight.completion.CompletionContributor
 import com.intellij.codeInsight.completion.CompletionType
 
@@ -23,6 +28,16 @@ class RepPolicyCompletionContributor : CompletionContributor() {init {
       })
   )
 
+  extend(
+      CompletionType.BASIC,
+      RepPolicyPatterns.repRestrictionAttributeName,
+      FunctionalCompletionProvider({ _, _, _ ->
+        listOf(
+            lookupElement("jcr:primaryType"),
+            lookupElement("rep:glob")
+        )
+      }, shouldStop = true))
+
   extend(CompletionType.BASIC,
       attributeNameUnderAcl,
       FunctionalCompletionProvider({ _, _, _ ->
@@ -36,8 +51,15 @@ class RepPolicyCompletionContributor : CompletionContributor() {init {
 
   extend(CompletionType.BASIC,
       privilegesValue,
-      FunctionalCompletionProvider({ _, _, _ ->
-        listOf(
+      FunctionalCompletionProvider({ parameters, _, _ ->
+        val currentPosition = parameters.position
+
+        val array = currentPosition.findParentByType(JpArray::class.java)
+
+        val values = array?.findChildrenByType(JpArrayValue::class.java)
+            ?.map { it.text }
+
+        val result = listOf(
             "jcr:versionManagement",
             "jcr:addChildNodes",
             "jcr:readAccessControl",
@@ -65,6 +87,12 @@ class RepPolicyCompletionContributor : CompletionContributor() {init {
             "rep:readNodes",
             "crx:replicate"
         ).map { lookupElement(it) }
+
+        if (values != null) {
+          result.filterNot { values.contains(it.lookupString) }
+        } else {
+          result
+        }
       })
   )
 

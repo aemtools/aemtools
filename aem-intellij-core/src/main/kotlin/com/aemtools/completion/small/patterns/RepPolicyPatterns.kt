@@ -44,6 +44,14 @@ object RepPolicyPatterns {
       .inFile(repPolicyFile)
 
   /**
+   * Matches name of attribute inside `rep:restrictions` tag.
+   */
+  val repRestrictionAttributeName = psiElement(XML_NAME)
+      .inside(xmlTag().withName("rep:restrictions"))
+      .inside(aclRootTag)
+      .inFile(repPolicyFile)
+
+  /**
    * Matches value of `rep:privileges` in [aclRootTag] subtag.
    */
   val privilegesValue = psiElement(JpTypes.ARRAY_VALUE_TOKEN)
