@@ -1,7 +1,9 @@
 package com.aemtools.completion.small.patterns
 
+import com.aemtools.common.patterns.IWithJcrPatterns
 import com.aemtools.common.util.findParentByType
 import com.aemtools.common.util.hasAttribute
+import com.aemtools.common.util.injectedLanguageManager
 import com.aemtools.lang.jcrproperty.psi.JpTypes
 import com.intellij.patterns.PatternCondition
 import com.intellij.patterns.PlatformPatterns
@@ -9,7 +11,6 @@ import com.intellij.patterns.PsiElementPattern
 import com.intellij.patterns.XmlPatterns.xmlFile
 import com.intellij.patterns.XmlPatterns.xmlTag
 import com.intellij.psi.PsiElement
-import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil.findInjectionHost
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
 import com.intellij.psi.xml.XmlTokenType.XML_NAME
@@ -18,7 +19,7 @@ import com.intellij.util.ProcessingContext
 /**
  * @author Dmytro Primshyts
  */
-object JcrPatterns {
+object JcrPatterns : IWithJcrPatterns {
 
   /**
    * Matches `jcr:root` tag with `cq:ClientLibraryFolder` `jcr:primaryType`.
@@ -29,14 +30,25 @@ object JcrPatterns {
   /**
    * Matches `jcr:root` tag with `rep:ACL` `jcr:primaryType`.
    */
-  val aclRootTag = xmlTag().withName("jcr:root")
+  val aclRootTag = jcrRootTag()
       .with(xmlTagWithAttribute(
           "jcr:primaryType", "rep:ACL"
       ))
 
+  /**
+   * Matches `.content.xml` file.
+   */
   val contentXmlFile = xmlFile().withName(".content.xml")
 
+  /**
+   * Matches `_rep_policy.xml` file.
+   */
   val repPolicyFile = xmlFile().withName("_rep_policy.xml")
+
+  /**
+   * Matches `_cq_editConfig.xml` file.
+   */
+  val editConfigFile = xmlFile().withName("_cq_editConfig.xml")
 
   /**
    * Matches an attribute of `jcr:root` tag with
@@ -59,7 +71,7 @@ object JcrPatterns {
   val jcrArrayValueOfCategories = jcrArrayValue
       .with(object : PatternCondition<PsiElement?>("XmlAttribute with name") {
         override fun accepts(t: PsiElement, context: ProcessingContext?): Boolean {
-          val host = findInjectionHost(t)
+          val host = t.project.injectedLanguageManager().getInjectionHost(t)
           return host.findParentByType(XmlAttribute::class.java)
               ?.name == "categories"
               && PlatformPatterns.psiElement().inside(clientLibraryRootTag)

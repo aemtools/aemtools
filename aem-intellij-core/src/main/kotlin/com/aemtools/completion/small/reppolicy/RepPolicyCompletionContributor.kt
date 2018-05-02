@@ -3,7 +3,7 @@ package com.aemtools.completion.small.reppolicy
 import com.aemtools.common.util.closest
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.common.util.findParentByType
-import com.aemtools.common.util.lookupElement
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.completion.small.inserthandler.JcrNameArrayInsertHandler
 import com.aemtools.completion.small.patterns.RepPolicyPatterns
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.attributeNameUnderAcl
@@ -11,7 +11,7 @@ import com.aemtools.completion.small.patterns.RepPolicyPatterns.primaryTypeInAcl
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.privilegesValue
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.repRestrictionAttributeName
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.tagUnderAclRoot
-import com.aemtools.completion.small.reppolicy.provider.FunctionalCompletionProvider
+import com.aemtools.common.completion.BaseCompletionProvider
 import com.aemtools.lang.jcrproperty.psi.JpArray
 import com.aemtools.lang.jcrproperty.psi.JpArrayValue
 import com.intellij.codeInsight.completion.CompletionContributor
@@ -26,7 +26,7 @@ class RepPolicyCompletionContributor : CompletionContributor() {init {
 
   extend(CompletionType.BASIC,
       primaryTypeInAcl,
-      FunctionalCompletionProvider({ _, _, _ ->
+      BaseCompletionProvider({ _, _, _ ->
         listOf(
             lookupElement("rep:GrantACE"),
             lookupElement("rep:DenyACE")
@@ -37,7 +37,7 @@ class RepPolicyCompletionContributor : CompletionContributor() {init {
   extend(
       CompletionType.BASIC,
       repRestrictionAttributeName,
-      FunctionalCompletionProvider({ _, _, _ ->
+      BaseCompletionProvider({ _, _, _ ->
         listOf(
             lookupElement("jcr:primaryType")
                 .withInsertHandler(XmlAttributeInsertHandler()),
@@ -48,7 +48,7 @@ class RepPolicyCompletionContributor : CompletionContributor() {init {
 
   extend(CompletionType.BASIC,
       RepPolicyPatterns.tagUnderAllowOrDeny,
-      FunctionalCompletionProvider({ _, _, _ ->
+      BaseCompletionProvider({ _, _, _ ->
         listOf(
             lookupElement("rep:restrictions")
         )
@@ -57,7 +57,7 @@ class RepPolicyCompletionContributor : CompletionContributor() {init {
   extend(
       CompletionType.BASIC,
       tagUnderAclRoot,
-      FunctionalCompletionProvider({ parameters, _, _ ->
+      BaseCompletionProvider({ parameters, _, _ ->
         val originalPosition = parameters.originalPosition
         val text = originalPosition?.text
 
@@ -104,7 +104,7 @@ class RepPolicyCompletionContributor : CompletionContributor() {init {
 
   extend(CompletionType.BASIC,
       attributeNameUnderAcl,
-      FunctionalCompletionProvider({ _, _, _ ->
+      BaseCompletionProvider({ _, _, _ ->
         listOf(
             lookupElement("jcr:primaryType")
                 .withInsertHandler(XmlAttributeInsertHandler()),
@@ -118,7 +118,7 @@ class RepPolicyCompletionContributor : CompletionContributor() {init {
 
   extend(CompletionType.BASIC,
       privilegesValue,
-      FunctionalCompletionProvider({ parameters, _, _ ->
+      BaseCompletionProvider({ parameters, _, _ ->
         val currentPosition = parameters.position
 
         val array = currentPosition.findParentByType(JpArray::class.java)

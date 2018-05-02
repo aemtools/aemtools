@@ -50,6 +50,16 @@ class JcrPropertyInjector : MultiHostInjector {
           "rep:principalName",
           "rep:privileges"
       ) -> inject(registrar, context, attributeValue)
+
+      psiLanguageInjectionHost.containingFile.name == "_cq_editConfig.xml"
+          && attributeName.name in listOf(
+          "jcr:primaryType",
+          "cq:actions",
+          "cq:layout",
+          "cq:dialogMode",
+          "cq:emptyText",
+          "cq:inherit"
+      ) -> inject(registrar, context, attributeValue)
     }
 
   }

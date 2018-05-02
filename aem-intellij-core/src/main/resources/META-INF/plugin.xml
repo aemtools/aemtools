@@ -170,7 +170,7 @@
 
         <!-- _cq_editConfig.xml completion -->
         <completion.contributor language="XML"
-                                implementationClass="com.aemtools.completion.editconfig.EditConfigCompletionContributor"/>
+                                implementationClass="com.aemtools.completion.small.editconfig.EditConfigCompletionContributor"/>
 
         <!-- _rep_policy.xml completion -->
         <completion.contributor language="XML"

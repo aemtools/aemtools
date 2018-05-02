@@ -1,4 +1,4 @@
-package com.aemtools.common.util
+package com.aemtools.common.completion
 
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 

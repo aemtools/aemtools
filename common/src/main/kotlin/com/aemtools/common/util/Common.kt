@@ -4,6 +4,7 @@ import com.aemtools.common.constant.const.htl.DECLARATION_ATTRIBUTES
 import com.aemtools.common.constant.const.htl.SINGLE_ATTRIBUTES
 import com.intellij.codeInsight.completion.PrioritizedLookupElement
 import com.intellij.codeInsight.lookup.LookupElement
+import com.intellij.lang.injection.InjectedLanguageManager
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.editor.Editor
@@ -216,6 +217,15 @@ fun Project.psiManager(): PsiManager = PsiManager.getInstance(this)
  * @return instance of psi document manager
  */
 fun Project.psiDocumentManager(): PsiDocumentManager = PsiDocumentManager.getInstance(this)
+
+/**
+ * Get [InjectedLanguageManager] associated with current project.
+ *
+ * @receiver [Project]
+ * @return instance of injected language manager
+ */
+fun Project.injectedLanguageManager(): InjectedLanguageManager =
+    InjectedLanguageManager.getInstance(this)
 
 /**
  * Get [GlobalSearchScope] associated with current project.

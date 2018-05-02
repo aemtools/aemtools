@@ -1,9 +1,9 @@
-package com.aemtools.completion.editconfig
+package com.aemtools.completion.small.editconfig
 
 import com.aemtools.test.completion.CompletionBaseLightTest
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class EditConfigCompletionTest : CompletionBaseLightTest(false) {
 
@@ -43,6 +43,21 @@ class EditConfigCompletionTest : CompletionBaseLightTest(false) {
             <jcr:root cq:actions='$CARET'></jcr:root>
         """)
     shouldContain(emptyList())
+  }
+
+  fun testCqActionsArray() = completionTest {
+    addXml("_cq_editConfig.xml", """
+      <jcr:root cq:actions="[$CARET]"></jcr:root>
+    """)
+    shouldContain(
+        "text:",
+        "-",
+        "edit",
+        "delete",
+        "insert",
+        "copymove",
+        "_clear"
+    )
   }
 
   fun testCqLayout() = completionTest {

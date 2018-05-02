@@ -1,4 +1,4 @@
-package com.aemtools.completion.small.reppolicy.provider
+package com.aemtools.common.completion
 
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
@@ -13,7 +13,7 @@ import com.intellij.util.ProcessingContext
  *
  * @author Dmytro Primshyts
  */
-class FunctionalCompletionProvider(
+class BaseCompletionProvider(
     private val completionProvider: (
         CompletionParameters,
         ProcessingContext?,

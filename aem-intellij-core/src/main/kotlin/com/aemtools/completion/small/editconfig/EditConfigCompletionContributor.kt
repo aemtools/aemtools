@@ -1,18 +1,22 @@
-package com.aemtools.completion.editconfig
+package com.aemtools.completion.small.editconfig
 
+import com.aemtools.common.completion.BaseCompletionContributor
+import com.aemtools.common.completion.BaseCompletionProvider
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.constant.const
-import com.aemtools.completion.model.editconfig.XmlAttributeDefinition
 import com.aemtools.common.util.findParentByType
+import com.aemtools.completion.model.editconfig.XmlAttributeDefinition
+import com.aemtools.completion.small.inserthandler.JcrArrayInsertHandler
+import com.aemtools.completion.small.patterns.EditConfigPatterns.cqActionsValue
+import com.aemtools.completion.small.patterns.EditConfigPatterns.primaryTypeInEditConfig
 import com.aemtools.service.ServiceFacade
-import com.intellij.codeInsight.completion.CompletionContributor
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
-import com.intellij.codeInsight.completion.CompletionType
 import com.intellij.codeInsight.completion.XmlAttributeInsertHandler
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.patterns.PlatformPatterns
+import com.intellij.patterns.PlatformPatterns.psiElement
 import com.intellij.psi.impl.source.xml.XmlTagImpl
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
@@ -20,15 +24,47 @@ import com.intellij.psi.xml.XmlToken
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
-class EditConfigCompletionContributor : CompletionContributor {
+//class EditConfigCompletionContributor : CompletionContributor {
+//
+//  constructor() {
+//    extend(CompletionType.BASIC, PlatformPatterns.psiElement(), EditConfigCompletionProvider())
+//  }
+//
+//}
 
-  constructor() {
-    extend(CompletionType.BASIC, PlatformPatterns.psiElement(), EditConfigCompletionProvider())
-  }
+class EditConfigCompletionContributor : BaseCompletionContributor({
+  basic(
+      primaryTypeInEditConfig,
+      BaseCompletionProvider({ _, _, _ ->
+        listOf(
+            lookupElement("jcr:primaryType"),
+            lookupElement("cq:actions")
+                .withInsertHandler(JcrArrayInsertHandler()),
+            lookupElement("cq:layout"),
+            lookupElement("cq:dialogMode"),
+            lookupElement("cq:emptyText"),
+            lookupElement("cq:inherit")
+        )
+      })
+  )
 
-}
+  basic(
+      cqActionsValue,
+      BaseCompletionProvider({ _, _, _ ->
+        listOf(
+            lookupElement("text:"),
+            lookupElement("-"),
+            lookupElement("edit"),
+            lookupElement("delete"),
+            lookupElement("insert"),
+            lookupElement("copymove"),
+            lookupElement("_clear")
+        )
+      })
+  )
+})
 
 private class EditConfigCompletionProvider : CompletionProvider<CompletionParameters>() {
 
