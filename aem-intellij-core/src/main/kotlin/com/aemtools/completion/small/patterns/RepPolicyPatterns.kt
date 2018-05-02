@@ -36,6 +36,14 @@ object RepPolicyPatterns {
       })
 
   /**
+   * Matches `allow` or `deny` subtag name
+   */
+  val tagUnderAllowOrDeny = psiElement()
+      .afterLeaf("<")
+      .inside(xmlTag().inside(aclRootTag))
+      .inFile(repPolicyFile)
+
+  /**
    * Matches tag - direct child of [aclRootTag].
    */
   val tagUnderAclRoot = psiElement(XML_NAME)

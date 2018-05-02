@@ -122,50 +122,16 @@ class RepPolicyCompletionProviderTest : CompletionBaseLightTest(false) {
     )
   }
 
-  fun testRootLevelCompletionAllow() = completionTest {
-    repPolicy("""
-            <a$CARET
-        """)
-    shouldContain(
-        "allow"
-    )
-  }
-
-  fun testRootLevelCompletionAllow2() = completionTest {
-    repPolicy("""
-           <allow></allow>
-           <a$CARET
-        """)
-    shouldContain(
-        "allow",
-        "allow0"
-    )
-  }
-
-  fun testRootLevelCompletionDeny() = completionTest {
-    repPolicy("""
-            <d$CARET
-        """)
-    shouldContain(
-        "deny"
-    )
-  }
-
-  fun testRootLevelCompletionDeny2() = completionTest {
-    repPolicy("""
-           <deny></deny>
-           <d$CARET
-        """)
-    shouldContain("deny2")
-  }
-
   fun testSecondLevel() = completionTest {
     repPolicy("""
             <allow0>
-                <re$CARET
+                <$CARET
             </allow0>
         """)
-    shouldContain("rep:restrictions")
+    shouldContain(
+        "rep:restrictions",
+        "allow0"
+    )
   }
 
   private fun ICompletionTestFixture.repPolicy(@Language("XML") body: String) {

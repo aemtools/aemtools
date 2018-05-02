@@ -9,6 +9,7 @@ import com.aemtools.completion.small.patterns.RepPolicyPatterns
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.attributeNameUnderAcl
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.primaryTypeInAcl
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.privilegesValue
+import com.aemtools.completion.small.patterns.RepPolicyPatterns.repRestrictionAttributeName
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.tagUnderAclRoot
 import com.aemtools.completion.small.reppolicy.provider.FunctionalCompletionProvider
 import com.aemtools.lang.jcrproperty.psi.JpArray
@@ -35,13 +36,21 @@ class RepPolicyCompletionContributor : CompletionContributor() {init {
 
   extend(
       CompletionType.BASIC,
-      RepPolicyPatterns.repRestrictionAttributeName,
+      repRestrictionAttributeName,
       FunctionalCompletionProvider({ _, _, _ ->
         listOf(
             lookupElement("jcr:primaryType")
                 .withInsertHandler(XmlAttributeInsertHandler()),
             lookupElement("rep:glob")
                 .withInsertHandler(XmlAttributeInsertHandler())
+        )
+      }, shouldStop = true))
+
+  extend(CompletionType.BASIC,
+      RepPolicyPatterns.tagUnderAllowOrDeny,
+      FunctionalCompletionProvider({ _, _, _ ->
+        listOf(
+            lookupElement("rep:restrictions")
         )
       }, shouldStop = true))
 

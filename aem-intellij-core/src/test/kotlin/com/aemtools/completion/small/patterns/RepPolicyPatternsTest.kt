@@ -5,6 +5,7 @@ import com.aemtools.completion.small.patterns.RepPolicyPatterns.primaryTypeInAcl
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.privilegesValue
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.repRestrictionAttributeName
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.tagUnderAclRoot
+import com.aemtools.completion.small.patterns.RepPolicyPatterns.tagUnderAllowOrDeny
 import com.aemtools.test.pattern.BasePatternsTest
 import com.intellij.patterns.ElementPattern
 import com.intellij.psi.PsiElement
@@ -80,6 +81,19 @@ class RepPolicyPatternsTest : BasePatternsTest() {
 <jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:rep="internal"
       jcr:primaryType="rep:ACL">
     <a$CARET
+</jcr:root>
+      """,
+      true
+  )
+
+  fun testTagUnderAllowOrDeny() = xmlPattern(
+      tagUnderAllowOrDeny,
+      """
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:rep="internal"
+      jcr:primaryType="rep:ACL">
+    <allow>
+        <re$CARET
+    </allow>
 </jcr:root>
       """,
       true
