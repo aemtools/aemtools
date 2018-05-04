@@ -1,9 +1,9 @@
 package com.aemtools.completion.htl.provider
 
+import com.aemtools.common.completion.withPriority
 import com.aemtools.common.constant.const
 import com.aemtools.common.util.normalizeToJcrRoot
 import com.aemtools.common.util.relativeTo
-import com.aemtools.common.util.withPriority
 import com.aemtools.completion.htl.CompletionPriority.CLOSE_CLASS
 import com.aemtools.completion.htl.CompletionPriority.CLOSE_TEMPLATE
 import com.aemtools.completion.htl.CompletionPriority.FAR_CLASS

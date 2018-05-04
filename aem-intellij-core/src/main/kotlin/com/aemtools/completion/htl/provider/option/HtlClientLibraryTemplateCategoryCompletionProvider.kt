@@ -2,9 +2,9 @@ package com.aemtools.completion.htl.provider.option
 
 import com.aemtools.analysis.htl.callchain
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
+import com.aemtools.common.completion.withPriority
 import com.aemtools.common.constant.const
 import com.aemtools.common.util.findParentByType
-import com.aemtools.common.util.withPriority
 import com.aemtools.index.HtlIndexFacade
 import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.intellij.codeInsight.completion.CompletionParameters

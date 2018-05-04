@@ -26,6 +26,9 @@ open class BaseCompletionContributor(
   }
 }
 
+/**
+ * Completion contributor DSL.
+ */
 class CompletionContributorDsl {
 
   internal data class ExtensionModel(
@@ -36,6 +39,13 @@ class CompletionContributorDsl {
 
   internal val extensions = mutableListOf<ExtensionModel>()
 
+  /**
+   * Register completion provider.
+   *
+   * @param type completion type
+   * @param pattern the pattern
+   * @param provider the completion provider
+   */
   fun extend(
       type: CompletionType,
       pattern: ElementPattern<out PsiElement>,
@@ -48,11 +58,23 @@ class CompletionContributorDsl {
     )
   }
 
+  /**
+   * Register [CompletionProvider] for [CompletionType.BASIC].
+   *
+   * @param pattern the pattern
+   * @param provider the completion provider
+   */
   fun basic(
       pattern: ElementPattern<out PsiElement>,
       provider: CompletionProvider<in CompletionParameters>
   ) = extend(CompletionType.BASIC, pattern, provider)
 
+  /**
+   * Register [CompletionProvider] for [CompletionType.SMART].
+   *
+   * @param pattern the pattern
+   * @param provider the completion provider
+   */
   fun smart(
       pattern: ElementPattern<out PsiElement>,
       provider: CompletionProvider<in CompletionParameters>

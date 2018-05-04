@@ -1,6 +1,7 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor.java
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
+import com.aemtools.common.completion.withPriority
 import com.aemtools.common.util.allScope
 import com.aemtools.common.util.elFields
 import com.aemtools.common.util.elMethods
@@ -8,7 +9,6 @@ import com.aemtools.common.util.elName
 import com.aemtools.common.util.findElMemberByName
 import com.aemtools.common.util.psiManager
 import com.aemtools.common.util.resolveReturnType
-import com.aemtools.common.util.withPriority
 import com.aemtools.completion.htl.CompletionPriority
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.lang.java.JavaSearch
