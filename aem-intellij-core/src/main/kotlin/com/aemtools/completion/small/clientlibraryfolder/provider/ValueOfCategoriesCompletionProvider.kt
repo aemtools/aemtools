@@ -28,7 +28,7 @@ object ValueOfCategoriesCompletionProvider : CompletionProvider<CompletionParame
     val position = parameters.position
     val siblings = position.findParentByType(JpArray::class.java)
         ?.findChildrenByType(JpArrayValue::class.java)
-        ?.map { it.text }
+        ?.map { it.text.trim() }
         ?: emptyList()
 
     val models = getAllClientLibraryModels(position.project)
