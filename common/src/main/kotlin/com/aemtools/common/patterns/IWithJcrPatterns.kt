@@ -17,5 +17,19 @@ interface IWithJcrPatterns {
    */
   fun jcrPrimaryTypeAttribute() = XmlPatterns.xmlAttribute().withName("jcr:primaryType")
 
+  /**
+   * Create matcher for `cq:dialogMode` attribute.
+   */
+  fun cqDialogModeAttribute() = XmlPatterns.xmlAttribute().withName("cq:dialogMode")
+
+  /**
+   * Create matcher for `cq:inherit` attribute.
+   */
+  fun cqInheritAttribute() = XmlPatterns.xmlAttribute().withName("cq:inherit")
+
+  /**
+   * Create matcher for `cq:layout` attribute.
+   */
+  fun cqLayoutAttribute() = XmlPatterns.xmlAttribute().withName("cq:layout")
 
 }

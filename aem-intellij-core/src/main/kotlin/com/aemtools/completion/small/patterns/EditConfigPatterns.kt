@@ -8,11 +8,18 @@ import com.intellij.patterns.PlatformPatterns.psiElement
 import com.intellij.patterns.PsiElementPattern
 import com.intellij.patterns.XmlPatterns
 import com.intellij.psi.PsiElement
+import com.intellij.psi.xml.XmlTokenType
 
 /**
  * @author Dmytro Primshyts
  */
 object EditConfigPatterns : IWithJcrPatterns {
+
+  /**
+   * Matches an attribute name under `jcr:root` tag in [editConfigFile].
+   */
+  val attributeUnderJcrRoot = psiElement(XmlTokenType.XML_NAME)
+      .inside(jcrRootTag().inFile(editConfigFile))
 
   /**
    * Matches `jcr:primaryType` inside of [editConfigFile].
@@ -28,11 +35,50 @@ object EditConfigPatterns : IWithJcrPatterns {
       ))
 
   /**
+   * Matches `cq:dialogMode` value inside of [editConfigFile].
+   */
+  val cqDialogModeValue = psiElement(JpTypes.VALUE_TOKEN)
+      .with(HostCondition(
+          "cq:dialogMode value",
+          { _, host, _ ->
+            psiElement().inside(cqDialogModeAttribute())
+                .inFile(editConfigFile)
+                .accepts(host)
+          }
+      ))
+
+  /**
+   * Matches `cq:inherit` value inside of [editConfigFile].
+   */
+  val cqInheritValue = psiElement(JpTypes.VALUE_TOKEN)
+      .with(HostCondition(
+          "cq:inherit value",
+          { _, host, _ ->
+            psiElement().inside(cqInheritAttribute())
+                .inFile(editConfigFile)
+                .accepts(host)
+          }
+      ))
+
+  /**
+   * Matches `cq:layout` value inside of [editConfigFile].
+   */
+  val cqLayoutValue = psiElement(JpTypes.VALUE_TOKEN)
+    .with(HostCondition(
+        "cq:layout value",
+        {_,host,_->
+          psiElement().inside(cqLayoutAttribute())
+              .inFile(editConfigFile)
+              .accepts(host)
+        }
+    ))
+
+  /**
    * Matches value of `cq:actions`.
    */
   val cqActionsValue = psiElement(JpTypes.ARRAY_VALUE_TOKEN)
       .with(HostCondition("cq:actions value",
-          { element, host, context ->
+          { _, host, _ ->
             psiElement()
                 .inside(XmlPatterns.xmlAttribute()
                     .withName("cq:actions"))

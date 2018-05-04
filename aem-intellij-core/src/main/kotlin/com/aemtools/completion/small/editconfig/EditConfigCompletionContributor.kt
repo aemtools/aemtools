@@ -3,40 +3,56 @@ package com.aemtools.completion.small.editconfig
 import com.aemtools.common.completion.BaseCompletionContributor
 import com.aemtools.common.completion.BaseCompletionProvider
 import com.aemtools.common.completion.lookupElement
-import com.aemtools.common.constant.const
-import com.aemtools.common.util.findParentByType
-import com.aemtools.completion.model.editconfig.XmlAttributeDefinition
 import com.aemtools.completion.small.inserthandler.JcrArrayInsertHandler
+import com.aemtools.completion.small.patterns.EditConfigPatterns.attributeUnderJcrRoot
 import com.aemtools.completion.small.patterns.EditConfigPatterns.cqActionsValue
+import com.aemtools.completion.small.patterns.EditConfigPatterns.cqDialogModeValue
+import com.aemtools.completion.small.patterns.EditConfigPatterns.cqInheritValue
+import com.aemtools.completion.small.patterns.EditConfigPatterns.cqLayoutValue
 import com.aemtools.completion.small.patterns.EditConfigPatterns.primaryTypeInEditConfig
-import com.aemtools.service.ServiceFacade
-import com.intellij.codeInsight.completion.CompletionParameters
-import com.intellij.codeInsight.completion.CompletionProvider
-import com.intellij.codeInsight.completion.CompletionResultSet
-import com.intellij.codeInsight.completion.XmlAttributeInsertHandler
-import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.patterns.PlatformPatterns.psiElement
-import com.intellij.psi.impl.source.xml.XmlTagImpl
-import com.intellij.psi.xml.XmlAttribute
-import com.intellij.psi.xml.XmlTag
-import com.intellij.psi.xml.XmlToken
-import com.intellij.util.ProcessingContext
 
 /**
  * @author Dmytro Primshyts
  */
-//class EditConfigCompletionContributor : CompletionContributor {
-//
-//  constructor() {
-//    extend(CompletionType.BASIC, PlatformPatterns.psiElement(), EditConfigCompletionProvider())
-//  }
-//
-//}
-
 class EditConfigCompletionContributor : BaseCompletionContributor({
   basic(
-      primaryTypeInEditConfig,
+      cqLayoutValue,
+
+      BaseCompletionProvider({ _, _, _ ->
+        listOf(
+            lookupElement("rollover"),
+            lookupElement("editbar"),
+            lookupElement("auto")
+        )
+      })
+  )
+
+  basic(
+      cqInheritValue,
+
+      BaseCompletionProvider({ _, _, _ ->
+        listOf(
+            lookupElement("true"),
+            lookupElement("false")
+        )
+      })
+  )
+
+  basic(
+      cqDialogModeValue,
+
+      BaseCompletionProvider({ _, _, _ ->
+        listOf(
+            lookupElement("floating"),
+            lookupElement("inline"),
+            lookupElement("auto")
+        )
+      })
+  )
+
+  basic(
+      attributeUnderJcrRoot,
+
       BaseCompletionProvider({ _, _, _ ->
         listOf(
             lookupElement("jcr:primaryType"),
@@ -46,6 +62,15 @@ class EditConfigCompletionContributor : BaseCompletionContributor({
             lookupElement("cq:dialogMode"),
             lookupElement("cq:emptyText"),
             lookupElement("cq:inherit")
+        )
+      })
+  )
+
+  basic(
+      primaryTypeInEditConfig,
+      BaseCompletionProvider({ _, _, _ ->
+        listOf(
+            lookupElement("cq:EditConfig")
         )
       })
   )
@@ -65,79 +90,3 @@ class EditConfigCompletionContributor : BaseCompletionContributor({
       })
   )
 })
-
-private class EditConfigCompletionProvider : CompletionProvider<CompletionParameters>() {
-
-  private val editConfigRepository = ServiceFacade.getEditConfigRepository()
-
-  override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext?,
-                              result: CompletionResultSet) {
-    if (!accept(parameters)) {
-      return
-    }
-
-    val currentElement = parameters.position as XmlToken
-    val currentPositionType = extractCurrentPositionType(currentElement)
-
-    val variantsGenerator = variantsProviders.get(currentPositionType) ?: return
-
-    result.addAllElements(variantsGenerator(parameters, currentElement))
-  }
-
-  private val variantsForName: (CompletionParameters, XmlToken) -> List<LookupElement> = { _, token ->
-    val tag = token.findParentByType(XmlTag::class.java)
-
-    val tagDefinition = editConfigRepository.getTagDefinitionByName((tag as XmlTagImpl).name)
-    val tagAttributes = tag.attributes.map { it.name }
-    val attributes = tagDefinition.attributes.filter { !tagAttributes.contains(it.name) }
-
-    attributes.map {
-      LookupElementBuilder.create(it.name).withInsertHandler(
-          XmlAttributeInsertHandler()
-      )
-    }
-  }
-
-  private val variantsForValue: (CompletionParameters, XmlToken) -> List<LookupElement> = { _, token ->
-    val tag = token.findParentByType(XmlTag::class.java)
-    val tagDefinition = editConfigRepository.getTagDefinitionByName((tag as XmlTagImpl).name)
-    val attributeName = (token.findParentByType(XmlAttribute::class.java) as XmlAttribute).name
-    val attributeDefinition: XmlAttributeDefinition? = tagDefinition.attributes.find { it.name == attributeName }
-
-    attributeDefinition?.values.orEmpty().map { LookupElementBuilder.create(it) }
-  }
-
-  private val variantsForTagName: (CompletionParameters, XmlToken) -> List<LookupElement> = { _, token ->
-    val parentTag = token.findParentByType(XmlTag::class.java)
-        ?.findParentByType(XmlTag::class.java)
-
-    val tagDefinition = editConfigRepository.getTagDefinitionByName(
-        (parentTag as XmlTagImpl).name)
-
-    tagDefinition.childNodes.map {
-      LookupElementBuilder.create(it)
-    }
-  }
-
-  private fun extractCurrentPositionType(token: XmlToken): String {
-    val currentPositionType = token.tokenType.toString()
-
-    if (currentPositionType == const.xml.XML_ATTRIBUTE_NAME &&
-        (token.findParentByType(XmlTag::class.java) as XmlTagImpl).name.contains(
-            const.IDEA_STRING_CARET_PLACEHOLDER)) {
-      return const.xml.XML_TAG_NAME
-    }
-    return currentPositionType
-  }
-
-  private fun accept(parameters: CompletionParameters): Boolean {
-    return const.CQ_EDITCONFIG_XML == parameters.originalFile.name
-  }
-
-  private val variantsProviders = mapOf(
-      const.xml.XML_ATTRIBUTE_NAME to variantsForName,
-      const.xml.XML_ATTRIBUTE_VALUE to variantsForValue,
-      const.xml.XML_TAG_NAME to variantsForTagName
-  )
-
-}

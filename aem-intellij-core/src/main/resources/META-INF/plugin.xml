@@ -172,6 +172,9 @@
         <completion.contributor language="XML"
                                 implementationClass="com.aemtools.completion.small.editconfig.EditConfigCompletionContributor"/>
 
+        <completion.contributor language="JcrProperty"
+                                implementationClass="com.aemtools.completion.small.editconfig.EditConfigCompletionContributor"/>
+
         <!-- _rep_policy.xml completion -->
         <completion.contributor language="XML"
                                 implementationClass="com.aemtools.completion.small.reppolicy.RepPolicyCompletionContributor"/>
