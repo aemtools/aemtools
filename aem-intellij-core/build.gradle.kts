@@ -1,4 +1,5 @@
 import org.jetbrains.intellij.IntelliJPluginExtension
+import org.jetbrains.kotlin.cli.jvm.main
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
@@ -32,6 +33,7 @@ dependencies {
     compile(project(":lang"))
     compile(project(":common"))
     compile(project(":inspection"))
+    compile(project(":aem-intellij-integration"))
 
     compile("com.google.code.gson:gson:$gsonVersion")
     compile("org.apache.commons:commons-lang3:$apacheCommonsVersion")

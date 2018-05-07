@@ -256,6 +256,10 @@
                 serviceInterface="com.aemtools.inspection.service.IInspectionService"
                 serviceImplementation="com.aemtools.inspection.service.InspectionService"/>
 
+        <projectService
+                serviceInterface="com.aemtools.integration.sync.settings.AemToolsProjectConfiguration"
+                serviceImplementation="com.aemtools.integration.sync.settings.AemToolsProjectConfiguration"/>
+
         <additionalTextAttributes
                 scheme="Default"
                 file="com/aemtools/ide/colorscheme/HtlDefault.xml"/>
@@ -266,6 +270,11 @@
 
         <postStartupActivity implementation="com.aemtools.init.AemIntellijStartupActivity"/>
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
+
+        <projectConfigurable groupId="tools"
+                             displayName="AEM Tools"
+                             id="preference.AEMTools"
+                             instance="com.aemtools.integration.sync.settings.SyncSettings"/>
     </extensions>
 
     <application-components>
@@ -281,6 +290,22 @@
                 description="HTML files under this directory will be considered as HTL files">
             <add-to-group group-id="MarkRootGroup" anchor="last"/>
         </action>
+        <group id="AEMToolsGroup"
+               class="com.aemtools.integration.sync.action.AemToolsActionGroup"
+               text="AEM Tools"
+               popup="true">
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorPopupMenu"/>
+            <action id="ExportFileToInstance"
+                    class="com.aemtools.integration.sync.action.ExportFileToInstance"
+                    text="Export file"
+                    description="Export file to AEM instance">
+            </action>
+            <action id="ImportFileFromInstance"
+                    class="com.aemtools.integration.sync.action.ImportFileFromInstance"
+                    text="Import file"
+                    description="Import file from AEM instance">
+            </action>
+        </group>
     </actions>
 
 </idea-plugin>
