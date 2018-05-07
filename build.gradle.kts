@@ -64,8 +64,6 @@ val junitVersion: String by extra
 val jmockitVersion: String by extra
 val assertjVersion: String by extra
 val mockitoVersion: String by extra
-val content_package_builder_version: String by extra
-val crx_packmgr_helper: String by extra
 
 plugins {
     java
@@ -128,9 +126,6 @@ subprojects {
     val junitVintageEngineVersion: String by extra
 
     dependencies {
-        compile("io.wcm.tooling.commons:io.wcm.tooling.commons.content-package-builder:$content_package_builder_version")
-        compile("io.wcm.tooling.commons:io.wcm.tooling.commons.crx-packmgr-helper:$crx_packmgr_helper")
-
         compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
         compile("org.jetbrains.kotlin:kotlin-runtime:$kotlinVersion")
         compile("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")

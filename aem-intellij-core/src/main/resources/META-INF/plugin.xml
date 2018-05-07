@@ -255,8 +255,8 @@
                 serviceImplementation="com.aemtools.inspection.service.InspectionService"/>
 
         <projectService
-                serviceInterface="com.aemtools.sync.settings.AemToolsProjectConfiguration"
-                serviceImplementation="com.aemtools.sync.settings.AemToolsProjectConfiguration"/>
+                serviceInterface="com.aemtools.integration.sync.settings.AemToolsProjectConfiguration"
+                serviceImplementation="com.aemtools.integration.sync.settings.AemToolsProjectConfiguration"/>
 
         <additionalTextAttributes
                 scheme="Default"
@@ -270,7 +270,7 @@
         <projectConfigurable groupId="tools"
                              displayName="AEM Tools"
                              id="preference.AEMTools"
-                             instance="com.aemtools.sync.settings.SyncSettings"/>
+                             instance="com.aemtools.integration.sync.settings.SyncSettings"/>
     </extensions>
 
     <application-components>
@@ -287,17 +287,17 @@
             <add-to-group group-id="MarkRootGroup" anchor="last"/>
         </action>
         <group id="AEMToolsGroup"
-               class="com.aemtools.sync.action.AemToolsActionGroup"
+               class="com.aemtools.integration.sync.action.AemToolsActionGroup"
                text="AEM Tools"
                popup="true">
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorPopupMenu"/>
             <action id="ExportFileToInstance"
-                    class="com.aemtools.sync.action.ExportFileToInstance"
+                    class="com.aemtools.integration.sync.action.ExportFileToInstance"
                     text="Export file"
                     description="Export file to AEM instance">
             </action>
             <action id="ImportFileFromInstance"
-                    class="com.aemtools.sync.action.ImportFileFromInstance"
+                    class="com.aemtools.integration.sync.action.ImportFileFromInstance"
                     text="Import file"
                     description="Import file from AEM instance">
             </action>

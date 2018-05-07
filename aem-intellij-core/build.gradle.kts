@@ -25,10 +25,6 @@ plugins {
     id("org.jetbrains.intellij") version "0.2.17"
 }
 
-java.sourceSets {
-    getByName("main").java.srcDirs("src/main/kotlin")
-}
-
 val kotlinVersion: String by extra
 val gsonVersion: String by extra
 val apacheCommonsVersion: String by extra
@@ -37,6 +33,7 @@ dependencies {
     compile(project(":lang"))
     compile(project(":common"))
     compile(project(":inspection"))
+    compile(project(":aem-intellij-integration"))
 
     compile("com.google.code.gson:gson:$gsonVersion")
     compile("org.apache.commons:commons-lang3:$apacheCommonsVersion")
