@@ -5,7 +5,6 @@ import com.aemtools.test.util.mock
 import com.intellij.lang.injection.MultiHostRegistrar
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiFile
-import com.intellij.psi.PsiLanguageInjectionHost
 import com.intellij.psi.impl.source.xml.XmlAttributeValueImpl
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlAttributeValue
@@ -27,13 +26,16 @@ import org.mockito.Mockito.verify
 @ExtendWith(MockitoExtension::class)
 class JcrPropertyInjectorTest {
 
-  val tested = JcrPropertyInjector()
+  private val tested = JcrPropertyInjector()
 
   @Mock
   lateinit var xmlAttributeValue: XmlAttributeValueImpl
 
   @Mock
   lateinit var xmlAttribute: XmlAttribute
+
+  @Mock
+  lateinit var xmlTag: XmlTag
 
   @Mock
   lateinit var psiFile: PsiFile
@@ -45,6 +47,9 @@ class JcrPropertyInjectorTest {
   fun init() {
     `when`(xmlAttributeValue.parent)
         .thenReturn(xmlAttribute)
+
+    `when`(xmlAttribute.parent)
+        .thenReturn(xmlTag)
 
     `when`(xmlAttributeValue.containingFile)
         .thenReturn(psiFile)
@@ -88,17 +93,29 @@ class JcrPropertyInjectorTest {
   @Test
   fun `should inject into dependencies`() = testAttribute("dependencies")
 
-  fun testAttribute(name: String) {
+  private fun testAttribute(name: String) {
     `when`(xmlAttribute.name)
         .thenReturn(name)
     `when`(xmlAttributeValue.parent)
         .thenReturn(xmlAttribute)
+    `when`(xmlAttribute.parent)
+        .thenReturn(xmlTag)
+
     `when`(xmlAttributeValue.containingFile)
         .thenReturn(psiFile)
     `when`(psiFile.name)
         .thenReturn(".content.xml")
     `when`(xmlAttributeValue.text)
         .thenReturn("test")
+
+    val mockClientLibAttribute = mock<XmlAttribute>()
+    `when`(mockClientLibAttribute.name).thenReturn("jcr:primaryType")
+    `when`(mockClientLibAttribute.value).thenReturn("cq:ClientLibraryFolder")
+
+    `when`(xmlTag.attributes)
+        .thenReturn(arrayOf(
+            mockClientLibAttribute
+        ))
 
     tested.getLanguagesToInject(registrar, xmlAttributeValue)
 

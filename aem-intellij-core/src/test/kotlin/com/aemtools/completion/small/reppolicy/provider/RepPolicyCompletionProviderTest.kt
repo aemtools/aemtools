@@ -42,6 +42,7 @@ class RepPolicyCompletionProviderTest : CompletionBaseLightTest(false) {
          rep:privileges="{Name}[$CARET]" />
     """)
     shouldContain(
+        "jcr:all",
         "jcr:versionManagement",
         "jcr:addChildNodes",
         "jcr:readAccessControl",
@@ -80,6 +81,7 @@ class RepPolicyCompletionProviderTest : CompletionBaseLightTest(false) {
     """)
 
     shouldContain(
+        "jcr:all",
         "jcr:versionManagement",
         "jcr:addChildNodes",
         "jcr:readAccessControl",

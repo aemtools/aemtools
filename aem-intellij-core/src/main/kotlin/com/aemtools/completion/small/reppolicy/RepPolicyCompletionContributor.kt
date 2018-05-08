@@ -127,6 +127,7 @@ class RepPolicyCompletionContributor : CompletionContributor() {init {
             ?.map { it.text }
 
         val result = listOf(
+            "jcr:all",
             "jcr:versionManagement",
             "jcr:addChildNodes",
             "jcr:readAccessControl",
