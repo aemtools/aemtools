@@ -43,10 +43,6 @@ allprojects {
 
     version = aemtoolsVersion
 
-    plugins {
-        id("io.gitlab.arturbosch.detekt").version("1.0.0.RC5-6")
-    }
-
     repositories {
         mavenCentral()
         mavenLocal()
@@ -75,9 +71,6 @@ apply {
 }
 
 subprojects {
-    plugins {
-        java
-    }
     apply {
         plugin("java")
         plugin("kotlin")
