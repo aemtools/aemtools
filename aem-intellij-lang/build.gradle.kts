@@ -51,7 +51,7 @@ java.sourceSets {
 }
 
 dependencies {
-    compile(project(":common"))
+    compile(project(":aem-intellij-common"))
 
     testCompile(project(":test-framework"))
 }

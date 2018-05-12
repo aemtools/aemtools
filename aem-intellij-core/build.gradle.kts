@@ -31,9 +31,9 @@ val gsonVersion: String by extra
 val apacheCommonsVersion: String by extra
 
 dependencies {
-    compile(project(":lang"))
-    compile(project(":common"))
-    compile(project(":inspection"))
+    compile(project(":aem-intellij-lang"))
+    compile(project(":aem-intellij-common"))
+    compile(project(":aem-intellij-inspection"))
     compile(project(":aem-intellij-integration"))
 
     compile("com.google.code.gson:gson:$gsonVersion")

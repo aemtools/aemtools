@@ -35,8 +35,8 @@ plugins {
 }
 
 dependencies {
-    compile(project(":common"))
-    compile(project(":lang"))
+    compile(project(":aem-intellij-common"))
+    compile(project(":aem-intellij-lang"))
 
     testCompile(project(":test-framework"))
 }

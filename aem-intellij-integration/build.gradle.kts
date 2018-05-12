@@ -28,7 +28,7 @@ apply {
 
 plugins {
     java
-    id("org.jetbrains.intellij") version "0.2.17"
+    id("org.jetbrains.intellij") version "0.3.0"
 }
 
 val contentPackageBuilderVersion: String by extra
@@ -40,7 +40,7 @@ dependencies {
     compile("io.wcm.tooling.commons:io.wcm.tooling.commons.content-package-builder:$contentPackageBuilderVersion")
     compile("io.wcm.tooling.commons:io.wcm.tooling.commons.crx-packmgr-helper:$crxPackmgrHelper")
 
-    compile(project(":common"))
+    compile(project(":aem-intellij-common"))
 
     testCompile(project(":test-framework"))
 }

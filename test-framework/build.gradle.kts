@@ -46,7 +46,7 @@ val junitJupiterEngineVersion: String by extra
 
 dependencies {
     compile(project(":aem-intellij-core"))
-    compile(project(":common"))
+    compile(project(":aem-intellij-common"))
 
     compile("junit:junit:$junitVersion")
     compile("org.jmockit:jmockit:$jmockitVersion")
