@@ -107,6 +107,9 @@
 
     <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
     <depends optional="true" config-file="inspections.xml">com.intellij.modules.lang</depends>
+    <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
+
+    <depends optional="true" config-file="expression-language.xml">com.intellij.modules.lang</depends>
 
     <idea-version since-build="131"/>
 
@@ -193,13 +196,12 @@
         <fileTypeFactory implementation="com.aemtools.lang.htl.file.HtlFileTypeFactory"/>
 
         <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>
-
         <fileBasedIndex implementation="com.aemtools.index.AemComponentDeclarationIndex"/>
         <fileBasedIndex implementation="com.aemtools.index.AemComponentClassicDialogIndex"/>
         <fileBasedIndex implementation="com.aemtools.index.AemComponentTouchUIDialogIndex"/>
-
         <fileBasedIndex implementation="com.aemtools.index.LocalizationIndex"/>
 
+        <backspaceHandlerDelegate implementation="com.aemtools.lang.htl.editor.HtlBackspaceHandler"/>
         <fileBasedIndex implementation="com.aemtools.index.ClientlibraryIndex"/>
 
         <extendWordSelectionHandler implementation="com.aemtools.ide.htl.HtlStringLiteralWordSelectioner"/>
@@ -223,7 +225,9 @@
 
         <completion.contributor language="Htl"
                                 implementationClass="com.aemtools.completion.htl.HtlElCompletionContributor"/>
-        <lang.braceMatcher language="Htl" implementationClass="com.aemtools.lang.htl.editor.HtlBraceMatcher"/>
+
+        <lang.braceMatcher language="Htl"
+                           implementationClass="com.aemtools.lang.htl.editor.HtlBraceMatcher"/>
 
         <lang.parserDefinition language="Htl"
                                implementationClass="com.aemtools.lang.htl.HtlParserDefinition"/>

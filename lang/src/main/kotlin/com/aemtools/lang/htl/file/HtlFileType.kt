@@ -15,11 +15,16 @@ import javax.swing.Icon
 /**
  * @author Dmytro Troynikov
  */
-object HtlFileType : LanguageFileType(HtlLanguage), TemplateLanguageFileType, FileTypeIdentifiableByVirtualFile {
+object HtlFileType
+  : LanguageFileType(HtlLanguage),
+    TemplateLanguageFileType,
+    FileTypeIdentifiableByVirtualFile {
 
   init {
     FileTypeEditorHighlighterProviders.INSTANCE.addExplicitExtension(this)
-    { project, _, virtualFile, colors -> HtlTemplateHighlighter(project, virtualFile, colors) }
+    { project, _, virtualFile, colors ->
+      HtlTemplateHighlighter(project, virtualFile, colors)
+    }
   }
 
   override fun isMyFileType(file: VirtualFile): Boolean {

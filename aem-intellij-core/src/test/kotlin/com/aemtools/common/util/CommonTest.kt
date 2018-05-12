@@ -18,7 +18,7 @@ class CommonTest {
   }
 
   @Test
-  fun `isHtlAttributeName should math declaration attribute by name + var name`() {
+  fun `isHtlAttributeName should match declaration attribute by name + var name`() {
     const.htl.DECLARATION_ATTRIBUTES.forEach {
       assertThat("$it.name".isHtlAttributeName())
           .isTrue()
@@ -34,7 +34,7 @@ class CommonTest {
   }
 
   @Test
-  fun `isHtlAttribute should not match single attribute with variable`() {
+  fun `isHtlAttributeName should not match single attribute with variable`() {
     const.htl.SINGLE_ATTRIBUTES.forEach {
       assertThat("$it.name".isHtlAttributeName())
           .isFalse()

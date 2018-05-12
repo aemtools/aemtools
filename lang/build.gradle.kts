@@ -95,6 +95,14 @@ task<GenerateLexer>("generateJpLexer") {
     purgeOldFiles = true
 }
 
+task<GenerateLexer>("generateElLexer") {
+    group = "grammar"
+    source = "src/main/flex/el.flex"
+    targetDir = "src/main/gen/com/aemtools/lang/el"
+    targetClass = "_ElLexer"
+    purgeOldFiles = true
+}
+
 task<GenerateParser>("generateHtlPsiAndParser") {
     group = "grammar"
     source = "src/main/bnf/Htl.bnf"
@@ -122,6 +130,15 @@ task<GenerateParser>("generateJpPsiAndParser") {
     purgeOldFiles = true
 }
 
+task<GenerateParser>("generateElPsiAndParser") {
+    group = "grammar"
+    source = "src/main/bnf/el.bnf"
+    targetRoot = "src/main/gen"
+    pathToParser = "/com/aemtools/lang/el/ElParser.java"
+    pathToPsiRoot = "/com/aemtools/lang/el/psi"
+    purgeOldFiles = true
+}
+
 task("generateGrammar") {
     group = "grammar"
     dependsOn.run {
@@ -133,6 +150,9 @@ task("generateGrammar") {
 
         add("generateJpLexer")
         add("generateJpPsiAndParser")
+
+        add("generateElLexer")
+        add("generateElPsiAndParser")
     }
 }
 
