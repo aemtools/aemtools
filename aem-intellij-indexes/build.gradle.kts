@@ -1,14 +1,20 @@
+import org.jetbrains.intellij.IntelliJPlugin
 import org.jetbrains.intellij.IntelliJPluginExtension
-import org.jetbrains.intellij.tasks.RunIdeTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.utils.identity
 
 buildscript {
     val kotlinVersion: String by extra
 
     repositories {
         mavenCentral()
+        jcenter()
+        mavenLocal()
+        maven {
+            setUrl("http://dl.bintray.com/jetbrains/intellij-plugin-service")
+        }
     }
-    
+
     dependencies {
         classpath(kotlin("gradle-plugin", kotlinVersion))
     }
@@ -17,7 +23,7 @@ buildscript {
 apply {
     plugin("java")
     plugin("kotlin")
-    plugin("org.junit.platform.gradle.plugin")
+    plugin("org.jetbrains.intellij")
 }
 
 plugins {
@@ -25,34 +31,18 @@ plugins {
     id("org.jetbrains.intellij") version "0.3.0"
 }
 
-val kotlinVersion: String by extra
-val gsonVersion: String by extra
-val apacheCommonsVersion: String by extra
-
 dependencies {
     compile(project(":lang"))
     compile(project(":common"))
-    compile(project(":aem-intellij-indexes"))
-    compile(project(":inspection"))
-
-    compile("com.google.code.gson:gson:$gsonVersion")
-    compile("org.apache.commons:commons-lang3:$apacheCommonsVersion")
-
     testCompile(project(":test-framework"))
 }
 
 val ideaVersion: String by extra
 
 configure<IntelliJPluginExtension> {
-    pluginName = "aemtools"
     version = ideaVersion
-    downloadSources = true
-    updateSinceUntilBuild = false
+
     setPlugins(
             "IntelliLang"
     )
-}
-
-tasks.withType<RunIdeTask> {
-    jvmArgs.add("-Didea.ProcessCanceledException=disabled")
 }
