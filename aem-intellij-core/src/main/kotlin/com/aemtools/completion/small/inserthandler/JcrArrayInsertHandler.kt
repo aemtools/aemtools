@@ -7,3 +7,6 @@ import com.aemtools.completion.html.inserthandler.HtlTextInsertHandler
  */
 class JcrArrayInsertHandler
   : HtlTextInsertHandler("=\"[]\"", offset = 3)
+
+class JcrNameArrayInsertHandler
+  : HtlTextInsertHandler("=\"{Name}[]\"", offset = 9)

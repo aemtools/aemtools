@@ -1,0 +1,7 @@
+JpFile:long.in
+  JpTypeImpl(TYPE)
+    PsiElement({)('{')
+    PsiElement(Long)('Long')
+    PsiElement(})('}')
+  JpSingleImpl(SINGLE)
+    PsiElement(VALUE_TOKEN)('long')

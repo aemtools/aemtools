@@ -3,6 +3,7 @@ package com.aemtools.lang.jcrproperty.highlight
 import com.aemtools.lang.jcrproperty.colorscheme.JpColors
 import com.aemtools.lang.jcrproperty.psi.JpTypes.BINARY
 import com.aemtools.lang.jcrproperty.psi.JpTypes.BOOLEAN
+import com.aemtools.lang.jcrproperty.psi.JpTypes.COMMA
 import com.aemtools.lang.jcrproperty.psi.JpTypes.DATE
 import com.aemtools.lang.jcrproperty.psi.JpTypes.DECIMAL
 import com.aemtools.lang.jcrproperty.psi.JpTypes.DOUBLE
@@ -15,6 +16,7 @@ import com.aemtools.lang.jcrproperty.psi.JpTypes.RBRACE
 import com.aemtools.lang.jcrproperty.psi.JpTypes.RBRACKET
 import com.aemtools.lang.jcrproperty.psi.JpTypes.REFERENCE
 import com.aemtools.lang.jcrproperty.psi.JpTypes.STRING
+import com.aemtools.lang.jcrproperty.psi.JpTypes.TYPE
 import com.aemtools.lang.jcrproperty.psi.JpTypes.URI
 import com.aemtools.lang.jcrproperty.psi.JpTypes.WEAK_REFERENCE
 import com.intellij.lexer.Lexer
@@ -38,6 +40,8 @@ class JpHighlighter : SyntaxHighlighterBase() {
 
     LBRACKET,
     RBRACKET -> JpColors.BRACES
+
+    COMMA -> JpColors.TYPE
 
     BINARY, BOOLEAN,
     DATE, DECIMAL,

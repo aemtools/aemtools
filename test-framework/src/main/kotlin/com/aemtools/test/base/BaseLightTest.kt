@@ -13,7 +13,7 @@ import java.io.File
 /**
  * @author Dmytro Troynikov
  */
-abstract class BaseLightTest(val withAemUberJar: Boolean = false)
+abstract class BaseLightTest(private val withAemUberJar: Boolean = false)
   : LightCodeInsightFixtureTestCase(),
     UberJarFixtureMixin {
 
@@ -48,8 +48,8 @@ abstract class BaseLightTest(val withAemUberJar: Boolean = false)
   }
 
   companion object {
-    val DOLLAR: String = "$"
-    val CARET: String = CARET_MARKER
+    const val DOLLAR: String = "$"
+    const val CARET: String = CARET_MARKER
   }
 
 }

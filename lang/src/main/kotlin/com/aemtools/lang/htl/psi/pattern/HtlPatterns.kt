@@ -10,7 +10,7 @@ import com.aemtools.common.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.common.constant.const.htl.DATA_SLY_USE
 import com.aemtools.common.constant.const.htl.HTL_ATTRIBUTES
-import com.aemtools.lang.htl.psi.HtlArrayExpression
+import com.aemtools.lang.htl.psi.HtlArrayLiteral
 import com.aemtools.lang.htl.psi.HtlExpression
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.HtlStringLiteral
@@ -167,8 +167,9 @@ object HtlPatterns {
   val categoriesOptionAssignmentViaArray: ElementPattern<PsiElement> =
       StandardPatterns.and(
           categoriesOptionAssignment,
-          psiElement(HtlStringLiteral::class.java)
-              .inside(psiElement(HtlArrayExpression::class.java))
+          psiElement()
+              .inside(HtlStringLiteral::class.java)
+              .inside(psiElement(HtlArrayLiteral::class.java))
       )
 
   /**

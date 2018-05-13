@@ -125,6 +125,23 @@
                 language="Cd"
                 implementationClass="com.aemtools.completion.clientlib.CdCompletionContributor"/>
 
+        <lang.parserDefinition
+                language="JcrProperty"
+                implementationClass="com.aemtools.lang.jcrproperty.JcrPropertyParserDefinition"/>
+
+        <lang.syntaxHighlighterFactory
+                language="JcrProperty"
+                implementationClass="com.aemtools.lang.jcrproperty.highlight.JpHighlighterFactory"/>
+
+        <completion.contributor
+            language="JcrProperty"
+            implementationClass="com.aemtools.completion.small.clientlibraryfolder.JcrClientLibraryFolderCompletionContributor"/>
+
+        <multiHostInjector implementation="com.aemtools.lang.jcrproperty.JcrPropertyInjector"/>
+
+        <lang.braceMatcher language="JcrProperty"
+                           implementationClass="com.aemtools.lang.jcrproperty.editor.JpBraceMatcher"/>
+
         <lang.substitutor
                 language="TEXT"
                 implementationClass="com.aemtools.lang.clientlib.CdLanguageSubstitutor"/>
@@ -153,12 +170,17 @@
 
         <!-- _cq_editConfig.xml completion -->
         <completion.contributor language="XML"
-                                implementationClass="com.aemtools.completion.editconfig.EditConfigCompletionContributor"/>
+                                implementationClass="com.aemtools.completion.small.editconfig.EditConfigCompletionContributor"/>
+
+        <completion.contributor language="JcrProperty"
+                                implementationClass="com.aemtools.completion.small.editconfig.EditConfigCompletionContributor"/>
 
         <!-- _rep_policy.xml completion -->
         <completion.contributor language="XML"
-                                implementationClass="com.aemtools.completion.reppolicy.RepPolicyCompletionContributor"/>
+                                implementationClass="com.aemtools.completion.small.reppolicy.RepPolicyCompletionContributor"/>
 
+        <completion.contributor language="JcrProperty"
+                                implementationClass="com.aemtools.completion.small.reppolicy.RepPolicyCompletionContributor"/>
         <!-- Htl -->
         <iconProvider implementation="com.aemtools.lang.htl.file.HtlFileIconProvider"/>
 
@@ -177,6 +199,8 @@
         <fileBasedIndex implementation="com.aemtools.index.AemComponentTouchUIDialogIndex"/>
 
         <fileBasedIndex implementation="com.aemtools.index.LocalizationIndex"/>
+
+        <fileBasedIndex implementation="com.aemtools.index.ClientlibraryIndex"/>
 
         <extendWordSelectionHandler implementation="com.aemtools.ide.htl.HtlStringLiteralWordSelectioner"/>
 

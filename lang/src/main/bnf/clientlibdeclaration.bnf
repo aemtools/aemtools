@@ -1,26 +1,26 @@
 {
-    parserClass="com.aemtools.lang.clientlib.ClientlibDeclarationParser"
-    psiPackage="com.aemtools.lang.clientlib.psi"
+  parserClass="com.aemtools.lang.clientlib.ClientlibDeclarationParser"
+  psiPackage="com.aemtools.lang.clientlib.psi"
 
-    extends="com.aemtools.lang.clientlib.psi.ClientlibPsiBaseElement"
+  extends="com.aemtools.lang.clientlib.psi.ClientlibPsiBaseElement"
 
-    psiClassPrefix="Cd"
-    psiPackage="com.aemtools.lang.clientlib.psi"
+  psiClassPrefix="Cd"
 
-    elementTypeHolderClass="com.aemtools.lang.clientlib.psi.CdTypes"
-    elementTypeClass="com.aemtools.lang.clientlib.psi.CdElement"
-    tokenTypeClass="com.aemtools.lang.clientlib.psi.CdToken"
+  elementTypeHolderClass="com.aemtools.lang.clientlib.psi.CdTypes"
 
-    parserImports="static com.aemtools.lang.clientlib.psi.CdTypes.*"
+  elementTypeClass="com.aemtools.lang.clientlib.psi.CdElement"
+  tokenTypeClass="com.aemtools.lang.clientlib.psi.CdToken"
 
-    tokens = [
-        DOT              = '.'
-        DD               = '..'
-        SEPARATOR        = 'regexp:\\|/'
-        PREFIX_TOKEN     = '#base='
-        WORD             = 'regexp:[\w\d_.-]+'
-        COMMENT_TOKEN    = 'regexp:(#\s.*)|(##.*)'
-    ]
+  parserImports="static com.aemtools.lang.clientlib.psi.CdTypes.*"
+
+  tokens = [
+    DOT              = '.'
+    DD               = '..'
+    SEPARATOR        = 'regexp:\\|/'
+    PREFIX_TOKEN     = '#base='
+    WORD             = 'regexp:[\w\d_.-]+'
+    COMMENT_TOKEN    = 'regexp:(#\s.*)|(##.*)'
+  ]
 }
 
 root ::= ( include | base_path | comment )*

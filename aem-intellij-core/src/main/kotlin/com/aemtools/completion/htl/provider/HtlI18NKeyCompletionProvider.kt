@@ -12,7 +12,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlI18NKeyCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(parameters: CompletionParameters,
@@ -21,10 +21,10 @@ object HtlI18NKeyCompletionProvider : CompletionProvider<CompletionParameters>()
     val position = parameters.position
 
     if (localizationMainString(position)) {
-      val localizations = HtlIndexFacade.getAllLocalizationModels(position.project)
+      val localizations = HtlIndexFacade.getAllLocalizationKeys(position.project)
 
       result.addAllElements(localizations.map {
-        LookupElementBuilder.create(it.key)
+        LookupElementBuilder.create(it)
             .withTypeText("i18n", true)
       })
 

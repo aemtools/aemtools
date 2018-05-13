@@ -16,9 +16,7 @@ import com.intellij.util.xmlb.annotations.Tag
  */
 @State(
     name = "HtlRootsConfiguration",
-    storages = arrayOf(
-        Storage(WORKSPACE_FILE)
-    )
+    storages = [(Storage(WORKSPACE_FILE))]
 )
 class HtlRootDirectories : PersistentStateComponent<HtlRootDirectories> {
 

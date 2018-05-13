@@ -46,7 +46,7 @@ class JavaInspectionService : IJavaInspectionService {
     }.flatMap { psiClass ->
       psiClass.allFields.mapNotNull { field ->
         val fqn = psiClass.qualifiedName ?: return@mapNotNull null
-        val fieldName = field.name ?: return@mapNotNull null
+        val fieldName = field.name
         val fieldValue = field.computeConstantValue() as? String ?: return@mapNotNull null
 
         ConstantDescriptor(

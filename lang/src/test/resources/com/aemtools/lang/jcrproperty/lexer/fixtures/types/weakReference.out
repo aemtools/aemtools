@@ -1,0 +1,4 @@
+{ ('{')
+WeakReference ('WeakReference')
+} ('}')
+VALUE_TOKEN ('weak reference')

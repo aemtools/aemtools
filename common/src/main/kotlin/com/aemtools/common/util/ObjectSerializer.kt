@@ -57,13 +57,14 @@ object ObjectSerializer {
    * @param byteArray the array to deserialize
    * @return deserialized object, _null_ in case of error.
    */
+  @Suppress("UNCHECKED_CAST")
   fun <T : Serializable> deserialize(byteArray: ByteArray): T? {
     if (byteArray.isEmpty()) {
       return null
     }
 
-    var bais = ByteArrayInputStream(byteArray)
-    var ois = ObjectInputStream(bais)
+    val bais = ByteArrayInputStream(byteArray)
+    val ois = ObjectInputStream(bais)
 
     return ois.readObject() as T
   }

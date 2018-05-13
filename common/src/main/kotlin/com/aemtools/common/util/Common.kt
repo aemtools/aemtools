@@ -4,6 +4,7 @@ import com.aemtools.common.constant.const.htl.DECLARATION_ATTRIBUTES
 import com.aemtools.common.constant.const.htl.SINGLE_ATTRIBUTES
 import com.intellij.codeInsight.completion.PrioritizedLookupElement
 import com.intellij.codeInsight.lookup.LookupElement
+import com.intellij.lang.injection.InjectedLanguageManager
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.editor.Editor
@@ -128,41 +129,6 @@ fun String.isHtlAttributeName(): Boolean = when (this.substringBefore(".")) {
 }
 
 /**
- * Add priority to current [LookupElement].
- *
- * @param priority the priority
- *
- * @receiver [LookupElement]
- * @return [PrioritizedLookupElement] with given priority
- */
-fun LookupElement.withPriority(priority: Double): LookupElement =
-    PrioritizedLookupElement.withPriority(this, priority)
-
-/**
- * Get priority of current lookup element if available.
- *
- * @receiver [LookupElement]
- * @see [PrioritizedLookupElement]
- * @return priority of current lookup element,
- * _null_ if current element is not instance of [PrioritizedLookupElement]
- */
-fun LookupElement.priority(): Double? = if (this is PrioritizedLookupElement<*>) {
-  this.priority
-} else {
-  null
-}
-
-/**
- * Add proximity to current [LookupElement].
- *
- * @param proximity the proximity
- * @receiver [LookupElement]
- * @return [PrioritizedLookupElement] with given proximity
- */
-fun LookupElement.withProximity(proximity: Int) =
-    PrioritizedLookupElement.withExplicitProximity(this, proximity)
-
-/**
  * Convert current [String] to [StringBuilder].
  *
  * @receiver [String]
@@ -216,6 +182,15 @@ fun Project.psiManager(): PsiManager = PsiManager.getInstance(this)
  * @return instance of psi document manager
  */
 fun Project.psiDocumentManager(): PsiDocumentManager = PsiDocumentManager.getInstance(this)
+
+/**
+ * Get [InjectedLanguageManager] associated with current project.
+ *
+ * @receiver [Project]
+ * @return instance of injected language manager
+ */
+fun Project.injectedLanguageManager(): InjectedLanguageManager =
+    InjectedLanguageManager.getInstance(this)
 
 /**
  * Get [GlobalSearchScope] associated with current project.

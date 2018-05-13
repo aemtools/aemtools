@@ -8,9 +8,10 @@ import com.intellij.codeInsight.completion.CompletionType.BASIC
 /**
  * @author Dmytro Primshyts
  */
-class ClientLibraryFolderCompletionContributor : CompletionContributor( ) {init{
+class ClientLibraryFolderCompletionContributor : CompletionContributor() {init {
 
   extend(BASIC, JcrPatterns.attributeInClientLibraryFolder,
       ClientLibraryFolderCompletionProvider)
 
-}}
+}
+}

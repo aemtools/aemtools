@@ -1,0 +1,3 @@
+JpFile:value.in
+  JpSingleImpl(SINGLE)
+    PsiElement(VALUE_TOKEN)('value')
