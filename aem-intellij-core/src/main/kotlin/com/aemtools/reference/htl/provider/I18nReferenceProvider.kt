@@ -83,8 +83,8 @@ object I18nReferenceProvider : PsiReferenceProvider() {
 
   }
 
-  class I18nResolveResult(val xmlTag: XmlTag,
-                          val localizationModel: LocalizationModel) : PsiElementResolveResult(xmlTag) {
+  private class I18nResolveResult(private val xmlTag: XmlTag,
+                          private val localizationModel: LocalizationModel) : PsiElementResolveResult(xmlTag) {
     override fun getElement(): PsiElement {
       return I18nNavigationWrapper(xmlTag, localizationModel)
     }
@@ -92,7 +92,7 @@ object I18nReferenceProvider : PsiReferenceProvider() {
     override fun isValidResult(): Boolean = true
   }
 
-  class I18nNavigationWrapper(val xmlTag: XmlTag,
+  private class I18nNavigationWrapper(val xmlTag: XmlTag,
                               val localizationModel: LocalizationModel) : NavigationItem,
       XmlTag by xmlTag {
     override fun navigate(requestFocus: Boolean) {

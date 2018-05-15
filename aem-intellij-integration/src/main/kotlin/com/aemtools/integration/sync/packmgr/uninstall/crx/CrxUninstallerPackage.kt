@@ -12,6 +12,14 @@ import org.jdom2.xpath.XPathFactory
  */
 class CrxUninstallerPackage(private val url: String) {
 
+  /**
+   * Uninstall CRX package.
+   *
+   * @param packageFileName the name of the package
+   * @param pkgmgr the package manager helper
+   * @param httpClient the http client
+   * @param log logger
+   */
   fun uninstallPackage(packageFileName: String,
                        pkgmgr: PackageManagerHelper,
                        httpClient: CloseableHttpClient?,

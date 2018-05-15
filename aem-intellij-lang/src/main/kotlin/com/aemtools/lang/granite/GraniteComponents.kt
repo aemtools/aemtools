@@ -11,11 +11,17 @@ data class GraniteComponent(
     val attributes: List<GraniteAttribute> = emptyList()
 )
 
+/**
+ * Represents single granite attribute.
+ */
 data class GraniteAttribute(
     val name: String,
     val description: String = ""
 )
 
+/**
+ * Represents granite field.
+ */
 data class GraniteField(
     val name: String,
     val type: String,
@@ -23,6 +29,9 @@ data class GraniteField(
     val enumeration: List<String> = emptyList()
 )
 
+/**
+ * List of granite attibutes.
+ */
 object GraniteAttributes {
   val commonAttrs = GraniteAttribute(
       "granite:commonAtrs"
@@ -37,6 +46,9 @@ object GraniteAttributes {
   )
 }
 
+/**
+ * List of standard granite components.
+ */
 object GraniteComponents {
 
   val Accordion = GraniteComponent(

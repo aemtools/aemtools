@@ -61,6 +61,9 @@ data class OSGiConfiguration(
 
 }
 
+/**
+ * OSGi configuration model used by indexing infrastructure.
+ */
 data class OSGiConfigurationIndexModel(
     val path: String,
     val parameters: Map<String, String?>
