@@ -1,8 +1,8 @@
 package com.aemtools.index.dataexternalizer
 
-import com.aemtools.index.model.OSGiConfiguration
+import com.aemtools.index.model.OSGiConfigurationIndexModel
 
 /**
  * @author Dmytro_Troynikov
  */
-object OSGiConfigurationExternalizer : BaseExternalizer<OSGiConfiguration>()
+object OSGiConfigurationExternalizer : BaseExternalizer<OSGiConfigurationIndexModel>()

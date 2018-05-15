@@ -3,9 +3,9 @@
     <name>AEM Tools</name>
     <version>@version@</version>
     <category>Framework integration</category>
-    <vendor email="dmytrotroynikov@gmail.com"
+    <vendor email="dprimsyts@gmail.com"
             url="https://github.com/aemtools/aemtools">
-        Dmytro Troynikov
+        Dmytro Primshyts
     </vendor>
 
     <description><![CDATA[
@@ -107,9 +107,10 @@
 
     <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
     <depends optional="true" config-file="inspections.xml">com.intellij.modules.lang</depends>
-    <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
 
     <depends optional="true" config-file="expression-language.xml">com.intellij.modules.lang</depends>
+
+    <depends optional="true" config-file="jcr-property-language.xml">com.intellij.modules.lang</depends>
 
     <idea-version since-build="131"/>
 
@@ -118,45 +119,6 @@
         <completion.contributor
                 language="XML"
                 implementationClass="com.aemtools.completion.small.clientlibraryfolder.ClientLibraryFolderCompletionContributor"/>
-
-        <fileTypeFactory
-                implementation="com.aemtools.lang.clientlib.file.CdFileTypeFactory"/>
-        <lang.parserDefinition
-                language="Cd"
-                implementationClass="com.aemtools.lang.clientlib.CdParserDefinition"/>
-        <completion.contributor
-                language="Cd"
-                implementationClass="com.aemtools.completion.clientlib.CdCompletionContributor"/>
-
-        <lang.parserDefinition
-                language="JcrProperty"
-                implementationClass="com.aemtools.lang.jcrproperty.JcrPropertyParserDefinition"/>
-
-        <lang.syntaxHighlighterFactory
-                language="JcrProperty"
-                implementationClass="com.aemtools.lang.jcrproperty.highlight.JpHighlighterFactory"/>
-
-        <completion.contributor
-            language="JcrProperty"
-            implementationClass="com.aemtools.completion.small.clientlibraryfolder.JcrClientLibraryFolderCompletionContributor"/>
-
-        <multiHostInjector implementation="com.aemtools.lang.jcrproperty.JcrPropertyInjector"/>
-
-        <lang.braceMatcher language="JcrProperty"
-                           implementationClass="com.aemtools.lang.jcrproperty.editor.JpBraceMatcher"/>
-
-        <lang.substitutor
-                language="TEXT"
-                implementationClass="com.aemtools.lang.clientlib.CdLanguageSubstitutor"/>
-        <psi.referenceContributor
-                language="Cd"
-                implementation="com.aemtools.reference.clientlib.CdReferenceContributor"/>
-        <lang.commenter
-                language="Cd"
-                implementationClass="com.aemtools.lang.clientlib.editor.CdCommenter"/>
-        <lang.syntaxHighlighterFactory
-                language="Cd"
-                implementationClass="com.aemtools.lang.clientlib.highlight.CdHighlighterFactory"/>
 
         <lang.documentationProvider language="HTML" order="first"
                                     implementationClass="com.aemtools.documentation.html.HtlAttributesDocumentationProvider"/>
@@ -184,6 +146,7 @@
 
         <completion.contributor language="JcrProperty"
                                 implementationClass="com.aemtools.completion.small.reppolicy.RepPolicyCompletionContributor"/>
+
         <!-- Htl -->
         <iconProvider implementation="com.aemtools.lang.htl.file.HtlFileIconProvider"/>
 

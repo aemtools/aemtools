@@ -6,9 +6,10 @@ import java.io.Serializable
 /**
  * @author Dmytro_Troynikov
  */
-data class OSGiConfiguration(val path: String,
-                             val parameters: Map<String, String?>,
-                             var xmlFile: XmlFile? = null) : Serializable {
+data class OSGiConfiguration(
+    val path: String,
+    val parameters: Map<String, String?>,
+    var xmlFile: XmlFile? = null) : Serializable {
 
   /**
    * Full qualified name of associated OSGi Service or Service factory.
@@ -51,13 +52,19 @@ data class OSGiConfiguration(val path: String,
           .split(".")
           .filterNot { it == "config" }
 
-      return if (result == null || result.isEmpty()) {
+      return if (result.isEmpty()) {
         listOf("default")
       } else {
         result
       }
     }
 
+}
+
+data class OSGiConfigurationIndexModel(
+    val path: String,
+    val parameters: Map<String, String?>
+) : Serializable {
   companion object {
     @JvmStatic
     val serialVersionUID: Long = 1L
