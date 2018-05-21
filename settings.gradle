@@ -4,6 +4,7 @@ rootProject.buildFileName="build.gradle.kts"
 include 'aem-intellij-core'
 include 'aem-intellij-lang'
 include 'aem-intellij-common'
+include 'aem-intellij-index'
 include 'aem-intellij-integration'
 include 'aem-intellij-inspection'
 include 'test-framework'

@@ -18,7 +18,7 @@ class ClientlibraryIndex : XmlIndex<ClientlibraryModel>() {
     val CLIENTLIBRARY_ID: ID<String, ClientlibraryModel> = ID.create<String, ClientlibraryModel>("ClientlibraryIndex")
   }
 
-  override fun getValueExternalizer(): DataExternalizer<ClientlibraryModel> = ClientlibraryExternalizer
+  override fun getValueExternalizer(): DataExternalizer<ClientlibraryModel> = ClientlibraryExternalizer()
 
   override fun getName(): ID<String, ClientlibraryModel> = CLIENTLIBRARY_ID
 
