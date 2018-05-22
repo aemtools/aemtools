@@ -32,7 +32,6 @@ val apacheCommonsVersion: String by extra
 dependencies {
     compile(project(":lang"))
     compile(project(":common"))
-    compile(project(":aem-intellij-indexes"))
     compile(project(":inspection"))
 
     compile("com.google.code.gson:gson:$gsonVersion")

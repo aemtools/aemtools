@@ -2,7 +2,7 @@ package com.aemtools.completion.small.clientlibraryfolder.provider
 
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.common.util.findParentByType
-import com.aemtools.index.ClientLibraryIndexFacade.getAllClientLibraryModels
+import com.aemtools.index.HtlIndexFacade.getAllClientLibraryModels
 import com.aemtools.lang.jcrproperty.psi.JpArray
 import com.aemtools.lang.jcrproperty.psi.JpArrayValue
 import com.intellij.codeInsight.completion.CompletionParameters

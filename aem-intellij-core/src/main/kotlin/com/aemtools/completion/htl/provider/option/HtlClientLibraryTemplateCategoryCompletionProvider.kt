@@ -5,7 +5,7 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeD
 import com.aemtools.common.completion.withPriority
 import com.aemtools.common.constant.const
 import com.aemtools.common.util.findParentByType
-import com.aemtools.index.ClientLibraryIndexFacade
+import com.aemtools.index.HtlIndexFacade
 import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
@@ -41,7 +41,7 @@ object HtlClientLibraryTemplateCategoryCompletionProvider : CompletionProvider<C
       return
     }
 
-    val models = ClientLibraryIndexFacade.getAllClientLibraryModels(currentPosition.project)
+    val models = HtlIndexFacade.getAllClientLibraryModels(currentPosition.project)
 
     models.flatMap { clientLibraryModel ->
       clientLibraryModel.categories.map { category ->

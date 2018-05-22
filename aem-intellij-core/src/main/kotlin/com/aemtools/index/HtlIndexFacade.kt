@@ -3,6 +3,7 @@ package com.aemtools.index
 import com.aemtools.common.util.allFromFbi
 import com.aemtools.common.util.toPsiFile
 import com.aemtools.index.LocalizationIndex.Companion.LOCALIZATION_INDEX
+import com.aemtools.index.model.ClientlibraryModel
 import com.aemtools.index.model.LocalizationModel
 import com.aemtools.index.model.TemplateDefinition
 import com.intellij.openapi.project.Project
@@ -134,6 +135,15 @@ object HtlIndexFacade {
         fbi.getAllKeys(LOCALIZATION_INDEX, project).filter { it.endsWith(key) }
             .flatMap { fbi.getValues(LOCALIZATION_INDEX, it, GlobalSearchScope.projectScope(project)) }
       }
+
+  /**
+   * Collect all [ClientlibraryModel] objects available in project.
+   *
+   * @param project the project
+   * @return list of [ClientlibraryModel] objects
+   */
+  fun getAllClientLibraryModels(project: Project): List<ClientlibraryModel> =
+      allFromFbi(ClientlibraryIndex.CLIENTLIBRARY_ID, project)
 
   /**
    * Normalize file name relative to given psi file.
