@@ -1,0 +1,1 @@
+${granite:encodeURIComponent('uri')}

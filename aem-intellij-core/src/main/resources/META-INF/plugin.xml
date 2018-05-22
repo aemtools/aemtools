@@ -3,9 +3,9 @@
     <name>AEM Tools</name>
     <version>@version@</version>
     <category>Framework integration</category>
-    <vendor email="dmytrotroynikov@gmail.com"
+    <vendor email="dprimsyts@gmail.com"
             url="https://github.com/aemtools/aemtools">
-        Dmytro Troynikov
+        Dmytro Primshyts
     </vendor>
 
     <description><![CDATA[
@@ -108,6 +108,10 @@
     <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
     <depends optional="true" config-file="inspections.xml">com.intellij.modules.lang</depends>
 
+    <depends optional="true" config-file="expression-language.xml">com.intellij.modules.lang</depends>
+
+    <depends optional="true" config-file="jcr-property-language.xml">com.intellij.modules.lang</depends>
+
     <idea-version since-build="131"/>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -115,45 +119,6 @@
         <completion.contributor
                 language="XML"
                 implementationClass="com.aemtools.completion.small.clientlibraryfolder.ClientLibraryFolderCompletionContributor"/>
-
-        <fileTypeFactory
-                implementation="com.aemtools.lang.clientlib.file.CdFileTypeFactory"/>
-        <lang.parserDefinition
-                language="Cd"
-                implementationClass="com.aemtools.lang.clientlib.CdParserDefinition"/>
-        <completion.contributor
-                language="Cd"
-                implementationClass="com.aemtools.completion.clientlib.CdCompletionContributor"/>
-
-        <lang.parserDefinition
-                language="JcrProperty"
-                implementationClass="com.aemtools.lang.jcrproperty.JcrPropertyParserDefinition"/>
-
-        <lang.syntaxHighlighterFactory
-                language="JcrProperty"
-                implementationClass="com.aemtools.lang.jcrproperty.highlight.JpHighlighterFactory"/>
-
-        <completion.contributor
-            language="JcrProperty"
-            implementationClass="com.aemtools.completion.small.clientlibraryfolder.JcrClientLibraryFolderCompletionContributor"/>
-
-        <multiHostInjector implementation="com.aemtools.lang.jcrproperty.JcrPropertyInjector"/>
-
-        <lang.braceMatcher language="JcrProperty"
-                           implementationClass="com.aemtools.lang.jcrproperty.editor.JpBraceMatcher"/>
-
-        <lang.substitutor
-                language="TEXT"
-                implementationClass="com.aemtools.lang.clientlib.CdLanguageSubstitutor"/>
-        <psi.referenceContributor
-                language="Cd"
-                implementation="com.aemtools.reference.clientlib.CdReferenceContributor"/>
-        <lang.commenter
-                language="Cd"
-                implementationClass="com.aemtools.lang.clientlib.editor.CdCommenter"/>
-        <lang.syntaxHighlighterFactory
-                language="Cd"
-                implementationClass="com.aemtools.lang.clientlib.highlight.CdHighlighterFactory"/>
 
         <lang.documentationProvider language="HTML" order="first"
                                     implementationClass="com.aemtools.documentation.html.HtlAttributesDocumentationProvider"/>
@@ -181,6 +146,7 @@
 
         <completion.contributor language="JcrProperty"
                                 implementationClass="com.aemtools.completion.small.reppolicy.RepPolicyCompletionContributor"/>
+
         <!-- Htl -->
         <iconProvider implementation="com.aemtools.lang.htl.file.HtlFileIconProvider"/>
 
@@ -193,13 +159,12 @@
         <fileTypeFactory implementation="com.aemtools.lang.htl.file.HtlFileTypeFactory"/>
 
         <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>
-
         <fileBasedIndex implementation="com.aemtools.index.AemComponentDeclarationIndex"/>
         <fileBasedIndex implementation="com.aemtools.index.AemComponentClassicDialogIndex"/>
         <fileBasedIndex implementation="com.aemtools.index.AemComponentTouchUIDialogIndex"/>
-
         <fileBasedIndex implementation="com.aemtools.index.LocalizationIndex"/>
 
+        <backspaceHandlerDelegate implementation="com.aemtools.lang.htl.editor.HtlBackspaceHandler"/>
         <fileBasedIndex implementation="com.aemtools.index.ClientlibraryIndex"/>
 
         <extendWordSelectionHandler implementation="com.aemtools.ide.htl.HtlStringLiteralWordSelectioner"/>
@@ -223,7 +188,9 @@
 
         <completion.contributor language="Htl"
                                 implementationClass="com.aemtools.completion.htl.HtlElCompletionContributor"/>
-        <lang.braceMatcher language="Htl" implementationClass="com.aemtools.lang.htl.editor.HtlBraceMatcher"/>
+
+        <lang.braceMatcher language="Htl"
+                           implementationClass="com.aemtools.lang.htl.editor.HtlBraceMatcher"/>
 
         <lang.parserDefinition language="Htl"
                                implementationClass="com.aemtools.lang.htl.HtlParserDefinition"/>
@@ -285,6 +252,10 @@
                 serviceInterface="com.aemtools.inspection.service.IInspectionService"
                 serviceImplementation="com.aemtools.inspection.service.InspectionService"/>
 
+        <projectService
+                serviceInterface="com.aemtools.integration.sync.settings.AemToolsProjectConfiguration"
+                serviceImplementation="com.aemtools.integration.sync.settings.AemToolsProjectConfiguration"/>
+
         <additionalTextAttributes
                 scheme="Default"
                 file="com/aemtools/ide/colorscheme/HtlDefault.xml"/>
@@ -295,6 +266,11 @@
 
         <postStartupActivity implementation="com.aemtools.init.AemIntellijStartupActivity"/>
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
+
+        <projectConfigurable groupId="tools"
+                             displayName="AEM Tools"
+                             id="preference.AEMTools"
+                             instance="com.aemtools.integration.sync.settings.SyncSettings"/>
     </extensions>
 
     <application-components>
@@ -310,6 +286,22 @@
                 description="HTML files under this directory will be considered as HTL files">
             <add-to-group group-id="MarkRootGroup" anchor="last"/>
         </action>
+        <group id="AEMToolsGroup"
+               class="com.aemtools.integration.sync.action.AemToolsActionGroup"
+               text="AEM Tools"
+               popup="true">
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorPopupMenu"/>
+            <action id="ExportFileToInstance"
+                    class="com.aemtools.integration.sync.action.ExportFileToInstance"
+                    text="Export file"
+                    description="Export file to AEM instance">
+            </action>
+            <action id="ImportFileFromInstance"
+                    class="com.aemtools.integration.sync.action.ImportFileFromInstance"
+                    text="Import file"
+                    description="Import file from AEM instance">
+            </action>
+        </group>
     </actions>
 
 </idea-plugin>
