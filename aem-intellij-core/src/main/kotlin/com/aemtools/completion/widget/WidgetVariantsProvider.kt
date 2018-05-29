@@ -78,7 +78,8 @@ object WidgetVariantsProvider {
     return listOf()
   }
 
-  private fun widgetXtypeUnknown(widgetDefinition: PsiWidgetDefinition?): Boolean = widgetDefinition?.getFieldValue(const.XTYPE) == null
+  private fun widgetXtypeUnknown(widgetDefinition: PsiWidgetDefinition?): Boolean
+      = widgetDefinition?.getFieldValue(const.XTYPE) == null
 
   private fun genericForName(): Collection<LookupElement> {
     return DEFAULT_ATTRIBUTES.map { it ->
