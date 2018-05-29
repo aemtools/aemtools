@@ -1,12 +1,12 @@
 package com.aemtools.completion.html.provider
 
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.util.normalizeToJcrRoot
 import com.aemtools.common.util.relativeTo
 import com.aemtools.index.HtlIndexFacade
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.util.ProcessingContext
 
 /**
@@ -27,7 +27,7 @@ object HtmlDataSlyIncludeCompletionProvider : CompletionProvider<CompletionParam
         .normalizeToJcrRoot()
 
     val variants = files.map {
-      LookupElementBuilder.create(
+      lookupElement(
           it.virtualFile.path.normalizeToJcrRoot()
               .relativeTo(dirName))
           .withTypeText(it.fileType.name)

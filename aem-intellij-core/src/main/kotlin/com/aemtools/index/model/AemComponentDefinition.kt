@@ -1,16 +1,16 @@
 package com.aemtools.index.model
 
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.constant.const.JCR_DESCRIPTION
 import com.aemtools.common.constant.const.JCR_TITLE
 import com.aemtools.common.constant.const.SLING_RESOURCE_SUPER_TYPE
 import com.aemtools.common.constant.const.aem_component_declaration.COMPONENT_GROUP
 import com.aemtools.common.constant.const.aem_component_declaration.CQ_ICON
 import com.aemtools.common.constant.const.aem_component_declaration.IS_CONTAINER
-import com.aemtools.common.util.toStringBuilder
 import com.aemtools.common.util.normalizeToJcrRoot
+import com.aemtools.common.util.toStringBuilder
 import com.aemtools.lang.htl.icons.HtlIcons
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.psi.xml.XmlTag
 import org.apache.commons.lang.BooleanUtils
 import java.io.Serializable
@@ -68,8 +68,7 @@ data class AemComponentDefinition(
    * @see [normalizeToJcrRoot]
    * @return resource type
    */
-  fun resourceType(): String
-      = fullPath.normalizeToJcrRoot().substringBeforeLast("/")
+  fun resourceType(): String = fullPath.normalizeToJcrRoot().substringBeforeLast("/")
 
   /**
    * Get component name.
@@ -78,8 +77,7 @@ data class AemComponentDefinition(
    *
    * @return component's name
    */
-  fun componentName(): String
-      = fullPath
+  fun componentName(): String = fullPath
       .substringBeforeLast("/")
       .substringAfterLast("/")
 
@@ -122,7 +120,7 @@ data class AemComponentDefinition(
      * @return lookup element
      */
     fun AemComponentDefinition.toLookupElement(): LookupElement =
-        LookupElementBuilder.create(resourceType())
+        lookupElement(resourceType())
             .withTypeText("AEM Component")
             .withPresentableText(title ?: componentName())
             .withIcon(HtlIcons.AEM_COMPONENT)

@@ -1,5 +1,6 @@
 package com.aemtools.completion.htl.provider
 
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.common.util.findParentByType
 import com.aemtools.index.HtlIndexFacade
@@ -7,7 +8,6 @@ import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.psi.PsiElement
 import com.intellij.util.ProcessingContext
 
@@ -24,7 +24,7 @@ object HtlI18NKeyCompletionProvider : CompletionProvider<CompletionParameters>()
       val localizations = HtlIndexFacade.getAllLocalizationKeys(position.project)
 
       result.addAllElements(localizations.map {
-        LookupElementBuilder.create(it)
+        lookupElement(it)
             .withTypeText("i18n", true)
       })
 

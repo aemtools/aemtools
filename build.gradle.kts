@@ -14,6 +14,8 @@ import org.junit.platform.gradle.plugin.FiltersExtension
 import org.junit.platform.gradle.plugin.EnginesExtension
 import io.gitlab.arturbosch.detekt.*
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import org.apache.tools.ant.taskdefs.condition.Os
+import org.jetbrains.kotlin.types.checker.captureFromArguments
 import org.junit.platform.console.options.Details
 
 buildscript {
@@ -101,12 +103,13 @@ subprojects {
             }
             executionData(junitPlatformTest)
         }
+
     }
 
     repositories {
-        mavenCentral()
-        jcenter()
         mavenLocal()
+        jcenter()
+        mavenCentral()
         maven {
             setUrl("http://dl.bintray.com/jetbrains/intellij-plugin-service")
         }
@@ -145,6 +148,15 @@ subprojects {
         testCompile("org.junit.platform:junit-platform-console:$junitPlatformVersion")
 
         testCompile("org.junit.vintage:junit-vintage-engine:$junitVintageEngineVersion")
+    }
+
+    // gross patch to address windows "too long classpath" issue
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        project.apply {
+            project.rootProject.projectDir
+            from("${project.rootProject.projectDir}/buildSrc/win-patch.gradle.kts")
+
+        }
     }
 
     configure<JUnitPlatformExtension> {

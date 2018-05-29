@@ -1,5 +1,6 @@
 package com.aemtools.completion.small.reppolicy.provider
 
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.constant.const
 import com.aemtools.common.util.findParentByType
 import com.aemtools.completion.model.editconfig.XmlAttributeDefinition
@@ -9,7 +10,6 @@ import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.completion.XmlAttributeInsertHandler
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.psi.impl.source.xml.XmlTagImpl
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
@@ -47,7 +47,7 @@ object RepPolicyCompletionProvider : CompletionProvider<CompletionParameters>() 
     val attributes = tagDefinition.attributes.filter { !tagAttributes.contains(it.name) }
 
     attributes.map {
-      LookupElementBuilder.create(it.name).withInsertHandler(
+      lookupElement(it.name).withInsertHandler(
           XmlAttributeInsertHandler()
       )
     }
@@ -59,7 +59,7 @@ object RepPolicyCompletionProvider : CompletionProvider<CompletionParameters>() 
     val attributeName = (token.findParentByType(XmlAttribute::class.java) as XmlAttribute).name
     val attributeDefinition: XmlAttributeDefinition? = tagDefinition.attributes.find { it.name == attributeName }
 
-    attributeDefinition?.values.orEmpty().map { LookupElementBuilder.create(it) }
+    attributeDefinition?.values.orEmpty().map { lookupElement(it) }
   }
 
   private val variantsForTagName: (CompletionParameters, XmlToken) -> List<LookupElement> = { _, token ->
@@ -70,7 +70,7 @@ object RepPolicyCompletionProvider : CompletionProvider<CompletionParameters>() 
         (parentTag as XmlTagImpl).name)
 
     tagDefinition.childNodes.map {
-      LookupElementBuilder.create(it)
+      lookupElement(it)
     }
   }
 

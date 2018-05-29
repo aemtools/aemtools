@@ -1,10 +1,10 @@
 package com.aemtools.completion.htl.provider.option
 
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.completion.htl.predefined.HtlELPredefined
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.util.ProcessingContext
 
 /**
@@ -15,7 +15,7 @@ object HtlContextOptionAssignmentCompletionProvider : CompletionProvider<Complet
                               context: ProcessingContext?,
                               result: CompletionResultSet) {
     val variants = HtlELPredefined.CONTEXT_VALUES.map {
-      LookupElementBuilder.create(it.completionText)
+      lookupElement(it.completionText)
           .withTypeText("HTL Context Value")
     }
 

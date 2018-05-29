@@ -6,12 +6,12 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor.Co
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.predefined.PredefinedTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.properties.PropertiesTypeDescriptor
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.completion.model.htl.ContextObject
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.java.JavaSearch
 import com.aemtools.service.ServiceFacade
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.project.Project
 
 /**
@@ -37,7 +37,7 @@ object PredefinedVariables {
    */
   fun contextObjectsCompletion(): List<LookupElement> {
     return repository.getContextObjects().map {
-      LookupElementBuilder.create(it.name)
+      lookupElement(it.name)
           .withTailText("(${it.className})", true)
           .withTypeText("Context Object")
           .withIcon(it.elementIcon)

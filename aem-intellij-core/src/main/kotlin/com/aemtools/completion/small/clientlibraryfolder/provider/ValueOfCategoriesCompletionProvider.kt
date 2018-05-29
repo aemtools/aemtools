@@ -1,5 +1,6 @@
 package com.aemtools.completion.small.clientlibraryfolder.provider
 
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.common.util.findParentByType
 import com.aemtools.index.ClientLibraryIndexFacade.getAllClientLibraryModels
@@ -8,7 +9,6 @@ import com.aemtools.lang.jcrproperty.psi.JpArrayValue
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.util.ProcessingContext
 
 /**
@@ -37,7 +37,7 @@ object ValueOfCategoriesCompletionProvider : CompletionProvider<CompletionParame
       it.categories
     }
         .filterNot { it in siblings }
-        .map { LookupElementBuilder.create(it) })
+        .map { lookupElement(it) })
     result.stopHere()
   }
 

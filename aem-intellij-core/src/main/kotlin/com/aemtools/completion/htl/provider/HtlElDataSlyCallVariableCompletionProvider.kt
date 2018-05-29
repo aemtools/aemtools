@@ -4,12 +4,12 @@ import com.aemtools.codeinsight.htl.model.DeclarationAttributeType
 import com.aemtools.codeinsight.htl.model.HtlUseVariableDeclaration
 import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
 import com.aemtools.codeinsight.htl.model.UseType
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.completion.htl.common.FileVariablesResolver
 import com.aemtools.lang.htl.icons.HtlIcons
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.util.ProcessingContext
 
 /**
@@ -35,8 +35,7 @@ object HtlElDataSlyCallVariableCompletionProvider : CompletionProvider<Completio
         .filter { (_, value) -> value.isNotEmpty() }
         .flatMap { (key, value) ->
           value.map {
-            LookupElementBuilder
-                .create("${key.variableName}.${it.name}")
+            lookupElement("${key.variableName}.${it.name}")
                 .withIcon(HtlIcons.HTL_FILE_ICON)
                 .withTypeText("HTL Template")
                 .withPresentableText(it.name)

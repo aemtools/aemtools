@@ -1,12 +1,12 @@
 package com.aemtools.completion.small.clientlibraryfolder.provider
 
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.util.findParentByType
 import com.aemtools.common.util.hasAttribute
 import com.aemtools.completion.small.inserthandler.JcrArrayInsertHandler
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.psi.xml.XmlTag
 import com.intellij.util.ProcessingContext
 
@@ -28,7 +28,7 @@ object ClientLibraryFolderCompletionProvider : CompletionProvider<CompletionPara
     attributes.filterNot { attributeName ->
       tag.hasAttribute { it.name == attributeName }
     }.map {
-      LookupElementBuilder.create(it)
+      lookupElement(it)
           .withInsertHandler(JcrArrayInsertHandler())
     }.apply {
       if (this.isNotEmpty()) {

@@ -78,6 +78,6 @@ class CompletionContributorDsl {
   fun smart(
       pattern: ElementPattern<out PsiElement>,
       provider: CompletionProvider<in CompletionParameters>
-  ) = extend(CompletionType.BASIC, pattern, provider)
+  ) = extend(CompletionType.SMART, pattern, provider)
 
 }

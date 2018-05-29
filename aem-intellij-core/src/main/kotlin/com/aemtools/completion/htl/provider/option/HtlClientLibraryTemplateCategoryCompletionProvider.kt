@@ -2,6 +2,7 @@ package com.aemtools.completion.htl.provider.option
 
 import com.aemtools.analysis.htl.callchain
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.completion.withPriority
 import com.aemtools.common.constant.const
 import com.aemtools.common.util.findParentByType
@@ -10,7 +11,6 @@ import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
 import com.intellij.util.ProcessingContext
 
@@ -45,7 +45,7 @@ object HtlClientLibraryTemplateCategoryCompletionProvider : CompletionProvider<C
 
     models.flatMap { clientLibraryModel ->
       clientLibraryModel.categories.map { category ->
-        LookupElementBuilder.create(category)
+        lookupElement(category)
             .withIcon(if (outputType.template.name == "css") {
               AllIcons.FileTypes.Css
             } else {

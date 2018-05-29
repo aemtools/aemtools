@@ -1,9 +1,9 @@
 package com.aemtools.completion.htl.predefined
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.predefined.PredefinedDescriptionTypeDescriptor
+import com.aemtools.common.completion.lookupElement
 import com.google.gson.annotations.SerializedName
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
 import javax.swing.Icon
 
@@ -25,7 +25,7 @@ data class PredefinedCompletion(
    * @return lookup element
    */
   fun toLookupElement(): LookupElement {
-    var result = LookupElementBuilder.create(completionText)
+    var result = lookupElement(completionText)
         .withIcon(icon ?: AllIcons.Nodes.Parameter)
     if (type != null) {
       result = result.withTypeText(type)

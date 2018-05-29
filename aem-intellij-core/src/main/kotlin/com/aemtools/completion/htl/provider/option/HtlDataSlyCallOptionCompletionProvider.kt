@@ -2,13 +2,13 @@ package com.aemtools.completion.htl.provider.option
 
 import com.aemtools.analysis.htl.callchain
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.util.findParentByType
 import com.aemtools.completion.htl.inserthandler.HtlElAssignmentInsertHandler
 import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
 import com.intellij.util.ProcessingContext
 
@@ -40,7 +40,7 @@ object HtlDataSlyCallOptionCompletionProvider : CompletionProvider<CompletionPar
     val variants = templateParameters
         .filterNot { presentOptions.contains(it) }
         .map {
-          LookupElementBuilder.create(it)
+          lookupElement(it)
               .withIcon(AllIcons.Nodes.Parameter)
               .withTypeText("HTL Template Parameter")
               .withInsertHandler(HtlElAssignmentInsertHandler())

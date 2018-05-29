@@ -1,5 +1,6 @@
 package com.aemtools.completion.htl.provider
 
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.completion.withPriority
 import com.aemtools.common.constant.const
 import com.aemtools.common.util.normalizeToJcrRoot
@@ -16,7 +17,6 @@ import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.completion.CompletionType
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
 import com.intellij.psi.PsiClass
 import com.intellij.util.ProcessingContext
@@ -64,12 +64,12 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
 
     val templates = extractTemplates(parameters)
 
-    return allClasses + templates + listOf(LookupElementBuilder
-        .create(const.CLIENTLIB_TEMPLATE)
-        .withIcon(AllIcons.FileTypes.Html)
-        .withTypeText("HTL Template")
-        .withTailText("(${const.CLIENTLIB_TEMPLATE})", true)
-        .withPresentableText("clientlib.html")
+    return allClasses + templates + listOf(
+        lookupElement(const.CLIENTLIB_TEMPLATE)
+            .withIcon(AllIcons.FileTypes.Html)
+            .withTypeText("HTL Template")
+            .withTailText("(${const.CLIENTLIB_TEMPLATE})", true)
+            .withPresentableText("clientlib.html")
     )
   }
 
@@ -98,7 +98,7 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
         return@flatMap listOf<LookupElement>()
       }
 
-      val result = LookupElementBuilder.create(qualifiedName)
+      val result = lookupElement(qualifiedName)
           .withLookupString(name)
           .withPresentableText(name)
           .withIcon(it.getIcon(0))
@@ -135,7 +135,7 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
         }
 
     return result.map {
-      LookupElementBuilder.create(it.normalizedPath.relativeTo(dirPath.normalizeToJcrRoot()))
+      lookupElement(it.normalizedPath.relativeTo(dirPath.normalizeToJcrRoot()))
           .withTypeText("HTL Template")
           .withTailText("(${it.normalizedPath})", true)
           .withPresentableText(it.fileName)
