@@ -153,9 +153,7 @@ subprojects {
     // gross patch to address windows "too long classpath" issue
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
         project.apply {
-            project.rootProject.projectDir
             from("${project.rootProject.projectDir}/buildSrc/win-patch.gradle.kts")
-
         }
     }
 
@@ -197,4 +195,8 @@ detekt {
         filters = "com.aemtools.test.*,.*test.*,"
         parallel = true
     })
+}
+
+apply {
+    from("buildSrc/idea.gradle.kts")
 }
