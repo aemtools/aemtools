@@ -1,31 +1,29 @@
 package com.aemtools.completion.small.reppolicy
 
+import com.aemtools.common.completion.BaseCompletionContributor
+import com.aemtools.common.completion.BaseCompletionProvider
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.util.closest
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.common.util.findParentByType
-import com.aemtools.common.completion.lookupElement
 import com.aemtools.completion.small.inserthandler.JcrNameArrayInsertHandler
-import com.aemtools.completion.small.patterns.RepPolicyPatterns
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.attributeNameUnderAcl
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.primaryTypeInAcl
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.privilegesValue
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.repRestrictionAttributeName
 import com.aemtools.completion.small.patterns.RepPolicyPatterns.tagUnderAclRoot
-import com.aemtools.common.completion.BaseCompletionProvider
+import com.aemtools.completion.small.patterns.RepPolicyPatterns.tagUnderAllowOrDeny
 import com.aemtools.lang.jcrproperty.psi.JpArray
 import com.aemtools.lang.jcrproperty.psi.JpArrayValue
-import com.intellij.codeInsight.completion.CompletionContributor
-import com.intellij.codeInsight.completion.CompletionType
 import com.intellij.codeInsight.completion.XmlAttributeInsertHandler
 import com.intellij.psi.xml.XmlTag
 
 /**
  * @author Dmytro Primshyts.
  */
-class RepPolicyCompletionContributor : CompletionContributor() {init {
+class RepPolicyCompletionContributor : BaseCompletionContributor({
 
-  extend(CompletionType.BASIC,
-      primaryTypeInAcl,
+  basic(primaryTypeInAcl,
       BaseCompletionProvider({ _, _, _ ->
         listOf(
             lookupElement("rep:GrantACE"),
@@ -34,9 +32,7 @@ class RepPolicyCompletionContributor : CompletionContributor() {init {
       })
   )
 
-  extend(
-      CompletionType.BASIC,
-      repRestrictionAttributeName,
+  basic(repRestrictionAttributeName,
       BaseCompletionProvider({ _, _, _ ->
         listOf(
             lookupElement("jcr:primaryType")
@@ -46,17 +42,14 @@ class RepPolicyCompletionContributor : CompletionContributor() {init {
         )
       }, shouldStop = true))
 
-  extend(CompletionType.BASIC,
-      RepPolicyPatterns.tagUnderAllowOrDeny,
+  basic(tagUnderAllowOrDeny,
       BaseCompletionProvider({ _, _, _ ->
         listOf(
             lookupElement("rep:restrictions")
         )
       }, shouldStop = true))
 
-  extend(
-      CompletionType.BASIC,
-      tagUnderAclRoot,
+  basic(tagUnderAclRoot,
       BaseCompletionProvider({ parameters, _, _ ->
         val originalPosition = parameters.originalPosition
         val text = originalPosition?.text
@@ -71,39 +64,38 @@ class RepPolicyCompletionContributor : CompletionContributor() {init {
               it.name
             } ?: emptyList()
 
-        when {
-          text == null -> listOf(
-              lookupElement("allow"),
-              lookupElement("deny")
-          )
-          else -> {
-            var closest = text.closest(setOf("allow", "deny"))
-                ?: "allow"
+        when (text) {
+            null -> listOf(
+                lookupElement("allow"),
+                lookupElement("deny")
+            )
+            else -> {
+              var closest = text.closest(setOf("allow", "deny"))
+                  ?: "allow"
 
-            while (childTags.contains(closest)) {
-              val first = if (closest.contains("allow")) {
-                "allow"
-              } else {
-                "deny"
+              while (childTags.contains(closest)) {
+                val first = if (closest.contains("allow")) {
+                  "allow"
+                } else {
+                  "deny"
+                }
+
+                val second = closest.substringAfter(first)
+
+                val number = second.toIntOrNull()
+                    ?: -1
+
+                closest = "$first${number + 1}"
               }
 
-              val second = closest.substringAfter(first)
-
-              val number = second.toIntOrNull()
-                  ?: -1
-
-              closest = "$first${number + 1}"
+              listOf(lookupElement(closest))
             }
-
-            listOf(lookupElement(closest))
-          }
         }
 
       }, shouldStop = true)
   )
 
-  extend(CompletionType.BASIC,
-      attributeNameUnderAcl,
+  basic(attributeNameUnderAcl,
       BaseCompletionProvider({ _, _, _ ->
         listOf(
             lookupElement("jcr:primaryType")
@@ -116,8 +108,7 @@ class RepPolicyCompletionContributor : CompletionContributor() {init {
       })
   )
 
-  extend(CompletionType.BASIC,
-      privilegesValue,
+  basic(privilegesValue,
       BaseCompletionProvider({ parameters, _, _ ->
         val currentPosition = parameters.position
 
@@ -164,5 +155,4 @@ class RepPolicyCompletionContributor : CompletionContributor() {init {
       })
   )
 
-}
-}
+})
