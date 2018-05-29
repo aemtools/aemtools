@@ -4,6 +4,8 @@ import com.aemtools.common.constant.const.JCR_ROOT
 import com.aemtools.test.completion.CompletionBaseLightTest
 
 /**
+ * Test for [HtmlDataSlyUseCompletionProvider].
+ *
  * @author Dmytro Troynikov
  */
 class DataSlyUseSmartCompletionTest : CompletionBaseLightTest() {

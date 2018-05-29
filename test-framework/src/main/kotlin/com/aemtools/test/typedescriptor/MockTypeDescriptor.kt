@@ -1,8 +1,8 @@
 package com.aemtools.test.typedescriptor
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
+import com.aemtools.common.completion.lookupElement
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 
 /**
  * @author Dmytro Troynikov
@@ -16,7 +16,7 @@ class MockTypeDescriptor(
     val subtypes: List<MockTypeDescriptor>
 ) : TypeDescriptor {
   override fun myVariants(): List<LookupElement> = subtypes.map {
-    LookupElementBuilder.create(it.nameInParent ?: it.name)
+    lookupElement(it.nameInParent ?: it.name)
   }
 
   override fun subtype(identifier: String): TypeDescriptor {

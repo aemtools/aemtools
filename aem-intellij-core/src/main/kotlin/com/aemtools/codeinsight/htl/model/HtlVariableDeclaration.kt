@@ -1,5 +1,6 @@
 package com.aemtools.codeinsight.htl.model
 
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEMPLATE
@@ -17,14 +18,8 @@ import com.aemtools.lang.htl.icons.HtlIcons.SLY_TEST_VARIABLE_ICON
 import com.aemtools.lang.htl.icons.HtlIcons.SLY_USE_VARIABLE_ICON
 import com.aemtools.lang.htl.icons.HtlIcons.TEMPLATE_PARAMETER_ICON
 import com.aemtools.lang.htl.psi.HtlVariableName
-import com.aemtools.lang.util.extractHtlHel
-import com.aemtools.lang.util.extractItemAndItemListNames
-import com.aemtools.lang.util.htlAttributeName
-import com.aemtools.lang.util.htlVariableName
-import com.aemtools.lang.util.isOption
-import com.aemtools.lang.util.resolveUseClass
+import com.aemtools.lang.util.*
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.psi.xml.XmlAttribute
 
 /**
@@ -56,7 +51,7 @@ open class HtlVariableDeclaration internal constructor(
    * @return lookup element
    */
   fun toLookupElement(): LookupElement {
-    var result = LookupElementBuilder.create(variableName)
+    var result = lookupElement(variableName)
 
     when (attributeType) {
       DeclarationAttributeType.DATA_SLY_USE -> {

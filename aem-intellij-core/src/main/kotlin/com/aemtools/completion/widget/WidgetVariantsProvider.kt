@@ -1,14 +1,14 @@
 package com.aemtools.completion.widget
 
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.constant.const
+import com.aemtools.common.util.PsiXmlUtil
 import com.aemtools.completion.model.WidgetMember
 import com.aemtools.completion.model.psi.PsiWidgetDefinition
-import com.aemtools.common.util.PsiXmlUtil
 import com.aemtools.service.ServiceFacade
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.XmlAttributeInsertHandler
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.psi.xml.XmlToken
 
 /**
@@ -78,12 +78,11 @@ object WidgetVariantsProvider {
     return listOf()
   }
 
-  private fun widgetXtypeUnknown(widgetDefinition: PsiWidgetDefinition?): Boolean
-      = widgetDefinition?.getFieldValue(const.XTYPE) == null
+  private fun widgetXtypeUnknown(widgetDefinition: PsiWidgetDefinition?): Boolean = widgetDefinition?.getFieldValue(const.XTYPE) == null
 
   private fun genericForName(): Collection<LookupElement> {
     return DEFAULT_ATTRIBUTES.map { it ->
-      LookupElementBuilder.create(it)
+      lookupElement(it)
           .withInsertHandler(XmlAttributeInsertHandler())
     }
   }
@@ -92,11 +91,11 @@ object WidgetVariantsProvider {
     val widgetDocRepository = ServiceFacade.getWidgetRepository()
     val query: String? = PsiXmlUtil.removeCaretPlaceholder(currentToken.text)
     val xtypes: List<String> = widgetDocRepository.findXTypes(query)
-    return xtypes.map { it -> LookupElementBuilder.create(it) }
+    return xtypes.map { it -> lookupElement(it) }
   }
 
   private fun variantsForJcrPrimaryType(): Collection<LookupElement> =
-      JCR_PRIMARY_TYPE_VALUES.map { it -> LookupElementBuilder.create(it) }
+      JCR_PRIMARY_TYPE_VALUES.map { it -> lookupElement(it) }
 
   /**
    * Give variants for attribute name
@@ -111,7 +110,7 @@ object WidgetVariantsProvider {
     val result = doc.members
         .filter { it.memberType != WidgetMember.MemberType.PUBLIC_METHOD }
         .map {
-          LookupElementBuilder.create(it.name)
+          lookupElement(it.name)
               .withTypeText(it.type)
               .withInsertHandler(XmlAttributeInsertHandler())
         }

@@ -91,8 +91,6 @@ class HtlDetectionServiceTest : BaseLightTest(false) {
 
   override fun setUp() {
     super.setUp()
-    HtlRootDirectories.getInstance(project)?.let {
-      it.directories.clear()
-    }
+    HtlRootDirectories.getInstance(project)?.directories?.clear()
   }
 }
