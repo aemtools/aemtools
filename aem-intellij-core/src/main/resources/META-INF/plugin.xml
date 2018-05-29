@@ -271,6 +271,11 @@
                              displayName="AEM Tools"
                              id="preference.AEMTools"
                              instance="com.aemtools.integration.sync.settings.SyncSettings"/>
+        <toolWindow id="Clientlibrary graph"
+                    icon="/icons/clientlibrary_graph_icon.png"
+                    anchor="right"
+                    secondary="true"
+                    factoryClass="com.aemtools.ui.clientlibrary.ClientLibraryGraphTool"/>
     </extensions>
 
     <application-components>

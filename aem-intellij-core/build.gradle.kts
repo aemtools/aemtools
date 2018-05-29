@@ -35,6 +35,7 @@ dependencies {
     compile(project(":aem-intellij-common"))
     compile(project(":aem-intellij-inspection"))
     compile(project(":aem-intellij-index"))
+    compile(project(":aem-intellij-ui-tools"))
     compile(project(":aem-intellij-integration"))
 
     compile("com.google.code.gson:gson:$gsonVersion")

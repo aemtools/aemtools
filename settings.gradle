@@ -7,5 +7,6 @@ include 'aem-intellij-common'
 include 'aem-intellij-index'
 include 'aem-intellij-integration'
 include 'aem-intellij-inspection'
+include 'aem-intellij-ui-tools'
 include 'test-framework'
 
