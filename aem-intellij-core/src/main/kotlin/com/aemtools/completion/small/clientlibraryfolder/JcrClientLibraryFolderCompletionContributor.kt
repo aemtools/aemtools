@@ -1,5 +1,6 @@
 package com.aemtools.completion.small.clientlibraryfolder
 
+import com.aemtools.common.completion.BaseCompletionContributor
 import com.aemtools.completion.small.clientlibraryfolder.provider.JcrTypeCompletionProvider
 import com.aemtools.completion.small.clientlibraryfolder.provider.ValueOfCategoriesCompletionProvider
 import com.aemtools.completion.small.patterns.JcrPatterns.jcrArrayValueOfCategories
@@ -10,17 +11,16 @@ import com.intellij.codeInsight.completion.CompletionType
 /**
  * @author Dmytro Primshyts
  */
-class JcrClientLibraryFolderCompletionContributor : CompletionContributor() {init {
-  extend(
-      CompletionType.BASIC,
+class JcrClientLibraryFolderCompletionContributor : BaseCompletionContributor({
+  basic(
       jcrArrayValueOfCategories,
       ValueOfCategoriesCompletionProvider
   )
 
-  extend(
-      CompletionType.BASIC,
+  basic(
       jcrType,
       JcrTypeCompletionProvider
   )
-}
-}
+})
+
+

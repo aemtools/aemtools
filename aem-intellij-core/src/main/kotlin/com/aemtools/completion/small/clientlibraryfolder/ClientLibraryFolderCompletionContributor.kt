@@ -1,17 +1,12 @@
 package com.aemtools.completion.small.clientlibraryfolder
 
+import com.aemtools.common.completion.BaseCompletionContributor
 import com.aemtools.completion.small.clientlibraryfolder.provider.ClientLibraryFolderCompletionProvider
-import com.aemtools.completion.small.patterns.JcrPatterns
-import com.intellij.codeInsight.completion.CompletionContributor
-import com.intellij.codeInsight.completion.CompletionType.BASIC
+import com.aemtools.completion.small.patterns.JcrPatterns.attributeInClientLibraryFolder
 
 /**
  * @author Dmytro Primshyts
  */
-class ClientLibraryFolderCompletionContributor : CompletionContributor() {init {
-
-  extend(BASIC, JcrPatterns.attributeInClientLibraryFolder,
-      ClientLibraryFolderCompletionProvider)
-
-}
-}
+class ClientLibraryFolderCompletionContributor : BaseCompletionContributor({
+  basic(attributeInClientLibraryFolder, ClientLibraryFolderCompletionProvider)
+})
