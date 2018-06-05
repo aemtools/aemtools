@@ -1,4 +1,4 @@
-package com.aemtools.index.dataexternalizer
+package com.aemtools.common.index
 
 import com.aemtools.common.util.ObjectSerializer
 import com.aemtools.common.util.serializeToByteArray
@@ -54,5 +54,5 @@ fun ByteArray.endsWith(other: ByteArray): Boolean {
     return false
   }
 
-  return (0..other.size - 1).none { this[this.lastIndex - it] != other[other.lastIndex - it] }
+  return (0 until other.size).none { this[this.lastIndex - it] != other[other.lastIndex - it] }
 }

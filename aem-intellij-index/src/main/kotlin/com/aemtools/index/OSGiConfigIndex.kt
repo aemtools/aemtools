@@ -2,7 +2,6 @@ package com.aemtools.index
 
 import com.aemtools.index.dataexternalizer.OSGiConfigurationExternalizer
 import com.aemtools.index.indexer.OSGiConfigIndexer
-import com.aemtools.index.model.OSGiConfiguration
 import com.aemtools.index.model.OSGiConfigurationIndexModel
 import com.intellij.ide.highlighter.XmlFileType
 import com.intellij.util.indexing.DataIndexer
@@ -24,18 +23,14 @@ class OSGiConfigIndex : XmlIndex<OSGiConfigurationIndexModel>() {
         = ID.create<String, OSGiConfigurationIndexModel>("OSGiConfigIndex")
   }
 
-  override fun getIndexer(): DataIndexer<String, OSGiConfigurationIndexModel, FileContent>
-      = OSGiConfigIndexer
+  override fun getIndexer(): DataIndexer<String, OSGiConfigurationIndexModel, FileContent> = OSGiConfigIndexer
 
-  override fun getInputFilter(): FileBasedIndex.InputFilter
-      = FileBasedIndex.InputFilter {
+  override fun getInputFilter(): FileBasedIndex.InputFilter = FileBasedIndex.InputFilter {
     it.fileType == XmlFileType.INSTANCE && it.path.contains("config")
   }
 
-  override fun getValueExternalizer(): DataExternalizer<OSGiConfigurationIndexModel>
-      = OSGiConfigurationExternalizer
+  override fun getValueExternalizer(): DataExternalizer<OSGiConfigurationIndexModel> = OSGiConfigurationExternalizer
 
-  override fun getName(): ID<String, OSGiConfigurationIndexModel>
-      = OSGI_INDEX_ID
+  override fun getName(): ID<String, OSGiConfigurationIndexModel> = OSGI_INDEX_ID
 
 }
