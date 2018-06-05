@@ -56,4 +56,19 @@ class OSGiConfigIndexTest : BaseLightTest() {
     }
   }
 
+  fun testOSGiIndexDotInName() = fileCase {
+    addXml("/$JCR_ROOT/configurations/config.author/com.test.config.Service.factory-one.xml", """
+        <jcr:root jcr:primaryType="sling:OsgiConfig"/>
+    """)
+
+    verify {
+      val osgiConfig = requireNotNull(
+          OSGiConfigSearch.findConfigsForClass("com.test.config.Service", project).firstOrNull()
+      )
+
+      assertEquals("com.test.config.Service.factory-one.xml", osgiConfig.fileName)
+      assertEquals("com.test.config.Service", osgiConfig.fullQualifiedName)
+    }
+  }
+
 }

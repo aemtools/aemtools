@@ -15,13 +15,10 @@ data class OSGiConfiguration(
    * Full qualified name of associated OSGi Service or Service factory.
    */
   val fullQualifiedName: String
-    get() {
-      return if (fileName.contains("-")) {
-        fileName.substringBefore("-")
-      } else {
-        fileName.substringBeforeLast(".")
-      }
-    }
+    get() =
+      Regex("([a-z_\\d-]+\\.)+[A-z]\\w+").find(fileName)
+          ?.groups?.firstOrNull()
+          ?.value ?: ""
 
   /**
    * Return name suffix.
