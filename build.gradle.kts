@@ -19,7 +19,7 @@ import org.jetbrains.kotlin.types.checker.captureFromArguments
 import org.junit.platform.console.options.Details
 
 buildscript {
-    val kotlinVersion: String by extra
+    val kotlinVersion: String by properties
 
     repositories {
         mavenLocal()
@@ -38,7 +38,7 @@ buildscript {
     }
 }
 
-val aemtoolsVersion: String by extra
+val aemtoolsVersion: String by properties
 
 allprojects {
     group = "aemtools"
@@ -57,11 +57,11 @@ allprojects {
     }
 }
 
-val kotlinVersion: String by extra
-val junitVersion: String by extra
-val jmockitVersion: String by extra
-val assertjVersion: String by extra
-val mockitoVersion: String by extra
+val kotlinVersion: String by properties
+val junitVersion: String by properties
+val jmockitVersion: String by properties
+val assertjVersion: String by properties
+val mockitoVersion: String by properties
 
 plugins {
     java
@@ -115,12 +115,12 @@ subprojects {
         }
     }
 
-    val mockitoKotlinVersion: String by extra
-    val spekVersion: String by extra
-    val junitJupiterApiVersion: String by extra
-    val junitJupiterEngineVersion: String by extra
-    val junitVintageEngineVersion: String by extra
-    val junitPlatformVersion: String by extra
+    val mockitoKotlinVersion: String by properties
+    val spekVersion: String by properties
+    val junitJupiterApiVersion: String by properties
+    val junitJupiterEngineVersion: String by properties
+    val junitVintageEngineVersion: String by properties
+    val junitPlatformVersion: String by properties
 
     dependencies {
         compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
@@ -178,8 +178,8 @@ subprojects {
     }
 }
 
-task<Wrapper>("gradleWrapper") {
-    gradleVersion = "4.6"
+task<Wrapper>("wrapper") {
+    gradleVersion = "4.8.1"
     distributionType = Wrapper.DistributionType.ALL
 }
 

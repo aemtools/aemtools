@@ -6,7 +6,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.junit.platform.gradle.plugin.JUnitPlatformExtension
 
 buildscript {
-    var kotlinVersion: String by extra
+    val kotlinVersion: String by properties
 
     repositories {
         mavenCentral()
@@ -31,7 +31,7 @@ apply {
 
 plugins {
     java
-    id("org.jetbrains.intellij") version "0.3.0"
+    id("org.jetbrains.intellij") version "0.3.4"
 }
 
 dependencies {
@@ -41,7 +41,7 @@ dependencies {
     testCompile(project(":test-framework"))
 }
 
-val ideaVersion: String by extra
+val ideaVersion: String by properties
 
 configure<IntelliJPluginExtension> {
     version = ideaVersion
