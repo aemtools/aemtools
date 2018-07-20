@@ -41,6 +41,6 @@ configure<IntelliJPluginExtension> {
     version = ideaVersion
 
     setPlugins(
-            "IntelliLang"
+            "IntelliLang", "github", "git4idea"
     )
 }

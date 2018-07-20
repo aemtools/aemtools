@@ -39,7 +39,7 @@ dependencies {
 
     compile("com.google.code.gson:gson:$gsonVersion")
     compile("org.apache.commons:commons-lang3:$apacheCommonsVersion")
-    compile(fileTree("${projectDir}"){
+    compile(fileTree("$projectDir"){
         include("**/plugins/github/lib/github.jar")
     })
 
@@ -54,7 +54,7 @@ configure<IntelliJPluginExtension> {
     downloadSources = true
     updateSinceUntilBuild = false
     setPlugins(
-            "IntelliLang", "github"
+            "IntelliLang", "github", "git4idea"
     )
 }
 
