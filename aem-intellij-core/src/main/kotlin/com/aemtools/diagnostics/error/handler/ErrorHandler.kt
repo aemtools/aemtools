@@ -62,7 +62,7 @@ class ErrorHandler : ErrorReportSubmitter() {
             }
           }
 
-          val issueOverview = createIssueOverview(events[0], pluginDescriptor)
+          val issueOverview = createIssueOverview(events[0], pluginDescriptor, additionalInfo)
 
           request.entity = StringEntity("{\"title\":\"User issue for version ${getPluginVersion(pluginDescriptor)}\"," +
               "\"body\":\"$issueOverview\"," +
@@ -80,30 +80,7 @@ class ErrorHandler : ErrorReportSubmitter() {
         }
       }
 
-      private fun createIssueOverview(event: IdeaLoggingEvent, pluginDescriptor: PluginDescriptor?): String {
-        val stringWriter = StringWriter()
-        PrintWriter(stringWriter).use{
-          event.throwable.printStackTrace(it)
-          it.flush()
-          return StringBuilder().append("```\n$stringWriter\n```")
-              .append("\n* Plugin version: ${getPluginVersion(pluginDescriptor)}")
-              .append("\n* Idea version: ${getIdeVersion()}")
-              .append("\n* Java vendor: ${getJavaVendor()}")
-              .append("\n* Java version: ${getRuntimeVersion()}")
-              .append("\n* Runtime name: ${getRuntimeName()}")
-              .append("\n* OS name: ${getOsName()}")
-              .append("\n* OS version: ${getOsVersion()}")
-              .append("\n* OS architecture: ${getOsArchitecture()}")
-              .toString()
-              .replace("\n", "\\n")
-              .replace("\r", "\\r")
-              .replace("\t", "\\t")
-        }
-
-
-      }
-
-    }.queue()
+    }.notifyFinished()
 
     return true
   }
@@ -138,6 +115,34 @@ class ErrorHandler : ErrorReportSubmitter() {
         UsernamePasswordCredentials(authData.basicAuth?.login, authData.basicAuth?.password))
     context.setAttribute(HttpClientContext.TARGET_AUTH_STATE, authState)
     return context
+  }
+
+  private fun createIssueOverview(event: IdeaLoggingEvent,
+                                  pluginDescriptor: PluginDescriptor?,
+                                  additionalInfo: String?): String {
+    val stringWriter = StringWriter()
+    PrintWriter(stringWriter).use {
+      event.throwable.printStackTrace(it)
+      it.flush()
+      val addInfo = if (additionalInfo == null) {
+        StringUtils.EMPTY
+      } else {
+        "Additional info: \n$additionalInfo\n"
+      }
+      return StringBuilder(addInfo).append("Stack trace:\n```\n$stringWriter\n```")
+          .append("\n* Plugin version: ${getPluginVersion(pluginDescriptor)}")
+          .append("\n* Idea version: ${getIdeVersion()}")
+          .append("\n* Java vendor: ${getJavaVendor()}")
+          .append("\n* Java version: ${getRuntimeVersion()}")
+          .append("\n* Runtime name: ${getRuntimeName()}")
+          .append("\n* OS name: ${getOsName()}")
+          .append("\n* OS version: ${getOsVersion()}")
+          .append("\n* OS architecture: ${getOsArchitecture()}")
+          .toString()
+          .replace("\n", "\\n")
+          .replace("\r", "\\r")
+          .replace("\t", "\\t")
+    }
   }
 }
 
