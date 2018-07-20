@@ -39,6 +39,9 @@ dependencies {
 
     compile("com.google.code.gson:gson:$gsonVersion")
     compile("org.apache.commons:commons-lang3:$apacheCommonsVersion")
+    compile(fileTree("${projectDir}"){
+        include("**/plugins/github/lib/github.jar")
+    })
 
     testCompile(project(":test-framework"))
 }
@@ -51,7 +54,7 @@ configure<IntelliJPluginExtension> {
     downloadSources = true
     updateSinceUntilBuild = false
     setPlugins(
-            "IntelliLang"
+            "IntelliLang", "github"
     )
 }
 
