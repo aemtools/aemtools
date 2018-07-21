@@ -176,6 +176,12 @@ subprojects {
         kotlinOptions.jvmTarget = "1.8"
         kotlinOptions.languageVersion = "1.2"
     }
+
+    (tasks.find { it.name == "junitPlatformTest" } as JavaExec).apply {
+        this.doLast {
+            classpath = classpath.plus(files("${rootDir.path}${File.separator}build-log-configs"))
+        }
+    }
 }
 
 task<Wrapper>("wrapper") {
