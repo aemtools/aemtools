@@ -7,7 +7,7 @@ env:
   global:
   - ORG_GRADLE_PROJECT_downloadIdeaSources=false
 
-script: ./gradlew test jacocoFullReport detektCheck
+script: ./gradlew test jacocoFullReport detektCheck --info
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
