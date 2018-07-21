@@ -158,9 +158,3 @@ task("generateGrammar") {
 
 getTasksByName("compileKotlin", true).first()
         .dependsOn("generateGrammar")
-
-(tasks.find { it.name == "junitPlatformTest" } as JavaExec).apply {
-    this.doLast {
-        classpath = classpath.plus(files("${rootDir.path}${File.separator}build-log-configs"))
-    }
-}
