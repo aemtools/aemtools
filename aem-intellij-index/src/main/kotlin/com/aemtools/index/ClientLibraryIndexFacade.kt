@@ -17,4 +17,5 @@ object ClientLibraryIndexFacade {
    */
   fun getAllClientLibraryModels(project: Project): List<ClientlibraryModel> =
       allFromFbi(ClientlibraryIndex.CLIENTLIBRARY_ID, project)
+
 }
