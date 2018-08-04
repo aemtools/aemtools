@@ -112,7 +112,7 @@
 
     <depends optional="true" config-file="jcr-property-language.xml">com.intellij.modules.lang</depends>
 
-    <idea-version since-build="131"/>
+    <idea-version since-build="181"/>
 
     <extensions defaultExtensionNs="com.intellij">
 

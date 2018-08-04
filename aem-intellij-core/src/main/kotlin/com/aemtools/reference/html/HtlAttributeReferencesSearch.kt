@@ -20,7 +20,8 @@ import com.intellij.util.Processor
  * @author Dmytro Troynikov
  */
 class HtlAttributeReferencesSearch : QueryExecutorBase<PsiReference, ReferencesSearch.SearchParameters>() {
-  override fun processQuery(queryParameters: ReferencesSearch.SearchParameters, consumer: Processor<PsiReference>) {
+
+  override fun processQuery(queryParameters: ReferencesSearch.SearchParameters, consumer: Processor<in PsiReference>) {
     val attribute = queryParameters.elementToSearch as? XmlAttribute
         ?: return
 

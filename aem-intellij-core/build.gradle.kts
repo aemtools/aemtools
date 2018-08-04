@@ -31,8 +31,8 @@ val gsonVersion: String by properties
 val apacheCommonsVersion: String by properties
 
 dependencies {
-    compile(project(":aem-intellij-lang"))
     compile(project(":aem-intellij-common"))
+    compile(project(":aem-intellij-lang"))
     compile(project(":aem-intellij-inspection"))
     compile(project(":aem-intellij-index"))
     compile(project(":aem-intellij-integration"))
