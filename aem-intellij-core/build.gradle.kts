@@ -7,6 +7,8 @@ buildscript {
     val kotlinVersion: String by properties
 
     repositories {
+        mavenLocal()
+        jcenter()
         mavenCentral()
     }
     
@@ -35,7 +37,8 @@ dependencies {
     compile(project(":aem-intellij-lang"))
     compile(project(":aem-intellij-inspection"))
     compile(project(":aem-intellij-index"))
-    compile(project(":aem-intellij-integration"))
+
+    // compile(project(":aem-intellij-integration"))
 
     compile("com.google.code.gson:gson:$gsonVersion")
     compile("org.apache.commons:commons-lang3:$apacheCommonsVersion")
