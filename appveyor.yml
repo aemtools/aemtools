@@ -9,6 +9,6 @@ test_script:
 
 environment:
   matrix:
-    - ORG_GRADLE_PROJECT_ideaVersion: 2018.1
     - ORG_GRADLE_PROJECT_ideaVersion: 2018.2
+#    - ORG_GRADLE_PROJECT_ideaVersion: 2018.2
     - ORG_GRADLE_PROJECT_ideaVersion: LATEST-EAP-SNAPSHOT

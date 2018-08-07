@@ -112,7 +112,7 @@
 
     <depends optional="true" config-file="jcr-property-language.xml">com.intellij.modules.lang</depends>
 
-    <idea-version since-build="181"/>
+    <idea-version since-build="182"/>
 
     <extensions defaultExtensionNs="com.intellij">
 
@@ -267,10 +267,12 @@
         <postStartupActivity implementation="com.aemtools.init.AemIntellijStartupActivity"/>
         <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
 
+        <!--
         <projectConfigurable groupId="tools"
                              displayName="AEM Tools"
                              id="preference.AEMTools"
                              instance="com.aemtools.integration.sync.settings.SyncSettings"/>
+        -->
     </extensions>
 
     <application-components>
@@ -286,6 +288,7 @@
                 description="HTML files under this directory will be considered as HTL files">
             <add-to-group group-id="MarkRootGroup" anchor="last"/>
         </action>
+        <!--
         <group id="AEMToolsGroup"
                class="com.aemtools.integration.sync.action.AemToolsActionGroup"
                text="AEM Tools"
@@ -302,6 +305,7 @@
                     description="Import file from AEM instance">
             </action>
         </group>
+        -->
     </actions>
 
 </idea-plugin>
