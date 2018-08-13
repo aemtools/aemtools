@@ -52,7 +52,6 @@ configure<IntelliJPluginExtension> {
     pluginName = "aemtools"
     version = ideaVersion
     downloadSources = true
-    updateSinceUntilBuild = false
     setPlugins(
             "IntelliLang"
     )

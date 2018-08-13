@@ -28,7 +28,8 @@ class ClientlibraryIndexTest : BaseLightTest() {
           .isEqualTo(ClientlibraryModel(
               emptyList(),
               listOf("lib1", "lib2"),
-              emptyList(), emptyList()
+              emptyList(), emptyList(),
+              "/src/jcr_root/apps/myapp/.content.xml"
           ))
     }
 

@@ -105,12 +105,9 @@ object OpenApiUtil {
  * @see WriteCommandAction.Simple
  */
 fun writeCommand(project: Project, lambda: () -> Unit) {
-  object : WriteCommandAction.Simple<Any>(project) {
-    override fun run() {
-      lambda.invoke()
-    }
-
-  }.execute().resultObject
+  WriteCommandAction.runWriteCommandAction(project) {
+    lambda.invoke()
+  }
 }
 
 /**

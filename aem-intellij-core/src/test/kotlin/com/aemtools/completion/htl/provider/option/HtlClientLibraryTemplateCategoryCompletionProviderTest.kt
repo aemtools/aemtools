@@ -2,17 +2,19 @@ package com.aemtools.completion.htl.provider.option
 
 import com.aemtools.common.constant.const
 import com.aemtools.test.completion.CompletionBaseLightTest
-import com.aemtools.test.completion.model.ICompletionTestFixture
+import com.aemtools.test.fixture.ClientlibraryMixin
+import com.aemtools.test.fixture.clientLibrary
 
 /**
  * Test for [HtlClientLibraryTemplateCategoryCompletionProvider].
  *
  * @author Dmytro Primshyts
  */
-class HtlClientLibraryTemplateCategoryCompletionProviderTest : CompletionBaseLightTest(false) {
+class HtlClientLibraryTemplateCategoryCompletionProviderTest : CompletionBaseLightTest(false),
+    ClientlibraryMixin {
 
   fun testForJs() = completionTest {
-    addClientlibrary("/${const.JCR_ROOT}/apps/myapp/.content.xml", listOf("lib1", "lib2"))
+    clientLibrary("/${const.JCR_ROOT}/apps/myapp/.content.xml", listOf("lib1", "lib2"))
 
     addHtml("${const.JCR_ROOT}/apps/myapp/myapp.html", """
         <div data-sly-use.cl="/libs/granite/sightly/templates/clientlib.html"> </div>
@@ -24,7 +26,7 @@ class HtlClientLibraryTemplateCategoryCompletionProviderTest : CompletionBaseLig
   }
 
   fun testForCss() = completionTest {
-    addClientlibrary("/${const.JCR_ROOT}/apps/myapp/.content.xml", listOf("lib1", "lib2"))
+    clientLibrary("/${const.JCR_ROOT}/apps/myapp/.content.xml", listOf("lib1", "lib2"))
 
     addHtml("${const.JCR_ROOT}/apps/myapp/myapp.html", """
         <div data-sly-use.cl="/libs/granite/sightly/templates/clientlib.html"> </div>
@@ -36,7 +38,7 @@ class HtlClientLibraryTemplateCategoryCompletionProviderTest : CompletionBaseLig
   }
 
   fun testForAll() = completionTest {
-    addClientlibrary("/${const.JCR_ROOT}/apps/myapp/.content.xml", listOf("lib1", "lib2"))
+    clientLibrary("/${const.JCR_ROOT}/apps/myapp/.content.xml", listOf("lib1", "lib2"))
 
     addHtml("${const.JCR_ROOT}/apps/myapp/myapp.html", """
         <div data-sly-use.cl="/libs/granite/sightly/templates/clientlib.html"> </div>
@@ -48,7 +50,7 @@ class HtlClientLibraryTemplateCategoryCompletionProviderTest : CompletionBaseLig
   }
 
   fun testForJsViaArray() = completionTest {
-    addClientlibrary("/${const.JCR_ROOT}/apps/myapp/.content.xml", listOf("lib1", "lib2"))
+    clientLibrary("/${const.JCR_ROOT}/apps/myapp/.content.xml", listOf("lib1", "lib2"))
 
     addHtml("${const.JCR_ROOT}/apps/myapp/myapp.html", """
         <div data-sly-use.cl="/libs/granite/sightly/templates/clientlib.html"> </div>
@@ -60,7 +62,7 @@ class HtlClientLibraryTemplateCategoryCompletionProviderTest : CompletionBaseLig
   }
 
   fun testForCssViaArray() = completionTest {
-    addClientlibrary("/${const.JCR_ROOT}/apps/myapp/.content.xml", listOf("lib1", "lib2"))
+    clientLibrary("/${const.JCR_ROOT}/apps/myapp/.content.xml", listOf("lib1", "lib2"))
 
     addHtml("${const.JCR_ROOT}/apps/myapp/myapp.html", """
         <div data-sly-use.cl="/libs/granite/sightly/templates/clientlib.html"> </div>
@@ -72,7 +74,7 @@ class HtlClientLibraryTemplateCategoryCompletionProviderTest : CompletionBaseLig
   }
 
   fun testForAllViaArray() = completionTest {
-    addClientlibrary("/${const.JCR_ROOT}/apps/myapp/.content.xml", listOf("lib1", "lib2"))
+    clientLibrary("/${const.JCR_ROOT}/apps/myapp/.content.xml", listOf("lib1", "lib2"))
 
     addHtml("${const.JCR_ROOT}/apps/myapp/myapp.html", """
         <div data-sly-use.cl="/libs/granite/sightly/templates/clientlib.html"> </div>
@@ -81,20 +83,6 @@ class HtlClientLibraryTemplateCategoryCompletionProviderTest : CompletionBaseLig
     """.trimIndent())
 
     shouldContain("lib1", "lib2")
-  }
-
-  private fun ICompletionTestFixture.addClientlibrary(
-      fileName: String,
-      categories: List<String>,
-      embeds: List<String> = emptyList(),
-      channels: List<String> = emptyList()
-  ) {
-    addXml(fileName, """
-        <jcr:root jcr:primaryType="cq:ClientLibraryFolder"
-             categories="$categories"
-             embeds="$embeds"
-             channels="$channels"
-    """.trimIndent())
   }
 
 }

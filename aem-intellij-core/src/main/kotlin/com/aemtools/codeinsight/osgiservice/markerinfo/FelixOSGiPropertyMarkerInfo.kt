@@ -16,13 +16,13 @@ import com.intellij.util.Function
  */
 class FelixOSGiPropertyMarkerInfo(
         propertyIdentifier: PsiIdentifier,
-        propertyDescriptors: List<FelixOSGiPropertyDescriptor>
+        propertyDescriptorsProvider: () -> List<FelixOSGiPropertyDescriptor>
 ) : LineMarkerInfo<PsiElement>(
         propertyIdentifier,
         propertyIdentifier.textRange,
         AllIcons.Nodes.PropertyRead,
         Pass.LINE_MARKERS,
         Function { "OSGi Property" },
-    FelixOSGiPropertyNavigationHandler(propertyDescriptors),
+    FelixOSGiPropertyNavigationHandler(propertyDescriptorsProvider),
         GutterIconRenderer.Alignment.CENTER
 )

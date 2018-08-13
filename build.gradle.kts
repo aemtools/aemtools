@@ -81,7 +81,7 @@ subprojects {
     }
 
     configure<JacocoPluginExtension> {
-        toolVersion = "0.7.6.201602180812"
+        toolVersion = "0.8.1"
         reportsDir = file("$buildDir/jacocoReport")
     }
 
@@ -178,9 +178,11 @@ subprojects {
     }
 }
 
-task<Wrapper>("wrapper") {
-    gradleVersion = "4.9"
-    distributionType = Wrapper.DistributionType.ALL
+tasks {
+    "wrapper"(Wrapper::class) {
+        gradleVersion = "4.9"
+        distributionType = Wrapper.DistributionType.ALL
+    }
 }
 
 configure<JacocoFullReportExtension> {

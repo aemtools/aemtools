@@ -39,8 +39,4 @@ val ideaVersion: String by properties
 
 configure<IntelliJPluginExtension> {
     version = ideaVersion
-
-    setPlugins(
-            "IntelliLang"
-    )
 }

@@ -20,7 +20,7 @@ object ClientlibraryIndexer : DataIndexer<String, ClientlibraryModel, FileConten
           ?: return mutableMapOf()
 
       val path = inputData.file.path
-      val model = ClientlibraryModel.fromTag(mainTag)
+      val model = ClientlibraryModel.fromTag(mainTag, path)
           ?: return mutableMapOf()
 
       return mutableMapOf(

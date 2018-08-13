@@ -20,5 +20,4 @@ class JpLexerTest : LexerBaseTest() {
   fun testValue() = doTest()
   fun testArray() = doTest()
   fun testEmptyArray() = doTest()
-
 }

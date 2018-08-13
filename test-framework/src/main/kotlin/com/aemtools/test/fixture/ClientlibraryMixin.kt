@@ -2,7 +2,6 @@ package com.aemtools.test.fixture
 
 import com.aemtools.test.base.model.fixture.ITestFixture
 
-
 /**
  * Clientlibrary utilities mixin.
  *
@@ -10,30 +9,33 @@ import com.aemtools.test.base.model.fixture.ITestFixture
  */
 interface ClientlibraryMixin {
 
-  /**
-   * Add clientlibrary definition to current [ITestFixture].
-   *
-   * @param path the path to definition file
-   * @param channels the channels
-   * @param categories the categories
-   * @param dependencies the dependencies
-   * @param embed the embed
-   *
-   * @receiver [ITestFixture]
-   */
-  fun ITestFixture.clientLibrary(
-      path: String,
-      channels: String = "",
-      categories: String = "",
-      dependencies: String = "",
-      embed: String = ""
-  ) {
+
+}
 
 
-    val body = buildString {
-
-    }
-
-  }
-
+/**
+ * Add clientlibrary definition to current [ITestFixture].
+ *
+ * @param fileName the name of client library definition file
+ * @param categories the categories
+ * @param channels the channels
+ * @param dependencies the dependencies
+ * @param embed the embed
+ *
+ * @receiver [ITestFixture]
+ */
+fun ITestFixture.clientLibrary(
+    fileName: String,
+    categories: List<String>,
+    dependencies: List<String> = emptyList(),
+    embed: List<String> = emptyList(),
+    channels: List<String> = emptyList()
+) {
+  addXml(fileName, """
+        <jcr:root jcr:primaryType="cq:ClientLibraryFolder"
+             categories="$categories"
+             dependencies="$dependencies"
+             embed="$embed"
+             channels="$channels"
+    """.trimIndent())
 }

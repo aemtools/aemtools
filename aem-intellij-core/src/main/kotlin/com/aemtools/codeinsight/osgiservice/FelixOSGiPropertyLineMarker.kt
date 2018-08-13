@@ -45,10 +45,20 @@ class FelixOSGiPropertyLineMarker : LineMarkerProvider {
         return null
       }
 
-      val propertyDescriptors = propertyDescriptors(configs, value)
+      return FelixOSGiPropertyMarkerInfo(element) {
+        val containingClassFqn = containingClass.qualifiedName
+            ?: return@FelixOSGiPropertyMarkerInfo emptyList()
 
-      return FelixOSGiPropertyMarkerInfo(element,
-          propertyDescriptors)
+        val configs = OSGiConfigSearch.findConfigsForClass(
+            containingClassFqn,
+            element.project,
+            true)
+        if (configs.isEmpty()) {
+          return@FelixOSGiPropertyMarkerInfo emptyList()
+        }
+
+        propertyDescriptors(configs, value)
+      }
     }
 
     return null
