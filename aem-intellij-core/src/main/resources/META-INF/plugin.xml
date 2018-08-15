@@ -102,7 +102,6 @@
     </change-notes>
 
     <depends>com.intellij.modules.lang</depends>
-    <depends>org.jetbrains.plugins.github</depends>
 
     <depends optional="true" config-file="java.xml">com.intellij.modules.java</depends>
 
