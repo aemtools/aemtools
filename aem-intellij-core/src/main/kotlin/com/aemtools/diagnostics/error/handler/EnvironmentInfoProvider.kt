@@ -1,6 +1,5 @@
 package com.aemtools.diagnostics.error.handler
 
-import com.intellij.idea.IdeaLogger
 import com.intellij.openapi.application.ApplicationInfo
 
 /**
@@ -14,8 +13,7 @@ object EnvironmentInfoProvider {
         |\n* Runtime name: ${getRuntimeName()}
         |\n* OS name: ${getOsName()}
         |\n* OS version: ${getOsVersion()}
-        |\n* OS architecture: ${getOsArchitecture()}
-        |\n* Last action id: ${getLastActionId()}""".trimMargin()
+        |\n* OS architecture: ${getOsArchitecture()}""".trimMargin()
   }
 
   private fun getIdeVersion(): String {
@@ -34,5 +32,4 @@ object EnvironmentInfoProvider {
 
   private fun getOsArchitecture() = System.getProperty("os.arch")
 
-  private fun getLastActionId() = IdeaLogger.ourLastActionId
 }

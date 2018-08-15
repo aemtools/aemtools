@@ -4,6 +4,7 @@ import AccessTokenProvider
 import com.google.gson.JsonParser
 import com.intellij.ide.DataManager
 import com.intellij.ide.plugins.IdeaPluginDescriptorImpl
+import com.intellij.idea.IdeaLogger
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationListener
 import com.intellij.notification.NotificationType
@@ -116,7 +117,8 @@ class ErrorHandler : ErrorReportSubmitter() {
       }
       return (addInfo +
           "Stack trace:\n```\n$stringWriter\n```" +
-          EnvironmentInfoProvider.envInfo)
+          EnvironmentInfoProvider.envInfo +
+          "\n* Last action id: ${IdeaLogger.ourLastActionId}")
           .replace("\n", "\\n")
           .replace("\r", "\\r")
           .replace("\t", "\\t")
