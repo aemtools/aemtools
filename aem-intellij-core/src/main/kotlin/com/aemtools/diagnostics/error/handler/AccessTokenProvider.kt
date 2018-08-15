@@ -27,7 +27,10 @@ object AccessTokenProvider {
     }
 
     private fun readToken(): ByteArray {
-        return AccessTokenProvider::class.java.getResource(TOKEN_FILE_PATH).readBytes()
+        return AccessTokenProvider::class.java.getResource(TOKEN_FILE_PATH)
+            .readText(StandardCharsets.UTF_8)
+            .trim()
+            .toByteArray()
     }
 
     private fun decodeToken(encodedToken: ByteArray): ByteArray {

@@ -1,17 +1,25 @@
 package com.aemtools.diagnostics.error.handler
 
 import AccessTokenProvider
+import com.google.gson.JsonParser
 import com.intellij.ide.DataManager
 import com.intellij.ide.plugins.IdeaPluginDescriptorImpl
+import com.intellij.notification.Notification
+import com.intellij.notification.NotificationListener
+import com.intellij.notification.NotificationType
+import com.intellij.notification.Notifications
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.diagnostic.ErrorReportSubmitter
 import com.intellij.openapi.diagnostic.IdeaLoggingEvent
 import com.intellij.openapi.diagnostic.SubmittedReportInfo
 import com.intellij.openapi.extensions.PluginDescriptor
 import com.intellij.openapi.progress.ProgressIndicator
+import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.progress.Task
 import com.intellij.util.Consumer
 import org.apache.commons.lang3.StringUtils
+import org.apache.http.HttpEntity
+import org.apache.http.HttpStatus
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.HttpClientBuilder
@@ -31,7 +39,7 @@ class ErrorHandler : ErrorReportSubmitter() {
   override fun submit(events: Array<out IdeaLoggingEvent>, additionalInfo: String?, parentComponent: Component,
                       consumer: Consumer<SubmittedReportInfo>): Boolean {
     val project = CommonDataKeys.PROJECT.getData(DataManager.getInstance().getDataContext(parentComponent))
-    object : Task.Backgroundable(project, "Submit issue") {
+    val reportingTask = object : Task.Backgroundable(project, "Submit issue") {
       override fun run(indicator: ProgressIndicator) {
         indicator.text = "Issue reporting..."
 
@@ -57,14 +65,34 @@ class ErrorHandler : ErrorReportSubmitter() {
             .build().use {
 
               val execute = it.execute(request)
-              execute.entity
-              execute.allHeaders
+              if (execute.statusLine.statusCode == HttpStatus.SC_CREATED) {
+                notifyUser("Report successful", "<a href=${extractLinkToIssue(execute.entity)}>click to open</a>", NotificationType.INFORMATION)
+              } else {
+                notifyUser("Report error", StringUtils.EMPTY, NotificationType.WARNING)
+              }
             }
       }
 
-    }.notifyFinished()
+    }
+    ProgressManager.getInstance().run(reportingTask)
 
     return true
+  }
+
+  private fun extractLinkToIssue(entity: HttpEntity?): String {
+    entity?.content?.bufferedReader().use {
+      val readText = it?.readText()
+      return JsonParser().parse(readText).asJsonObject.getAsJsonPrimitive("html_url").toString()
+    }
+  }
+
+  private fun notifyUser(title: String, text: String, notificationType: NotificationType) {
+    Notifications.Bus.notify(Notification(pluginDescriptor.pluginId.idString,
+        title,
+        text,
+        notificationType,
+        NotificationListener.UrlOpeningListener(true)))
+
   }
 
   private fun getPluginVersion(pluginDescriptor: PluginDescriptor?) = if (pluginDescriptor != null
@@ -75,8 +103,8 @@ class ErrorHandler : ErrorReportSubmitter() {
   }
 
 
-  fun createIssueOverview(event: IdeaLoggingEvent,
-                          additionalInfo: String?): String {
+  private fun createIssueOverview(event: IdeaLoggingEvent,
+                                  additionalInfo: String?): String {
     val stringWriter = StringWriter()
     PrintWriter(stringWriter).use {
       event.throwable.printStackTrace(it)
