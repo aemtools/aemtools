@@ -30,7 +30,7 @@ class JcrPropertyInjector : MultiHostInjector {
     val attributeName = attributeValue.findParentByType(XmlAttribute::class.java)
         ?: return
 
-    val tag = attributeName.findParentByType(XmlTag::class.java)
+    val parentTag = attributeName.findParentByType(XmlTag::class.java)
         ?: return
     val psiLanguageInjectionHost = context
         as? PsiLanguageInjectionHost
@@ -68,10 +68,26 @@ class JcrPropertyInjector : MultiHostInjector {
       ) -> inject(registrar, context, attributeValue)
 
       // inject into osgi config
-      tag hasAttribute xmlAttributeMatcher(
+      parentTag hasAttribute xmlAttributeMatcher(
           name = JCR_PRIMARY_TYPE,
           value = SLING_OSGI_CONFIG
+      )
+          && attributeName.name !in listOf(
+          "xmlns:sling",
+          "xmlns:jcr",
+          "xmlns:nt"
       ) -> inject(registrar, context, attributeValue)
+
+      // inject into i18n file
+//      parentTag.findParentByType(XmlTag::class.java, { tag ->
+//        tag.name == "jcr:root"
+//      })?.let { rootTag ->
+//        rootTag hasAttribute {
+//          it.name == "jcr:language"
+//        } && rootTag hasAttribute {
+//          it.name == "jcr:mixinTypes"
+//        }
+//      } ?: false -> inject(registrar, context, attributeValue)
     }
 
   }
