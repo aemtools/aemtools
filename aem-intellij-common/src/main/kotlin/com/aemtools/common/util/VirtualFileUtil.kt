@@ -21,6 +21,6 @@ fun VirtualFile.toPsiFile(project: Project): PsiFile? = project.psiManager().fin
  * @param project the project
  * @receiver [VirtualFile]
  * @see [com.intellij.psi.PsiManager.findDirectory]
- * @return the psi directory]
+ * @return the psi directory
  */
 fun VirtualFile.toPsiDirectory(project: Project): PsiDirectory? = project.psiManager().findDirectory(this)

@@ -61,4 +61,3 @@ class HtlElCompletionContributor : BaseCompletionContributor({
   basic(categoriesOptionAssignmentViaArray, HtlClientLibraryTemplateCategoryCompletionProvider)
 
 })
-

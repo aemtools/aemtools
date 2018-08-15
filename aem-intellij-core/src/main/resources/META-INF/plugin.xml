@@ -44,59 +44,9 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li>
-                Added Cognifide
-                <a href="https://github.com/Cognifide/AEM-Rules-for-SonarQube#good-practices">AEM-1</a> rule as
-                IntelliJ inspection.
-            </li>
-            <li>
-                Added Cognifide
-                <a href="https://github.com/Cognifide/AEM-Rules-for-SonarQube#good-practices">AEM-2</a> rule as
-                IntelliJ inspection.
-            </li>
-            <li>
-                Added Cognifide
-                <a href="https://github.com/Cognifide/AEM-Rules-for-SonarQube#sling-models-related">AEM-16</a>
-                rule as IntelliJ inspection.
-            </li>
-            <li>
-                "Unnecessary expression inspection". Reports redundant HTL expression inside of
-                <i>data-sly-use</i> and <i>data-sly-include</i> as a warning.
-            </li>
-            <li>
-                Present available OSGi properties right in the Java editor via gutter icon.
-            </li>
-            <li>
-                "Associated OSGi service" gutter icon in <b>sling:OsgiConfig</b> configuration files
-                that links to corresponding OSGi service.
-            </li>
-            <li>
-                Inspection that warns on wrong data-sly-attribute usage. It can not be used
-                with event handler attributes "on*" and the "style" attribute (for more info see the
-                <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#223-attribute">spec</a>).
-            </li>
-            <li>
-                Added HTL Color Scheme Settings Page (<i>settings -> HTML Markup Language</i>).
-            </li>
-            <li>
-                HTL: Syntax highlighting for escape sequences within string literals.
-            </li>
-            <li>
-                HTL: Special highlighting for template parameters&arguments.
-            </li>
-            <li>
-                HTL: Smart completion for <i>data-sly-list</i> & <i>data-sly-repeat</i>.
-                Completion suggests the most relevant variant.
-            </li>
-            <li>
-                HTL: Improved completion for <i>i18n</i> expressions (e.g. ${'&lt;caret&gt;' @ i18n}).
-            </li>
-            <li>
-                HTL: Fixed wrong syntax highlighting within HTL comments.
-            </li>
-            <li>
-                HTL: Bug fixes and improvements.
-            </li>
+            <li>Plugin recognizes /libs/granite/sightly/templates/clientlib.html and provides corresponding completion in data-sly-call</li>
+            <li>Dropped support of Intellij IDEA of versions under 2018.1</li>
+            <li>Bug fixes</li>
         </ul>
     ]]>
     </change-notes>
@@ -112,7 +62,7 @@
 
     <depends optional="true" config-file="jcr-property-language.xml">com.intellij.modules.lang</depends>
 
-    <idea-version since-build="131"/>
+    <idea-version since-build="182"/>
 
     <extensions defaultExtensionNs="com.intellij">
 
@@ -267,10 +217,12 @@
         <postStartupActivity implementation="com.aemtools.init.AemIntellijStartupActivity"/>
         <errorHandler implementation="com.aemtools.diagnostics.error.handler.ErrorHandler"/>
 
+        <!--
         <projectConfigurable groupId="tools"
                              displayName="AEM Tools"
                              id="preference.AEMTools"
                              instance="com.aemtools.integration.sync.settings.SyncSettings"/>
+        -->
     </extensions>
 
     <application-components>
@@ -286,6 +238,7 @@
                 description="HTML files under this directory will be considered as HTL files">
             <add-to-group group-id="MarkRootGroup" anchor="last"/>
         </action>
+        <!--
         <group id="AEMToolsGroup"
                class="com.aemtools.integration.sync.action.AemToolsActionGroup"
                text="AEM Tools"
@@ -302,6 +255,7 @@
                     description="Import file from AEM instance">
             </action>
         </group>
+        -->
     </actions>
 
 </idea-plugin>

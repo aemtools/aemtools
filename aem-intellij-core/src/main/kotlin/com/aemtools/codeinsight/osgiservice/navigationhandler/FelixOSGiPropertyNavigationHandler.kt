@@ -15,12 +15,12 @@ import java.awt.event.MouseEvent
  * @author Dmytro Troynikov
  */
 class FelixOSGiPropertyNavigationHandler(
-    val propertyDescriptors: List<FelixOSGiPropertyDescriptor>
+    val propertyDescriptors: () -> List<FelixOSGiPropertyDescriptor>
 ) : GutterIconNavigationHandler<PsiElement> {
 
   override fun navigate(e: MouseEvent?, elt: PsiElement?) {
     PsiElementListNavigator.openTargets(e,
-        propertyDescriptors.map {
+        propertyDescriptors().map {
           (it.xmlAttribute?.toNavigatable() ?: it.osgiConfigFIle) as NavigatablePsiElement
         }.toTypedArray(),
         "OSGi Property", null, createListCellRenderer())
@@ -31,7 +31,7 @@ class FelixOSGiPropertyNavigationHandler(
       override fun getIconFlags(): Int = 0
 
       override fun getContainerText(element: PsiElement, name: String): String? {
-        return propertyDescriptors.find {
+        return propertyDescriptors().find {
           it.xmlAttribute?.toNavigatable() == element
            || it.osgiConfigFIle == element
         }?.propertyValue ?: ""
@@ -41,7 +41,7 @@ class FelixOSGiPropertyNavigationHandler(
         if (element == null) {
           return ""
         }
-        return propertyDescriptors.find {
+        return propertyDescriptors().find {
           it.xmlAttribute?.toNavigatable() == element
               || it.osgiConfigFIle == element
         }?.mods ?: ""

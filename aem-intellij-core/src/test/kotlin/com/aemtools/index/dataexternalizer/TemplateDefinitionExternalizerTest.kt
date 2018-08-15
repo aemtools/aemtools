@@ -3,11 +3,11 @@ package com.aemtools.index.dataexternalizer
 import com.aemtools.common.index.BaseExternalizer.Companion.MARKER_BYTES
 import com.aemtools.common.util.serializeToByteArray
 import com.aemtools.index.model.TemplateDefinition
+import com.nhaarman.mockito_kotlin.mock
 import org.junit.Assert
 import org.junit.Test
 import org.mockito.ArgumentCaptor
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.mock
 import org.mockito.Mockito.only
 import org.mockito.Mockito.verify
 import org.mockito.invocation.InvocationOnMock
@@ -16,7 +16,9 @@ import java.io.DataInput
 import java.io.DataOutput
 
 /**
- * @author Dmytro_Troynikov
+ * Test for [TemplateDefinitionExternalizer].
+ *
+ * @author Dmytro Primshyts
  */
 class TemplateDefinitionExternalizerTest {
 
@@ -24,7 +26,7 @@ class TemplateDefinitionExternalizerTest {
 
   @Test
   fun saveShouldAddMarkerBytes() {
-    val out = mock(DataOutput::class.java)
+    val out: DataOutput = mock()
 
     TemplateDefinitionExternalizer.save(out, fixture)
 
@@ -33,8 +35,8 @@ class TemplateDefinitionExternalizerTest {
 
   @Test
   fun saveAndRead() {
-    val out = mock(DataOutput::class.java)
-    val input = mock(DataInput::class.java)
+    val out: DataOutput = mock()
+    val input: DataInput = mock()
 
     val outputCaptor = ArgumentCaptor.forClass<ByteArray, ByteArray>(ByteArray::class.java)
 

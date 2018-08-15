@@ -39,7 +39,6 @@ class SyncSettingsTest : BaseLightTest(false) {
 
   @Test
   fun `test apply settings`() {
-
     TestCase.assertNotNull(syncSettings)
 
     syncSettings.createComponent()

@@ -155,7 +155,7 @@ object HtlPatterns {
    * ```
    */
   val categoriesOptionAssignment: ElementPattern<PsiElement> =
-      namedOptionAssignment("categories")
+      namedOptionAssignment(const.htl.options.CATEGORIES)
 
   /**
    * Matches the following:

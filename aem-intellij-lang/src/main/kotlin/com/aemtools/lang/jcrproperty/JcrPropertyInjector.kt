@@ -1,8 +1,11 @@
 package com.aemtools.lang.jcrproperty
 
+import com.aemtools.common.constant.const.JCR_PRIMARY_TYPE
+import com.aemtools.common.constant.const.xml.SLING_OSGI_CONFIG
 import com.aemtools.common.util.findParentByType
 import com.aemtools.common.util.hasAttribute
 import com.aemtools.common.util.hasParent
+import com.aemtools.common.util.xmlAttributeMatcher
 import com.intellij.lang.injection.MultiHostInjector
 import com.intellij.lang.injection.MultiHostRegistrar
 import com.intellij.openapi.util.TextRange
@@ -27,12 +30,14 @@ class JcrPropertyInjector : MultiHostInjector {
     val attributeName = attributeValue.findParentByType(XmlAttribute::class.java)
         ?: return
 
+    val parentTag = attributeName.findParentByType(XmlTag::class.java)
+        ?: return
     val psiLanguageInjectionHost = context
         as? PsiLanguageInjectionHost
         ?: return
 
     when {
-    // inject into cq:ClientLibraryFolder
+      // inject into cq:ClientLibraryFolder
       psiLanguageInjectionHost.containingFile.name == ".content.xml"
           && psiLanguageInjectionHost.hasParent(cqClientLibraryFolderTag())
           && attributeName.name in listOf(
@@ -43,7 +48,7 @@ class JcrPropertyInjector : MultiHostInjector {
           "dependencies"
       ) -> inject(registrar, context, attributeValue)
 
-    // inject into _rep_policy.xml
+      // inject into _rep_policy.xml
       psiLanguageInjectionHost.containingFile.name == "_rep_policy.xml"
           && attributeName.name in listOf(
           "jcr:primaryType",
@@ -51,6 +56,7 @@ class JcrPropertyInjector : MultiHostInjector {
           "rep:privileges"
       ) -> inject(registrar, context, attributeValue)
 
+      // inject into _cq_editorConfig.xml
       psiLanguageInjectionHost.containingFile.name == "_cq_editConfig.xml"
           && attributeName.name in listOf(
           "jcr:primaryType",
@@ -60,6 +66,28 @@ class JcrPropertyInjector : MultiHostInjector {
           "cq:emptyText",
           "cq:inherit"
       ) -> inject(registrar, context, attributeValue)
+
+      // inject into osgi config
+      parentTag hasAttribute xmlAttributeMatcher(
+          name = JCR_PRIMARY_TYPE,
+          value = SLING_OSGI_CONFIG
+      )
+          && attributeName.name !in listOf(
+          "xmlns:sling",
+          "xmlns:jcr",
+          "xmlns:nt"
+      ) -> inject(registrar, context, attributeValue)
+
+      // inject into i18n file
+//      parentTag.findParentByType(XmlTag::class.java, { tag ->
+//        tag.name == "jcr:root"
+//      })?.let { rootTag ->
+//        rootTag hasAttribute {
+//          it.name == "jcr:language"
+//        } && rootTag hasAttribute {
+//          it.name == "jcr:mixinTypes"
+//        }
+//      } ?: false -> inject(registrar, context, attributeValue)
     }
 
   }

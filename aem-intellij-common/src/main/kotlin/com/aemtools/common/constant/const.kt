@@ -100,6 +100,8 @@ object const {
       const val CONTEXT = "context"
       const val RESOURCE_TYPE = "resourceType"
       const val I18N = "i18n"
+
+      const val CATEGORIES = "categories"
     }
   }
 

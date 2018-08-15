@@ -28,7 +28,7 @@ EOL=\R
 WHITE_SPACE=\s+
 
 VALUE_TOKEN=[^\[\]{}]+
-ARRAY_VALUE_TOKEN=[\w:.-]+
+ARRAY_VALUE_TOKEN=[\w:. -]+
 
 %%
 <YYINITIAL> {
@@ -56,11 +56,10 @@ ARRAY_VALUE_TOKEN=[\w:.-]+
   ","                  { return COMMA; }
 
   {VALUE_TOKEN}        { return VALUE_TOKEN; }
-
 }
 
 <ARRAY> {
-{WHITE_SPACE}        { return WHITE_SPACE; }
+  {WHITE_SPACE}        { return WHITE_SPACE; }
 
   "String"             { return STRING; }
   "Binary"             { return BINARY; }
