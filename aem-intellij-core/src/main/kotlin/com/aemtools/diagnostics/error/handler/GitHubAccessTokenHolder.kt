@@ -2,7 +2,7 @@ package com.aemtools.diagnostics.error.handler
 
 import java.lang.Exception
 import java.nio.charset.StandardCharsets
-import java.util.*
+import java.util.Base64
 import javax.crypto.Cipher
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.IvParameterSpec

@@ -45,7 +45,7 @@ class ErrorHandler : ErrorReportSubmitter() {
           request.addHeader(BasicHeader("Authorization",
               "token ${accessTokenHolder().getToken()}"))
         } catch (ex: TokenInitializationException) {
-
+          notifyUser("Report error", StringUtils.EMPTY, NotificationType.WARNING)
           return
         }
 
@@ -56,7 +56,8 @@ class ErrorHandler : ErrorReportSubmitter() {
         createHttpClient().use {
           val execute = it.execute(request)
           if (execute.statusLine.statusCode == HttpStatus.SC_CREATED) {
-            notifyUser("Report successful", "<a href=${extractLinkToIssue(execute.entity)}>click to open</a>", NotificationType.INFORMATION)
+            notifyUser("Report successful", "<a href=${extractLinkToIssue(execute.entity)}>click to open</a>",
+                NotificationType.INFORMATION)
           } else {
             notifyUser("Report error", StringUtils.EMPTY, NotificationType.WARNING)
           }
@@ -69,23 +70,44 @@ class ErrorHandler : ErrorReportSubmitter() {
     return true
   }
 
+  /**
+   * @param parentComponent
+   */
   fun currentProject(parentComponent: Component) =
       CommonDataKeys.PROJECT.getData(DataManager.getInstance().getDataContext(parentComponent))
 
+  /**
+   * @param reportingTask
+   */
   fun startReporting(reportingTask: Task) {
     ProgressManager.getInstance().run(reportingTask)
   }
 
+  /**
+   * @return http client
+   */
   fun createHttpClient() = HttpClientBuilder.create().build()!!
 
+  /**
+   * @return token holder
+   */
   fun accessTokenHolder() = GitHubAccessTokenHolder() as AccessTokenHolder
 
+  /**
+   * @return information about issue
+   */
   fun issueInfoHolder() = GitHubIssueInfoHolder() as IssueInfoHolder
 
+  /**
+   * @return
+   */
   fun createRequest(): HttpPost {
     return HttpPost("https://api.github.com/repos/aemtools-issue-reporter/test/issues")
   }
 
+  /**
+   * Notify user
+   */
   fun notifyUser(title: String, text: String, notificationType: NotificationType) {
     Notifications.Bus.notify(Notification(pluginDescriptor.pluginId.idString,
         title,
@@ -95,6 +117,10 @@ class ErrorHandler : ErrorReportSubmitter() {
 
   }
 
+  /**
+   * @param entity
+   * @return
+   */
   fun extractLinkToIssue(entity: HttpEntity?): String {
     return entity?.content?.bufferedReader()?.use {
       val readText = it.readText()

@@ -7,5 +7,8 @@ import com.intellij.openapi.extensions.PluginDescriptor
  * @author DeusBit
  */
 interface IssueInfoHolder {
+  /**
+   * Create detail information about an issue.
+   */
   fun getIssueDetails(event: IdeaLoggingEvent, pluginDescriptor: PluginDescriptor, additionalInfo: String?): String
 }

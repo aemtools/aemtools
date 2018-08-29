@@ -81,8 +81,7 @@ class ErrorHandlerTest {
     events = arrayOf(loggingEvent)
 
     doAnswer {
-      val backgroundable = it.getArgument(0) as Task.Backgroundable
-      backgroundable.run(indicator)
+      (it.getArgument(0) as Task.Backgroundable).run(indicator)
     }.`when`(target).startReporting(any())
 
     doReturn(pluginDescriptor).`when`(target).pluginDescriptor
@@ -133,6 +132,16 @@ class ErrorHandlerTest {
       assertEquals("Content-Type", lastValue.name)
       assertEquals("application/json", lastValue.value)
     }
+  }
+
+
+  @Test
+  fun testShouldShouldNotifyUserWhenCannotGetAccessToken() {
+    doThrow(TokenInitializationException()).`when`(accessTokenHolder).getToken()
+
+    target.submit(events, null, component, {})
+
+    verify(target).notifyUser("Report error",StringUtils.EMPTY, NotificationType.WARNING)
   }
 
   @Test
