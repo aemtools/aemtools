@@ -114,7 +114,6 @@ class ErrorHandler : ErrorReportSubmitter() {
         text,
         notificationType,
         NotificationListener.UrlOpeningListener(true)))
-
   }
 
   /**
