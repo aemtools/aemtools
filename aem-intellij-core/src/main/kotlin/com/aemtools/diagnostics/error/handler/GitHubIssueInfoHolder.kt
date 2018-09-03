@@ -17,9 +17,7 @@ class GitHubIssueInfoHolder: IssueInfoHolder {
                                additionalInfo: String?): String {
     val issueOverview = createIssueOverview(event, additionalInfo)
 
-    return "{\"title\":\"User issue for version ${getPluginVersion(pluginDescriptor)}\"," +
-        "\"body\":\"$issueOverview\"," +
-        "\"labels\":[\"bug\"]}"
+    return """{"title":"User issue for version ${getPluginVersion(pluginDescriptor)}","body":"$issueOverview","labels":["bug"]}"""
   }
 
   private fun getPluginVersion(pluginDescriptor: PluginDescriptor?) = if (pluginDescriptor != null

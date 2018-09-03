@@ -13,6 +13,7 @@ import javax.crypto.spec.SecretKeySpec
  * @author DeusBit
  */
 class GitHubAccessTokenHolder : AccessTokenHolder {
+
   override fun getToken(): String {
     return GitHubAccessTokenProvider.token
   }
