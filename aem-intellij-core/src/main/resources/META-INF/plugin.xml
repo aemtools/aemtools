@@ -215,7 +215,7 @@
         <colorSettingsPage implementation="com.aemtools.ide.htl.HtlColorsAndFontsPage"/>
 
         <postStartupActivity implementation="com.aemtools.init.AemIntellijStartupActivity"/>
-        <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
+        <errorHandler implementation="com.aemtools.diagnostics.error.handler.ErrorHandler"/>
 
         <!--
         <projectConfigurable groupId="tools"
