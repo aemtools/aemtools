@@ -2,6 +2,7 @@ package com.aemtools.index
 
 import com.aemtools.common.util.allFromFbi
 import com.aemtools.common.util.toPsiFile
+import com.aemtools.index.LocalizationIndex.Companion.LOCALIZATION_INDEX
 import com.aemtools.index.model.LocalizationModel
 import com.aemtools.index.model.TemplateDefinition
 import com.intellij.openapi.project.Project
@@ -9,6 +10,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.util.PathUtil
+import com.intellij.util.indexing.FileBasedIndex
 
 /**
  * @author Dmytro Troynikov
@@ -108,7 +110,30 @@ object HtlIndexFacade {
    * @return list of [LocalizationModel] objects
    */
   fun getAllLocalizationModels(project: Project): List<LocalizationModel> =
-      allFromFbi(LocalizationIndex.LOCALIZATION_INDEX, project)
+      allFromFbi(LOCALIZATION_INDEX, project, GlobalSearchScope.projectScope(project))
+
+  /**
+   * Collect all localization keys.
+   *
+   * @param project the project
+   * @return list of localization keys
+   */
+  fun getAllLocalizationKeys(project: Project): List<String> =
+      FileBasedIndex.getInstance().getAllKeys(LOCALIZATION_INDEX, project).map {
+        it.substringAfter("#")
+      }
+
+  /**
+   * Collect localization models that correspond to given key.
+   *
+   * @param project the project
+   * @return list of [LocalizationModel] objects
+   */
+  fun getLocalizationModelsForKey(project: Project, key: String): List<LocalizationModel> =
+      FileBasedIndex.getInstance().let { fbi ->
+        fbi.getAllKeys(LOCALIZATION_INDEX, project).filter { it.endsWith(key) }
+            .flatMap { fbi.getValues(LOCALIZATION_INDEX, it, GlobalSearchScope.projectScope(project)) }
+      }
 
   /**
    * Normalize file name relative to given psi file.

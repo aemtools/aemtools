@@ -1,0 +1,7 @@
+JpFile:boolean.in
+  JpTypeImpl(TYPE)
+    PsiElement({)('{')
+    PsiElement(Boolean)('Boolean')
+    PsiElement(})('}')
+  JpSingleImpl(SINGLE)
+    PsiElement(VALUE_TOKEN)('false')

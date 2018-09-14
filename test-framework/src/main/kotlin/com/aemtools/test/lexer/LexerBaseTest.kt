@@ -10,6 +10,8 @@ import com.intellij.openapi.util.text.StringUtil
 import com.intellij.testFramework.LexerTestCase
 import com.intellij.testFramework.UsefulTestCase
 import java.io.IOException
+import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * @author Dmytro_Troynikov
@@ -25,7 +27,9 @@ abstract class LexerBaseTest : LexerTestCase(), HtlTestCase {
 
     var text = ""
     try {
-      val fileText = FileUtil.loadFile(filePath.toFile(), Charsets.UTF_8)
+      val absolutePath = Paths.get(filePath.toFile().absolutePath)
+
+      val fileText = FileUtil.loadFile(absolutePath.toFile(), Charsets.UTF_8)
       text = StringUtil.convertLineSeparators(if (shouldTrim()) fileText.trim() else fileText)
     } catch (e: IOException) {
       fail("Unable to load file $filePath: ${e.message}")

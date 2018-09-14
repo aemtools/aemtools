@@ -28,9 +28,10 @@ class LocalizationCompletionTest : CompletionBaseLightTest(false) {
     addHtml("test.html", """
             $DOLLAR{'$CARET' @ i18n}
         """)
-    shouldContain(
+    shouldContain(listOf(
         "message1",
-        "message2"
+        "message2"),
+        strict = false
     )
   }
 
@@ -69,9 +70,11 @@ class LocalizationCompletionTest : CompletionBaseLightTest(false) {
     addHtml("test.html", """
             $DOLLAR{'$CARET' @ i18n}
         """)
-    shouldContain(
+    shouldContain(listOf(
         "message1",
         "message2"
+    ),
+        strict = false
     )
   }
 

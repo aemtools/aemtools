@@ -2,7 +2,8 @@ package com.aemtools.completion.html.inserthandler
 
 import com.aemtools.test.BaseVariantsCheckContributorTest
 
-class HtlTextInsertHandlerTest : BaseVariantsCheckContributorTest("com/aemtools/completion/html/inserthandler") {
+class HtlTextInsertHandlerTest : BaseVariantsCheckContributorTest(
+    "com/aemtools/completion/html/inserthandler") {
 
   fun testHtlAttributesInsertExpressionDataSlyTest() = checkAutoCompletion()
 

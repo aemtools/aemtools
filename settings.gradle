@@ -1,9 +1,0 @@
-rootProject.name="aemtools"
-rootProject.buildFileName="build.gradle.kts"
-
-include 'aem-intellij-core'
-include 'test-framework'
-include 'common'
-include 'inspection'
-include 'lang'
-

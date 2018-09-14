@@ -1,5 +1,6 @@
 package com.aemtools.completion.html
 
+import com.aemtools.common.completion.BaseCompletionContributor
 import com.aemtools.completion.html.provider.HtmlAttributeCompletionProvider
 import com.aemtools.completion.html.provider.HtmlDataSlyIncludeCompletionProvider
 import com.aemtools.completion.html.provider.HtmlDataSlyUseCompletionProvider
@@ -10,39 +11,24 @@ import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseNoEl
 import com.aemtools.lang.html.psi.pattern.HtmlPatterns.aInHtlFile
 import com.aemtools.lang.html.psi.pattern.HtmlPatterns.attributeInHtlFile
 import com.aemtools.lang.html.psi.pattern.HtmlPatterns.valueOfXLinkChecker
-import com.intellij.codeInsight.completion.CompletionContributor
-import com.intellij.codeInsight.completion.CompletionType
 
 /**
  * Completion contributor for HTML related completions.
  *
  * @author Dmytro_Troynikov
  */
-class HtmlCompletionContributor : CompletionContributor() { init {
-  extend(CompletionType.BASIC,
-      dataSlyUseNoEl,
-      HtmlDataSlyUseCompletionProvider)
+class HtmlCompletionContributor : BaseCompletionContributor({
 
-  extend(CompletionType.SMART,
-      dataSlyUseNoEl,
-      HtmlDataSlyUseCompletionProvider)
+  basic(dataSlyUseNoEl, HtmlDataSlyUseCompletionProvider)
 
-  extend(CompletionType.BASIC,
-      attributeInHtlFile,
-      HtmlAttributeCompletionProvider)
+  smart(dataSlyUseNoEl, HtmlDataSlyUseCompletionProvider)
 
-  extend(CompletionType.BASIC,
-      aInHtlFile,
-      HtmlHrefLinkCheckerCompletionProvider
-  )
+  basic(attributeInHtlFile, HtmlAttributeCompletionProvider)
 
-  extend(CompletionType.BASIC,
-      valueOfXLinkChecker,
-      HtmlLinkCheckerValueCompletionProvider
-  )
+  basic(aInHtlFile, HtmlHrefLinkCheckerCompletionProvider)
 
-  extend(CompletionType.BASIC,
-      dataSlyIncludeNoEl,
-      HtmlDataSlyIncludeCompletionProvider)
-}
-}
+  basic(valueOfXLinkChecker, HtmlLinkCheckerValueCompletionProvider)
+
+  basic(dataSlyIncludeNoEl, HtmlDataSlyIncludeCompletionProvider)
+})
+

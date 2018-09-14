@@ -1,6 +1,6 @@
 package com.aemtools.completion.widget
 
-import com.aemtools.common.util.PsiXmlUtil
+import com.aemtools.common.util.findParentByType
 import com.aemtools.completion.model.psi.PsiWidgetDefinition
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlElement
@@ -18,7 +18,7 @@ object WidgetDefinitionUtil {
    * @return PsiWidgetDefinition object or *null*
    */
   fun extract(element: PsiElement): PsiWidgetDefinition? {
-    val tag = PsiXmlUtil.extractTag(element) ?: return null
+    val tag = element.findParentByType(XmlTag::class.java) ?: return null
 
     return extractDefinition(tag, element as XmlElement)
   }

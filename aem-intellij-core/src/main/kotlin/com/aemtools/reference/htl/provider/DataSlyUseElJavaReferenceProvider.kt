@@ -1,8 +1,7 @@
 package com.aemtools.reference.htl.provider
 
-import com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin
-import com.aemtools.lang.java.JavaSearch
 import com.aemtools.common.util.allScope
+import com.aemtools.lang.java.JavaSearch
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference

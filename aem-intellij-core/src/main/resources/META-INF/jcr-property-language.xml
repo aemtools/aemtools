@@ -1,0 +1,20 @@
+<idea-plugin url="https://www.jetbrains.com/idea">
+    <extensions defaultExtensionNs="com.intellij">
+        <lang.parserDefinition
+                language="JcrProperty"
+                implementationClass="com.aemtools.lang.jcrproperty.JcrPropertyParserDefinition"/>
+
+        <lang.syntaxHighlighterFactory
+                language="JcrProperty"
+                implementationClass="com.aemtools.lang.jcrproperty.highlight.JpHighlighterFactory"/>
+
+        <completion.contributor
+                language="JcrProperty"
+                implementationClass="com.aemtools.completion.small.clientlibraryfolder.JcrClientLibraryFolderCompletionContributor"/>
+
+        <multiHostInjector implementation="com.aemtools.lang.jcrproperty.JcrPropertyInjector"/>
+
+        <lang.braceMatcher language="JcrProperty"
+                           implementationClass="com.aemtools.lang.jcrproperty.editor.JpBraceMatcher"/>
+    </extensions>
+</idea-plugin>

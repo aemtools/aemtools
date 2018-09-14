@@ -1,0 +1,7 @@
+JpFile:name.in
+  JpTypeImpl(TYPE)
+    PsiElement({)('{')
+    PsiElement(Name)('Name')
+    PsiElement(})('}')
+  JpSingleImpl(SINGLE)
+    PsiElement(VALUE_TOKEN)('name')

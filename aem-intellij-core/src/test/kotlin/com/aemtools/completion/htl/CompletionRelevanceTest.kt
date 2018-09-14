@@ -29,7 +29,8 @@ class CompletionRelevanceTest : CompletionBaseLightTest(true) {
         "com.test.ComponentModel",
         "template.html",
         "com.test.SomeOtherModel",
-        "/apps/myapp/component2/template.html"
+        "/apps/myapp/component2/template.html",
+        "/libs/granite/sightly/templates/clientlib.html"
     ),
         ordered = true
     )

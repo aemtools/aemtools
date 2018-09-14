@@ -1,0 +1,3 @@
+${ ('${')
+STRING_LITERAL ('"literal"')
+} ('}')

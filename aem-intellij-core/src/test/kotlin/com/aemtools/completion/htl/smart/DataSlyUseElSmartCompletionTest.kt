@@ -29,7 +29,8 @@ class DataSlyUseElSmartCompletionTest : CompletionBaseLightTest() {
     shouldContain(listOf(
         "partials/piece1.html",
         "piece2.html",
-        "com.test.ComponentUse"
+        "com.test.ComponentUse",
+        "/libs/granite/sightly/templates/clientlib.html"
     ))
   }
 

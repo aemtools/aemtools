@@ -1,0 +1,7 @@
+EL File
+  ElDynamicExpressionImpl(DYNAMIC_EXPRESSION)
+    PsiElement(${)('${')
+    ElExpressionImpl(EXPRESSION)
+      ElNullLiteralImpl(NULL_LITERAL)
+        PsiElement(null)('null')
+    PsiElement(})('}')

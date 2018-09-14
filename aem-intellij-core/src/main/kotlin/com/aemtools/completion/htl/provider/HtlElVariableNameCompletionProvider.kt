@@ -2,7 +2,7 @@ package com.aemtools.completion.htl.provider
 
 import com.aemtools.codeinsight.htl.model.DeclarationAttributeType
 import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
-import com.aemtools.common.util.withPriority
+import com.aemtools.common.completion.withPriority
 import com.aemtools.completion.htl.CompletionPriority
 import com.aemtools.completion.htl.common.FileVariablesResolver
 import com.aemtools.completion.htl.common.PredefinedVariables

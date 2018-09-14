@@ -1,10 +1,10 @@
 package com.aemtools.completion.clientlib.provider
 
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.util.relativeTo
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.project.DumbAware
 import com.intellij.psi.PsiDirectory
 import com.intellij.util.ProcessingContext
@@ -23,7 +23,7 @@ object ClientlibDeclarationBasePathCompletionProvider : CompletionProvider<Compl
 
     val suitableDirs = collectSuitableDirs(parameters)
     result.addAllElements(suitableDirs.map {
-      LookupElementBuilder.create(it)
+      lookupElement(it)
     })
     result.stopHere()
   }
@@ -35,12 +35,12 @@ object ClientlibDeclarationBasePathCompletionProvider : CompletionProvider<Compl
     fun dirsCollector(dir: PsiDirectory): List<String> {
       val result = ArrayList<String>()
       if (dir.files.any {
-        if (myName == "js.txt") {
-          jsTxtSuitableFileMatcher(it.name)
-        } else {
-          cssTxtSuitableFileMatcher(it.name)
-        }
-      }) {
+            if (myName == "js.txt") {
+              jsTxtSuitableFileMatcher(it.name)
+            } else {
+              cssTxtSuitableFileMatcher(it.name)
+            }
+          }) {
         result.add(dir.virtualFile.path.relativeTo(containingDirectory.virtualFile.path))
       }
 

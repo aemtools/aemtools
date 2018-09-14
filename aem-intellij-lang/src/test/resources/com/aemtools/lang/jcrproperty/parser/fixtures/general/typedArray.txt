@@ -1,0 +1,13 @@
+JpFile:typedArray.in
+  JpTypeImpl(TYPE)
+    PsiElement({)('{')
+    PsiElement(Name)('Name')
+    PsiElement(})('}')
+  JpArrayImpl(ARRAY)
+    PsiElement([)('[')
+    JpArrayValueImpl(ARRAY_VALUE)
+      PsiElement(ARRAY_VALUE_TOKEN)('name1')
+    PsiElement(,)(',')
+    JpArrayValueImpl(ARRAY_VALUE)
+      PsiElement(ARRAY_VALUE_TOKEN)('name2')
+    PsiElement(])(']')

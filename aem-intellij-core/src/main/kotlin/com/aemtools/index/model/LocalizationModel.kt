@@ -1,6 +1,11 @@
 package com.aemtools.index.model
 
 import com.aemtools.common.constant.const
+import com.aemtools.common.util.OpenApiUtil.findFileByPath
+import com.aemtools.common.util.findChildrenByType
+import com.aemtools.common.util.toPsiFile
+import com.intellij.openapi.project.Project
+import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlTag
 import java.io.Serializable
 
@@ -64,6 +69,19 @@ data class LocalizationModel(
     "\\{\\d}".toRegex()
         .findAll(it)
         .count()
+  }
+
+  /**
+   * Resolve the declaration element of current i18n message.
+   *
+   * @param project the project
+   * @return declaration element
+   */
+  fun resolve(project: Project): XmlTag? {
+    val virtualFile = findFileByPath(this.fileName) ?: return null
+    val psiFile = virtualFile.toPsiFile(project) ?: return null
+    return psiFile.findChildrenByType(XmlTag::class.java)
+        .find { it.name == key }
   }
 
   companion object {

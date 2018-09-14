@@ -1,7 +1,7 @@
 package com.aemtools.index.model.dialog.parameter
 
+import com.aemtools.common.completion.lookupElement
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
 import java.io.Serializable
 
@@ -24,7 +24,7 @@ abstract class BaseParameterDeclaration : Serializable {
    * @return lookup element
    */
   fun toLookupElement(): LookupElement =
-      LookupElementBuilder.create(name.normalize())
+      lookupElement(name.normalize())
           .withIcon(AllIcons.Nodes.Parameter)
           .withTailText("($tailText)", true)
           .withTypeText("Dialog")

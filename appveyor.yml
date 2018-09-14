@@ -1,6 +1,6 @@
 build:
   verbosity: detailed
-  
+
 build_script:
   - gradlew.bat buildPlugin --info --no-daemon
 
@@ -9,6 +9,6 @@ test_script:
 
 environment:
   matrix:
-    - ORG_GRADLE_PROJECT_ideaVersion: 2017.1.5
-    - ORG_GRADLE_PROJECT_ideaVersion: 2017.3.5
+    - ORG_GRADLE_PROJECT_ideaVersion: 2018.2
+#    - ORG_GRADLE_PROJECT_ideaVersion: 2018.2
     - ORG_GRADLE_PROJECT_ideaVersion: LATEST-EAP-SNAPSHOT

@@ -7,7 +7,9 @@ import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.openapi.editor.Document
 
 /**
- * Base htl text insert handler.
+ * Base text insert handler.
+ *
+ * @author Dmytro Primshyts
  */
 abstract class HtlTextInsertHandler(private val expression: String,
                                     private val offset: Int) : InsertHandler<LookupElement> {
@@ -24,6 +26,7 @@ abstract class HtlTextInsertHandler(private val expression: String,
   }
 
   private fun tagHasExpression(document: Document, position: Int) =
-      document.hasText("='" + expression, position) || document.hasText("=\"" + expression, position)
+      document.hasText("='$expression", position)
+          || document.hasText("=\"$expression", position)
 
 }

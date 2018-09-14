@@ -1,5 +1,6 @@
 package com.aemtools.completion.htl.common
 
+import com.aemtools.common.constant.const
 import com.aemtools.test.BaseVariantsCheckContributorTest.Companion.CUSTOM_MODEL_FIELDS
 import com.aemtools.test.BaseVariantsCheckContributorTest.Companion.DATA_SLY_SUITABLE_CLASSES
 import com.aemtools.test.completion.CompletionBaseLightTest
@@ -17,14 +18,14 @@ class HtlVariablesCommonTest : CompletionBaseLightTest(true),
     addHtml("test.html", """
       <div data-sly-use.bean="$CARET"></div>
     """)
-    shouldContain(DATA_SLY_SUITABLE_CLASSES)
+    shouldContain(DATA_SLY_SUITABLE_CLASSES + const.CLIENTLIB_TEMPLATE)
   }
 
   fun testDataSlyUseValue() = completionTest {
     addHtml("test.html", """
       <div data-sly-use.bean="$DOLLAR{'$CARET'}"></div>
     """)
-    shouldContain(DATA_SLY_SUITABLE_CLASSES)
+    shouldContain(DATA_SLY_SUITABLE_CLASSES + const.CLIENTLIB_TEMPLATE)
   }
 
   fun testDataSlyUseValueContextString() = completionTest {

@@ -23,15 +23,11 @@ import com.intellij.refactoring.rename.RenameHandler
  */
 class HtlDeclarationAttributeRenameHandler : RenameHandler {
 
-  override fun isRenaming(dataContext: DataContext?): Boolean {
+  override fun isRenaming(dataContext: DataContext): Boolean {
     return isAvailableOnDataContext(dataContext)
   }
 
-  override fun isAvailableOnDataContext(dataContext: DataContext?): Boolean {
-    if (dataContext == null) {
-      return false
-    }
-
+  override fun isAvailableOnDataContext(dataContext: DataContext): Boolean {
     val attribute = PsiElementRenameHandler.getElement(dataContext) as? XmlAttribute
         ?: return false
 
@@ -60,6 +56,6 @@ class HtlDeclarationAttributeRenameHandler : RenameHandler {
   }
 
   override fun invoke(project: Project, elements: Array<out PsiElement>, dataContext: DataContext?) {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    TODO("not implemented")
   }
 }

@@ -1,0 +1,12 @@
+EL File
+  ElDynamicExpressionImpl(DYNAMIC_EXPRESSION)
+    PsiElement(${)('${')
+    ElExpressionImpl(EXPRESSION)
+      ElBooleanLiteralImpl(BOOLEAN_LITERAL)
+        PsiElement(true)('true')
+      PsiWhiteSpace(' ')
+      PsiElement(and)('and')
+      PsiWhiteSpace(' ')
+      ElBooleanLiteralImpl(BOOLEAN_LITERAL)
+        PsiElement(true)('true')
+    PsiElement(})('}')

@@ -15,6 +15,7 @@ after_success:
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
     - $HOME/.gradle/caches/
@@ -24,18 +25,18 @@ jobs:
   include:
     - stage: Build and Test
       env: ORG_GRADLE_PROJECT_ideaVersion=LATEST-EAP-SNAPSHOT
-    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.3.5
-    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.1.5
+    - env: ORG_GRADLE_PROJECT_ideaVersion=2018.2
+#    - env: ORG_GRADLE_PROJECT_ideaVersion=2018.2
     - stage: Deploy new Release
       script: skip
-      env: ORG_GRADLE_PROJECT_ideaVersion=2017.3.4
+      env: ORG_GRADLE_PROJECT_ideaVersion=2018.2
       deploy:
         - provider: script
           script: ./gradlew publishPlugin
           skip_cleanup: true
           on:
             tags: true
-            repo: DmytroTroynikov/aemtools
+            repo: aemtools/aemtools
         - provider: releases
           api_key: "generate yours: https://docs.travis-ci.com/user/deployment/releases/"
           file_glob: true
@@ -43,6 +44,6 @@ jobs:
           skip_cleanup: true
           on:
             tags: true
-            repo: DmytroTroynikov/aemtools
+            repo: aemtools/aemtools
   allow_failures:
     - env: ORG_GRADLE_PROJECT_ideaVersion=LATEST-EAP-SNAPSHOT
