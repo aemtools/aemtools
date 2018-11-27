@@ -12,7 +12,7 @@ import com.intellij.util.ProcessingContext
  */
 object HtlDataSlyTemplateOptionCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(parameters: CompletionParameters,
-                              context: ProcessingContext?,
+                              context: ProcessingContext,
                               result: CompletionResultSet) {
     result.stopHere()
   }

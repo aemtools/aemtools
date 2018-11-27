@@ -129,7 +129,6 @@ subprojects {
 
     dependencies {
         compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
-        compile("org.jetbrains.kotlin:kotlin-runtime:$kotlinVersion")
         compile("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
         compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
 
@@ -177,8 +176,8 @@ subprojects {
 }
 
 task<Wrapper>("gradleWrapper") {
-    gradleVersion = "4.6"
-    // distributionType =
+    gradleVersion = "5.0"
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 configure<JacocoFullReportExtension> {

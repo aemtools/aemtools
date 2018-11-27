@@ -34,7 +34,7 @@ private class EditConfigCompletionProvider : CompletionProvider<CompletionParame
 
   private val editConfigRepository = ServiceFacade.getEditConfigRepository()
 
-  override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext?,
+  override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext,
                               result: CompletionResultSet) {
     if (!accept(parameters)) {
       return

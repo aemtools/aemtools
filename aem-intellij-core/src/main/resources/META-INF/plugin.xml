@@ -5,7 +5,7 @@
     <category>Framework integration</category>
     <vendor email="dmytrotroynikov@gmail.com"
             url="https://github.com/aemtools/aemtools">
-        Dmytro Troynikov
+        Dmytro Primshyts
     </vendor>
 
     <description><![CDATA[
@@ -44,59 +44,7 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li>
-                Added Cognifide
-                <a href="https://github.com/Cognifide/AEM-Rules-for-SonarQube#good-practices">AEM-1</a> rule as
-                IntelliJ inspection.
-            </li>
-            <li>
-                Added Cognifide
-                <a href="https://github.com/Cognifide/AEM-Rules-for-SonarQube#good-practices">AEM-2</a> rule as
-                IntelliJ inspection.
-            </li>
-            <li>
-                Added Cognifide
-                <a href="https://github.com/Cognifide/AEM-Rules-for-SonarQube#sling-models-related">AEM-16</a>
-                rule as IntelliJ inspection.
-            </li>
-            <li>
-                "Unnecessary expression inspection". Reports redundant HTL expression inside of
-                <i>data-sly-use</i> and <i>data-sly-include</i> as a warning.
-            </li>
-            <li>
-                Present available OSGi properties right in the Java editor via gutter icon.
-            </li>
-            <li>
-                "Associated OSGi service" gutter icon in <b>sling:OsgiConfig</b> configuration files
-                that links to corresponding OSGi service.
-            </li>
-            <li>
-                Inspection that warns on wrong data-sly-attribute usage. It can not be used
-                with event handler attributes "on*" and the "style" attribute (for more info see the
-                <a href="https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#223-attribute">spec</a>).
-            </li>
-            <li>
-                Added HTL Color Scheme Settings Page (<i>settings -> HTML Markup Language</i>).
-            </li>
-            <li>
-                HTL: Syntax highlighting for escape sequences within string literals.
-            </li>
-            <li>
-                HTL: Special highlighting for template parameters&arguments.
-            </li>
-            <li>
-                HTL: Smart completion for <i>data-sly-list</i> & <i>data-sly-repeat</i>.
-                Completion suggests the most relevant variant.
-            </li>
-            <li>
-                HTL: Improved completion for <i>i18n</i> expressions (e.g. ${'&lt;caret&gt;' @ i18n}).
-            </li>
-            <li>
-                HTL: Fixed wrong syntax highlighting within HTL comments.
-            </li>
-            <li>
-                HTL: Bug fixes and improvements.
-            </li>
+            <li>Fixed HTL file icon for IntelliJ IDEA 2018.3</li>
         </ul>
     ]]>
     </change-notes>
@@ -111,28 +59,6 @@
     <idea-version since-build="131"/>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileTypeFactory
-                implementation="com.aemtools.lang.clientlib.file.CdFileTypeFactory"/>
-        <lang.parserDefinition
-                language="Cd"
-                implementationClass="com.aemtools.lang.clientlib.CdParserDefinition"/>
-        <completion.contributor
-                language="Cd"
-                implementationClass="com.aemtools.completion.clientlib.CdCompletionContributor"/>
-
-        <lang.substitutor
-                language="TEXT"
-                implementationClass="com.aemtools.lang.clientlib.CdLanguageSubstitutor"/>
-        <psi.referenceContributor
-                language="Cd"
-                implementation="com.aemtools.reference.clientlib.CdReferenceContributor"/>
-        <lang.commenter
-                language="Cd"
-                implementationClass="com.aemtools.lang.clientlib.editor.CdCommenter"/>
-        <lang.syntaxHighlighterFactory
-                language="Cd"
-                implementationClass="com.aemtools.lang.clientlib.highlight.CdHighlighterFactory"/>
-
         <lang.documentationProvider language="HTML" order="first"
                                     implementationClass="com.aemtools.documentation.html.HtlAttributesDocumentationProvider"/>
         <lang.documentationProvider language="HTML" order="first"

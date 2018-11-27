@@ -28,27 +28,38 @@ import org.picocontainer.PicoContainer
 @RunWith(JMockit::class)
 class MarkAsHtlRootDirectoryActionActionPerformedTest {
 
-  @Mocked lateinit var actionEvent: AnActionEvent
+  @Mocked
+  lateinit var actionEvent: AnActionEvent
 
-  @Mocked lateinit var presentation: Presentation
+  @Mocked
+  lateinit var presentation: Presentation
 
-  @Mocked lateinit var virtualFile: VirtualFile
+  @Mocked
+  lateinit var virtualFile: VirtualFile
 
-  @Mocked lateinit var mockProject: Project
+  @Mocked
+  lateinit var mockProject: Project
 
-  @Mocked lateinit var picoContainer: PicoContainer
+  @Mocked
+  lateinit var picoContainer: PicoContainer
 
-  @Mocked lateinit var rootDirectories: HtlRootDirectories
+  @Mocked
+  lateinit var rootDirectories: HtlRootDirectories
 
-  @Mocked lateinit var psiManager: PsiManager
+  @Mocked
+  lateinit var psiManager: PsiManager
 
-  @Mocked lateinit var application: Application
+  @Mocked
+  lateinit var application: Application
 
-  @Mocked lateinit var projectManager: ProjectManager
+  @Mocked
+  lateinit var projectManager: ProjectManager
 
-  @Mocked lateinit var fileEditorManager: FileEditorManager
+  @Mocked
+  lateinit var fileEditorManager: FileEditorManager
 
-  @Mocked lateinit var fileBasedIndex: FileBasedIndex
+  @Mocked
+  lateinit var fileBasedIndex: FileBasedIndex
 
   @Tested
   private var action: MarkAsHtlRootDirectoryAction = MarkAsHtlRootDirectoryAction()

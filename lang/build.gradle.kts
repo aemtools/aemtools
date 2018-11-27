@@ -23,7 +23,7 @@ buildscript {
 
     dependencies {
         classpath(kotlin("gradle-plugin", kotlinVersion))
-        classpath("com.github.hurricup:gradle-grammar-kit-plugin:2017.1.1")
+        classpath("com.github.hurricup:gradle-grammar-kit-plugin:2018.2.2")
     }
 
 }
@@ -37,13 +37,13 @@ apply {
 
 plugins {
     java
-    id("org.jetbrains.intellij") version "0.2.17"
+    id("org.jetbrains.intellij") version "0.3.12"
 }
 
 val kotlinVersion: String by extra
 
 configure<GrammarKitPluginExtension> {
-    grammarKitRelease = "1.5.2"
+    grammarKitRelease = "2017.1.6"
 }
 
 java.sourceSets {
