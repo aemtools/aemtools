@@ -56,7 +56,7 @@
     <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
     <depends optional="true" config-file="inspections.xml">com.intellij.modules.lang</depends>
 
-    <idea-version since-build="183.4284.148"/>
+    <idea-version since-build="183.4284"/>
 
     <extensions defaultExtensionNs="com.intellij">
         <lang.documentationProvider language="HTML" order="first"
