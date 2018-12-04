@@ -36,7 +36,7 @@ private class RepPolicyCompletionProvider : CompletionProvider<CompletionParamet
 
   override fun addCompletions(
       parameters: CompletionParameters,
-      context: ProcessingContext?,
+      context: ProcessingContext,
       result: CompletionResultSet) {
     if (!accept(parameters)) {
       return

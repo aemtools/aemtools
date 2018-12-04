@@ -10,7 +10,7 @@ import com.intellij.util.ProcessingContext
  */
 object HtlDataSlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(parameters: CompletionParameters,
-                              context: ProcessingContext?,
+                              context: ProcessingContext,
                               result: CompletionResultSet) {
     val useSuggestions = SlyUseCompletionProvider.useSuggestions(parameters)
     if (useSuggestions.isNotEmpty()) {

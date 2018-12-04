@@ -12,7 +12,7 @@ import com.intellij.util.ProcessingContext
  */
 object HtlContextOptionAssignmentCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(parameters: CompletionParameters,
-                              context: ProcessingContext?,
+                              context: ProcessingContext,
                               result: CompletionResultSet) {
     val variants = HtlELPredefined.CONTEXT_VALUES.map {
       LookupElementBuilder.create(it.completionText)

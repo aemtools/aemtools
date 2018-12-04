@@ -30,11 +30,11 @@ class HtlDeclarationReference(
     }
   }
 
-  override fun handleElementRename(newElementName: String?): PsiElement {
+  override fun handleElementRename(newElementName: String): PsiElement {
     return super.handleElementRename(newElementName)
   }
 
-  override fun isReferenceTo(element: PsiElement?): Boolean {
+  override fun isReferenceTo(element: PsiElement): Boolean {
     return super.isReferenceTo(element) || xmlAttribute?.isEquivalentTo(element) ?: false
   }
 
