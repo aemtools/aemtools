@@ -7,7 +7,7 @@ import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.icons.AllIcons
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 data class HtlOption(val name: String,
                      val type: String,

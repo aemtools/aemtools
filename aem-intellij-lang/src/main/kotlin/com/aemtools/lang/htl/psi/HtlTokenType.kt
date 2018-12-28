@@ -7,7 +7,7 @@ import com.intellij.psi.tree.IElementType
 import com.intellij.psi.tree.ILeafElementType
 
 /**
- * Created by Dmytro_Troynikov on 5/16/2016.
+ * Created by Dmytro Primshyts on 5/16/2016.
  */
 class HtlTokenType(debugName: String) :
     IElementType(debugName, HtlLanguage), ILeafElementType {

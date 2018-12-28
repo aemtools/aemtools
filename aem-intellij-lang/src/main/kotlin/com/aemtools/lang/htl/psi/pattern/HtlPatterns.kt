@@ -38,7 +38,7 @@ import com.intellij.psi.TokenType
 import com.intellij.psi.xml.XmlTokenType.XML_NAME
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlPatterns {
 

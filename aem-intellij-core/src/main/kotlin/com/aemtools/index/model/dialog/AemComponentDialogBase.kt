@@ -17,7 +17,7 @@ import java.io.Serializable
  * @property resourceType The resource type of associated component
  * @property myParameters List of parameters
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class AemComponentDialogBase<out PARAMETER : Serializable> : Serializable {
 

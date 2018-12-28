@@ -23,7 +23,7 @@ import org.junit.runner.RunWith
 import org.picocontainer.PicoContainer
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 @RunWith(JMockit::class)
 class MarkAsHtlRootDirectoryActionActionPerformedTest {

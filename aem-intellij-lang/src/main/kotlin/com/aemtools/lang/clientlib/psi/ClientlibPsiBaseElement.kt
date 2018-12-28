@@ -6,7 +6,7 @@ import com.intellij.psi.PsiReference
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 open class ClientlibPsiBaseElement(node: ASTNode) : ASTWrapperPsiElement(node) {
 

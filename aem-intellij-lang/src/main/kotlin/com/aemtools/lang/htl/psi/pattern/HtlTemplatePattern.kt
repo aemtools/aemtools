@@ -10,7 +10,7 @@ import com.intellij.util.ProcessingContext
 /**
  * Pattern that matches htl expression inside of given htl attribute.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlTemplatePattern(val name: String) : PatternCondition<PsiElement?>(name) {
 

@@ -12,7 +12,7 @@ import com.intellij.psi.PsiElement
 /**
  * Documentation provider for `dialog.xml` files.
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 open class WidgetDocumentationProvider : AbstractDocumentationProvider() {
 

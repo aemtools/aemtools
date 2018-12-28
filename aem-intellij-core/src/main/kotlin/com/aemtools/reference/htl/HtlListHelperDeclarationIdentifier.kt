@@ -5,7 +5,7 @@ import com.intellij.psi.PsiNamedElement
 import com.intellij.psi.xml.XmlAttribute
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlListHelperDeclarationIdentifier(
     val attribute: XmlAttribute

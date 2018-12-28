@@ -1,7 +1,7 @@
 package com.aemtools.completion.htl.predefined
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlELPredefined {
 

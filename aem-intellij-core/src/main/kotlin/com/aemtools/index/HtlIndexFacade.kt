@@ -13,7 +13,7 @@ import com.intellij.util.PathUtil
 import com.intellij.util.indexing.FileBasedIndex
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlIndexFacade {
 

@@ -8,7 +8,7 @@ import com.intellij.psi.FileViewProviderFactory
 import com.intellij.psi.PsiManager
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlViewProviderFactory : FileViewProviderFactory {
 

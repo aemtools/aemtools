@@ -11,7 +11,7 @@ import org.assertj.core.api.Assertions.assertThat
 /**
  * Test for [HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlWrongQuotesXmlAttributeInvertQuotesIntentionActionTest : InspectionFixtureTestCase() {
 

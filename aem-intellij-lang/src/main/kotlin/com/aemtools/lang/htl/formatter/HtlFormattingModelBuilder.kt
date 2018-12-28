@@ -5,6 +5,6 @@ import com.intellij.psi.templateLanguages.SimpleTemplateLanguageFormattingModelB
 /**
  * Formatting model for [com.aemtools.lang.htl.HtlLanguage].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlFormattingModelBuilder : SimpleTemplateLanguageFormattingModelBuilder()

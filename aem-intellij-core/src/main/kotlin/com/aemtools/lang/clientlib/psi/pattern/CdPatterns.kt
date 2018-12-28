@@ -6,7 +6,7 @@ import com.intellij.patterns.PlatformPatterns.psiElement
 import com.intellij.psi.PsiElement
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object CdPatterns {
 

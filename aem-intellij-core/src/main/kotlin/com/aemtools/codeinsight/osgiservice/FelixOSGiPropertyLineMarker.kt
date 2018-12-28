@@ -18,7 +18,7 @@ import com.intellij.psi.PsiIdentifier
 import com.intellij.psi.xml.XmlAttribute
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class FelixOSGiPropertyLineMarker : LineMarkerProvider {
   override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<PsiElement>? {

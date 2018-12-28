@@ -9,7 +9,7 @@ import com.intellij.patterns.PlatformPatterns
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro_Troynikov.
+ * @author Dmytro Primshyts.
  */
 class WidgetCompletionContributor : BaseCompletionContributor({
 

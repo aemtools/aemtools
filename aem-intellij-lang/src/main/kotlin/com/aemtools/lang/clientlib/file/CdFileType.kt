@@ -6,7 +6,7 @@ import com.intellij.openapi.fileTypes.LanguageFileType
 import javax.swing.Icon
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object CdFileType : LanguageFileType(CdLanguage) {
 

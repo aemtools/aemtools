@@ -6,7 +6,7 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.LanguageSubstitutor
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class CdLanguageSubstitutor : LanguageSubstitutor() {
 

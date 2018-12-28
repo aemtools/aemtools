@@ -5,7 +5,7 @@ import com.aemtools.index.search.AemComponentSearch
 import com.aemtools.test.base.BaseLightTest
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class AemComponentDeclarationIndexTest : BaseLightTest() {
 

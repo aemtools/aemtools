@@ -28,7 +28,7 @@ import java.util.ArrayList
 /**
  * Type descriptor which uses given [PsiClass] to provide type information.
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
                                       open val psiMember: PsiMember? = null,

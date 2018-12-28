@@ -14,7 +14,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlElVariableNameCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(parameters: CompletionParameters,

@@ -10,7 +10,7 @@ import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class MarkAsHtlRootDirectoryActionUpdateTest
   : MarkAsHtlRootDirectoryActionBaseTest() {

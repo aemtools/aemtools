@@ -8,7 +8,7 @@ import com.intellij.psi.PsiReferenceRegistrar
 /**
  * Register `com.intellij.modules.java` dependent htl reference providers.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlToJavaReferenceContributor : PsiReferenceContributor() {
   override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {

@@ -5,7 +5,7 @@ import com.aemtools.test.completion.CompletionBaseLightTest
 /**
  * Test for [com.aemtools.completion.htl.provider.HtlListSmartCompletionProvider].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class DataSlyListSmartCompletionTest : CompletionBaseLightTest(true) {
 

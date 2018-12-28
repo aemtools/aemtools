@@ -12,7 +12,7 @@ import com.intellij.psi.PsiLiteralExpression
 /**
  * AEM-1 & AEM-2 implementation.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class AemConstantInspection : LocalInspectionTool(), BatchSuppressableTool {
 

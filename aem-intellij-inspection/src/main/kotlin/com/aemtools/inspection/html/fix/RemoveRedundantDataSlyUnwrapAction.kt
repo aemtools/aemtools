@@ -9,7 +9,7 @@ import com.intellij.psi.SmartPsiElementPointer
 import com.intellij.psi.xml.XmlAttribute
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class RemoveRedundantDataSlyUnwrapAction(
     val pointer: SmartPsiElementPointer<XmlAttribute>) : BaseHtlIntentionAction(

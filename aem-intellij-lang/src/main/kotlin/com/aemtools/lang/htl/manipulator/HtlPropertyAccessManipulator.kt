@@ -8,7 +8,7 @@ import com.intellij.psi.AbstractElementManipulator
 import com.intellij.util.IncorrectOperationException
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlPropertyAccessManipulator : AbstractElementManipulator<HtlPropertyAccess>() {
   override fun handleContentChange(

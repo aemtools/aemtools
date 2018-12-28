@@ -23,7 +23,7 @@ import org.jetbrains.spek.api.dsl.on
 /**
  * Specification for [RemoveRedundantElAction].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object RemoveRedundantElActionSpec : Spek({
   val htlHtlElPointer: SmartPsiElementPointer<HtlElExpressionMixin> by memo()

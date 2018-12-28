@@ -11,7 +11,7 @@ import com.intellij.util.indexing.FileBasedIndex
 /**
  * Search methods for Htl templates.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlTemplateSearch {
 

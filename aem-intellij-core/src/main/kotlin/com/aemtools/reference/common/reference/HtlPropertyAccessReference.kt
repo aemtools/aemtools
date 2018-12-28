@@ -10,7 +10,7 @@ import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiReferenceBase
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlPropertyAccessReference(
     val propertyAccess: com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin,

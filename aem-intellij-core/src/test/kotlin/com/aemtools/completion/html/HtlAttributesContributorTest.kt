@@ -7,7 +7,7 @@ import com.aemtools.common.constant.const.htl.HTL_ATTRIBUTES
 import com.aemtools.test.BaseVariantsCheckContributorTest
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlAttributesContributorTest : BaseVariantsCheckContributorTest("com/aemtools/completion/html/attributes") {
 

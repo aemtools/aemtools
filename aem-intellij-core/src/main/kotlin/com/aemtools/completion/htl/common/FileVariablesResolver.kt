@@ -16,7 +16,7 @@ import com.intellij.psi.xml.XmlAttribute
 /**
  * Resolves variables declared within htl (html) file.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object FileVariablesResolver {
 

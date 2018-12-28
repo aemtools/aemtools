@@ -3,7 +3,7 @@ package com.aemtools.test.fixture
 import com.aemtools.test.base.model.fixture.ITestFixture
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 interface OSGiConfigFixtureMixin {
 

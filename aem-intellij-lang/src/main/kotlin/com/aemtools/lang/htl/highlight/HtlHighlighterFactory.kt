@@ -5,7 +5,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlHighlighterFactory : SyntaxHighlighterFactory() {
   override fun getSyntaxHighlighter(project: Project?, virtualFile: VirtualFile?) = HtlHighlighter()

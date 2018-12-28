@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement
 import javax.swing.Icon
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlFileIconProvider : IconProvider() {
   override fun getIcon(element: PsiElement, flags: Int): Icon? {

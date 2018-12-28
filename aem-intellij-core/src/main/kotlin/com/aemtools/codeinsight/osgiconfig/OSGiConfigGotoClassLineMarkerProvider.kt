@@ -18,7 +18,7 @@ import com.intellij.util.Function
 import javax.swing.DefaultListCellRenderer
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class OSGiConfigGotoClassLineMarkerProvider : LineMarkerProvider {
   override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<PsiElement>? {

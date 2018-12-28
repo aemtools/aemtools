@@ -12,7 +12,7 @@ import com.intellij.util.Function
 /**
  * Marker for Felix OSGi properties.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class FelixOSGiPropertyMarkerInfo(
         propertyIdentifier: PsiIdentifier,

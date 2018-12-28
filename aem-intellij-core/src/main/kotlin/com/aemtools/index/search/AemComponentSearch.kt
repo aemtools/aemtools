@@ -13,7 +13,7 @@ import com.intellij.util.indexing.FileBasedIndex
 /**
  * Search functionality related to aem components.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object AemComponentSearch {
 

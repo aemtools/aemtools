@@ -7,7 +7,7 @@ import com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributes
 
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object ElColors {
   val OPERATOR = r("EL_OPERATOR", dc.OPERATION_SIGN)

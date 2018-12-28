@@ -15,7 +15,7 @@ import java.io.Serializable
 /**
  * Container of template definition data. (`data-sly-template.name="${@ param1, param2}"
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 data class TemplateDefinition(
     /**

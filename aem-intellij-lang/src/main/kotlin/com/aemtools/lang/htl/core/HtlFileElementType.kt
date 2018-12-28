@@ -4,7 +4,7 @@ import com.aemtools.lang.htl.HtlLanguage
 import com.intellij.psi.tree.IFileElementType
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlFileElementType : IFileElementType("HTL File", HtlLanguage)
 

@@ -9,7 +9,7 @@ import com.intellij.psi.AbstractElementManipulator
 /**
  * Handles the rename action for [HtlStringLiteral] object which holds the name of Java/Kotlin class.
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlStringLiteralManipulator : AbstractElementManipulator<HtlStringLiteral>() {
   override fun handleContentChange(

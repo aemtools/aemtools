@@ -5,7 +5,7 @@ import com.aemtools.common.completion.lookupElement
 import com.intellij.codeInsight.lookup.LookupElement
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class MockTypeDescriptor(
     val name: String,

@@ -15,7 +15,7 @@ import org.jetbrains.spek.api.dsl.on
 
 /**
  * Specification for [SubstituteWithRawAttributeIntentionAction].
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object SubstituteWithRawAttributeIntentionActionSpec : Spek({
   val xmlAttributePointer: SmartPsiElementPointer<XmlAttribute> by memo()

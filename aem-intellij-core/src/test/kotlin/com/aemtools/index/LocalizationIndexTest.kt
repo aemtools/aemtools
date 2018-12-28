@@ -5,7 +5,7 @@ import com.aemtools.test.base.BaseLightTest
 import junit.framework.TestCase
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class LocalizationIndexTest : BaseLightTest() {
 

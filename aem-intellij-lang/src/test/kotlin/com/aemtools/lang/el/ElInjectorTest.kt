@@ -18,7 +18,7 @@ import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 @RunWith(MockitoJUnitRunner::class)
 class ElInjectorTest {

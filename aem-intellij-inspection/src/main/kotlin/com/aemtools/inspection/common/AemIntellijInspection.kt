@@ -6,7 +6,7 @@ import com.intellij.codeInspection.LocalInspectionTool
 /**
  * Base inspection.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class AemIntellijInspection(
     val groupName: String,

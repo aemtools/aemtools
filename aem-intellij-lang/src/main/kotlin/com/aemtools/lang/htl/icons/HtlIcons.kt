@@ -5,7 +5,7 @@ import com.intellij.openapi.util.IconLoader
 import javax.swing.Icon
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlIcons {
 

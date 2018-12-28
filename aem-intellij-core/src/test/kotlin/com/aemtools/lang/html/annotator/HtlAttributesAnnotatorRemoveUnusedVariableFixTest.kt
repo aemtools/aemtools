@@ -4,7 +4,7 @@ import com.aemtools.common.util.writeCommand
 import com.intellij.testFramework.InspectionFixtureTestCase
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlAttributesAnnotatorRemoveUnusedVariableFixTest : InspectionFixtureTestCase() {
 

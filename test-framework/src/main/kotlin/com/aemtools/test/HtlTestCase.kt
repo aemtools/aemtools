@@ -4,7 +4,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 interface HtlTestCase {
   fun getTestDataPath(): String

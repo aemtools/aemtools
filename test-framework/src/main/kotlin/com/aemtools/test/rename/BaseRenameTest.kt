@@ -5,7 +5,7 @@ import com.aemtools.test.rename.model.fixture.IRenameFixture
 import com.aemtools.test.rename.model.fixture.RenameFixture
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class BaseRenameTest(withUberJar: Boolean = false) : BaseLightTest(withUberJar) {
 

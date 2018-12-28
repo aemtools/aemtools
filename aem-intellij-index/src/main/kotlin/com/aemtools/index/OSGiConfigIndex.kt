@@ -14,7 +14,7 @@ import com.intellij.xml.index.XmlIndex
 /**
  * Indexes OSGi configuration files.
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class OSGiConfigIndex : XmlIndex<OSGiConfigurationIndexModel>() {
 

@@ -6,7 +6,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.junit.platform.gradle.plugin.JUnitPlatformExtension
 
 plugins {
-  id("org.jetbrains.intellij") version "0.3.4"
+  id("org.jetbrains.intellij") version "0.4.1"
 }
 
 dependencies {

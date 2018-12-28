@@ -1,7 +1,7 @@
 package com.aemtools.common.constant
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object const {
 

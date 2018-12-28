@@ -26,7 +26,7 @@ import com.intellij.usageView.UsageViewUtil
 import java.util.Arrays
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object RenameUtil {
 

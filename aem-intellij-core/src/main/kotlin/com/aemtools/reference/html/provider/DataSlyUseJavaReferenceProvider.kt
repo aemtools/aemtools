@@ -15,7 +15,7 @@ import com.intellij.util.ProcessingContext
 /**
  * Adds references in data-sly-use attributes.
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object DataSlyUseJavaReferenceProvider : JavaClassReferenceProvider() {
   override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<out PsiReference> {

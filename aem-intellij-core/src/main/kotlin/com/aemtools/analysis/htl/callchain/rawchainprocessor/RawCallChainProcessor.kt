@@ -37,7 +37,7 @@ import java.util.ArrayList
 import java.util.LinkedList
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object RawCallChainProcessor {
 

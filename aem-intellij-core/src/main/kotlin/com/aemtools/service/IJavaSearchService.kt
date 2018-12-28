@@ -12,7 +12,7 @@ import com.intellij.psi.search.searches.AnnotatedElementsSearch
 import com.intellij.psi.search.searches.ClassInheritorsSearch
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 interface IJavaSearchService {
 

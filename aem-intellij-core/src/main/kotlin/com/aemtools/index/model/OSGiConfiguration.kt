@@ -4,7 +4,7 @@ import com.intellij.psi.xml.XmlFile
 import java.io.Serializable
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 data class OSGiConfiguration(
     val path: String,

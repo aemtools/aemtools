@@ -21,7 +21,7 @@ apply {
 
 plugins {
     java
-    id("org.jetbrains.intellij") version "0.3.12"
+    id("org.jetbrains.intellij") version "0.4.1"
 }
 
 val kotlinVersion: String by extra

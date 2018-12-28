@@ -8,7 +8,7 @@ import com.intellij.psi.PsiMember
 import com.intellij.psi.impl.source.PsiClassReferenceType
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class MapJavaTypeDescriptor(psiClass: PsiClass,
                             psiMember: PsiMember?,

@@ -7,7 +7,7 @@ import com.intellij.xml.XmlAttributeDescriptor
 import com.intellij.xml.XmlAttributeDescriptorsProvider
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlAttributesDescriptorsProvider : XmlAttributeDescriptorsProvider {
   override fun getAttributeDescriptors(context: XmlTag?): Array<XmlAttributeDescriptor> {

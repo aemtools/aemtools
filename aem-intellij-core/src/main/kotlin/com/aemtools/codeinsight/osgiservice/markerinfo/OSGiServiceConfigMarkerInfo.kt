@@ -11,7 +11,7 @@ import com.intellij.psi.PsiIdentifier
 import com.intellij.util.Function
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class OSGiServiceConfigMarkerInfo(
     val classIdentifier: PsiIdentifier,

@@ -21,7 +21,7 @@ import org.jetbrains.spek.api.dsl.on
 /**
  * Specification for [RemoveRedundantDataSlyUnwrapAction].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object RemoveRedundantDataSlyUnwrapActionSpec : Spek({
   val xmlAttributePointer: SmartPsiElementPointer<XmlAttribute> by memo()

@@ -15,7 +15,7 @@ import com.intellij.refactoring.rename.RenamePsiElementProcessor
 
 /**
  * Psi utility & extension methods
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 
 /**

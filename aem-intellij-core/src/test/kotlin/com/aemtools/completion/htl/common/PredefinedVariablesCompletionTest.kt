@@ -10,7 +10,7 @@ import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 import java.io.File
 
 /**
- * @author Dmytro Troynikov.
+ * @author Dmytro Primshyts.
  */
 class PredefinedVariablesCompletionTest : LightFixtureCompletionTestCase(),
     UberJarFixtureMixin {

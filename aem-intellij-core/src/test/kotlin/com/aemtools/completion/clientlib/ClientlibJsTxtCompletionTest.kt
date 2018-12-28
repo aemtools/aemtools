@@ -4,7 +4,7 @@ import com.aemtools.common.constant.const.JCR_ROOT
 import com.aemtools.test.completion.CompletionBaseLightTest
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class ClientlibJsTxtCompletionTest : CompletionBaseLightTest(false) {
   fun testBaseCompletionJs() = completionTest {

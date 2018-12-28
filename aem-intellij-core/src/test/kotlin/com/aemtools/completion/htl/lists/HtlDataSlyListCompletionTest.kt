@@ -4,7 +4,7 @@ import com.aemtools.completion.htl.common.CollectionsTest.Companion.MY_MODEL_VAR
 import com.aemtools.test.BaseVariantsWithJdkContributorTest
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlDataSlyListCompletionTest : BaseVariantsWithJdkContributorTest("com/aemtools/completion/htl/fixtures/noafter/data-sly-list") {
 

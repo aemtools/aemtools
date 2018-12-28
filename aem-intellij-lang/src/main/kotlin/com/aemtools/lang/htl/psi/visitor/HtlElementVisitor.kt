@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElementVisitor
 /**
  * Htl Psi visitor.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class HtlElementVisitor : PsiElementVisitor() {
 

@@ -9,7 +9,7 @@ import com.intellij.psi.PsiManager
 import com.intellij.psi.SingleRootFileViewProvider
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ElViewProviderFactory : FileViewProviderFactory {
   override fun createFileViewProvider(

@@ -3,7 +3,7 @@ package com.aemtools.completion.htl.lists
 import com.aemtools.test.BaseVariantsWithJdkContributorTest
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlListCommonCompletionTest
   : BaseVariantsWithJdkContributorTest("com/aemtools/completion/htl/fixtures/noafter/list-common") {

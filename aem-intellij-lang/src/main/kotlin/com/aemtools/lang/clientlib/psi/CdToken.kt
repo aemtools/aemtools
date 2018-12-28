@@ -4,7 +4,7 @@ import com.aemtools.lang.clientlib.CdLanguage
 import com.intellij.psi.tree.IElementType
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class CdToken(debugName: String) : IElementType(debugName, CdLanguage) {
   override fun toString(): String = "[Cd] ${super.toString()}"

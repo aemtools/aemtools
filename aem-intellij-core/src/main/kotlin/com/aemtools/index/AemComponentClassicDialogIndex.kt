@@ -13,7 +13,7 @@ import com.intellij.xml.index.XmlIndex
 /**
  * Indexes classic dialog files (dialog.xml).
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class AemComponentClassicDialogIndex : XmlIndex<AemComponentClassicDialogDefinition>() {
 

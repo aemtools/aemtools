@@ -13,7 +13,7 @@ import com.intellij.openapi.vfs.VirtualFile
 import javax.swing.Icon
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlFileType
   : LanguageFileType(HtlLanguage),

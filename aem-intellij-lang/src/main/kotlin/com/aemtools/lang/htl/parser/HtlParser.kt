@@ -7,7 +7,7 @@ import com.intellij.lang.PsiParser
 import com.intellij.psi.tree.IElementType
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlParser : PsiParser {
   override fun parse(root: IElementType, builder: PsiBuilder): ASTNode {

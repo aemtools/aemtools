@@ -7,7 +7,7 @@ package com.aemtools.inspection.java.constants
  * @property name name of constant in container class
  * @property value value of constant
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 data class ConstantDescriptor(
     val containerClass: String,

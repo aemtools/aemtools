@@ -4,7 +4,7 @@ import com.aemtools.common.constant.const.DOLLAR
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlVariablesAnnotatorTest : LightCodeInsightFixtureTestCase() {
 

@@ -8,7 +8,7 @@ import com.intellij.psi.xml.XmlTokenType
 import com.intellij.psi.xml.XmlTokenType.XML_NAME
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtmlPatterns {
 

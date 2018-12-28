@@ -9,7 +9,7 @@ import com.intellij.psi.search.SearchScope
 
 /**
  * Enables *Find Usages* action to search in HTL files.
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlPropertyScopeProvider : CustomPropertyScopeProvider {
   override fun getScope(project: Project): SearchScope =

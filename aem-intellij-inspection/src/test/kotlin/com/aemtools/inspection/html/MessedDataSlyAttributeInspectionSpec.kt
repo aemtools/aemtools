@@ -22,7 +22,7 @@ import org.picocontainer.PicoContainer
 /**
  * Specification for [MessedDataSlyAttributeInspection].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object MessedDataSlyAttributeInspectionSpec : Spek({
   val tested = MessedDataSlyAttributeInspection()

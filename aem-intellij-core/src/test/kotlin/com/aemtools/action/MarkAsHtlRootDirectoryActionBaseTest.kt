@@ -18,7 +18,7 @@ import org.mockito.Mockito.`when`
 import org.picocontainer.PicoContainer
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class MarkAsHtlRootDirectoryActionBaseTest {
 

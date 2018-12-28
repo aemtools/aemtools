@@ -19,7 +19,7 @@ import com.intellij.psi.PsiReferenceRegistrar
 /**
  * Htl reference contributor.
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlReferenceContributor : PsiReferenceContributor() {
   override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {

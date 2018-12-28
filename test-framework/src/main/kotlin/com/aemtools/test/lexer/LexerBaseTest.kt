@@ -14,7 +14,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class LexerBaseTest : LexerTestCase(), HtlTestCase {
   override fun createLexer(): Lexer = HtlLexer()

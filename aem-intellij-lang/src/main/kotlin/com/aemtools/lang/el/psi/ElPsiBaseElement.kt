@@ -4,7 +4,7 @@ import com.intellij.extapi.psi.ASTWrapperPsiElement
 import com.intellij.lang.ASTNode
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 open class ElPsiBaseElement(node: ASTNode)
   : ASTWrapperPsiElement(node)

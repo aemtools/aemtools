@@ -12,7 +12,7 @@ import com.intellij.util.ProcessingContext
 /**
  * Reference provider for Htl string literals.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object DataSlyUseElJavaReferenceProvider : JavaClassReferenceProvider() {
   override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<out PsiReference> {

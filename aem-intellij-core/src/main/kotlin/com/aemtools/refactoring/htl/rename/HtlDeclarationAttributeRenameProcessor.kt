@@ -19,7 +19,7 @@ import javax.swing.JCheckBox
 import javax.swing.JPanel
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlDeclarationAttributeRenameProcessor : RenamePsiElementProcessor() {
 

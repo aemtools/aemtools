@@ -25,7 +25,7 @@ import org.apache.commons.lang.StringUtils
 /**
  * Code completion for __data-sly-use.*__ attribute. (e.g. <div data-sly-use.bean="<caret>")
  *
- * @author Dmytro Troynikov.
+ * @author Dmytro Primshyts.
  */
 object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
 

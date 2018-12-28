@@ -11,7 +11,7 @@ import java.io.File
 /**
  * Test for [DefaultInjectionStrategyInspection].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class DefaultInjectionStrategyInspectionTest
   : BaseLightTest(),

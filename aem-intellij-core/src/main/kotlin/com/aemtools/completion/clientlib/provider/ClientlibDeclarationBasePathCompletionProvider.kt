@@ -10,7 +10,7 @@ import com.intellij.psi.PsiDirectory
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object ClientlibDeclarationBasePathCompletionProvider : CompletionProvider<CompletionParameters>(), DumbAware {
   override fun addCompletions(

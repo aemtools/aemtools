@@ -11,7 +11,7 @@ import org.assertj.core.api.Assertions.assertThat
 /**
  * Test for [HtlWrongQuotesLiteralFixIntentionAction].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlWrongQuotesLiteralFixIntentionActionTest : InspectionFixtureTestCase() {
 

@@ -14,7 +14,7 @@ import javax.swing.Icon
 /**
  * Htl declaration identifier fake element.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 open class HtlDeclarationIdentifier(val xmlAttribute: XmlAttribute)
   : FakePsiElement(), PsiNamedElement {

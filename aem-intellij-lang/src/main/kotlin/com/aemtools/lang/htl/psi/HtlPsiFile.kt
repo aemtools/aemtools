@@ -6,7 +6,7 @@ import com.intellij.extapi.psi.PsiFileBase
 import com.intellij.psi.FileViewProvider
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlPsiFile(fileViewProvider: FileViewProvider)
   : PsiFileBase(fileViewProvider, HtlLanguage) {

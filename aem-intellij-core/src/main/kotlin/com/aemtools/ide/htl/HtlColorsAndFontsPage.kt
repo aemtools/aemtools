@@ -12,7 +12,7 @@ import com.intellij.openapi.options.colors.ColorSettingsPage
 import javax.swing.Icon
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlColorsAndFontsPage : ColorSettingsPage {
 

@@ -19,7 +19,7 @@ import com.intellij.refactoring.rename.PsiElementRenameHandler.DEFAULT_NAME
 import com.intellij.refactoring.rename.RenameHandler
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlDeclarationAttributeRenameHandler : RenameHandler {
 

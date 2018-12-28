@@ -14,7 +14,7 @@ import com.intellij.xml.index.XmlIndex
 /**
  * Indexes content of `.content.xml` files with *jcr:primaryType="cq:Component"*.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class AemComponentDeclarationIndex : XmlIndex<AemComponentDefinition>() {
 

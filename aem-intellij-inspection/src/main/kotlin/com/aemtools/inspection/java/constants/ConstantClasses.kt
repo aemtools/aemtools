@@ -1,7 +1,7 @@
 package com.aemtools.inspection.java.constants
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object ConstantClasses {
 

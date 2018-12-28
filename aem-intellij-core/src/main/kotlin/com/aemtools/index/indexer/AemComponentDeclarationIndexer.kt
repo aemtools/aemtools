@@ -7,7 +7,7 @@ import com.intellij.util.indexing.DataIndexer
 import com.intellij.util.indexing.FileContent
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object AemComponentDeclarationIndexer : DataIndexer<String, AemComponentDefinition, FileContent> {
   override fun map(inputData: FileContent): MutableMap<String, AemComponentDefinition> {

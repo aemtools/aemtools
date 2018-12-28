@@ -9,7 +9,7 @@ import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
 import com.intellij.psi.tree.IElementType
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class CdHighlighter : SyntaxHighlighterBase() {
   override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {

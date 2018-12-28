@@ -7,7 +7,7 @@ import com.intellij.psi.xml.XmlTag
 import com.intellij.psi.xml.XmlTokenType
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 
 /**

@@ -6,7 +6,7 @@ import com.aemtools.completion.htl.predefined.PredefinedCompletion
 import com.intellij.codeInsight.lookup.LookupElement
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class PredefinedDescriptionTypeDescriptor(val predefined: PredefinedCompletion) : BaseTypeDescriptor() {
 

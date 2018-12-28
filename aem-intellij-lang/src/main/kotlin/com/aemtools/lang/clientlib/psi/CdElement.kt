@@ -4,7 +4,7 @@ import com.aemtools.lang.clientlib.CdLanguage
 import com.intellij.psi.tree.IElementType
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class CdElement(debugName: String)
   : IElementType(debugName, CdLanguage) {

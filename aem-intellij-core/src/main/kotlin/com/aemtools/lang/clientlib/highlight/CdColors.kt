@@ -4,7 +4,7 @@ import com.intellij.openapi.editor.DefaultLanguageHighlighterColors as dc
 import com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey as r
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object CdColors {
   val COMMENT = r("cd.COMMENT", dc.LINE_COMMENT)

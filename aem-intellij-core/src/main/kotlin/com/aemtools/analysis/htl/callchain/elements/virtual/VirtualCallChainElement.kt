@@ -8,7 +8,7 @@ import com.intellij.codeInsight.lookup.LookupElement
  * Represents call chain that has no physical presentation
  * inside PSI.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 interface VirtualCallChainElement {
   /**

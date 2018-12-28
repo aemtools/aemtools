@@ -6,7 +6,7 @@ import com.intellij.testFramework.LightProjectDescriptor
 import java.io.File
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class JdkProjectDescriptor : LightProjectDescriptor() {
   override fun getSdk(): Sdk? {

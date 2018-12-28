@@ -9,7 +9,7 @@ import com.intellij.psi.search.UseScopeEnlarger
 import com.intellij.psi.xml.XmlAttribute
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlDeclarationSearchScopeEnlarger : UseScopeEnlarger() {
   override fun getAdditionalUseScope(element: PsiElement): SearchScope? {

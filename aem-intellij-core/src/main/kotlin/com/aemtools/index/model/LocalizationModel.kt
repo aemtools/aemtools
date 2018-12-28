@@ -27,7 +27,7 @@ import java.io.Serializable
  * The "sling:key" property is optional, in case if it is absent,
  * the name of tag will set the key name.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 data class LocalizationModel(
     /**

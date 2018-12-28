@@ -5,7 +5,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 open class AssertionContext(val fixture: JavaCodeInsightTestFixture)
   : IAssertionContext {

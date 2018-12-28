@@ -8,7 +8,7 @@ import com.intellij.psi.PsiReferenceBase
 /**
  * Reference to template argument.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlTemplateArgumentReference(
     val variable: HtlVariableName,

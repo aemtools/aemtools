@@ -6,7 +6,7 @@ import com.intellij.openapi.fileTypes.LanguageFileType
 import javax.swing.Icon
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object ElFileType : LanguageFileType(ElLanguage) {
 

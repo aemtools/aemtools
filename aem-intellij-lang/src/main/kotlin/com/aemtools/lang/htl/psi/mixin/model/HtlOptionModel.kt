@@ -4,7 +4,7 @@ import com.aemtools.lang.htl.psi.HtlContextExpression
 
 /**
  * Helper model for htl option.
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlOptionModel(val contextExpression: HtlContextExpression) {
 

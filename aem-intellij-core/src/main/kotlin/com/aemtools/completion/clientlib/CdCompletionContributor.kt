@@ -6,7 +6,7 @@ import com.aemtools.completion.clientlib.provider.ClientlibDeclarationIncludeCom
 import com.aemtools.lang.clientlib.psi.pattern.CdPatterns
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class CdCompletionContributor : BaseCompletionContributor({
 

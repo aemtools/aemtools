@@ -10,7 +10,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementVisitor
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class HtlElExpressionMixin(node: ASTNode) : ASTWrapperPsiElement(node), PsiElement {
 

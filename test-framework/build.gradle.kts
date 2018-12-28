@@ -7,7 +7,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
-    id("org.jetbrains.intellij") version "0.3.12"
+    id("org.jetbrains.intellij") version "0.4.1"
 }
 
 repositories {

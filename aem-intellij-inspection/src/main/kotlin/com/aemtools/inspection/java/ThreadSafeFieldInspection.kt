@@ -17,7 +17,7 @@ import com.intellij.psi.search.GlobalSearchScope
 /**
  * AEM 3 rule implementation.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ThreadSafeFieldInspection : AemIntellijInspection(
     name = "Thread-safe field inspection",

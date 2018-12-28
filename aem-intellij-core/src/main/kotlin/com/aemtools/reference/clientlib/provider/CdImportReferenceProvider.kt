@@ -12,7 +12,7 @@ import com.intellij.psi.PsiReferenceProvider
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object CdImportReferenceProvider : PsiReferenceProvider() {
   override fun getReferencesByElement(element: PsiElement,

@@ -17,7 +17,7 @@ import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ElParserDefinition : ParserDefinition {
   override fun createParser(project: Project?): PsiParser = ElParser()

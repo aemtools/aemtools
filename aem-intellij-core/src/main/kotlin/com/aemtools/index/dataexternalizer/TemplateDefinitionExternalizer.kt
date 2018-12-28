@@ -4,7 +4,7 @@ import com.aemtools.common.index.BaseExternalizer
 import com.aemtools.index.model.TemplateDefinition
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object TemplateDefinitionExternalizer : BaseExternalizer<TemplateDefinition>()
 

@@ -12,7 +12,7 @@ import com.intellij.openapi.project.Project
 /**
  * Descriptor of type spawned in `data-sly-use` which included some Htl template containing file.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class TemplateHolderTypeDescriptor(
     val templates: List<TemplateDefinition>,

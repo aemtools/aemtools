@@ -6,7 +6,7 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.psi.AbstractElementManipulator
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlVariableNameManipulator : AbstractElementManipulator<HtlVariableName>() {
   override fun handleContentChange(element: HtlVariableName, range: TextRange, newContent: String): HtlVariableName {

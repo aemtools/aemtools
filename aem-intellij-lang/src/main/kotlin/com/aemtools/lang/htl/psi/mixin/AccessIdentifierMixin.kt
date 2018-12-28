@@ -9,7 +9,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class AccessIdentifierMixin(node: ASTNode) : com.aemtools.lang.htl.psi.mixin.VariableNameMixin(node) {
 

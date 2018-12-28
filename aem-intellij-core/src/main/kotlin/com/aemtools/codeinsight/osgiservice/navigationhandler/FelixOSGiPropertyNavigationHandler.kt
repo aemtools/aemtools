@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent
 /**
  * Felix OSGi gutter navigation handler.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class FelixOSGiPropertyNavigationHandler(
     val propertyDescriptors: () -> List<FelixOSGiPropertyDescriptor>

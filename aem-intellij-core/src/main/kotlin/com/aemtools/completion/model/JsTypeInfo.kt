@@ -4,7 +4,7 @@ package com.aemtools.completion.model
  * The type of attribute (e.g. __Boolean__)
  * Can be mixed, the | sign is used as separator
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class JsTypeInfo(
     val types: List<String>

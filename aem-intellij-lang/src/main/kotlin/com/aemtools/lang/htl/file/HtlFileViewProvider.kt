@@ -20,7 +20,7 @@ import gnu.trove.THashSet
 import java.util.concurrent.ConcurrentMap
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlFileViewProvider @JvmOverloads constructor(
     manager: PsiManager,

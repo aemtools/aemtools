@@ -4,6 +4,6 @@ import com.aemtools.common.index.BaseExternalizer
 import com.aemtools.index.model.OSGiConfigurationIndexModel
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object OSGiConfigurationExternalizer : BaseExternalizer<OSGiConfigurationIndexModel>()

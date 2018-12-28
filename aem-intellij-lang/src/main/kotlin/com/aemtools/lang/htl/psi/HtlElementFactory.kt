@@ -10,7 +10,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiFileFactory
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlElementFactory {
 

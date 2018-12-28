@@ -8,7 +8,7 @@ import com.intellij.psi.PsiReferenceBase
 /**
  * Reference to template parameter.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlTemplateParameterReference(
     val type: TemplateParameterTypeDescriptor,

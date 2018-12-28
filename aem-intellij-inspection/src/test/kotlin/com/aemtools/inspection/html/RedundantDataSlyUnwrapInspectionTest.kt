@@ -8,7 +8,7 @@ import java.io.File
 /**
  * Test for [RedundantDataSlyUnwrapInspection].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class RedundantDataSlyUnwrapInspectionTest : InspectionTestCase() {
 

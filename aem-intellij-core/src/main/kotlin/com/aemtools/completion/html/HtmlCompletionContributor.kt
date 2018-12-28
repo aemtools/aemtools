@@ -15,7 +15,7 @@ import com.aemtools.lang.html.psi.pattern.HtmlPatterns.valueOfXLinkChecker
 /**
  * Completion contributor for HTML related completions.
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class HtmlCompletionContributor : BaseCompletionContributor({
 

@@ -6,7 +6,7 @@ import com.aemtools.test.fix.BaseFixTest
 /**
  * Test for [RemoveRedundantElAction] & [RedundantElInspection].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class RemoveRedundantElFixTest : BaseFixTest() {
 

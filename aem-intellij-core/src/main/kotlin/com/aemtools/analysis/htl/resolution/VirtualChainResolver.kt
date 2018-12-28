@@ -7,7 +7,7 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.mayBeIteratedUpon
 import com.intellij.codeInsight.lookup.LookupElement
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object VirtualChainResolver {
 

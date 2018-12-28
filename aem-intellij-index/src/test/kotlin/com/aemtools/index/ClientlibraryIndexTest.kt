@@ -8,7 +8,7 @@ import org.assertj.core.api.Assertions.assertThat
 /**
  * Test for [ClientlibraryIndex] & [ClientLibraryIndexFacade].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ClientlibraryIndexTest : BaseLightTest() {
 

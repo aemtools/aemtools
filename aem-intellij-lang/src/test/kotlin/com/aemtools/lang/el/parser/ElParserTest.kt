@@ -4,7 +4,7 @@ import com.aemtools.lang.el.ElParserDefinition
 import com.aemtools.test.parser.BaseParserTest
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ElParserTest
   : BaseParserTest(

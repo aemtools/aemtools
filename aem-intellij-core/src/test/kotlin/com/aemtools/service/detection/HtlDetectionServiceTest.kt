@@ -6,7 +6,7 @@ import com.aemtools.test.base.BaseLightTest
 import org.assertj.core.api.Assertions.assertThat
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlDetectionServiceTest : BaseLightTest(false) {
 

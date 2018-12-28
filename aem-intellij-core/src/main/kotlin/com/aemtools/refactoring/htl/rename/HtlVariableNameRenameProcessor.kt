@@ -7,7 +7,7 @@ import com.intellij.refactoring.rename.RenamePsiElementProcessor
 import com.intellij.usageView.UsageInfo
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlVariableNameRenameProcessor : RenamePsiElementProcessor() {
 

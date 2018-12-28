@@ -66,7 +66,7 @@ val mockitoVersion: String by properties
 plugins {
   base
   java
-  kotlin("jvm") version "1.2.60"
+  kotlin("jvm") version "1.3.11"
   id("io.gitlab.arturbosch.detekt").version("1.0.0.RC5-6")
   id("com.palantir.jacoco-full-report").version("0.4.0")
 }
@@ -121,11 +121,7 @@ subprojects {
 
   dependencies {
     compile(kotlin("stdlib", kotlinVersion))
-    compile(kotlin("runtime", kotlinVersion))
     compile(kotlin("reflect", kotlinVersion))
-    compile(kotlin("stdlib-jdk8", kotlinVersion))
-
-    testCompile("com.github.markusbernhardt:proxy-vole:1.0.3")
 
     testCompile("junit:junit:$junitVersion")
     testCompile("org.jmockit:jmockit:$jmockitVersion")
@@ -171,7 +167,7 @@ subprojects {
 
   tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
-    kotlinOptions.languageVersion = "1.2"
+    kotlinOptions.languageVersion = "1.3"
   }
 }
 

@@ -14,7 +14,7 @@ import com.intellij.xml.index.XmlIndex
 /**
  * Collects Htl files containing *data-sly-template* for quick search.
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlTemplateIndex : XmlIndex<TemplateDefinition>() {
 

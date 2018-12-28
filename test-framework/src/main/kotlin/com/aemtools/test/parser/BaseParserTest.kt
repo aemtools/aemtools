@@ -4,7 +4,7 @@ import com.intellij.lang.ParserDefinition
 import com.intellij.testFramework.ParsingTestCase
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class BaseParserTest(dataPath: String,
                               fileExt: String,

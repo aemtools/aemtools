@@ -13,7 +13,7 @@ import com.intellij.util.indexing.FileBasedIndex
 /**
  * Search of OSGi configuration files.
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object OSGiConfigSearch {
 

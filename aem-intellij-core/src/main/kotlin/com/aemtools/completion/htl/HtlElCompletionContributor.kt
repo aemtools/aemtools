@@ -32,7 +32,7 @@ import com.aemtools.lang.htl.psi.pattern.HtlPatterns.variableName
 import com.intellij.patterns.StandardPatterns.or
 
 /**
- * @author Dmytro Troynikov.
+ * @author Dmytro Primshyts.
  */
 class HtlElCompletionContributor : BaseCompletionContributor({
   basic(memberAccess, HtlElMemberAccessCompletionProvider)

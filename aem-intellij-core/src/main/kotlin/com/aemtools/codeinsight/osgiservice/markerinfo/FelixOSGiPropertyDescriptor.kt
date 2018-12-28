@@ -6,7 +6,7 @@ import com.intellij.psi.xml.XmlFile
 /**
  * Descriptor of single OSGi property.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 data class FelixOSGiPropertyDescriptor(
         /**

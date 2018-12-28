@@ -1,7 +1,7 @@
 package com.aemtools.lang.granite
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 data class GraniteComponent(
     val fullPath: String,

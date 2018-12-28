@@ -3,7 +3,7 @@ package com.aemtools.lang.htl.editor.comments
 import com.intellij.lang.xml.XmlCommenter
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlCommenter : XmlCommenter() {
   override fun getBlockCommentPrefix(): String = "<!--/* "

@@ -3,7 +3,7 @@ package com.aemtools.lang.clientlib.editor
 import com.intellij.lang.Commenter
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class CdCommenter : Commenter {
   override fun getCommentedBlockCommentPrefix(): String? = null

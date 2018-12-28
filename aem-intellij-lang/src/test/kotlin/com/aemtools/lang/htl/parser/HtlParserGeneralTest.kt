@@ -1,7 +1,7 @@
 package com.aemtools.lang.htl.parser
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlParserGeneralTest
   : HtlParserBaseTest("com/aemtools/lang/htl/parser/fixtures/general") {

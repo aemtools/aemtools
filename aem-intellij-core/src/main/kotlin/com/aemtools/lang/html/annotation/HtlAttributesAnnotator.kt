@@ -30,7 +30,7 @@ import com.intellij.psi.xml.XmlAttribute
 /**
  * Annotates Htl attributes
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlAttributesAnnotator : Annotator {
   override fun annotate(element: PsiElement, holder: AnnotationHolder) {

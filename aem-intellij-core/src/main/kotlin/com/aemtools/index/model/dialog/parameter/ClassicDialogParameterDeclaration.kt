@@ -5,7 +5,7 @@ package com.aemtools.index.model.dialog.parameter
  *
  * @property xtype The xtype type of underlying parameter.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 data class ClassicDialogParameterDeclaration(
     val xtype: String,

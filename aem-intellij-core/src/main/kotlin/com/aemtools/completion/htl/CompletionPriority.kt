@@ -3,7 +3,7 @@ package com.aemtools.completion.htl
 /**
  * Holder for common completion priority values.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object CompletionPriority {
 

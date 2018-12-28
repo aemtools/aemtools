@@ -14,7 +14,7 @@ import com.intellij.psi.PsiElement
 /**
  * Type descriptor for `properties` context object.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class PropertiesTypeDescriptor(val element: PsiElement) : BaseTypeDescriptor() {
 

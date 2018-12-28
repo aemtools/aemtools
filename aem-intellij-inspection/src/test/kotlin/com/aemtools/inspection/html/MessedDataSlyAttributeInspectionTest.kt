@@ -8,7 +8,7 @@ import java.io.File
 /**
  * Test for [MessedDataSlyAttributeInspection].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class MessedDataSlyAttributeInspectionTest : InspectionTestCase() {
 

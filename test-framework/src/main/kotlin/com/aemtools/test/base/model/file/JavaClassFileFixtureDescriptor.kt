@@ -4,7 +4,7 @@ import com.intellij.psi.PsiClass
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class JavaClassFileFixtureDescriptor(
     name: String,

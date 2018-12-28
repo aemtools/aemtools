@@ -7,7 +7,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IElementType
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ElBraceMatcher : PairedBraceMatcher {
   override fun getCodeConstructStart(

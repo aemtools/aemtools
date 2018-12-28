@@ -6,7 +6,7 @@ import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
 import com.intellij.psi.xml.XmlAttribute
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlTemplateDeclaration(
     val templateDefinition: TemplateDefinition,

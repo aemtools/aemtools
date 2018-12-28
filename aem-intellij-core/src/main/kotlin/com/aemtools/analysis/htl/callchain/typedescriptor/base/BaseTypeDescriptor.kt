@@ -1,7 +1,7 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor.base
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class BaseTypeDescriptor : TypeDescriptor {
 

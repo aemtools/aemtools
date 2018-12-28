@@ -4,7 +4,7 @@ import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.base.BasePlatformLightTest
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 interface TypeActionTest {
 

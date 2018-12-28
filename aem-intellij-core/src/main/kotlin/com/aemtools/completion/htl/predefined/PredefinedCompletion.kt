@@ -8,7 +8,7 @@ import com.intellij.icons.AllIcons
 import javax.swing.Icon
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 data class PredefinedCompletion(
     @SerializedName(value = "name")

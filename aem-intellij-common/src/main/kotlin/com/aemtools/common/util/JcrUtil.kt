@@ -3,7 +3,7 @@ package com.aemtools.common.util
 import com.intellij.psi.xml.XmlTag
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 
 /**

@@ -7,7 +7,7 @@ import com.intellij.psi.PsiReferenceBase
 import com.intellij.psi.xml.XmlAttribute
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlListHelperReference(val xmlAttribute: XmlAttribute,
                              holder: PsiElement,

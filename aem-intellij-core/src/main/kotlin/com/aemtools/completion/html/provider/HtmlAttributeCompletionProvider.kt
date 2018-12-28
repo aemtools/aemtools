@@ -31,7 +31,7 @@ import com.intellij.util.ProcessingContext
 
 /**
  * Provider of Htl specific attributes.
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters>() {
 

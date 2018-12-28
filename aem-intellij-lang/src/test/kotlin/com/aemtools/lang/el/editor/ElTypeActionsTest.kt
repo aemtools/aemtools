@@ -6,7 +6,7 @@ import com.aemtools.test.base.BaseLightTest.Companion.DOLLAR
 import com.aemtools.test.base.BasePlatformLightTest
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ElTypeActionsTest : BasePlatformLightTest(),
     TypeActionTest {

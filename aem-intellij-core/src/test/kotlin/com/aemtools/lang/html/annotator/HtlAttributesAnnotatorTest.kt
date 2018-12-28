@@ -5,7 +5,7 @@ import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 /**
  * Test for [HtlAttributesAnnotator].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlAttributesAnnotatorTest : LightCodeInsightFixtureTestCase() {
 

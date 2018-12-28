@@ -5,7 +5,7 @@ import com.intellij.testFramework.fixtures.CodeInsightTestFixture
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class BaseFileFixtureDescriptor(protected val _name: String,
                                          protected val _text: String,

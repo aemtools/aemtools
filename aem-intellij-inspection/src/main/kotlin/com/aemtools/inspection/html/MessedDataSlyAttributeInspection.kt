@@ -11,7 +11,7 @@ import com.intellij.psi.xml.XmlAttribute
  * Checks if data-sly-attribute is used with prohibited attribute
  * (e.g. "style").
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class MessedDataSlyAttributeInspection : HtmlLocalInspectionTool() {
   override fun getGroupDisplayName(): String = "HTL"

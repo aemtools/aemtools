@@ -12,7 +12,7 @@ import com.intellij.util.xmlb.annotations.Tag
 /**
  * Storage for HTL root folders.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 @State(
     name = "HtlRootsConfiguration",

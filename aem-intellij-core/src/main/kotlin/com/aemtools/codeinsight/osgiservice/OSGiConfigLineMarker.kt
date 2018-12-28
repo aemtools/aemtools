@@ -11,7 +11,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiIdentifier
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class OSGiConfigLineMarker : LineMarkerProvider {
   override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<PsiElement>? {

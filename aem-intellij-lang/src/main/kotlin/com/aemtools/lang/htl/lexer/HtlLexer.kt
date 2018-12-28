@@ -5,7 +5,7 @@ import com.intellij.lexer.MergingLexerAdapter
 import com.intellij.psi.tree.TokenSet
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlLexer : MergingLexerAdapter(HtlRawLexer(),
     TokenSet.create(

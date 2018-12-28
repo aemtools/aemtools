@@ -6,7 +6,7 @@ import com.intellij.openapi.fileTypes.StdFileTypes
 import com.intellij.psi.templateLanguages.TemplateLanguage
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlLanguage : Language("Htl"), TemplateLanguage {
 

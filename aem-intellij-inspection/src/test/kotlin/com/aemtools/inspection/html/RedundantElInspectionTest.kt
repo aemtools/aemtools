@@ -8,7 +8,7 @@ import java.io.File
 /**
  * Test for [RedundantElInspection].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class RedundantElInspectionTest : InspectionTestCase() {
 

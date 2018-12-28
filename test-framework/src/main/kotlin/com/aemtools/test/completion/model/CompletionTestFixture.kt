@@ -6,7 +6,7 @@ import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 import org.assertj.core.api.Assertions.assertThat
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class CompletionTestFixture(fixture: JavaCodeInsightTestFixture)
   : TestFixture(fixture), ICompletionTestFixture {

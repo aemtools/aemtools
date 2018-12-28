@@ -7,7 +7,7 @@ import org.jetbrains.spek.api.dsl.on
 
 /**
  * Specification for [RedundantDataSlyUnwrapInspection].
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object RedundantDataSlyUnwrapInspectionSpec : Spek({
   val tested = RedundantDataSlyUnwrapInspection()

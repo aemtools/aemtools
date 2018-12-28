@@ -12,7 +12,7 @@ import com.intellij.psi.xml.XmlAttribute
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object DataSlyUseReferenceProvider : PsiReferenceProvider() {
 

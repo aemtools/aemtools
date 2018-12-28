@@ -7,7 +7,7 @@ import com.aemtools.index.model.dialog.parameter.ClassicDialogParameterDeclarati
  *
  * @property fullPath Full path to component's classic dialog file (`dialog.xml`).
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 data class AemComponentClassicDialogDefinition(
     override val fullPath: String,

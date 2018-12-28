@@ -3,7 +3,7 @@ package com.aemtools.analysis.htl.callchain.typedescriptor.base
 import com.intellij.codeInsight.lookup.LookupElement
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 open class EmptyTypeDescriptor : TypeDescriptor {
   override fun isArray(): Boolean = false

@@ -5,7 +5,7 @@ import com.aemtools.test.lexer.LexerBaseTest
 import com.intellij.lexer.Lexer
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ElLexerTest : LexerBaseTest(), HtlTestCase {
   override fun getDirPath(): String = "com.aemtools.lang.el.lexer"

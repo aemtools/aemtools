@@ -10,7 +10,7 @@ import com.intellij.psi.xml.XmlAttribute
 /**
  * Reference to htl variable declaration (like `data-sly-use` or `data-sly-test` spawned variables).
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlDeclarationReference(
     val xmlAttribute: XmlAttribute?,

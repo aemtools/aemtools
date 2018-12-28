@@ -4,7 +4,7 @@ import com.aemtools.test.base.BaseLightTest
 import com.intellij.testFramework.PlatformTestUtil
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlStructureViewProviderTest : BaseLightTest(false) {
 

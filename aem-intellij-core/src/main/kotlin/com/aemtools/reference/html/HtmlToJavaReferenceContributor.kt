@@ -8,7 +8,7 @@ import com.intellij.psi.PsiReferenceRegistrar
 /**
  * Register `com.intellij.modules.java` dependent html reference providers.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtmlToJavaReferenceContributor : PsiReferenceContributor() {
 

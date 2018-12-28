@@ -10,7 +10,7 @@ import com.intellij.codeInsight.lookup.LookupElement
 /**
  * Type Descriptor backed by list of [PredefinedCompletion] objects.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class PredefinedTypeDescriptor(val predefined: List<PredefinedCompletion>) : BaseTypeDescriptor() {
 

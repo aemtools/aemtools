@@ -7,7 +7,7 @@ import com.intellij.psi.PsiFile
 /**
  * Base Htl intention action.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class BaseHtlIntentionAction(
     text: () -> String,

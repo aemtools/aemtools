@@ -5,7 +5,7 @@ import com.intellij.patterns.ElementPattern
 import com.intellij.psi.PsiElement
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class CdPatternsTest : BasePatternsTest() {
 

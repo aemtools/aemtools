@@ -17,7 +17,7 @@ import com.intellij.psi.xml.XmlAttribute
 import com.intellij.util.Processor
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlAttributeReferencesSearch : QueryExecutorBase<PsiReference, ReferencesSearch.SearchParameters>() {
 

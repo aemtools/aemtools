@@ -8,7 +8,7 @@ import com.intellij.openapi.vfs.VirtualFile
 /**
  * Highlighter factory for [com.aemtools.lang.clientlib.CdLanguage].
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class CdHighlighterFactory : SyntaxHighlighterFactory() {
 

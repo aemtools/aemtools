@@ -12,7 +12,7 @@ import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.psi.xml.XmlToken
 
 /**
- * @author Dmytro_Troynikov.
+ * @author Dmytro Primshyts.
  */
 object WidgetVariantsProvider {
 

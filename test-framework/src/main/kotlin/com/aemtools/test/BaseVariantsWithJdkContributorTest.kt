@@ -4,7 +4,7 @@ import com.aemtools.test.fixture.JdkProjectDescriptor
 import com.intellij.testFramework.LightProjectDescriptor
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class BaseVariantsWithJdkContributorTest(dataPath: String)
   : BaseVariantsCheckContributorTest(dataPath) {

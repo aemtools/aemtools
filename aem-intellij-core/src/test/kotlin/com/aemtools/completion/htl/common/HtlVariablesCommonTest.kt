@@ -9,7 +9,7 @@ import com.aemtools.test.fixture.TestClassesMixin
 /**
  * Tests for Htl variables resolution.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlVariablesCommonTest : CompletionBaseLightTest(true),
     TestClassesMixin {

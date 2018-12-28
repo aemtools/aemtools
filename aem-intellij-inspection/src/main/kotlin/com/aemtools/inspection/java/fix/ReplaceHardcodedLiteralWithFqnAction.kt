@@ -12,7 +12,7 @@ import com.intellij.psi.SmartPsiElementPointer
 /**
  * Replaces given [PsiLiteralExpression] with full qualified usage.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ReplaceHardcodedLiteralWithFqnAction(
     message: String,

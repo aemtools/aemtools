@@ -11,7 +11,7 @@ import com.intellij.psi.SmartPsiElementPointer
 /**
  * Inverts [HtlStringLiteralMixin] quotes.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlWrongQuotesLiteralFixIntentionAction(
     private val pointer: SmartPsiElementPointer<HtlStringLiteralMixin>

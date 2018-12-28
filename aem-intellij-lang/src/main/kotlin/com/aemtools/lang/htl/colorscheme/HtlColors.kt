@@ -6,7 +6,7 @@ import com.intellij.openapi.editor.DefaultLanguageHighlighterColors as dc
 import com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey as r
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlColors {
   val BOOLEAN = r("HTL_EL_BOOLEAN", dc.KEYWORD)

@@ -5,7 +5,7 @@ package com.aemtools.index.model.dialog.parameter
  *
  * @property slingResourceType Sling resource type of underlying parameter (`sling:resourceType`).
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 data class TouchUIDialogParameterDeclaration(
     val slingResourceType: String,

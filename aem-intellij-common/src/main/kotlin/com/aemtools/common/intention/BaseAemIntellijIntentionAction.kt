@@ -16,7 +16,7 @@ import com.intellij.psi.PsiFile
  * be started in write action [startInWriteAction].
  * @property isAvailable Function that should determine whether or current action
  * available in given context. (default: will return `true` for any context)
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class BaseAemIntellijIntentionAction(
     private val text: () -> String,

@@ -7,7 +7,7 @@ import com.aemtools.service.repository.inmemory.RepPolicyRepository
 import com.intellij.openapi.components.ServiceManager
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object ServiceFacade {
 

@@ -4,7 +4,7 @@ import com.aemtools.test.HtlTestCase
 import com.aemtools.test.lexer.LexerBaseTest
 
 /**
- * @author Dmytro Troynikov.
+ * @author Dmytro Primshyts.
  */
 class HtlLexerTest : LexerBaseTest(), HtlTestCase {
   override fun getTestDataPath(): String

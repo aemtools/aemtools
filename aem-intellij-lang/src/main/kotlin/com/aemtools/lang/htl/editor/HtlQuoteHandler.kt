@@ -5,7 +5,7 @@ import com.aemtools.lang.htl.psi.HtlTypes.SINGLE_QUOTE
 import com.intellij.codeInsight.editorActions.SimpleTokenSetQuoteHandler
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlQuoteHandler :
     SimpleTokenSetQuoteHandler(SINGLE_QUOTE, DOUBLE_QUOTE)

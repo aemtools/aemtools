@@ -4,7 +4,7 @@ import com.intellij.openapi.fileTypes.FileTypeConsumer
 import com.intellij.openapi.fileTypes.FileTypeFactory
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlFileTypeFactory : FileTypeFactory() {
   override fun createFileTypes(consumer: FileTypeConsumer) {

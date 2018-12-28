@@ -9,7 +9,7 @@ import com.intellij.patterns.ElementPattern
 import com.intellij.psi.PsiElement
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtmlPatternsTest : BasePatternsTest() {
 

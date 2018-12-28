@@ -1,7 +1,7 @@
 package com.aemtools.completion.model.editconfig
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 data class XmlTagDefinition(
 

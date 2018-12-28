@@ -7,7 +7,7 @@ import org.junit.Test
 /**
  * Test for [HtlRootDirectories].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlRootDirectoriesTest {
 

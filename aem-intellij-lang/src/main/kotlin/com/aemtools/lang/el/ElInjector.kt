@@ -8,7 +8,7 @@ import com.intellij.psi.PsiLanguageInjectionHost
 import com.intellij.psi.xml.XmlAttributeValue
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ElInjector : MultiHostInjector {
   override fun elementsToInjectIn(): MutableList<out Class<out PsiElement>>

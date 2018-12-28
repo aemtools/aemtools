@@ -20,7 +20,7 @@ import java.util.LinkedList
  *  ${properties.myProperty} -> [properties, myProperty]
  * ```
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 open class RawChainUnit(
     val myCallChain: LinkedList<PsiElement>,

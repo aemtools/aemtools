@@ -17,7 +17,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.impl.source.html.HtmlFileImpl
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlStructureViewProvider : PsiStructureViewFactory {
   override fun getStructureViewBuilder(psiFile: PsiFile): StructureViewBuilder? {

@@ -8,7 +8,7 @@ import com.intellij.codeInsight.completion.XmlAttributeInsertHandler
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtmlHrefLinkCheckerCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(

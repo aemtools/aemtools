@@ -6,7 +6,7 @@ import com.aemtools.test.base.BaseLightTest
 /**
  * Test for [HtlBraceMatcher], [HtlQuoteHandler], [HtlBackspaceHandler]
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlTypeActionsTest : BaseLightTest(),
     TypeActionTest {

@@ -12,7 +12,7 @@ import com.intellij.testFramework.PlatformTestUtil
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class RenameFixture(val fixture: JavaCodeInsightTestFixture)
   : IRenameFixture, ITestFixtureInternal {

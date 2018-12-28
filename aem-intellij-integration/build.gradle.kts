@@ -28,7 +28,7 @@ apply {
 
 plugins {
     java
-    id("org.jetbrains.intellij") version "0.3.4"
+    id("org.jetbrains.intellij") version "0.4.1"
 }
 
 val contentPackageBuilderVersion: String by properties

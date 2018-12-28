@@ -10,7 +10,7 @@ import com.intellij.psi.PsiNameIdentifierOwner
 import com.intellij.psi.PsiNamedElement
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class HtlStringLiteralMixin(node: ASTNode)
   : HtlPsiBaseElement(node), HtlStringLiteral, PsiNamedElement, PsiNameIdentifierOwner {

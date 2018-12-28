@@ -10,7 +10,7 @@ import java.io.File
 /**
  * Test for [AemConstantInspection].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class AemConstantInspectionTest : BaseLightTest() {
 

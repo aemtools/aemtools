@@ -4,7 +4,7 @@ import com.aemtools.lang.clientlib.CdParserDefinition
 import com.aemtools.test.parser.BaseParserTest
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class CdParserTest
   : BaseParserTest(

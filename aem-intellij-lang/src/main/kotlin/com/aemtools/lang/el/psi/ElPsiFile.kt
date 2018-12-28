@@ -6,7 +6,7 @@ import com.intellij.openapi.fileTypes.FileType
 import com.intellij.psi.FileViewProvider
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ElPsiFile(fileViewProvider: FileViewProvider)
   : PsiFileBase(fileViewProvider, ElLanguage) {

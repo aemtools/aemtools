@@ -9,7 +9,7 @@ import com.intellij.openapi.project.Project
 /**
  * The service responsible of Htl file type detection.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlDetectionService {
 

@@ -7,7 +7,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiLiteralExpression
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 interface IJavaInspectionService {
 

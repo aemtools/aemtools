@@ -11,7 +11,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.SmartPsiElementPointer
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class RemoveRedundantElAction(private val pointer: SmartPsiElementPointer<HtlElExpressionMixin>)
   : BaseHtlIntentionAction(

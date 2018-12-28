@@ -6,7 +6,7 @@ import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 @Deprecated("Use corresponding extension functions instead")
 object PsiXmlUtil {

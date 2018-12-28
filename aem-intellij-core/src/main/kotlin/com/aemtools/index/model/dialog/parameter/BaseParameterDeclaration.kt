@@ -10,7 +10,7 @@ import java.io.Serializable
  *
  * @property name The name of parameter.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class BaseParameterDeclaration : Serializable {
 

@@ -6,7 +6,7 @@ import com.intellij.psi.ContributedReferenceHost
 import com.intellij.psi.NavigatablePsiElement
 
 /**
- * @author Dmytro Troynikov.
+ * @author Dmytro Primshyts.
  */
 abstract class HtlELNavigableMixin(node: ASTNode)
   : ASTWrapperPsiElement(node), NavigatablePsiElement, ContributedReferenceHost {

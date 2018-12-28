@@ -11,7 +11,7 @@ import com.intellij.util.io.DataExternalizer
 import com.intellij.xml.index.XmlIndex
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class LocalizationIndex : XmlIndex<LocalizationModel>() {
   companion object {

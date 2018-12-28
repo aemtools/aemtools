@@ -13,7 +13,7 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.templateLanguages.TemplateDataLanguageMappings
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlTemplateHighlighter(val project: Project?,
                              val virtualFile: VirtualFile?,

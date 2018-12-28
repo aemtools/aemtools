@@ -6,7 +6,7 @@ import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.actionSystem.IdeActions
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class CdCommenterTest : BaseLightTest(false) {
 

@@ -4,7 +4,7 @@ import com.aemtools.common.constant.const.JCR_ROOT
 import com.aemtools.test.pattern.BasePatternsTest
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlFilePatternTest : BasePatternsTest() {
 

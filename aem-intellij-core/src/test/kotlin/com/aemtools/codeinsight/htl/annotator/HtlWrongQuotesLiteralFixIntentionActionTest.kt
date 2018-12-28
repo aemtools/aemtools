@@ -22,7 +22,7 @@ import org.mockito.Mock
 /**
  * Test for [HtlWrongQuotesLiteralFixIntentionAction].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 @ExtendWith(MockitoExtension::class)
 class HtlWrongQuotesLiteralFixIntentionActionTest {

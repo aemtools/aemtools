@@ -3,7 +3,7 @@ package com.aemtools.test.rename.model.fixture
 import org.intellij.lang.annotations.Language
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 interface IRenameState {
 

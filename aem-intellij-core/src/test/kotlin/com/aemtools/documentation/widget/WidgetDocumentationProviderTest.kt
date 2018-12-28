@@ -3,7 +3,7 @@ package com.aemtools.documentation.widget
 import com.aemtools.test.documentation.BaseDocumentationTest
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class WidgetDocumentationProviderTest
   : BaseDocumentationTest(WidgetDocumentationProvider()) {

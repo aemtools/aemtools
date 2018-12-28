@@ -7,7 +7,7 @@ import java.io.ObjectOutputStream
 import java.io.Serializable
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object ObjectSerializer {
 

@@ -8,7 +8,7 @@ import com.intellij.codeInsight.lookup.LookupElement
 /**
  * Descriptor of template parameter.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class TemplateParameterTypeDescriptor(
     val declaration: HtlTemplateParameterDeclaration) : BaseTypeDescriptor() {

@@ -14,7 +14,7 @@ import org.assertj.core.api.Assertions.assertThat
 import java.io.File
 
 /**
- * @author Dmytro Troynikov.
+ * @author Dmytro Primshyts.
  */
 abstract class BaseVariantsCheckContributorTest(val dataPath: String)
   : LightFixtureCompletionTestCase(),

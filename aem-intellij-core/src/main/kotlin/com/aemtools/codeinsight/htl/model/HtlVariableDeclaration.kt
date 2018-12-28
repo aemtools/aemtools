@@ -30,7 +30,7 @@ import com.intellij.psi.xml.XmlAttribute
 /**
  * Represents the name of variable and the [XmlAttribute] in which it was declared.
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 open class HtlVariableDeclaration internal constructor(
     /**

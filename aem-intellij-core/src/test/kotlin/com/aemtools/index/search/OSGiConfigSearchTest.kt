@@ -5,7 +5,7 @@ import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class OSGiConfigSearchTest : BaseLightTest(),
     OSGiConfigFixtureMixin {

@@ -31,7 +31,7 @@ import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
 import com.intellij.psi.tree.IElementType
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ElHighlighter : SyntaxHighlighterBase() {
   override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {

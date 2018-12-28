@@ -6,7 +6,7 @@ import com.aemtools.index.model.dialog.parameter.TouchUIDialogParameterDeclarati
  * Contains aem component definition information
  * from touch ui dialog.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 data class AemComponentTouchUIDialogDefinition(
     override val fullPath: String,

@@ -4,7 +4,7 @@ import com.aemtools.lang.htl.psi.HtlVariableName
 import com.intellij.psi.xml.XmlAttribute
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlTemplateParameterDeclaration(
     val htlVariableNameElement: HtlVariableName,

@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class CdCommenterUnitTest {
 

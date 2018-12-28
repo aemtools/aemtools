@@ -3,7 +3,7 @@ package com.aemtools.completion.model
 import java.io.Serializable
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 data class WidgetMember(
     /**

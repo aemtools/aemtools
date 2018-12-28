@@ -4,7 +4,7 @@ import com.aemtools.test.BaseVariantsWithJdkContributorTest
 
 /**
  * Tests for proper collections variables resolution.
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class CollectionsTest : BaseVariantsWithJdkContributorTest("com/aemtools/completion/htl/fixtures/noafter/collections") {
 

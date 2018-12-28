@@ -12,7 +12,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IElementType
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlBraceMatcher : PairedBraceMatcher {
   override fun getCodeConstructStart(

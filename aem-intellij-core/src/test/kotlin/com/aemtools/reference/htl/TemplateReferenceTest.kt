@@ -5,7 +5,7 @@ import com.aemtools.test.reference.BaseReferenceTest
 import com.intellij.psi.xml.XmlAttribute
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class TemplateReferenceTest : BaseReferenceTest() {
 

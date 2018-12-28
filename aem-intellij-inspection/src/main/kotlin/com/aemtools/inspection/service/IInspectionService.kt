@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 interface IInspectionService {
 

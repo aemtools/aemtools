@@ -18,7 +18,7 @@ import com.intellij.psi.xml.XmlAttribute
  *  <div style="${'...'}">
  * ```
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class SubstituteWithRawAttributeIntentionAction(
     private val pointer: SmartPsiElementPointer<XmlAttribute>,

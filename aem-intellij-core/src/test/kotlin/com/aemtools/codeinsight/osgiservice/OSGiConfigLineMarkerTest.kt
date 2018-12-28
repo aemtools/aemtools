@@ -13,7 +13,7 @@ import org.mockito.junit.MockitoRule
 /**
  * Test for [OSGiConfigLineMarker].
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class OSGiConfigLineMarkerTest : BaseLightTest(),
     OSGiConfigFixtureMixin,

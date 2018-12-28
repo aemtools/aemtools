@@ -5,7 +5,7 @@ import com.aemtools.common.constant.const
 /**
  * Represent String value of Lexeme under user cursor
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 data class SelectedString constructor(
     val value: String,

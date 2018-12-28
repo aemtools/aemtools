@@ -19,7 +19,7 @@ import com.intellij.util.ProcessingContext
 import javax.swing.Icon
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object ClientlibDeclarationIncludeCompletionProvider : CompletionProvider<CompletionParameters>(), DumbAware {
   override fun addCompletions(

@@ -7,7 +7,7 @@ import com.aemtools.test.base.model.fixture.ITestFixture
 import com.aemtools.test.completion.CompletionBaseLightTest
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class CompletionRelevanceTest : CompletionBaseLightTest(true) {
 

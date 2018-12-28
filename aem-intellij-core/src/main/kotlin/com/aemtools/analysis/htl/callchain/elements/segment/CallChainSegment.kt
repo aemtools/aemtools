@@ -4,7 +4,7 @@ import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 
 /**
- * @Author Dmytro_Troynikov
+ * @Author Dmytro Primshyts
  */
 interface CallChainSegment {
 

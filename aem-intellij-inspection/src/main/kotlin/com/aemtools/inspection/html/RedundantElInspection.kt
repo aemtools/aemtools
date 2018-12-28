@@ -16,7 +16,7 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class RedundantElInspection : AemIntellijInspection(
     groupName = "HTL",

@@ -8,7 +8,7 @@ import com.intellij.util.indexing.DataIndexer
 import com.intellij.util.indexing.FileContent
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object LocalizationModelIndexer : DataIndexer<String, LocalizationModel, FileContent> {
 

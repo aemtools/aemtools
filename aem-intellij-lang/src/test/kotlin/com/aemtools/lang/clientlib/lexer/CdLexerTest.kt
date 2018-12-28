@@ -4,7 +4,7 @@ import com.aemtools.test.lexer.LexerBaseTest
 import com.intellij.lexer.Lexer
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class CdLexerTest : LexerBaseTest() {
   override fun getTestDataPath(): String

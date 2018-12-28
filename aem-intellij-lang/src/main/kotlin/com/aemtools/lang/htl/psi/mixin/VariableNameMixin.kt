@@ -9,7 +9,7 @@ import com.intellij.psi.PsiNamedElement
 import javax.swing.Icon
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class VariableNameMixin(node: ASTNode)
   : com.aemtools.lang.htl.psi.mixin.HtlELNavigableMixin(node),

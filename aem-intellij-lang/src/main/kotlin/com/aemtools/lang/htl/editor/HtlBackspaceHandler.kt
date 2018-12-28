@@ -7,7 +7,7 @@ import com.intellij.openapi.editor.Editor
 import com.intellij.psi.PsiFile
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlBackspaceHandler : BackspaceHandlerDelegate() {
   override fun beforeCharDeleted(c: Char, file: PsiFile, editor: Editor) {

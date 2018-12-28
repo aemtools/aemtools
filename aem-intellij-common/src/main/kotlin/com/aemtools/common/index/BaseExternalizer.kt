@@ -9,7 +9,7 @@ import java.io.DataOutput
 import java.io.Serializable
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 open class BaseExternalizer<T : Serializable> : DataExternalizer<T> {
   companion object {

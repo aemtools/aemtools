@@ -15,7 +15,7 @@ import com.intellij.psi.PsiElement
  * <div attribute="${"it's an error"}"></div>
  * ```
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlWrongQuotesAnnotator : Annotator {
   override fun annotate(element: PsiElement, holder: AnnotationHolder) {

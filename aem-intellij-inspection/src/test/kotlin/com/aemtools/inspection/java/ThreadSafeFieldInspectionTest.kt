@@ -10,7 +10,7 @@ import java.io.File
 /**
  * Test for [ThreadSafeFieldInspection].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ThreadSafeFieldInspectionTest : BaseLightTest(true) {
 

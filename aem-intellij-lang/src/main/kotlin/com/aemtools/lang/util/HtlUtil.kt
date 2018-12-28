@@ -28,7 +28,7 @@ import com.intellij.psi.xml.XmlTag
 /**
  * Htl related utility methods.
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 
 /**

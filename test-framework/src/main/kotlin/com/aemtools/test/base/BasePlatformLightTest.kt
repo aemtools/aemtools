@@ -4,7 +4,7 @@ import com.intellij.testFramework.fixtures.CodeInsightTestFixture
 import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class BasePlatformLightTest : LightPlatformCodeInsightFixtureTestCase() {
 

@@ -7,7 +7,7 @@ import com.intellij.codeInspection.htmlInspections.HtmlLocalInspectionTool
 import com.intellij.psi.xml.XmlAttribute
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class RedundantDataSlyUnwrapInspection : HtmlLocalInspectionTool() {
   override fun getGroupDisplayName(): String = "HTL"

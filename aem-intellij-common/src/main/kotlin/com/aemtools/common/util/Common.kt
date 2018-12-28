@@ -29,7 +29,7 @@ import java.io.Serializable
 /**
  * Some common IDEA Open API methods
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object OpenApiUtil {
 

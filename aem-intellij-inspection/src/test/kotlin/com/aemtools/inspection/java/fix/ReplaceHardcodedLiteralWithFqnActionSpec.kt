@@ -23,7 +23,7 @@ import org.jetbrains.spek.api.lifecycle.CachingMode
 /**
  * Specification for [ReplaceHardcodedLiteralWithFqnAction].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object ReplaceHardcodedLiteralWithFqnActionSpec : Spek({
 

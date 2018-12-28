@@ -7,7 +7,7 @@ import com.intellij.psi.xml.XmlElement
 import com.intellij.psi.xml.XmlTag
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object WidgetDefinitionUtil {
 

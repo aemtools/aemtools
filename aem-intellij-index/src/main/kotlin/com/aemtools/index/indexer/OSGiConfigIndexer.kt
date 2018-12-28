@@ -8,7 +8,7 @@ import com.intellij.util.indexing.DataIndexer
 import com.intellij.util.indexing.FileContent
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object OSGiConfigIndexer : DataIndexer<String, OSGiConfigurationIndexModel, FileContent> {
   override fun map(inputData: FileContent): MutableMap<String, OSGiConfigurationIndexModel> {

@@ -19,7 +19,7 @@ import java.io.Serializable
  * Represents content of AEM component descriptor
  * (`.content.xml`).
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 data class AemComponentDefinition(
 

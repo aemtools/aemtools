@@ -5,7 +5,7 @@ import com.aemtools.index.search.OSGiConfigSearch
 import com.aemtools.test.base.BaseLightTest
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class OSGiConfigIndexTest : BaseLightTest() {
 

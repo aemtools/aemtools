@@ -3,7 +3,7 @@ package com.aemtools.completion.htl.common
 import com.aemtools.test.completion.CompletionBaseLightTest
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class LocalizationCompletionTest : CompletionBaseLightTest(false) {
 

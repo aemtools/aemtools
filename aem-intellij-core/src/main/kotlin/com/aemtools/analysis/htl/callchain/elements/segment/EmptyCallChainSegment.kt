@@ -6,7 +6,7 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 /**
  * Class that represents empty call chain.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class EmptyCallChainSegment : CallChainSegment {
   override fun outputType(): TypeDescriptor = TypeDescriptor.empty()

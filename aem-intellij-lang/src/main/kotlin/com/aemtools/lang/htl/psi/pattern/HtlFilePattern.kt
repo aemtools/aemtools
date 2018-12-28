@@ -8,7 +8,7 @@ import com.intellij.util.ProcessingContext
 /**
  * Will match file that contain injected HTL.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlFilePattern : PatternCondition<PsiFile?>("HTL File") {
 

@@ -18,7 +18,7 @@ import com.intellij.psi.PsiElementVisitor
  * Will report `@Optional` annotation as "unused" on `@Inject`'ed field in
  * case if `@Model` annotation has `defaultInjectionStrategy = OPTIONAL`.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class DefaultInjectionStrategyInspection : AemIntellijInspection(
     groupName = "AEM",

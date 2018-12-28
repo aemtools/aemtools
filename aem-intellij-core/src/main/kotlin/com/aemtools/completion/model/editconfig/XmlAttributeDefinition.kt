@@ -3,7 +3,7 @@ package com.aemtools.completion.model.editconfig
 import com.aemtools.completion.model.JsTypeInfo
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 data class XmlAttributeDefinition(
     /**

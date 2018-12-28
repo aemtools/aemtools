@@ -18,7 +18,7 @@ import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class CdParserDefinition : ParserDefinition {
 

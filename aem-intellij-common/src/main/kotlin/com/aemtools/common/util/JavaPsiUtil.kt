@@ -20,7 +20,7 @@ import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiTypesUtil
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 
 /**

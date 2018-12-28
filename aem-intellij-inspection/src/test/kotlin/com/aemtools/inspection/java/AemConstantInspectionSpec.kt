@@ -23,7 +23,7 @@ import org.picocontainer.PicoContainer
 /**
  * Specification for [AemConstantInspection].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object AemConstantInspectionSpec : Spek({
   val tested = AemConstantInspection()

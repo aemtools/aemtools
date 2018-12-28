@@ -13,7 +13,7 @@ import com.intellij.icons.AllIcons
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlDataSlyCallOptionCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(

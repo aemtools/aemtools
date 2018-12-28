@@ -12,14 +12,14 @@ import org.jetbrains.intellij.IntelliJPluginExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  id("org.jetbrains.grammarkit") version "2018.1.7"
-  id("org.jetbrains.intellij") version "0.3.4"
+  id("org.jetbrains.grammarkit") version "2018.2.2"
+  id("org.jetbrains.intellij") version "0.4.1"
 }
 
 val kotlinVersion: String by properties
 
 grammarKit {
-  grammarKitRelease = "2017.1.5"
+  grammarKitRelease = "2017.1.7"
 }
 
 java.sourceSets {

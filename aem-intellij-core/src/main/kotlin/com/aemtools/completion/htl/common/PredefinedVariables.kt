@@ -17,7 +17,7 @@ import com.intellij.openapi.project.Project
 /**
  * Provides completion on Htl context object (e.g. 'properties').
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object PredefinedVariables {
 

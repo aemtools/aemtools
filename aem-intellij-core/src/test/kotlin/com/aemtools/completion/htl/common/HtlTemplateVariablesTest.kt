@@ -3,7 +3,7 @@ package com.aemtools.completion.htl.common
 import com.aemtools.test.BaseVariantsCheckContributorTest
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlTemplateVariablesTest : BaseVariantsCheckContributorTest("com/aemtools/completion/htl/fixtures/noafter/template") {
 

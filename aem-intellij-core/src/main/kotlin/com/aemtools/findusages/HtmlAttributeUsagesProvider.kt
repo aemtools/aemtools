@@ -14,7 +14,7 @@ import com.intellij.psi.search.SearchScope
 import com.intellij.psi.xml.XmlAttribute
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtmlAttributeUsagesProvider : FindUsagesHandlerFactory() {
   override fun createFindUsagesHandler(element: PsiElement, forHighlightUsages: Boolean): FindUsagesHandler? {

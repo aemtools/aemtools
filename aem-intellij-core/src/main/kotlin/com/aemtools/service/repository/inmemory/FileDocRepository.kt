@@ -10,7 +10,7 @@ import org.apache.sanselan.util.IOUtils
 /**
  * [WidgetDocRepository] implementation that uses json files as the storage.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object FileDocRepository : WidgetDocRepository {
 

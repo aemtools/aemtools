@@ -15,7 +15,7 @@ import com.intellij.psi.PsiLiteralExpression
 import com.intellij.psi.search.GlobalSearchScope
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class JavaInspectionService : IJavaInspectionService {
 

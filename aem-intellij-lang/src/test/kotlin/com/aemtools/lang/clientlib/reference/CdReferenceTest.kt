@@ -4,7 +4,7 @@ import com.aemtools.test.reference.BaseReferenceTest
 import com.intellij.psi.PsiFile
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class CdReferenceTest : BaseReferenceTest() {
 

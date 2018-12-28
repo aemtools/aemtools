@@ -4,7 +4,7 @@ import com.aemtools.lang.el.ElLanguage
 import com.intellij.psi.tree.IElementType
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ElToken(debugName: String)
   : IElementType(debugName, ElLanguage)

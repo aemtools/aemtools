@@ -6,7 +6,7 @@ import com.intellij.extapi.psi.PsiFileBase
 import com.intellij.psi.FileViewProvider
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class CdPsiFile(fileViewProvider: FileViewProvider)
   : PsiFileBase(fileViewProvider, CdLanguage) {
