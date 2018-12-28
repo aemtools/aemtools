@@ -175,11 +175,9 @@ subprojects {
   }
 }
 
-tasks {
-  "wrapper"(Wrapper::class) {
-    gradleVersion = "4.9"
+task<Wrapper>("gradleWrapper") {
+    gradleVersion = "5.0"
     distributionType = Wrapper.DistributionType.ALL
-  }
 }
 
 jacocoFull {

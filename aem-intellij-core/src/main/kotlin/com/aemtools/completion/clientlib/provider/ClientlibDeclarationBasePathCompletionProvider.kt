@@ -15,7 +15,7 @@ import com.intellij.util.ProcessingContext
 object ClientlibDeclarationBasePathCompletionProvider : CompletionProvider<CompletionParameters>(), DumbAware {
   override fun addCompletions(
       parameters: CompletionParameters,
-      context: ProcessingContext?,
+      context: ProcessingContext,
       result: CompletionResultSet) {
     if (result.isStopped) {
       return

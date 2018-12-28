@@ -14,11 +14,11 @@ import org.apache.sanselan.util.IOUtils
  */
 object FileDocRepository : WidgetDocRepository {
 
-  var documents: List<WidgetDoc> = ArrayList()
+  private var documents: List<WidgetDoc> = ArrayList()
 
-  var groupedByXtype: MutableMap<String, WidgetDoc> = HashMap()
-  var groupedByClass: MutableMap<String, WidgetDoc> = HashMap()
-  var xtypes: MutableList<String> = Lists.newArrayList()
+  private var groupedByXtype: MutableMap<String, WidgetDoc> = HashMap()
+  private var groupedByClass: MutableMap<String, WidgetDoc> = HashMap()
+  private var xtypes: MutableList<String> = Lists.newArrayList()
 
   init {
     val bytes: ByteArray? = getDocumentationFromClasspath()
@@ -27,11 +27,11 @@ object FileDocRepository : WidgetDocRepository {
     val docs: Array<WidgetDoc> = Gson().fromJson(jsonString.toString(), emptyArray<WidgetDoc>().javaClass)
     documents += docs
     documents.filterNot { it.xtype.isNullOrBlank() }
-        .forEach({
-          groupedByXtype.put(it.xtype as String, it)
+        .forEach {
+          groupedByXtype[it.xtype as String] = it
           xtypes.add(it.xtype as String)
-        })
-    documents.forEach { groupedByClass.put(it.className, it) }
+        }
+    documents.forEach { groupedByClass[it.className] = it }
   }
 
   private fun getDocumentationFromClasspath(): ByteArray? {

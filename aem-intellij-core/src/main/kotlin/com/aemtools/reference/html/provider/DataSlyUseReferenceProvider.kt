@@ -19,7 +19,7 @@ object DataSlyUseReferenceProvider : PsiReferenceProvider() {
   override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
     val attr = element.findParentByType(XmlAttribute::class.java) ?: return emptyArray()
     val valueElement = attr.valueElement ?: return emptyArray()
-    val value = valueElement.value ?: return emptyArray()
+    val value = valueElement.value
     if (attr.isDataSlyUse()) {
       val psiFile = HtlIndexFacade.resolveUseFile(value, attr.containingFile)
 

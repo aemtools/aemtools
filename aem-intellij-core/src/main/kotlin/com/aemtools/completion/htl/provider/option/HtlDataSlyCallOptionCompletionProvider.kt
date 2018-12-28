@@ -18,7 +18,7 @@ import com.intellij.util.ProcessingContext
 object HtlDataSlyCallOptionCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(
       parameters: CompletionParameters,
-      context: ProcessingContext?,
+      context: ProcessingContext,
       result: CompletionResultSet) {
     val currentPosition = parameters.position
     val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)

@@ -16,7 +16,7 @@ import com.intellij.util.ProcessingContext
  */
 object HtlListSmartCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(parameters: CompletionParameters,
-                              context: ProcessingContext?,
+                              context: ProcessingContext,
                               result: CompletionResultSet) {
     val currentPosition = parameters.position
 

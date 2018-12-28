@@ -20,7 +20,7 @@ import com.intellij.util.ProcessingContext
 object HtlClientLibraryTemplateCategoryCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(
       parameters: CompletionParameters,
-      context: ProcessingContext?,
+      context: ProcessingContext,
       result: CompletionResultSet) {
     if (result.isStopped) {
       return

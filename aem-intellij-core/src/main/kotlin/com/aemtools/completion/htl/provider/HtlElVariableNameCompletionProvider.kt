@@ -18,7 +18,7 @@ import com.intellij.util.ProcessingContext
  */
 object HtlElVariableNameCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(parameters: CompletionParameters,
-                              context: ProcessingContext?,
+                              context: ProcessingContext,
                               result: CompletionResultSet) {
     val currentPosition = parameters.position
     val contextObjects = PredefinedVariables.contextObjectsCompletion()

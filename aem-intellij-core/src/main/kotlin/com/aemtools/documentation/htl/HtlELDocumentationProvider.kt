@@ -73,7 +73,7 @@ open class HtlELDocumentationProvider : AbstractDocumentationProvider() {
           append("<html><head></head><body>")
 
           val dependencies = clientlibs.flatMap { it.dependencies }
-          val embed = clientlibs.flatMap { it.embed }
+          val embeds = clientlibs.flatMap { it.embed }
 
           append("<h2>Declared in:</h2>")
           clientlibs.forEach { model ->
@@ -89,10 +89,10 @@ open class HtlELDocumentationProvider : AbstractDocumentationProvider() {
             append("</ul>")
           }
 
-          if (embed.isNotEmpty()) {
+          if (embeds.isNotEmpty()) {
             append("<h2>Embeds:</h2>")
             append("<ul>")
-            embed.forEach { embed ->
+            embeds.forEach { embed ->
               append("<li>$embed</li>")
             }
             append("</ul>")

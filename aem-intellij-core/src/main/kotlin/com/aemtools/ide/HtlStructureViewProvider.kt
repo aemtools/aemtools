@@ -31,7 +31,6 @@ class HtlStructureViewProvider : PsiStructureViewFactory {
         val _htmlStructureViewBuilder = htmlStructureViewBuilder
         if (_htmlStructureViewBuilder != null && htmlFile != null) {
           val fileEditor = FileEditorManager.getInstance(psiFile.project).getSelectedEditor(psiFile.virtualFile)
-              as? FileEditor
           val viewBuilder = _htmlStructureViewBuilder.createStructureView(fileEditor, psiFile.project)
           return viewBuilder.treeModel
         }

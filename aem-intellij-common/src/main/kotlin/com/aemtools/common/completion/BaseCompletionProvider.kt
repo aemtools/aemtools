@@ -16,14 +16,14 @@ import com.intellij.util.ProcessingContext
 class BaseCompletionProvider(
     private val completionProvider: (
         CompletionParameters,
-        ProcessingContext?,
+        ProcessingContext,
         CompletionResultSet
     ) -> List<LookupElement>,
     private val shouldStop: Boolean = false
 ) : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(
       parameters: CompletionParameters,
-      context: ProcessingContext?,
+      context: ProcessingContext,
       result: CompletionResultSet) {
     if (result.isStopped) {
       return

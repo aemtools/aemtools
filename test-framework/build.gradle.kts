@@ -6,7 +6,12 @@ import org.jetbrains.intellij.IntelliJPluginExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  id("org.jetbrains.intellij") version "0.3.4"
+    java
+    id("org.jetbrains.intellij") version "0.3.12"
+}
+
+repositories {
+    mavenCentral()
 }
 
 val junitVersion: String by properties

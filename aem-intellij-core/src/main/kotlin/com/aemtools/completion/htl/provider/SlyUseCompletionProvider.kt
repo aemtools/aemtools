@@ -32,7 +32,7 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
   private const val ONE_HUNDRED: Double = 100.0
 
   override fun addCompletions(parameters: CompletionParameters,
-                              context: ProcessingContext?,
+                              context: ProcessingContext,
                               result: CompletionResultSet) {
     result.addAllElements(useSuggestions(parameters))
   }

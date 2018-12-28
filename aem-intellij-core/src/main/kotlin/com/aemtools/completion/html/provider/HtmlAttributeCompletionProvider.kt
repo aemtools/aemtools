@@ -49,7 +49,7 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
   )
 
   override fun addCompletions(parameters: CompletionParameters,
-                              context: ProcessingContext?,
+                              context: ProcessingContext,
                               result: CompletionResultSet) {
     if (result.isStopped) {
       return

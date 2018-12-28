@@ -22,7 +22,7 @@ object HtlResourceTypeOptionAssignmentCompletionProvider
 
   override fun addCompletions(
       parameters: CompletionParameters,
-      context: ProcessingContext?,
+      context: ProcessingContext,
       result: CompletionResultSet) {
     val myDirectory = parameters.position.containingFile.originalFile.containingDirectory.virtualFile
         .path
