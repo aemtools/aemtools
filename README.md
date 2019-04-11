@@ -25,3 +25,7 @@ The plugin is available in official JetBrains repository:
    * Provides the list of all available xtypes (taken from official documentation)
    * After the xtype is chosen proposes fields declared in specified xtype
    * "Quick doc" action triggered on specific field or xtype will show corresponding documentation
+
+## Sponsoring
+
+[![Support this reposiroty with issuehunt](https://issuehunt.io/static/embed/issuehunt-button-v1.svg)](https://issuehunt.io/r/aemtools/aemtools)
