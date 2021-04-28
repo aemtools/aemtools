@@ -74,7 +74,7 @@ class MarkAsHtlRootDirectoryActionUpdateTest
   fun `should change presentation text for htl root directory`() {
     `when`(virtualFile.path)
         .thenReturn("/marked/directory")
-    `when`(picoContainer.getComponentInstance(HtlRootDirectories::class.qualifiedName))
+    `when`(picoContainer.getComponentInstance(HtlRootDirectories::class.qualifiedName as Any))
         .thenReturn(rootDirectories)
     `when`(rootDirectories.directories)
         .thenReturn(mutableListOf("/marked/directory"))

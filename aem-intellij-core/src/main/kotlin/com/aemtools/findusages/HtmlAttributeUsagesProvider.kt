@@ -6,8 +6,6 @@ import com.aemtools.reference.htl.reference.HtlDeclarationReference
 import com.aemtools.reference.htl.reference.HtlListHelperReference
 import com.intellij.find.findUsages.FindUsagesHandler
 import com.intellij.find.findUsages.FindUsagesHandlerFactory
-import com.intellij.find.findUsages.FindUsagesOptions
-import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
 import com.intellij.psi.search.SearchScope
@@ -40,14 +38,6 @@ class HtmlAttributeUsagesProvider : FindUsagesHandlerFactory() {
       return super.findReferencesToHighlight(target, searchScope)
           .filter { it is HtlDeclarationReference || it is HtlListHelperReference }
           .toMutableList()
-    }
-
-    override fun getFindUsagesOptions(dataContext: DataContext?): FindUsagesOptions {
-      return super.getFindUsagesOptions(dataContext)
-    }
-
-    override fun getPrimaryElements(): Array<PsiElement> {
-      return super.getPrimaryElements()
     }
 
     override fun getSecondaryElements(): Array<PsiElement> {

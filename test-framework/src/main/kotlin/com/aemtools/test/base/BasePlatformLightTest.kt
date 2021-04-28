@@ -6,7 +6,8 @@ import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCa
 /**
  * @author Dmytro Primshyts
  */
-abstract class BasePlatformLightTest : LightPlatformCodeInsightFixtureTestCase() {
+abstract class BasePlatformLightTest :
+    LightPlatformCodeInsightFixtureTestCase() {
 
   fun fixture(): CodeInsightTestFixture = myFixture
 

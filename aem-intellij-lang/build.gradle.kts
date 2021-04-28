@@ -12,27 +12,33 @@ import org.jetbrains.intellij.IntelliJPluginExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  id("org.jetbrains.grammarkit") version "2018.2.2"
-  id("org.jetbrains.intellij") version "0.4.1"
+  id("org.jetbrains.grammarkit") version "2021.1.2"
+  id("org.jetbrains.intellij") version "0.7.2"
 }
 
-val kotlinVersion: String by properties
+val kotlinVersion: String by project
 
 grammarKit {
-  grammarKitRelease = "2017.1.7"
+  grammarKitRelease = "2020.3.1"
 }
 
-java.sourceSets {
-  getByName("main").java.srcDirs("src/main/gen")
+//java.sourceSets {
+//  getByName("main").java.srcDirs("src/main/gen")
+//}
+
+configure<SourceSetContainer> {
+  val main by getting
+//  main.allJava.srcDirs("src/main/gen")
+  main.java.srcDirs("src/main/gen")
 }
 
 dependencies {
-  compile(project(":aem-intellij-common"))
+  implementation(project(":aem-intellij-common"))
 
-  testCompile(project(":test-framework"))
+  testImplementation(project(":test-framework"))
 }
 
-val ideaVersion: String by properties
+val ideaVersion: String by project
 
 intellij {
   version = ideaVersion

@@ -10,7 +10,7 @@ import com.intellij.psi.xml.XmlAttribute
  * @receiver [XmlAttribute]
  * @return template definition, _null_ in case if current tag isn't of `data-sly-template` type.
  */
-fun XmlAttribute.extractTemplateDefinition(): TemplateDefinition? {
+fun XmlAttribute.extractTemplateDefinition(): TemplateDefinition {
   val name = if (name.contains(".")) {
     name.substring(name.indexOf(".") + 1)
   } else {

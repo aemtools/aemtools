@@ -106,17 +106,17 @@ object I18nReferenceProvider : PsiReferenceProvider() {
       }
     }
 
-    override fun getPresentation(): ItemPresentation? {
+    override fun getPresentation(): ItemPresentation {
       return object : ItemPresentation {
-        override fun getLocationString(): String? {
+        override fun getLocationString(): String {
           return localizationModel.message
         }
 
-        override fun getIcon(unused: Boolean): Icon? {
+        override fun getIcon(unused: Boolean): Icon {
           return AllIcons.Nodes.ResourceBundle
         }
 
-        override fun getPresentableText(): String? {
+        override fun getPresentableText(): String {
           return localizationModel.language
         }
       }

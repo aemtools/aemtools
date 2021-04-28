@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.utils.identity
 
 plugins {
-  id("org.jetbrains.intellij") version "0.4.1"
+  id("org.jetbrains.intellij") version "0.7.2"
 }
 
 dependencies {
@@ -14,7 +14,7 @@ dependencies {
   testCompile(project(":test-framework"))
 }
 
-val ideaVersion: String by properties
+val ideaVersion: String by project
 
 intellij {
   version = ideaVersion

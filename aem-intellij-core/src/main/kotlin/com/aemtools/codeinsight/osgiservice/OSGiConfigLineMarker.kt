@@ -32,7 +32,7 @@ class OSGiConfigLineMarker : LineMarkerProvider {
     return null
   }
 
-  override fun collectSlowLineMarkers(elements: MutableList<PsiElement>,
-                                      result: MutableCollection<LineMarkerInfo<PsiElement>>) {
+  override fun collectSlowLineMarkers(elements: MutableList<out PsiElement>,
+                                      result: MutableCollection<in LineMarkerInfo<*>>) {
   }
 }

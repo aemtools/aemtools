@@ -53,7 +53,7 @@ object PredefinedVariables {
    */
   fun typeDescriptorByIdentifier(variableName: VariableNameMixin, project: Project): TypeDescriptor {
     val name = variableName.variableName()
-    val classInfo = repository.findContextObject(name) ?: return TypeDescriptor.empty()
+    val classInfo = repository.findContextObject(name) ?: return empty()
     val originalElement = variableName.originalElement
     val fullClassName = classInfo.className
     val psiClass = JavaSearch.findClass(fullClassName, project)

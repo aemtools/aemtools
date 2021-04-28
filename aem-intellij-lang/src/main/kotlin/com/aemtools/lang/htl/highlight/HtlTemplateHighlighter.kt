@@ -32,6 +32,6 @@ class HtlTemplateHighlighter(val project: Project?,
     }
     val outerHighlighter = SyntaxHighlighterFactory.getSyntaxHighlighter(type, project, virtualFile)
 
-    registerLayer(HtlTypes.OUTER_LANGUAGE, LayerDescriptor(outerHighlighter, ""))
+    registerLayer(HtlTypes.OUTER_LANGUAGE, LayerDescriptor(outerHighlighter!!, ""))
   }
 }

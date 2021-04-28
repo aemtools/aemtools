@@ -17,7 +17,7 @@ import mockit.Expectations
 import mockit.Mocked
 import mockit.Tested
 import mockit.Verifications
-import mockit.integration.junit4.JMockit
+//import mockit.integration.junit4.JMockit
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.picocontainer.PicoContainer
@@ -25,7 +25,7 @@ import org.picocontainer.PicoContainer
 /**
  * @author Dmytro Primshyts
  */
-@RunWith(JMockit::class)
+//@RunWith(JMockit::class)
 class MarkAsHtlRootDirectoryActionActionPerformedTest {
 
   @Mocked

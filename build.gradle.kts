@@ -1,4 +1,4 @@
-import com.palantir.jacoco.JacocoFullReportExtension
+//import com.palantir.jacoco.JacocoFullReportExtension
 import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.include
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.getValue
@@ -15,30 +15,29 @@ import org.junit.platform.gradle.plugin.EnginesExtension
 import io.gitlab.arturbosch.detekt.*
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.apache.tools.ant.taskdefs.condition.Os
-import org.jetbrains.kotlin.types.checker.captureFromArguments
 import org.junit.platform.console.options.Details
 
 buildscript {
-  val kotlinVersion: String by properties
+  val kotlinVersion: String by project
 
   repositories {
     mavenLocal()
     jcenter()
     mavenCentral()
     maven {
-      setUrl("http://dl.bintray.com/jetbrains/intellij-plugin-service")
+      setUrl("https://dl.bintray.com/jetbrains/intellij-plugin-service")
     }
 
     dependencies {
       classpath(kotlin("gradle-plugin", kotlinVersion))
       classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.2")
-      classpath("com.palantir:jacoco-coverage:0.4.0")
+//      classpath("com.palantir:jacoco-coverage:0.4.0")
       classpath("gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0.RC5-6")
     }
   }
 }
 
-val aemtoolsVersion: String by properties
+val aemtoolsVersion: String by project
 
 allprojects {
   group = "aemtools"
@@ -49,7 +48,7 @@ allprojects {
     mavenLocal()
     mavenCentral()
     maven {
-      setUrl("http://dl.bintray.com/jetbrains/spek")
+      setUrl("https://dl.bintray.com/jetbrains/spek")
     }
     maven {
       setUrl("https://jitpack.io")
@@ -57,49 +56,49 @@ allprojects {
   }
 }
 
-val kotlinVersion: String by properties
-val junitVersion: String by properties
-val jmockitVersion: String by properties
-val assertjVersion: String by properties
-val mockitoVersion: String by properties
+val kotlinVersion: String by project
+val junitVersion: String by project
+val jmockitVersion: String by project
+val assertjVersion: String by project
+val mockitoVersion: String by project
 
 plugins {
   base
   java
-  kotlin("jvm") version "1.3.11"
+  kotlin("jvm") version "1.4.32"
   id("io.gitlab.arturbosch.detekt").version("1.0.0.RC5-6")
-  id("com.palantir.jacoco-full-report").version("0.4.0")
+//  id("com.palantir.jacoco-full-report").version("0.4.0")
 }
 
 subprojects {
   apply(plugin = "java")
   apply(plugin = "kotlin")
-  apply(plugin = "jacoco")
+//  apply(plugin = "jacoco")
   apply(plugin = "org.junit.platform.gradle.plugin")
 
-  jacoco {
-    toolVersion = "0.8.1"
-    reportsDir = file("$buildDir/jacocoReport")
-  }
+//  jacoco {
+//    toolVersion = "0.8.1"
+//    reportsDir = file("$buildDir/jacocoReport")
+//  }
 
   afterEvaluate {
     val junitPlatformTest: JavaExec by tasks
-    configure<JacocoPluginExtension> {
-      applyTo(junitPlatformTest)
-    }
+//    configure<JacocoPluginExtension> {
+//      applyTo(junitPlatformTest)
+//    }
 
-    task<JacocoReport>("junitPlatformJacoco") {
-      sourceDirectories = files("$projectDir/src/main/kotlin")
-      classDirectories = files("$buildDir/classes/kotlin/main")
-      reports {
-        xml.isEnabled = true
-        xml.destination =
-            file("$buildDir/reports/jacoco/test/jacocoTestReport.xml")
-        csv.isEnabled = false
-        html.isEnabled = true
-      }
-      executionData(junitPlatformTest)
-    }
+//    task<JacocoReport>("junitPlatformJacoco") {
+//      sourceDirectories.setFrom(files("$projectDir/src/main/kotlin"))
+//      classDirectories.setFrom(files("$buildDir/classes/kotlin/main"))
+//      reports {
+//        xml.isEnabled = true
+//        xml.destination =
+//            file("$buildDir/reports/jacoco/test/jacocoTestReport.xml")
+//        csv.isEnabled = false
+//        html.isEnabled = true
+//      }
+//      executionData(junitPlatformTest)
+//    }
 
   }
 
@@ -108,16 +107,16 @@ subprojects {
     jcenter()
     mavenCentral()
     maven {
-      setUrl("http://dl.bintray.com/jetbrains/intellij-plugin-service")
+      setUrl("https://dl.bintray.com/jetbrains/intellij-plugin-service")
     }
   }
 
-  val mockitoKotlinVersion: String by properties
-  val spekVersion: String by properties
-  val junitJupiterApiVersion: String by properties
-  val junitJupiterEngineVersion: String by properties
-  val junitVintageEngineVersion: String by properties
-  val junitPlatformVersion: String by properties
+  val mockitoKotlinVersion: String by project
+  val spekVersion: String by project
+  val junitJupiterApiVersion: String by project
+  val junitJupiterEngineVersion: String by project
+  val junitVintageEngineVersion: String by project
+  val junitPlatformVersion: String by project
 
   dependencies {
     compile(kotlin("stdlib", kotlinVersion))
@@ -171,14 +170,14 @@ subprojects {
   }
 }
 
-task<Wrapper>("gradleWrapper") {
-    gradleVersion = "5.0"
+tasks.wrapper {
+    gradleVersion = "6.4.1"
     distributionType = Wrapper.DistributionType.ALL
 }
 
-jacocoFull {
-  excludeProject(":test-framework")
-}
+//jacocoFull {
+//  excludeProject(":test-framework")
+//}
 
 detekt {
   version = "1.0.0.RC5-6"

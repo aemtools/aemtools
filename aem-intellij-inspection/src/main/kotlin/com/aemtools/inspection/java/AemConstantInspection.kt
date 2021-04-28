@@ -20,7 +20,7 @@ class AemConstantInspection : LocalInspectionTool(), BatchSuppressableTool {
 
   override fun getDisplayName(): String = "Hardcoded AEM specific literal"
 
-  override fun getStaticDescription(): String? {
+  override fun getStaticDescription(): String {
     return """
 <html>
 <body>

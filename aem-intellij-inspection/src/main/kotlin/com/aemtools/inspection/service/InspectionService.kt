@@ -51,7 +51,7 @@ class InspectionService : IInspectionService {
         "$variableName is not allowed in data-sly-attribute",
         ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
         RemoveAttributeIntentionFix(
-            attribute.name, attribute
+            attribute.name
         ),
         SubstituteWithRawAttributeIntentionAction(
             attribute.toSmartPointer(),

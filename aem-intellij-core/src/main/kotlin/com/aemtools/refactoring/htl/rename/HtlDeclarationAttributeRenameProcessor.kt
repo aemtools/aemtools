@@ -44,9 +44,9 @@ class HtlDeclarationAttributeRenameProcessor : RenamePsiElementProcessor() {
     val htlDeclarationUsages: ArrayList<UsageInfo> = ArrayList()
     val htlListHelperUsages: ArrayList<UsageInfo> = ArrayList()
     val propertyAccessUsages: ArrayList<UsageInfo> = ArrayList()
-    usages.filterTo(htlDeclarationUsages, { it.reference is HtlDeclarationReference })
-    usages.filterTo(htlListHelperUsages, { it.reference is HtlListHelperReference })
-    usages.filterTo(propertyAccessUsages, { it.reference is HtlPropertyAccessReference })
+    usages.filterTo(htlDeclarationUsages) { it.reference is HtlDeclarationReference }
+    usages.filterTo(htlListHelperUsages) { it.reference is HtlListHelperReference }
+    usages.filterTo(propertyAccessUsages) { it.reference is HtlPropertyAccessReference }
 
     htlListHelperUsages.forEach {
       it.reference?.handleElementRename("${newName}List")
@@ -96,9 +96,7 @@ class HtlAttributeRenameDialog(project: Project,
     super.createCheckboxes(panel, gbConstraints)
     // hide checkboxes
     panel?.let {
-      it.components.filter {
-        it is JCheckBox
-      }.forEach {
+      it.components.filterIsInstance<JCheckBox>().forEach {
             it.isVisible = false
           }
     }

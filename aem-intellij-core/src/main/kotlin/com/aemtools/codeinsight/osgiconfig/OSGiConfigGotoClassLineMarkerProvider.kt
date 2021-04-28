@@ -25,9 +25,9 @@ class OSGiConfigGotoClassLineMarkerProvider : LineMarkerProvider {
     val xmlTag = element as? XmlTag ?: return null
 
     if (xmlTag hasAttribute xmlAttributeMatcher(
-        name = JCR_PRIMARY_TYPE,
-        value = SLING_OSGI_CONFIG
-    )) {
+            name = JCR_PRIMARY_TYPE,
+            value = SLING_OSGI_CONFIG
+        )) {
       val fileName = xmlTag.containingFile.name
 
       val className = fileName.substringBeforeLast(".")
@@ -58,9 +58,9 @@ class OSGiConfigGotoClassLineMarkerProvider : LineMarkerProvider {
     return null
   }
 
-  override fun collectSlowLineMarkers(elements: MutableList<PsiElement>,
-                                      result: MutableCollection<LineMarkerInfo<PsiElement>>) {
-
+  override fun collectSlowLineMarkers(elements: MutableList<out PsiElement>,
+                                      result: MutableCollection<in LineMarkerInfo<*>>) {
+//    super.collectSlowLineMarkers(elements, result)
   }
 
 }

@@ -44,7 +44,7 @@ abstract class BaseLightTest(private val withAemUberJar: Boolean = false)
 
   override fun tearDown() {
     super.tearDown()
-    VfsRootAccess.disallowRootAccess(File("src/test").absolutePath)
+//    VfsRootAccess.disallowRootAccess(File("src/test").absolutePath)
   }
 
   companion object {

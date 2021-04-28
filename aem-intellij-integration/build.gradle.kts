@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.utils.identity
 
 buildscript {
-    val kotlinVersion: String by properties
+    val kotlinVersion: String by project
 
     repositories {
         mavenCentral()
@@ -28,11 +28,11 @@ apply {
 
 plugins {
     java
-    id("org.jetbrains.intellij") version "0.4.1"
+    id("org.jetbrains.intellij") version "0.7.2"
 }
 
-val contentPackageBuilderVersion: String by properties
-val crxPackmgrHelper: String by properties
+val contentPackageBuilderVersion: String by project
+val crxPackmgrHelper: String by project
 
 dependencies {
     compile("com.github.deeprim.aemsync:aemsync-core:2b92cf57c1")
@@ -45,7 +45,7 @@ dependencies {
     testCompile(project(":test-framework"))
 }
 
-val ideaVersion: String by properties
+val ideaVersion: String by project
 
 configure<IntelliJPluginExtension> {
     version = ideaVersion

@@ -355,7 +355,6 @@ fun List<XmlAttribute>.htlAttributes(): List<XmlAttribute> =
  * @receiver [XmlAttribute]
  * @return full qualified class name, or _null_ in case if resolution is not possible
  */
-@Deprecated("To be removed")
 fun XmlAttribute.resolveUseClass(): String? {
   val attributeValue = valueElement?.value ?: return null
   return when {
@@ -365,7 +364,6 @@ fun XmlAttribute.resolveUseClass(): String? {
   }
 }
 
-@Deprecated("To be removed")
 private fun extractBeanNameFromEl(el: String): String? {
   val start = el.indexOf("'") + 1
   val end = el.indexOf("'", start + 1)

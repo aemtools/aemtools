@@ -41,7 +41,7 @@ class DefaultInjectionStrategyInspection : AemIntellijInspection(
       nameValuePair.name == "defaultInjectionStrategy"
     } ?: return
 
-    if (injectionStrategy.value?.text?.contains("OPTIONAL") ?: false) {
+    if (injectionStrategy.value?.text?.contains("OPTIONAL") == true) {
       holder.registerProblem(
           annotation,
           "Redundant annotation",

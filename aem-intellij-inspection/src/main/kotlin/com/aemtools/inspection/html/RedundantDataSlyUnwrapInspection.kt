@@ -15,7 +15,7 @@ class RedundantDataSlyUnwrapInspection : HtmlLocalInspectionTool() {
   override fun getDisplayName(): String
       = "data-sly-unwrap is redundant inside sly tag"
 
-  override fun getStaticDescription(): String? {
+  override fun getStaticDescription(): String {
     return """
 <html>
 <body>

@@ -1,5 +1,4 @@
 import org.jetbrains.intellij.IntelliJPluginExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     val kotlinVersion: String by extra
@@ -7,7 +6,7 @@ buildscript {
     repositories {
         mavenCentral()
     }
-    
+
     dependencies {
         classpath(kotlin("gradle-plugin", kotlinVersion))
     }
@@ -21,7 +20,7 @@ apply {
 
 plugins {
     java
-    id("org.jetbrains.intellij") version "0.4.1"
+    id("org.jetbrains.intellij") version "0.7.2"
 }
 
 val kotlinVersion: String by extra
@@ -29,15 +28,15 @@ val gsonVersion: String by extra
 val apacheCommonsVersion: String by extra
 
 dependencies {
-  compile(project(":aem-intellij-common"))
-  compile(project(":aem-intellij-lang"))
-  compile(project(":aem-intellij-inspection"))
-  compile(project(":aem-intellij-index"))
+  implementation(project(":aem-intellij-common"))
+  implementation(project(":aem-intellij-lang"))
+  implementation(project(":aem-intellij-inspection"))
+  implementation(project(":aem-intellij-index"))
 
-  compile("com.google.code.gson:gson:$gsonVersion")
-    compile("org.apache.commons:commons-lang3:$apacheCommonsVersion")
+  implementation("com.google.code.gson:gson:$gsonVersion")
+  implementation("org.apache.commons:commons-lang3:$apacheCommonsVersion")
 
-    testCompile(project(":test-framework"))
+  testImplementation(project(":test-framework"))
 }
 
 val ideaVersion: String by extra
@@ -47,6 +46,10 @@ configure<IntelliJPluginExtension> {
     version = ideaVersion
     updateSinceUntilBuild = false
     setPlugins(
-            "IntelliLang"
+            "IntelliLang", "java"
     )
+}
+
+tasks.test {
+
 }

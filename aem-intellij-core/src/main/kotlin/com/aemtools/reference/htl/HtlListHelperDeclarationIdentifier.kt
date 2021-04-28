@@ -11,11 +11,11 @@ class HtlListHelperDeclarationIdentifier(
     val attribute: XmlAttribute
 ) : HtlDeclarationIdentifier(attribute), PsiNamedElement {
   override fun getParent(): PsiElement = attribute
-  override fun getName(): String? {
+  override fun getName(): String {
     return super.getName() + "List"
   }
 
-  override fun getText(): String? {
+  override fun getText(): String {
     return super.getText() + "List"
   }
 }

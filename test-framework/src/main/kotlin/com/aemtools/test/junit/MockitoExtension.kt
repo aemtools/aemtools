@@ -13,7 +13,7 @@ class MockitoExtension : TestInstancePostProcessor, ParameterResolver {
 
   override fun postProcessTestInstance(testInstance: Any,
                                        context: ExtensionContext) {
-    MockitoAnnotations.initMocks(testInstance)
+    MockitoAnnotations.openMocks(testInstance)
   }
 
   override fun supportsParameter(parameterContext: ParameterContext,

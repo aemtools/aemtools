@@ -17,7 +17,7 @@ class PsiDirectoryReference(
     return emptyArray()
   }
 
-  override fun resolve(): PsiElement? {
+  override fun resolve(): PsiElement {
     return psiDirectory
   }
 }

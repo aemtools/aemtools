@@ -18,7 +18,7 @@ class MessedDataSlyAttributeInspection : HtmlLocalInspectionTool() {
 
   override fun getDisplayName(): String = "data-sly-attribute with prohibited attributes"
 
-  override fun getStaticDescription(): String? {
+  override fun getStaticDescription(): String {
     return """
 <html>
 <body>

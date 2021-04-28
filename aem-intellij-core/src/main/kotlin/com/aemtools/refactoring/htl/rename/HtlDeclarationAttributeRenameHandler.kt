@@ -4,6 +4,7 @@ import com.aemtools.lang.util.isHtlGlobalDeclarationAttribute
 import com.aemtools.refactoring.htl.rename.util.RenameUtil
 import com.aemtools.refactoring.htl.rename.util.RenameUtil.getElement
 import com.aemtools.refactoring.htl.rename.util.RenameUtil.rename
+import com.intellij.lang.injection.InjectedLanguageManager
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.editor.Editor
@@ -35,6 +36,9 @@ class HtlDeclarationAttributeRenameHandler : RenameHandler {
   }
 
   override fun invoke(project: Project, editor: Editor?, file: PsiFile?, dataContext: DataContext?) {
+    if (editor == null) {
+      return
+    }
     val element = getElement(dataContext)
         ?: BaseRefactoringAction.getElementAtCaret(editor, file)
         ?: return

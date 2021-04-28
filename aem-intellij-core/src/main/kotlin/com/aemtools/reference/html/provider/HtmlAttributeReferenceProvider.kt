@@ -30,7 +30,7 @@ object HtmlAttributeReferenceProvider : PsiReferenceProvider() {
   /**
    * Xml attribute reference wrapper.
    */
-  class XmlAttributeReferenceWrapper(val xmlAttribute: XmlAttributeImpl) : XmlAttributeReference(xmlAttribute) {
+  class XmlAttributeReferenceWrapper(val xmlAttribute: XmlAttribute) : XmlAttributeReference(xmlAttribute) {
     override fun resolve() = xmlAttribute
 
     override fun getRangeInElement(): TextRange {

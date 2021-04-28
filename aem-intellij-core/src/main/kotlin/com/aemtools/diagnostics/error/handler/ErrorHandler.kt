@@ -32,8 +32,10 @@ class ErrorHandler : ErrorReportSubmitter() {
     return "Report on GitHub"
   }
 
-  override fun submit(events: Array<out IdeaLoggingEvent>, additionalInfo: String?, parentComponent: Component,
-                      consumer: Consumer<SubmittedReportInfo>): Boolean {
+  override fun submit(events: Array<out IdeaLoggingEvent>,
+                      additionalInfo: String?,
+                      parentComponent: Component,
+                      consumer: Consumer<in SubmittedReportInfo>): Boolean {
     val project = currentProject(parentComponent)
     val reportingTask = object : Task.Backgroundable(project, "Submit issue") {
       override fun run(indicator: ProgressIndicator) {

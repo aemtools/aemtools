@@ -6,6 +6,7 @@ import com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin
 import com.aemtools.lang.util.containerAttribute
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
+import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
 
 /**
@@ -28,26 +29,24 @@ class HtlWrongQuotesAnnotator : Annotator {
     when {
       literal.isDoubleQuoted()
           && parentAttribute.isDoubleQuoted() -> {
-        holder.createErrorAnnotation(
-            literal, "Incorrect quotes"
-        ).apply {
-          registerFix(HtlWrongQuotesLiteralFixIntentionAction(literal.toSmartPointer()))
-          registerFix(HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction(
-              parentAttribute.toSmartPointer())
-          )
-        }
+        holder.newAnnotation(HighlightSeverity.ERROR, "Incorrect quotes")
+            .newFix(HtlWrongQuotesLiteralFixIntentionAction(literal.toSmartPointer()))
+            .registerFix()
+            .newFix(HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction(
+                parentAttribute.toSmartPointer()))
+            .registerFix()
+            .create()
       }
 
       !literal.isDoubleQuoted()
           && !parentAttribute.isDoubleQuoted() -> {
-        holder.createErrorAnnotation(
-            literal, "Incorrect quotes"
-        ).apply {
-          registerFix(HtlWrongQuotesLiteralFixIntentionAction(literal.toSmartPointer()))
-          registerFix(HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction(
-              parentAttribute.toSmartPointer())
-          )
-        }
+        holder.newAnnotation(HighlightSeverity.ERROR, "Incorrect quotes")
+            .newFix(HtlWrongQuotesLiteralFixIntentionAction(literal.toSmartPointer()))
+            .registerFix()
+            .newFix(HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction(
+                parentAttribute.toSmartPointer()))
+            .registerFix()
+            .create()
       }
     }
 

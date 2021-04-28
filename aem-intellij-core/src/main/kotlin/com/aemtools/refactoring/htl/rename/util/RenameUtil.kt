@@ -1,10 +1,11 @@
 package com.aemtools.refactoring.htl.rename.util
 
-import com.aemtools.common.util.virtualFile
 import com.aemtools.common.util.psiManager
 import com.aemtools.common.util.showErrorMessage
+import com.aemtools.common.util.virtualFile
 import com.intellij.featureStatistics.FeatureUsageTracker
-import com.intellij.ide.scratch.ScratchFileType
+import com.intellij.ide.scratch.ScratchUtil
+import com.intellij.lang.injection.InjectedLanguageManager
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.editor.Editor
@@ -12,6 +13,7 @@ import com.intellij.openapi.fileEditor.impl.NonProjectFileWritingAccessProvider
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.Messages
+import com.intellij.openapi.util.TextRange
 import com.intellij.openapi.util.text.StringUtil
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiNamedElement
@@ -23,7 +25,7 @@ import com.intellij.refactoring.actions.BaseRefactoringAction
 import com.intellij.refactoring.rename.RenamePsiElementProcessor
 import com.intellij.refactoring.util.CommonRefactoringUtil
 import com.intellij.usageView.UsageViewUtil
-import java.util.Arrays
+import java.util.*
 
 /**
  * @author Dmytro Primshyts
@@ -49,7 +51,7 @@ object RenameUtil {
     val contextFile = nameSuggestionContext.virtualFile()
 
     if (nameSuggestionContext.isPhysical
-        && (contextFile == null || contextFile.fileType != ScratchFileType.INSTANCE)
+        && (contextFile == null || ScratchUtil.isScratch(contextFile))
         && !project.psiManager().isInProject(nameSuggestionContext)) {
       val message = "Selected element is used from non-project files." +
           " These usages won't be renamed. Proceed anyway?"
@@ -163,7 +165,7 @@ object RenameUtil {
       }
     }
 
-    if (InjectedLanguageUtil.isInInjectedLanguagePrefixSuffix(element)) {
+    if (isInInjectedLanguagePrefixSuffix(element)) {
       val message = RefactoringBundle.message(
           "error.in.injected.lang.prefix.suffix",
           UsageViewUtil.getType(element)
@@ -181,8 +183,23 @@ object RenameUtil {
    * @return psi element, *null* if no element found
    */
   fun getElement(dataContext: DataContext?): PsiElement? {
+    if (dataContext == null) {
+      return null
+    }
+
     val elements = BaseRefactoringAction.getPsiElementArray(dataContext)
     return elements.firstOrNull()
+  }
+
+  private fun isInInjectedLanguagePrefixSuffix(element: PsiElement): Boolean {
+    val injectedFile = element.containingFile ?: return false
+    val project = injectedFile.project
+    val languageManager = InjectedLanguageManager.getInstance(project)
+    if (!languageManager.isInjectedFragment(injectedFile)) return false
+    val elementRange = element.textRange
+    val edibles = languageManager.intersectWithAllEditableFragments(injectedFile, elementRange)
+    val combinedEdiblesLength = edibles.stream().mapToInt { obj: TextRange -> obj.length }.sum()
+    return combinedEdiblesLength != elementRange.length
   }
 
 }

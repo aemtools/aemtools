@@ -153,7 +153,7 @@
                             serviceImplementation="com.aemtools.service.repository.impl.RepositoryService"
                             id="aemtools.repository-service"/>
 
-        <internalFileTemplate name="_rep_policy"/>
+<!--        <internalFileTemplate name="_rep_policy"/>-->
 
         <customPropertyScopeProvider implementation="com.aemtools.findusages.HtlPropertyScopeProvider"/>
 
@@ -170,7 +170,7 @@
                    implementationClass="com.aemtools.codeinsight.htl.annotator.HtlWrongQuotesAnnotator"/>
 
         <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
-                       order="before xmlAttribute"/>
+                       order="before xmlTagRenameHandler"/>
 
         <renamePsiElementProcessor
                 implementation="com.aemtools.refactoring.htl.rename.HtlVariableNameRenameProcessor"/>
@@ -202,9 +202,9 @@
                 serviceInterface="com.aemtools.inspection.service.IInspectionService"
                 serviceImplementation="com.aemtools.inspection.service.InspectionService"/>
 
-        <projectService
-                serviceInterface="com.aemtools.integration.sync.settings.AemToolsProjectConfiguration"
-                serviceImplementation="com.aemtools.integration.sync.settings.AemToolsProjectConfiguration"/>
+<!--        <projectService-->
+<!--                serviceInterface="com.aemtools.integration.sync.settings.AemToolsProjectConfiguration"-->
+<!--                serviceImplementation="com.aemtools.integration.sync.settings.AemToolsProjectConfiguration"/>-->
 
         <additionalTextAttributes
                 scheme="Default"

@@ -21,17 +21,17 @@ class HtlDeclarationReference(
 
   override fun resolve(): PsiElement? {
     val psiClass = callChainElement?.type?.asResolutionResult()?.psiClass
-    if (xmlAttribute != null) {
-      return HtlDeclarationIdentifier(xmlAttribute)
-    } else if (psiClass != null) {
-      return psiClass
-    } else {
-      return null
+    return when {
+      xmlAttribute != null -> {
+        HtlDeclarationIdentifier(xmlAttribute)
+      }
+      psiClass != null -> {
+        psiClass
+      }
+      else -> {
+        null
+      }
     }
-  }
-
-  override fun handleElementRename(newElementName: String): PsiElement {
-    return super.handleElementRename(newElementName)
   }
 
   override fun isReferenceTo(element: PsiElement): Boolean {

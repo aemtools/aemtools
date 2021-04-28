@@ -37,7 +37,7 @@ object DataSlyUseJavaReferenceProvider : JavaClassReferenceProvider() {
    *
    * @see com.intellij.psi.impl.source.resolve.reference.impl.providers.JavaClassReference.getScope
    */
-  override fun getScope(project: Project): GlobalSearchScope? {
+  override fun getScope(project: Project): GlobalSearchScope {
     return project.allScope()
   }
 }

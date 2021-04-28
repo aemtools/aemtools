@@ -176,14 +176,16 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
 
   override fun setUp() {
     super.setUp()
-    VfsRootAccess.allowRootAccess(File("src/test").absolutePath)
+    VfsRootAccess.allowRootAccess(this.testRootDisposable, File("src/test").absolutePath)
     myFixture.addUberJar()
     myFixture.addClasses()
-    (StartupManager.getInstance(project) as StartupManagerImpl).runPostStartupActivities()
+
+    val startupManager = StartupManager.getInstance(project)
+//    (StartupManager.getInstance(project) as StartupManagerImpl).runPostStartupActivities()
   }
 
   override fun tearDown() {
-    VfsRootAccess.disallowRootAccess(File("src/test").absolutePath)
+//    VfsRootAccess.disallowRootAccess(File("src/test").absolutePath)
 
     super.tearDown()
   }

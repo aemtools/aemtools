@@ -67,7 +67,7 @@ class PredefinedVariablesCompletionTest : LightFixtureCompletionTestCase(),
 
   override fun tearDown() {
     super.tearDown()
-    VfsRootAccess.disallowRootAccess(File("src/test").absolutePath)
+//    VfsRootAccess.disallowRootAccess(File("src/test").absolutePath)
   }
 
   override fun getTestDataPath() = File("${HtlTestCase.testResourcesPath}/com/aemtools/completion/htl/fixtures/").path + "/"
