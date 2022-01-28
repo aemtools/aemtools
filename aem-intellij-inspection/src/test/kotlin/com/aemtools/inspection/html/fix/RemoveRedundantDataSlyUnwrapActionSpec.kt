@@ -9,14 +9,13 @@ import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiFile
 import com.intellij.psi.SmartPsiElementPointer
 import com.intellij.psi.xml.XmlAttribute
-import com.nhaarman.mockito_kotlin.never
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
+import org.junit.runner.RunWith
+import org.mockito.Mockito.*
 
 /**
  * Specification for [RemoveRedundantDataSlyUnwrapAction].
@@ -50,28 +49,28 @@ object RemoveRedundantDataSlyUnwrapActionSpec : Spek({
 
   describe("invoke") {
     beforeEachTest {
-      whenever(xmlAttributePointer.element)
+      `when`(xmlAttributePointer.element)
           .thenReturn(xmlAttribute)
-      whenever(project.getComponent(PsiDocumentManager::class.java))
+      `when`(project.getService(PsiDocumentManager::class.java))
           .thenReturn(psiDocumentManager)
-      whenever(psiDocumentManager.getDocument(psiFile))
+      `when`(psiDocumentManager.getDocument(psiFile))
           .thenReturn(document)
-      whenever(xmlAttribute.textRange)
+      `when`(xmlAttribute.textRange)
           .thenReturn(TextRange.create(10, 20))
     }
 
     it("should ignore if no element available") {
-      whenever(xmlAttributePointer.element)
+      `when`(xmlAttributePointer.element)
           .thenReturn(null)
 
       tested.invoke(project, editor, psiFile)
 
       verify(project, never())
-          .getComponent(PsiDocumentManager::class.java)
+          .getService(PsiDocumentManager::class.java)
     }
 
     it("should ignore if no document available") {
-      whenever(psiDocumentManager.getDocument(psiFile))
+      `when`(psiDocumentManager.getDocument(psiFile))
           .thenReturn(null)
 
       tested.invoke(project, editor, psiFile)

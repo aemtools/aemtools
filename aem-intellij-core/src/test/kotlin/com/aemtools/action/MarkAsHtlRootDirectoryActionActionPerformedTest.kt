@@ -2,193 +2,111 @@ package com.aemtools.action
 
 import com.aemtools.index.HtlTemplateIndex
 import com.aemtools.lang.settings.HtlRootDirectories
-import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
-import com.intellij.openapi.actionSystem.Presentation
-import com.intellij.openapi.application.Application
-import com.intellij.openapi.components.ServiceManager
-import com.intellij.openapi.fileEditor.FileEditorManager
-import com.intellij.openapi.project.Project
-import com.intellij.openapi.project.ProjectManager
-import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiManager
 import com.intellij.util.indexing.FileBasedIndex
-import mockit.Expectations
-import mockit.Mocked
-import mockit.Tested
-import mockit.Verifications
-//import mockit.integration.junit4.JMockit
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.picocontainer.PicoContainer
+import org.mockito.Mockito.*
 
 /**
- * @author Dmytro Primshyts
+ * @author Dmytro Troynikov
  */
-//@RunWith(JMockit::class)
-class MarkAsHtlRootDirectoryActionActionPerformedTest {
+class MarkAsHtlRootDirectoryActionActionPerformedTest
+  : MarkAsHtlRootDirectoryActionBaseTest() {
 
-  @Mocked
-  lateinit var actionEvent: AnActionEvent
-
-  @Mocked
-  lateinit var presentation: Presentation
-
-  @Mocked
-  lateinit var virtualFile: VirtualFile
-
-  @Mocked
-  lateinit var mockProject: Project
-
-  @Mocked
-  lateinit var picoContainer: PicoContainer
-
-  @Mocked
-  lateinit var rootDirectories: HtlRootDirectories
-
-  @Mocked
-  lateinit var psiManager: PsiManager
-
-  @Mocked
-  lateinit var application: Application
-
-  @Mocked
-  lateinit var projectManager: ProjectManager
-
-  @Mocked
-  lateinit var fileEditorManager: FileEditorManager
-
-  @Mocked
-  lateinit var fileBasedIndex: FileBasedIndex
-
-  @Tested
-  private var action: MarkAsHtlRootDirectoryAction = MarkAsHtlRootDirectoryAction()
+  var targetAction: MarkAsHtlRootDirectoryAction = MarkAsHtlRootDirectoryAction()
 
   @Test
-  fun `actionPerformed should ignore if presentation is disabled`(
-      @Mocked serviceManager: ServiceManager
-  ) {
-    object : Expectations(serviceManager) {init {
-      actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
-      result = arrayOf(virtualFile)
+  fun `actionPerformed should ignore if presentation is disabled`() {
+    `when`(actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY))
+      .thenReturn(arrayOf(virtualFile));
+    `when`(actionEvent.project).thenReturn(mockProject)
+    `when`(actionEvent.presentation).thenReturn(presentation)
+    `when`(presentation.isEnabledAndVisible).thenReturn(false)
 
-      actionEvent.project; result = mockProject
-      actionEvent.presentation; result = presentation
-      presentation.isEnabledAndVisible; result = false
-    }
-    }
+    targetAction.actionPerformed(actionEvent)
 
-    action.actionPerformed(actionEvent)
-
-    object : Verifications() {init {
-      rootDirectories.removeRoot(anyString); maxTimes = 0
-      rootDirectories.addRoot(anyString); maxTimes = 0
-    }
-    }
+    verify(rootDirectories, never()).removeRoot(anyString())
+    verify(rootDirectories, never()).addRoot(anyString())
   }
 
   @Test
   fun `actionPerformed should ignore if project is null`() {
-    object : Expectations() {init {
-      actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
-      result = arrayOf(virtualFile)
+    `when`(actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY))
+      .thenReturn(arrayOf(virtualFile));
+    `when`(actionEvent.project).thenReturn(null)
 
-      actionEvent.project; result = null
-    }
-    }
+    targetAction.actionPerformed(actionEvent)
 
-    action.actionPerformed(actionEvent)
-
-    object : Verifications() {init {
-      rootDirectories.removeRoot(anyString); maxTimes = 0
-      rootDirectories.addRoot(anyString); maxTimes = 0
-    }
-    }
+    verify(rootDirectories, never()).removeRoot(anyString())
+    verify(rootDirectories, never()).addRoot(anyString())
   }
 
   @Test
-  fun `actionPerformed should return if HtlRootDirectories is not available`(
-      @Mocked serviceManager: ServiceManager
-  ) {
-    object : Expectations() {init {
-      actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
-      result = arrayOf(virtualFile)
+  fun `actionPerformed should return if HtlRootDirectories is not available`() {
+    `when`(actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY))
+      .thenReturn(arrayOf(virtualFile));
+    `when`(actionEvent.project).thenReturn(mockProject)
+    `when`(actionEvent.presentation).thenReturn(presentation)
+    `when`(presentation.isEnabledAndVisible).thenReturn(true)
+    `when`(mockProject.getService(HtlRootDirectories::class.java))
+      .thenReturn(null)
+    `when`(virtualFile.path).thenReturn("/jcr_root/directory");
 
-      actionEvent.project; result = mockProject
-      actionEvent.presentation; result = presentation
-      presentation.isEnabledAndVisible; result = true
-      ServiceManager.getService(mockProject, HtlRootDirectories::class.java); result = null
-      virtualFile.path; result = "/jcr_root/directory"
-    }
-    }
+    targetAction.actionPerformed(actionEvent)
 
-    action.actionPerformed(actionEvent)
-
-    object : Verifications() {init {
-      rootDirectories.removeRoot(anyString); maxTimes = 0
-      rootDirectories.addRoot(anyString); maxTimes = 0
-    }
-    }
+    verify(rootDirectories, never()).removeRoot(anyString())
+    verify(rootDirectories, never()).addRoot(anyString())
   }
 
   @Test
-  fun `actionPerformed should add root if action is available`(
-      @Mocked serviceManager: ServiceManager,
-      @Mocked psiManager: PsiManager,
-      @Mocked fbi: FileBasedIndex
-  ) {
-    object : Expectations() {init {
-      actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
-      result = arrayOf(virtualFile)
+  fun `actionPerformed should add root if action is available`() {
+    `when`(actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY))
+      .thenReturn(arrayOf(virtualFile));
+    `when`(actionEvent.project).thenReturn(mockProject)
+    `when`(actionEvent.presentation).thenReturn(presentation)
+    `when`(presentation.isEnabledAndVisible).thenReturn(true)
+    `when`(presentation.text).thenReturn("HTL Root")
+    `when`(virtualFile.path).thenReturn("/jcr_root/directory");
+    var fbi = mock(FileBasedIndex::class.java)
+    `when`(application.getService(FileBasedIndex::class.java))
+      .thenReturn(fbi);
+    `when`(mockProject.getService(HtlRootDirectories::class.java))
+      .thenReturn(rootDirectories)
+    `when`(mockProject.getService(PsiManager::class.java))
+      .thenReturn(mock(PsiManager::class.java));
 
-      actionEvent.project; result = mockProject
-      actionEvent.presentation; result = presentation
-      presentation.isEnabledAndVisible; result = true
+    targetAction.actionPerformed(actionEvent)
 
-      presentation.text; result = "HTL Root"
-      virtualFile.path; result = "/jcr_root/directory"
-      FileBasedIndex.getInstance(); result = fbi
-    }
-    }
+    verify(rootDirectories, never()).removeRoot("/jcr_root/directory")
+    verify(rootDirectories).addRoot("/jcr_root/directory")
 
-    action.actionPerformed(actionEvent)
-
-    object : Verifications() {init {
-      rootDirectories.addRoot("/jcr_root/directory"); times = 1
-      rootDirectories.removeRoot("/jcr_root/directory"); times = 0
-      fbi.requestRebuild(HtlTemplateIndex.HTL_TEMPLATE_ID)
-    }
-    }
+    fbi.requestRebuild(HtlTemplateIndex.HTL_TEMPLATE_ID)
   }
 
   @Test
-  fun `actionPerformed should remove root if action is available`(
-      @Mocked serviceManager: ServiceManager,
-      @Mocked psiManager: PsiManager,
-      @Mocked fbi: FileBasedIndex
-  ) {
-    object : Expectations() {init {
-      actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
-      result = arrayOf(virtualFile)
+  fun `actionPerformed should remove root if action is available`() {
+    `when`(actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY))
+      .thenReturn(arrayOf(virtualFile));
+    `when`(actionEvent.project).thenReturn(mockProject)
+    `when`(actionEvent.presentation).thenReturn(presentation)
+    `when`(presentation.isEnabledAndVisible).thenReturn(true)
+    `when`(presentation.text).thenReturn("Unmark as HTL Root")
+    `when`(virtualFile.path).thenReturn("/jcr_root/directory");
+    var fbi = mock(FileBasedIndex::class.java)
+    `when`(application.getService(FileBasedIndex::class.java))
+      .thenReturn(fbi);
+    `when`(mockProject.getService(HtlRootDirectories::class.java))
+      .thenReturn(rootDirectories)
+    `when`(mockProject.getService(PsiManager::class.java))
+      .thenReturn(mock(PsiManager::class.java));
 
-      actionEvent.project; result = mockProject
-      actionEvent.presentation; result = presentation
-      presentation.isEnabledAndVisible; result = true
+    targetAction.actionPerformed(actionEvent)
 
-      presentation.text; result = "Unmark as HTL Root"
-      virtualFile.path; result = "/jcr_root/directory"
-      FileBasedIndex.getInstance(); result = fbi
-    }
-    }
+    verify(rootDirectories).removeRoot("/jcr_root/directory")
+    verify(rootDirectories, never()).addRoot("/jcr_root/directory")
 
-    action.actionPerformed(actionEvent)
-
-    object : Verifications() {init {
-      rootDirectories.addRoot("/jcr_root/directory"); times = 0
-      rootDirectories.removeRoot("/jcr_root/directory"); times = 1
-      fbi.requestRebuild(HtlTemplateIndex.HTL_TEMPLATE_ID)
-    }
-    }
+    fbi.requestRebuild(HtlTemplateIndex.HTL_TEMPLATE_ID)
   }
 
 }

@@ -1,27 +1,30 @@
-import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.include
-import org.gradle.kotlin.dsl.extra
-import org.jetbrains.intellij.IntelliJPlugin
-import org.jetbrains.intellij.IntelliJPluginExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.junit.platform.gradle.plugin.JUnitPlatformExtension
+fun properties(key: String) = project.findProperty(key).toString()
 
 plugins {
-  id("org.jetbrains.intellij") version "0.7.2"
+  id("org.jetbrains.intellij")
+}
+
+apply {
+  plugin("java")
+  plugin("kotlin")
+  plugin("org.jetbrains.intellij")
+}
+
+buildscript {
+  val kotlinVersion: String by extra
+
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath(kotlin("gradle-plugin", kotlinVersion))
+  }
 }
 
 dependencies {
-  compile(project(":aem-intellij-common"))
-  compile(project(":aem-intellij-lang"))
+  implementation(project(":aem-intellij-common"))
+  implementation(project(":aem-intellij-lang"))
 
-  testCompile(project(":test-framework"))
+  testImplementation(project(":test-framework"))
 }
-
-val ideaVersion: String by project
-
-intellij {
-  version = ideaVersion
-  setPlugins(
-      "IntelliLang", "java"
-  )
-}
-

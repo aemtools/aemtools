@@ -1,15 +1,15 @@
 package com.aemtools.test
 
+import com.aemtools.test.fixture.JdkProjectDescriptor
 import com.aemtools.test.fixture.TestClassesMixin
 import com.aemtools.test.fixture.UberJarFixtureMixin
 import com.intellij.codeInsight.completion.LightFixtureCompletionTestCase
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.ide.startup.impl.StartupManagerImpl
-import com.intellij.openapi.startup.StartupManager
+import com.intellij.openapi.roots.LanguageLevelProjectExtension
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess
+import com.intellij.pom.java.LanguageLevel
 import com.intellij.testFramework.LightProjectDescriptor
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
 import org.assertj.core.api.Assertions.assertThat
 import java.io.File
 
@@ -176,16 +176,15 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
 
   override fun setUp() {
     super.setUp()
-    VfsRootAccess.allowRootAccess(this.testRootDisposable, File("src/test").absolutePath)
+    LanguageLevelProjectExtension.getInstance(project).languageLevel = LanguageLevel.JDK_11
+    VfsRootAccess.allowRootAccess(myFixture.testRootDisposable, File("src/test").absolutePath)
+    VfsRootAccess.allowRootAccess(myFixture.projectDisposable, File("src/test").absolutePath)
     myFixture.addUberJar()
     myFixture.addClasses()
-
-    val startupManager = StartupManager.getInstance(project)
-//    (StartupManager.getInstance(project) as StartupManagerImpl).runPostStartupActivities()
   }
 
   override fun tearDown() {
-//    VfsRootAccess.disallowRootAccess(File("src/test").absolutePath)
+    //VfsRootAccess.disallowRootAccess(File("src/test").absolutePath)
 
     super.tearDown()
   }
@@ -193,6 +192,7 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
   val fixture: JavaCodeInsightTestFixture
     get() = myFixture
 
-  override fun getProjectDescriptor(): LightProjectDescriptor = LightCodeInsightFixtureTestCase.JAVA_8
+  override fun getProjectDescriptor(): LightProjectDescriptor
+      = JdkProjectDescriptor()
 
 }

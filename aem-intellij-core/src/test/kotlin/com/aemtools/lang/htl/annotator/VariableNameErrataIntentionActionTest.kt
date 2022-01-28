@@ -13,9 +13,9 @@ import org.assertj.core.api.Assertions.assertThat
  *
  * @author Dmytro Primshyts
  */
-class VariableNameErrataIntentionActionTest : InspectionFixtureTestCase() {
+class VariableNameErrataIntentionActionTest /*: InspectionFixtureTestCase()*/ {
 
-  fun testFixErrataCorrectFormat() {
+  /*fun testFixErrataCorrectFormat() {
     myFixture.configureByText("test.html", """
             <div data-sly-use.myModel=""></div>
             $DOLLAR{mymodel}
@@ -69,5 +69,5 @@ class VariableNameErrataIntentionActionTest : InspectionFixtureTestCase() {
 
     myFixture.checkResult("$DOLLAR{properties}")
   }
-
+*/
 }

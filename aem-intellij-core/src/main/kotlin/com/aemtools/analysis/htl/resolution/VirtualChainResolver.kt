@@ -65,7 +65,7 @@ object VirtualChainResolver {
     return type.myVariants().filterNot {
       it.lookupString in listOf(
           "class", "toString", "parallelStream",
-          "stream", "toArray"
+          "stream", "toArray", "of"
       )
     }.map {
       val name = it.lookupString

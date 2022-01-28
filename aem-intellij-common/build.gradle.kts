@@ -1,25 +1,29 @@
-import org.jetbrains.intellij.IntelliJPlugin
-import org.jetbrains.intellij.IntelliJPluginExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.utils.identity
+apply {
+  plugin("java")
+  plugin("kotlin")
+  plugin("org.jetbrains.intellij")
+}
 
 plugins {
-  id("org.jetbrains.intellij") version "0.7.2"
+  java
+  id("org.jetbrains.intellij")
+}
+
+buildscript {
+  val kotlinVersion: String by extra
+
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    gradlePluginPortal()
+    maven { url = uri("https://plugins.gradle.org/m2/") }
+  }
+
+  dependencies {
+    classpath(kotlin("gradle-plugin", kotlinVersion))
+  }
 }
 
 dependencies {
   testImplementation(project(":test-framework"))
-}
-
-val ideaVersion: String by project
-
-intellij {
-  version = ideaVersion
-  setPlugins(
-      "IntelliLang", "java"
-  )
-}
-
-tasks.test {
-  jvmArgs?.add("-Djdk.attach.allowAttachSelf=true")
 }

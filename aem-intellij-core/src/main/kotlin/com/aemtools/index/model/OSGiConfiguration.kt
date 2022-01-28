@@ -9,7 +9,7 @@ import java.io.Serializable
 data class OSGiConfiguration(
     val path: String,
     val parameters: Map<String, String?>,
-    var xmlFile: XmlFile? = null) : Serializable {
+    @Transient var xmlFile: XmlFile? = null) : Serializable {
 
   /**
    * Full qualified name of associated OSGi Service or Service factory.

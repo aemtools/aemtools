@@ -15,6 +15,7 @@ import com.intellij.psi.impl.source.PsiFileImpl
 import com.intellij.psi.templateLanguages.ConfigurableTemplateLanguageFileViewProvider
 import com.intellij.psi.templateLanguages.TemplateDataElementType
 import com.intellij.psi.templateLanguages.TemplateDataLanguageMappings
+import com.intellij.psi.tree.OuterLanguageElementType
 import com.intellij.util.containers.ContainerUtil
 import gnu.trove.THashSet
 import java.util.concurrent.ConcurrentMap
@@ -42,7 +43,10 @@ class HtlFileViewProvider @JvmOverloads constructor(
         return result
       }
 
-      val created = TemplateDataElementType("SIGHTLY_DATA_TEMPLATE", lang, OUTER_LANGUAGE, HEL)
+      val created = TemplateDataElementType(
+        "SIGHTLY_DATA_TEMPLATE", lang, OUTER_LANGUAGE,
+        OuterLanguageElementType(HEL.debugName, HEL.language)
+      )
 
       return TEMPLATE_DATA_TO_LANG.putIfAbsent(lang.id, created) ?: created
     }

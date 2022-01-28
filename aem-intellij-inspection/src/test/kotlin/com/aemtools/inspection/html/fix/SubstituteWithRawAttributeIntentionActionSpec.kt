@@ -4,14 +4,14 @@ import com.aemtools.test.util.memo
 import com.intellij.openapi.project.Project
 import com.intellij.psi.SmartPsiElementPointer
 import com.intellij.psi.xml.XmlAttribute
-import com.nhaarman.mockito_kotlin.never
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
+import org.mockito.Mockito.`when`
+import org.mockito.kotlin.never
+import org.mockito.kotlin.verify
 
 /**
  * Specification for [SubstituteWithRawAttributeIntentionAction].
@@ -44,12 +44,12 @@ object SubstituteWithRawAttributeIntentionActionSpec : Spek({
     val project: Project by memo()
 
     beforeEachTest {
-      whenever(xmlAttributePointer.element)
+      `when`(xmlAttributePointer.element)
           .thenReturn(xmlAttribute)
     }
 
     it("should ignore if no element available") {
-      whenever(xmlAttributePointer.element)
+      `when`(xmlAttributePointer.element)
           .thenReturn(null)
 
       tested.invoke(project, null, null)
@@ -59,7 +59,7 @@ object SubstituteWithRawAttributeIntentionActionSpec : Spek({
     }
 
     it("should rename attribute if it available") {
-      whenever(xmlAttribute.name)
+      `when`(xmlAttribute.name)
           .thenReturn("data-sly-attribute.style")
 
       tested.invoke(project, null, null)

@@ -1,25 +1,29 @@
-import org.jetbrains.intellij.IntelliJPlugin
-import org.jetbrains.intellij.IntelliJPluginExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.utils.identity
+apply {
+  plugin("java")
+  plugin("kotlin")
+  plugin("org.jetbrains.intellij")
+}
 
 plugins {
-  id("org.jetbrains.intellij") version "0.7.2"
+  id("org.jetbrains.intellij")
+}
+
+buildscript {
+  val kotlinVersion: String by extra
+
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath(kotlin("gradle-plugin", kotlinVersion))
+  }
 }
 
 dependencies {
-  compile(project(":aem-intellij-lang"))
-  compile(project(":aem-intellij-common"))
+  implementation(project(":aem-intellij-common"))
+  implementation(project(":aem-intellij-lang"))
 
-  testCompile(project(":test-framework"))
-}
-
-val ideaVersion: String by project
-
-intellij {
-  version = ideaVersion
-
-  setPlugins(
-      "IntelliLang"
-  )
+  testImplementation(project(":aem-intellij-core"))
+  testImplementation(project(":test-framework"))
 }

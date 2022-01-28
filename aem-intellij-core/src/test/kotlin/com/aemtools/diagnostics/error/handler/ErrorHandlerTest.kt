@@ -6,22 +6,22 @@ import com.intellij.openapi.extensions.PluginDescriptor
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.Task
 import com.intellij.openapi.project.Project
-import com.nhaarman.mockito_kotlin.*
 import org.apache.commons.lang.StringUtils
 import org.apache.http.StatusLine
 import org.apache.http.client.methods.CloseableHttpResponse
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.impl.client.CloseableHttpClient
 import org.apache.http.message.BasicHeader
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.*
+import org.mockito.Mockito.*
 
-import org.mockito.Mockito.doReturn
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.argumentCaptor
 import java.awt.Component
-import kotlin.test.assertEquals
 
 
 /**
@@ -80,16 +80,16 @@ class ErrorHandlerTest {
 
     events = arrayOf(loggingEvent)
 
-    doAnswer {
-      (it.getArgument(0) as Task.Backgroundable).run(indicator)
-    }.`when`(target).startReporting(any())
+    doAnswer({ (it.getArgument<Task>(0) as Task.Backgroundable).run(indicator) })
+      .`when`(target).startReporting(org.mockito.kotlin.any())
 
     doReturn(pluginDescriptor).`when`(target).pluginDescriptor
     doReturn(issueInfoHolder).`when`(target).issueInfoHolder()
     doReturn(StringUtils.EMPTY).`when`(issueInfoHolder).getIssueDetails(loggingEvent, pluginDescriptor, null)
     doReturn(response).`when`(httpClient).execute(any())
     doReturn(statusLine).`when`(response).statusLine
-    doNothing().`when`(target).notifyUser(ArgumentMatchers.anyString(), ArgumentMatchers.anyString(), any())
+    doNothing().`when`(target).notifyUser(
+      ArgumentMatchers.anyString(), ArgumentMatchers.anyString(), org.mockito.kotlin.any())
   }
 
   @Test

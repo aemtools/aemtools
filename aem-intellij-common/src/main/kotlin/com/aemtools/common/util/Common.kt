@@ -155,7 +155,7 @@ fun String.distanceTo(other: String): Int =
  * @return the closest element, *null* in case if given set is empty
  */
 fun String.closest(others: Set<String>): String? =
-    others.minBy { this.distanceTo(it) }
+    others.minByOrNull { this.distanceTo(it) }
 
 /**
  * Get [PsiFileFactory] associated with current project.
