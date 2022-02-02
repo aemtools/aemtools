@@ -3,6 +3,7 @@ package com.aemtools.lang.htl.annotator
 import com.aemtools.common.constant.const.DOLLAR
 import com.aemtools.common.util.writeCommand
 import com.aemtools.inspection.fix.VariableNameErrataIntentionAction
+import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.util.notNull
 import com.aemtools.test.util.quickFix
 import com.intellij.testFramework.InspectionFixtureTestCase
@@ -13,9 +14,9 @@ import org.assertj.core.api.Assertions.assertThat
  *
  * @author Dmytro Primshyts
  */
-class VariableNameErrataIntentionActionTest /*: InspectionFixtureTestCase()*/ {
+class VariableNameErrataIntentionActionTest : BaseLightTest() {
 
-  /*fun testFixErrataCorrectFormat() {
+  fun testFixErrataCorrectFormat() {
     myFixture.configureByText("test.html", """
             <div data-sly-use.myModel=""></div>
             $DOLLAR{mymodel}
@@ -69,5 +70,5 @@ class VariableNameErrataIntentionActionTest /*: InspectionFixtureTestCase()*/ {
 
     myFixture.checkResult("$DOLLAR{properties}")
   }
-*/
+
 }
