@@ -1,10 +1,10 @@
 package com.aemtools.lang.jcrproperty.editor
 
-import com.aemtools.lang.jcrproperty.file.JpFileType
+import com.aemtools.lang.jcrproperty.JcrPropertyLanguage
 import com.aemtools.test.action.TypeActionTest
-import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.base.BaseLightTest.Companion.CARET
 import com.aemtools.test.base.BasePlatformLightTest
+import com.intellij.lang.LanguageBraceMatching
 import org.intellij.lang.annotations.Language
 
 /**
@@ -12,11 +12,10 @@ import org.intellij.lang.annotations.Language
  *
  * @author Dmytro Primshyts
  */
-//fixme
-class JpBraceMatcherTest : /*BasePlatformLightTest(),*/
+class JpBraceMatcherTest : BasePlatformLightTest(),
     TypeActionTest {
 
-  /*fun `test should close brace`() = jpTypeTest(
+  fun `test should close brace`() = jpTypeTest(
       CARET,
       "{",
       "{$CARET}"
@@ -67,6 +66,10 @@ class JpBraceMatcherTest : /*BasePlatformLightTest(),*/
            <jcr:root jcr:primaryType="cq:ClientLibraryFolder"
                 embed="$after" />
            """
-      )*/
+      )
 
+  override fun setUp() {
+    super.setUp()
+    LanguageBraceMatching.INSTANCE.addExplicitExtension(JcrPropertyLanguage, JpBraceMatcher())
+  }
 }
