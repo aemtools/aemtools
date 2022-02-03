@@ -1,4 +1,6 @@
+import io.gitlab.arturbosch.detekt.Detekt
 import org.apache.tools.ant.taskdefs.condition.Os
+import org.jetbrains.kotlin.gradle.targets.js.internal.filterClassName
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.junit.platform.console.options.Details
 import org.junit.platform.gradle.plugin.JUnitPlatformExtension
@@ -10,6 +12,7 @@ val pluginVersion: String by extra
 val platformVersion: String by extra
 val platformType: String by extra
 val platformPlugins: String by extra
+val projectDirectory = getProjectDir()
 
 plugins {
     id("java")
@@ -39,13 +42,6 @@ intellij {
 changelog {
   version.set(pluginVersion)
   groups.set(emptyList())
-}
-
-detekt {
-    version = "1.19.0"
-    config = files("$projectDir/config/detekt.yml")
-    parallel = true
-    ignoreFailures = true
 }
 
 tasks {
@@ -115,7 +111,7 @@ allprojects {
     version = pluginVersion
 
     apply {
-        //plugin("io.gitlab.arturbosch.detekt")
+        plugin("io.gitlab.arturbosch.detekt")
         plugin("org.jetbrains.intellij")
     }
 
@@ -123,6 +119,21 @@ allprojects {
         mavenCentral()
         mavenLocal()
         maven { url = uri("https://plugins.gradle.org/m2/") }
+    }
+
+    detekt {
+      version = "1.19.0"
+      config = files("$projectDirectory/config/detekt.yml")
+      parallel = true
+      ignoreFailures = true
+      buildUponDefaultConfig = true
+      disableDefaultRuleSets = true
+      autoCorrect = true
+      source = files("src/main/java", "src/main/kotlin")
+    }
+
+    tasks.withType<Detekt>().configureEach {
+      exclude("com.aemtools.test.*", ".*test.*")
     }
 }
 
