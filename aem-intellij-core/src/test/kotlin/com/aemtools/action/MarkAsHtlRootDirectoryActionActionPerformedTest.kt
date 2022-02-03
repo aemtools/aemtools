@@ -2,11 +2,14 @@ package com.aemtools.action
 
 import com.aemtools.index.HtlTemplateIndex
 import com.aemtools.lang.settings.HtlRootDirectories
+import com.intellij.ide.plugins.PluginUtil
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.psi.PsiManager
 import com.intellij.util.indexing.FileBasedIndex
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.Mockito.*
+import org.mockito.junit.MockitoJUnitRunner
 
 /**
  * @author Dmytro Troynikov
@@ -74,14 +77,15 @@ class MarkAsHtlRootDirectoryActionActionPerformedTest
     `when`(mockProject.getService(HtlRootDirectories::class.java))
       .thenReturn(rootDirectories)
     `when`(mockProject.getService(PsiManager::class.java))
-      .thenReturn(mock(PsiManager::class.java));
+      .thenReturn(psiManager);
+    `when`(application.getService(PluginUtil::class.java))
+      .thenReturn(pluginUtil)
+    `when`(pluginUtil.getCallerPlugin(anyInt())).thenReturn(pluginId)
 
     targetAction.actionPerformed(actionEvent)
 
     verify(rootDirectories, never()).removeRoot("/jcr_root/directory")
     verify(rootDirectories).addRoot("/jcr_root/directory")
-
-    fbi.requestRebuild(HtlTemplateIndex.HTL_TEMPLATE_ID)
   }
 
   @Test
@@ -99,14 +103,15 @@ class MarkAsHtlRootDirectoryActionActionPerformedTest
     `when`(mockProject.getService(HtlRootDirectories::class.java))
       .thenReturn(rootDirectories)
     `when`(mockProject.getService(PsiManager::class.java))
-      .thenReturn(mock(PsiManager::class.java));
+      .thenReturn(psiManager);
+    `when`(application.getService(PluginUtil::class.java))
+      .thenReturn(pluginUtil)
+    `when`(pluginUtil.getCallerPlugin(anyInt())).thenReturn(pluginId)
 
     targetAction.actionPerformed(actionEvent)
 
     verify(rootDirectories).removeRoot("/jcr_root/directory")
     verify(rootDirectories, never()).addRoot("/jcr_root/directory")
-
-    fbi.requestRebuild(HtlTemplateIndex.HTL_TEMPLATE_ID)
   }
 
 }

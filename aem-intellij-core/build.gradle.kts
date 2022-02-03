@@ -5,7 +5,6 @@ val apacheCommonsVersion: String by extra
 apply {
   plugin("java")
   plugin("kotlin")
-  plugin("org.junit.platform.gradle.plugin")
 }
 
 plugins {

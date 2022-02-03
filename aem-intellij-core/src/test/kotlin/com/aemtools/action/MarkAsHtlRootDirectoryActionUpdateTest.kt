@@ -4,6 +4,7 @@ import com.aemtools.lang.htl.icons.HtlIcons
 import com.aemtools.lang.settings.HtlRootDirectories
 import com.intellij.openapi.actionSystem.ActionPlaces
 import com.intellij.openapi.actionSystem.CommonDataKeys
+import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.never
@@ -80,6 +81,12 @@ class MarkAsHtlRootDirectoryActionUpdateTest
         .thenReturn(mutableListOf("/marked/directory"))
     `when`(mockProject.getService(HtlRootDirectories::class.java))
       .thenReturn(rootDirectories)
+     `when`(actionEvent.place)
+      .thenReturn(ActionPlaces.PROJECT_VIEW_POPUP)
+    `when`(virtualFile.isDirectory)
+        .thenReturn(true)
+    `when`(mockProject.picoContainer)
+      .thenReturn(picoContainer)
 
     action.update(actionEvent)
 
@@ -91,6 +98,10 @@ class MarkAsHtlRootDirectoryActionUpdateTest
 
   @Test
   fun `should set icon if directory is eligible to mark as htl root`() {
+     `when`(actionEvent.place)
+      .thenReturn(ActionPlaces.PROJECT_VIEW_POPUP)
+    `when`(virtualFile.isDirectory)
+        .thenReturn(true)
     `when`(virtualFile.path)
         .thenReturn("/not_jcr_root/directory")
 
