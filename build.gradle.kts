@@ -76,6 +76,7 @@ tasks {
   }
 
   koverMergedVerify {
+    isEnabled = false
     //includes = listOf("com.aemtools.*")
     //excludes = listOf("generated.psi.impl.*")
     rule {
