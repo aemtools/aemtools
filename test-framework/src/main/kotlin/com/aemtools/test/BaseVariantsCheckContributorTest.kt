@@ -177,8 +177,8 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
   override fun setUp() {
     super.setUp()
     LanguageLevelProjectExtension.getInstance(project).languageLevel = LanguageLevel.JDK_11
-    VfsRootAccess.allowRootAccess(myFixture.testRootDisposable, File("src/test").absolutePath)
-    VfsRootAccess.allowRootAccess(myFixture.projectDisposable, File("src/test").absolutePath)
+    //VfsRootAccess.allowRootAccess(myFixture.testRootDisposable, File("src/test").absolutePath)
+    //VfsRootAccess.allowRootAccess(myFixture.projectDisposable, File("src/test").absolutePath)
     myFixture.addUberJar()
     myFixture.addClasses()
   }

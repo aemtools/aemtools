@@ -25,7 +25,7 @@ class CdParserDefinition : ParserDefinition {
   override fun createLexer(project: Project?): Lexer
       = CdLexer()
 
-  override fun createParser(project: Project?): PsiParser?
+  override fun createParser(project: Project?): PsiParser
       = CdParser()
 
   override fun createFile(viewProvider: FileViewProvider): PsiFile
@@ -40,7 +40,7 @@ class CdParserDefinition : ParserDefinition {
   override fun getWhitespaceTokens(): TokenSet
       = TokenSet.create(TokenType.WHITE_SPACE)
 
-  override fun getFileNodeType(): IFileElementType?
+  override fun getFileNodeType(): IFileElementType
       = CdFileElementType
 
   override fun createElement(node: ASTNode?): PsiElement

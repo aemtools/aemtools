@@ -8,7 +8,9 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.roots.LanguageLevelProjectExtension
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess
 import com.intellij.pom.java.LanguageLevel
+import com.intellij.testFramework.IdeaTestUtil
 import com.intellij.testFramework.LightProjectDescriptor
+import com.intellij.testFramework.VfsTestUtil
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture.CARET_MARKER
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase
@@ -45,8 +47,8 @@ abstract class BaseLightTest(private val withAemUberJar: Boolean = false)
   override fun setUp() {
     super.setUp()
     LanguageLevelProjectExtension.getInstance(project).languageLevel = LanguageLevel.JDK_11
-    VfsRootAccess.allowRootAccess(myFixture.testRootDisposable, File("src/test").absolutePath)
-    VfsRootAccess.allowRootAccess(myFixture.projectDisposable, File("src/test").absolutePath)
+    //VfsRootAccess.allowRootAccess(myFixture.testRootDisposable, File("src/test").absolutePath)
+    //VfsRootAccess.allowRootAccess(myFixture.projectDisposable, File("src/test").absolutePath)
 
     if (withAemUberJar) {
       myFixture.addUberJar()

@@ -5,20 +5,12 @@ fun properties(key: String) = project.findProperty(key).toString()
 
 plugins {
   java
+  kotlin("jvm")
   id("org.jetbrains.intellij")
   id("org.jetbrains.grammarkit") version "2021.2.1"
 }
 
-apply {
-  plugin("java")
-  plugin("kotlin")
-  plugin("org.jetbrains.intellij")
-  plugin("org.jetbrains.grammarkit")
-}
-
-
 buildscript {
-  val kotlinVersion: String by extra
 
   repositories {
     mavenLocal()
@@ -28,7 +20,6 @@ buildscript {
   }
 
   dependencies {
-    classpath(kotlin("gradle-plugin", kotlinVersion))
     classpath("org.jetbrains.intellij.plugins:gradle-grammarkit-plugin:2021.2.1")
   }
 }
@@ -41,13 +32,13 @@ grammarKit {
 dependencies {
   implementation(project(":aem-intellij-common"))
 
-  testImplementation(project(":aem-intellij-core"))
+  testCompileOnly(project(":aem-intellij-core"))
   testImplementation(project(":test-framework"))
 }
 
-java.sourceSets {
+/*java.sourceSets {
   getByName("main").java.srcDirs("src/main/gen")
-}
+}*/
 
 configure<SourceSetContainer> {
   val main by getting

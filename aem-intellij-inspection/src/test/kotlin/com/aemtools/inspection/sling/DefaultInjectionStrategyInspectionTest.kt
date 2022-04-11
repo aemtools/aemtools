@@ -30,7 +30,7 @@ class DefaultInjectionStrategyInspectionTest
   }
 
   override fun getProjectDescriptor(): LightProjectDescriptor {
-    return JAVA_11
+    return JdkProjectDescriptor()
   }
 
 }

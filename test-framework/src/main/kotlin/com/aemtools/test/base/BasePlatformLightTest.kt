@@ -1,5 +1,7 @@
 package com.aemtools.test.base
 
+import com.aemtools.test.fixture.JdkProjectDescriptor
+import com.intellij.testFramework.LightProjectDescriptor
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture
 
@@ -11,4 +13,7 @@ abstract class BasePlatformLightTest :
 
   fun fixture(): CodeInsightTestFixture = myFixture
 
+  override fun getProjectDescriptor(): LightProjectDescriptor {
+    return JdkProjectDescriptor()
+  }
 }

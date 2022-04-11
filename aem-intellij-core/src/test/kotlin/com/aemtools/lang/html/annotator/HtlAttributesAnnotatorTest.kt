@@ -1,5 +1,6 @@
 package com.aemtools.lang.html.annotator
 
+import com.aemtools.test.base.BaseLightTest
 import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase
 
 /**
@@ -7,7 +8,7 @@ import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase
  *
  * @author Dmytro Primshyts
  */
-class HtlAttributesAnnotatorTest : LightJavaCodeInsightFixtureTestCase() {
+class HtlAttributesAnnotatorTest : BaseLightTest() {
 
   fun testUnusedDataSlyUse() {
     myFixture.configureByText("test.html", """

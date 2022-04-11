@@ -47,7 +47,7 @@ class ThreadSafeFieldInspectionTest : BaseLightTest(true) {
 
 
   override fun getProjectDescriptor(): LightProjectDescriptor {
-    return JAVA_11
+    return JdkProjectDescriptor()
   }
 
 }

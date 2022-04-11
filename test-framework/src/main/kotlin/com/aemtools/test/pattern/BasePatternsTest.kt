@@ -12,6 +12,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.impl.DebugUtil
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture
 import junit.framework.TestCase
+import org.jetbrains.annotations.NotNull
 
 /**
  * @author Dmytro Primshyts
@@ -45,7 +46,7 @@ abstract class BasePatternsTest : BaseLightTest() {
     fixtureSetup.invoke(this, textToAdd)
 
     verify {
-      val element = elementSelector.invoke(this)
+      val element = elementSelector.invoke(this)!!
       TestCase.assertEquals(result,
           condition.accepts(element, null))
     }

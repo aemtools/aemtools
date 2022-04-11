@@ -1,6 +1,7 @@
 package com.aemtools.completion.htl.common
 
 import com.aemtools.test.HtlTestCase
+import com.aemtools.test.fixture.JdkProjectDescriptor
 import com.aemtools.test.fixture.UberJarFixtureMixin
 import com.intellij.codeInsight.completion.LightFixtureCompletionTestCase
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess
@@ -74,7 +75,7 @@ class PredefinedVariablesCompletionTest : LightFixtureCompletionTestCase(),
   override fun getTestDataPath() = File("${HtlTestCase.testResourcesPath}/com/aemtools/completion/htl/fixtures/").path + "/"
 
   override fun getProjectDescriptor(): LightProjectDescriptor {
-    return LightJavaCodeInsightFixtureTestCase.JAVA_11
+    return JdkProjectDescriptor()
   }
 
 }
