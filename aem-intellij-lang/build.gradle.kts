@@ -32,7 +32,6 @@ grammarKit {
 dependencies {
   implementation(project(":aem-intellij-common"))
 
-  //testCompileOnly(project(":aem-intellij-core"))
   testImplementation(project(":test-framework"))
 }
 

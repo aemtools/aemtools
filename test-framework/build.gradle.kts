@@ -1,22 +1,14 @@
-fun properties(key: String) = project.findProperty(key).toString()
-val junitVersion: String by extra
-val jmockitVersion: String by extra
+val kotlinVersion: String by extra
+val mockitoKotlinVersion: String by extra
+val spekVersion: String by extra
+var junit4Version: String by extra
+var junitBomVersion: String by extra
 val assertjVersion: String by extra
 val mockitoVersion: String by extra
-val spekVersion = "1.1.5"
-var junit5Version = "5.8.2"
-val junitJupiterApiVersion: String by extra
-val junitJupiterEngineVersion: String by extra
-val mockitoKotlinVersion: String by extra
-val junitVintageEngineVersion: String by extra
 
 plugins {
   kotlin("jvm")
   id("org.jetbrains.intellij")
-}
-
-repositories {
-  mavenCentral()
 }
 
 dependencies {
@@ -27,9 +19,6 @@ dependencies {
   implementation("org.assertj:assertj-core:$assertjVersion")
   implementation("org.mockito:mockito-core:$mockitoVersion")
   implementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
-
-  val junit4Version = "4.13.2"
-  val junitBomVersion = "5.8.2"
 
   // Use junit-bom to align versions
   // https://docs.gradle.org/current/userguide/managing_transitive_dependencies.html#sec:bom_import

@@ -1,15 +1,14 @@
 val kotlinVersion: String by extra
 val gsonVersion: String by extra
 val apacheCommonsVersion: String by extra
+val pluginSinceBuild: String by extra
+val pluginUntilBuild: String by extra
+val pluginVersion: String by extra
 
 plugins {
   java
   kotlin("jvm")
   id("org.jetbrains.intellij")
-}
-
-repositories {
-  mavenCentral()
 }
 
 dependencies {
@@ -24,13 +23,12 @@ dependencies {
   testImplementation(project(":test-framework"))
 }
 
-fun properties(key: String) = project.findProperty(key).toString()
 tasks {
-  val pluginVersion: String by extra
+
   patchPluginXml {
     version.set(pluginVersion)
-    sinceBuild.set(properties("pluginSinceBuild"))
-    untilBuild.set(properties("pluginUntilBuild"))
+    sinceBuild.set(pluginSinceBuild)
+    untilBuild.set(pluginUntilBuild)
 
     // Extract the <!-- Plugin description --> section from README.md and provide for the plugin's manifest
     /*pluginDescription.set(

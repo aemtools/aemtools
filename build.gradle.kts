@@ -9,6 +9,7 @@ val pluginVersion: String by extra
 val platformVersion: String by extra
 val platformType: String by extra
 val platformPlugins: String by extra
+val javaVersion: String by extra
 val projectDirectory = getProjectDir()
 
 plugins {
@@ -27,7 +28,15 @@ repositories {
   mavenCentral()
 }
 
-// Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
+java {
+  sourceCompatibility = JavaVersion.toVersion(javaVersion.toInt())
+  targetCompatibility = JavaVersion.toVersion(javaVersion.toInt())
+
+  toolchain {
+    languageVersion.set(JavaLanguageVersion.of(javaVersion))
+  }
+}
+
 intellij {
   pluginName.set(properties("pluginName"))
   version.set(platformVersion)
@@ -41,15 +50,6 @@ changelog {
   groups.set(emptyList())
 }
 
-java {
-  sourceCompatibility = JavaVersion.VERSION_11
-  targetCompatibility = JavaVersion.VERSION_11
-
-  toolchain {
-    languageVersion.set(JavaLanguageVersion.of(11))
-  }
-}
-
 kover {
   isDisabled = false
   coverageEngine.set(kotlinx.kover.api.CoverageEngine.INTELLIJ)
@@ -61,13 +61,12 @@ kover {
 }
 
 tasks {
-
   koverMergedHtmlReport {
     isEnabled = true
     htmlReportDir.set(layout.buildDirectory.dir("my-merged-report/html-result"))
 
     //includes = listOf("com.aemtools.*")
-    excludes = listOf("generated.psi.impl.*","com.aemtools.test.*")
+    excludes = listOf("generated.psi.impl.*", "com.aemtools.test.*")
   }
 
   koverMergedXmlReport {
@@ -77,8 +76,7 @@ tasks {
 
   koverMergedVerify {
     isEnabled = false
-    //includes = listOf("com.aemtools.*")
-    //excludes = listOf("generated.psi.impl.*")
+    excludes = listOf("generated.psi.impl.*")
     rule {
       name = "Minimal line coverage rate in percent"
       bound {
@@ -103,9 +101,7 @@ buildscript {
     mavenLocal()
     mavenCentral()
     gradlePluginPortal()
-    maven {
-      url = uri("https://plugins.gradle.org/m2/")
-    }
+    maven { url = uri("https://plugins.gradle.org/m2/") }
 
     dependencies {
       classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.19.0")
@@ -114,9 +110,6 @@ buildscript {
 }
 
 allprojects {
-  group = pluginGroup
-  version = pluginVersion
-
   apply {
     plugin("io.gitlab.arturbosch.detekt")
     plugin("java")
@@ -140,11 +133,11 @@ allprojects {
   }
 
   java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.toVersion(javaVersion.toInt())
+    targetCompatibility = JavaVersion.toVersion(javaVersion.toInt())
 
     toolchain {
-      languageVersion.set(JavaLanguageVersion.of(11))
+      languageVersion.set(JavaLanguageVersion.of(javaVersion))
     }
   }
 
@@ -152,9 +145,8 @@ allprojects {
     useJUnitPlatform {
       includeEngines("spek", "junit-vintage", "junit-jupiter")
     }
-    //useJUnitPlatform()
     testLogging {
-      events("standardOut", "passed", "skipped", "failed", "STANDARD_OUT", "STANDARD_ERROR")
+      events("standardOut", "passed", "skipped", "failed")
       showStandardStreams = true
     }
   }
@@ -164,22 +156,21 @@ allprojects {
   }
 
   tasks.withType<JavaCompile>().configureEach {
-    options.release.set(11)
-    sourceCompatibility = "11"
-    targetCompatibility = "11"
+    options.release.set(javaVersion.toInt())
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
     options.encoding = "UTF-8"
 
     javaCompiler.set(javaToolchains.compilerFor {
-      languageVersion.set(JavaLanguageVersion.of(11))
+      languageVersion.set(JavaLanguageVersion.of(javaVersion))
     })
   }
 
   tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "11"
+    kotlinOptions.jvmTarget = javaVersion
     kotlinOptions.apiVersion = "1.5"
     kotlinOptions.languageVersion = "1.5"
   }
-
 }
 
 subprojects {
@@ -195,25 +186,19 @@ subprojects {
 
   intellij {
     pluginName.set(properties("pluginName"))
-    version.set(properties("platformVersion"))
-    type.set(properties("platformType"))
+    version.set(platformVersion)
+    type.set(platformType)
 
-    plugins.set(properties("platformPlugins").split(',').map(String::trim).filter(String::isNotEmpty))
+    plugins.set(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
   }
 
   val kotlinVersion: String by extra
   val mockitoKotlinVersion: String by extra
-  val spekVersion = "1.1.5"
-  var junit5Version = "5.8.2"
-  val junitJupiterApiVersion: String by extra
-  val junitJupiterEngineVersion: String by extra
-  val junitVintageEngineVersion: String by extra
-  val junitPlatformVersion: String by extra
-  val junitVersion: String by extra
-  val jmockitVersion: String by extra
+  val spekVersion: String by extra
+  var junit4Version: String by extra
+  var junitBomVersion: String by extra
   val assertjVersion: String by extra
   val mockitoVersion: String by extra
-  val jacocoVersion: String by extra
 
   dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
@@ -223,9 +208,6 @@ subprojects {
     testImplementation("org.assertj:assertj-core:$assertjVersion")
     testImplementation("org.mockito:mockito-core:$mockitoVersion")
     testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
-
-    val junit4Version = "4.13.2"
-    val junitBomVersion = "5.8.2"
 
     // Use junit-bom to align versions
     // https://docs.gradle.org/current/userguide/managing_transitive_dependencies.html#sec:bom_import
@@ -256,7 +238,7 @@ subprojects {
     testImplementation("org.jetbrains.spek:spek-api:$spekVersion") {
       exclude(group = "org.jetbrains.kotlin")
     }
-    testRuntimeOnly("org.jetbrains.spek:spek-junit-platform-engine:$spekVersion"){
+    testRuntimeOnly("org.jetbrains.spek:spek-junit-platform-engine:$spekVersion") {
       exclude(group = "org.jetbrains.kotlin")
       exclude(group = "org.junit.platform")
     }
