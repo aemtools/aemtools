@@ -10,11 +10,12 @@ val platformVersion: String by extra
 val platformType: String by extra
 val platformPlugins: String by extra
 val javaVersion: String by extra
-val projectDirectory = getProjectDir()
+val kotlinVersion: String by extra
+val rootProjectDirectory = projectDir
 
 plugins {
   id("java")
-  kotlin("jvm") version "1.5.32"
+  kotlin("jvm") version "1.6.10"
   id("org.jetbrains.intellij") version "1.5.2"
   id("org.jetbrains.changelog") version "1.3.1"
   id("io.gitlab.arturbosch.detekt") version "1.19.0"
@@ -38,10 +39,8 @@ java {
 }
 
 intellij {
-  pluginName.set(properties("pluginName"))
   version.set(platformVersion)
   type.set(platformType)
-
   plugins.set(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
 }
 
@@ -63,7 +62,7 @@ kover {
 tasks {
   koverMergedHtmlReport {
     isEnabled = true
-    htmlReportDir.set(layout.buildDirectory.dir("my-merged-report/html-result"))
+    htmlReportDir.set(layout.buildDirectory.dir("merged-report/html"))
 
     //includes = listOf("com.aemtools.*")
     excludes = listOf("generated.psi.impl.*", "com.aemtools.test.*")
@@ -91,7 +90,6 @@ tasks {
 
   buildSearchableOptions {
     enabled = false
-    jbrVersion.set("11_0_2b159")
   }
 }
 
@@ -123,7 +121,7 @@ allprojects {
 
   detekt {
     toolVersion = "1.19.0"
-    config = files("$projectDirectory/config/detekt.yml")
+    config = files("$rootProjectDirectory/config/detekt.yml")
     parallel = true
     ignoreFailures = true
     buildUponDefaultConfig = true
@@ -141,6 +139,22 @@ allprojects {
     }
   }
 
+  tasks.withType<JavaCompile>().configureEach {
+    options.release.set(javaVersion.toInt())
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+
+    javaCompiler.set(javaToolchains.compilerFor {
+      languageVersion.set(JavaLanguageVersion.of(javaVersion))
+    })
+  }
+
+  tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.jvmTarget = javaVersion
+    kotlinOptions.apiVersion = "1.6"
+    kotlinOptions.languageVersion = "1.6"
+  }
+
   tasks.withType<Test>().configureEach {
     useJUnitPlatform {
       includeEngines("spek", "junit-vintage", "junit-jupiter")
@@ -153,23 +167,6 @@ allprojects {
 
   tasks.withType<Detekt>().configureEach {
     exclude("com.aemtools.test.*", ".*test.*")
-  }
-
-  tasks.withType<JavaCompile>().configureEach {
-    options.release.set(javaVersion.toInt())
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-    options.encoding = "UTF-8"
-
-    javaCompiler.set(javaToolchains.compilerFor {
-      languageVersion.set(JavaLanguageVersion.of(javaVersion))
-    })
-  }
-
-  tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = javaVersion
-    kotlinOptions.apiVersion = "1.5"
-    kotlinOptions.languageVersion = "1.5"
   }
 }
 
@@ -185,18 +182,20 @@ subprojects {
   }
 
   intellij {
-    pluginName.set(properties("pluginName"))
     version.set(platformVersion)
     type.set(platformType)
-
     plugins.set(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
+  }
+
+  tasks.buildSearchableOptions {
+    enabled = false
   }
 
   val kotlinVersion: String by extra
   val mockitoKotlinVersion: String by extra
   val spekVersion: String by extra
-  var junit4Version: String by extra
-  var junitBomVersion: String by extra
+  val junit4Version: String by extra
+  val junitBomVersion: String by extra
   val assertjVersion: String by extra
   val mockitoVersion: String by extra
 

@@ -4,11 +4,22 @@ val apacheCommonsVersion: String by extra
 val pluginSinceBuild: String by extra
 val pluginUntilBuild: String by extra
 val pluginVersion: String by extra
+val platformVersion: String by extra
+val platformType: String by extra
+val platformPlugins: String by extra
+fun properties(key: String) = project.findProperty(key).toString()
 
 plugins {
   java
   kotlin("jvm")
   id("org.jetbrains.intellij")
+}
+
+intellij {
+  pluginName.set(properties("pluginName"))
+  version.set(platformVersion)
+  type.set(platformType)
+  plugins.set(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
 }
 
 dependencies {
