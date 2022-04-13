@@ -4,6 +4,7 @@ val apacheCommonsVersion: String by extra
 val pluginSinceBuild: String by extra
 val pluginUntilBuild: String by extra
 val pluginVersion: String by extra
+val pluginGroup: String by extra
 val platformVersion: String by extra
 val platformType: String by extra
 val platformPlugins: String by extra
@@ -62,4 +63,19 @@ tasks {
     })*/
     pluginXmlFiles.set(fileTree("$projectDir/src/main/resources/META-INF").filter { it.isFile() }.files)
   }
+
+  buildPlugin {
+    archiveFileName.set("$platformType-$pluginGroup-$pluginVersion.zip")
+
+    doLast {
+      delete("../build/distributions").also {
+        copy {
+          from("build/distributions")
+          include("*.zip")
+          into("../build/distributions")
+        }
+      }
+    }
+  }
+
 }

@@ -91,6 +91,12 @@ tasks {
   buildSearchableOptions {
     enabled = false
   }
+
+  runIde {
+    configDir.set(file("${project(":aem-intellij-core").buildDir}/idea-sandbox/config"))
+    pluginsDir.set(file("${project(":aem-intellij-core").buildDir}/idea-sandbox/plugins"))
+    systemDir.set(file("${project(":aem-intellij-core").buildDir}/idea-sandbox/system"))
+  }
 }
 
 buildscript {
