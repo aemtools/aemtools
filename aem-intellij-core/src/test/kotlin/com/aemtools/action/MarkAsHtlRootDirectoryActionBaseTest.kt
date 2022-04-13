@@ -4,8 +4,6 @@ import com.aemtools.index.HtlTemplateIndex
 import com.aemtools.lang.settings.HtlRootDirectories
 import com.aemtools.test.util.mock
 import com.intellij.ide.plugins.PluginUtil
-import com.intellij.openapi.Disposable
-import com.intellij.openapi.actionSystem.ActionPlaces
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.Presentation
@@ -17,11 +15,9 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManager
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiManager
-import com.intellij.util.indexing.FileBasedIndex
 import org.junit.Before
 import org.mockito.Mock
 import org.mockito.Mockito.*
-import org.mockito.kotlin.mock
 import org.picocontainer.PicoContainer
 
 /**

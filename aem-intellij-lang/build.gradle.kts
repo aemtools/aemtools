@@ -32,17 +32,12 @@ grammarKit {
 dependencies {
   implementation(project(":aem-intellij-common"))
 
-  testCompileOnly(project(":aem-intellij-core"))
+  //testCompileOnly(project(":aem-intellij-core"))
   testImplementation(project(":test-framework"))
 }
 
-/*java.sourceSets {
-  getByName("main").java.srcDirs("src/main/gen")
-}*/
-
 configure<SourceSetContainer> {
   val main by getting
-//  main.allJava.srcDirs("src/main/gen")
   main.java.srcDirs("src/main/gen")
 }
 

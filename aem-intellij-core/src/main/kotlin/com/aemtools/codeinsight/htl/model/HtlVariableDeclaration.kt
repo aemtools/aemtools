@@ -7,7 +7,6 @@ import com.aemtools.common.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.common.constant.const.htl.DATA_SLY_USE
 import com.aemtools.common.util.findChildrenByType
-import com.aemtools.index.model.HtlTemplateDeclaration
 import com.aemtools.index.util.extractTemplateDefinition
 import com.aemtools.lang.htl.icons.HtlIcons.DATA_SLY_LIST_ICON
 import com.aemtools.lang.htl.icons.HtlIcons.DATA_SLY_REPEAT_ICON
