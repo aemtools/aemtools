@@ -1,3 +1,4 @@
+import org.jetbrains.changelog.date
 import org.jetbrains.changelog.markdownToHTML
 
 val kotlinVersion: String by extra
@@ -16,6 +17,7 @@ plugins {
   java
   kotlin("jvm")
   id("org.jetbrains.intellij")
+  id("org.jetbrains.changelog")
 }
 
 intellij {
@@ -23,6 +25,15 @@ intellij {
   version.set(platformVersion)
   type.set(platformType)
   plugins.set(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
+}
+
+changelog {
+  version.set(pluginVersion)
+  path.set("${project.parent?.projectDir}/CHANGELOG.md")
+  header.set(provider { "[$version] - ${date()}" })
+  itemPrefix.set("-")
+  keepUnreleasedSection.set(true)
+  groups.set(listOf("New features", "Bug fixes", "Maintenance"))
 }
 
 dependencies {
@@ -57,6 +68,7 @@ tasks {
         }.joinToString("\n").run { markdownToHTML(this) }
       )
     }
+    changeNotes.set(provider { changelog.getUnreleased().toHTML() })
 
     pluginXmlFiles.set(fileTree("$projectDir/src/main/resources/META-INF").filter { it.isFile() }.files)
   }
