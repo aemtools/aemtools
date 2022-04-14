@@ -8,6 +8,7 @@ import com.intellij.openapi.editor.markup.GutterIconRenderer
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiIdentifier
 import com.intellij.util.Function
+import java.util.function.Supplier
 
 /**
  * Marker for Felix OSGi properties.
@@ -21,8 +22,8 @@ class FelixOSGiPropertyMarkerInfo(
         propertyIdentifier,
         propertyIdentifier.textRange,
         AllIcons.Nodes.PropertyRead,
-        Pass.LINE_MARKERS,
         Function { "OSGi Property" },
-    FelixOSGiPropertyNavigationHandler(propertyDescriptorsProvider),
-        GutterIconRenderer.Alignment.CENTER
+        FelixOSGiPropertyNavigationHandler(propertyDescriptorsProvider),
+        GutterIconRenderer.Alignment.CENTER,
+        Supplier { "OSGi Property" }
 )
