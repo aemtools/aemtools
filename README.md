@@ -4,6 +4,10 @@
 
 Intellij IDEA plugin containing AEM (Adobe Experience Manager) related features. The goal of the plugin is to make the development of AEM projects faster and more convenient by leveraging features which IDE can provide.
 
+## Compatibility
+
+It is compatible with Intellij IDEA **2020.3+** versions. [IntelliJ Platform Based Products of Recent IDE Versions.](https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html#intellij-platform-based-products-of-recent-ide-versions)
+
 ## Installation 
 The plugin is available in official JetBrains repository:
 
@@ -26,5 +30,9 @@ The plugin is available in official JetBrains repository:
    * Provides the list of all available xtypes (taken from official documentation)
    * After the xtype is chosen proposes fields declared in specified xtype
    * "Quick doc" action triggered on specific field or xtype will show corresponding documentation
+
+4. AEM Clientlibs
+   * Categories completion
+   * Libs template completion in HTL
 
 <!-- Plugin description end -->
