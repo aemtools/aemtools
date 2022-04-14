@@ -32,3 +32,7 @@ The plugin is available in official JetBrains repository:
    * "Quick doc" action triggered on specific field or xtype will show corresponding documentation
 
 <!-- Plugin description end -->
+
+## Sponsoring
+
+[![Support this reposiroty with issuehunt](https://issuehunt.io/static/embed/issuehunt-button-v1.svg)](https://issuehunt.io/r/aemtools/aemtools)
