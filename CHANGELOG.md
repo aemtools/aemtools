@@ -5,14 +5,13 @@ All notable changes to this project will be documented in this file.
 [Unreleased]: https://github.com/aemtools/aemtools/tree/v0.9.1
 ### New features
 - [Add support of 2021.1+ IDEA versions](https://github.com/aemtools/aemtools/issues/182)
-- [AEM: Support of Touch UI dialog (partially)](https://github.com/aemtools/aemtools/issues/143)
-- [HTL: Add support for "/libs/granite/sightly/templates/clientlib.html"](https://github.com/aemtools/aemtools/issues/133)
 - [HTL: Improve completion for i18n expressions](https://github.com/aemtools/aemtools/issues/111)
 - [IDE: Support of _rep_policy.xml files](https://github.com/aemtools/aemtools/issues/116)
 - [IDE: Support of _cq_editConfig.xml files](https://github.com/aemtools/aemtools/issues/82)
 ### Bug fixes
 - [js.txt & css.txt duplicated reference to a file](https://github.com/aemtools/aemtools/releases?page=1#167)
 - [IntelliJ 2018.3: Icons of file type "HTL" in wrong size!](https://github.com/aemtools/aemtools/issues/179)
+- [OSGI config isn't show if it naming contains suffix that starts with dot instead dash](https://github.com/aemtools/aemtools/issues/163)
 ### Maintenance
 - [Increase test coverage in common module](https://github.com/aemtools/aemtools/issues/72)
 

@@ -31,8 +31,4 @@ The plugin is available in official JetBrains repository:
    * After the xtype is chosen proposes fields declared in specified xtype
    * "Quick doc" action triggered on specific field or xtype will show corresponding documentation
 
-4. AEM Clientlibs
-   * Categories completion
-   * Libs template completion in HTL
-
 <!-- Plugin description end -->
