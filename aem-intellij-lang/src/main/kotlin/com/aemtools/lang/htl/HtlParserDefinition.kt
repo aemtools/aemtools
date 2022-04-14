@@ -25,13 +25,13 @@ class HtlParserDefinition : ParserDefinition {
   override fun createLexer(project: Project?): Lexer
       = HtlLexer()
 
-  override fun createParser(project: Project?): PsiParser?
+  override fun createParser(project: Project?): PsiParser
       = HtlParser()
 
-  override fun createFile(viewProvider: FileViewProvider): PsiFile?
+  override fun createFile(viewProvider: FileViewProvider): PsiFile
       = HtlPsiFile(viewProvider)
 
-  override fun spaceExistanceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements?
+  override fun spaceExistanceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements
       = ParserDefinition.SpaceRequirements.MUST
 
   override fun getStringLiteralElements(): TokenSet
@@ -43,7 +43,7 @@ class HtlParserDefinition : ParserDefinition {
   override fun getWhitespaceTokens(): TokenSet
       = TokenSet.create(TokenType.WHITE_SPACE)
 
-  override fun getFileNodeType(): IFileElementType?
+  override fun getFileNodeType(): IFileElementType
       = HtlFileElementType
 
   override fun createElement(node: ASTNode?): PsiElement

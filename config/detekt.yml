@@ -1,13 +1,10 @@
-autoCorrect: true
-failFast: false
 
 build:
-  warningThreshold: 5
-  failThreshold: 10
+  maxIssues: 10
   weights:
     complexity: 2
     formatting: 1
-    LongParameterList: 1
+    functionThreshold: 1
     comments: 1
 
 processors:
@@ -75,7 +72,7 @@ exceptions:
     active: false
   TooGenericExceptionCaught:
     active: true
-    exceptions:
+    exceptionNames:
       - ArrayIndexOutOfBoundsException
       - Error
       - Exception
@@ -86,7 +83,7 @@ exceptions:
       - RuntimeException
   TooGenericExceptionThrown:
     active: true
-    exceptions:
+    exceptionNames:
       - Throwable
       - ThrowError
       - ThrowException
@@ -95,9 +92,7 @@ exceptions:
       - ThrowThrowable
   InstanceOfCheckForException:
     active: false
-  IteratorNotThrowingNoSuchElementException:
-    active: false
-  PrintExceptionStackTrace:
+  PrintStackTrace:
     active: false
   RethrowCaughtException:
     active: false
@@ -144,13 +139,13 @@ complexity:
   LongMethod:
     threshold: 20
   LongParameterList:
-    threshold: 5
+    functionThreshold: 5
   LargeClass:
     threshold: 150
   ComplexMethod:
     threshold: 10
   TooManyFunctions:
-    threshold: 30
+    thresholdInFiles: 30
   ComplexCondition:
     threshold: 3
   LabeledExpression:
@@ -162,61 +157,49 @@ complexity:
     excludeStringsWithLessThan5Characters: true
     ignoreStringsRegex: '$^'
 
-code-smell:
-  active: true
-  FeatureEnvy:
-    threshold: 0.5
-    weight: 0.45
-    base: 0.5
+#code-smell:
+#  active: true
+#  FeatureEnvy:
+#    threshold: 0.5
+#    weight: 0.45
+#    base: 0.5
 
 formatting:
   active: true
-  useTabs: false
+  #useTabs: false
   Indentation:
     active: true
     indentSize: 2
-  ConsecutiveBlankLines:
+  NoConsecutiveBlankLines:
     active: true
     autoCorrect: true
-  MultipleSpaces:
+  NoMultipleSpaces:
     active: true
     autoCorrect: true
-  SpacingAfterComma:
+  SpacingAroundComma:
     active: true
     autoCorrect: true
-  SpacingAfterKeyword:
+  SpacingAroundKeyword:
     active: true
     autoCorrect: true
   SpacingAroundColon:
     active: true
     autoCorrect: true
-  SpacingAroundCurlyBraces:
+  SpacingAroundCurly:
     active: true
     autoCorrect: true
-  SpacingAroundOperator:
+  SpacingAroundOperators:
     active: true
     autoCorrect: true
-  TrailingSpaces:
+  NoTrailingSpaces:
     active: true
     autoCorrect: true
-  UnusedImports:
+  NoUnusedImports:
     active: true
     autoCorrect: true
-  OptionalSemicolon:
+  NoSemicolons:
     active: true
     autoCorrect: true
-  OptionalUnit:
-    active: true
-    autoCorrect: true
-  ExpressionBodySyntax:
-    active: false
-    autoCorrect: false
-  ExpressionBodySyntaxLineBreaks:
-    active: false
-    autoCorrect: false
-  OptionalReturnKeyword:
-    active: true
-    autoCorrect: false
 
 style:
   active: true
@@ -237,8 +220,6 @@ style:
   ForbiddenImport:
     active: false
     imports: ''
-  PackageDeclarationStyle:
-    active: false
   ModifierOrder:
     active: true
   MagicNumber:
@@ -257,6 +238,18 @@ style:
     maxLineLength: 120
     excludePackageStatements: false
     excludeImportStatements: false
+  ProtectedMemberInFinalClass:
+    active: false
+  UnnecessaryParentheses:
+    active: false
+  DataClassContainsFunctions:
+    active: false
+  UseDataClass:
+    active: false
+  UnnecessaryAbstractClass:
+    active: false
+
+naming:
   PackageNaming:
     active: true
     packagePattern: '^[a-z]+(\.[a-z][a-z0-9]*)*$'
@@ -278,7 +271,7 @@ style:
   VariableNaming:
     active: true
     variablePattern: '^(_)?[a-z$][a-zA-Z$0-9]*$'
-  ConstantNaming:
+  ObjectPropertyNaming:
     active: true
     constantPattern: '^([A-Z_][A-Z\d_]*|serialVersionUID)$'
   VariableMaxLength:
@@ -290,21 +283,9 @@ style:
   ForbiddenClassName:
     active: false
     forbiddenName: ''
-  ProtectedMemberInFinalClass:
-    active: false
-  UnnecessaryParentheses:
-    active: false
-  DataClassContainsFunctions:
-    active: false
-  UseDataClass:
-    active: false
-  UnnecessaryAbstractClass:
-    active: false
 
 comments:
   active: true
-  CommentOverPrivateMethod:
-    active: false
   CommentOverPrivateFunction:
     active: false
   CommentOverPrivateProperty:
@@ -320,9 +301,9 @@ comments:
 
 # *experimental feature*
 # Migration rules can be defined in the same config file or a new one
-migration:
-  active: true
-  imports:
+#migration:
+#  active: true
+#  imports:
     # your.package.Class: new.package.or.Class
     # for example:
     # io.gitlab.arturbosch.detekt.api.Rule: io.gitlab.arturbosch.detekt.rule.Rule

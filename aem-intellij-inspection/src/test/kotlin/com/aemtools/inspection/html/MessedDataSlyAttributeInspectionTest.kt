@@ -1,8 +1,8 @@
 package com.aemtools.inspection.html
 
 import com.aemtools.test.HtlTestCase
+import com.aemtools.test.base.BasePlatformLightTest
 import com.intellij.codeInspection.ex.LocalInspectionToolWrapper
-import com.intellij.testFramework.InspectionTestCase
 import java.io.File
 
 /**
@@ -10,20 +10,24 @@ import java.io.File
  *
  * @author Dmytro Primshyts
  */
-class MessedDataSlyAttributeInspectionTest : InspectionTestCase() {
+class MessedDataSlyAttributeInspectionTest : BasePlatformLightTest() {
 
   override fun getTestDataPath(): String {
     return File(HtlTestCase.testResourcesPath).absolutePath
   }
 
   fun testInspectionForStyle() {
-    doTest("com/aemtools/inspection/html/messed-data-sly-attribute/style",
-        LocalInspectionToolWrapper(MessedDataSlyAttributeInspection()))
+    myFixture.enableInspections(MessedDataSlyAttributeInspection())
+
+    myFixture.testInspection("com/aemtools/inspection/html/messed-data-sly-attribute/style",
+      LocalInspectionToolWrapper(MessedDataSlyAttributeInspection()))
   }
 
   fun testInspectionForOnclick() {
-    doTest("com/aemtools/inspection/html/messed-data-sly-attribute/onclick",
-        LocalInspectionToolWrapper(MessedDataSlyAttributeInspection()))
+    myFixture.enableInspections(MessedDataSlyAttributeInspection())
+
+    myFixture.testInspection("com/aemtools/inspection/html/messed-data-sly-attribute/onclick",
+      LocalInspectionToolWrapper(MessedDataSlyAttributeInspection()))
   }
 
 }

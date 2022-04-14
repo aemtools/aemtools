@@ -61,7 +61,7 @@ object FileVariablesResolver {
   fun declarationsForPosition(position: PsiElement, completionParameters: CompletionParameters)
       : List<HtlVariableDeclaration> {
     val htlFile = completionParameters.originalFile
-    val htmlFile = htlFile.viewProvider.getPsi(StdLanguages.HTML)
+    val htmlFile = htlFile.getHtmlFile()
 
     val attributes: List<XmlAttribute> = PsiTreeUtil.findChildrenOfType(htmlFile, XmlAttribute::class.java)
         .toList()

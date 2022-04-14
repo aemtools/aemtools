@@ -1,35 +1,32 @@
-import org.gradle.internal.impldep.org.apache.maven.model.Build
-import org.gradle.kotlin.dsl.extra
-import org.gradle.kotlin.dsl.getValue
-import org.gradle.kotlin.dsl.kotlin
-import org.gradle.kotlin.dsl.maven
-import org.gradle.kotlin.dsl.repositories
-import org.jetbrains.grammarkit.GrammarKitPluginExtension
-import org.jetbrains.grammarkit.tasks.GenerateLexer
-import org.jetbrains.grammarkit.tasks.GenerateParser
-import org.jetbrains.intellij.IntelliJPlugin
-import org.jetbrains.intellij.IntelliJPluginExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.grammarkit.tasks.GenerateLexerTask
+import org.jetbrains.grammarkit.tasks.GenerateParserTask
+
+fun properties(key: String) = project.findProperty(key).toString()
 
 plugins {
-  id("org.jetbrains.grammarkit") version "2021.1.2"
-  id("org.jetbrains.intellij") version "0.7.2"
+  java
+  kotlin("jvm")
+  id("org.jetbrains.intellij")
+  id("org.jetbrains.grammarkit") version "2021.2.1"
 }
 
-val kotlinVersion: String by project
+buildscript {
+
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    gradlePluginPortal()
+    maven { url = uri("https://plugins.gradle.org/m2/") }
+  }
+
+  dependencies {
+    classpath("org.jetbrains.intellij.plugins:gradle-grammarkit-plugin:2021.2.1")
+  }
+}
 
 grammarKit {
-  grammarKitRelease = "2020.3.1"
-}
-
-//java.sourceSets {
-//  getByName("main").java.srcDirs("src/main/gen")
-//}
-
-configure<SourceSetContainer> {
-  val main by getting
-//  main.allJava.srcDirs("src/main/gen")
-  main.java.srcDirs("src/main/gen")
+  // Version of IntelliJ patched JFlex (see the link below), Default is 1.7.0-1
+  jflexRelease.set("1.7.0-1")
 }
 
 dependencies {
@@ -38,107 +35,98 @@ dependencies {
   testImplementation(project(":test-framework"))
 }
 
-val ideaVersion: String by project
-
-intellij {
-  version = ideaVersion
-  setPlugins(
-      "IntelliLang"
-  )
+configure<SourceSetContainer> {
+  val main by getting
+  main.java.srcDirs("src/main/gen")
 }
 
-java {
-  sourceCompatibility = JavaVersion.VERSION_1_8
-}
+tasks {
 
-tasks.withType<KotlinCompile> {
-  kotlinOptions.jvmTarget = "1.8"
-}
-
-task<GenerateLexer>("generateHtlLexer") {
-  group = "grammar"
-  source = "src/main/flex/Htl.flex"
-  targetDir = "src/main/gen/com/aemtools/lang/htl/lexer"
-  targetClass = "_HtlLexer"
-  purgeOldFiles = true
-}
-
-task<GenerateLexer>("generateCdLexer") {
-  group = "grammar"
-  source = "src/main/flex/_ClientlibDeclarationLexer.flex"
-  targetDir = "src/main/gen/com/aemtools/lang/clientlib"
-  targetClass = "_ClientlibDeclarationLexer"
-  purgeOldFiles = true
-}
-
-task<GenerateLexer>("generateJpLexer") {
-  group = "grammar"
-  source = "src/main/flex/JcrPropertyLexer.flex"
-  targetDir = "src/main/gen/com/aemtools/lang/jcrproperty"
-  targetClass = "_JcrPropertyLexer"
-  purgeOldFiles = true
-}
-
-task<GenerateLexer>("generateElLexer") {
-  group = "grammar"
-  source = "src/main/flex/el.flex"
-  targetDir = "src/main/gen/com/aemtools/lang/el"
-  targetClass = "_ElLexer"
-  purgeOldFiles = true
-}
-
-task<GenerateParser>("generateHtlPsiAndParser") {
-  group = "grammar"
-  source = "src/main/bnf/Htl.bnf"
-  targetRoot = "src/main/gen"
-  pathToParser = "/com/aemtools/lang/htl/HtlParser.java"
-  pathToPsiRoot = "/com/aemtools/lang/htl/psi"
-  purgeOldFiles = true
-}
-
-task<GenerateParser>("generateCdPsiAndParser") {
-  group = "grammar"
-  source = "src/main/bnf/clientlibdeclaration.bnf"
-  targetRoot = "src/main/gen"
-  pathToParser = "/com/aemtools/lang/clientlib/ClientlibDeclarationParser.java"
-  pathToPsiRoot = "/com/aemtools/lang/clientlib/psi"
-  purgeOldFiles = true
-}
-
-task<GenerateParser>("generateJpPsiAndParser") {
-  group = "grammar"
-  source = "src/main/bnf/jcrproperty.bnf"
-  targetRoot = "src/main/gen"
-  pathToParser = "/com/aemtools/lang/jcrproperty/JcrPropertyParser.java"
-  pathToPsiRoot = "/com/aemtools/lang/jcrproperty/psi"
-  purgeOldFiles = true
-}
-
-task<GenerateParser>("generateElPsiAndParser") {
-  group = "grammar"
-  source = "src/main/bnf/el.bnf"
-  targetRoot = "src/main/gen"
-  pathToParser = "/com/aemtools/lang/el/ElParser.java"
-  pathToPsiRoot = "/com/aemtools/lang/el/psi"
-  purgeOldFiles = true
-}
-
-task("generateGrammar") {
-  group = "grammar"
-  dependsOn.run {
-    add("generateCdLexer")
-    add("generateCdPsiAndParser")
-
-    add("generateHtlLexer")
-    add("generateHtlPsiAndParser")
-
-    add("generateJpLexer")
-    add("generateJpPsiAndParser")
-
-    add("generateElLexer")
-    add("generateElPsiAndParser")
+  task<GenerateLexerTask>("generateCdLexer") {
+    group = "grammar"
+    source.set("src/main/flex/Htl.flex")
+    targetDir.set("src/main/gen/com/aemtools/lang/htl/lexer")
+    targetClass.set("_HtlLexer")
+    purgeOldFiles.set(true)
   }
-}
 
-getTasksByName("compileKotlin", true).first()
+  task<GenerateLexerTask>("generateHtlLexer") {
+    group = "grammar"
+    source.set("src/main/flex/_ClientlibDeclarationLexer.flex")
+    targetDir.set("src/main/gen/com/aemtools/lang/clientlib")
+    targetClass.set("_ClientlibDeclarationLexer")
+    purgeOldFiles.set(true)
+  }
+
+  task<GenerateLexerTask>("generateJpLexer") {
+    group = "grammar"
+    source.set("src/main/flex/JcrPropertyLexer.flex")
+    targetDir.set("src/main/gen/com/aemtools/lang/jcrproperty")
+    targetClass.set("_JcrPropertyLexer")
+    purgeOldFiles.set(true)
+  }
+
+  task<GenerateLexerTask>("generateElLexer") {
+    group = "grammar"
+    source.set("src/main/flex/el.flex")
+    targetDir.set("src/main/gen/com/aemtools/lang/el")
+    targetClass.set("_ElLexer")
+    purgeOldFiles.set(true)
+  }
+
+  task<GenerateParserTask>("generateHtlPsiAndParser") {
+    group = "grammar"
+    source.set("src/main/bnf/Htl.bnf")
+    targetRoot.set("src/main/gen")
+    pathToParser.set("/com/aemtools/lang/htl/HtlParser.java")
+    pathToPsiRoot.set("/com/aemtools/lang/htl/psi")
+    purgeOldFiles.set(true)
+  }
+
+  task<GenerateParserTask>("generateCdPsiAndParser") {
+    group = "grammar"
+    source.set("src/main/bnf/clientlibdeclaration.bnf")
+    targetRoot.set("src/main/gen")
+    pathToParser.set("/com/aemtools/lang/clientlib/ClientlibDeclarationParser.java")
+    pathToPsiRoot.set("/com/aemtools/lang/clientlib/psi")
+    purgeOldFiles.set(true)
+  }
+
+  task<GenerateParserTask>("generateJpPsiAndParser") {
+    group = "grammar"
+    source.set("src/main/bnf/jcrproperty.bnf")
+    targetRoot.set("src/main/gen")
+    pathToParser.set("/com/aemtools/lang/jcrproperty/JcrPropertyParser.java")
+    pathToPsiRoot.set("/com/aemtools/lang/jcrproperty/psi")
+    purgeOldFiles.set(true)
+  }
+
+  task<GenerateParserTask>("generateElPsiAndParser") {
+    group = "grammar"
+    source.set("src/main/bnf/el.bnf")
+    targetRoot.set("src/main/gen")
+    pathToParser.set("/com/aemtools/lang/el/ElParser.java")
+    pathToPsiRoot.set("/com/aemtools/lang/el/psi")
+    purgeOldFiles.set(true)
+  }
+
+  task("generateGrammar") {
+    group = "grammar"
+    dependsOn.run {
+      add("generateCdLexer")
+      add("generateCdPsiAndParser")
+
+      add("generateHtlLexer")
+      add("generateHtlPsiAndParser")
+
+      add("generateJpLexer")
+      add("generateJpPsiAndParser")
+
+      add("generateElLexer")
+      add("generateElPsiAndParser")
+    }
+  }
+
+  getTasksByName("compileKotlin", true).first()
     .dependsOn("generateGrammar")
+}

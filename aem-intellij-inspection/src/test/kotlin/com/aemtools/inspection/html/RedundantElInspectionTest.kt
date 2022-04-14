@@ -1,8 +1,8 @@
 package com.aemtools.inspection.html
 
 import com.aemtools.test.HtlTestCase
+import com.aemtools.test.base.BasePlatformLightTest
 import com.intellij.codeInspection.ex.LocalInspectionToolWrapper
-import com.intellij.testFramework.InspectionTestCase
 import java.io.File
 
 /**
@@ -10,15 +10,19 @@ import java.io.File
  *
  * @author Dmytro Primshyts
  */
-class RedundantElInspectionTest : InspectionTestCase() {
+class RedundantElInspectionTest : BasePlatformLightTest() {
 
   override fun getTestDataPath(): String {
     return File(HtlTestCase.testResourcesPath).absolutePath
   }
 
   fun testRedundantElInspection() {
-    doTest("com/aemtools/inspection/html/redundant-el",
-        LocalInspectionToolWrapper(RedundantElInspection()))
+    myFixture.enableInspections(RedundantElInspection())
+
+    myFixture.testInspection(
+      "com/aemtools/inspection/html/redundant-el",
+      LocalInspectionToolWrapper(RedundantElInspection())
+    )
   }
 
 }

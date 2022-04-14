@@ -5,18 +5,16 @@ import com.aemtools.test.util.memo
 import com.aemtools.test.util.mock
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.openapi.project.Project
+import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.never
-import com.nhaarman.mockito_kotlin.whenever
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 import org.jetbrains.spek.api.lifecycle.CachingMode
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.*
 import org.picocontainer.PicoContainer
 
 /**
@@ -58,11 +56,11 @@ attributes that take JavaScript as input (e.g. onclick, onmousemove, etc).
     val picoContainer: PicoContainer by memo()
     val inspectionService: IInspectionService by memo()
     beforeEachTest {
-      whenever(project.picoContainer)
+      `when`(project.picoContainer)
           .thenReturn(picoContainer)
-      whenever(picoContainer.getComponentInstance(IInspectionService::class.java.name))
+      `when`(picoContainer.getComponentInstance(IInspectionService::class.java.name))
           .thenReturn(inspectionService)
-      whenever(attribute.project)
+      `when`(attribute.project)
           .thenReturn(project)
     }
 
@@ -164,9 +162,9 @@ attributes that take JavaScript as input (e.g. onclick, onmousemove, etc).
     }
 
     on("correct attribute") {
-      whenever(inspectionService.validTarget(any()))
+      `when`(inspectionService.validTarget(attribute))
           .thenReturn(true)
-      whenever(attribute.name)
+      `when`(attribute.name)
           .thenReturn("data-sly-attribute.correct")
       it("should do nothing") {
         tested.checkAttribute(attribute, holder, false)
@@ -179,9 +177,9 @@ attributes that take JavaScript as input (e.g. onclick, onmousemove, etc).
     }
 
     on("not data-sly-attribute") {
-      whenever(inspectionService.validTarget(any()))
+      `when`(inspectionService.validTarget(attribute))
           .thenReturn(true)
-      whenever(attribute.name)
+      `when`(attribute.name)
           .thenReturn("style")
       it("should do nothing") {
         tested.checkAttribute(attribute, holder, false)
@@ -194,7 +192,7 @@ attributes that take JavaScript as input (e.g. onclick, onmousemove, etc).
     }
 
     on("inspection disabled") {
-      whenever(inspectionService.validTarget(any()))
+      `when`(inspectionService.validTarget(attribute))
           .thenReturn(false)
       it("should do nothing") {
         tested.checkAttribute(attribute, holder, false)

@@ -1,145 +1,252 @@
-//import com.palantir.jacoco.JacocoFullReportExtension
-import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.include
-import org.gradle.kotlin.dsl.extra
-import org.gradle.kotlin.dsl.getValue
-import org.gradle.kotlin.dsl.maven
-import org.gradle.kotlin.dsl.repositories
-import org.gradle.kotlin.dsl.*
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.junit.platform.gradle.plugin.JUnitPlatformExtension
-import org.gradle.api.plugins.ExtensionAware
-import org.gradle.wrapper.GradleWrapperMain
-
-import org.junit.platform.gradle.plugin.FiltersExtension
-import org.junit.platform.gradle.plugin.EnginesExtension
-import io.gitlab.arturbosch.detekt.*
-import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import io.gitlab.arturbosch.detekt.Detekt
 import org.apache.tools.ant.taskdefs.condition.Os
-import org.junit.platform.console.options.Details
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-buildscript {
-  val kotlinVersion: String by project
-
-  repositories {
-    mavenLocal()
-    jcenter()
-    mavenCentral()
-    maven {
-      setUrl("https://dl.bintray.com/jetbrains/intellij-plugin-service")
-    }
-
-    dependencies {
-      classpath(kotlin("gradle-plugin", kotlinVersion))
-      classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.2")
-//      classpath("com.palantir:jacoco-coverage:0.4.0")
-      classpath("gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0.RC5-6")
-    }
-  }
-}
-
-val aemtoolsVersion: String by project
-
-allprojects {
-  group = "aemtools"
-
-  version = aemtoolsVersion
-
-  repositories {
-    mavenLocal()
-    mavenCentral()
-    maven {
-      setUrl("https://dl.bintray.com/jetbrains/spek")
-    }
-    maven {
-      setUrl("https://jitpack.io")
-    }
-  }
-}
-
-val kotlinVersion: String by project
-val junitVersion: String by project
-val jmockitVersion: String by project
-val assertjVersion: String by project
-val mockitoVersion: String by project
+fun properties(key: String) = project.findProperty(key).toString()
+val pluginName: String by extra
+val pluginGroup: String by extra
+val pluginVersion: String by extra
+val platformVersion: String by extra
+val platformType: String by extra
+val platformPlugins: String by extra
+val javaVersion: String by extra
+val kotlinVersion: String by extra
+val rootProjectDirectory = projectDir
 
 plugins {
-  base
-  java
-  kotlin("jvm") version "1.4.32"
-  id("io.gitlab.arturbosch.detekt").version("1.0.0.RC5-6")
-//  id("com.palantir.jacoco-full-report").version("0.4.0")
+  id("java")
+  kotlin("jvm") version "1.6.10"
+  id("org.jetbrains.intellij") version "1.5.2"
+  id("org.jetbrains.changelog") version "1.3.1" apply false
+  id("io.gitlab.arturbosch.detekt") version "1.19.0"
+  id("org.jetbrains.kotlinx.kover") version "0.5.0"
+}
+
+group = pluginGroup
+version = pluginVersion
+
+repositories {
+  mavenCentral()
+}
+
+java {
+  sourceCompatibility = JavaVersion.toVersion(javaVersion.toInt())
+  targetCompatibility = JavaVersion.toVersion(javaVersion.toInt())
+
+  toolchain {
+    languageVersion.set(JavaLanguageVersion.of(javaVersion))
+  }
+}
+
+intellij {
+  version.set(platformVersion)
+  type.set(platformType)
+  plugins.set(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
+}
+
+kover {
+  isDisabled = false
+  coverageEngine.set(kotlinx.kover.api.CoverageEngine.INTELLIJ)
+  //coverageEngine.set(kotlinx.kover.api.CoverageEngine.JACOCO)
+  intellijEngineVersion.set("1.0.656")
+  jacocoEngineVersion.set("0.8.8")
+  runAllTestsForProjectTask = true
+  generateReportOnCheck = true
+}
+
+tasks {
+  koverMergedHtmlReport {
+    isEnabled = true
+    htmlReportDir.set(layout.buildDirectory.dir("merged-report/html"))
+
+    //includes = listOf("com.aemtools.*")
+    excludes = listOf("generated.psi.impl.*", "com.aemtools.test.*")
+  }
+
+  koverMergedXmlReport {
+    isEnabled = true
+    excludes = listOf("generated.psi.impl.*")
+  }
+
+  koverMergedVerify {
+    isEnabled = false
+    excludes = listOf("generated.psi.impl.*")
+    rule {
+      name = "Minimal line coverage rate in percent"
+      bound {
+        minValue = 80
+      }
+    }
+  }
+
+  wrapper {
+    gradleVersion = properties("gradleVersion")
+  }
+
+  buildSearchableOptions {
+    enabled = false
+  }
+
+  runIde {
+    configDir.set(file("${project(":aem-intellij-core").buildDir}/idea-sandbox/config"))
+    pluginsDir.set(file("${project(":aem-intellij-core").buildDir}/idea-sandbox/plugins"))
+    systemDir.set(file("${project(":aem-intellij-core").buildDir}/idea-sandbox/system"))
+  }
+}
+
+buildscript {
+
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    gradlePluginPortal()
+    maven { url = uri("https://plugins.gradle.org/m2/") }
+
+    dependencies {
+      classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.19.0")
+    }
+  }
+}
+
+allprojects {
+  apply {
+    plugin("io.gitlab.arturbosch.detekt")
+    plugin("java")
+  }
+
+  repositories {
+    mavenCentral()
+    mavenLocal()
+    maven { url = uri("https://plugins.gradle.org/m2/") }
+  }
+
+  detekt {
+    toolVersion = "1.19.0"
+    config = files("$rootProjectDirectory/config/detekt.yml")
+    parallel = true
+    ignoreFailures = true
+    buildUponDefaultConfig = true
+    disableDefaultRuleSets = true
+    autoCorrect = true
+    source = files("src/main/java", "src/main/kotlin")
+  }
+
+  java {
+    sourceCompatibility = JavaVersion.toVersion(javaVersion.toInt())
+    targetCompatibility = JavaVersion.toVersion(javaVersion.toInt())
+
+    toolchain {
+      languageVersion.set(JavaLanguageVersion.of(javaVersion))
+    }
+  }
+
+  tasks.withType<JavaCompile>().configureEach {
+    options.release.set(javaVersion.toInt())
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+
+    javaCompiler.set(javaToolchains.compilerFor {
+      languageVersion.set(JavaLanguageVersion.of(javaVersion))
+    })
+  }
+
+  tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.jvmTarget = javaVersion
+    kotlinOptions.apiVersion = "1.6"
+    kotlinOptions.languageVersion = "1.6"
+  }
+
+  tasks.withType<Test>().configureEach {
+    useJUnitPlatform {
+      includeEngines("spek", "junit-vintage", "junit-jupiter")
+    }
+    testLogging {
+      events("standardOut", "passed", "skipped", "failed")
+      showStandardStreams = true
+    }
+  }
+
+  tasks.withType<Detekt>().configureEach {
+    exclude("com.aemtools.test.*", ".*test.*")
+  }
 }
 
 subprojects {
-  apply(plugin = "java")
-  apply(plugin = "kotlin")
-//  apply(plugin = "jacoco")
-  apply(plugin = "org.junit.platform.gradle.plugin")
-
-//  jacoco {
-//    toolVersion = "0.8.1"
-//    reportsDir = file("$buildDir/jacocoReport")
-//  }
-
-  afterEvaluate {
-    val junitPlatformTest: JavaExec by tasks
-//    configure<JacocoPluginExtension> {
-//      applyTo(junitPlatformTest)
-//    }
-
-//    task<JacocoReport>("junitPlatformJacoco") {
-//      sourceDirectories.setFrom(files("$projectDir/src/main/kotlin"))
-//      classDirectories.setFrom(files("$buildDir/classes/kotlin/main"))
-//      reports {
-//        xml.isEnabled = true
-//        xml.destination =
-//            file("$buildDir/reports/jacoco/test/jacocoTestReport.xml")
-//        csv.isEnabled = false
-//        html.isEnabled = true
-//      }
-//      executionData(junitPlatformTest)
-//    }
-
+  apply {
+    plugin("org.jetbrains.intellij")
   }
 
   repositories {
-    mavenLocal()
-    jcenter()
     mavenCentral()
-    maven {
-      setUrl("https://dl.bintray.com/jetbrains/intellij-plugin-service")
-    }
+    mavenLocal()
+    maven { url = uri("https://plugins.gradle.org/m2/") }
   }
 
-  val mockitoKotlinVersion: String by project
-  val spekVersion: String by project
-  val junitJupiterApiVersion: String by project
-  val junitJupiterEngineVersion: String by project
-  val junitVintageEngineVersion: String by project
-  val junitPlatformVersion: String by project
+  intellij {
+    version.set(platformVersion)
+    type.set(platformType)
+    plugins.set(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
+  }
+
+  tasks.buildSearchableOptions {
+    enabled = false
+  }
+
+  val kotlinVersion: String by extra
+  val mockitoKotlinVersion: String by extra
+  val spekVersion: String by extra
+  val junit4Version: String by extra
+  val junitBomVersion: String by extra
+  val assertjVersion: String by extra
+  val mockitoVersion: String by extra
 
   dependencies {
-    compile(kotlin("stdlib", kotlinVersion))
-    compile(kotlin("reflect", kotlinVersion))
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
 
-    testCompile("junit:junit:$junitVersion")
-    testCompile("org.jmockit:jmockit:$jmockitVersion")
-    testCompile("org.assertj:assertj-core:$assertjVersion")
-    testCompile("org.mockito:mockito-core:$mockitoVersion")
-    testCompile("com.nhaarman:mockito-kotlin:$mockitoKotlinVersion")
+    testImplementation("org.assertj:assertj-core:$assertjVersion")
+    testImplementation("org.mockito:mockito-core:$mockitoVersion")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
 
-    testCompile("org.jetbrains.spek:spek-api:$spekVersion")
-    testRuntime("org.jetbrains.spek:spek-junit-platform-engine:$spekVersion")
-    testCompile("org.jetbrains.spek:spek-subject-extension:$spekVersion")
+    // Use junit-bom to align versions
+    // https://docs.gradle.org/current/userguide/managing_transitive_dependencies.html#sec:bom_import
+    implementation(platform("org.junit:junit-bom:$junitBomVersion")) {
+      because("Platform, Jupiter, and Vintage versions should match")
+    }
 
-    testCompile("org.junit.jupiter:junit-jupiter-api:$junitJupiterApiVersion")
-    testCompile("org.junit.jupiter:junit-jupiter-engine:$junitJupiterEngineVersion")
-    testCompile("org.junit.jupiter:junit-jupiter-params:$junitJupiterApiVersion")
+    // JUnit Jupiter
+    testImplementation("org.junit.jupiter:junit-jupiter")
 
-    testCompile("org.junit.platform:junit-platform-launcher:$junitPlatformVersion")
-    testCompile("org.junit.platform:junit-platform-console:$junitPlatformVersion")
+    // JUnit Vintage
+    testImplementation("junit:junit:$junit4Version")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine") {
+      because("allows JUnit 3 and JUnit 4 tests to run")
+    }
 
-    testCompile("org.junit.vintage:junit-vintage-engine:$junitVintageEngineVersion")
+    // JUnit Suites
+    testImplementation("org.junit.platform:junit-platform-suite")
+
+    // JUnit Platform Launcher + Console
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
+      because("allows tests to run from IDEs that bundle older version of launcher")
+    }
+    testRuntimeOnly("org.junit.platform:junit-platform-console") {
+      because("needed to launch the JUnit Platform Console program")
+    }
+
+    testImplementation("org.jetbrains.spek:spek-api:$spekVersion") {
+      exclude(group = "org.jetbrains.kotlin")
+    }
+    testRuntimeOnly("org.jetbrains.spek:spek-junit-platform-engine:$spekVersion") {
+      exclude(group = "org.jetbrains.kotlin")
+      exclude(group = "org.junit.platform")
+    }
+    testImplementation("org.jetbrains.spek:spek-subject-extension:$spekVersion") {
+      exclude(group = "org.jetbrains.kotlin")
+      exclude(group = "org.junit.platform")
+    }
+
   }
 
   // gross patch to address windows "too long classpath" issue
@@ -148,45 +255,6 @@ subprojects {
       from("${project.rootProject.projectDir}/buildSrc/win-patch.gradle.kts")
     }
   }
-
-  configure<JUnitPlatformExtension> {
-    platformVersion = junitPlatformVersion
-    details = Details.TREE
-    filters {
-      engines {
-        include("spek", "junit-vintage", "junit-jupiter")
-      }
-    }
-  }
-
-  java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-  }
-
-  tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
-    kotlinOptions.languageVersion = "1.3"
-  }
-}
-
-tasks.wrapper {
-    gradleVersion = "6.4.1"
-    distributionType = Wrapper.DistributionType.ALL
-}
-
-//jacocoFull {
-//  excludeProject(":test-framework")
-//}
-
-detekt {
-  version = "1.0.0.RC5-6"
-  profile("main", Action {
-    input = rootProject.projectDir.absolutePath
-    config = "$projectDir/config/detekt.yml"
-    filters = "com.aemtools.test.*,.*test.*,"
-    parallel = true
-  })
 }
 
 apply {

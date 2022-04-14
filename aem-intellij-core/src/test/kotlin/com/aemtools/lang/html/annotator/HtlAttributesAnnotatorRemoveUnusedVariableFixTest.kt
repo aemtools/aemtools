@@ -1,12 +1,13 @@
 package com.aemtools.lang.html.annotator
 
 import com.aemtools.common.util.writeCommand
+import com.aemtools.test.base.BaseLightTest
 import com.intellij.testFramework.InspectionFixtureTestCase
 
 /**
  * @author Dmytro Primshyts
  */
-class HtlAttributesAnnotatorRemoveUnusedVariableFixTest : InspectionFixtureTestCase() {
+class HtlAttributesAnnotatorRemoveUnusedVariableFixTest : BaseLightTest() {
 
   fun testQuickFixWithDataSlyUse() {
     myFixture.configureByText("test.html", """

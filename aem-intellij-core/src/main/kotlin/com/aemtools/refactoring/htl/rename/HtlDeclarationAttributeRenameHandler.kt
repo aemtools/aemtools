@@ -12,7 +12,6 @@ import com.intellij.openapi.editor.ScrollType
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
-import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.refactoring.actions.BaseRefactoringAction
 import com.intellij.refactoring.rename.PsiElementRenameHandler
@@ -55,8 +54,9 @@ class HtlDeclarationAttributeRenameHandler : RenameHandler {
     }
 
     editor.scrollingModel.scrollToCaret(ScrollType.MAKE_VISIBLE)
-    val nameSuggestionContext = InjectedLanguageUtil.findElementAtNoCommit(file, editor.caretModel.offset)
-    RenameUtil.invoke(element, project, nameSuggestionContext, editor)
+    InjectedLanguageManager.getInstance(project).findInjectedElementAt(file, editor.caretModel.offset)?.let {
+      nameSuggestionContext -> RenameUtil.invoke(element, project, nameSuggestionContext, editor)
+    }
   }
 
   override fun invoke(project: Project, elements: Array<out PsiElement>, dataContext: DataContext?) {

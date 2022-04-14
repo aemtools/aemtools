@@ -1,7 +1,10 @@
 package com.aemtools.lang.jcrproperty.editor
 
+import com.aemtools.lang.jcrproperty.JcrPropertyLanguage
 import com.aemtools.test.action.TypeActionTest
-import com.aemtools.test.base.BaseLightTest
+import com.aemtools.test.base.BaseLightTest.Companion.CARET
+import com.aemtools.test.base.BasePlatformLightTest
+import com.intellij.lang.LanguageBraceMatching
 import org.intellij.lang.annotations.Language
 
 /**
@@ -9,7 +12,7 @@ import org.intellij.lang.annotations.Language
  *
  * @author Dmytro Primshyts
  */
-class JpBraceMatcherTest : BaseLightTest(),
+class JpBraceMatcherTest : BasePlatformLightTest(),
     TypeActionTest {
 
   fun `test should close brace`() = jpTypeTest(
@@ -65,4 +68,8 @@ class JpBraceMatcherTest : BaseLightTest(),
            """
       )
 
+  override fun setUp() {
+    super.setUp()
+    LanguageBraceMatching.INSTANCE.addExplicitExtension(JcrPropertyLanguage, JpBraceMatcher())
+  }
 }

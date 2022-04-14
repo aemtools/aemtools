@@ -1,14 +1,12 @@
 package com.aemtools.common.util
 
 import com.intellij.lang.Language
-import com.intellij.lang.StdLanguages
+import com.intellij.lang.html.HTMLLanguage
+import com.intellij.lang.xml.XMLLanguage
 import com.intellij.openapi.application.runReadAction
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiFile
-import com.intellij.psi.PsiReference
-import com.intellij.psi.SmartPointerManager
-import com.intellij.psi.SmartPsiElementPointer
+import com.intellij.psi.*
+import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiUtilCore
 import com.intellij.psi.xml.XmlFile
 import com.intellij.refactoring.rename.RenamePsiElementProcessor
@@ -29,20 +27,20 @@ import com.intellij.refactoring.rename.RenamePsiElementProcessor
 fun PsiFile.getPsi(language: Language): PsiFile? = viewProvider.getPsi(language)
 
 /**
- * Get [PsiFile] for [StdLanguages.HTML] language.
+ * Get [PsiFile] for [HTMLLanguage.INSTANCE] language.
  *
  * @receiver [PsiFile]
  * @return psi file for html language, *null* if no such file available
  */
-fun PsiFile.getHtmlFile(): PsiFile? = getPsi(StdLanguages.HTML)
+fun PsiFile.getHtmlFile(): PsiFile? = getPsi(HTMLLanguage.INSTANCE)
 
 /**
  * Get [XmlFile] from current [PsiFile].
  *
  * @receiver [PsiFile]
- * @return psi file for [StdLanguages.XML] language, *null* if no such file available
+ * @return psi file for [XMLLanguage.INSTANCE] language, *null* if no such file available
  */
-fun PsiFile.getXmlFile(): XmlFile? = getPsi(StdLanguages.XML) as? XmlFile
+fun PsiFile.getXmlFile(): XmlFile? = getPsi(XMLLanguage.INSTANCE) as? XmlFile
 
 /**
  * Get [VirtualFile] instance that contain current [PsiElement].
@@ -63,7 +61,8 @@ fun PsiElement.virtualFile(): VirtualFile? =
  * @return list of incoming references
  */
 fun PsiElement.incomingReferences(): List<PsiReference> = runReadAction {
-  RenamePsiElementProcessor.forElement(this).findReferences(this)
+  RenamePsiElementProcessor.forElement(this)
+      .findReferences(this, GlobalSearchScope.projectScope(this.project), false)
       .toList()
 }
 

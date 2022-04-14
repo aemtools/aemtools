@@ -1,8 +1,8 @@
 package com.aemtools.common.util
 
 import com.aemtools.test.psi.mockAttribute
+import com.aemtools.test.util.mock
 import com.intellij.psi.xml.XmlTag
-import com.nhaarman.mockito_kotlin.mock
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe

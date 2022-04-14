@@ -1,13 +1,14 @@
 package com.aemtools.lang.html.annotator
 
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
+import com.aemtools.test.base.BaseLightTest
+import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase
 
 /**
  * Test for [HtlAttributesAnnotator].
  *
  * @author Dmytro Primshyts
  */
-class HtlAttributesAnnotatorTest : LightCodeInsightFixtureTestCase() {
+class HtlAttributesAnnotatorTest : BaseLightTest() {
 
   fun testUnusedDataSlyUse() {
     myFixture.configureByText("test.html", """

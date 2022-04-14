@@ -67,11 +67,12 @@ class CompletionRelevanceTest : CompletionBaseLightTest(true) {
         "sling:resourceType",
         "empty",
         "entrySet",
-        "hashCode",
         "keySet",
+        "of",
         "size",
         "values",
         "class",
+        "hashCode",
         "toString"
     ),
         ordered = true

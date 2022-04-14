@@ -1,12 +1,13 @@
 package com.aemtools.lang.htl.annotator
 
 import com.aemtools.common.constant.const.DOLLAR
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
+import com.aemtools.test.base.BaseLightTest
+import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase
 
 /**
  * @author Dmytro Primshyts
  */
-class HtlVariablesAnnotatorTest : LightCodeInsightFixtureTestCase() {
+class HtlVariablesAnnotatorTest : BaseLightTest() {
 
   fun testGlobalProperties() = testGlobalVariable("properties")
   fun testGlobalPageProperties() = testGlobalVariable("pageProperties")

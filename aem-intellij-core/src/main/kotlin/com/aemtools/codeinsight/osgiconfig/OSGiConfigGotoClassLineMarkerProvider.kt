@@ -15,6 +15,7 @@ import com.intellij.openapi.editor.markup.GutterIconRenderer
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlTag
 import com.intellij.util.Function
+import java.util.function.Supplier
 import javax.swing.DefaultListCellRenderer
 
 /**
@@ -40,7 +41,6 @@ class OSGiConfigGotoClassLineMarkerProvider : LineMarkerProvider {
           xmlTag.firstChild,
           xmlTag.firstChild.textRange,
           AllIcons.FileTypes.JavaClass,
-          Pass.LINE_MARKERS,
           Function { "Open associated OSGi service" },
           GutterIconNavigationHandler { mouseEvent, _ ->
             PsiElementListNavigator.openTargets(
@@ -51,7 +51,8 @@ class OSGiConfigGotoClassLineMarkerProvider : LineMarkerProvider {
                 DefaultListCellRenderer()
             )
           },
-          GutterIconRenderer.Alignment.CENTER
+          GutterIconRenderer.Alignment.CENTER,
+          Supplier { "Open associated OSGi service" }
       )
     }
 

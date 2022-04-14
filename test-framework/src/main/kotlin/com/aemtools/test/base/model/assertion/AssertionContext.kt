@@ -10,7 +10,7 @@ import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 open class AssertionContext(val fixture: JavaCodeInsightTestFixture)
   : IAssertionContext {
   override fun elementUnderCaret(): PsiElement =
-      fixture.file.findElementAt(fixture.editor.caretModel.offset)
+      fixture.file.findElementAt(fixture.caretOffset)
           ?: throw AssertionError("Unable to retrieve element under caret in file: ${fixture.file.text}")
 
   override fun openedFile(): PsiFile = fixture.file

@@ -1,8 +1,6 @@
-package com.aemtools.index.model
+package com.aemtools.codeinsight.htl.model
 
-import com.aemtools.codeinsight.htl.model.DeclarationAttributeType
-import com.aemtools.codeinsight.htl.model.HtlTemplateParameterDeclaration
-import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
+import com.aemtools.index.model.TemplateDefinition
 import com.intellij.psi.xml.XmlAttribute
 
 /**

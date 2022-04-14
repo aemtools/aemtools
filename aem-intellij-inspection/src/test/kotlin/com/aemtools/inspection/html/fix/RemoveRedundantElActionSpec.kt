@@ -11,14 +11,12 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiFile
 import com.intellij.psi.SmartPsiElementPointer
-import com.nhaarman.mockito_kotlin.never
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
+import org.mockito.Mockito.*
 
 /**
  * Specification for [RemoveRedundantElAction].
@@ -53,34 +51,36 @@ object RemoveRedundantElActionSpec : Spek({
     val stringLiteral: HtlStringLiteralMixin by memo()
 
     beforeEachTest {
-      whenever(htlHtlElPointer.element)
+      `when`(htlHtlElPointer.element)
           .thenReturn(element)
-      whenever(psiDocumentManager.getDocument(psiFile))
+      `when`(psiDocumentManager.getDocument(psiFile))
           .thenReturn(document)
-      whenever(element.textRange)
+      `when`(element.textRange)
           .thenReturn(TextRange.create(10, 20))
-      whenever(element.children)
+      `when`(element.children)
           .thenReturn(arrayOf(stringLiteral))
-      whenever(stringLiteral.children)
+      `when`(stringLiteral.children)
           .thenReturn(emptyArray())
-      whenever(stringLiteral.name)
+      `when`(stringLiteral.name)
           .thenReturn("com.test.Class")
 
+      `when`(project.getService(PsiDocumentManager::class.java))
+        .thenReturn(psiDocumentManager);
       mockComponent(project, psiDocumentManager)
     }
 
     it("should ignore if no element available") {
-      whenever(htlHtlElPointer.element)
+      `when`(htlHtlElPointer.element)
           .thenReturn(null)
 
       tested.invoke(project, editor, psiFile)
 
       verify(project, never())
-          .getComponent(PsiDocumentManager::class.java)
+          .getService(PsiDocumentManager::class.java)
     }
 
     it("should ignore if no document available") {
-      whenever(psiDocumentManager.getDocument(psiFile))
+      `when`(psiDocumentManager.getDocument(psiFile))
           .thenReturn(null)
 
       tested.invoke(project, editor, psiFile)

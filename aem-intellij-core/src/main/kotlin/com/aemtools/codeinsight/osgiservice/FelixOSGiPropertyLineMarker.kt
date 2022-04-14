@@ -93,7 +93,7 @@ class FelixOSGiPropertyLineMarker : LineMarkerProvider {
   private fun padModsByMaxModLength(propertyDescriptors: List<FelixOSGiPropertyDescriptor>)
       : List<FelixOSGiPropertyDescriptor> {
     val modsMaxLength = propertyDescriptors
-        .maxBy {
+        .maxByOrNull {
           it.mods.length
         }?.mods?.length
         ?: 0

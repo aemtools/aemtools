@@ -36,7 +36,7 @@ class FelixOSGiPropertyLineMarkerTest : BaseLightTest(),
       public class MyService {
 
         @Property
-        private static final String ${CARET}TEST = "test.property"
+        private static final String ${CARET}TEST = "test.property";
 
       }
     """)

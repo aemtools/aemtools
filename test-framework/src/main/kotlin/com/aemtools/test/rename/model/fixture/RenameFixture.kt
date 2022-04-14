@@ -67,7 +67,7 @@ class RenameFixture(val fixture: JavaCodeInsightTestFixture)
 
     val beforeRoot = VirtualFileManager.getInstance().findFileByUrl("temp:///src")
 
-    PlatformTestUtil.assertDirectoriesEqual(afterRoot, beforeRoot)
+    PlatformTestUtil.assertDirectoriesEqual(afterRoot, beforeRoot!!)
   }
 
   override fun assertionContext(): IAssertionContext {

@@ -1,12 +1,13 @@
 package com.aemtools.completion.htl.common
 
 import com.aemtools.test.HtlTestCase
+import com.aemtools.test.fixture.JdkProjectDescriptor
 import com.aemtools.test.fixture.UberJarFixtureMixin
 import com.intellij.codeInsight.completion.LightFixtureCompletionTestCase
 import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess
 import com.intellij.testFramework.LightProjectDescriptor
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase
+import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase
 import java.io.File
 
 /**
@@ -61,19 +62,20 @@ class PredefinedVariablesCompletionTest : LightFixtureCompletionTestCase(),
 
   override fun setUp() {
     super.setUp()
-    VfsRootAccess.allowRootAccess(File("src/test").absolutePath)
+    VfsRootAccess.allowRootAccess(myFixture.testRootDisposable, File("src/test").absolutePath)
+    VfsRootAccess.allowRootAccess(myFixture.projectDisposable, File("src/test").absolutePath)
     myFixture.addUberJar()
   }
 
   override fun tearDown() {
     super.tearDown()
-//    VfsRootAccess.disallowRootAccess(File("src/test").absolutePath)
+    //VfsRootAccess.disallowRootAccess(File("src/test").absolutePath)
   }
 
   override fun getTestDataPath() = File("${HtlTestCase.testResourcesPath}/com/aemtools/completion/htl/fixtures/").path + "/"
 
   override fun getProjectDescriptor(): LightProjectDescriptor {
-    return LightCodeInsightFixtureTestCase.JAVA_8
+    return JdkProjectDescriptor()
   }
 
 }

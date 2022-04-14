@@ -3,7 +3,7 @@ package com.aemtools.index.dataexternalizer
 import com.aemtools.common.index.BaseExternalizer.Companion.MARKER_BYTES
 import com.aemtools.common.util.serializeToByteArray
 import com.aemtools.index.model.TemplateDefinition
-import com.nhaarman.mockito_kotlin.mock
+import com.aemtools.test.util.mock
 import org.junit.Assert
 import org.junit.Test
 import org.mockito.ArgumentCaptor

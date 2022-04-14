@@ -6,6 +6,7 @@ import com.aemtools.test.fixture.JdkProjectDescriptor
 import com.aemtools.test.fixture.UberJarFixtureMixin
 import com.intellij.codeInspection.ex.LocalInspectionToolWrapper
 import com.intellij.testFramework.LightProjectDescriptor
+import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase
 import java.io.File
 
 /**
@@ -22,8 +23,6 @@ class DefaultInjectionStrategyInspectionTest
   }
 
   fun testDefaultInjectionStrategyInspection() {
-    myFixture.addUberJar()
-
     myFixture.enableInspections(DefaultInjectionStrategyInspection())
 
     myFixture.testInspection("com/aemtools/inspection/sling/default-injection",

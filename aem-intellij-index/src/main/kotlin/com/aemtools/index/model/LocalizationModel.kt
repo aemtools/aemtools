@@ -5,7 +5,6 @@ import com.aemtools.common.util.OpenApiUtil.findFileByPath
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.common.util.toPsiFile
 import com.intellij.openapi.project.Project
-import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlTag
 import java.io.Serializable
 

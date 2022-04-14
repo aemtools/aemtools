@@ -10,15 +10,13 @@ import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiLiteralExpression
 import com.intellij.psi.SmartPsiElementPointer
-import com.nhaarman.mockito_kotlin.never
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 import org.jetbrains.spek.api.lifecycle.CachingMode
+import org.mockito.Mockito.*
 
 /**
  * Specification for [ReplaceHardcodedLiteralWithFqnAction].
@@ -99,28 +97,28 @@ object ReplaceHardcodedLiteralWithFqnActionSpec : Spek({
     }
 
     beforeEachTest {
-      whenever(smartPsiElementPointer.element)
+      `when`(smartPsiElementPointer.element)
           .thenReturn(psiLiteralExpression)
-      whenever(project.getComponent(PsiDocumentManager::class.java))
+      `when`(project.getService(PsiDocumentManager::class.java))
           .thenReturn(psiDocumentManger)
-      whenever(psiLiteralExpression.textRange)
+      `when`(psiLiteralExpression.textRange)
           .thenReturn(textRange)
-      whenever(psiDocumentManger.getDocument(psiFile))
+      `when`(psiDocumentManger.getDocument(psiFile))
           .thenReturn(document)
     }
 
     it("should ignore if no element available") {
-      whenever(smartPsiElementPointer.element)
+      `when`(smartPsiElementPointer.element)
           .thenReturn(null)
 
       tested.invoke(project, editor, psiFile)
 
       verify(project, never())
-          .getComponent(PsiDocumentManager::class.java)
+          .getService(PsiDocumentManager::class.java)
     }
 
     it ("should ignore if no document available") {
-      whenever(psiDocumentManger.getDocument(psiFile))
+      `when`(psiDocumentManger.getDocument(psiFile))
           .thenReturn(null)
 
       tested.invoke(project, editor, psiFile)
