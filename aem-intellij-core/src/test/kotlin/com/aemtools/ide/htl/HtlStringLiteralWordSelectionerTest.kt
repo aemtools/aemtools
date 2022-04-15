@@ -5,7 +5,7 @@ import com.aemtools.test.base.BaseLightTest
 import com.intellij.testFramework.fixtures.CodeInsightTestUtil
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlStringLiteralWordSelectionerTest : BaseLightTest(false) {
 

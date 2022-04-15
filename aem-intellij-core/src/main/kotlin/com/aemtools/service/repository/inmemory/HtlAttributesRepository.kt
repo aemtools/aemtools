@@ -7,7 +7,7 @@ import com.aemtools.service.repository.const
 import com.aemtools.service.repository.inmemory.util.readJson
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlAttributesRepository {
 

@@ -16,7 +16,7 @@ import com.intellij.lang.annotation.Annotator
 import com.intellij.psi.PsiElement
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlOptionsAnnotator : Annotator {
   override fun annotate(element: PsiElement, holder: AnnotationHolder) {

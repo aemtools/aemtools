@@ -22,7 +22,7 @@ import com.intellij.psi.PsiElement
 /**
  * Annotates htl variables inside of EL.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlVariablesAnnotator : Annotator {
   override fun annotate(element: PsiElement, holder: AnnotationHolder) {

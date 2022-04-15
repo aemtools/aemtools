@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import org.apache.sanselan.util.IOUtils
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object FileUtils {
 

@@ -1,0 +1,11 @@
+EL File
+  ElDynamicExpressionImpl(DYNAMIC_EXPRESSION)
+    PsiElement(${)('${')
+    ElExpressionImpl(EXPRESSION)
+      ElNonLiteralImpl(NON_LITERAL)
+        ElIdentifierImpl(IDENTIFIER)
+          PsiElement(IDENTIFIER_TOKEN)('requestPathInfo')
+      ElDotSuffixImpl(DOT_SUFFIX)
+        PsiElement(.)('.')
+        PsiElement(IDENTIFIER_TOKEN)('suffix')
+    PsiElement(})('}')

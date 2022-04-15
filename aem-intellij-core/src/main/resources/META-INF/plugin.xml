@@ -3,7 +3,7 @@
     <name>AEM Tools</name>
     <version>@version@</version>
     <category>Framework integration</category>
-    <vendor email="dmytrotroynikov@gmail.com"
+    <vendor email="dprimsyts@gmail.com"
             url="https://github.com/aemtools/aemtools">
         Dmytro Primshyts
     </vendor>
@@ -44,7 +44,9 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li>Fixed HTL file icon for IntelliJ IDEA 2018.3</li>
+            <li>Plugin recognizes /libs/granite/sightly/templates/clientlib.html and provides corresponding completion in data-sly-call</li>
+            <li>Dropped support of Intellij IDEA of versions under 2018.1</li>
+            <li>Bug fixes</li>
         </ul>
     ]]>
     </change-notes>
@@ -56,9 +58,18 @@
     <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
     <depends optional="true" config-file="inspections.xml">com.intellij.modules.lang</depends>
 
-    <idea-version since-build="183.4284"/>
+    <depends optional="true" config-file="expression-language.xml">com.intellij.modules.lang</depends>
+
+    <depends optional="true" config-file="jcr-property-language.xml">com.intellij.modules.lang</depends>
+
+    <idea-version since-build="203"/>
 
     <extensions defaultExtensionNs="com.intellij">
+
+        <completion.contributor
+                language="XML"
+                implementationClass="com.aemtools.completion.small.clientlibraryfolder.ClientLibraryFolderCompletionContributor"/>
+
         <lang.documentationProvider language="HTML" order="first"
                                     implementationClass="com.aemtools.documentation.html.HtlAttributesDocumentationProvider"/>
         <lang.documentationProvider language="HTML" order="first"
@@ -74,11 +85,17 @@
 
         <!-- _cq_editConfig.xml completion -->
         <completion.contributor language="XML"
-                                implementationClass="com.aemtools.completion.editconfig.EditConfigCompletionContributor"/>
+                                implementationClass="com.aemtools.completion.small.editconfig.EditConfigCompletionContributor"/>
+
+        <completion.contributor language="JcrProperty"
+                                implementationClass="com.aemtools.completion.small.editconfig.EditConfigCompletionContributor"/>
 
         <!-- _rep_policy.xml completion -->
         <completion.contributor language="XML"
-                                implementationClass="com.aemtools.completion.reppolicy.RepPolicyCompletionContributor"/>
+                                implementationClass="com.aemtools.completion.small.reppolicy.RepPolicyCompletionContributor"/>
+
+        <completion.contributor language="JcrProperty"
+                                implementationClass="com.aemtools.completion.small.reppolicy.RepPolicyCompletionContributor"/>
 
         <!-- Htl -->
         <iconProvider implementation="com.aemtools.lang.htl.file.HtlFileIconProvider"/>
@@ -92,12 +109,13 @@
         <fileTypeFactory implementation="com.aemtools.lang.htl.file.HtlFileTypeFactory"/>
 
         <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>
-
         <fileBasedIndex implementation="com.aemtools.index.AemComponentDeclarationIndex"/>
         <fileBasedIndex implementation="com.aemtools.index.AemComponentClassicDialogIndex"/>
         <fileBasedIndex implementation="com.aemtools.index.AemComponentTouchUIDialogIndex"/>
-
         <fileBasedIndex implementation="com.aemtools.index.LocalizationIndex"/>
+
+        <backspaceHandlerDelegate implementation="com.aemtools.lang.htl.editor.HtlBackspaceHandler"/>
+        <fileBasedIndex implementation="com.aemtools.index.ClientlibraryIndex"/>
 
         <extendWordSelectionHandler implementation="com.aemtools.ide.htl.HtlStringLiteralWordSelectioner"/>
 
@@ -120,7 +138,9 @@
 
         <completion.contributor language="Htl"
                                 implementationClass="com.aemtools.completion.htl.HtlElCompletionContributor"/>
-        <lang.braceMatcher language="Htl" implementationClass="com.aemtools.lang.htl.editor.HtlBraceMatcher"/>
+
+        <lang.braceMatcher language="Htl"
+                           implementationClass="com.aemtools.lang.htl.editor.HtlBraceMatcher"/>
 
         <lang.parserDefinition language="Htl"
                                implementationClass="com.aemtools.lang.htl.HtlParserDefinition"/>
@@ -133,7 +153,7 @@
                             serviceImplementation="com.aemtools.service.repository.impl.RepositoryService"
                             id="aemtools.repository-service"/>
 
-        <internalFileTemplate name="_rep_policy"/>
+<!--        <internalFileTemplate name="_rep_policy"/>-->
 
         <customPropertyScopeProvider implementation="com.aemtools.findusages.HtlPropertyScopeProvider"/>
 
@@ -150,7 +170,7 @@
                    implementationClass="com.aemtools.codeinsight.htl.annotator.HtlWrongQuotesAnnotator"/>
 
         <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
-                       order="before xmlAttribute"/>
+                       order="before xmlTagRenameHandler"/>
 
         <renamePsiElementProcessor
                 implementation="com.aemtools.refactoring.htl.rename.HtlVariableNameRenameProcessor"/>
@@ -182,6 +202,10 @@
                 serviceInterface="com.aemtools.inspection.service.IInspectionService"
                 serviceImplementation="com.aemtools.inspection.service.InspectionService"/>
 
+<!--        <projectService-->
+<!--                serviceInterface="com.aemtools.integration.sync.settings.AemToolsProjectConfiguration"-->
+<!--                serviceImplementation="com.aemtools.integration.sync.settings.AemToolsProjectConfiguration"/>-->
+
         <additionalTextAttributes
                 scheme="Default"
                 file="com/aemtools/ide/colorscheme/HtlDefault.xml"/>
@@ -191,7 +215,14 @@
         <colorSettingsPage implementation="com.aemtools.ide.htl.HtlColorsAndFontsPage"/>
 
         <postStartupActivity implementation="com.aemtools.init.AemIntellijStartupActivity"/>
-        <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
+        <errorHandler implementation="com.aemtools.diagnostics.error.handler.ErrorHandler"/>
+
+        <!--
+        <projectConfigurable groupId="tools"
+                             displayName="AEM Tools"
+                             id="preference.AEMTools"
+                             instance="com.aemtools.integration.sync.settings.SyncSettings"/>
+        -->
     </extensions>
 
     <application-components>
@@ -207,6 +238,24 @@
                 description="HTML files under this directory will be considered as HTL files">
             <add-to-group group-id="MarkRootGroup" anchor="last"/>
         </action>
+        <!--
+        <group id="AEMToolsGroup"
+               class="com.aemtools.integration.sync.action.AemToolsActionGroup"
+               text="AEM Tools"
+               popup="true">
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorPopupMenu"/>
+            <action id="ExportFileToInstance"
+                    class="com.aemtools.integration.sync.action.ExportFileToInstance"
+                    text="Export file"
+                    description="Export file to AEM instance">
+            </action>
+            <action id="ImportFileFromInstance"
+                    class="com.aemtools.integration.sync.action.ImportFileFromInstance"
+                    text="Import file"
+                    description="Import file from AEM instance">
+            </action>
+        </group>
+        -->
     </actions>
 
 </idea-plugin>

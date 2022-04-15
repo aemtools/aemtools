@@ -1,7 +1,7 @@
 package com.aemtools.completion.model.htl
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 data class HtlAttributeMetaInfo(
 

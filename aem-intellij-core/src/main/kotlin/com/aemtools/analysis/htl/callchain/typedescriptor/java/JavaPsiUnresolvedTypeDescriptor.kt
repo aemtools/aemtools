@@ -5,7 +5,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiMember
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 open class JavaPsiUnresolvedTypeDescriptor(
     val psiMember: PsiMember

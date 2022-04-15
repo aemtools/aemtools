@@ -1,0 +1,5 @@
+EL File
+  PsiElement(#{)('#{')
+  PsiWhiteSpace(' ')
+  PsiErrorElement:<expression> expected, got '}'
+    PsiElement(})('}')

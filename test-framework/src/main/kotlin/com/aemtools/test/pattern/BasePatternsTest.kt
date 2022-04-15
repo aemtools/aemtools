@@ -12,13 +12,14 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.impl.DebugUtil
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture
 import junit.framework.TestCase
+import org.jetbrains.annotations.NotNull
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class BasePatternsTest : BaseLightTest() {
 
-  fun testPattern(pattern: ElementPattern<PsiElement>,
+  fun testPattern(pattern: ElementPattern<out PsiElement>,
                   text: String,
                   result: Boolean,
                   addCompletionPlaceholder: Boolean = true,
@@ -45,7 +46,7 @@ abstract class BasePatternsTest : BaseLightTest() {
     fixtureSetup.invoke(this, textToAdd)
 
     verify {
-      val element = elementSelector.invoke(this)
+      val element = elementSelector.invoke(this)!!
       TestCase.assertEquals(result,
           condition.accepts(element, null))
     }
@@ -59,7 +60,7 @@ abstract class BasePatternsTest : BaseLightTest() {
         textToAdd
       }
 
-  private fun assertionMessage(pattern: ElementPattern<PsiElement>,
+  private fun assertionMessage(pattern: ElementPattern<out PsiElement>,
                                file: PsiFile,
                                text: String): String {
     val builder = StringBuilder()

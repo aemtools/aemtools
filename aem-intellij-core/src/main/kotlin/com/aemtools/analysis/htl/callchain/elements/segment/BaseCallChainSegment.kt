@@ -7,7 +7,7 @@ import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
 /**
  * Base implementation of [CallChainSegment].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class BaseCallChainSegment(
     private val input: TypeDescriptor,

@@ -19,7 +19,7 @@ import com.intellij.util.FileContentUtil.reparseOpenedFiles
  * `Mark As -> HTL Root`
  * `Mark As -> Unmark as HTL Root`
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
 

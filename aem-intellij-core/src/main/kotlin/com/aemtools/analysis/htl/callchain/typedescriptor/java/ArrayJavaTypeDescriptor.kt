@@ -7,7 +7,7 @@ import com.intellij.psi.PsiMember
 import com.intellij.psi.PsiType
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ArrayJavaTypeDescriptor(psiClass: PsiClass,
                               psiMember: PsiMember?,

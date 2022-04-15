@@ -7,7 +7,7 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.mayBeIteratedUpon
 import com.intellij.codeInsight.lookup.LookupElement
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object VirtualChainResolver {
 
@@ -65,7 +65,7 @@ object VirtualChainResolver {
     return type.myVariants().filterNot {
       it.lookupString in listOf(
           "class", "toString", "parallelStream",
-          "stream", "toArray"
+          "stream", "toArray", "of"
       )
     }.map {
       val name = it.lookupString

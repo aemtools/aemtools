@@ -3,7 +3,7 @@ package com.aemtools.codeinsight.htl.model
 /**
  * The enumeration of declaration types.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 enum class DeclarationType {
 

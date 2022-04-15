@@ -15,19 +15,20 @@ import com.intellij.openapi.editor.markup.GutterIconRenderer
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlTag
 import com.intellij.util.Function
+import java.util.function.Supplier
 import javax.swing.DefaultListCellRenderer
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class OSGiConfigGotoClassLineMarkerProvider : LineMarkerProvider {
   override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<PsiElement>? {
     val xmlTag = element as? XmlTag ?: return null
 
     if (xmlTag hasAttribute xmlAttributeMatcher(
-        name = JCR_PRIMARY_TYPE,
-        value = SLING_OSGI_CONFIG
-    )) {
+            name = JCR_PRIMARY_TYPE,
+            value = SLING_OSGI_CONFIG
+        )) {
       val fileName = xmlTag.containingFile.name
 
       val className = fileName.substringBeforeLast(".")
@@ -40,7 +41,6 @@ class OSGiConfigGotoClassLineMarkerProvider : LineMarkerProvider {
           xmlTag.firstChild,
           xmlTag.firstChild.textRange,
           AllIcons.FileTypes.JavaClass,
-          Pass.LINE_MARKERS,
           Function { "Open associated OSGi service" },
           GutterIconNavigationHandler { mouseEvent, _ ->
             PsiElementListNavigator.openTargets(
@@ -51,16 +51,17 @@ class OSGiConfigGotoClassLineMarkerProvider : LineMarkerProvider {
                 DefaultListCellRenderer()
             )
           },
-          GutterIconRenderer.Alignment.CENTER
+          GutterIconRenderer.Alignment.CENTER,
+          Supplier { "Open associated OSGi service" }
       )
     }
 
     return null
   }
 
-  override fun collectSlowLineMarkers(elements: MutableList<PsiElement>,
-                                      result: MutableCollection<LineMarkerInfo<PsiElement>>) {
-
+  override fun collectSlowLineMarkers(elements: MutableList<out PsiElement>,
+                                      result: MutableCollection<in LineMarkerInfo<*>>) {
+//    super.collectSlowLineMarkers(elements, result)
   }
 
 }

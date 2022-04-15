@@ -88,12 +88,12 @@ fun List<HtlVariableDeclaration>.filterForPosition(position: PsiElement): List<H
           result
         }
 
-        val closest = it.minBy {
+        val closest = it.minByOrNull {
           val myTag = it.xmlAttribute.findParentByType(XmlTag::class.java)
-              ?: return@minBy 100
+              ?: return@minByOrNull 100
 
           val myIndex = parentTags.indexOf(myTag)
-          return@minBy if (myIndex > -1) {
+          return@minByOrNull if (myIndex > -1) {
             myIndex
           } else {
             100

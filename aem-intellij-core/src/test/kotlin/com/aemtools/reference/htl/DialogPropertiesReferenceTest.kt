@@ -5,7 +5,7 @@ import com.aemtools.test.reference.BaseReferenceTest
 import com.intellij.psi.xml.XmlTag
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class DialogPropertiesReferenceTest : BaseReferenceTest(true) {
 

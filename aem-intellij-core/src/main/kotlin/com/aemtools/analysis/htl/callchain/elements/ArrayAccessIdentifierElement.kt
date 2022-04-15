@@ -12,7 +12,7 @@ import com.intellij.psi.PsiElement
  * This class will represent the content of piece of expression between brackets
  * in case if object of Array, List or Map type
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ArrayAccessIdentifierElement(
     override val element: PsiElement

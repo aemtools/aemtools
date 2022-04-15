@@ -4,7 +4,7 @@ import com.aemtools.common.constant.const.JCR_ROOT
 import com.aemtools.test.documentation.BaseDocumentationTest
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlElDocumentationProviderTest
   : BaseDocumentationTest(HtlELDocumentationProvider(), true) {

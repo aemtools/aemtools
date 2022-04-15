@@ -4,7 +4,9 @@ import com.aemtools.common.constant.const
 import com.aemtools.test.completion.CompletionBaseLightTest
 
 /**
- * @author Dmytro Troynikov
+ * Test for [com.aemtools.completion.htl.provider.option.HtlOptionCompletionProvider].
+ *
+ * @author Dmytro Primshyts
  */
 class DataSlyCallOptionsCompletionTest : CompletionBaseLightTest() {
 

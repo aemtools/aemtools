@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement
  * Call chain element interface.
  * Represents call chain present in PSI.
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 interface CallChainElement {
   val element: PsiElement

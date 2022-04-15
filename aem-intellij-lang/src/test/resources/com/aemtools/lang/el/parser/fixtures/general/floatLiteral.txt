@@ -1,0 +1,7 @@
+EL File
+  ElDynamicExpressionImpl(DYNAMIC_EXPRESSION)
+    PsiElement(${)('${')
+    ElExpressionImpl(EXPRESSION)
+      ElFloatingPointImpl(FLOATING_POINT)
+        PsiElement(FLOATING_POINT_LITERAL)('100.33')
+    PsiElement(})('}')

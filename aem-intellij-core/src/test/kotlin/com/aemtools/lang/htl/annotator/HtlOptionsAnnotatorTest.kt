@@ -3,7 +3,7 @@ package com.aemtools.lang.htl.annotator
 import com.aemtools.test.base.BaseLightTest
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlOptionsAnnotatorTest : BaseLightTest() {
 

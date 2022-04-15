@@ -9,7 +9,7 @@ import com.google.gson.JsonObject
 import java.lang.reflect.Type
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class XmlTagDefinitionDeserializer : JsonDeserializer<XmlTagDefinition> {
   override fun deserialize(json: JsonElement?, typeOfT: Type?,

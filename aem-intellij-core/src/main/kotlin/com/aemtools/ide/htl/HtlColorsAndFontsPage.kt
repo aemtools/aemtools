@@ -12,7 +12,7 @@ import com.intellij.openapi.options.colors.ColorSettingsPage
 import javax.swing.Icon
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlColorsAndFontsPage : ColorSettingsPage {
 
@@ -51,21 +51,21 @@ class HtlColorsAndFontsPage : ColorSettingsPage {
       AttributesDescriptor("Bracket", HtlColors.BRACKET),
       AttributesDescriptor("Operator", HtlColors.OPERATOR),
       AttributesDescriptor("Identifier", HtlColors.IDENTIFIER),
-      AttributesDescriptor("Template Argument", HtlColors.TEMPLATE_ARGUMENT),
-      AttributesDescriptor("Template Parameter", HtlColors.TEMPLATE_PARAMETER),
-      AttributesDescriptor("Standard Option", HtlColors.STANDARD_OPTION),
+      AttributesDescriptor("Template argument", HtlColors.TEMPLATE_ARGUMENT),
+      AttributesDescriptor("Template parameter", HtlColors.TEMPLATE_PARAMETER),
+      AttributesDescriptor("Standard option", HtlColors.STANDARD_OPTION),
       AttributesDescriptor("Option", HtlColors.OPTION),
       AttributesDescriptor("Null", HtlColors.NULL),
       AttributesDescriptor("Parentheses", HtlColors.PARENTHESES),
 
-      AttributesDescriptor("HTL Attribute", HtlColors.HTL_ATTRIBUTE),
+      AttributesDescriptor("HTL attribute", HtlColors.HTL_ATTRIBUTE),
 
-      AttributesDescriptor("Variable Declaration", HtlColors.HTL_VARIABLE_DECLARATION),
-      AttributesDescriptor("Unused Variable", HtlColors.HTL_VARIABLE_UNUSED),
+      AttributesDescriptor("Variable declaration", HtlColors.HTL_VARIABLE_DECLARATION),
+      AttributesDescriptor("Unused variable", HtlColors.HTL_VARIABLE_UNUSED),
 
-      AttributesDescriptor("Global Variable", HtlColors.HTL_EL_GLOBAL_VARIABLE),
-      AttributesDescriptor("Local Variable", HtlColors.HTL_EL_LOCAL_VARIABLE),
-      AttributesDescriptor("Unresolved Variable", HtlColors.HTL_EL_UNRESOLVED_VARIABLE)
+      AttributesDescriptor("Global variable", HtlColors.HTL_EL_GLOBAL_VARIABLE),
+      AttributesDescriptor("Local variable", HtlColors.HTL_EL_LOCAL_VARIABLE),
+      AttributesDescriptor("Unresolved variable", HtlColors.HTL_EL_UNRESOLVED_VARIABLE)
   )
 
   override fun getHighlighter(): SyntaxHighlighter
@@ -74,7 +74,7 @@ class HtlColorsAndFontsPage : ColorSettingsPage {
   override fun getAdditionalHighlightingTagToDescriptorMap(): MutableMap<String, TextAttributesKey>
       = previewTags
 
-  override fun getIcon(): Icon?
+  override fun getIcon(): Icon
       = HtlIcons.HTL_FILE_ICON
 
   override fun getAttributeDescriptors(): Array<AttributesDescriptor>

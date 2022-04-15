@@ -1,51 +1,90 @@
-import org.jetbrains.intellij.IntelliJPluginExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-buildscript {
-    val kotlinVersion: String by extra
-
-    repositories {
-        mavenCentral()
-    }
-    
-    dependencies {
-        classpath(kotlin("gradle-plugin", kotlinVersion))
-    }
-}
-
-apply {
-    plugin("java")
-    plugin("kotlin")
-    plugin("org.junit.platform.gradle.plugin")
-}
-
-plugins {
-    java
-    id("org.jetbrains.intellij") version "0.3.12"
-}
+import org.jetbrains.changelog.date
+import org.jetbrains.changelog.markdownToHTML
 
 val kotlinVersion: String by extra
 val gsonVersion: String by extra
 val apacheCommonsVersion: String by extra
+val pluginSinceBuild: String by extra
+val pluginUntilBuild: String by extra
+val pluginVersion: String by extra
+val pluginGroup: String by extra
+val platformVersion: String by extra
+val platformType: String by extra
+val platformPlugins: String by extra
+fun properties(key: String) = project.findProperty(key).toString()
 
-dependencies {
-    compile(project(":lang"))
-    compile(project(":common"))
-    compile(project(":inspection"))
-
-    compile("com.google.code.gson:gson:$gsonVersion")
-    compile("org.apache.commons:commons-lang3:$apacheCommonsVersion")
-
-    testCompile(project(":test-framework"))
+plugins {
+  java
+  kotlin("jvm")
+  id("org.jetbrains.intellij")
+  id("org.jetbrains.changelog")
 }
 
-val ideaVersion: String by extra
+intellij {
+  pluginName.set(properties("pluginName"))
+  version.set(platformVersion)
+  type.set(platformType)
+  plugins.set(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
+}
 
-configure<IntelliJPluginExtension> {
-    pluginName = "aemtools"
-    version = ideaVersion
-    updateSinceUntilBuild = false
-    setPlugins(
-            "IntelliLang"
-    )
+changelog {
+  version.set(pluginVersion)
+  path.set("${project.parent?.projectDir}/CHANGELOG.md")
+  header.set(provider { "[$version] - ${date()}" })
+  itemPrefix.set("-")
+  keepUnreleasedSection.set(true)
+  groups.set(listOf("New features", "Bug fixes", "Maintenance"))
+}
+
+dependencies {
+  implementation(project(":aem-intellij-common"))
+  implementation(project(":aem-intellij-lang"))
+  implementation(project(":aem-intellij-inspection"))
+  implementation(project(":aem-intellij-index"))
+
+  implementation("com.google.code.gson:gson:$gsonVersion")
+  implementation("org.apache.commons:commons-lang3:$apacheCommonsVersion")
+
+  testImplementation(project(":test-framework"))
+}
+
+tasks {
+
+  patchPluginXml {
+    version.set(pluginVersion)
+    sinceBuild.set(pluginSinceBuild)
+    untilBuild.set(pluginUntilBuild)
+
+    project.parent?.projectDir?.let {
+      pluginDescription.set(
+        it.resolve("README.md").readText().lines().run {
+          val startMarkerText = "<!-- Plugin description -->"
+          val endMarkerText = "<!-- Plugin description end -->"
+
+          if (!containsAll(listOf(startMarkerText, endMarkerText))) {
+            throw GradleException("Plugin description section not found in README.md:\n$startMarkerText ... $endMarkerText")
+          }
+          subList(indexOf(startMarkerText) + 1, indexOf(endMarkerText))
+        }.joinToString("\n").run { markdownToHTML(this) }
+      )
+    }
+    changeNotes.set(provider { changelog.getUnreleased().toHTML() })
+
+    pluginXmlFiles.set(fileTree("$projectDir/src/main/resources/META-INF").filter { it.isFile() }.files)
+  }
+
+  buildPlugin {
+    archiveFileName.set("$platformType-$pluginGroup-$pluginVersion.zip")
+
+    doLast {
+      delete("../build/distributions").also {
+        copy {
+          from("build/distributions")
+          include("*.zip")
+          into("../build/distributions")
+        }
+      }
+    }
+  }
+
 }

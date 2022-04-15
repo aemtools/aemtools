@@ -2,15 +2,15 @@ package com.aemtools.analysis.htl.callchain.typedescriptor.predefined
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.BaseTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
+import com.aemtools.common.completion.withPriority
 import com.aemtools.completion.htl.CompletionPriority
 import com.aemtools.completion.htl.predefined.PredefinedCompletion
-import com.aemtools.common.util.withPriority
 import com.intellij.codeInsight.lookup.LookupElement
 
 /**
  * Type Descriptor backed by list of [PredefinedCompletion] objects.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class PredefinedTypeDescriptor(val predefined: List<PredefinedCompletion>) : BaseTypeDescriptor() {
 

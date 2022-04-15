@@ -9,9 +9,10 @@ import com.intellij.openapi.editor.markup.GutterIconRenderer
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiIdentifier
 import com.intellij.util.Function
+import java.util.function.Supplier
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class OSGiServiceConfigMarkerInfo(
     val classIdentifier: PsiIdentifier,
@@ -20,10 +21,11 @@ class OSGiServiceConfigMarkerInfo(
     classIdentifier,
     classIdentifier.textRange,
     AllIcons.FileTypes.Config,
-    Pass.LINE_MARKERS,
     Function { "OSGi configs found" },
     OSGiGutterIconNavigationHandler(configs, classIdentifier, "OSGi Config"),
-    GutterIconRenderer.Alignment.CENTER) {
+    GutterIconRenderer.Alignment.CENTER,
+    Supplier { "OSGi configs found" }
+) {
   override fun equals(other: Any?): Boolean {
     val otherMarker = other as? OSGiServiceConfigMarkerInfo
         ?: return false

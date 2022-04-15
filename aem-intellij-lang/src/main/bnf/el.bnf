@@ -1,0 +1,130 @@
+{
+    parserClass="com.aemtools.lang.el.ElParser"
+    parserUtilClass="com.aemtools.lang.el.ElParserUtil"
+
+    extends="com.aemtools.lang.el.psi.ElPsiBaseElement"
+
+    psiClassPrefix="El"
+    psiPackage="com.aemtools.lang.el.psi"
+
+    elementTypeHolderClass="com.aemtools.lang.el.psi.ElTypes"
+    elementTypeClass="com.aemtools.lang.el.psi.ElElement"
+    tokenTypeClass="com.aemtools.lang.el.psi.ElToken"
+
+    parserImports='static com.aemtools.lang.el.psi.ElTypes.*'
+
+    tokens = [
+        START_DEFERRED_EXPRESSION = '#{'
+        START_DYNAMIC_EXPRESSION = '${'
+        END_EXPRESSION = '}'
+        QUESTION_MARK = '?'
+        COLON = ':'
+        OR0         = '||'
+        OR1         = 'or'
+        AND0        = '&&'
+        AND1        = 'and'
+        EQ0         = '=='
+        EQ1         = 'eq'
+        NE0         = '!='
+        NE1         = 'neq'
+        LT0         = '<'
+        LT1         = 'lt'
+        GT0         = '>'
+        GT1         = 'gt'
+        LE0         = '<='
+        LE1         = 'le'
+        GE0         = '>='
+        GE1         = 'ge'
+        PLUS        = '+'
+        MINUS       = '-'
+        MULT        = '*'
+        DIV         = '/'
+        MOD0        = '%'
+        MOD1        = 'mod'
+        NOT0        = '!'
+        NOT1        = 'not'
+        EMPTY       = 'empty'
+        DOT         = '.'
+        LBRACK      = '['
+        RBRACK      = ']'
+        LPAREN      = '('
+        RPAREN      = ')'
+        COMMA       = ','
+        TRUE        = 'true'
+        FALSE       = 'false'
+        NULL_LITERAL_TOKEN= 'null'
+        // stubs
+        STRING_LITERAL =''
+        IDENTIFIER_TOKEN = ''
+        LITERAL_EXPRESSION_TOKEN = ''
+        FUNCTION_SUFFIX = ''
+    ]
+}
+
+root::=(deferred_expression | dynamic_expression | literal_expression)*
+
+// Represents "outer" language.
+literal_expression::=LITERAL_EXPRESSION_TOKEN
+
+// expression that starts with '#'
+deferred_expression::=START_DEFERRED_EXPRESSION expression END_EXPRESSION
+
+// expression that starts with '$'
+dynamic_expression::=START_DYNAMIC_EXPRESSION expression END_EXPRESSION
+
+expression::=choice
+
+private choice ::= or (QUESTION_MARK choice COLON choice)*
+
+private or::=and((OR0|OR1)and)*
+
+private and::=equality((AND0|AND1)equality)*
+
+private equality::=compare (((EQ0|EQ1) compare) | ((NE0|NE1)compare))*
+
+private compare::=math ( ((LT0|LT1) math) | ( (GT0|GT1) math) | ((LE0|LE1)math)|((GE0|GE1)math))*
+
+private math::=multiplication((PLUS multiplication)|(MINUS multiplication))*
+
+private multiplication::=unary((MULT unary) | (DIV unary)|((MOD0|MOD1)unary))*
+
+private unary ::= MINUS unary
+    | (NOT0|NOT1) unary
+    | EMPTY unary
+    | value
+
+private value ::= (value_prefix (value_suffix+)?)
+
+private value_prefix ::=  non_literal
+    | literal
+
+private value_suffix ::= dot_suffix
+    | bracket_suffix
+
+dot_suffix::=DOT IDENTIFIER_TOKEN
+
+bracket_suffix::=LBRACK expression RBRACK
+
+non_literal ::= LPAREN expression RPAREN
+    | function
+    | identifier
+
+identifier::=IDENTIFIER_TOKEN
+
+function::=IDENTIFIER_TOKEN COLON (IDENTIFIER_TOKEN)? LPAREN (expression (COMMA expression)*)? RPAREN
+
+private literal ::= boolean_literal
+    | floating_point
+    | integer
+    | string
+    | null_literal
+
+boolean_literal ::= TRUE | FALSE
+
+floating_point ::= FLOATING_POINT_LITERAL
+
+integer ::= INTEGER_LITERAL
+
+string ::= STRING_LITERAL
+
+null_literal ::= NULL_LITERAL_TOKEN

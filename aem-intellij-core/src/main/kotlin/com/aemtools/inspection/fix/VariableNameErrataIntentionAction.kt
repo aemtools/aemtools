@@ -11,7 +11,7 @@ import com.intellij.psi.SmartPsiElementPointer
 /**
  * Provides fix for variable that may contain errata.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class VariableNameErrataIntentionAction(
     private val possiblyCorrectName: String,

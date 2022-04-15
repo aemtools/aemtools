@@ -1,0 +1,3 @@
+${ ('${')
+FLOATING_POINT_LITERAL ('100.33')
+} ('}')

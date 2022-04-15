@@ -1,12 +1,12 @@
 package com.aemtools.codeinsight.htl.model
 
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.common.constant.const.htl.DATA_SLY_USE
 import com.aemtools.common.util.findChildrenByType
-import com.aemtools.index.model.HtlTemplateDeclaration
 import com.aemtools.index.util.extractTemplateDefinition
 import com.aemtools.lang.htl.icons.HtlIcons.DATA_SLY_LIST_ICON
 import com.aemtools.lang.htl.icons.HtlIcons.DATA_SLY_REPEAT_ICON
@@ -24,13 +24,12 @@ import com.aemtools.lang.util.htlVariableName
 import com.aemtools.lang.util.isOption
 import com.aemtools.lang.util.resolveUseClass
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.psi.xml.XmlAttribute
 
 /**
  * Represents the name of variable and the [XmlAttribute] in which it was declared.
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 open class HtlVariableDeclaration internal constructor(
     /**
@@ -56,7 +55,7 @@ open class HtlVariableDeclaration internal constructor(
    * @return lookup element
    */
   fun toLookupElement(): LookupElement {
-    var result = LookupElementBuilder.create(variableName)
+    var result = lookupElement(variableName)
 
     when (attributeType) {
       DeclarationAttributeType.DATA_SLY_USE -> {

@@ -10,7 +10,7 @@ import com.intellij.psi.PsiIdentifier
 import java.awt.event.MouseEvent
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class OSGiGutterIconNavigationHandler(
     val configs: List<OSGiConfiguration>,

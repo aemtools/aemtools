@@ -6,7 +6,7 @@ import org.junit.*
 
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class TypeDescriptorUtilKtTest {
 

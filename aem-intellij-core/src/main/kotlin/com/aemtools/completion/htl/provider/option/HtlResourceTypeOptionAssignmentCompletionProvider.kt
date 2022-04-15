@@ -12,7 +12,7 @@ import com.intellij.util.ProcessingContext
 import org.apache.commons.lang.StringUtils
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlResourceTypeOptionAssignmentCompletionProvider
   : CompletionProvider<CompletionParameters>() {

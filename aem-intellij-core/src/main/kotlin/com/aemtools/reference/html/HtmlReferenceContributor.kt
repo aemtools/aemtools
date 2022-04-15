@@ -10,7 +10,7 @@ import com.intellij.psi.PsiReferenceRegistrar
 /**
  * Html reference contributor.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtmlReferenceContributor : PsiReferenceContributor() {
 

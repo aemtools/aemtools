@@ -4,7 +4,7 @@ import com.aemtools.test.base.BaseLightTest
 import com.intellij.openapi.actionSystem.IdeActions
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlCommenterTest : BaseLightTest(false) {
 

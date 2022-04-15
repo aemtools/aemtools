@@ -7,7 +7,7 @@ import com.aemtools.test.base.model.fixture.ITestFixture
 import com.aemtools.test.completion.CompletionBaseLightTest
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class CompletionRelevanceTest : CompletionBaseLightTest(true) {
 
@@ -29,7 +29,8 @@ class CompletionRelevanceTest : CompletionBaseLightTest(true) {
         "com.test.ComponentModel",
         "template.html",
         "com.test.SomeOtherModel",
-        "/apps/myapp/component2/template.html"
+        "/apps/myapp/component2/template.html",
+        "/libs/granite/sightly/templates/clientlib.html"
     ),
         ordered = true
     )
@@ -66,11 +67,12 @@ class CompletionRelevanceTest : CompletionBaseLightTest(true) {
         "sling:resourceType",
         "empty",
         "entrySet",
-        "hashCode",
         "keySet",
+        "of",
         "size",
         "values",
         "class",
+        "hashCode",
         "toString"
     ),
         ordered = true

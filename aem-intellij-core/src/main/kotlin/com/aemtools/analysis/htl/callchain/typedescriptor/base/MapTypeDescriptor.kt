@@ -7,7 +7,7 @@ package com.aemtools.analysis.htl.callchain.typedescriptor.base
  * ${mapType[key]}
  * ```
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 interface MapTypeDescriptor : TypeDescriptor {
 

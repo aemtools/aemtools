@@ -6,7 +6,7 @@ import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 import junit.framework.TestCase.assertEquals
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class DocTestFixture(
     val documentationProvider: AbstractDocumentationProvider,

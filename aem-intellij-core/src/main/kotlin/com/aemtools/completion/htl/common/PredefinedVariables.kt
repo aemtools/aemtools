@@ -6,18 +6,18 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor.Co
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.predefined.PredefinedTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.properties.PropertiesTypeDescriptor
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.completion.model.htl.ContextObject
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.java.JavaSearch
 import com.aemtools.service.ServiceFacade
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.project.Project
 
 /**
  * Provides completion on Htl context object (e.g. 'properties').
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object PredefinedVariables {
 
@@ -37,7 +37,7 @@ object PredefinedVariables {
    */
   fun contextObjectsCompletion(): List<LookupElement> {
     return repository.getContextObjects().map {
-      LookupElementBuilder.create(it.name)
+      lookupElement(it.name)
           .withTailText("(${it.className})", true)
           .withTypeText("Context Object")
           .withIcon(it.elementIcon)
@@ -53,7 +53,7 @@ object PredefinedVariables {
    */
   fun typeDescriptorByIdentifier(variableName: VariableNameMixin, project: Project): TypeDescriptor {
     val name = variableName.variableName()
-    val classInfo = repository.findContextObject(name) ?: return TypeDescriptor.empty()
+    val classInfo = repository.findContextObject(name) ?: return empty()
     val originalElement = variableName.originalElement
     val fullClassName = classInfo.className
     val psiClass = JavaSearch.findClass(fullClassName, project)

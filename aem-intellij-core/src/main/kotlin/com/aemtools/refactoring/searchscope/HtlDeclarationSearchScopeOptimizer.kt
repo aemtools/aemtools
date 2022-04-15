@@ -12,7 +12,7 @@ import com.intellij.psi.search.ScopeOptimizer
 import com.intellij.psi.xml.XmlAttribute
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlDeclarationSearchScopeOptimizer : ScopeOptimizer {
 

@@ -1,7 +1,7 @@
 package com.aemtools.test.rename.model.fixture
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 interface IRenameFixture {
 

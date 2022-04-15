@@ -7,13 +7,13 @@ import com.intellij.psi.PsiReferenceBase
 import com.intellij.psi.xml.XmlAttribute
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlListHelperReference(val xmlAttribute: XmlAttribute,
                              holder: PsiElement,
                              range: TextRange) :
     PsiReferenceBase<PsiElement>(holder, range, true) {
-  override fun resolve(): PsiElement? = HtlListHelperDeclarationIdentifier(xmlAttribute)
+  override fun resolve(): PsiElement = HtlListHelperDeclarationIdentifier(xmlAttribute)
 
   override fun getVariants(): Array<Any> {
     return arrayOf()

@@ -5,7 +5,7 @@ import com.aemtools.test.reference.BaseReferenceTest
 import com.intellij.psi.PsiDirectory
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ResourceTypeReferenceProviderTest : BaseReferenceTest() {
 

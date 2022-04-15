@@ -7,7 +7,7 @@ import com.aemtools.test.fixture.JdkProjectDescriptor
 import com.intellij.testFramework.LightProjectDescriptor
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class CompletionBaseLightTest(withUberJar: Boolean = true) : BaseLightTest(withUberJar) {
 

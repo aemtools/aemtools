@@ -12,7 +12,7 @@ import com.intellij.psi.PsiReferenceProvider
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object DataSlyCallPropertiesReferenceProvider : PsiReferenceProvider() {
   override fun getReferencesByElement(element: PsiElement,

@@ -1,0 +1,4 @@
+{ ('{')
+URI ('URI')
+} ('}')
+VALUE_TOKEN ('uri')

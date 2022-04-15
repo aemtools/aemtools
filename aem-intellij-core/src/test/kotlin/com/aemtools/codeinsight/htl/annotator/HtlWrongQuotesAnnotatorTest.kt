@@ -5,7 +5,7 @@ import com.aemtools.test.base.BaseLightTest
 /**
  * Test for [HtlWrongQuotesAnnotator].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlWrongQuotesAnnotatorTest : BaseLightTest() {
 

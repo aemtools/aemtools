@@ -1,7 +1,7 @@
 package com.aemtools.test.base.model.file
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 interface IFileFixtureDescriptor {
 

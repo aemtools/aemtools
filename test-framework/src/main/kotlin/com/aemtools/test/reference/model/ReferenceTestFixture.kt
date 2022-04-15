@@ -6,7 +6,7 @@ import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 import junit.framework.TestCase
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class ReferenceTestFixture(fixture: JavaCodeInsightTestFixture)
   : TestFixture(fixture),

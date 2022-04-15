@@ -9,7 +9,7 @@ import com.intellij.psi.impl.source.resolve.reference.impl.providers.PsiFileRefe
 /**
  * Reference to PsiFile.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class PsiFileReference(val psiFile: PsiElement?,
                        holder: PsiElement,

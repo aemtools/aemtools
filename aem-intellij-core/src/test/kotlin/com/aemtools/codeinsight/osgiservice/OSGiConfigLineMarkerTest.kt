@@ -6,23 +6,17 @@ import com.aemtools.lang.java.JavaSearch
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin
 import com.aemtools.test.fixture.OSGiFelixAnnotationsMixin
-import org.junit.Rule
-import org.mockito.junit.MockitoJUnit
-import org.mockito.junit.MockitoRule
 
 /**
  * Test for [OSGiConfigLineMarker].
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class OSGiConfigLineMarkerTest : BaseLightTest(),
     OSGiConfigFixtureMixin,
     OSGiFelixAnnotationsMixin {
 
   var tested: OSGiConfigLineMarker = OSGiConfigLineMarker()
-
-  @Rule
-  var mockitoRule: MockitoRule = MockitoJUnit.rule()
 
   fun testFelixServiceShouldBeMarked() = fileCase {
     addFelixServiceAnnotation()

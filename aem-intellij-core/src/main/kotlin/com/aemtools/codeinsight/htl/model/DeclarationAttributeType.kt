@@ -1,7 +1,7 @@
 package com.aemtools.codeinsight.htl.model
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 enum class DeclarationAttributeType {
   /**

@@ -3,7 +3,7 @@ package com.aemtools.completion.htl.common
 import com.aemtools.test.BaseVariantsCheckContributorTest
 
 /**
- * @author Dmytro Troynikov.
+ * @author Dmytro Primshyts.
  */
 class HtlELVariantsCheckContributorTest : BaseVariantsCheckContributorTest("com/aemtools/completion/htl/fixtures/noafter") {
 

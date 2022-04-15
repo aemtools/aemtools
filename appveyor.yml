@@ -1,14 +1,14 @@
 build:
   verbosity: detailed
-  
+
 build_script:
   - gradlew.bat buildPlugin --info --no-daemon
 
 test_script:
-  - gradlew.bat test jacocoFullReport --info --no-daemon
+  - gradlew.bat test koverMergedHtmlReport --info --no-daemon
 
 environment:
   matrix:
 #    - ORG_GRADLE_PROJECT_ideaVersion: 2017.1.5
-    - ORG_GRADLE_PROJECT_ideaVersion: 2018.3
+    - ORG_GRADLE_PROJECT_ideaVersion: 2021.1.3
     - ORG_GRADLE_PROJECT_ideaVersion: LATEST-EAP-SNAPSHOT

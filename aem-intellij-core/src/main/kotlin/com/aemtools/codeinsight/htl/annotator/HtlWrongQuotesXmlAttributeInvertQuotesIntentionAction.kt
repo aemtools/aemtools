@@ -18,7 +18,7 @@ import com.intellij.psi.xml.XmlAttribute
 /**
  * Inverts [XmlAttribute] quotes.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction(
     private val pointer: SmartPsiElementPointer<XmlAttribute>

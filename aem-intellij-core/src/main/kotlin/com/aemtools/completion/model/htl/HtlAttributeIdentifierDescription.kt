@@ -1,7 +1,7 @@
 package com.aemtools.completion.model.htl
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 data class HtlAttributeIdentifierDescription(
     val required: String?,

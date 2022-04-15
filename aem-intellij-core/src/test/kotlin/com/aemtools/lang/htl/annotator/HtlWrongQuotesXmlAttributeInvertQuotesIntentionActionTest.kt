@@ -2,6 +2,7 @@ package com.aemtools.lang.htl.annotator
 
 import com.aemtools.codeinsight.htl.annotator.HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction
 import com.aemtools.common.util.writeCommand
+import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.base.BaseLightTest.Companion.DOLLAR
 import com.aemtools.test.util.notNull
 import com.aemtools.test.util.quickFix
@@ -11,9 +12,9 @@ import org.assertj.core.api.Assertions.assertThat
 /**
  * Test for [HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
-class HtlWrongQuotesXmlAttributeInvertQuotesIntentionActionTest : InspectionFixtureTestCase() {
+class HtlWrongQuotesXmlAttributeInvertQuotesIntentionActionTest : BaseLightTest() {
 
   fun testFormat() {
     myFixture.configureByText("test.html", """

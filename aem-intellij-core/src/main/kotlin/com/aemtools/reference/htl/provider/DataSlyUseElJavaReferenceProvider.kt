@@ -1,8 +1,7 @@
 package com.aemtools.reference.htl.provider
 
-import com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin
-import com.aemtools.lang.java.JavaSearch
 import com.aemtools.common.util.allScope
+import com.aemtools.lang.java.JavaSearch
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReference
@@ -13,7 +12,7 @@ import com.intellij.util.ProcessingContext
 /**
  * Reference provider for Htl string literals.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object DataSlyUseElJavaReferenceProvider : JavaClassReferenceProvider() {
   override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<out PsiReference> {
@@ -30,7 +29,7 @@ object DataSlyUseElJavaReferenceProvider : JavaClassReferenceProvider() {
    * declared as a dependency for current module, resulting in non-resolvable reference.
    * @see com.intellij.psi.impl.source.resolve.reference.impl.providers.JavaClassReference.getScope
    */
-  override fun getScope(project: Project): GlobalSearchScope? {
+  override fun getScope(project: Project): GlobalSearchScope {
     return project.allScope()
   }
 

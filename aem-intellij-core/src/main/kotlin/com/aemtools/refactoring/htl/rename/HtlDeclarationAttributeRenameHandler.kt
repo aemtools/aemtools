@@ -4,6 +4,7 @@ import com.aemtools.lang.util.isHtlGlobalDeclarationAttribute
 import com.aemtools.refactoring.htl.rename.util.RenameUtil
 import com.aemtools.refactoring.htl.rename.util.RenameUtil.getElement
 import com.aemtools.refactoring.htl.rename.util.RenameUtil.rename
+import com.intellij.lang.injection.InjectedLanguageManager
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.editor.Editor
@@ -11,7 +12,6 @@ import com.intellij.openapi.editor.ScrollType
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
-import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.refactoring.actions.BaseRefactoringAction
 import com.intellij.refactoring.rename.PsiElementRenameHandler
@@ -19,7 +19,7 @@ import com.intellij.refactoring.rename.PsiElementRenameHandler.DEFAULT_NAME
 import com.intellij.refactoring.rename.RenameHandler
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlDeclarationAttributeRenameHandler : RenameHandler {
 
@@ -35,6 +35,9 @@ class HtlDeclarationAttributeRenameHandler : RenameHandler {
   }
 
   override fun invoke(project: Project, editor: Editor?, file: PsiFile?, dataContext: DataContext?) {
+    if (editor == null) {
+      return
+    }
     val element = getElement(dataContext)
         ?: BaseRefactoringAction.getElementAtCaret(editor, file)
         ?: return
@@ -51,11 +54,12 @@ class HtlDeclarationAttributeRenameHandler : RenameHandler {
     }
 
     editor.scrollingModel.scrollToCaret(ScrollType.MAKE_VISIBLE)
-    val nameSuggestionContext = InjectedLanguageUtil.findElementAtNoCommit(file, editor.caretModel.offset)
-    RenameUtil.invoke(element, project, nameSuggestionContext, editor)
+    InjectedLanguageManager.getInstance(project).findInjectedElementAt(file, editor.caretModel.offset)?.let {
+      nameSuggestionContext -> RenameUtil.invoke(element, project, nameSuggestionContext, editor)
+    }
   }
 
   override fun invoke(project: Project, elements: Array<out PsiElement>, dataContext: DataContext?) {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    TODO("not implemented")
   }
 }

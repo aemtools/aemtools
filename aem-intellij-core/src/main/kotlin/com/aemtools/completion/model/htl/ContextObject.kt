@@ -5,7 +5,7 @@ import com.intellij.icons.AllIcons
 import javax.swing.Icon
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 data class ContextObject(
     val name: String,

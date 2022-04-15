@@ -3,7 +3,7 @@ package com.aemtools.test.base.model.fixture
 import com.aemtools.test.base.model.assertion.IAssertionContext
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 interface ITestFixtureInternal {
 

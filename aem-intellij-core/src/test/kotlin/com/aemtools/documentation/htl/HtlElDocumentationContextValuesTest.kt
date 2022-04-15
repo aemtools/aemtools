@@ -4,7 +4,7 @@ import com.aemtools.test.documentation.BaseDocumentationTest
 import com.aemtools.test.documentation.model.IDocTestFixture
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlElDocumentationContextValuesTest
   : BaseDocumentationTest(HtlELDocumentationProvider()) {

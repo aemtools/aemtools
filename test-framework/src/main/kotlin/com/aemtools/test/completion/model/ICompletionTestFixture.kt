@@ -3,7 +3,7 @@ package com.aemtools.test.completion.model
 import com.aemtools.test.base.model.fixture.ITestFixture
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 interface ICompletionTestFixture : ITestFixture {
 

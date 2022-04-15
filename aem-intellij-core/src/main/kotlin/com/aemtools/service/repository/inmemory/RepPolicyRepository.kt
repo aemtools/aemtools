@@ -7,7 +7,7 @@ import com.aemtools.service.repository.inmemory.util.XmlTagDefinitionDeserialize
 import com.google.gson.GsonBuilder
 
 /**
- * @author Dmytro Troynikov.
+ * @author Dmytro Primshyts.
  */
 object RepPolicyRepository {
 

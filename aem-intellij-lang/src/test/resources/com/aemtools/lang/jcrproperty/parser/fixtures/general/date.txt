@@ -1,0 +1,7 @@
+JpFile:date.in
+  JpTypeImpl(TYPE)
+    PsiElement({)('{')
+    PsiElement(Date)('Date')
+    PsiElement(})('}')
+  JpSingleImpl(SINGLE)
+    PsiElement(VALUE_TOKEN)('date')

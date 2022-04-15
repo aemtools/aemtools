@@ -5,7 +5,7 @@ import com.aemtools.service.repository.WidgetDocRepository
 import com.aemtools.service.repository.inmemory.FileDocRepository
 
 /**
- * @author Dmytro_Troynikov.
+ * @author Dmytro Primshyts.
  */
 class RepositoryService : IRepositoryService {
 

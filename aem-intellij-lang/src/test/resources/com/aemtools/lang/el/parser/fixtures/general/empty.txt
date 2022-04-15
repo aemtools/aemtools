@@ -1,0 +1,10 @@
+EL File
+  ElDynamicExpressionImpl(DYNAMIC_EXPRESSION)
+    PsiElement(${)('${')
+    ElExpressionImpl(EXPRESSION)
+      PsiElement(empty)('empty')
+      PsiWhiteSpace(' ')
+      ElNonLiteralImpl(NON_LITERAL)
+        ElIdentifierImpl(IDENTIFIER)
+          PsiElement(IDENTIFIER_TOKEN)('collection')
+    PsiElement(})('}')

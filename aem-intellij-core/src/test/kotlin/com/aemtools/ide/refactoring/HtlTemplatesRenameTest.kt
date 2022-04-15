@@ -4,7 +4,7 @@ import com.aemtools.common.constant.const
 import com.aemtools.test.rename.BaseRenameTest
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlTemplatesRenameTest : BaseRenameTest() {
 

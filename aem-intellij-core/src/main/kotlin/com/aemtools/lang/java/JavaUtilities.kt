@@ -4,7 +4,7 @@ import com.aemtools.common.constant.const
 import com.intellij.psi.PsiClass
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object JavaUtilities {
 

@@ -11,7 +11,7 @@ import com.intellij.codeInsight.completion.PrioritizedLookupElement
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlDataSlyResourceOptionCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(
