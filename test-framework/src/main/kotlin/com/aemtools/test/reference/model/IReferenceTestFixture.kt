@@ -4,7 +4,7 @@ import com.aemtools.test.base.model.fixture.ITestFixture
 import com.intellij.psi.PsiElement
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 interface IReferenceTestFixture : ITestFixture {
 

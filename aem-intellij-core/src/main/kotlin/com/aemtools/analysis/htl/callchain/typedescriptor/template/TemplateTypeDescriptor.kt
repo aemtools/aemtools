@@ -10,7 +10,7 @@ import com.intellij.psi.PsiElement
 /**
  * Descriptor of Htl template.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class TemplateTypeDescriptor(
     val template: TemplateDefinition,

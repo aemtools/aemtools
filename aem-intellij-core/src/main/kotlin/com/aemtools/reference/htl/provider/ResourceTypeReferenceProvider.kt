@@ -12,7 +12,7 @@ import com.intellij.util.ProcessingContext
 import generated.psi.impl.HtlStringLiteralImpl
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object ResourceTypeReferenceProvider : PsiReferenceProvider() {
   override fun getReferencesByElement(

@@ -8,7 +8,7 @@ import org.junit.Test
 /**
  * Test for [HtlColorsAndFontsPage].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlColorsAndFontsPageTest {
 

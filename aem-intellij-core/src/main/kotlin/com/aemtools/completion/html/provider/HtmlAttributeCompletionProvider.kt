@@ -1,5 +1,6 @@
 package com.aemtools.completion.html.provider
 
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.constant.const
 import com.aemtools.common.constant.const.htl.DATA_SLY_ATTRIBUTE
 import com.aemtools.common.constant.const.htl.DATA_SLY_CALL
@@ -23,16 +24,14 @@ import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.completion.XmlAttributeInsertHandler
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
 import com.intellij.util.ProcessingContext
-import java.util.ArrayList
 
 /**
  * Provider of Htl specific attributes.
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters>() {
 
@@ -50,7 +49,7 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
   )
 
   override fun addCompletions(parameters: CompletionParameters,
-                              context: ProcessingContext?,
+                              context: ProcessingContext,
                               result: CompletionResultSet) {
     if (result.isStopped) {
       return
@@ -78,20 +77,8 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
     return vars.filter { !obsoleteAttributes.contains(it.lookupString) }
   }
 
-  /**
-   * Method return attributes which have to be unique attributes in tag and already exist
-   * in tag.
-   *
-   * @param tag XmlTag where method search unique attributes
-   * @return collection of names of attributes
-   */
-  private fun getUniqueHtlAttributes(tag: XmlTag?): Collection<String> =
-      tag.findChildrenByType(XmlAttribute::class.java)
-          .filter { it.isUniqueHtlAttribute() }
-          .map { it.name }
-
   private val vars: List<LookupElement> = const.htl.HTL_ATTRIBUTES.map {
-    val result = LookupElementBuilder.create(it)
+    val result = lookupElement(it)
         .withTypeText("HTL Attribute")
     when (it) {
       in HTL_ATTRIBUTES_WITH_EXPRESSION -> result.withInsertHandler(HtlExpressionInsertHandler())
@@ -104,6 +91,18 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
       else -> result.withInsertHandler(XmlAttributeInsertHandler())
     }
   }
+
+  /**
+   * Method return attributes which have to be unique attributes in tag and already exist
+   * in tag.
+   *
+   * @param tag XmlTag where method search unique attributes
+   * @return collection of names of attributes
+   */
+  private fun getUniqueHtlAttributes(tag: XmlTag?): Collection<String> =
+      tag.findChildrenByType(XmlAttribute::class.java)
+          .filter { it.isUniqueHtlAttribute() }
+          .map { it.name }
 
   /**
    * Check if current [PsiElement] is unique. Unique attributes are

@@ -7,7 +7,7 @@ import com.intellij.psi.PsiClass
 /**
  * [JavaSearch] utilities.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 interface JavaSearchMixin {
 

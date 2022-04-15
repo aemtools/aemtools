@@ -7,7 +7,7 @@ import com.intellij.openapi.startup.StartupActivity
 import com.intellij.profile.codeInspection.ProjectInspectionProfileManager
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class AemIntellijStartupActivity : StartupActivity {
   override fun runActivity(project: Project) {

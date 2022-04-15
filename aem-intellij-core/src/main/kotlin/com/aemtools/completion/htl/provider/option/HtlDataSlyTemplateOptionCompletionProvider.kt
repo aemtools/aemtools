@@ -8,11 +8,11 @@ import com.intellij.util.ProcessingContext
 /**
  * Ends completion for options inside of data-sly-template.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlDataSlyTemplateOptionCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(parameters: CompletionParameters,
-                              context: ProcessingContext?,
+                              context: ProcessingContext,
                               result: CompletionResultSet) {
     result.stopHere()
   }

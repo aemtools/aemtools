@@ -8,7 +8,7 @@ import junit.framework.TestCase
 import org.intellij.lang.annotations.Language
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class BaseFixTest : BaseLightTest() {
 

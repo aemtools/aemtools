@@ -1,0 +1,4 @@
+JpFile:emptyArray.in
+  JpArrayImpl(ARRAY)
+    PsiElement([)('[')
+    PsiElement(])(']')

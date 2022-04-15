@@ -4,7 +4,7 @@ import com.aemtools.common.constant.const.JCR_ROOT
 import com.aemtools.test.completion.CompletionBaseLightTest
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class DataSlyUseElSmartCompletionTest : CompletionBaseLightTest() {
 
@@ -29,7 +29,8 @@ class DataSlyUseElSmartCompletionTest : CompletionBaseLightTest() {
     shouldContain(listOf(
         "partials/piece1.html",
         "piece2.html",
-        "com.test.ComponentUse"
+        "com.test.ComponentUse",
+        "/libs/granite/sightly/templates/clientlib.html"
     ))
   }
 

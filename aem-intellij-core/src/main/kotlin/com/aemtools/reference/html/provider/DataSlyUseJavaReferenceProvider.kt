@@ -15,7 +15,7 @@ import com.intellij.util.ProcessingContext
 /**
  * Adds references in data-sly-use attributes.
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object DataSlyUseJavaReferenceProvider : JavaClassReferenceProvider() {
   override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<out PsiReference> {
@@ -37,7 +37,7 @@ object DataSlyUseJavaReferenceProvider : JavaClassReferenceProvider() {
    *
    * @see com.intellij.psi.impl.source.resolve.reference.impl.providers.JavaClassReference.getScope
    */
-  override fun getScope(project: Project): GlobalSearchScope? {
+  override fun getScope(project: Project): GlobalSearchScope {
     return project.allScope()
   }
 }

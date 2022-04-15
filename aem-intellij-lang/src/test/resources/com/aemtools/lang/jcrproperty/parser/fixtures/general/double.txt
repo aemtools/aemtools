@@ -1,0 +1,7 @@
+JpFile:double.in
+  JpTypeImpl(TYPE)
+    PsiElement({)('{')
+    PsiElement(Double)('Double')
+    PsiElement(})('}')
+  JpSingleImpl(SINGLE)
+    PsiElement(VALUE_TOKEN)('double')

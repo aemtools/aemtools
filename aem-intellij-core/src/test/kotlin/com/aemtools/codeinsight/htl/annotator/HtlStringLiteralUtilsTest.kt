@@ -1,14 +1,15 @@
 package com.aemtools.codeinsight.htl.annotator
 
 import com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin
-import com.nhaarman.mockito_kotlin.mock
+import com.aemtools.test.util.mock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
+import org.mockito.kotlin.mock
 
 /**
  * Test for [HtlStringLiteralUtils].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlStringLiteralUtilsTest {
 

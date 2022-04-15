@@ -3,7 +3,7 @@ package com.aemtools.test.fixture
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 interface TestClassesMixin {
   fun JavaCodeInsightTestFixture.addClasses() {

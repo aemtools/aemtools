@@ -2,7 +2,7 @@ package com.aemtools.codeinsight.htl.model
 
 /**
  * Types of `data-sly-use` declaration.
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 enum class UseType {
   /**

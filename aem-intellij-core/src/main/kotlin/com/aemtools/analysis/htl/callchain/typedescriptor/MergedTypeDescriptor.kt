@@ -9,7 +9,7 @@ import com.intellij.psi.PsiElement
 /**
  * Type descriptor compounded from several type descriptors.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class MergedTypeDescriptor(vararg val types: TypeDescriptor) : TypeDescriptor {
   override fun myVariants(): List<LookupElement> =

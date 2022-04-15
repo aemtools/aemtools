@@ -11,7 +11,7 @@ import java.util.LinkedHashMap
 import java.util.LinkedList
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 data class PsiWidgetDefinition constructor(
     val fields: LinkedHashMap<String, String?>,

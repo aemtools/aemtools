@@ -4,7 +4,7 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.intellij.psi.PsiElement
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 open class BaseChainElement(
     override val element: PsiElement,

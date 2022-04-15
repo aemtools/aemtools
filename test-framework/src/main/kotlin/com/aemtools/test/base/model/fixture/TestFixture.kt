@@ -9,7 +9,7 @@ import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 import java.util.ArrayList
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 open class TestFixture(val fixture: JavaCodeInsightTestFixture)
   : ITestFixture, ITestFixtureInternal {

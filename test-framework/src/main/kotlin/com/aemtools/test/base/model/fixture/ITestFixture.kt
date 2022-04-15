@@ -4,7 +4,7 @@ import com.aemtools.test.base.model.assertion.IAssertionContext
 import org.intellij.lang.annotations.Language
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 interface ITestFixture {
 

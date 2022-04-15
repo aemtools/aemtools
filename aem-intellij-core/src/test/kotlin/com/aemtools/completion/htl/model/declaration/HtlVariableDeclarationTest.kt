@@ -14,7 +14,7 @@ import org.mockito.Mockito.`when`
 /**
  * Test for [HtlVariableDeclaration] & [HtlVariableDeclaration.Companion].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlVariableDeclarationTest {
 

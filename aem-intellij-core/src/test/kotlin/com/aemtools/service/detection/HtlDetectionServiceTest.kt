@@ -6,7 +6,7 @@ import com.aemtools.test.base.BaseLightTest
 import org.assertj.core.api.Assertions.assertThat
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlDetectionServiceTest : BaseLightTest(false) {
 
@@ -91,8 +91,6 @@ class HtlDetectionServiceTest : BaseLightTest(false) {
 
   override fun setUp() {
     super.setUp()
-    HtlRootDirectories.getInstance(project)?.let {
-      it.directories.clear()
-    }
+    HtlRootDirectories.getInstance(project)?.directories?.clear()
   }
 }

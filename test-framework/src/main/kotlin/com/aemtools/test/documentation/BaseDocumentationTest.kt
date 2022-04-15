@@ -6,7 +6,7 @@ import com.aemtools.test.documentation.model.IDocTestFixture
 import com.intellij.lang.documentation.AbstractDocumentationProvider
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class BaseDocumentationTest(
     val tested: AbstractDocumentationProvider,

@@ -3,7 +3,7 @@ package com.aemtools.codeinsight.htl.model
 import com.intellij.psi.xml.XmlAttribute
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlListHelperDeclaration(
     attribute: XmlAttribute,

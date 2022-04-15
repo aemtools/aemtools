@@ -2,13 +2,12 @@ package com.aemtools.service
 
 import com.aemtools.service.repository.IRepositoryService
 import com.aemtools.service.repository.WidgetDocRepository
-import com.aemtools.service.repository.inmemory.EditConfigRepository
 import com.aemtools.service.repository.inmemory.HtlAttributesRepository
 import com.aemtools.service.repository.inmemory.RepPolicyRepository
 import com.intellij.openapi.components.ServiceManager
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object ServiceFacade {
 
@@ -27,13 +26,6 @@ object ServiceFacade {
    * @return instance of htl attribute repository
    */
   fun getHtlAttributesRepository(): HtlAttributesRepository = HtlAttributesRepository
-
-  /**
-   * Get [EditConfigRepository] instance.
-   *
-   * @return instance of edit config repository
-   */
-  fun getEditConfigRepository() = EditConfigRepository
 
   /**
    * Get [RepPolicyRepository] instance.

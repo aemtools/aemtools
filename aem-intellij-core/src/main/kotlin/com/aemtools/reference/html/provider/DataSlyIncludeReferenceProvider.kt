@@ -6,7 +6,7 @@ import com.intellij.psi.xml.XmlAttributeValue
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object DataSlyIncludeReferenceProvider : DataSlyIncludeReferenceProviderBase() {
 

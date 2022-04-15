@@ -8,7 +8,7 @@ import kotlin.reflect.KProperty
  * provide not null value.
  * If supplier returns __null__ [IllegalArgumentException] will be thrown.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class RequireNotNull<out T>(private val supplier: () -> T?) {
 

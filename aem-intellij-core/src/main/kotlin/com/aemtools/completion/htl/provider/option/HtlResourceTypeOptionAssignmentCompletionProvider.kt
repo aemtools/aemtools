@@ -12,7 +12,7 @@ import com.intellij.util.ProcessingContext
 import org.apache.commons.lang.StringUtils
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlResourceTypeOptionAssignmentCompletionProvider
   : CompletionProvider<CompletionParameters>() {
@@ -22,7 +22,7 @@ object HtlResourceTypeOptionAssignmentCompletionProvider
 
   override fun addCompletions(
       parameters: CompletionParameters,
-      context: ProcessingContext?,
+      context: ProcessingContext,
       result: CompletionResultSet) {
     val myDirectory = parameters.position.containingFile.originalFile.containingDirectory.virtualFile
         .path

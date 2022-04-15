@@ -2,8 +2,8 @@ package com.aemtools.analysis.htl.callchain.typedescriptor.properties
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.BaseTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
+import com.aemtools.common.completion.withPriority
 import com.aemtools.common.util.resourceType
-import com.aemtools.common.util.withPriority
 import com.aemtools.completion.htl.CompletionPriority.DIALOG_PROPERTY
 import com.aemtools.index.model.dialog.AemComponentClassicDialogDefinition
 import com.aemtools.index.model.dialog.AemComponentTouchUIDialogDefinition
@@ -14,7 +14,7 @@ import com.intellij.psi.PsiElement
 /**
  * Type descriptor for `properties` context object.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class PropertiesTypeDescriptor(val element: PsiElement) : BaseTypeDescriptor() {
 

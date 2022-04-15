@@ -3,7 +3,7 @@ package com.aemtools.service.repository
 import com.aemtools.completion.model.WidgetDoc
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 interface WidgetDocRepository {
 

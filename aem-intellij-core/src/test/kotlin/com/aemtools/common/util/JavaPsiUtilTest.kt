@@ -13,7 +13,7 @@ import com.aemtools.test.util.notNull
 import com.intellij.psi.PsiField
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class JavaPsiUtilTest : BaseLightTest(),
     JavaSearchMixin,

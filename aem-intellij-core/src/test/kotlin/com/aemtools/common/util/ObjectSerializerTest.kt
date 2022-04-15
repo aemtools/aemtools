@@ -5,7 +5,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class ObjectSerializerTest {
 

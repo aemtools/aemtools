@@ -8,10 +8,10 @@ import com.intellij.util.ProcessingContext
 
 /**
  * Provides available "data-sly-use" variants.
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object HtmlDataSlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
-  override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext?,
+  override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext,
                               result: CompletionResultSet) {
     if (result.isStopped) {
       return

@@ -1,24 +1,21 @@
 package com.aemtools.completion.widget
 
+import com.aemtools.common.completion.BaseCompletionContributor
 import com.aemtools.common.constant.const
-import com.intellij.codeInsight.completion.CompletionContributor
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
-import com.intellij.codeInsight.completion.CompletionType
 import com.intellij.patterns.PlatformPatterns
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro_Troynikov.
+ * @author Dmytro Primshyts.
  */
-class WidgetCompletionContributor : CompletionContributor {
+class WidgetCompletionContributor : BaseCompletionContributor({
 
-  constructor() {
-    extend(CompletionType.BASIC, PlatformPatterns.psiElement(), WidgetCompletionProvider())
-  }
+  basic(PlatformPatterns.psiElement(), WidgetCompletionProvider())
 
-}
+})
 
 private class WidgetCompletionProvider : CompletionProvider<CompletionParameters>() {
 

@@ -1,6 +1,8 @@
 package com.aemtools.analysis.htl.callchain.typedescriptor.java
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
+import com.aemtools.common.completion.lookupElement
+import com.aemtools.common.completion.withPriority
 import com.aemtools.common.util.allScope
 import com.aemtools.common.util.elFields
 import com.aemtools.common.util.elMethods
@@ -8,13 +10,11 @@ import com.aemtools.common.util.elName
 import com.aemtools.common.util.findElMemberByName
 import com.aemtools.common.util.psiManager
 import com.aemtools.common.util.resolveReturnType
-import com.aemtools.common.util.withPriority
 import com.aemtools.completion.htl.CompletionPriority
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.lang.java.JavaSearch
 import com.aemtools.lang.java.JavaUtilities
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.psi.PsiArrayType
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiClassType
@@ -28,7 +28,7 @@ import java.util.ArrayList
 /**
  * Type descriptor which uses given [PsiClass] to provide type information.
  *
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
                                       open val psiMember: PsiMember? = null,
@@ -53,7 +53,7 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
       } else {
         methodNames.add(name)
       }
-      var lookupElement = LookupElementBuilder.create(name)
+      var lookupElement = lookupElement(name)
           .withIcon(it.getIcon(0))
           .withTailText(" ${it.name}()", true)
 
@@ -65,7 +65,7 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
       result.add(lookupElement.withPriority(extractPriority(it, psiClass)))
     }
     fields.forEach {
-      val lookupElement = LookupElementBuilder.create(it.name.toString())
+      val lookupElement = lookupElement(it.name.toString())
           .withIcon(it.getIcon(0))
           .withTypeText(it.type.presentableText, true)
 

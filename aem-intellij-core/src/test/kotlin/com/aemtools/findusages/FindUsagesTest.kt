@@ -8,7 +8,7 @@ import com.intellij.psi.xml.XmlAttribute
 import org.assertj.core.api.Assertions.assertThat
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class FindUsagesTest : BaseLightTest() {
 

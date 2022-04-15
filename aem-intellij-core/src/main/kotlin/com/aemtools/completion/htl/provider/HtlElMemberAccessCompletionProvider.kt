@@ -12,7 +12,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlElMemberAccessCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(

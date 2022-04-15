@@ -4,7 +4,7 @@ import java.io.Serializable
 import java.util.ArrayList
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 data class WidgetDoc(
     /**

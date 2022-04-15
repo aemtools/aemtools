@@ -14,7 +14,7 @@ import com.intellij.psi.search.searches.ClassInheritorsSearch
 /**
  * Utility object for java search.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object JavaSearch {
 

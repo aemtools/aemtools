@@ -5,7 +5,7 @@ import com.aemtools.completion.widget.WidgetVariantsProvider.JCR_PRIMARY_TYPE_VA
 import com.aemtools.test.completion.CompletionBaseLightTest
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class ClassicWidgetCompletionTest : CompletionBaseLightTest() {
 

@@ -18,7 +18,7 @@ import com.intellij.psi.PsiIdentifier
 import com.intellij.psi.xml.XmlAttribute
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class FelixOSGiPropertyLineMarker : LineMarkerProvider {
   override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<PsiElement>? {
@@ -45,17 +45,27 @@ class FelixOSGiPropertyLineMarker : LineMarkerProvider {
         return null
       }
 
-      val propertyDescriptors = propertyDescriptors(configs, value)
+      return FelixOSGiPropertyMarkerInfo(element) {
+        val containingClassFqn = containingClass.qualifiedName
+            ?: return@FelixOSGiPropertyMarkerInfo emptyList()
 
-      return FelixOSGiPropertyMarkerInfo(element,
-          propertyDescriptors)
+        val configs = OSGiConfigSearch.findConfigsForClass(
+            containingClassFqn,
+            element.project,
+            true)
+        if (configs.isEmpty()) {
+          return@FelixOSGiPropertyMarkerInfo emptyList()
+        }
+
+        propertyDescriptors(configs, value)
+      }
     }
 
     return null
   }
 
-  override fun collectSlowLineMarkers(elements: MutableList<PsiElement>,
-                                      result: MutableCollection<LineMarkerInfo<PsiElement>>) {
+  override fun collectSlowLineMarkers(elements: MutableList<out PsiElement>,
+                                      result: MutableCollection<in LineMarkerInfo<*>>) {
   }
 
   private fun propertyDescriptors(configs: List<OSGiConfiguration>, value: String): List<FelixOSGiPropertyDescriptor> {
@@ -83,7 +93,7 @@ class FelixOSGiPropertyLineMarker : LineMarkerProvider {
   private fun padModsByMaxModLength(propertyDescriptors: List<FelixOSGiPropertyDescriptor>)
       : List<FelixOSGiPropertyDescriptor> {
     val modsMaxLength = propertyDescriptors
-        .maxBy {
+        .maxByOrNull {
           it.mods.length
         }?.mods?.length
         ?: 0

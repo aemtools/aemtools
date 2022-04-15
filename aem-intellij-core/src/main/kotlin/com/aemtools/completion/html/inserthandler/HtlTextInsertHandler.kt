@@ -7,12 +7,14 @@ import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.openapi.editor.Document
 
 /**
- * Base htl text insert handler.
+ * Base text insert handler.
+ *
+ * @author Dmytro Primshyts
  */
 abstract class HtlTextInsertHandler(private val expression: String,
                                     private val offset: Int) : InsertHandler<LookupElement> {
 
-  override fun handleInsert(context: InsertionContext, item: LookupElement?) {
+  override fun handleInsert(context: InsertionContext, item: LookupElement) {
     val document = context.document
     val editor = context.editor
     val position = editor.caretModel.offset
@@ -24,6 +26,7 @@ abstract class HtlTextInsertHandler(private val expression: String,
   }
 
   private fun tagHasExpression(document: Document, position: Int) =
-      document.hasText("='" + expression, position) || document.hasText("=\"" + expression, position)
+      document.hasText("='$expression", position)
+          || document.hasText("=\"$expression", position)
 
 }

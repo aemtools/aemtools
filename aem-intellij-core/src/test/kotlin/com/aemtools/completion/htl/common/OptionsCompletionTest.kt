@@ -6,7 +6,7 @@ import com.aemtools.test.BaseVariantsCheckContributorTest.Companion.DEFAULT_CONT
 import com.aemtools.test.completion.CompletionBaseLightTest
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class OptionsCompletionTest : CompletionBaseLightTest(true) {
 

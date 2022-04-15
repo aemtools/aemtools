@@ -2,17 +2,17 @@ package com.aemtools.analysis.htl.callchain.typedescriptor.template
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.BaseTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.completion.htl.model.ResolutionResult
 import com.aemtools.index.model.TemplateDefinition
 import com.aemtools.lang.htl.icons.HtlIcons
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.project.Project
 
 /**
  * Descriptor of type spawned in `data-sly-use` which included some Htl template containing file.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class TemplateHolderTypeDescriptor(
     val templates: List<TemplateDefinition>,
@@ -20,7 +20,7 @@ class TemplateHolderTypeDescriptor(
   : BaseTypeDescriptor() {
   override fun myVariants(): List<LookupElement> {
     return templates.map {
-      LookupElementBuilder.create(it.name)
+      lookupElement(it.name)
           .withTypeText("HTL Template")
           .withIcon(HtlIcons.HTL_FILE_ICON)
     }

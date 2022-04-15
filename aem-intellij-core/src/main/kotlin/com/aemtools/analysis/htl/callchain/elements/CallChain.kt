@@ -5,7 +5,7 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.intellij.psi.PsiElement
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class CallChain(val callChainSegments: List<CallChainSegment>) {
 

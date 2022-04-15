@@ -1,17 +1,14 @@
 package com.aemtools.analysis.htl.callchain.elements.virtual
 
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.java.IterableJavaTypeDescriptor
-import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 
 /**
  * Virtual call chain element interface.
  * Represents call chain that has no physical presentation
- * inside PSI
- * @author Dmytro Troynikov
+ * inside PSI.
+ *
+ * @author Dmytro Primshyts
  */
 interface VirtualCallChainElement {
   /**

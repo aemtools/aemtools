@@ -9,7 +9,7 @@ import com.aemtools.test.fix.BaseFixTest
  *  * [HtlWrongQuotesLiteralFixIntentionAction]
  *  * [HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction]
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlWrongQuotesFixTest : BaseFixTest() {
 

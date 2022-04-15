@@ -6,7 +6,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReferenceBase
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class PsiDirectoryReference(
     val psiDirectory: PsiDirectory,
@@ -17,7 +17,7 @@ class PsiDirectoryReference(
     return emptyArray()
   }
 
-  override fun resolve(): PsiElement? {
+  override fun resolve(): PsiElement {
     return psiDirectory
   }
 }

@@ -1,13 +1,13 @@
 package com.aemtools.completion.model.htl
 
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.completion.htl.inserthandler.HtlElArrayOptionInsertHandler
 import com.aemtools.completion.htl.inserthandler.HtlElStringOptionInsertHandler
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 data class HtlOption(val name: String,
                      val type: String,
@@ -20,7 +20,7 @@ data class HtlOption(val name: String,
    *
    * @return new lookup element
    */
-  fun toLookupElement(): LookupElement = LookupElementBuilder.create(name)
+  fun toLookupElement(): LookupElement = lookupElement(name)
       .withTypeText("HTL Option")
       .withIcon(AllIcons.Nodes.Parameter)
       .withInsertHandler(when (name) {

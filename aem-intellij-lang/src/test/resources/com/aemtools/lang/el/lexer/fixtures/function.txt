@@ -1,0 +1,8 @@
+${ ('${')
+IDENTIFIER_TOKEN ('granite')
+: (':')
+IDENTIFIER_TOKEN ('encodeURIComponent')
+( ('(')
+STRING_LITERAL (''uri'')
+) (')')
+} ('}')

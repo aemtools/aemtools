@@ -4,8 +4,8 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.ArrayJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.IterableJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
+import com.aemtools.common.completion.lookupElement
 import com.intellij.codeInsight.lookup.LookupElement
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 
 /**
  * Base implementation of [VirtualCallChainElement].
@@ -28,7 +28,7 @@ class BaseVirtualCallChainElement(
       }
     }
 
-    var lookupElement = LookupElementBuilder.create(lookupString)
+    var lookupElement = lookupElement(lookupString)
 
     when (type) {
       is ArrayJavaTypeDescriptor -> {

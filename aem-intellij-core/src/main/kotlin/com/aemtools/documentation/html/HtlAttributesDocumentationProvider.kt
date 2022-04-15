@@ -11,7 +11,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlAttributesDocumentationProvider : AbstractDocumentationProvider() {
 

@@ -13,7 +13,7 @@ import org.assertj.core.api.Assertions.assertThat
 /**
  * Test for [FelixOSGiPropertyLineMarker].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class FelixOSGiPropertyLineMarkerTest : BaseLightTest(),
     OSGiConfigFixtureMixin,
@@ -36,7 +36,7 @@ class FelixOSGiPropertyLineMarkerTest : BaseLightTest(),
       public class MyService {
 
         @Property
-        private static final String ${CARET}TEST = "test.property"
+        private static final String ${CARET}TEST = "test.property";
 
       }
     """)

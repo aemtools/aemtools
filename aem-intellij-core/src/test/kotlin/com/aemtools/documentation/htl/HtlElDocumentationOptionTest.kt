@@ -5,7 +5,7 @@ import com.aemtools.test.documentation.model.IDocTestFixture
 import org.intellij.lang.annotations.Language
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlElDocumentationOptionTest
   : BaseDocumentationTest(HtlELDocumentationProvider()) {

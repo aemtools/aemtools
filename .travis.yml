@@ -1,5 +1,5 @@
 language: java
-jdk: oraclejdk8
+jdk: oraclejdk11
 dist: trusty
 sudo: required
 
@@ -7,7 +7,7 @@ env:
   global:
   - ORG_GRADLE_PROJECT_downloadIdeaSources=false
 
-script: ./gradlew test jacocoFullReport detektCheck
+script: ./gradlew test koverMergedHtmlReport detektCheck
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
@@ -24,18 +24,18 @@ jobs:
   include:
     - stage: Build and Test
       env: ORG_GRADLE_PROJECT_ideaVersion=LATEST-EAP-SNAPSHOT
-    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.3.5
-    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.1.5
+    - env: ORG_GRADLE_PROJECT_ideaVersion=2021.1.3
+#    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.1.5
     - stage: Deploy new Release
       script: skip
-      env: ORG_GRADLE_PROJECT_ideaVersion=2017.3.4
+      env: ORG_GRADLE_PROJECT_ideaVersion=2021.1.3
       deploy:
         - provider: script
           script: ./gradlew publishPlugin
           skip_cleanup: true
           on:
             tags: true
-            repo: DmytroTroynikov/aemtools
+            repo: aemtools/aemtools
         - provider: releases
           api_key: "generate yours: https://docs.travis-ci.com/user/deployment/releases/"
           file_glob: true
@@ -43,6 +43,6 @@ jobs:
           skip_cleanup: true
           on:
             tags: true
-            repo: DmytroTroynikov/aemtools
+            repo: aemtools/aemtools
   allow_failures:
     - env: ORG_GRADLE_PROJECT_ideaVersion=LATEST-EAP-SNAPSHOT

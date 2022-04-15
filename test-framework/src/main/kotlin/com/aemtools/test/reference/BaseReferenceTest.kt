@@ -7,7 +7,7 @@ import com.aemtools.test.reference.model.ReferenceTestFixture
 import com.intellij.testFramework.LightProjectDescriptor
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 abstract class BaseReferenceTest(withAemUberJar: Boolean = false)
   : BaseLightTest(withAemUberJar) {

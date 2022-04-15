@@ -1,5 +1,6 @@
 package com.aemtools.completion.clientlib.provider
 
+import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.util.findParentByType
 import com.aemtools.common.util.getPsi
 import com.aemtools.common.util.relativeTo
@@ -12,19 +13,18 @@ import com.aemtools.lang.util.basePathElement
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.project.DumbAware
 import com.intellij.psi.PsiDirectory
 import com.intellij.util.ProcessingContext
 import javax.swing.Icon
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object ClientlibDeclarationIncludeCompletionProvider : CompletionProvider<CompletionParameters>(), DumbAware {
   override fun addCompletions(
       parameters: CompletionParameters,
-      context: ProcessingContext?,
+      context: ProcessingContext,
       result: CompletionResultSet) {
     if (result.isStopped) {
       return
@@ -48,7 +48,7 @@ object ClientlibDeclarationIncludeCompletionProvider : CompletionProvider<Comple
     }
 
     result.addAllElements(filteredVariants.map {
-      LookupElementBuilder.create(it.relativePath)
+      lookupElement(it.relativePath)
           .withIcon(it.icon)
     })
     result.stopHere()

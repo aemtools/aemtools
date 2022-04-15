@@ -4,7 +4,6 @@ import com.aemtools.analysis.htl.callchain.elements.CallChainElement
 import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiUnresolvedTypeDescriptor
-import com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
@@ -12,19 +11,19 @@ import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiReferenceBase
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlPropertyAccessReference(
-    val propertyAccess: com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin,
+    val propertyAccess: PropertyAccessMixin,
     val callChainElement: CallChainElement,
     textRange: TextRange,
     val referencedElement: PsiElement,
     soft: Boolean = true
-) : PsiReferenceBase<com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin>(propertyAccess, textRange, soft) {
+) : PsiReferenceBase<PropertyAccessMixin>(propertyAccess, textRange, soft) {
 
-  override fun resolve(): PsiElement? = referencedElement
+  override fun resolve(): PsiElement = referencedElement
 
-  override fun isReferenceTo(element: PsiElement?): Boolean {
+  override fun isReferenceTo(element: PsiElement): Boolean {
     return referencedElement == element
   }
 
@@ -39,11 +38,7 @@ class HtlPropertyAccessReference(
     }
   }
 
-  override fun handleElementRename(newElementName: String?): PsiElement {
-    if (newElementName == null) {
-      return propertyAccess
-    }
-
+  override fun handleElementRename(newElementName: String): PsiElement {
     val actualElement = callChainElement.element as? com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
         ?: return propertyAccess
 

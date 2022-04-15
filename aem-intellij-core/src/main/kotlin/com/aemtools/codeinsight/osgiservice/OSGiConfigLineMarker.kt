@@ -11,7 +11,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiIdentifier
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class OSGiConfigLineMarker : LineMarkerProvider {
   override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<PsiElement>? {
@@ -32,7 +32,7 @@ class OSGiConfigLineMarker : LineMarkerProvider {
     return null
   }
 
-  override fun collectSlowLineMarkers(elements: MutableList<PsiElement>,
-                                      result: MutableCollection<LineMarkerInfo<PsiElement>>) {
+  override fun collectSlowLineMarkers(elements: MutableList<out PsiElement>,
+                                      result: MutableCollection<in LineMarkerInfo<*>>) {
   }
 }

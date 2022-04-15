@@ -10,7 +10,7 @@ import com.intellij.psi.PsiField
 import com.intellij.psi.PsiMethod
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 class ReferenceTest : BaseReferenceTest() {
 

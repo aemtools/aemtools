@@ -27,7 +27,7 @@ import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
 import com.aemtools.common.util.hasChild
 import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.htl.predefined.HtlELPredefined.LIST_AND_REPEAT_HELPER_OBJECT
-import com.aemtools.index.model.HtlTemplateDeclaration
+import com.aemtools.codeinsight.htl.model.HtlTemplateDeclaration
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
 import com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
@@ -37,7 +37,7 @@ import java.util.ArrayList
 import java.util.LinkedList
 
 /**
- * @author Dmytro_Troynikov
+ * @author Dmytro Primshyts
  */
 object RawCallChainProcessor {
 

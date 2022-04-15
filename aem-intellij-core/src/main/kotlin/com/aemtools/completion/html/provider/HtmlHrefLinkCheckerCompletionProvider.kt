@@ -1,25 +1,25 @@
 package com.aemtools.completion.html.provider
 
+import com.aemtools.common.completion.lookupElement
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.completion.XmlAttributeInsertHandler
-import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtmlHrefLinkCheckerCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(
       parameters: CompletionParameters,
-      context: ProcessingContext?,
+      context: ProcessingContext,
       result: CompletionResultSet) {
     if (result.isStopped) {
       return
     }
 
-    result.addElement(LookupElementBuilder.create("x-cq-linkchecker")
+    result.addElement(lookupElement("x-cq-linkchecker")
         .withInsertHandler(XmlAttributeInsertHandler())
     )
   }

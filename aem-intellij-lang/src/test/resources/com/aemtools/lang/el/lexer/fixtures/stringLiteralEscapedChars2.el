@@ -1,0 +1,1 @@
+${'literal with \' escaped char'}

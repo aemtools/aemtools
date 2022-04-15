@@ -1,7 +1,7 @@
 package com.aemtools.service.repository
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object const {
 

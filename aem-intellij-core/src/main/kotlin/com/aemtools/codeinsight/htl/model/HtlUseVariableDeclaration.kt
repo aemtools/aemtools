@@ -11,7 +11,7 @@ import com.intellij.psi.PsiClass
 import com.intellij.psi.xml.XmlAttribute
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class HtlUseVariableDeclaration(
     xmlAttribute: XmlAttribute,

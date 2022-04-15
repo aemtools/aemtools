@@ -3,7 +3,7 @@ package com.aemtools.ide.refactoring
 import com.aemtools.test.rename.BaseRenameTest
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class JavaToHtlRenameTest : BaseRenameTest() {
 

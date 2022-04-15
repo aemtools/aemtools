@@ -12,7 +12,7 @@ import org.mockito.Mock
 /**
  * Test for [HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 @ExtendWith(MockitoExtension::class)
 internal class HtlWrongQuotesXmlAttributeInvertQuotesIntentionActionTest {

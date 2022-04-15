@@ -14,7 +14,7 @@ import com.intellij.psi.xml.XmlTag
 /**
  * Test for [OSGiConfigGotoClassLineMarkerProvider].
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 class OSGiConfigGotoClassLineMarkerProviderTest : BaseLightTest(),
     OSGiConfigFixtureMixin {

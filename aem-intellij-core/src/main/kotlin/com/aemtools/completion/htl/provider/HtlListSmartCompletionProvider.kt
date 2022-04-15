@@ -12,11 +12,11 @@ import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlListSmartCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(parameters: CompletionParameters,
-                              context: ProcessingContext?,
+                              context: ProcessingContext,
                               result: CompletionResultSet) {
     val currentPosition = parameters.position
 

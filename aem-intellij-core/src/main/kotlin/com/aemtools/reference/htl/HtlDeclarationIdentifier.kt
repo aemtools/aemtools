@@ -14,7 +14,7 @@ import javax.swing.Icon
 /**
  * Htl declaration identifier fake element.
  *
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 open class HtlDeclarationIdentifier(val xmlAttribute: XmlAttribute)
   : FakePsiElement(), PsiNamedElement {
@@ -81,7 +81,7 @@ open class HtlDeclarationIdentifier(val xmlAttribute: XmlAttribute)
   }
 
   override fun textToCharArray(): CharArray {
-    return text?.toCharArray() ?: kotlin.CharArray(0)
+    return text?.toCharArray() ?: CharArray(0)
   }
 
   override fun textContains(c: Char): Boolean {

@@ -25,7 +25,7 @@ import com.intellij.util.ProcessingContext
 import java.util.LinkedList
 
 /**
- * @author Dmytro Troynikov
+ * @author Dmytro Primshyts
  */
 object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
   override fun getReferencesByElement(
