@@ -68,7 +68,7 @@ tasks {
         }.joinToString("\n").run { markdownToHTML(this) }
       )
     }
-    changeNotes.set(provider { changelog.getUnreleased().toHTML() })
+    changeNotes.set(provider { changelog.getLatest().toHTML() })
 
     pluginXmlFiles.set(fileTree("$projectDir/src/main/resources/META-INF").filter { it.isFile() }.files)
   }
