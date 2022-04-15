@@ -1,8 +1,8 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
-[Unreleased]: https://github.com/aemtools/aemtools/tree/v0.9.1
+## [0.9.1] - 2022-04-14
+[0.9.1]: https://github.com/aemtools/aemtools/tree/v0.9.1
 ### New features
 - [Add support of 2021.1+ IDEA versions](https://github.com/aemtools/aemtools/issues/182)
 - [HTL: Improve completion for i18n expressions](https://github.com/aemtools/aemtools/issues/111)
