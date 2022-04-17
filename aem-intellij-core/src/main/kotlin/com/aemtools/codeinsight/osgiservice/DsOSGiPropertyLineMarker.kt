@@ -68,6 +68,7 @@ class DsOSGiPropertyLineMarker : LineMarkerProvider {
   private fun findReferencedOsgiComponentClassInCurrentClass(configPsiClass: PsiClass): PsiClass? {
     val osgiComponentPsiClass = configPsiClass.parent as? PsiClass ?: return null
     val isReferencedOsgiComponentClass = osgiComponentPsiClass.annotations
+        .filter { it.hasQualifiedName(DS_DESIGNATE_ANNOTATION) }
         .flatMap { it.parameterList.attributes.asList() }
         .any { attribute ->
           DESIGNATE_OCD_ANNOTATION_ATTRIBUTE == attribute.name && isOsgiConfig(attribute, configPsiClass)

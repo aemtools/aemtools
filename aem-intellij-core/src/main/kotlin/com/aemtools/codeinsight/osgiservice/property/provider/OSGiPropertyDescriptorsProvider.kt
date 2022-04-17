@@ -11,60 +11,58 @@ import com.intellij.psi.xml.XmlAttribute
 /**
  * @author Kostiantyn Diachenko
  */
-class OSGiPropertyDescriptorsProvider {
-  companion object {
-    fun get(referencedOsgiComponentClass: PsiClass, configPropertyName: String): List<FelixOSGiPropertyDescriptor> {
-      val containingClassFqn = referencedOsgiComponentClass.qualifiedName
-          ?: return emptyList()
+object OSGiPropertyDescriptorsProvider {
+  fun get(referencedOsgiComponentClass: PsiClass, configPropertyName: String): List<FelixOSGiPropertyDescriptor> {
+    val containingClassFqn = referencedOsgiComponentClass.qualifiedName
+        ?: return emptyList()
 
-      val configs = OSGiConfigSearch.findConfigsForClass(
-          containingClassFqn,
-          referencedOsgiComponentClass.project,
-          true)
-      if (configs.isEmpty()) {
-        return emptyList()
-      }
-
-      return propertyDescriptors(configs, configPropertyName)
+    val configs = OSGiConfigSearch.findConfigsForClass(
+        containingClassFqn,
+        referencedOsgiComponentClass.project,
+        true)
+    if (configs.isEmpty()) {
+      return emptyList()
     }
 
-    private fun propertyDescriptors(configs: List<OSGiConfiguration>,
-                                    value: String): List<FelixOSGiPropertyDescriptor> {
-      return configs.sortByMods()
-          .mapNotNull { config ->
-            val file = config.xmlFile ?: return@mapNotNull null
-            val attribute = file
-                .findChildrenByType(XmlAttribute::class.java)
-                .find { it.name == value }
+    return propertyDescriptors(configs, configPropertyName)
+  }
 
-            val attributeValue = attribute?.value ?: "<no value set>"
+  private fun propertyDescriptors(configs: List<OSGiConfiguration>,
+                                  value: String): List<FelixOSGiPropertyDescriptor> {
+    return configs.sortByMods()
+        .mapNotNull { config ->
+          val file = config.xmlFile ?: return@mapNotNull null
+          val attribute = file
+              .findChildrenByType(XmlAttribute::class.java)
+              .find { it.name == value }
 
-            FelixOSGiPropertyDescriptor(
-                config.mods.joinToString { it },
-                attributeValue,
-                attribute,
-                file
-            )
-          }
-          .let { propertyDescriptors ->
-            padModsByMaxModLength(propertyDescriptors)
-          }
-    }
+          val attributeValue = attribute?.value ?: "<no value set>"
 
-    private fun padModsByMaxModLength(propertyDescriptors: List<FelixOSGiPropertyDescriptor>)
-        : List<FelixOSGiPropertyDescriptor> {
-      val modsMaxLength = propertyDescriptors
-          .maxByOrNull {
-            it.mods.length
-          }?.mods?.length
-          ?: 0
-      return propertyDescriptors.map {
-        it.copy(
-            mods = it.mods.padEnd(
-                modsMaxLength
-            )
-        )
-      }
+          FelixOSGiPropertyDescriptor(
+              config.mods.joinToString { it },
+              attributeValue,
+              attribute,
+              file
+          )
+        }
+        .let { propertyDescriptors ->
+          padModsByMaxModLength(propertyDescriptors)
+        }
+  }
+
+  private fun padModsByMaxModLength(propertyDescriptors: List<FelixOSGiPropertyDescriptor>)
+      : List<FelixOSGiPropertyDescriptor> {
+    val modsMaxLength = propertyDescriptors
+        .maxByOrNull {
+          it.mods.length
+        }?.mods?.length
+        ?: 0
+    return propertyDescriptors.map {
+      it.copy(
+          mods = it.mods.padEnd(
+              modsMaxLength
+          )
+      )
     }
   }
 }

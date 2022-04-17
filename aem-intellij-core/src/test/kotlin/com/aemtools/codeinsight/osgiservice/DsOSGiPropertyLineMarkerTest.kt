@@ -19,7 +19,7 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     OSGiDsAnnotationsMixin,
     JavaMixin {
 
-  fun testDsPropertiesShouldBeMarkedWhenOsgiConfigAsSeparateAnnotation() = fileCase {
+  fun `test marker info DS OSGi Config with OCD in separate class`() = fileCase {
     addComponentAnnotation()
     addDesignateAnnotation()
     addObjectClassDefinitionAnnotation()
@@ -81,7 +81,7 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     }
   }
 
-  fun testDsPropertiesShouldBeMarkedWhenOsgiConfigAsInnerAnnotation() = fileCase {
+  fun `test marker info DS OSGi Config with OCD as inner class`() = fileCase {
     addComponentAnnotation()
     addDesignateAnnotation()
     addObjectClassDefinitionAnnotation()
@@ -138,7 +138,7 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
   /**
    * Note: Class file doesn't provide PsiJavaCodeReferenceElement
    */
-  fun testDsPropertiesShouldBeMarkedWhenOsgiConfigAsInnerAnnotationInClassFile() = fileCase {
+  fun `test marker info DS OSGi Config when OCD as inner annotation in _class file`() = fileCase {
     addComponentAnnotation()
     addDesignateAnnotation()
     addObjectClassDefinitionAnnotation()
@@ -189,6 +189,239 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
       Assertions.assertThat(felixGutter.lineMarkerTooltip)
           .isEqualTo("OSGi Property")
 
+    }
+  }
+
+  fun `test no marker info DS OSGi Config when OCD in not marked as OCD`() = fileCase {
+    addComponentAnnotation()
+    addDesignateAnnotation()
+    addObjectClassDefinitionAnnotation()
+    addAttributeDefinitionAnnotation()
+
+    javaLangString()
+
+    addClass("MyService.class", """
+      package com.test;
+
+      import ${const.java.DS_COMPONENT_ANNOTATION};
+      import ${const.java.DS_DESIGNATE_ANNOTATION};
+      import ${const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION};
+
+      @Component
+      @Designate(ocd = Config.class)
+      public class MyService {
+          
+        public @interface Config {
+  
+          @AttributeDefinition(
+              name = "Test property",
+              description = "Test property description")
+          String ${CARET}test_property();
+        }
+      }
+    """)
+
+    verify {
+      val gutters = myFixture.findAllGutters()
+
+      Assertions.assertThat(gutters)
+          .isEmpty()
+    }
+  }
+
+  fun `test no marker info DS OSGi Config when OCD method doesn't have AttributeDefinition annotation`() = fileCase {
+    addComponentAnnotation()
+    addDesignateAnnotation()
+    addObjectClassDefinitionAnnotation()
+
+    javaLangString()
+
+    addClass("MyService.java", """
+      package com.test;
+
+      import ${const.java.DS_COMPONENT_ANNOTATION};
+      import ${const.java.DS_DESIGNATE_ANNOTATION};
+      import ${const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION};
+
+      @Component
+      @Designate(ocd = Config.class)
+      public class MyService { 
+        
+        @ObjectClassDefinition(name = "Configuration")
+        public @interface Config {
+          String ${CARET}test_property();
+        }
+      }
+    """)
+
+    verify {
+      val gutters = myFixture.findAllGutters()
+
+      Assertions.assertThat(gutters)
+          .isEmpty()
+    }
+  }
+
+  fun `test no marker info DS OSGi Config when no config files for current OCD`() = fileCase {
+    addComponentAnnotation()
+    addDesignateAnnotation()
+    addObjectClassDefinitionAnnotation()
+    addAttributeDefinitionAnnotation()
+
+    javaLangString()
+
+    addClass("MyService.class", """
+      package com.test;
+
+      import ${const.java.DS_COMPONENT_ANNOTATION};
+      import ${const.java.DS_DESIGNATE_ANNOTATION};
+      import ${const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION};
+      import ${const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION};
+
+      @Component
+      @Designate(ocd = Config.class)
+      public class MyService { 
+        
+        @ObjectClassDefinition(name = "Configuration")
+        public @interface Config {
+          @AttributeDefinition(
+              name = "Test property",
+              description = "Test property description")
+          String ${CARET}test_property();
+        }
+      }
+    """)
+
+    verify {
+      val gutters = myFixture.findAllGutters()
+
+      Assertions.assertThat(gutters)
+          .isEmpty()
+    }
+  }
+
+  fun `test no marker info DS OSGi Config when component doesn't have Designate annotation`() = fileCase {
+    addComponentAnnotation()
+    addDesignateAnnotation()
+    addObjectClassDefinitionAnnotation()
+    addAttributeDefinitionAnnotation()
+
+    javaLangString()
+
+    addClass("MyService.java", """
+      package com.test;
+
+      import ${const.java.DS_COMPONENT_ANNOTATION};
+      import ${const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION};
+      import ${const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION};
+
+      @Component(ocd = Config.class)
+      public class MyService { 
+        
+        @ObjectClassDefinition(name = "Configuration")
+        public @interface Config {
+          @AttributeDefinition(
+              name = "Test property",
+              description = "Test property description")
+          String ${CARET}test_property();
+        }
+      }
+    """)
+
+    verify {
+      val gutters = myFixture.findAllGutters()
+
+      Assertions.assertThat(gutters)
+          .isEmpty()
+    }
+  }
+
+  fun `test no marker info DS OSGi Config when it is referenced not via Designate annotation`() = fileCase {
+    addComponentAnnotation()
+    addDesignateAnnotation()
+    addObjectClassDefinitionAnnotation()
+    addAttributeDefinitionAnnotation()
+
+    javaLangString()
+
+    addClass("MyService.class", """
+      package com.test;
+
+      import ${const.java.DS_COMPONENT_ANNOTATION};
+      import ${const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION};
+      import ${const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION};
+
+      @Component(ocd = Config.class)
+      public class MyService { 
+        
+        @ObjectClassDefinition(name = "Configuration")
+        public @interface Config {
+          @AttributeDefinition(
+              name = "Test property",
+              description = "Test property description")
+          String ${CARET}test_property();
+        }
+      }
+    """)
+
+    verify {
+      val gutters = myFixture.findAllGutters()
+
+      Assertions.assertThat(gutters)
+          .isEmpty()
+    }
+  }
+
+  fun `test no marker info DS OSGi Config when component is referenced to another OCD`() = fileCase {
+    addComponentAnnotation()
+    addDesignateAnnotation()
+    addObjectClassDefinitionAnnotation()
+    addAttributeDefinitionAnnotation()
+
+    javaLangString()
+
+    addClass("Config.java", """
+      package com.test;
+
+      import ${const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION};
+      import ${const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION};
+      
+      @ObjectClassDefinition(name = "Other Configuration")
+      public @interface OtherConfig {
+        @AttributeDefinition(
+            name = "Test property",
+            description = "Test property description")
+        String ${CARET}testProperty();
+      }
+    """)
+
+    addClass("MyService.class", """
+      package com.test;
+
+      import ${const.java.DS_COMPONENT_ANNOTATION};
+      import ${const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION};
+      import ${const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION};
+      import ${const.java.DS_DESIGNATE_ANNOTATION};
+
+      @Component
+      @Designate(ocd = OtherConfig.class)
+      public class MyService { 
+        
+        @ObjectClassDefinition(name = "Configuration")
+        public @interface Config {
+          @AttributeDefinition(
+              name = "Test property",
+              description = "Test property description")
+          String ${CARET}test_property();
+        }
+      }
+    """)
+
+    verify {
+      val gutters = myFixture.findAllGutters()
+
+      Assertions.assertThat(gutters)
+          .isEmpty()
     }
   }
 }
