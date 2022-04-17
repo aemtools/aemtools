@@ -1,7 +1,7 @@
 package com.aemtools.codeinsight.osgiservice
 
 import com.aemtools.codeinsight.osgiservice.markerinfo.FelixOSGiPropertyMarkerInfo
-import com.aemtools.codeinsight.osgiservice.property.mapper.osgiConfigMethodToPropertyName
+import com.aemtools.codeinsight.osgiservice.property.mapper.OSGiComponentPropertyNameMapper
 import com.aemtools.codeinsight.osgiservice.property.provider.OSGiPropertyDescriptorsProvider
 import com.aemtools.common.constant.const.java.DS_DESIGNATE_ANNOTATION
 import com.aemtools.common.constant.const.osgi.DESIGNATE_OCD_ANNOTATION_ATTRIBUTE
@@ -46,7 +46,7 @@ class DsOSGiPropertyLineMarker : LineMarkerProvider {
     return FelixOSGiPropertyMarkerInfo(element) {
       OSGiPropertyDescriptorsProvider.get(
           referencedOsgiComponentClass,
-          osgiConfigMethod.name.osgiConfigMethodToPropertyName()
+          OSGiComponentPropertyNameMapper.mapByMethodName(osgiConfigMethod.name)
       )
     }
   }
