@@ -1,7 +1,6 @@
 package com.aemtools.codeinsight.osgiservice
 
 import com.aemtools.codeinsight.osgiservice.markerinfo.FelixOSGiPropertyMarkerInfo
-import com.aemtools.common.constant.const
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.JavaMixin
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin
@@ -30,8 +29,8 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     addClass("Config.java", """
       package com.test;
 
-      import ${const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION};
-      import ${const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION};
+      import org.osgi.service.metatype.annotations.AttributeDefinition;
+      import org.osgi.service.metatype.annotations.ObjectClassDefinition;
       
       @ObjectClassDefinition(name = "Configuration")
       public @interface Config {
@@ -47,8 +46,8 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     addClass("MyService.java", """
       package com.test;
 
-      import ${const.java.DS_COMPONENT_ANNOTATION};
-      import ${const.java.DS_DESIGNATE_ANNOTATION};
+      import org.osgi.service.component.annotations.Component;
+      import org.osgi.service.metatype.annotations.Designate;
       import com.test.Config;
 
       @Component
@@ -92,10 +91,10 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     addClass("MyService.java", """
       package com.test;
 
-      import ${const.java.DS_COMPONENT_ANNOTATION};
-      import ${const.java.DS_DESIGNATE_ANNOTATION};
-      import ${const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION};
-      import ${const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION};
+      import org.osgi.service.component.annotations.Component;
+      import org.osgi.service.metatype.annotations.AttributeDefinition;
+      import org.osgi.service.metatype.annotations.ObjectClassDefinition;
+      import org.osgi.service.metatype.annotations.Designate;
 
       @Component
       @Designate(ocd = MyService.Config.class)
@@ -149,10 +148,10 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     addClass("MyService.class", """
       package com.test;
 
-      import ${const.java.DS_COMPONENT_ANNOTATION};
-      import ${const.java.DS_DESIGNATE_ANNOTATION};
-      import ${const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION};
-      import ${const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION};
+      import org.osgi.service.component.annotations.Component;
+      import org.osgi.service.metatype.annotations.AttributeDefinition;
+      import org.osgi.service.metatype.annotations.ObjectClassDefinition;
+      import org.osgi.service.metatype.annotations.Designate;
 
       @Component
       @Designate(ocd = Config.class)
@@ -195,7 +194,6 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
   fun `test no marker info DS OSGi Config when OCD in not marked as OCD`() = fileCase {
     addComponentAnnotation()
     addDesignateAnnotation()
-    addObjectClassDefinitionAnnotation()
     addAttributeDefinitionAnnotation()
 
     javaLangString()
@@ -203,9 +201,9 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     addClass("MyService.class", """
       package com.test;
 
-      import ${const.java.DS_COMPONENT_ANNOTATION};
-      import ${const.java.DS_DESIGNATE_ANNOTATION};
-      import ${const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION};
+      import org.osgi.service.component.annotations.Component;
+      import org.osgi.service.metatype.annotations.AttributeDefinition;
+      import org.osgi.service.metatype.annotations.Designate;
 
       @Component
       @Designate(ocd = Config.class)
@@ -239,9 +237,9 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     addClass("MyService.java", """
       package com.test;
 
-      import ${const.java.DS_COMPONENT_ANNOTATION};
-      import ${const.java.DS_DESIGNATE_ANNOTATION};
-      import ${const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION};
+      import org.osgi.service.component.annotations.Component;
+      import org.osgi.service.metatype.annotations.ObjectClassDefinition;
+      import org.osgi.service.metatype.annotations.Designate;
 
       @Component
       @Designate(ocd = Config.class)
@@ -273,10 +271,10 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     addClass("MyService.class", """
       package com.test;
 
-      import ${const.java.DS_COMPONENT_ANNOTATION};
-      import ${const.java.DS_DESIGNATE_ANNOTATION};
-      import ${const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION};
-      import ${const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION};
+      import org.osgi.service.component.annotations.Component;
+      import org.osgi.service.metatype.annotations.AttributeDefinition;
+      import org.osgi.service.metatype.annotations.ObjectClassDefinition;
+      import org.osgi.service.metatype.annotations.Designate;
 
       @Component
       @Designate(ocd = Config.class)
@@ -302,7 +300,6 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
 
   fun `test no marker info DS OSGi Config when component doesn't have Designate annotation`() = fileCase {
     addComponentAnnotation()
-    addDesignateAnnotation()
     addObjectClassDefinitionAnnotation()
     addAttributeDefinitionAnnotation()
 
@@ -311,9 +308,9 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     addClass("MyService.java", """
       package com.test;
 
-      import ${const.java.DS_COMPONENT_ANNOTATION};
-      import ${const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION};
-      import ${const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION};
+      import org.osgi.service.component.annotations.Component;
+      import org.osgi.service.metatype.annotations.AttributeDefinition;
+      import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
       @Component(ocd = Config.class)
       public class MyService { 
@@ -338,7 +335,6 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
 
   fun `test no marker info DS OSGi Config when it is referenced not via Designate annotation`() = fileCase {
     addComponentAnnotation()
-    addDesignateAnnotation()
     addObjectClassDefinitionAnnotation()
     addAttributeDefinitionAnnotation()
 
@@ -347,9 +343,9 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     addClass("MyService.class", """
       package com.test;
 
-      import ${const.java.DS_COMPONENT_ANNOTATION};
-      import ${const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION};
-      import ${const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION};
+      import org.osgi.service.component.annotations.Component;
+      import org.osgi.service.metatype.annotations.ObjectClassDefinition;
+      import org.osgi.service.metatype.annotations.AttributeDefinition;
 
       @Component(ocd = Config.class)
       public class MyService { 
@@ -383,8 +379,8 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     addClass("Config.java", """
       package com.test;
 
-      import ${const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION};
-      import ${const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION};
+      import org.osgi.service.metatype.annotations.AttributeDefinition;
+      import org.osgi.service.metatype.annotations.ObjectClassDefinition;
       
       @ObjectClassDefinition(name = "Other Configuration")
       public @interface OtherConfig {
@@ -398,10 +394,10 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     addClass("MyService.class", """
       package com.test;
 
-      import ${const.java.DS_COMPONENT_ANNOTATION};
-      import ${const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION};
-      import ${const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION};
-      import ${const.java.DS_DESIGNATE_ANNOTATION};
+      import org.osgi.service.component.annotations.Component;
+      import org.osgi.service.metatype.annotations.AttributeDefinition;
+      import org.osgi.service.metatype.annotations.ObjectClassDefinition;
+      import org.osgi.service.metatype.annotations.Designate;
 
       @Component
       @Designate(ocd = OtherConfig.class)

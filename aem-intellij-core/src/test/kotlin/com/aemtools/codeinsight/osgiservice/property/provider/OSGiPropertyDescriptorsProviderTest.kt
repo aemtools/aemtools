@@ -2,7 +2,6 @@ package com.aemtools.codeinsight.osgiservice.property.provider
 
 import com.aemtools.codeinsight.osgiservice.DsOSGiPropertyLineMarker
 import com.aemtools.codeinsight.osgiservice.navigationhandler.FelixOSGiPropertyNavigationHandler
-import com.aemtools.common.constant.const
 import com.aemtools.lang.java.JavaSearch
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.JavaMixin
@@ -25,8 +24,8 @@ class OSGiPropertyDescriptorsProviderTest : BaseLightTest(),
     addClass("Config.java", """
       package com.test;
 
-      import ${const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION};
-      import ${const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION};
+      import org.osgi.service.metatype.annotations.AttributeDefinition;
+      import org.osgi.service.metatype.annotations.ObjectClassDefinition;
       
       @ObjectClassDefinition(name = "Configuration")
       public @interface Config {
@@ -42,9 +41,9 @@ class OSGiPropertyDescriptorsProviderTest : BaseLightTest(),
     addClass("MyService.java", """
       package com.test;
 
-      import ${const.java.DS_COMPONENT_ANNOTATION};
-      import ${const.java.DS_DESIGNATE_ANNOTATION};
       import com.test.Config;
+      import org.osgi.service.component.annotations.Component;
+      import org.osgi.service.metatype.annotations.Designate;
 
       @Component
       @Designate(ocd = Config.class)
