@@ -40,6 +40,15 @@ object HtlDetectionService {
     return (markAllInTest && iAmTest()) || fileName.contains(JCR_ROOT_SEPARATED)
   }
 
+  fun isHtlFile(fileName: String): Boolean {
+    val extension = fileName.substringAfterLast(".")
+    if (extension != "html") {
+      return false
+    }
+
+    return (markAllInTest && iAmTest()) || fileName.contains(JCR_ROOT_SEPARATED)
+  }
+
   /**
    * Check if given directory is one of Htl roots.
    *
