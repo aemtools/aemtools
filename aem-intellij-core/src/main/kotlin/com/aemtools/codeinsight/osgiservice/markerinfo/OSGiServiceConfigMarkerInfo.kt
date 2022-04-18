@@ -16,13 +16,13 @@ import java.util.function.Supplier
  */
 class OSGiServiceConfigMarkerInfo(
     val classIdentifier: PsiIdentifier,
-    configs: List<OSGiConfiguration>
+    configsProvider: () -> List<OSGiConfiguration>
 ) : LineMarkerInfo<PsiElement>(
     classIdentifier,
     classIdentifier.textRange,
     AllIcons.FileTypes.Config,
     Function { "OSGi configs found" },
-    OSGiGutterIconNavigationHandler(configs, classIdentifier, "OSGi Config"),
+    OSGiGutterIconNavigationHandler(configsProvider, classIdentifier, "OSGi Config"),
     GutterIconRenderer.Alignment.CENTER,
     Supplier { "OSGi configs found" }
 ) {
