@@ -12,7 +12,6 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.impl.DebugUtil
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture
 import junit.framework.TestCase
-import org.jetbrains.annotations.NotNull
 
 /**
  * @author Dmytro Primshyts
@@ -51,6 +50,18 @@ abstract class BasePatternsTest : BaseLightTest() {
           condition.accepts(element, null))
     }
 
+  }
+
+  inline fun <reified T> testCondition(condition: PatternCondition<T>,
+                                       text: String,
+                                       result: Boolean,
+                                       addCompletionPlaceholder: Boolean = true,
+                                       crossinline fixtureSetup: ITestFixture.(textToAdd: String) -> Unit,
+                                       crossinline elementSelector: IAssertionContext.() -> T,
+                                       crossinline fixtureTearDown: ITestFixture.() -> Unit) = fileCase {
+    testCondition(condition, text, result, addCompletionPlaceholder, fixtureSetup, elementSelector)
+
+    fixtureTearDown.invoke(this)
   }
 
   fun preprocessText(textToAdd: String, addCompletionPlaceholder: Boolean): String =
