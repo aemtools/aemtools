@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.9.1.1]
+### Bug fixes
+* [Blocks xml file copy operation](https://github.com/aemtools/aemtools/issues/189)
+
 ## [0.9.1] - 2022-04-14
 [0.9.1]: https://github.com/aemtools/aemtools/tree/v0.9.1
 ### New features
