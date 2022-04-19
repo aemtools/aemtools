@@ -35,7 +35,7 @@ class FelixOSGiPropertyLineMarker : LineMarkerProvider {
       val configs = OSGiConfigSearch.findConfigsForClass(
           containingClassFqn,
           element.project,
-          true)
+          false)
       if (configs.isEmpty()) {
         return null
       }

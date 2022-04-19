@@ -38,7 +38,7 @@ class DsOSGiPropertyLineMarker : LineMarkerProvider {
     val configs = OSGiConfigSearch.findConfigsForClass(
         referencedOsgiComponentFqn,
         element.project,
-        true)
+        false)
     if (configs.isEmpty()) {
       return null
     }
