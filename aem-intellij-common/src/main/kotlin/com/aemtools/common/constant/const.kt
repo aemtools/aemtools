@@ -242,7 +242,16 @@ object const {
     const val SLING_FILTER_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingFilter"
     const val SLING_HEALTH_CHECK_ANNOTATION = "org.apache.sling.hc.annotations.SlingHealthCheck"
 
+    const val DS_COMPONENT_ANNOTATION = "org.osgi.service.component.annotations.Component"
+    const val DS_DESIGNATE_ANNOTATION = "org.osgi.service.metatype.annotations.Designate"
+    const val DS_ATTRIBUTE_DEFINITION_ANNOTATION = "org.osgi.service.metatype.annotations.AttributeDefinition"
+    const val DS_OBJECT_CLASS_DEFINITION_ANNOTATION = "org.osgi.service.metatype.annotations.ObjectClassDefinition"
+
     const val FELIX_PROPERTY_ANNOTATION = "org.apache.felix.scr.annotations.Property"
+  }
+
+  object osgi {
+    const val DESIGNATE_OCD_ANNOTATION_ATTRIBUTE = "ocd"
   }
 
   /**

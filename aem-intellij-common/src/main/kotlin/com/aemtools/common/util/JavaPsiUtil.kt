@@ -1,5 +1,9 @@
 package com.aemtools.common.util
 
+import com.aemtools.common.constant.const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION
+import com.aemtools.common.constant.const.java.DS_COMPONENT_ANNOTATION
+import com.aemtools.common.constant.const.java.DS_DESIGNATE_ANNOTATION
+import com.aemtools.common.constant.const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION
 import com.aemtools.common.constant.const.java.FELIX_PROPERTY_ANNOTATION
 import com.aemtools.common.constant.const.java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.common.constant.const.java.SLING_FILTER_ANNOTATION
@@ -31,13 +35,13 @@ import com.intellij.psi.util.PsiTypesUtil
  */
 fun PsiClass.isOSGiService(): Boolean {
 
-  // TODO add check for OSGi declarative service
   return annotations().any {
     it.qualifiedName in listOf(
         FELIX_SERVICE_ANNOTATION,
         SLING_SERVLET_ANNOTATION,
         SLING_FILTER_ANNOTATION,
-        SLING_HEALTH_CHECK_ANNOTATION
+        SLING_HEALTH_CHECK_ANNOTATION,
+        DS_COMPONENT_ANNOTATION
     )
   }
 }
@@ -53,6 +57,17 @@ fun PsiField.isFelixProperty(): Boolean =
     annotations().any {
       it.qualifiedName == FELIX_PROPERTY_ANNOTATION
     }
+
+fun PsiClass.isDsOSGiConfig(): Boolean =
+    annotations().any {
+      it.qualifiedName == DS_OBJECT_CLASS_DEFINITION_ANNOTATION
+    }
+
+fun PsiMethod.isDsOSGiConfigProperty(): Boolean =
+    annotations().any {
+      it.qualifiedName == DS_ATTRIBUTE_DEFINITION_ANNOTATION
+    }
+
 
 /**
  * Get list of [PsiAnnotation] objects from current psi modifier list owner.
