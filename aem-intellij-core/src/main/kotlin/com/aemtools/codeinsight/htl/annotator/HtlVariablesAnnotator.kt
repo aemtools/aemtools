@@ -1,10 +1,6 @@
 package com.aemtools.codeinsight.htl.annotator
 
-import com.aemtools.common.util.closest
-import com.aemtools.common.util.distanceTo
-import com.aemtools.common.util.hasParentOfType
-import com.aemtools.common.util.highlight
-import com.aemtools.common.util.toSmartPointer
+import com.aemtools.common.util.*
 import com.aemtools.completion.htl.common.FileVariablesResolver
 import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.model.htl.ContextObject
@@ -36,27 +32,28 @@ class HtlVariablesAnnotator : Annotator {
     val contextObjects = PredefinedVariables.allContextObjects()
     when {
       contextObjects.find { it.name == name } != null -> {
-        holder.highlight(element, HTL_EL_GLOBAL_VARIABLE, "Context Object")
+        holder.createInfoAnnotation(element, HTL_EL_GLOBAL_VARIABLE, "Context Object")
       }
 
       FileVariablesResolver.validVariable(name, element) -> {
-        holder.highlight(element, HTL_EL_LOCAL_VARIABLE)
+        holder.createInfoAnnotation(element, HTL_EL_LOCAL_VARIABLE)
       }
 
       else -> {
-        val annotation = holder.highlight(element,
+        val annotationBuilder = holder.createInfoAnnotationBuilder(element,
             HTL_EL_UNRESOLVED_VARIABLE,
             "Cannot resolve symbol '$name'")
 
         val similar = findSimilarVariable(element, contextObjects, name)
         if (similar != null) {
-          annotation.registerFix(
+          annotationBuilder.withFix(
               VariableNameErrataIntentionAction(
                   similar,
                   element.toSmartPointer()
               )
           )
         }
+        annotationBuilder.create()
       }
     }
   }

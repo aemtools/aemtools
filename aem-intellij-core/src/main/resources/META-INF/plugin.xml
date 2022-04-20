@@ -51,15 +51,12 @@
     ]]>
     </change-notes>
 
-    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.platform</depends>
 
-    <depends optional="true" config-file="java.xml">com.intellij.modules.java</depends>
-
+    <depends optional="true" config-file="java.xml">com.intellij.java</depends>
     <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
     <depends optional="true" config-file="inspections.xml">com.intellij.modules.lang</depends>
-
     <depends optional="true" config-file="expression-language.xml">com.intellij.modules.lang</depends>
-
     <depends optional="true" config-file="jcr-property-language.xml">com.intellij.modules.lang</depends>
 
     <idea-version since-build="203"/>

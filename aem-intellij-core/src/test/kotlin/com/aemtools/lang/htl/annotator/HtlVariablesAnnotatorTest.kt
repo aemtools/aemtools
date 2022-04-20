@@ -35,22 +35,22 @@ class HtlVariablesAnnotatorTest : BaseLightTest() {
 
   fun testLocalUseVariable() {
     myFixture.configureByText("test.html", """
-            <div <info descr="null">data-sly-use</info>.<info descr="null">bean</info>=""></div>
-            $DOLLAR{<info descr="null">bean</info>}
+            <div <info descr="null">data-sly-use</info>.<weak_warning descr="null">bean</weak_warning>=""></div>
+            $DOLLAR{<weak_warning descr="null">bean</weak_warning>}
         """)
     myFixture.checkHighlighting(true, true, true)
   }
 
   fun testUnresolvedVariable() {
     myFixture.configureByText("test.html", """
-            $DOLLAR{<info descr="Cannot resolve symbol 'bean'">bean</info>}
+            $DOLLAR{<weak_warning descr="Cannot resolve symbol 'bean'">bean</weak_warning>}
         """)
     myFixture.checkHighlighting(true, true, true)
   }
 
   fun testGlobalVariable(variableName: String) {
     myFixture.configureByText("test.html", """
-            $DOLLAR{<info descr="Context Object">$variableName</info>}
+            $DOLLAR{<weak_warning descr="Context Object">$variableName</weak_warning>}
         """)
     myFixture.checkHighlighting(true, true, true)
   }

@@ -18,7 +18,7 @@ class FelixOSGiPropertyNavigationHandler(
     val propertyDescriptors: () -> List<FelixOSGiPropertyDescriptor>
 ) : GutterIconNavigationHandler<PsiElement> {
 
-  override fun navigate(e: MouseEvent?, elt: PsiElement?) {
+  override fun navigate(e: MouseEvent, elt: PsiElement?) {
     PsiElementListNavigator.openTargets(e,
         propertyDescriptors().map {
           (it.xmlAttribute?.toNavigatable() ?: it.osgiConfigFIle) as NavigatablePsiElement

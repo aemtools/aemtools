@@ -32,8 +32,8 @@ class HtlOptionsAnnotatorTest : BaseLightTest() {
 
   fun testTemplateArgument() = fileCase {
     addHtml("/src/test.html", """
-<div <info descr="null">data-sly-use</info>.<info descr="null">temp</info>="template.html">
-<div <info descr="null">data-sly-call</info>="$DOLLAR{<info descr="null">temp</info>.template @ <info descr="Template Argument">param1</info>=''}">
+<div <info descr="null">data-sly-use</info>.<weak_warning descr="null">temp</weak_warning>="template.html">
+<div <info descr="null">data-sly-call</info>="$DOLLAR{<weak_warning descr="null">temp</weak_warning>.template @ <weak_warning descr="Template Argument">param1</weak_warning>=''}">
 $CARET
 </div>
 </div>
@@ -64,7 +64,7 @@ $CARET
 
   private fun testStandardOptionHighlight(option: String) {
     myFixture.configureByText("test.html", """
-            $DOLLAR{'' @ <info descr="Standard Option">$option</info>=''}
+            $DOLLAR{'' @ <weak_warning descr="Standard Option">$option</weak_warning>=''}
         """)
     myFixture.checkHighlighting(true, true, true)
   }

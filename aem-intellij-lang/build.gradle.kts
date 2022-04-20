@@ -7,7 +7,7 @@ plugins {
   java
   kotlin("jvm")
   id("org.jetbrains.intellij")
-  id("org.jetbrains.grammarkit") version "2021.2.1"
+  id("org.jetbrains.grammarkit") version "2021.2.2"
 }
 
 buildscript {
