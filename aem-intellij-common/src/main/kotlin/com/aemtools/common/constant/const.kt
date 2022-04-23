@@ -238,6 +238,7 @@ object const {
     val VALUE_MAP = "org.apache.sling.api.resource.ValueMap"
 
     const val FELIX_SERVICE_ANNOTATION = "org.apache.felix.scr.annotations.Service"
+    const val FELIX_COMPONENT_ANNOTATION = "org.apache.felix.scr.annotations.Component"
     const val SLING_SERVLET_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingServlet"
     const val SLING_FILTER_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingFilter"
     const val SLING_HEALTH_CHECK_ANNOTATION = "org.apache.sling.hc.annotations.SlingHealthCheck"
