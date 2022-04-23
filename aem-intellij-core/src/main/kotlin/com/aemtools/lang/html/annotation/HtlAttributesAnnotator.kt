@@ -4,7 +4,8 @@ import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.common.constant.const.htl.DATA_SLY_USE
-import com.aemtools.common.util.highlight
+import com.aemtools.common.util.createInfoAnnotation
+import com.aemtools.common.util.createInfoAnnotationBuilder
 import com.aemtools.common.util.incomingReferences
 import com.aemtools.common.util.nameRange
 import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_ATTRIBUTE
@@ -84,7 +85,7 @@ class HtlAttributesAnnotator : Annotator {
           it is HtlDeclarationReference
               || it is HtlListHelperReference
         }) {
-      holder.highlight(range, HTL_VARIABLE_DECLARATION)
+      holder.createInfoAnnotation(range, HTL_VARIABLE_DECLARATION)
     } else {
       holder.newSilentAnnotation(HighlightSeverity.WARNING)
           .range(range)
@@ -103,7 +104,7 @@ class HtlAttributesAnnotator : Annotator {
     val references = attribute.incomingReferences()
 
     if (references.any { it is HtlDeclarationReference }) {
-      holder.highlight(range, HTL_VARIABLE_DECLARATION)
+      holder.createInfoAnnotation(range, HTL_VARIABLE_DECLARATION)
     } else {
       holder.newSilentAnnotation(HighlightSeverity.WARNING)
           .textAttributes(HTL_VARIABLE_UNUSED)

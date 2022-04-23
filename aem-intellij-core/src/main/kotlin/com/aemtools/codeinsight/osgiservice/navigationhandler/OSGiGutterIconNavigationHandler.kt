@@ -28,7 +28,7 @@ class OSGiGutterIconNavigationHandler(
     return classIdentifier.text.hashCode()
   }
 
-  override fun navigate(e: MouseEvent?, elt: PsiElement?) {
+  override fun navigate(e: MouseEvent, elt: PsiElement?) {
     val sortedConfigs = getSortedConfigs()
     PsiElementListNavigator.openTargets(e,
         sortedConfigs.map { it.xmlFile }.toTypedArray(),

@@ -3,8 +3,9 @@ package com.aemtools.codeinsight.htl.annotator
 import com.aemtools.analysis.htl.callchain
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
 import com.aemtools.common.constant.const
+import com.aemtools.common.util.createInfoAnnotation
 import com.aemtools.common.util.findParentByType
-import com.aemtools.common.util.highlight
+import com.aemtools.common.util.createInfoAnnotationBuilder
 import com.aemtools.lang.htl.colorscheme.HtlColors
 import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
@@ -38,13 +39,13 @@ class HtlOptionsAnnotator : Annotator {
 
       val templateParameters = outputType.parameters()
       if (templateParameters.any { it == element.variableName() }) {
-        holder.highlight(element, HtlColors.TEMPLATE_ARGUMENT, "Template Argument")
+        holder.createInfoAnnotation(element, HtlColors.TEMPLATE_ARGUMENT, "Template Argument")
       }
       return
     }
 
     if (element.isInsideOf(const.htl.DATA_SLY_TEMPLATE)) {
-      holder.highlight(element, HtlColors.TEMPLATE_PARAMETER, "Template Parameter")
+      holder.createInfoAnnotation(element, HtlColors.TEMPLATE_PARAMETER, "Template Parameter")
     }
 
     if (element.isInsideOf(const.htl.DATA_SLY_USE)) {
@@ -53,7 +54,7 @@ class HtlOptionsAnnotator : Annotator {
 
     if (HtlAttributesRepository.getHtlOptions()
         .any { it.name == element.variableName() }) {
-      holder.highlight(element, HtlColors.STANDARD_OPTION, "Standard Option")
+      holder.createInfoAnnotation(element, HtlColors.STANDARD_OPTION, "Standard Option")
     }
   }
 

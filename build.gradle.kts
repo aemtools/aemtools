@@ -39,6 +39,7 @@ java {
 }
 
 intellij {
+  pluginName.set(properties("pluginName"))
   version.set(platformVersion)
   type.set(platformType)
   plugins.set(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
@@ -183,6 +184,7 @@ subprojects {
   }
 
   intellij {
+    pluginName.set(properties("pluginName"))
     version.set(platformVersion)
     type.set(platformType)
     plugins.set(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
