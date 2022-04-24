@@ -56,4 +56,13 @@ interface OSGiConfigTestClassesMixin {
             String configurationPid() default "";
         }
         """)
+
+  fun JavaCodeInsightTestFixture.addFelixPropertiesClass(): PsiClass =
+      addClass("""
+        package org.apache.felix.scr.annotations;
+
+        public @interface Properties {
+            Property[] value();
+        }
+        """)
 }

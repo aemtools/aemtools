@@ -249,6 +249,7 @@ object const {
     const val DS_OBJECT_CLASS_DEFINITION_ANNOTATION = "org.osgi.service.metatype.annotations.ObjectClassDefinition"
 
     const val FELIX_PROPERTY_ANNOTATION = "org.apache.felix.scr.annotations.Property"
+    const val FELIX_PROPERTIES_ANNOTATION = "org.apache.felix.scr.annotations.Properties"
   }
 
   object osgi {
