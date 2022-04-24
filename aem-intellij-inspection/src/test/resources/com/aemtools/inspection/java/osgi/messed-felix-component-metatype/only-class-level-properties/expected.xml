@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problems>
+    <problem>
+        <file>TestService.java</file>
+        <line>11</line>
+        <package>com.test</package>
+        <entry_point TYPE="file" FQNAME="TestService.java" />
+        <problem_class severity="ERROR" attribute_key="GENERIC_ERROR">Messed Felix Component metatype</problem_class>
+        <description>In case no properties or only private properties are wanted, consider to use 'metatype=false'</description>
+    </problem>
+</problems>

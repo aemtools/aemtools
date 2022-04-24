@@ -40,4 +40,31 @@ class MessedFelixComponentMetatypeInspectionTest : BaseLightTest(true), OSGiConf
         LocalInspectionToolWrapper(MessedFelixComponentMetatypeInspection()))
   }
 
+  fun testInspectionWhenThereAreFieldAndClassProperties() {
+    with(myFixture) {
+      addFelixComponentClass()
+      addFelixPropertyAnnotation()
+      addFelixPropertiesClass()
+    }
+
+    myFixture.enableInspections(MessedFelixComponentMetatypeInspection())
+
+    myFixture.testInspection("com/aemtools/inspection/java/osgi/messed-felix-component-metatype/mixed-properties",
+        LocalInspectionToolWrapper(MessedFelixComponentMetatypeInspection()))
+  }
+
+  fun testInspectionWhenOnlyPrivatePropertyOnClassLevel() {
+    with(myFixture) {
+      addFelixComponentClass()
+      addFelixPropertyAnnotation()
+      addFelixPropertiesClass()
+    }
+
+    myFixture.enableInspections(MessedFelixComponentMetatypeInspection())
+
+    myFixture.testInspection(
+        "com/aemtools/inspection/java/osgi/messed-felix-component-metatype/only-class-level-properties",
+        LocalInspectionToolWrapper(MessedFelixComponentMetatypeInspection()))
+  }
+
 }
