@@ -428,10 +428,11 @@ class DsOSGiPropertiesLineMarkerTest : BaseOSGiPropertyLineMarkerTest(),
       import org.apache.sling.commons.scheduler.Scheduler;
 
       @Component(
-        property = "sling.servlet.paths=" + MyService.PATH
+        property = MyService.EVENT_TOPIC + "=" + MyService.EVENT
       )
       public class MyService {
-        static final String PATH = "/services/servlet/test/path";
+        static final String EVENT_TOPIC = "event.topic";
+        static final String EVENT = "event";
         $CARET
       }
     """)
@@ -444,7 +445,7 @@ class DsOSGiPropertiesLineMarkerTest : BaseOSGiPropertyLineMarkerTest(),
       hasOSGiPropertyLineMarker(
           getFixtureOsgiPropertyGutters(),
           lineMarkerElementTextAndTooltipExtractors,
-          Tuple("\"sling.servlet.paths=\"", "OSGi Property")
+          Tuple("EVENT_TOPIC", "OSGi Property")
       )
     }
   }

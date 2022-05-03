@@ -79,6 +79,7 @@ class DsOSGiPropertiesLineMarker : LineMarkerProvider {
     val polyadicExpression = expression.findParentByType(PsiPolyadicExpression::class.java)
 
     return if (polyadicExpression?.text?.startsWith(expression.text) == true
+        && polyadicExpression.text?.endsWith(expression.text) == false
         && ExpressionUtils.computeConstantExpression(expression) != null) {
       ExpressionUtils.computeConstantExpression(polyadicExpression) as? String
     } else {
