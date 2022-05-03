@@ -8,9 +8,11 @@ import com.aemtools.common.constant.const.java.SLING_SERVLET_ANNOTATION
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.JavaSearchMixin
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin
+import com.aemtools.test.fixture.OSGiDsAnnotationsMixin
 import com.aemtools.test.fixture.OSGiFelixAnnotationsMixin
 import com.aemtools.test.util.notNull
 import com.intellij.psi.PsiField
+import com.intellij.psi.PsiMethod
 
 /**
  * @author Dmytro Primshyts
@@ -18,14 +20,15 @@ import com.intellij.psi.PsiField
 class JavaPsiUtilTest : BaseLightTest(),
     JavaSearchMixin,
     OSGiConfigFixtureMixin,
-    OSGiFelixAnnotationsMixin {
+    OSGiFelixAnnotationsMixin,
+    OSGiDsAnnotationsMixin {
 
-  fun testIsOSGiServiceFelixAnnotated() = fileCase {
+  fun `test is OSGi Service Felix annotated`() = fileCase {
     addFelixServiceAnnotation()
     addClass("MyService.java", """
       package com.test;
 
-      import $FELIX_SERVICE_ANNOTATION;
+      import org.apache.felix.scr.annotations.Service;
 
       @Service
       public class MyService {}
@@ -34,16 +37,16 @@ class JavaPsiUtilTest : BaseLightTest(),
     verify {
       val psiClass = psiClass("com.test.MyService")
 
-      assertTrue("The class should be determined as OSGi service", psiClass.isOSGiService())
+      assertTrue("The class should be determined as OSGi Felix service", psiClass.isOSGiService())
     }
   }
 
-  fun testSlingServletIsOSGiService() = fileCase {
+  fun `test Sling Servlet is OSGi Service`() = fileCase {
     addFelixSlingServletAnnotation()
     addClass("MyServlet.java", """
       package com.test;
 
-      import $SLING_SERVLET_ANNOTATION;
+      import org.apache.felix.scr.annotations.sling.SlingServlet;
 
       @SlingServlet
       public class MyServlet {}
@@ -57,12 +60,12 @@ class JavaPsiUtilTest : BaseLightTest(),
     }
   }
 
-  fun testSlingFilterIsOSGiService() = fileCase {
+  fun `test Sling Filter is OSGi Service`() = fileCase {
     addFelixSlingFilterAnnotation()
     addClass("MyFilter.java", """
       package com.test;
 
-      import $SLING_FILTER_ANNOTATION;
+      import org.apache.felix.scr.annotations.sling.SlingFilter;
 
       @SlingFilter
       public class MyFilter {}
@@ -76,13 +79,13 @@ class JavaPsiUtilTest : BaseLightTest(),
     }
   }
 
-  fun `test SlingHealthCheck is OSGi service`() = fileCase {
+  fun `test Sling Health Check is OSGi service`() = fileCase {
     addSlingHealthCheckAnnotation()
 
     addClass("MyHealthCheck.java", """
       package com.test;
 
-      import $SLING_HEALTH_CHECK_ANNOTATION;
+      import org.apache.sling.hc.annotations.SlingHealthCheck;
 
       @SlingHealthCheck
       public class Test {}
@@ -101,7 +104,7 @@ class JavaPsiUtilTest : BaseLightTest(),
     addClass("PropertyTest.java", """
       package com.test;
 
-      import $FELIX_PROPERTY_ANNOTATION;
+      import org.apache.felix.scr.annotations.Property;
 
       public class PropertyTest {
         @Property
@@ -119,9 +122,61 @@ class JavaPsiUtilTest : BaseLightTest(),
 
       assertTrue(field.isFelixProperty())
     }
-
   }
 
-  // todo add test for declarative OSGi service declaration
+  fun `test is declarative OSGi service annotated`() = fileCase {
+    addComponentAnnotation()
+
+    addClass("ServiceTest.java", """
+      package com.test;
+
+      import org.osgi.service.component.annotations.Component;
+
+      @Component
+      public class ServiceTest {
+        @Property
+        public static final String PROPERTY = "property";
+      }
+    """)
+
+    verify {
+      val psiClass = psiClass("com.test.ServiceTest")
+
+      assertTrue("The class should be determined as OSGi DS service", psiClass.isOSGiService())
+    }
+  }
+
+  fun `test is declarative OSGi service Object Class Method property annotated`() = fileCase {
+    addAttributeDefinitionAnnotation()
+    addObjectClassDefinitionAnnotation()
+
+    addClass("Config.java", """
+      package com.test;
+
+      import org.osgi.service.metatype.annotations.AttributeDefinition;
+      import org.osgi.service.metatype.annotations.ObjectClassDefinition;
+      
+      @ObjectClassDefinition(name = "Configuration")
+      public @interface Config {
+
+        @AttributeDefinition(
+            name = "Test property",
+            description = "Test property description")
+        String ${CARET}test1Property();
+
+      }
+    """)
+
+    verify {
+      val psiClass = psiClass("com.test.Config")
+
+      val method by notNull {
+        psiClass.findChildrenByType(PsiMethod::class.java)
+            .firstOrNull()
+      }
+
+      assertTrue("The method should be determined as OSGi OCD property", method.isDsOSGiConfigProperty())
+    }
+  }
 
 }

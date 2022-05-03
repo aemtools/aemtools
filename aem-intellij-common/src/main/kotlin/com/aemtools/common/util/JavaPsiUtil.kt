@@ -28,7 +28,7 @@ import com.intellij.psi.util.PsiTypesUtil
  */
 
 /**
- * Check if current [PsiClass] is an OSGi service.
+ * Check if current [PsiClass] is an OSGi service (Felix, R6, R7).
  *
  * @receiver [PsiClass]
  * @return *true* if class is marked with corresponding OSGi annotations, *false* otherwise
@@ -58,11 +58,24 @@ fun PsiField.isFelixProperty(): Boolean =
       it.qualifiedName == FELIX_PROPERTY_ANNOTATION
     }
 
+/**
+ * Check if current [PsiClass] is an OSGi Declarative Service (R6, R7).
+ *
+ * @receiver [PsiClass]
+ * @return *true* if class is marked with corresponding OSGi annotations, *false* otherwise
+ */
 fun PsiClass.isDsOSGiConfig(): Boolean =
     annotations().any {
       it.qualifiedName == DS_OBJECT_CLASS_DEFINITION_ANNOTATION
     }
 
+/**
+ * Check if current method is OSGi DS config metadata property.
+ * (annotated with [DS_ATTRIBUTE_DEFINITION_ANNOTATION]).
+ *
+ * @receiver [PsiMethod]
+ * @return _true_ if current field is Object Class Definition method
+ */
 fun PsiMethod.isDsOSGiConfigProperty(): Boolean =
     annotations().any {
       it.qualifiedName == DS_ATTRIBUTE_DEFINITION_ANNOTATION

@@ -6,6 +6,19 @@ import com.aemtools.test.base.model.fixture.ITestFixture
  * @author Kostiantyn Diachenko
  */
 interface OSGiDsAnnotationsMixin {
+
+  /**
+   * Add basic set of OSGi service component annotations.
+   *
+   * @receiver [ITestFixture]
+   */
+  fun ITestFixture.addBasicOSGiDeclarativeServiceAnnotations() {
+    addComponentAnnotation()
+    addDesignateAnnotation()
+    addObjectClassDefinitionAnnotation()
+    addAttributeDefinitionAnnotation()
+  }
+
   /**
    * Add OSGi service component annotation to current fixture.
    *

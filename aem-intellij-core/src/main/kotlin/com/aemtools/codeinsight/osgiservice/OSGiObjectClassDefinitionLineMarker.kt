@@ -1,6 +1,6 @@
 package com.aemtools.codeinsight.osgiservice
 
-import com.aemtools.codeinsight.osgiservice.markerinfo.FelixOSGiPropertyMarkerInfo
+import com.aemtools.codeinsight.osgiservice.markerinfo.OSGiPropertyMarkerInfo
 import com.aemtools.codeinsight.osgiservice.property.mapper.OSGiComponentPropertyNameMapper
 import com.aemtools.codeinsight.osgiservice.property.provider.OSGiPropertyDescriptorsProvider
 import com.aemtools.common.constant.const.java.DS_DESIGNATE_ANNOTATION
@@ -12,9 +12,11 @@ import com.intellij.codeInsight.daemon.LineMarkerProvider
 import com.intellij.psi.*
 
 /**
+ * Line marker provider for OSGI (R6, R7) Object Class Definition properties.
+ *
  * @author Kostiantyn Diachenko
  */
-class DsOSGiPropertyLineMarker : LineMarkerProvider {
+class OSGiObjectClassDefinitionLineMarker : LineMarkerProvider {
   override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<PsiElement>? {
     val identifier = element as? PsiIdentifier
         ?: return null
@@ -43,7 +45,7 @@ class DsOSGiPropertyLineMarker : LineMarkerProvider {
       return null
     }
 
-    return FelixOSGiPropertyMarkerInfo(element) {
+    return OSGiPropertyMarkerInfo(element) {
       OSGiPropertyDescriptorsProvider.get(
           referencedOsgiComponentClass,
           OSGiComponentPropertyNameMapper.mapByMethodName(osgiConfigMethod.name)

@@ -10,6 +10,8 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiIdentifier
 
 /**
+ * Line marker provider for OSGI configs. Supports Felix (SCR) and OSGi (R6, R7) components.
+ *
  * @author Dmytro Primshyts
  */
 class OSGiConfigLineMarker : LineMarkerProvider {

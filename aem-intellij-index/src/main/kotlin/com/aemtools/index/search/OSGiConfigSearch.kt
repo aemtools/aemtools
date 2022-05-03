@@ -1,6 +1,7 @@
 package com.aemtools.index.search
 
 import com.aemtools.common.util.allScope
+import com.aemtools.common.util.toPsiFile
 import com.aemtools.index.OSGiConfigIndex
 import com.aemtools.index.model.OSGiConfiguration
 import com.aemtools.index.model.OSGiConfigurationIndexModel
@@ -39,15 +40,14 @@ object OSGiConfigSearch {
       val fileNames = mapped.map { it.fileName }
           .toSet()
 
-      val files = fileNames.flatMap {
-        FilenameIndex.getFilesByName(project, it, GlobalSearchScope.projectScope(project))
-            .toList()
+      val virtualFiles = fileNames.flatMap {
+        FilenameIndex.getVirtualFilesByName(it, GlobalSearchScope.projectScope(project))
       }
 
       mapped.forEach { config ->
-        val matchedFile = files.find { file ->
-          file.virtualFile.path == config.path
-        } as? XmlFile
+        val matchedFile = virtualFiles.find { virtualFile ->
+          virtualFile.path == config.path
+        }?.toPsiFile(project) as? XmlFile
         config.xmlFile = matchedFile
       }
       mapped

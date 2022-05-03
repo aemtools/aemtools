@@ -1,36 +1,29 @@
 package com.aemtools.codeinsight.osgiservice
 
-import com.aemtools.codeinsight.osgiservice.markerinfo.FelixOSGiPropertyMarkerInfo
-import com.aemtools.common.constant.const.java.FELIX_PROPERTY_ANNOTATION
-import com.aemtools.common.constant.const.java.FELIX_SERVICE_ANNOTATION
-import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.JavaMixin
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin
 import com.aemtools.test.fixture.OSGiFelixAnnotationsMixin
-import com.intellij.codeInsight.daemon.LineMarkerInfo
-import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.groups.Tuple
 
 /**
  * Test for [FelixOSGiPropertyLineMarker].
  *
  * @author Dmytro Primshyts
  */
-class FelixOSGiPropertyLineMarkerTest : BaseLightTest(),
+class FelixOSGiPropertyLineMarkerTest : BaseOSGiPropertyLineMarkerTest(),
     OSGiConfigFixtureMixin,
     OSGiFelixAnnotationsMixin,
     JavaMixin {
 
-  fun testFelixPropertiesShouldBeMarked() = fileCase {
+  fun `test marker info for Felix method property declaration`() = fileCase {
     addFelixServiceAnnotation()
     addFelixPropertyAnnotation()
-
-    javaLangString()
 
     addClass("MyService.java", """
       package com.test;
 
-      import $FELIX_SERVICE_ANNOTATION;
-      import $FELIX_PROPERTY_ANNOTATION;
+      import org.apache.felix.scr.annotations.Service;
+      import org.apache.felix.scr.annotations.Property;
 
       @Service
       public class MyService {
@@ -50,17 +43,184 @@ class FelixOSGiPropertyLineMarkerTest : BaseLightTest(),
     """)
 
     verify {
-      val gutters = myFixture.findAllGutters()
+      hasOSGiPropertyLineMarker(
+          getFixtureOsgiPropertyGutters(),
+          lineMarkerElementTextAndTooltipExtractors,
+          Tuple("TEST", "OSGi Property")
+      )
+    }
+  }
 
-      val felixGutter = gutters.mapNotNull {
-        it as? LineMarkerInfo.LineMarkerGutterIconRenderer<*>
-      }.find {
-        it.lineMarkerInfo is FelixOSGiPropertyMarkerInfo
-      }?.lineMarkerInfo ?: throw AssertionError("Unable to find Felix gutter")
+  fun `test no marker info for Felix method property declaration without existed configs`() = fileCase {
+    addFelixServiceAnnotation()
+    addFelixPropertyAnnotation()
 
-      assertThat(felixGutter.lineMarkerTooltip)
-          .isEqualTo("OSGi Property")
+    addClass("MyService.java", """
+      package com.test;
 
+      import org.apache.felix.scr.annotations.Service;
+      import org.apache.felix.scr.annotations.Property;
+
+      @Service
+      public class MyService {
+
+        @Property
+        private static final String ${CARET}TEST = "test.property";
+
+      }
+    """)
+
+    verify {
+      hasNotOSGIPropertyLineMarker()
+    }
+  }
+
+  fun `test marker info for Felix class level property with literal name`() = fileCase {
+    addFelixServiceAnnotation()
+    addFelixPropertyAnnotation()
+    addFelixPropertiesAnnotation()
+
+    addClass("MyService.java", """
+      package com.test;
+
+      import org.apache.felix.scr.annotations.Service;
+      import org.apache.felix.scr.annotations.Property;
+      import org.apache.felix.scr.annotations.Properties;
+
+      @Service
+      @Properties({
+        @Property(name = "test.property", value = "testValue")
+      })
+      public class MyService {
+        $CARET
+      }
+    """)
+
+    addEmptyOSGiConfigs(
+        "/config/com.test.MyService.xml"
+    )
+
+    osgiConfig("/config/author/com.test.MyService.xml", """
+      test.property="test value"
+    """)
+
+    verify {
+      hasOSGiPropertyLineMarker(
+          getFixtureOsgiPropertyGutters(),
+          listOf(
+              java.util.function.Function { it.element?.parent?.text },
+              java.util.function.Function { it.lineMarkerTooltip }
+          ),
+          Tuple("name = \"test.property\"", "OSGi Property")
+      )
+    }
+  }
+
+  fun `test marker info for Felix class level property with name from current class constants`() = fileCase {
+    addFelixServiceAnnotation()
+    addFelixPropertyAnnotation()
+    addFelixPropertiesAnnotation()
+
+    addClass("MyService.java", """
+      package com.test;
+
+      import org.apache.felix.scr.annotations.Service;
+      import org.apache.felix.scr.annotations.Property;
+      import org.apache.felix.scr.annotations.Properties;
+
+      @Service
+      @Properties({
+        @Property(name = MyService.PROPERTY_KEY, value = "testValue")
+      })
+      public class MyService { 
+        static final String PROPERTY_KEY = "test.property";
+        $CARET
+      }
+    """)
+
+    osgiConfig("/config/author/com.test.MyService.xml", """
+      test.property="test value"
+    """)
+
+    verify {
+      hasOSGiPropertyLineMarker(
+          getFixtureOsgiPropertyGutters(),
+          listOf(
+              java.util.function.Function { it.element?.parent?.text },
+              java.util.function.Function { it.lineMarkerTooltip }
+          ),
+          Tuple("name = MyService.PROPERTY_KEY", "OSGi Property")
+      )
+    }
+  }
+
+  fun `test marker info for Felix class level property with name from external class constants`() = fileCase {
+    addFelixServiceAnnotation()
+    addFelixPropertyAnnotation()
+    addFelixPropertiesAnnotation()
+
+    addClass("MyService.java", """
+      package com.test;
+
+      import org.apache.felix.scr.annotations.Service;
+      import org.apache.felix.scr.annotations.Property;
+      import org.apache.felix.scr.annotations.Properties;
+      import static com.test.Constants.ANOTHER_PROPERTY_NAME;
+
+      @Service
+      @Properties({
+        @Property(name = ANOTHER_PROPERTY_NAME, value = "testValue")
+      })
+      public class MyService {
+        $CARET
+      }
+    """)
+
+    addClass("Constants.java", """
+      package com.test;
+
+      public final class Constants { 
+        public static final String ANOTHER_PROPERTY_NAME = "another.test.property";
+      }
+    """)
+
+    osgiConfig("/config/author/com.test.MyService.xml", """
+      another.test.property="test value"
+    """)
+
+    verify {
+      hasOSGiPropertyLineMarker(
+          getFixtureOsgiPropertyGutters(),
+          listOf(
+              java.util.function.Function { it.element?.parent?.text },
+              java.util.function.Function { it.lineMarkerTooltip }
+          ),
+          Tuple("name = ANOTHER_PROPERTY_NAME", "OSGi Property")
+      )
+    }
+  }
+
+  fun `test no marker info for Felix class level property without property declaration`() = fileCase {
+    addFelixServiceAnnotation()
+    addFelixPropertyAnnotation()
+    addFelixPropertiesAnnotation()
+
+    addClass("MyService.java", """
+      package com.test;
+
+      import org.apache.felix.scr.annotations.Service;
+      import org.apache.felix.scr.annotations.Property;
+      import org.apache.felix.scr.annotations.Properties;
+
+      @Service
+      @Component(name = "Service name")
+      public class MyService {
+        $CARET
+      }
+    """)
+
+    verify {
+      hasNotOSGIPropertyLineMarker()
     }
   }
 

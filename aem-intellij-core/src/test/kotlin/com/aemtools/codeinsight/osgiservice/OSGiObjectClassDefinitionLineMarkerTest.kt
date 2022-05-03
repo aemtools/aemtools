@@ -1,30 +1,26 @@
 package com.aemtools.codeinsight.osgiservice
 
-import com.aemtools.codeinsight.osgiservice.markerinfo.FelixOSGiPropertyMarkerInfo
+import com.aemtools.codeinsight.osgiservice.markerinfo.OSGiPropertyMarkerInfo
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.JavaMixin
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin
 import com.aemtools.test.fixture.OSGiDsAnnotationsMixin
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import org.assertj.core.api.Assertions
+import org.assertj.core.groups.Tuple
 
 /**
- * Test for [DsOSGiPropertyLineMarker].
+ * Test for [OSGiObjectClassDefinitionLineMarker].
  *
  * @author Kostiantyn Diachenko
  */
-class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
+class OSGiObjectClassDefinitionLineMarkerTest : BaseOSGiPropertyLineMarkerTest(),
     OSGiConfigFixtureMixin,
     OSGiDsAnnotationsMixin,
     JavaMixin {
 
   fun `test marker info DS OSGi Config with OCD in separate class`() = fileCase {
-    addComponentAnnotation()
-    addDesignateAnnotation()
-    addObjectClassDefinitionAnnotation()
-    addAttributeDefinitionAnnotation()
-
-    javaLangString()
+    addBasicOSGiDeclarativeServiceAnnotations()
 
     addClass("Config.java", """
       package com.test;
@@ -38,7 +34,7 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
         @AttributeDefinition(
             name = "Test property",
             description = "Test property description")
-        String ${CARET}testProperty();
+        String ${CARET}test1Property();
 
       }
     """)
@@ -62,31 +58,20 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     )
 
     osgiConfig("/config/author/com.test.MyService.xml", """
-      testProperty="test value"
+      test1Property="test value"
     """)
 
     verify {
-      val gutters = myFixture.findAllGutters()
-
-      val felixGutter = gutters.mapNotNull {
-        it as? LineMarkerInfo.LineMarkerGutterIconRenderer<*>
-      }.find {
-        it.lineMarkerInfo is FelixOSGiPropertyMarkerInfo
-      }?.lineMarkerInfo ?: throw AssertionError("Unable to find Felix gutter")
-
-      Assertions.assertThat(felixGutter.lineMarkerTooltip)
-          .isEqualTo("OSGi Property")
-
+      hasOSGiPropertyLineMarker(
+          getFixtureOsgiPropertyGutters(),
+          lineMarkerElementTextAndTooltipExtractors,
+          Tuple("test1Property", "OSGi Property")
+      )
     }
   }
 
   fun `test marker info DS OSGi Config with OCD as inner class`() = fileCase {
-    addComponentAnnotation()
-    addDesignateAnnotation()
-    addObjectClassDefinitionAnnotation()
-    addAttributeDefinitionAnnotation()
-
-    javaLangString()
+    addBasicOSGiDeclarativeServiceAnnotations()
 
     addClass("MyService.java", """
       package com.test;
@@ -106,7 +91,7 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
           @AttributeDefinition(
               name = "Test property",
               description = "Test property description")
-          String ${CARET}testProperty();
+          String ${CARET}test2Property();
         }
       }
     """)
@@ -116,21 +101,15 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     )
 
     osgiConfig("/config/author/com.test.MyService.xml", """
-      testProperty="test value"
+      test2Property="test value"
     """)
 
     verify {
-      val gutters = myFixture.findAllGutters()
-
-      val felixGutter = gutters.mapNotNull {
-        it as? LineMarkerInfo.LineMarkerGutterIconRenderer<*>
-      }.find {
-        it.lineMarkerInfo is FelixOSGiPropertyMarkerInfo
-      }?.lineMarkerInfo ?: throw AssertionError("Unable to find Felix gutter")
-
-      Assertions.assertThat(felixGutter.lineMarkerTooltip)
-          .isEqualTo("OSGi Property")
-
+      hasOSGiPropertyLineMarker(
+          getFixtureOsgiPropertyGutters(),
+          lineMarkerElementTextAndTooltipExtractors,
+          Tuple("test2Property", "OSGi Property")
+      )
     }
   }
 
@@ -138,12 +117,7 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
    * Note: Class file doesn't provide PsiJavaCodeReferenceElement
    */
   fun `test marker info DS OSGi Config when OCD as inner annotation in _class file`() = fileCase {
-    addComponentAnnotation()
-    addDesignateAnnotation()
-    addObjectClassDefinitionAnnotation()
-    addAttributeDefinitionAnnotation()
-
-    javaLangString()
+    addBasicOSGiDeclarativeServiceAnnotations()
 
     addClass("MyService.class", """
       package com.test;
@@ -163,7 +137,7 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
           @AttributeDefinition(
               name = "Test property",
               description = "Test property description")
-          String ${CARET}test_property();
+          String ${CARET}test1_property();
         }
       }
     """)
@@ -173,30 +147,20 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     )
 
     osgiConfig("/config/author/com.test.MyService.xml", """
-      test.property="test value"
+      test1.property="test value"
     """)
 
     verify {
-      val gutters = myFixture.findAllGutters()
-
-      val felixGutter = gutters.mapNotNull {
-        it as? LineMarkerInfo.LineMarkerGutterIconRenderer<*>
-      }.find {
-        it.lineMarkerInfo is FelixOSGiPropertyMarkerInfo
-      }?.lineMarkerInfo ?: throw AssertionError("Unable to find Felix gutter")
-
-      Assertions.assertThat(felixGutter.lineMarkerTooltip)
-          .isEqualTo("OSGi Property")
-
+      hasOSGiPropertyLineMarker(
+          getFixtureOsgiPropertyGutters(),
+          lineMarkerElementTextAndTooltipExtractors,
+          Tuple("test1_property", "OSGi Property")
+      )
     }
   }
 
   fun `test no marker info DS OSGi Config when OCD in not marked as OCD`() = fileCase {
-    addComponentAnnotation()
-    addDesignateAnnotation()
-    addAttributeDefinitionAnnotation()
-
-    javaLangString()
+    addBasicOSGiDeclarativeServiceAnnotations()
 
     addClass("MyService.class", """
       package com.test;
@@ -220,19 +184,12 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     """)
 
     verify {
-      val gutters = myFixture.findAllGutters()
-
-      Assertions.assertThat(gutters)
-          .isEmpty()
+      hasNotOSGIPropertyLineMarker()
     }
   }
 
   fun `test no marker info DS OSGi Config when OCD method doesn't have AttributeDefinition annotation`() = fileCase {
-    addComponentAnnotation()
-    addDesignateAnnotation()
-    addObjectClassDefinitionAnnotation()
-
-    javaLangString()
+    addBasicOSGiDeclarativeServiceAnnotations()
 
     addClass("MyService.java", """
       package com.test;
@@ -253,20 +210,12 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     """)
 
     verify {
-      val gutters = myFixture.findAllGutters()
-
-      Assertions.assertThat(gutters)
-          .isEmpty()
+      hasNotOSGIPropertyLineMarker()
     }
   }
 
   fun `test no marker info DS OSGi Config when no config files for current OCD`() = fileCase {
-    addComponentAnnotation()
-    addDesignateAnnotation()
-    addObjectClassDefinitionAnnotation()
-    addAttributeDefinitionAnnotation()
-
-    javaLangString()
+    addBasicOSGiDeclarativeServiceAnnotations()
 
     addClass("MyService.class", """
       package com.test;
@@ -291,19 +240,12 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     """)
 
     verify {
-      val gutters = myFixture.findAllGutters()
-
-      Assertions.assertThat(gutters)
-          .isEmpty()
+      hasNotOSGIPropertyLineMarker()
     }
   }
 
   fun `test no marker info DS OSGi Config when component doesn't have Designate annotation`() = fileCase {
-    addComponentAnnotation()
-    addObjectClassDefinitionAnnotation()
-    addAttributeDefinitionAnnotation()
-
-    javaLangString()
+    addBasicOSGiDeclarativeServiceAnnotations()
 
     addClass("MyService.java", """
       package com.test;
@@ -326,19 +268,12 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     """)
 
     verify {
-      val gutters = myFixture.findAllGutters()
-
-      Assertions.assertThat(gutters)
-          .isEmpty()
+      hasNotOSGIPropertyLineMarker()
     }
   }
 
   fun `test no marker info DS OSGi Config when it is referenced not via Designate annotation`() = fileCase {
-    addComponentAnnotation()
-    addObjectClassDefinitionAnnotation()
-    addAttributeDefinitionAnnotation()
-
-    javaLangString()
+    addBasicOSGiDeclarativeServiceAnnotations()
 
     addClass("MyService.class", """
       package com.test;
@@ -361,20 +296,12 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     """)
 
     verify {
-      val gutters = myFixture.findAllGutters()
-
-      Assertions.assertThat(gutters)
-          .isEmpty()
+      hasNotOSGIPropertyLineMarker()
     }
   }
 
   fun `test no marker info DS OSGi Config when component is referenced to another OCD`() = fileCase {
-    addComponentAnnotation()
-    addDesignateAnnotation()
-    addObjectClassDefinitionAnnotation()
-    addAttributeDefinitionAnnotation()
-
-    javaLangString()
+    addBasicOSGiDeclarativeServiceAnnotations()
 
     addClass("Config.java", """
       package com.test;
@@ -414,10 +341,7 @@ class DsOSGiPropertyLineMarkerTest : BaseLightTest(),
     """)
 
     verify {
-      val gutters = myFixture.findAllGutters()
-
-      Assertions.assertThat(gutters)
-          .isEmpty()
+      hasNotOSGIPropertyLineMarker()
     }
   }
 }
