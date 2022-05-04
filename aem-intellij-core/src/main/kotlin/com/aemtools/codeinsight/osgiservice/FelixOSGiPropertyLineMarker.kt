@@ -60,13 +60,14 @@ class FelixOSGiPropertyLineMarker : LineMarkerProvider {
   private fun isFelixProperty(psiElement: PsiElement): Boolean =
       when (psiElement) {
         is PsiField -> psiElement.isFelixProperty()
-        is PsiNameValuePair -> isInnerFelixProperty(psiElement)
+        is PsiNameValuePair -> isInnerNotPrivateFelixProperty(psiElement)
         else -> false
       }
 
-  private fun isInnerFelixProperty(annotationAttribute: PsiNameValuePair): Boolean {
+  private fun isInnerNotPrivateFelixProperty(annotationAttribute: PsiNameValuePair): Boolean {
     val psiAnnotation = annotationAttribute.findParentByType(PsiAnnotation::class.java)
-    if (psiAnnotation != null && psiAnnotation.hasQualifiedName(const.java.FELIX_PROPERTY_ANNOTATION)) {
+    if (psiAnnotation != null && psiAnnotation.hasQualifiedName(const.java.FELIX_PROPERTY_ANNOTATION)
+        && isNotPrivateProperty(psiAnnotation)) {
       return psiAnnotation.findParentByType(PsiAnnotation::class.java, true)
           ?.hasQualifiedName(const.java.FELIX_PROPERTIES_ANNOTATION) ?: false
     }
@@ -89,6 +90,11 @@ class FelixOSGiPropertyLineMarker : LineMarkerProvider {
         is PsiLiteralExpression -> annotation.literalValue
         else -> null
       }
+
+  private fun isNotPrivateProperty(propertyAnnotation: PsiAnnotation?) =
+      propertyAnnotation
+          ?.findAttributeValue("propertyPrivate")
+          ?.text.toBoolean().not()
 
   override fun collectSlowLineMarkers(elements: MutableList<out PsiElement>,
                                       result: MutableCollection<in LineMarkerInfo<*>>) {

@@ -154,6 +154,35 @@ class FelixOSGiPropertyLineMarkerTest : BaseOSGiPropertyLineMarkerTest(),
     }
   }
 
+  fun `test no marker info for Felix class level private property`() = fileCase {
+    addFelixServiceAnnotation()
+    addFelixPropertyAnnotation()
+    addFelixPropertiesAnnotation()
+
+    addClass("MyService.java", """
+      package com.test;
+
+      import org.apache.felix.scr.annotations.Service;
+      import org.apache.felix.scr.annotations.Property;
+      import org.apache.felix.scr.annotations.Properties;
+
+      @Service
+      @Properties({
+        @Property(name = MyService.PROPERTY_KEY, value = "testValue", propertyPrivate = true)
+      })
+      public class MyService { 
+        static final String PROPERTY_KEY = "test.property";
+        $CARET
+      }
+    """)
+
+    addEmptyOSGiConfigs("/config/author/com.test.MyService.xml")
+
+    verify {
+      hasNotOSGIPropertyLineMarker()
+    }
+  }
+
   fun `test marker info for Felix class level property with name from external class constants`() = fileCase {
     addFelixServiceAnnotation()
     addFelixPropertyAnnotation()
