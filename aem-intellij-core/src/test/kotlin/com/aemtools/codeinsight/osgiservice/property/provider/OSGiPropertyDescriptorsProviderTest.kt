@@ -1,7 +1,7 @@
 package com.aemtools.codeinsight.osgiservice.property.provider
 
-import com.aemtools.codeinsight.osgiservice.DsOSGiPropertyLineMarker
-import com.aemtools.codeinsight.osgiservice.navigationhandler.FelixOSGiPropertyNavigationHandler
+import com.aemtools.codeinsight.osgiservice.OSGiObjectClassDefinitionLineMarker
+import com.aemtools.codeinsight.osgiservice.navigationhandler.OSGiPropertyNavigationHandler
 import com.aemtools.lang.java.JavaSearch
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.JavaMixin
@@ -70,9 +70,9 @@ class OSGiPropertyDescriptorsProviderTest : BaseLightTest(),
       val methodIdentifier = osgiOcdPsiClass.allMethods.first().nameIdentifier
           ?: throw AssertionError("Unable to get OCD method!")
 
-      val marker = DsOSGiPropertyLineMarker().getLineMarkerInfo(methodIdentifier)
+      val marker = OSGiObjectClassDefinitionLineMarker().getLineMarkerInfo(methodIdentifier)
           ?: throw AssertionError("Marker is null")
-      val navigationHandler = marker.navigationHandler as? FelixOSGiPropertyNavigationHandler
+      val navigationHandler = marker.navigationHandler as? OSGiPropertyNavigationHandler
           ?: throw AssertionError("Navigation handler is null")
 
       val configs = navigationHandler.propertyDescriptors()

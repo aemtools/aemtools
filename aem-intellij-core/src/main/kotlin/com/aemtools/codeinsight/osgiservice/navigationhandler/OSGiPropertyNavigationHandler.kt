@@ -1,6 +1,6 @@
 package com.aemtools.codeinsight.osgiservice.navigationhandler
 
-import com.aemtools.codeinsight.osgiservice.markerinfo.FelixOSGiPropertyDescriptor
+import com.aemtools.codeinsight.osgiservice.markerinfo.OSGiPropertyDescriptor
 import com.aemtools.common.util.toNavigatable
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler
 import com.intellij.codeInsight.daemon.impl.PsiElementListNavigator
@@ -10,30 +10,32 @@ import com.intellij.psi.PsiElement
 import java.awt.event.MouseEvent
 
 /**
- * Felix OSGi gutter navigation handler.
+ * OSGi gutter navigation handler.
  *
  * @author Dmytro Primshyts
  */
-class FelixOSGiPropertyNavigationHandler(
-    val propertyDescriptors: () -> List<FelixOSGiPropertyDescriptor>
+class OSGiPropertyNavigationHandler(
+    val propertyDescriptors: () -> List<OSGiPropertyDescriptor>
 ) : GutterIconNavigationHandler<PsiElement> {
 
   override fun navigate(e: MouseEvent, elt: PsiElement?) {
+    val propertyDescriptors = propertyDescriptors()
     PsiElementListNavigator.openTargets(e,
-        propertyDescriptors().map {
+        propertyDescriptors.map {
           (it.xmlAttribute?.toNavigatable() ?: it.osgiConfigFIle) as NavigatablePsiElement
         }.toTypedArray(),
-        "OSGi Property", null, createListCellRenderer())
+        "OSGi Property", null, createListCellRenderer(propertyDescriptors))
   }
 
-  private fun createListCellRenderer(): PsiElementListCellRenderer<PsiElement> {
+  private fun createListCellRenderer(propertyDescriptors: List<OSGiPropertyDescriptor>)
+      : PsiElementListCellRenderer<PsiElement> {
     return object : PsiElementListCellRenderer<PsiElement>() {
       override fun getIconFlags(): Int = 0
 
       override fun getContainerText(element: PsiElement, name: String): String? {
-        return propertyDescriptors().find {
+        return propertyDescriptors.find {
           it.xmlAttribute?.toNavigatable() == element
-           || it.osgiConfigFIle == element
+              || it.osgiConfigFIle == element
         }?.propertyValue ?: ""
       }
 
@@ -41,7 +43,7 @@ class FelixOSGiPropertyNavigationHandler(
         if (element == null) {
           return ""
         }
-        return propertyDescriptors().find {
+        return propertyDescriptors.find {
           it.xmlAttribute?.toNavigatable() == element
               || it.osgiConfigFIle == element
         }?.mods ?: ""

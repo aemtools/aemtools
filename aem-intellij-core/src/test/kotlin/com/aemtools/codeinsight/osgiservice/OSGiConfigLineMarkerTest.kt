@@ -22,8 +22,9 @@ class OSGiConfigLineMarkerTest : BaseLightTest(),
 
   var tested: OSGiConfigLineMarker = OSGiConfigLineMarker()
 
-  fun testFelixServiceShouldBeMarked() = fileCase {
+  fun `test marker info for Felix service`() = fileCase {
     addFelixServiceAnnotation()
+
     addClass("MyService.java", """
         package com.test;
 
@@ -46,8 +47,9 @@ class OSGiConfigLineMarkerTest : BaseLightTest(),
     }
   }
 
-  fun testDsComponentShouldBeMarked() = fileCase {
+  fun `test marker info for OSGi DS service`() = fileCase {
     addComponentAnnotation()
+
     addClass("MyService.java", """
         package com.test;
 
@@ -70,7 +72,7 @@ class OSGiConfigLineMarkerTest : BaseLightTest(),
     }
   }
 
-  fun testAvailableConfigsShouldBeSortedCorrectly() = fileCase {
+  fun `test correct sorting of available configs`() = fileCase {
     addFelixServiceAnnotation()
     addClass("MyService.java", """
             package com.test;
@@ -114,8 +116,9 @@ class OSGiConfigLineMarkerTest : BaseLightTest(),
     }
   }
 
-  fun testUpdatingConfigListIfSomeConfigWasRemoved() = fileCase {
+  fun `test updating of rendered configs if some config was removed`() = fileCase {
     addFelixServiceAnnotation()
+
     addClass("MyService.java", """
             package com.test;
 
@@ -145,7 +148,7 @@ class OSGiConfigLineMarkerTest : BaseLightTest(),
       assertEquals(4, configs.size)
 
       val configVirtualFileToRemove = configs[0].xmlFile?.virtualFile
-          ?: throw AssertionError("Couldn't get cirtual file of osgi config")
+          ?: throw AssertionError("Couldn't get virtual file of osgi config")
       VfsTestUtil.deleteFile(configVirtualFileToRemove)
 
       val updatedConfigs = navigationHandler.getSortedConfigs()
@@ -155,8 +158,9 @@ class OSGiConfigLineMarkerTest : BaseLightTest(),
     }
   }
 
-  fun testUpdatingConfigListIfNewConfigWasAdded() = fileCase {
+  fun `test updating of rendered config list if new config was added`() = fileCase {
     addFelixServiceAnnotation()
+
     addClass("MyService.java", """
             package com.test;
 

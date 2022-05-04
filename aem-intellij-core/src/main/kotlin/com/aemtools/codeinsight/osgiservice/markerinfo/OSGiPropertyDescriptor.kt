@@ -8,7 +8,7 @@ import com.intellij.psi.xml.XmlFile
  *
  * @author Dmytro Primshyts
  */
-data class FelixOSGiPropertyDescriptor(
+data class OSGiPropertyDescriptor(
         /**
          * Mods string.
          */

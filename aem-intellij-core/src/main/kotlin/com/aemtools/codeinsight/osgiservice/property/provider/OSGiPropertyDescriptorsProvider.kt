@@ -1,6 +1,6 @@
 package com.aemtools.codeinsight.osgiservice.property.provider
 
-import com.aemtools.codeinsight.osgiservice.markerinfo.FelixOSGiPropertyDescriptor
+import com.aemtools.codeinsight.osgiservice.markerinfo.OSGiPropertyDescriptor
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.index.model.OSGiConfiguration
 import com.aemtools.index.model.sortByMods
@@ -12,7 +12,7 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Kostiantyn Diachenko
  */
 object OSGiPropertyDescriptorsProvider {
-  fun get(referencedOsgiComponentClass: PsiClass, configPropertyName: String): List<FelixOSGiPropertyDescriptor> {
+  fun get(referencedOsgiComponentClass: PsiClass, configPropertyName: String): List<OSGiPropertyDescriptor> {
     val containingClassFqn = referencedOsgiComponentClass.qualifiedName
         ?: return emptyList()
 
@@ -28,7 +28,7 @@ object OSGiPropertyDescriptorsProvider {
   }
 
   private fun propertyDescriptors(configs: List<OSGiConfiguration>,
-                                  value: String): List<FelixOSGiPropertyDescriptor> {
+                                  value: String): List<OSGiPropertyDescriptor> {
     return configs.sortByMods()
         .mapNotNull { config ->
           val file = config.xmlFile ?: return@mapNotNull null
@@ -38,7 +38,7 @@ object OSGiPropertyDescriptorsProvider {
 
           val attributeValue = attribute?.value ?: "<no value set>"
 
-          FelixOSGiPropertyDescriptor(
+          OSGiPropertyDescriptor(
               config.mods.joinToString { it },
               attributeValue,
               attribute,
@@ -50,8 +50,8 @@ object OSGiPropertyDescriptorsProvider {
         }
   }
 
-  private fun padModsByMaxModLength(propertyDescriptors: List<FelixOSGiPropertyDescriptor>)
-      : List<FelixOSGiPropertyDescriptor> {
+  private fun padModsByMaxModLength(propertyDescriptors: List<OSGiPropertyDescriptor>)
+      : List<OSGiPropertyDescriptor> {
     val modsMaxLength = propertyDescriptors
         .maxByOrNull {
           it.mods.length
