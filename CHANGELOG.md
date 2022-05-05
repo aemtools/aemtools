@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 ### Bug fixes
 - [Blocks xml file copy operation](https://github.com/aemtools/aemtools/issues/189)
 - [Unsynchronized list of OSGI configs when they removed/added](https://github.com/aemtools/aemtools/issues/151)
+- [Fixed HTL map object completion wrapped in separate class](https://github.com/aemtools/aemtools/issues/194)
 
 ## [0.9.1] - 2022-04-14
 [0.9.1]: https://github.com/aemtools/aemtools/tree/v0.9.1
