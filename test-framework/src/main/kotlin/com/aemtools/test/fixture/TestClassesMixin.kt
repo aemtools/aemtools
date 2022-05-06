@@ -214,5 +214,40 @@ interface TestClassesMixin {
 
       }
     """)
+
+    addClass("""
+      package com.aemtools.completion.htl.fixtures.classes;
+
+      import org.apache.sling.models.annotations.Model;
+
+      import java.util.List;
+      import java.util.Map;
+
+      /**
+       * Documentation of RequestModel.
+       */
+      @Model(adaptables = Resource.class)
+      public class RequestModel {
+        public WrappedMapClass getMethodWrappedMap() {
+            return null;
+        }
+      }
+    """)
+
+    addClass("""
+      package com.aemtools.completion.htl.fixtures.classes;
+
+      import com.aemtools.completion.htl.fixtures.classes.MyModel;
+      import com.aemtools.completion.htl.fixtures.classes.MapModel;
+
+      import java.util.List;
+      import java.util.Map;
+
+      /**
+       * Documentation of CustomMap.
+       */
+      public class WrappedMapClass extends Map<MyModel, MapModel> {
+      }
+    """)
   }
 }
