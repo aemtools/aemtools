@@ -23,8 +23,11 @@ class DocTestFixture(
     super.test()
 
     val elementUnderCaret = assertionContext().elementUnderCaret()
+    val customDocumentationElement = documentationProvider.getCustomDocumentationElement(
+        fixture.editor, fixture.file, elementUnderCaret, fixture.caretOffset)
+        ?: elementUnderCaret
 
-    val result = documentationProvider.generateDoc(elementUnderCaret, elementUnderCaret)
+    val result = documentationProvider.generateDoc(customDocumentationElement, customDocumentationElement)
 
     assertEquals(documentation, result)
   }

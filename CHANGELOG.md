@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - [IDE: resolve OSGi configs for declarative services (OSGi R6-R7 annotations)](https://github.com/aemtools/aemtools/issues/84) 
 - [OSGi: add metadata validation of OSGi Felix component annotation](https://github.com/aemtools/aemtools/issues/174)
 - [OSGi: add gutter icon for Felix Properties annotation](https://github.com/aemtools/aemtools/issues/166)
+- [HTL: Add support for "/libs/granite/sightly/templates/clientlib.html"](https://github.com/aemtools/aemtools/issues/133)
 
 ### Bug fixes
 - [Blocks xml file copy operation](https://github.com/aemtools/aemtools/issues/189)
