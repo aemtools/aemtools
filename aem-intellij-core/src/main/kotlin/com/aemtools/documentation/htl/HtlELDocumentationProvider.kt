@@ -3,7 +3,7 @@ package com.aemtools.documentation.htl
 import com.aemtools.analysis.htl.callchain
 import com.aemtools.common.util.findParentByType
 import com.aemtools.completion.model.htl.HtlOption
-import com.aemtools.index.ClientLibraryIndexFacade
+import com.aemtools.documentation.clientlibs.generator.ClientlibDocumentationGenerator
 import com.aemtools.index.model.AemComponentDefinition.Companion.generateDoc
 import com.aemtools.index.search.AemComponentSearch
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
@@ -66,40 +66,8 @@ open class HtlELDocumentationProvider : AbstractDocumentationProvider() {
           return super.generateDoc(element, originalElement)
         }
 
-        val clientlibs = ClientLibraryIndexFacade
-            .findClientlibsByCategory(originalElement.project, category)
-
-        buildString {
-          append("<html><head></head><body>")
-
-          val dependencies = clientlibs.flatMap { it.dependencies }
-          val embeds = clientlibs.flatMap { it.embed }
-
-          append("<h2>Declared in:</h2>")
-          clientlibs.forEach { model ->
-            append("<a href=\"${model.filePath}\">${model.filePath}</a>")
-          }
-
-          if (dependencies.isNotEmpty()) {
-            append("<h2>Depends on:</h2>")
-            append("<ul>")
-            dependencies.forEach { dependency ->
-              append("<li>$dependency</li>")
-            }
-            append("</ul>")
-          }
-
-          if (embeds.isNotEmpty()) {
-            append("<h2>Embeds:</h2>")
-            append("<ul>")
-            embeds.forEach { embed ->
-              append("<li>$embed</li>")
-            }
-            append("</ul>")
-          }
-
-          append("</body></head>")
-        }
+        ClientlibDocumentationGenerator.generateDoc(originalElement, category)
+            ?: super.generateDoc(element, originalElement)
       }
 
       memberAccess.accepts(originalElement) -> {
