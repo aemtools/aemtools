@@ -16,5 +16,8 @@
 
         <lang.braceMatcher language="JcrProperty"
                            implementationClass="com.aemtools.lang.jcrproperty.editor.JpBraceMatcher"/>
+        <lang.documentationProvider
+                language="JcrProperty" order="first"
+                implementationClass="com.aemtools.documentation.clientlibs.ClientlibsFolderDocumentationProvider"/>
     </extensions>
 </idea-plugin>
