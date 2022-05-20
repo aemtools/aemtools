@@ -119,6 +119,8 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
   override fun asResolutionResult(): ResolutionResult =
       ResolutionResult(psiClass, myVariants())
 
+  fun qualifiedName(): String? = psiClass.qualifiedName
+
   companion object {
     /**
      * Build method for [JavaPsiClassTypeDescriptor].
