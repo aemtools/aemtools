@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - [IDE: add absolute path completion for js.txt and css.txt](https://github.com/aemtools/aemtools/issues/165)
 - [HTL: Add support for "/libs/granite/sightly/templates/clientlib.html"](https://github.com/aemtools/aemtools/issues/133)
 - [HTL: Improve completion for WCM API component](https://github.com/aemtools/aemtools/issues/172)
+- [IDE: support of component declaration files](https://github.com/aemtools/aemtools/issues/83)
 
 ### Bug fixes
 - [Blocks xml file copy operation](https://github.com/aemtools/aemtools/issues/189)

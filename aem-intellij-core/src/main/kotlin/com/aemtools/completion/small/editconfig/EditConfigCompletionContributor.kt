@@ -5,6 +5,7 @@ import com.aemtools.common.completion.BaseCompletionProvider
 import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.common.util.findParentByType
+import com.aemtools.completion.common.provider.JpBooleanValueCompletionProvider
 import com.aemtools.completion.small.inserthandler.JcrArrayInsertHandler
 import com.aemtools.completion.small.patterns.EditConfigPatterns.attributeUnderJcrRoot
 import com.aemtools.completion.small.patterns.EditConfigPatterns.cqActionsValue
@@ -34,13 +35,7 @@ class EditConfigCompletionContributor : BaseCompletionContributor({
 
   basic(
       cqInheritValue,
-
-      BaseCompletionProvider({ _, _, _ ->
-        listOf(
-            lookupElement("true"),
-            lookupElement("false")
-        )
-      })
+      JpBooleanValueCompletionProvider
   )
 
   basic(

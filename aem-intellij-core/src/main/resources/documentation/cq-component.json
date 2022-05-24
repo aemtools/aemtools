@@ -1,0 +1,42 @@
+[
+  {
+    "name": "jcr:title",
+    "type": "String",
+    "description": "Title of the component."
+  },
+  {
+    "name": "jcr:description",
+    "type": "String",
+    "description": "Description of the component."
+  },
+  {
+    "name": "componentGroup",
+    "type": "String",
+    "description": "Group under which the component can be selected in the Components browser (touch-enabled UI) or Sidekick (classic UI).<br/>A value of .hidden is used for components that are not available for selection from the UI such as the actual paragraph systems."
+  },
+  {
+    "name": "sling:resourceSuperType",
+    "type": "String",
+    "description": "When set, the component inherits from this component."
+  },
+  {
+    "name": "cq:isContainer",
+    "type": "Boolean",
+    "description": "Indicates whether the component is a container component and therefore can contain other components such as a paragraph system."
+  },
+  {
+    "name": "cq:noDecoration",
+    "type": "Boolean",
+    "description": "If true, the component is not rendered with automatically generated div and css classes."
+  },
+  {
+    "name": "dialogPath",
+    "type": "String",
+    "description": "Path to a dialog to cover the case when the component does not have a dialog node."
+  },
+  {
+    "name": "cq:templatePath",
+    "type": "String",
+    "description": "Path to a node to use as a content template when the component is added from the Components browser or Sidekick. This must be an absolute path, not relative to the component node.<br/>Unless you want to reuse content already available elsewhere, this is not required and cq:template is sufficient."
+  }
+]
