@@ -20,4 +20,8 @@ class JpLexerTest : LexerBaseTest() {
   fun testValue() = doTest()
   fun testArray() = doTest()
   fun testEmptyArray() = doTest()
+  fun testValueWithBracesAndBrackets() = doTest()
+  fun testArrayWithRightBracketInToken() = doTest()
+  fun testArrayWithLeadingRightBracketInToken() = doTest()
+  fun testArrayWithEscapedComma() = doTest()
 }

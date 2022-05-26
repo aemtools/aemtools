@@ -1,0 +1,9 @@
+JpFile:arrayWithEscapedComma.in
+  JpArrayImpl(ARRAY)
+    PsiElement([)('[')
+    JpArrayValueImpl(ARRAY_VALUE)
+      PsiElement(ARRAY_VALUE_TOKEN)('a:href\,data-href')
+    PsiElement(,)(',')
+    JpArrayValueImpl(ARRAY_VALUE)
+      PsiElement(ARRAY_VALUE_TOKEN)('data:data-href')
+    PsiElement(])(']')

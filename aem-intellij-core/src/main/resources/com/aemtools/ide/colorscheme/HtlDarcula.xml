@@ -89,4 +89,7 @@
             <option name="EFFECT_TYPE" value="2" />
         </value>
     </option>
+    <option name="XML:INJECTED_LANGUAGE_FRAGMENT">
+        <value />
+    </option>
 </list>

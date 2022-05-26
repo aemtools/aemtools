@@ -30,4 +30,9 @@ class JpParserTest :
   fun testString() = doTest()
   fun testUri() = doTest()
   fun testWeakReference() = doTest()
+
+  fun testValueWithBracesAndBrackets() = doTest()
+  fun testArrayWithRightBracketInToken() = doTest()
+  fun testArrayWithLeadingRightBracketInToken() = doTest()
+  fun testArrayWithEscapedComma() = doTest()
 }

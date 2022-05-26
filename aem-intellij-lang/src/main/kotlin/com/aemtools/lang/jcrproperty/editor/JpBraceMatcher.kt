@@ -13,7 +13,6 @@ class JpBraceMatcher : PairedBraceMatcher {
   override fun getCodeConstructStart(file: PsiFile?, openingBraceOffset: Int): Int = openingBraceOffset
 
   override fun getPairs(): Array<BracePair> = arrayOf(
-      BracePair(JpTypes.LBRACE, JpTypes.RBRACE, false),
       BracePair(JpTypes.LBRACKET, JpTypes.RBRACKET, false)
   )
 

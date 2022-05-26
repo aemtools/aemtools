@@ -96,4 +96,7 @@
             <option name="FOREGROUND" value="808080" />
         </value>
     </option>
+    <option name="XML:INJECTED_LANGUAGE_FRAGMENT">
+        <value />
+    </option>
 </list>

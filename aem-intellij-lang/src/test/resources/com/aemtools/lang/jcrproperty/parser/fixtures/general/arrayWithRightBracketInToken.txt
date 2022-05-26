@@ -1,0 +1,6 @@
+JpFile:arrayWithRightBracketInToken.in
+  JpArrayImpl(ARRAY)
+    PsiElement([)('[')
+    JpArrayValueImpl(ARRAY_VALUE)
+      PsiElement(ARRAY_VALUE_TOKEN)('/some/path/([a-z]+_[A-Z]+)=/some/path')
+    PsiElement(])(']')

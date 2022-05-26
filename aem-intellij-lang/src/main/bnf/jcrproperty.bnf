@@ -33,8 +33,8 @@
     RBRACKET  = ']'
     COMMA     = ','
 
-    VALUE_TOKEN = 'regexp:[^\[\]{}]*'
-    ARRAY_VALUE_TOKEN = 'regexp:[^\[\]{},]*'
+    VALUE_TOKEN = 'regexp:.*'
+    ARRAY_VALUE_TOKEN = 'regexp:([^,](\\,)?)+'
   ]
 }
 

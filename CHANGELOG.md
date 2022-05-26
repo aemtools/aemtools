@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - [HTL: Improve completion for WCM API component](https://github.com/aemtools/aemtools/issues/172)
 - [IDE: support of component declaration files](https://github.com/aemtools/aemtools/issues/83)
 - [Support: Error reporting](https://github.com/aemtools/aemtools/issues/139)
+- [JCR Property Language syntax error](https://github.com/aemtools/aemtools/issues/209)
 
 ### Bug fixes
 - [Blocks xml file copy operation](https://github.com/aemtools/aemtools/issues/189)
