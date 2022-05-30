@@ -16,18 +16,14 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.java.IterableJavaTypeD
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.JavaPsiClassTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.java.MapJavaTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.predefined.PredefinedTypeDescriptor
+import com.aemtools.analysis.htl.callchain.typedescriptor.properties.PropertiesTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateParameterTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
-import com.aemtools.codeinsight.htl.model.DeclarationAttributeType
-import com.aemtools.codeinsight.htl.model.DeclarationType
-import com.aemtools.codeinsight.htl.model.HtlListHelperDeclaration
-import com.aemtools.codeinsight.htl.model.HtlTemplateParameterDeclaration
-import com.aemtools.codeinsight.htl.model.HtlUseVariableDeclaration
-import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
+import com.aemtools.codeinsight.htl.model.*
+import com.aemtools.common.constant.const.java.WCM_API_COMPONENT
 import com.aemtools.common.util.hasChild
 import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.htl.predefined.HtlELPredefined.LIST_AND_REPEAT_HELPER_OBJECT
-import com.aemtools.codeinsight.htl.model.HtlTemplateDeclaration
 import com.aemtools.lang.htl.psi.HtlArrayLikeAccess
 import com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
@@ -246,6 +242,11 @@ object RawCallChainProcessor {
           callChainElement = ArrayAccessIdentifierElement(nextRawElement)
           currentType = currentType.valueType()
         }
+        hasInnerPropertiesTypeDescriptor(nextRawElement, currentType) -> {
+          val newType = PropertiesTypeDescriptor(nextRawElement)
+          callChainElement = BaseChainElement(nextRawElement, "properties", newType)
+          currentType = newType
+        }
         else -> {
           val varName = extractElementName(nextRawElement)
           val newType = currentType.subtype(varName)
@@ -268,6 +269,12 @@ object RawCallChainProcessor {
       else -> ""
     }
   }
+
+  private fun hasInnerPropertiesTypeDescriptor(nextRawElement: PsiElement?, currentType: TypeDescriptor) =
+      nextRawElement is AccessIdentifierMixin
+          && nextRawElement.variableName() == "properties"
+          && currentType is JavaPsiClassTypeDescriptor
+          && currentType.qualifiedName() == WCM_API_COMPONENT
 
 }
 

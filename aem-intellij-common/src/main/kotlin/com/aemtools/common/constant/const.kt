@@ -231,6 +231,7 @@ object const {
     const val USE_INTERFACE = "io.sightly.java.api.Use"
     const val WCM_USE_CLASS = "com.adobe.cq.sightly.WCMUse"
     const val POJO_USE = "org.apache.sling.scripting.sightly.pojo.Use"
+    const val WCM_API_COMPONENT = "com.day.cq.wcm.api.components.Component"
 
     const val SLING_MODEL = "org.apache.sling.models.annotations.Model"
     const val OPTIONAL = "org.apache.sling.models.annotations.Optional"

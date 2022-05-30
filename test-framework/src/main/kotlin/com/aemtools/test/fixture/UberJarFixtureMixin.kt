@@ -556,6 +556,52 @@ interface UberJarFixtureMixin : OSGiFelixAnnotationsMixin {
                 }
             }
         """)
+
+    addClass("""
+            package com.day.cq.wcm.api.components;
+
+            import com.day.cq.commons.LabeledResource;
+            import org.apache.sling.api.adapter.Adaptable;
+            import org.apache.sling.api.resource.Resource;
+            import org.apache.sling.api.resource.ValueMap;
+            
+            import java.util.Map;
+            
+            public interface Component extends Adaptable, LabeledResource {
+                boolean isAccessible();
+                String getCellName();
+                boolean isEditable();
+                boolean isDesignable();
+                boolean isContainer();
+                boolean isAnalyzable();
+                boolean noDecoration();
+                String getDialogPath();
+                String getDesignDialogPath();
+                String getIconPath();
+                String getThumbnailPath();
+                String getComponentGroup();
+                ValueMap getProperties();
+                ComponentEditConfig getDeclaredEditConfig();
+                ComponentEditConfig getDeclaredChildEditConfig();
+                ComponentEditConfig getEditConfig();
+                ComponentEditConfig getChildEditConfig();
+                ComponentEditConfig getDesignEditConfig(String var1);
+                Map<String, String> getHtmlTagAttributes();
+                Component getSuperComponent();
+                String getResourceType();
+                Resource getLocalResource(String var1);
+                String getDefaultView();
+                String getTemplatePath();
+                String[] getInfoProviders();
+            }
+        """)
+
+    addClass("""
+      package com.day.cq.wcm.api.components;
+      
+      public interface ComponentEditConfig {
+      }
+    """)
   }
 
 }
