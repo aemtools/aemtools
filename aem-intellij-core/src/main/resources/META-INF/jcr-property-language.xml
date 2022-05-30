@@ -11,6 +11,9 @@
         <completion.contributor
                 language="JcrProperty"
                 implementationClass="com.aemtools.completion.small.clientlibraryfolder.JcrClientLibraryFolderCompletionContributor"/>
+        <completion.contributor
+                language="JcrProperty"
+                implementationClass="com.aemtools.completion.small.component.JcrCqComponentCompletionContributor"/>
 
         <multiHostInjector implementation="com.aemtools.lang.jcrproperty.JcrPropertyInjector"/>
 

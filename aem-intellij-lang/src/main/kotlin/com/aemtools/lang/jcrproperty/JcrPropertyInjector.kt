@@ -78,6 +78,16 @@ class JcrPropertyInjector : MultiHostInjector {
           "xmlns:nt"
       ) -> inject(registrar, context, attributeValue)
 
+      // inject into cq:Component
+      psiLanguageInjectionHost.containingFile.name == ".content.xml"
+          && psiLanguageInjectionHost.hasParent(cqComponentTag())
+          && attributeName.name in listOf(
+          "componentGroup",
+          "sling:resourceSuperType",
+          "cq:isContainer",
+          "cq:noDecoration"
+      ) -> inject(registrar, context, attributeValue)
+
       // inject into i18n file
 //      parentTag.findParentByType(XmlTag::class.java, { tag ->
 //        tag.name == "jcr:root"
@@ -98,6 +108,16 @@ class JcrPropertyInjector : MultiHostInjector {
           && parent.hasAttribute { attribute ->
         attribute.name == "jcr:primaryType"
             && attribute.value == "cq:ClientLibraryFolder"
+      }
+    }
+  }
+
+  private fun cqComponentTag(): (PsiElement) -> Boolean {
+    return { parent ->
+      parent is XmlTag
+          && parent.hasAttribute { attribute ->
+        attribute.name == "jcr:primaryType"
+            && attribute.value == "cq:Component"
       }
     }
   }

@@ -13,7 +13,7 @@ import com.intellij.util.ProcessingContext
  *
  * @author Dmytro Primshyts
  */
-class BaseCompletionProvider(
+open class BaseCompletionProvider(
     private val completionProvider: (
         CompletionParameters,
         ProcessingContext,

@@ -66,6 +66,9 @@
         <completion.contributor
                 language="XML"
                 implementationClass="com.aemtools.completion.small.clientlibraryfolder.ClientLibraryFolderCompletionContributor"/>
+        <completion.contributor
+                language="XML"
+                implementationClass="com.aemtools.completion.small.component.CqComponentCompletionContributor"/>
 
         <lang.documentationProvider language="HTML" order="first"
                                     implementationClass="com.aemtools.documentation.html.HtlAttributesDocumentationProvider"/>
@@ -75,6 +78,8 @@
                                     implementationClass="com.aemtools.documentation.htl.HtlELDocumentationProvider"/>
         <lang.documentationProvider language="XML" order="first"
                                     implementationClass="com.aemtools.documentation.widget.WidgetDocumentationProvider"/>
+        <lang.documentationProvider language="XML" order="first"
+                                    implementationClass="com.aemtools.documentation.component.CqComponentDocumentationProvider"/>
 
         <!-- widget.xml completion -->
         <completion.contributor language="XML"
