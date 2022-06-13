@@ -1,4 +1,4 @@
-package com.aemtools.diagnostics.error.handler
+package com.aemtools.diagnostics.error.handler.exception
 
 /**
  * @author DeusBit
