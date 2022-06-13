@@ -1,5 +1,9 @@
 package com.aemtools.diagnostics.error.handler
 
+import com.aemtools.diagnostics.error.handler.exception.TokenInitializationException
+import com.aemtools.diagnostics.error.handler.model.GitHubIssue
+import com.aemtools.diagnostics.error.handler.provider.AccessTokenHolder
+import com.aemtools.diagnostics.error.handler.provider.IssueInfoFactory
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.diagnostic.IdeaLoggingEvent
 import com.intellij.openapi.extensions.PluginDescriptor
@@ -16,9 +20,11 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.*
+import org.mockito.ArgumentMatchers
+import org.mockito.InjectMocks
+import org.mockito.Mock
 import org.mockito.Mockito.*
-
+import org.mockito.Spy
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.argumentCaptor
 import java.awt.Component
@@ -28,7 +34,7 @@ import java.awt.Component
  * @author DeusBit
  */
 @RunWith(MockitoJUnitRunner::class)
-class ErrorHandlerTest {
+class GitHubErrorHandlerTest {
 
   private val testToken: String = "testToken"
 
@@ -59,17 +65,20 @@ class ErrorHandlerTest {
   private lateinit var pluginDescriptor: PluginDescriptor
 
   @Mock
-  private lateinit var issueInfoHolder: IssueInfoHolder
+  private lateinit var issueInfoFactory: IssueInfoFactory
 
   @Mock
   private lateinit var response: CloseableHttpResponse
+
+  @Mock
+  private lateinit var gitHubIssue: GitHubIssue
 
   @Mock
   private lateinit var statusLine: StatusLine
 
   @Spy
   @InjectMocks
-  private lateinit var target: ErrorHandler
+  private lateinit var target: GitHubErrorHandler
 
   @Before
   fun init() {
@@ -81,15 +90,15 @@ class ErrorHandlerTest {
     events = arrayOf(loggingEvent)
 
     doAnswer({ (it.getArgument<Task>(0) as Task.Backgroundable).run(indicator) })
-      .`when`(target).startReporting(org.mockito.kotlin.any())
+        .`when`(target).startReporting(org.mockito.kotlin.any())
 
     doReturn(pluginDescriptor).`when`(target).pluginDescriptor
-    doReturn(issueInfoHolder).`when`(target).issueInfoHolder()
-    doReturn(StringUtils.EMPTY).`when`(issueInfoHolder).getIssueDetails(loggingEvent, pluginDescriptor, null)
+    doReturn(issueInfoFactory).`when`(target).issueInfoHolder()
+    doReturn(gitHubIssue).`when`(issueInfoFactory).create(loggingEvent, pluginDescriptor, null)
     doReturn(response).`when`(httpClient).execute(any())
     doReturn(statusLine).`when`(response).statusLine
     doNothing().`when`(target).notifyUser(
-      ArgumentMatchers.anyString(), ArgumentMatchers.anyString(), org.mockito.kotlin.any())
+        ArgumentMatchers.anyString(), ArgumentMatchers.anyString(), org.mockito.kotlin.any())
   }
 
   @Test
@@ -116,7 +125,7 @@ class ErrorHandlerTest {
       verify(postRequest, times(3)).addHeader(capture())
 
       assertEquals("Accept", secondValue.name)
-      assertEquals("application/vnd.github.symmetra-preview+json", secondValue.value)
+      assertEquals("application/vnd.github.v3+json", secondValue.value)
     }
   }
 
@@ -141,7 +150,7 @@ class ErrorHandlerTest {
 
     target.submit(events, null, component, {})
 
-    verify(target).notifyUser("Report error",StringUtils.EMPTY, NotificationType.WARNING)
+    verify(target).notifyUser("Report error", StringUtils.EMPTY, NotificationType.WARNING)
   }
 
   @Test
@@ -149,9 +158,9 @@ class ErrorHandlerTest {
 
     doReturn(201).`when`(statusLine).statusCode
 
-    target.submit(events, null, component, {})
+    target.submit(events, null, component) {}
 
-    verify(target).notifyUser("Report successful","<a href=>click to open</a>", NotificationType.INFORMATION)
+    verify(target).notifyUser("Report successful", "<a href=>Click to open created issue</a>", NotificationType.INFORMATION)
   }
 
   @Test
@@ -159,8 +168,8 @@ class ErrorHandlerTest {
 
     doReturn(502).`when`(statusLine).statusCode
 
-    target.submit(events, null, component, {})
+    target.submit(events, null, component) {}
 
-    verify(target).notifyUser("Report error",StringUtils.EMPTY, NotificationType.WARNING)
+    verify(target).notifyUser("Report error", StringUtils.EMPTY, NotificationType.WARNING)
   }
 }
