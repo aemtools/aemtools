@@ -78,7 +78,8 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
         "com.aemtools.completion.htl.fixtures.classes.CustomSlingModel",
         "com.aemtools.completion.htl.fixtures.classes.IterableModel",
         "com.aemtools.completion.htl.fixtures.classes.CustomUseClass",
-        "com.aemtools.completion.htl.fixtures.classes.CustomWcmUseClass"
+        "com.aemtools.completion.htl.fixtures.classes.CustomWcmUseClass",
+        "com.aemtools.completion.htl.fixtures.classes.RequestModel"
     )
 
     val DEFAULT_LIST_VARIABLES = listOf("item", "itemList")

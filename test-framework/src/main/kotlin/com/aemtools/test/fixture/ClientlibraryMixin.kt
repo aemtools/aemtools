@@ -33,9 +33,11 @@ fun ITestFixture.clientLibrary(
 ) {
   addXml(fileName, """
         <jcr:root jcr:primaryType="cq:ClientLibraryFolder"
-             categories="$categories"
-             dependencies="$dependencies"
-             embed="$embed"
-             channels="$channels"
+             categories="${toPrintedArray(categories)}"
+             dependencies="${toPrintedArray(dependencies)}"
+             embed="${toPrintedArray(embed)}"
+             channels="${toPrintedArray(channels)}"
     """.trimIndent())
 }
+
+private fun toPrintedArray(categories: List<String>) = categories.joinToString(",", "[", "]")

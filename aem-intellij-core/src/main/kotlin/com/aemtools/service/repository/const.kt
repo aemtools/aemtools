@@ -25,6 +25,8 @@ object const {
     val HTL_OPTIONS = "$DOCUMENTATION_DIR/htl-options.json"
 
     val HTL_CONTEXT_VALUES = "$DOCUMENTATION_DIR/htl-context-values.json"
+
+    val CQ_COMPONENT_VALUES = "$DOCUMENTATION_DIR/cq-component.json"
   }
 
 }

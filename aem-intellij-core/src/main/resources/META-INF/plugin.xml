@@ -51,15 +51,12 @@
     ]]>
     </change-notes>
 
-    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.platform</depends>
 
-    <depends optional="true" config-file="java.xml">com.intellij.modules.java</depends>
-
+    <depends optional="true" config-file="java.xml">com.intellij.java</depends>
     <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
     <depends optional="true" config-file="inspections.xml">com.intellij.modules.lang</depends>
-
     <depends optional="true" config-file="expression-language.xml">com.intellij.modules.lang</depends>
-
     <depends optional="true" config-file="jcr-property-language.xml">com.intellij.modules.lang</depends>
 
     <idea-version since-build="203"/>
@@ -69,6 +66,9 @@
         <completion.contributor
                 language="XML"
                 implementationClass="com.aemtools.completion.small.clientlibraryfolder.ClientLibraryFolderCompletionContributor"/>
+        <completion.contributor
+                language="XML"
+                implementationClass="com.aemtools.completion.small.component.CqComponentCompletionContributor"/>
 
         <lang.documentationProvider language="HTML" order="first"
                                     implementationClass="com.aemtools.documentation.html.HtlAttributesDocumentationProvider"/>
@@ -78,6 +78,8 @@
                                     implementationClass="com.aemtools.documentation.htl.HtlELDocumentationProvider"/>
         <lang.documentationProvider language="XML" order="first"
                                     implementationClass="com.aemtools.documentation.widget.WidgetDocumentationProvider"/>
+        <lang.documentationProvider language="XML" order="first"
+                                    implementationClass="com.aemtools.documentation.component.CqComponentDocumentationProvider"/>
 
         <!-- widget.xml completion -->
         <completion.contributor language="XML"
@@ -215,7 +217,7 @@
         <colorSettingsPage implementation="com.aemtools.ide.htl.HtlColorsAndFontsPage"/>
 
         <postStartupActivity implementation="com.aemtools.init.AemIntellijStartupActivity"/>
-        <errorHandler implementation="com.aemtools.diagnostics.error.handler.ErrorHandler"/>
+        <errorHandler implementation="com.aemtools.diagnostics.error.handler.GitHubErrorHandler"/>
 
         <!--
         <projectConfigurable groupId="tools"

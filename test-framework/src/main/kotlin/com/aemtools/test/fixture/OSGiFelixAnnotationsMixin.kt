@@ -52,7 +52,24 @@ interface OSGiFelixAnnotationsMixin {
       this.addClass("org/apache/felix/scr/annotations/Property.java", """
         package org.apache.felix.scr.annotations;
 
-        public @interface Property {}
+        public @interface Property {
+            String name() default "";
+            String[] value() default {};
+        }
+      """)
+
+  /**
+   * Add `org.apache.felix.scr.annotations.Property` annotation to current fixture.
+   *
+   * @receiver [ITestFixture]
+   */
+  fun ITestFixture.addFelixPropertiesAnnotation() =
+      this.addClass("org/apache/felix/scr/annotations/Properties.java", """
+        package org.apache.felix.scr.annotations;
+
+        public @interface Properties {
+            Property[] value();
+        }
       """)
 
   /**

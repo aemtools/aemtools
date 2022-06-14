@@ -25,6 +25,9 @@
         <codeInsight.lineMarkerProvider
                 language="JAVA"
                 implementationClass="com.aemtools.codeinsight.osgiservice.FelixOSGiPropertyLineMarker"/>
+        <codeInsight.lineMarkerProvider
+                language="JAVA"
+                implementationClass="com.aemtools.codeinsight.osgiservice.OSGiObjectClassDefinitionLineMarker"/>
 
         <projectService
                 serviceInterface="com.aemtools.inspection.service.IJavaInspectionService"
@@ -47,6 +50,12 @@
                 enabledByDefault="true"
                 hasStaticDescription="true"
                 implementationClass="com.aemtools.inspection.java.ThreadSafeFieldInspection"/>
+
+        <localInspection
+                language="JAVA"
+                enabledByDefault="true"
+                hasStaticDescription="true"
+                implementationClass="com.aemtools.inspection.osgi.MessedFelixComponentMetatypeInspection"/>
 
     </extensions>
 </idea-plugin>

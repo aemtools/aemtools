@@ -1,5 +1,9 @@
 package com.aemtools.common.util
 
+import com.aemtools.common.constant.const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION
+import com.aemtools.common.constant.const.java.DS_COMPONENT_ANNOTATION
+import com.aemtools.common.constant.const.java.DS_DESIGNATE_ANNOTATION
+import com.aemtools.common.constant.const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION
 import com.aemtools.common.constant.const.java.FELIX_PROPERTY_ANNOTATION
 import com.aemtools.common.constant.const.java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.common.constant.const.java.SLING_FILTER_ANNOTATION
@@ -24,20 +28,20 @@ import com.intellij.psi.util.PsiTypesUtil
  */
 
 /**
- * Check if current [PsiClass] is an OSGi service.
+ * Check if current [PsiClass] is an OSGi service (Felix, R6, R7).
  *
  * @receiver [PsiClass]
  * @return *true* if class is marked with corresponding OSGi annotations, *false* otherwise
  */
 fun PsiClass.isOSGiService(): Boolean {
 
-  // TODO add check for OSGi declarative service
   return annotations().any {
     it.qualifiedName in listOf(
         FELIX_SERVICE_ANNOTATION,
         SLING_SERVLET_ANNOTATION,
         SLING_FILTER_ANNOTATION,
-        SLING_HEALTH_CHECK_ANNOTATION
+        SLING_HEALTH_CHECK_ANNOTATION,
+        DS_COMPONENT_ANNOTATION
     )
   }
 }
@@ -53,6 +57,30 @@ fun PsiField.isFelixProperty(): Boolean =
     annotations().any {
       it.qualifiedName == FELIX_PROPERTY_ANNOTATION
     }
+
+/**
+ * Check if current [PsiClass] is an OSGi Declarative Service (R6, R7).
+ *
+ * @receiver [PsiClass]
+ * @return *true* if class is marked with corresponding OSGi annotations, *false* otherwise
+ */
+fun PsiClass.isDsOSGiConfig(): Boolean =
+    annotations().any {
+      it.qualifiedName == DS_OBJECT_CLASS_DEFINITION_ANNOTATION
+    }
+
+/**
+ * Check if current method is OSGi DS config metadata property.
+ * (annotated with [DS_ATTRIBUTE_DEFINITION_ANNOTATION]).
+ *
+ * @receiver [PsiMethod]
+ * @return _true_ if current field is Object Class Definition method
+ */
+fun PsiMethod.isDsOSGiConfigProperty(): Boolean =
+    annotations().any {
+      it.qualifiedName == DS_ATTRIBUTE_DEFINITION_ANNOTATION
+    }
+
 
 /**
  * Get list of [PsiAnnotation] objects from current psi modifier list owner.

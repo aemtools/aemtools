@@ -1,6 +1,7 @@
 package com.aemtools.codeinsight.osgiservice.navigationhandler
 
 import com.aemtools.index.model.OSGiConfiguration
+import com.aemtools.index.model.sortByMods
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler
 import com.intellij.codeInsight.daemon.impl.PsiElementListNavigator
 import com.intellij.ide.util.PsiElementListCellRenderer
@@ -13,7 +14,7 @@ import java.awt.event.MouseEvent
  * @author Dmytro Primshyts
  */
 class OSGiGutterIconNavigationHandler(
-    val configs: List<OSGiConfiguration>,
+    val configsProvider: () -> List<OSGiConfiguration>,
     val classIdentifier: PsiIdentifier,
     val myTitle: String
 ) : GutterIconNavigationHandler<PsiElement> {
@@ -27,24 +28,30 @@ class OSGiGutterIconNavigationHandler(
     return classIdentifier.text.hashCode()
   }
 
-  private val messages: Map<String, CellDescriptor> = configs.flatMap {
-    val path = it.xmlFile?.virtualFile?.path
-    if (path != null) {
-      listOf(path to CellDescriptor(
-          it.mods.joinToString { it },
-          it.suffix()))
-    } else {
-      listOf()
-    }
-  }.toMap()
-
-  override fun navigate(e: MouseEvent?, elt: PsiElement?) {
+  override fun navigate(e: MouseEvent, elt: PsiElement?) {
+    val sortedConfigs = getSortedConfigs()
     PsiElementListNavigator.openTargets(e,
-        configs.map { it.xmlFile }.toTypedArray(),
-        myTitle, null, createListCellRenderer())
+        sortedConfigs.map { it.xmlFile }.toTypedArray(),
+        myTitle, null, createListCellRenderer(sortedConfigs))
   }
 
-  private fun createListCellRenderer(): PsiElementListCellRenderer<PsiFile> {
+  fun getSortedConfigs() = configsProvider().sortByMods()
+
+  private fun prepareOsgiConfigCellDescriptors(configs: List<OSGiConfiguration>): Map<String, CellDescriptor> =
+      configs.flatMap {
+        val path = it.xmlFile?.virtualFile?.path
+        if (path != null) {
+          listOf(path to CellDescriptor(
+              it.mods.joinToString { it },
+              it.suffix()))
+        } else {
+          listOf()
+        }
+      }.toMap()
+
+  private fun createListCellRenderer(configs: List<OSGiConfiguration>): PsiElementListCellRenderer<PsiFile> {
+    val osgiConfigCellDescriptors = prepareOsgiConfigCellDescriptors(configs)
+
     return object : PsiElementListCellRenderer<PsiFile>() {
       override fun getIconFlags(): Int {
         return 0
@@ -53,14 +60,14 @@ class OSGiGutterIconNavigationHandler(
       override fun getElementText(element: PsiFile?): String {
         val path = element?.virtualFile?.path
             ?: return "Unknown"
-        return messages[path]?.elementText
+        return osgiConfigCellDescriptors[path]?.elementText
             ?: return "Unknown"
       }
 
       override fun getContainerText(element: PsiFile?, name: String?): String? {
         val path = element?.virtualFile?.path
             ?: return ""
-        return messages[path]?.containerText
+        return osgiConfigCellDescriptors[path]?.containerText
             ?: ""
       }
 

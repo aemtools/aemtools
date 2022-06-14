@@ -22,6 +22,14 @@ class HtlListCommonCompletionTest
 
   fun testLcResolveMapValue() = assertVariants(MAP_VALUE_FIELDS)
 
+  fun testLcResolveWrappedMap() = assertVariants(INNER_MODEL_FIELDS)
+
+  fun testLcResolveWrappedMapDeclaredInAttribute() = assertVariants(INNER_MODEL_FIELDS)
+
+  fun testLcResolveWrappedMapRecursive() = assertVariants(INNER_MODEL_FIELDS)
+
+  fun testLcResolveWrappedMapValue() = assertVariants(MAP_VALUE_FIELDS)
+
   fun testLcTwoLists() = assertVariants(PAGE_FIELDS)
 
   fun testLcTwoListsNested() = assertVariants(PAGE_FIELDS)

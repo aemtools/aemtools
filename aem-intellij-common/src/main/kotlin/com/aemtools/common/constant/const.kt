@@ -231,6 +231,7 @@ object const {
     const val USE_INTERFACE = "io.sightly.java.api.Use"
     const val WCM_USE_CLASS = "com.adobe.cq.sightly.WCMUse"
     const val POJO_USE = "org.apache.sling.scripting.sightly.pojo.Use"
+    const val WCM_API_COMPONENT = "com.day.cq.wcm.api.components.Component"
 
     const val SLING_MODEL = "org.apache.sling.models.annotations.Model"
     const val OPTIONAL = "org.apache.sling.models.annotations.Optional"
@@ -238,11 +239,22 @@ object const {
     val VALUE_MAP = "org.apache.sling.api.resource.ValueMap"
 
     const val FELIX_SERVICE_ANNOTATION = "org.apache.felix.scr.annotations.Service"
+    const val FELIX_COMPONENT_ANNOTATION = "org.apache.felix.scr.annotations.Component"
     const val SLING_SERVLET_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingServlet"
     const val SLING_FILTER_ANNOTATION = "org.apache.felix.scr.annotations.sling.SlingFilter"
     const val SLING_HEALTH_CHECK_ANNOTATION = "org.apache.sling.hc.annotations.SlingHealthCheck"
 
+    const val DS_COMPONENT_ANNOTATION = "org.osgi.service.component.annotations.Component"
+    const val DS_DESIGNATE_ANNOTATION = "org.osgi.service.metatype.annotations.Designate"
+    const val DS_ATTRIBUTE_DEFINITION_ANNOTATION = "org.osgi.service.metatype.annotations.AttributeDefinition"
+    const val DS_OBJECT_CLASS_DEFINITION_ANNOTATION = "org.osgi.service.metatype.annotations.ObjectClassDefinition"
+
     const val FELIX_PROPERTY_ANNOTATION = "org.apache.felix.scr.annotations.Property"
+    const val FELIX_PROPERTIES_ANNOTATION = "org.apache.felix.scr.annotations.Properties"
+  }
+
+  object osgi {
+    const val DESIGNATE_OCD_ANNOTATION_ATTRIBUTE = "ocd"
   }
 
   /**

@@ -11,10 +11,16 @@
         <completion.contributor
                 language="JcrProperty"
                 implementationClass="com.aemtools.completion.small.clientlibraryfolder.JcrClientLibraryFolderCompletionContributor"/>
+        <completion.contributor
+                language="JcrProperty"
+                implementationClass="com.aemtools.completion.small.component.JcrCqComponentCompletionContributor"/>
 
         <multiHostInjector implementation="com.aemtools.lang.jcrproperty.JcrPropertyInjector"/>
 
         <lang.braceMatcher language="JcrProperty"
                            implementationClass="com.aemtools.lang.jcrproperty.editor.JpBraceMatcher"/>
+        <lang.documentationProvider
+                language="JcrProperty" order="first"
+                implementationClass="com.aemtools.documentation.clientlibs.ClientlibsFolderDocumentationProvider"/>
     </extensions>
 </idea-plugin>

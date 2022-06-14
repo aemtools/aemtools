@@ -25,13 +25,16 @@
 
 root ::= ( include | base_path | comment )*
 
-include ::= simple_include | relative_include {implements="com.intellij.psi.ContributedReferenceHost"}
+include ::= simple_include | relative_include | absolute_include {implements="com.intellij.psi.ContributedReferenceHost"}
 
 simple_include ::= (WORD SEPARATOR)+ WORD
     | WORD
 
 relative_include ::= DOT SEPARATOR simple_include
     | (DD SEPARATOR)+ simple_include
+    | DOT
+
+absolute_include ::= SEPARATOR simple_include
 
 base_path ::= prefix include?
 
