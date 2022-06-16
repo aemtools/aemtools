@@ -1,5 +1,4 @@
 import io.gitlab.arturbosch.detekt.Detekt
-import org.apache.tools.ant.taskdefs.condition.Os
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 fun properties(key: String) = project.findProperty(key).toString()
@@ -98,10 +97,8 @@ tasks {
 buildscript {
 
   repositories {
-    mavenLocal()
     mavenCentral()
-    gradlePluginPortal()
-    maven { url = uri("https://plugins.gradle.org/m2/") }
+    maven { url = uri("https://www.jetbrains.com/intellij-repository/releases") }
 
     dependencies {
       classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.19.0")
@@ -117,8 +114,7 @@ allprojects {
 
   repositories {
     mavenCentral()
-    mavenLocal()
-    maven { url = uri("https://plugins.gradle.org/m2/") }
+    maven { url = uri("https://www.jetbrains.com/intellij-repository/releases") }
   }
 
   detekt {
@@ -179,8 +175,7 @@ subprojects {
 
   repositories {
     mavenCentral()
-    mavenLocal()
-    maven { url = uri("https://plugins.gradle.org/m2/") }
+    maven { url = uri("https://www.jetbrains.com/intellij-repository/releases") }
   }
 
   intellij {
@@ -252,11 +247,11 @@ subprojects {
   }
 
   // gross patch to address windows "too long classpath" issue
-  if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+  /*if (Os.isFamily(Os.FAMILY_WINDOWS)) {
     project.apply {
       from("${project.rootProject.projectDir}/buildSrc/win-patch.gradle.kts")
     }
-  }
+  }*/
 }
 
 apply {
