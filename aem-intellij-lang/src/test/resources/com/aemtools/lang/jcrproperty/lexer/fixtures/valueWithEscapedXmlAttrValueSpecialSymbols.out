@@ -1,0 +1,4 @@
+VALID_STRING_ESCAPE_TOKEN ('\{')
+VALUE_TOKEN ('"key1": "value"')
+VALID_STRING_ESCAPE_TOKEN ('\,')
+VALUE_TOKEN (' "key2":"value"}')

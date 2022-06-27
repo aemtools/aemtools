@@ -34,7 +34,7 @@ open class ClientlibsFolderDocumentationProvider : AbstractDocumentationProvider
         || jcrArrayValueOfEmbeds.accepts(originalElement)) {
 
       val categoryPsiElement = element as? JpArrayValue
-      val category = categoryPsiElement?.arrayValueToken?.text
+      val category = categoryPsiElement?.text
           ?: return super.generateDoc(element, originalElement)
 
       return ClientlibDocumentationGenerator.generateDoc(categoryPsiElement, category)

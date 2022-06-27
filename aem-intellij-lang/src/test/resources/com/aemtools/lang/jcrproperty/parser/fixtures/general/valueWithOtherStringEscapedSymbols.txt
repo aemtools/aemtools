@@ -1,0 +1,10 @@
+JpFile:valueWithOtherStringEscapedSymbols.in
+  JpSingleImpl(SINGLE)
+    PsiElement(VALUE_TOKEN)('it')
+    PsiElement(VALID_STRING_ESCAPE_TOKEN)('\'')
+    PsiElement(VALUE_TOKEN)('s great it is escaped quote - ')
+    PsiElement(VALID_STRING_ESCAPE_TOKEN)('\"')
+    PsiElement(VALUE_TOKEN)(' Unicode escape ')
+    PsiElement(VALID_STRING_ESCAPE_TOKEN)('\u3332')
+    PsiElement(VALUE_TOKEN)(' Unicode escape ')
+    PsiElement(VALID_STRING_ESCAPE_TOKEN)('\u3332')

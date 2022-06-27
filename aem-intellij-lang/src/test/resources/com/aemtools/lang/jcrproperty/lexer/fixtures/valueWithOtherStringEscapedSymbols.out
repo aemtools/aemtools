@@ -1,0 +1,8 @@
+VALUE_TOKEN ('it')
+VALID_STRING_ESCAPE_TOKEN ('\'')
+VALUE_TOKEN ('s great it is escaped quote - ')
+VALID_STRING_ESCAPE_TOKEN ('\"')
+VALUE_TOKEN (' Unicode escape ')
+VALID_STRING_ESCAPE_TOKEN ('\u3332')
+VALUE_TOKEN (' Unicode escape ')
+VALID_STRING_ESCAPE_TOKEN ('\u3332')

@@ -1,0 +1,12 @@
+JpFile:valueWithCharRefEscape.in
+  JpSingleImpl(SINGLE)
+    PsiElement(VALUE_TOKEN)('function check() {')
+    PsiElement(VALID_XML_CHAR_REF_ESCAPE_TOKEN)('&#xd;')
+    PsiElement(VALID_XML_CHAR_REF_ESCAPE_TOKEN)('&#xa;')
+    PsiElement(VALUE_TOKEN)(' return ')
+    PsiElement(VALID_XML_CHAR_REF_ESCAPE_TOKEN)('&#34;')
+    PsiElement(VALID_XML_CHAR_REF_ESCAPE_TOKEN)('&#34;')
+    PsiElement(VALUE_TOKEN)(';')
+    PsiElement(VALID_XML_CHAR_REF_ESCAPE_TOKEN)('&#xd;')
+    PsiElement(VALID_XML_CHAR_REF_ESCAPE_TOKEN)('&#xa;')
+    PsiElement(VALUE_TOKEN)('}')

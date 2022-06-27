@@ -17,7 +17,9 @@ class JpColorsAndFontsPage : ColorSettingsPage {
       "JP_DELIMITER" to JpColors.DELIMITER,
       "JP_BRACES" to JpColors.BRACES,
       "JP_BRACKETS" to JpColors.BRACKETS,
-      "JP_VALUE" to JpColors.VALUE
+      "JP_VALUE" to JpColors.VALUE,
+      "JP_VALID_STRING_ESCAPE" to JpColors.VALID_STRING_ESCAPE,
+      "JP_INVALID_STRING_ESCAPE" to JpColors.INVALID_STRING_ESCAPE
   )
 
   private val attributes: Array<AttributesDescriptor> = arrayOf(
@@ -25,7 +27,9 @@ class JpColorsAndFontsPage : ColorSettingsPage {
       AttributesDescriptor("Delimiter", JpColors.DELIMITER),
       AttributesDescriptor("Braces", JpColors.BRACES),
       AttributesDescriptor("Value", JpColors.VALUE),
-      AttributesDescriptor("Brackets", JpColors.BRACKETS)
+      AttributesDescriptor("Brackets", JpColors.BRACKETS),
+      AttributesDescriptor("Valid string escape", JpColors.VALID_STRING_ESCAPE),
+      AttributesDescriptor("Invalid string escape", JpColors.INVALID_STRING_ESCAPE)
   )
 
   override fun getAttributeDescriptors(): Array<AttributesDescriptor> = attributes
@@ -43,6 +47,9 @@ class JpColorsAndFontsPage : ColorSettingsPage {
     appendLine("<JP_BRACKETS>[</JP_BRACKETS><JP_VALUE>array.value1</JP_VALUE><JP_DELIMITER>,</JP_DELIMITER><JP_VALUE>array.value1</JP_VALUE><JP_BRACKETS>]</JP_BRACKETS>")
     appendLine("<JP_BRACES>{</JP_BRACES><JP_TYPE>Boolean</JP_TYPE><JP_BRACES>}</JP_BRACES><JP_VALUE>true</JP_VALUE>")
     appendLine("<JP_VALUE>simple string value</JP_VALUE>")
+    appendLine("""<JP_VALUE>It<JP_VALID_STRING_ESCAPE>\'</JP_VALID_STRING_ESCAPE>s a simple string value</JP_VALUE>""")
+    appendLine("""<JP_VALUE>Configure <JP_VALID_STRING_ESCAPE>&amp;</JP_VALID_STRING_ESCAPE> apply color settings</JP_VALUE>""")
+    appendLine("""<JP_VALUE>This is invalid - <JP_INVALID_STRING_ESCAPE>\u111</JP_INVALID_STRING_ESCAPE></JP_VALUE>""")
   }
 
   override fun getAdditionalHighlightingTagToDescriptorMap(): MutableMap<String, TextAttributesKey> = previewTags

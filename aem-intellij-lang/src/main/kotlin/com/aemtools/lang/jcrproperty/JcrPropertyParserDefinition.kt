@@ -31,7 +31,9 @@ class JcrPropertyParserDefinition : ParserDefinition {
   override fun spaceExistanceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements
       = ParserDefinition.SpaceRequirements.MAY
 
-  override fun getStringLiteralElements(): TokenSet = TokenSet.EMPTY
+  override fun getStringLiteralElements(): TokenSet = TokenSet.create(
+      JpTypes.VALUE_TOKEN, JpTypes.ARRAY_VALUE_TOKEN
+  )
 
   override fun getWhitespaceTokens(): TokenSet = TokenSet.create(TokenType.WHITE_SPACE)
 

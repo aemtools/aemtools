@@ -8,8 +8,7 @@ import com.intellij.lexer.Lexer
  */
 class JpLexerTest : LexerBaseTest() {
 
-  override fun getTestDataPath(): String
-  = "com/aemtools/lang/jcrproperty/lexer/fixtures"
+  override fun getTestDataPath(): String = "com/aemtools/lang/jcrproperty/lexer/fixtures"
 
   override fun createLexer(): Lexer = JpLexer()
   override fun getDirPath(): String = "com.aemtools.lang.jcrproperty.lexer"
@@ -18,10 +17,20 @@ class JpLexerTest : LexerBaseTest() {
   override fun getOutExtension(): String = "out"
 
   fun testValue() = doTest()
+  fun testValueWithEscapedXmlAttrValueSpecialSymbols() = doTest()
+  fun testValueWithEscapedXmlAttrValueSpecialSymbols2() = doTest()
+  fun testValueWithEntityRefEscape() = doTest()
+  fun testValueWithCharRefEscape() = doTest()
+  fun testValueWithOtherStringEscapedSymbols() = doTest()
   fun testArray() = doTest()
   fun testEmptyArray() = doTest()
   fun testValueWithBracesAndBrackets() = doTest()
   fun testArrayWithRightBracketInToken() = doTest()
   fun testArrayWithLeadingRightBracketInToken() = doTest()
   fun testArrayWithEscapedComma() = doTest()
+  fun testArrayWithEscapedXmlAttrValueSpecialSymbols() = doTest()
+  fun testArrayWithEscapedXmlAttrValueSpecialSymbols2() = doTest()
+  fun testArrayWithEntityRefEscape() = doTest()
+  fun testArrayWithCharRefEscape() = doTest()
+  fun testArrayWithOtherStringEscapedSymbols() = doTest()
 }
