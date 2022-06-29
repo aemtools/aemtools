@@ -23,13 +23,25 @@ The plugin is available in official JetBrains repository:
    * Java Use & Sling Models support
 
 2. OSGi
-   * Resolve OSGi (Felix) configurations
-   * Resolve OSGi Properties
+   * Resolve OSGi (Felix, OSGi R6-R7) configurations
+   * Resolve OSGi Properties (Felix, OSGi R6-R7)
+   * Metadata property validation 
 
-3. dialog.xml completion (Classic UI)
-   * Provides the list of all available xtypes (taken from official documentation)
-   * After the xtype is chosen proposes fields declared in specified xtype
-   * "Quick doc" action triggered on specific field or xtype will show corresponding documentation
+3. Jackrabbit FileVault xml-content files
+   1. Syntax highlighting
+   2. dialog.xml completion (Classic UI)
+      * Provides the list of all available xtypes (taken from official documentation)
+      * After the xtype is chosen proposes fields declared in specified xtype
+      * "Quick doc" action triggered on specific field or xtype will show corresponding documentation
+   3. cq:Component, cq:editConfig completion and highlighting support
+
+4. Clientlibs
+   * Provides completion for project category name in the clientlibs declaration
+   * Provides completion for project category name in the HTL
+   * Provides completion/reference provider for clientlibs js.txt and css.txt files 
+   * Provides short documentation about clientlibs category
+   * Provides HTL template support
+   
 
 <!-- Plugin description end -->
 
