@@ -57,7 +57,7 @@ class JcrPatternsTest : BasePatternsTest() {
       jcrType,
       """
           <jcr:root jcr:primaryType="${const.xml.CQ_CLIENTLIBRARY_FOLDER}"
-            embed="{$CARET}"
+            embed="{$CARET"
       """,
       true
   )

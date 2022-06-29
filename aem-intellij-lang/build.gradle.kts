@@ -13,15 +13,10 @@ plugins {
 buildscript {
 
   repositories {
-    mavenLocal()
     mavenCentral()
-    gradlePluginPortal()
-    maven { url = uri("https://plugins.gradle.org/m2/") }
+    maven { url = uri("https://www.jetbrains.com/intellij-repository/releases") }
   }
 
-  dependencies {
-    classpath("org.jetbrains.intellij.plugins:gradle-grammarkit-plugin:2021.2.1")
-  }
 }
 
 grammarKit {

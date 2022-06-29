@@ -78,6 +78,15 @@ class JcrPropertyInjector : MultiHostInjector {
           "xmlns:nt"
       ) -> inject(registrar, context, attributeValue)
 
+      // inject into Touch UI dialog
+      /*(psiLanguageInjectionHost.containingFile.name == "_cq_dialog.xml"
+          || psiLanguageInjectionHost.containingFile.virtualFile.path.endsWith("_cq_dialog/.content.xml"))
+          && attributeName.name !in listOf(
+          "xmlns:sling",
+          "xmlns:jcr",
+          "xmlns:nt"
+      ) -> inject(registrar, context, attributeValue)*/
+
       // inject into cq:Component
       psiLanguageInjectionHost.containingFile.name == ".content.xml"
           && psiLanguageInjectionHost.hasParent(cqComponentTag())

@@ -21,7 +21,7 @@ object AemComponentTouchUIDialogIndexer : DataIndexer<String, AemComponentTouchU
         ?: return mutableMapOf()
 
     val resourceType = inputData.file.path.normalizeToJcrRoot()
-        .substringBefore("/_cq_dialog/")
+        .substringBefore("/_cq_dialog")
 
     val dialogDefinition = AemComponentTouchUIDialogDefinition(
         inputData.file.path,

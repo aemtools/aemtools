@@ -40,14 +40,14 @@ class GitHubIssueInfoFactory(private val envInfoProvider: EnvironmentInfoProvide
     stacktraceWriter.flush()
 
     return buildString {
-      if (additionalInfo == null) {
+      if (additionalInfo != null) {
+        append("Additional info:\n")
+        append("${additionalInfo}\n")
         appendLine()
-      } else {
-        appendLine("Additional info: ")
-        appendLine(additionalInfo)
       }
-      appendLine(stringWriter.toString())
-      appendLine(envInfoProvider.getEnvInfo())
+      append("$stringWriter\n")
+      appendLine()
+      append(envInfoProvider.getEnvInfo())
     }
   }
 }

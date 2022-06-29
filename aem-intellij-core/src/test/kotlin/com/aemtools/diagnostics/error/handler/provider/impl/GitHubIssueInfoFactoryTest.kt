@@ -43,23 +43,24 @@ class GitHubIssueInfoFactoryTest {
     doReturn(ThrowableStub(null, null)).`when`(ideaLoggingEvent).throwable
     doReturn("envInfo").`when`(environmentInfoProvider).getEnvInfo()
 
-    val gitHubIssue = factory.create(ideaLoggingEvent, pluginDescriptor, null)
+    val gitHubIssue = factory.create(ideaLoggingEvent, pluginDescriptor, "additional info")
 
     assertEquals("User issue for version mock-version", gitHubIssue.title)
     assertEquals(1, gitHubIssue.labels.size)
     assertTrue(gitHubIssue.labels.contains("bug"))
     assertEquals("""
+      Additional info:
+      additional info
       
       Throwable Stacktrace
       
       envInfo
-      
     """.trimIndent(), gitHubIssue.body)
   }
 
   internal class ThrowableStub(message: String?, cause: Throwable?) : Throwable(message, cause) {
     override fun printStackTrace(s: PrintWriter) {
-      s.println("Throwable Stacktrace")
+      s.print("Throwable Stacktrace")
     }
   }
 }

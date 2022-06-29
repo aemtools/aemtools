@@ -1,0 +1,2 @@
+VALID_STRING_ESCAPE_TOKEN ('\[')
+VALUE_TOKEN ('key=value]')

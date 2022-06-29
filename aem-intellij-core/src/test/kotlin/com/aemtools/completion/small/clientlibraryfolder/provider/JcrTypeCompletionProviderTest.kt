@@ -11,7 +11,7 @@ class JcrTypeCompletionProviderTest : CompletionBaseLightTest(false) {
 
   fun testJcrTypeCompletion() = completionTest {
     addXml(".content.xml", """
-        <jcr:root jcr:primaryType="cq:ClientLibraryFolder" embed="{$CARET}" />
+        <jcr:root jcr:primaryType="cq:ClientLibraryFolder" embed="{$CARET" />
     """)
 
     shouldContain(

@@ -96,4 +96,12 @@
             <option name="FOREGROUND" value="808080" />
         </value>
     </option>
+    <option name="XML:INJECTED_LANGUAGE_FRAGMENT">
+        <value />
+    </option>
+    <option name="JP_VALID_STRING_ESCAPE">
+        <value>
+            <option name="FOREGROUND" value="6d9cbe" />
+        </value>
+    </option>
 </list>

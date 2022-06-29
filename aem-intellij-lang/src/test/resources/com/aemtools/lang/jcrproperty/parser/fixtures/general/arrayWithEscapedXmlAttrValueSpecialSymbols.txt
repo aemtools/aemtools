@@ -1,0 +1,13 @@
+JpFile:arrayWithEscapedXmlAttrValueSpecialSymbols.in
+  JpArrayImpl(ARRAY)
+    PsiElement([)('[')
+    JpArrayValueImpl(ARRAY_VALUE)
+      PsiElement(ARRAY_VALUE_TOKEN)('{"key1": "value"')
+      PsiElement(VALID_STRING_ESCAPE_TOKEN)('\,')
+      PsiElement(ARRAY_VALUE_TOKEN)(' "key2":"value"}')
+    PsiElement(,)(',')
+    JpArrayValueImpl(ARRAY_VALUE)
+      PsiElement(ARRAY_VALUE_TOKEN)('{"key3": "value"')
+      PsiElement(VALID_STRING_ESCAPE_TOKEN)('\,')
+      PsiElement(ARRAY_VALUE_TOKEN)(' "key4":"value"}')
+    PsiElement(])(']')
