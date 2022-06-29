@@ -1,6 +1,7 @@
 package com.aemtools.completion.small.clientlibraryfolder.provider
 
 import com.aemtools.common.completion.lookupElement
+import com.aemtools.completion.small.inserthandler.JcrPropertyTypeCloseBraceInsertHandler
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -33,6 +34,7 @@ object JcrTypeCompletionProvider : CompletionProvider<CompletionParameters>() {
         "URI"
     ).map {
       lookupElement(it)
+          .withInsertHandler(JcrPropertyTypeCloseBraceInsertHandler())
     })
   }
 

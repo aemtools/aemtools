@@ -15,24 +15,6 @@ import org.intellij.lang.annotations.Language
 class JpBraceMatcherTest : BasePlatformLightTest(),
     TypeActionTest {
 
-  fun `test should close brace`() = jpTypeTest(
-      CARET,
-      "{",
-      "{$CARET}"
-  )
-
-  fun `test should skip close brace`() = jpTypeTest(
-      "{$CARET}",
-      "}",
-      "{}$CARET"
-  )
-
-  fun `test should remove braces`() = jpTypeTest(
-      "{$CARET}",
-      "\b",
-      ""
-  )
-
   fun `test should close bracket`() = jpTypeTest(
       CARET,
       "[",

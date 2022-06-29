@@ -14,6 +14,11 @@ class JpParserTest :
     ) {
 
   fun testValue() = doTest()
+  fun testValueWithEscapedXmlAttrValueSpecialSymbols() = doTest()
+  fun testValueWithEscapedXmlAttrValueSpecialSymbols2() = doTest()
+  fun testValueWithEntityRefEscape() = doTest()
+  fun testValueWithCharRefEscape() = doTest()
+  fun testValueWithOtherStringEscapedSymbols() = doTest()
   fun testArray() = doTest()
   fun testEmptyArray() = doTest()
   fun testTypedArray() = doTest()
@@ -30,4 +35,14 @@ class JpParserTest :
   fun testString() = doTest()
   fun testUri() = doTest()
   fun testWeakReference() = doTest()
+
+  fun testValueWithBracesAndBrackets() = doTest()
+  fun testArrayWithRightBracketInToken() = doTest()
+  fun testArrayWithLeadingRightBracketInToken() = doTest()
+  fun testArrayWithEscapedComma() = doTest()
+  fun testArrayWithEscapedXmlAttrValueSpecialSymbols() = doTest()
+  fun testArrayWithEscapedXmlAttrValueSpecialSymbols2() = doTest()
+  fun testArrayWithEntityRefEscape() = doTest()
+  fun testArrayWithCharRefEscape() = doTest()
+  fun testArrayWithOtherStringEscapedSymbols() = doTest()
 }

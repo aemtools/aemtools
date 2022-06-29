@@ -22,5 +22,11 @@
         <lang.documentationProvider
                 language="JcrProperty" order="first"
                 implementationClass="com.aemtools.documentation.clientlibs.ClientlibsFolderDocumentationProvider"/>
+
+        <colorSettingsPage implementation="com.aemtools.ide.jcrproperty.JpColorsAndFontsPage"/>
+        <fileType name="JcrProperty"
+                  language="JcrProperty"
+                  implementationClass="com.aemtools.lang.jcrproperty.file.JpFileType"/>
+
     </extensions>
 </idea-plugin>

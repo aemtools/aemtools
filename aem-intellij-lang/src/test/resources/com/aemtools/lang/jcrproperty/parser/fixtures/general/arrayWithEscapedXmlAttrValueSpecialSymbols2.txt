@@ -1,0 +1,10 @@
+JpFile:arrayWithEscapedXmlAttrValueSpecialSymbols2.in
+  JpArrayImpl(ARRAY)
+    PsiElement([)('[')
+    JpArrayValueImpl(ARRAY_VALUE)
+      PsiElement(VALID_STRING_ESCAPE_TOKEN)('\[')
+      PsiElement(ARRAY_VALUE_TOKEN)('key=value]')
+    PsiElement(,)(',')
+    JpArrayValueImpl(ARRAY_VALUE)
+      PsiElement(ARRAY_VALUE_TOKEN)('[]')
+    PsiElement(])(']')

@@ -1,0 +1,4 @@
+JpFile:valueWithEscapedXmlAttrValueSpecialSymbols2.in
+  JpSingleImpl(SINGLE)
+    PsiElement(VALID_STRING_ESCAPE_TOKEN)('\[')
+    PsiElement(VALUE_TOKEN)('key=value]')

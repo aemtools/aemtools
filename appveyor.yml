@@ -8,7 +8,10 @@ test_script:
   - gradlew.bat test koverMergedHtmlReport --info --no-daemon
 
 environment:
+  JAVA_HOME: C:\Program Files\Java\jdk11
+  JAVA_OPTS: "-Xms256m -Xmx2048M -Djdk.tls.client.protocols=TLSv1.2"
   matrix:
-#    - ORG_GRADLE_PROJECT_ideaVersion: 2017.1.5
-    - ORG_GRADLE_PROJECT_ideaVersion: 2021.1.3
-    - ORG_GRADLE_PROJECT_ideaVersion: LATEST-EAP-SNAPSHOT
+    - ORG_GRADLE_PROJECT_ideaVersion: 2022.1
+    #- ORG_GRADLE_PROJECT_ideaVersion: LATEST-EAP-SNAPSHOT
+#cache:
+#  - C:\Users\appveyor\.gradle

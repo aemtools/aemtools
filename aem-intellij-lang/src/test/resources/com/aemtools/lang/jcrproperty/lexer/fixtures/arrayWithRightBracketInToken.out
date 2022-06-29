@@ -1,0 +1,3 @@
+[ ('[')
+ARRAY_VALUE_TOKEN ('/some/path/([a-z]+_[A-Z]+)=/some/path')
+] (']')

@@ -67,7 +67,6 @@ object JcrPatterns : IWithJcrPatterns {
    */
   val jcrType: PsiElementPattern.Capture<PsiElement> = PlatformPatterns.psiElement()
       .afterLeaf("{")
-      .beforeLeaf(PlatformPatterns.psiElement(JpTypes.RBRACE))
 
 }
 

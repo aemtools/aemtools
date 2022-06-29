@@ -18,6 +18,7 @@ object const {
   const val XTYPE: String = "xtype"
 
   const val JCR_PRIMARY_TYPE: String = "jcr:primaryType"
+  const val SLING_RESOURCE_TYPE: String = "sling:resourceType"
   const val JCR_TITLE: String = "jcr:title"
   const val JCR_DESCRIPTION: String = "jcr:description"
   const val SLING_RESOURCE_SUPER_TYPE: String = "sling:resourceSuperType"

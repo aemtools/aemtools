@@ -1,0 +1,6 @@
+[ ('[')
+VALID_STRING_ESCAPE_TOKEN ('\[')
+ARRAY_VALUE_TOKEN ('key=value]')
+, (',')
+ARRAY_VALUE_TOKEN ('[]')
+] (']')
