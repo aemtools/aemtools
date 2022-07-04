@@ -92,6 +92,11 @@ tasks {
     pluginsDir.set(file("${project(":aem-intellij-core").buildDir}/idea-sandbox/plugins"))
     systemDir.set(file("${project(":aem-intellij-core").buildDir}/idea-sandbox/system"))
   }
+
+  buildSearchableOptions { enabled = false }
+  runPluginVerifier { enabled = false }
+  listProductsReleases { enabled = false }
+  verifyPlugin { enabled = false }
 }
 
 buildscript {
@@ -185,8 +190,11 @@ subprojects {
     plugins.set(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
   }
 
-  tasks.buildSearchableOptions {
-    enabled = false
+  tasks {
+    buildSearchableOptions { enabled = false }
+    runPluginVerifier { enabled = false }
+    listProductsReleases { enabled = false }
+    verifyPlugin { enabled = false }
   }
 
   val kotlinVersion: String by extra

@@ -45,7 +45,7 @@ class HtlFileViewProvider @JvmOverloads constructor(
 
       val created = TemplateDataElementType(
         "SIGHTLY_DATA_TEMPLATE", lang, OUTER_LANGUAGE,
-        OuterLanguageElementType(HEL.debugName, HEL.language)
+        OuterLanguageElementType(HEL.toString(), HEL.language)
       )
 
       return TEMPLATE_DATA_TO_LANG.putIfAbsent(lang.id, created) ?: created

@@ -14,11 +14,8 @@ import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 import org.mockito.ArgumentMatchers.anyList
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.never
+import org.mockito.Mockito.*
 import org.mockito.kotlin.any
-import org.picocontainer.PicoContainer
 
 /**
  * Specification for [AemConstantInspection].
@@ -57,19 +54,12 @@ hardcode.
     val javaInspectionService: IJavaInspectionService by memo()
     val module: Module by memo()
     val problemsHolder: ProblemsHolder by memo()
-    val picoContainer: PicoContainer by memo()
 
     beforeEachTest {
-      `when`(picoContainer.getComponentInstance(IJavaInspectionService::class.java.name))
-          .thenReturn(javaInspectionService)
-      `when`(picoContainer.getComponentInstance(IInspectionService::class.java.name))
-          .thenReturn(inspectionService)
       `when`(project.getService(IJavaInspectionService::class.java))
-        .thenReturn(javaInspectionService)
+          .thenReturn(javaInspectionService)
       `when`(project.getService(IInspectionService::class.java))
-        .thenReturn(inspectionService)
-      `when`(project.picoContainer)
-          .thenReturn(picoContainer)
+          .thenReturn(inspectionService)
       `when`(psiLiteralExpression.project)
           .thenReturn(project)
       `when`(inspectionService.validTarget(psiLiteralExpression))
