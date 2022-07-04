@@ -19,7 +19,7 @@ All notable changes to this project will be documented in this file.
 - [Unsynchronized list of OSGI configs when they removed/added](https://github.com/aemtools/aemtools/issues/151)
 - [Fixed HTL map object completion wrapped in separate class](https://github.com/aemtools/aemtools/issues/194)
 
-## [0.9.1.1]
+## [0.9.1-hot-fix]
 ### Bug fixes
 * [Blocks xml file copy operation](https://github.com/aemtools/aemtools/issues/189)
 
