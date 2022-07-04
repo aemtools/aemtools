@@ -1,10 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [0.9.2] 
+## [0.9.2]
 [0.9.2]: https://github.com/aemtools/aemtools/tree/v0.9.2
 ### New features
-- [IDE: resolve OSGi configs for declarative services (OSGi R6-R7 annotations)](https://github.com/aemtools/aemtools/issues/84) 
+- [IDE: resolve OSGi configs for declarative services (OSGi R6-R7 annotations)](https://github.com/aemtools/aemtools/issues/84)
 - [OSGi: add metadata validation of OSGi Felix component annotation](https://github.com/aemtools/aemtools/issues/174)
 - [OSGi: add gutter icon for Felix Properties annotation](https://github.com/aemtools/aemtools/issues/166)
 - [IDE: add absolute path completion for js.txt and css.txt](https://github.com/aemtools/aemtools/issues/165)
@@ -18,6 +18,10 @@ All notable changes to this project will be documented in this file.
 - [Blocks xml file copy operation](https://github.com/aemtools/aemtools/issues/189)
 - [Unsynchronized list of OSGI configs when they removed/added](https://github.com/aemtools/aemtools/issues/151)
 - [Fixed HTL map object completion wrapped in separate class](https://github.com/aemtools/aemtools/issues/194)
+
+## [0.9.1.1]
+### Bug fixes
+* [Blocks xml file copy operation](https://github.com/aemtools/aemtools/issues/189)
 
 ## [0.9.1] - 2022-04-14
 [0.9.1]: https://github.com/aemtools/aemtools/tree/v0.9.1
