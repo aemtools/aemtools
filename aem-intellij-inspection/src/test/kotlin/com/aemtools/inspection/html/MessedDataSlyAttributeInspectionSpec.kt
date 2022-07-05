@@ -2,20 +2,16 @@ package com.aemtools.inspection.html
 
 import com.aemtools.inspection.service.IInspectionService
 import com.aemtools.test.util.memo
-import com.aemtools.test.util.mock
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.openapi.project.Project
-import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
-import org.jetbrains.spek.api.lifecycle.CachingMode
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.*
-import org.picocontainer.PicoContainer
 
 /**
  * Specification for [MessedDataSlyAttributeInspection].
@@ -53,13 +49,8 @@ attributes that take JavaScript as input (e.g. onclick, onmousemove, etc).
     val project: Project by memo()
     val attribute: XmlAttribute by memo()
     val holder: ProblemsHolder by memo()
-    val picoContainer: PicoContainer by memo()
     val inspectionService: IInspectionService by memo()
     beforeEachTest {
-      `when`(project.picoContainer)
-          .thenReturn(picoContainer)
-      `when`(picoContainer.getComponentInstance(IInspectionService::class.java.name))
-          .thenReturn(inspectionService)
       `when`(attribute.project)
           .thenReturn(project)
     }

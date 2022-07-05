@@ -74,7 +74,7 @@ tasks {
   }
 
   buildPlugin {
-    archiveFileName.set("$platformType-$pluginGroup-$pluginVersion.zip")
+    archiveFileName.set("$pluginGroup-$pluginVersion.zip")
 
     doLast {
       delete("../build/distributions").also {
@@ -86,5 +86,9 @@ tasks {
       }
     }
   }
+
+  runPluginVerifier { enabled = true }
+  listProductsReleases { enabled = true }
+  verifyPlugin { enabled = true }
 
 }

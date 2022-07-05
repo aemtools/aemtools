@@ -41,7 +41,7 @@ object OSGiConfigSearch {
           .toSet()
 
       val virtualFiles = fileNames.flatMap {
-        FilenameIndex.getVirtualFilesByName(it, GlobalSearchScope.projectScope(project))
+        FilenameIndex.getVirtualFilesByName(project, it, GlobalSearchScope.projectScope(project))
       }
 
       mapped.forEach { config ->
