@@ -3,8 +3,9 @@ package com.aemtools.documentation.html
 import com.aemtools.completion.model.htl.HtlAttributeIdentifierDescription
 import com.aemtools.completion.model.htl.HtlAttributeMetaInfo
 import com.aemtools.completion.model.htl.HtlAttributeValueDescription
-import com.aemtools.lang.util.htlAttributeName
+import com.aemtools.completion.model.htl.HtlOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.htlAttribute
+import com.aemtools.lang.util.htlAttributeName
 import com.aemtools.service.ServiceFacade
 import com.intellij.lang.documentation.AbstractDocumentationProvider
 import com.intellij.psi.PsiElement
@@ -46,6 +47,8 @@ class HtlAttributesDocumentationProvider : AbstractDocumentationProvider() {
       append(elementContentBlock(elementContent))
       append(attributeValueBlock(attributeValue))
       append(attributeIdentifierBlock(attributeIdentifier))
+      append(optionsBlock(options))
+      append(scopeBlock(scope))
       append(footer(info))
     }
   }
@@ -102,4 +105,22 @@ class HtlAttributesDocumentationProvider : AbstractDocumentationProvider() {
     return "<b>Description:</b> $description<br>"
   }
 
+  private fun scopeBlock(scope: String?): String = if (scope != null) {
+    "<b>Scope:</b> $scope<br>"
+  } else {
+    ""
+  }
+
+  private fun optionsBlock(options: List<HtlOption>?): String {
+    return if (options != null && options.isNotEmpty()) {
+      buildString {
+        append("<b>Options:</b><br>")
+        options.forEach {
+          append(" - <strong>${it.name}</strong>: ${it.description}<br>")
+        }
+      }
+    } else {
+      ""
+    }
+  }
 }

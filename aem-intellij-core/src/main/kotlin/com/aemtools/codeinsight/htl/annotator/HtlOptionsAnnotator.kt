@@ -5,7 +5,6 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeD
 import com.aemtools.common.constant.const
 import com.aemtools.common.util.createInfoAnnotation
 import com.aemtools.common.util.findParentByType
-import com.aemtools.common.util.createInfoAnnotationBuilder
 import com.aemtools.lang.htl.colorscheme.HtlColors
 import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
@@ -48,14 +47,30 @@ class HtlOptionsAnnotator : Annotator {
       holder.createInfoAnnotation(element, HtlColors.TEMPLATE_PARAMETER, "Template Parameter")
     }
 
+    if (element.isInsideOf(const.htl.DATA_SLY_LIST) && element.isBlockSpecificOption(const.htl.DATA_SLY_LIST)
+        || element.isInsideOf(const.htl.DATA_SLY_REPEAT) && element.isBlockSpecificOption(const.htl.DATA_SLY_REPEAT) ) {
+      holder.createInfoAnnotation(element, HtlColors.STANDARD_OPTION, "Iterable Parameter")
+      return
+    }
+
+    if (element.isInsideOf(const.htl.DATA_SLY_RESOURCE) && element.isBlockSpecificOption(const.htl.DATA_SLY_RESOURCE)) {
+      holder.createInfoAnnotation(element, HtlColors.STANDARD_OPTION, "Standard Option")
+      return
+    }
+
     if (element.isInsideOf(const.htl.DATA_SLY_USE)) {
       return
     }
 
-    if (HtlAttributesRepository.getHtlOptions()
-        .any { it.name == element.variableName() }) {
+    if (HtlAttributesRepository.getHtlOptions().any { it.name == element.variableName() }) {
       holder.createInfoAnnotation(element, HtlColors.STANDARD_OPTION, "Standard Option")
     }
   }
+
+  private fun VariableNameMixin.isBlockSpecificOption(blockName: String): Boolean =
+      HtlAttributesRepository.getAttributesData()
+          .filter { it.name == blockName }
+          .flatMap { it.options ?: listOf() }
+          .any { it.name == this.variableName() }
 
 }

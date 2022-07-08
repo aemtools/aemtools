@@ -32,6 +32,11 @@ data class HtlAttributeMetaInfo(
     val link: String,
 
     /**
+     * Description of identifier's visibility.
+     */
+    val scope: String?,
+
+    /**
      * Description of attribute value.
      */
     val attributeValue: HtlAttributeValueDescription?,
@@ -40,6 +45,11 @@ data class HtlAttributeMetaInfo(
      * Description of attribute identifier
      * (variable spawned by the attribute).
      */
-    val attributeIdentifier: HtlAttributeIdentifierDescription?
+    val attributeIdentifier: HtlAttributeIdentifierDescription?,
+
+    /**
+     * Attribute specific options.
+     */
+    val options: List<HtlOption>? = listOf()
 
 )

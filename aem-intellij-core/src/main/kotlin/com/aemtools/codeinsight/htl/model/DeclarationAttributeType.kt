@@ -9,9 +9,17 @@ enum class DeclarationAttributeType {
    */
   DATA_SLY_USE,
   /**
+   * Variable spawned by `data-sly-set`.
+   */
+  DATA_SLY_SET,
+  /**
    * Variable spawned by `data-sly-test`.
    */
   DATA_SLY_TEST,
+  /**
+   * Variable spawned by `data-sly-unwrap`.
+   */
+  DATA_SLY_UNWRAP,
   /**
    * Variable spawned by `data-sly-template`.
    */

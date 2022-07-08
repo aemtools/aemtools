@@ -1,0 +1,17 @@
+HtlFile:relationOperatorWithNumber.html
+  HtlHtlElImpl([Htl] HTL_EL)
+    HtlHelStartImpl([Htl] HEL_START)
+      PsiElement([Htl] ${)('${')
+    HtlHelImpl([Htl] HEL)
+      HtlExpressionImpl([Htl] EXPRESSION)
+        HtlStatementImpl([Htl] STATEMENT)
+          HtlOperandImpl([Htl] OPERAND)
+            HtlLiteralImpl([Htl] LITERAL)
+              HtlNumberLiteralImpl([Htl] NUMBER_LITERAL)
+                PsiElement([Htl] INTEGER)('100')
+    PsiWhiteSpace(' ')
+    PsiElement([Htl] in)('in')
+    PsiWhiteSpace(' ')
+    PsiErrorElement:<relational operator operand> expected, got '100'
+      PsiElement([Htl] INTEGER)('100')
+    PsiElement([Htl] })('}')

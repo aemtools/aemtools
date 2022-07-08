@@ -1,7 +1,9 @@
 package com.aemtools.lang.htl.psi.util
 
+import com.aemtools.common.util.findParentByType
 import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.tree.CompositeElement
+import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlElement
 import com.intellij.psi.xml.XmlTag
 import com.intellij.psi.xml.XmlTokenType
@@ -63,4 +65,12 @@ fun PsiElement.isPartOf(element: XmlElement): Boolean {
  */
 fun PsiElement.isNotPartOf(element: XmlElement): Boolean {
   return !isPartOf(element)
+}
+
+fun PsiElement.isAfterDeclaration(xmlAttribute: XmlAttribute): Boolean {
+  val tag = xmlAttribute.findParentByType(XmlTag::class.java) ?: return false
+  return when {
+    isPartOf(tag) -> true
+    else -> textOffset > xmlAttribute.textOffset
+  }
 }

@@ -28,6 +28,20 @@ class HtlVariablesCommonTest : CompletionBaseLightTest(true),
     shouldContain(DATA_SLY_SUITABLE_CLASSES + const.CLIENTLIB_TEMPLATE)
   }
 
+  fun testDataSlySetValue() = completionTest {
+    addHtml("test.html", """
+      <div data-sly-set.bean="$DOLLAR{'$CARET'}"></div>
+    """)
+    shouldContain(emptyList())
+  }
+
+  fun testDataSlyTestValue() = completionTest {
+    addHtml("test.html", """
+      <div data-sly-test.bean="$DOLLAR{'$CARET'}"></div>
+    """)
+    shouldContain(emptyList())
+  }
+
   fun testDataSlyUseValueContextString() = completionTest {
     addHtml("test.html", """
       <div data-sly-use.bean="$DOLLAR{'' @ param='$CARET'}">

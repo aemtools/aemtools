@@ -41,6 +41,7 @@
         AND_AND     = '&&'
         OR_OR       = '||'
         AT          = '@'
+        IN          = 'in'
 
         // unclosed string is considered as a 'string until the end of line'
         DOUBLE_QUOTED_STRING = "regexp:\"((\\[\"btnfr])|[^\"\n])*\"?"
@@ -95,6 +96,7 @@ statement ::= ternary_operation (operator operand)+
     | ternary_operation
     | operand operator operand (operator operand)+
     | operand operator operand
+    | operand relational_operator relational_operator_operand
     | operand
 
 array_statement ::= ternary_operation
@@ -105,6 +107,10 @@ operand ::= array_expression
     | unary_operator? property_access
     | unary_operator? literal
     | unary_operator? braced_operand
+
+relational_operator_operand ::= property_access
+    | string_literal
+    | array_literal
 
 braced_operand ::= LBRACKET statement RBRACKET
 
@@ -134,6 +140,8 @@ logical_operator ::= EQ
     | LTE
     | AND_AND
     | OR_OR
+
+relational_operator ::= IN
 
 unary_operator ::= EXCLAMATION | MINUS
 

@@ -6,29 +6,19 @@ import com.aemtools.common.constant.const.htl.DATA_SLY_INCLUDE
 import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.common.constant.const.htl.DATA_SLY_RESOURCE
+import com.aemtools.common.constant.const.htl.DATA_SLY_SET
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
+import com.aemtools.common.constant.const.htl.DATA_SLY_UNWRAP
 import com.aemtools.common.constant.const.htl.DATA_SLY_USE
 import com.aemtools.common.constant.const.htl.HTL_ATTRIBUTES
 import com.aemtools.lang.htl.psi.HtlArrayLiteral
 import com.aemtools.lang.htl.psi.HtlExpression
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.HtlStringLiteral
-import com.aemtools.lang.htl.psi.HtlTypes.ACCESS_IDENTIFIER
-import com.aemtools.lang.htl.psi.HtlTypes.ARRAY_LIKE_ACCESS
-import com.aemtools.lang.htl.psi.HtlTypes.ASSIGNMENT
-import com.aemtools.lang.htl.psi.HtlTypes.ASSIGNMENT_VALUE
-import com.aemtools.lang.htl.psi.HtlTypes.CONTEXT_EXPRESSION
-import com.aemtools.lang.htl.psi.HtlTypes.EL_START
-import com.aemtools.lang.htl.psi.HtlTypes.STRING_LITERAL
-import com.aemtools.lang.htl.psi.HtlTypes.VARIABLE_NAME
-import com.aemtools.lang.htl.psi.HtlTypes.VAR_NAME
+import com.aemtools.lang.htl.psi.HtlTypes.*
 import com.intellij.patterns.ElementPattern
-import com.intellij.patterns.PlatformPatterns.and
-import com.intellij.patterns.PlatformPatterns.or
-import com.intellij.patterns.PlatformPatterns.psiElement
-import com.intellij.patterns.PlatformPatterns.psiFile
-import com.intellij.patterns.PlatformPatterns.string
+import com.intellij.patterns.PlatformPatterns.*
 import com.intellij.patterns.PsiElementPattern
 import com.intellij.patterns.StandardPatterns
 import com.intellij.patterns.XmlPatterns.xmlAttribute
@@ -94,6 +84,26 @@ object HtlPatterns {
    */
   val dataSlyResourceOption: ElementPattern<PsiElement> =
       optionInsideAttribute(DATA_SLY_RESOURCE)
+
+  /**
+   * Matches option inside of data-sly-list , e.g.:
+   *
+   * ```
+   *  <div data-sly-list="${@ <caret>}"
+   * ```
+   */
+  val dataSlyListOption: ElementPattern<PsiElement> =
+      optionInsideAttribute(DATA_SLY_LIST)
+
+  /**
+   * Matches option inside of data-sly-repeat, e.g.:
+   *
+   * ```
+   *  <div data-sly-repeat="${@ <caret>}"
+   * ```
+   */
+  val dataSlyRepeatOption: ElementPattern<PsiElement> =
+      optionInsideAttribute(DATA_SLY_REPEAT)
 
   /**
    * Matches the following:
@@ -225,7 +235,9 @@ object HtlPatterns {
           or(
               string().oneOfIgnoreCase(*HTL_ATTRIBUTES.toTypedArray()),
               string().startsWith("$DATA_SLY_USE."),
+              string().startsWith("$DATA_SLY_SET."),
               string().startsWith("$DATA_SLY_TEST."),
+              string().startsWith("$DATA_SLY_UNWRAP."),
               string().startsWith("$DATA_SLY_LIST."),
               string().startsWith("$DATA_SLY_REPEAT."),
               string().startsWith("$DATA_SLY_TEMPLATE.")

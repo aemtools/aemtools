@@ -68,7 +68,7 @@ class OptionsCompletionTest : CompletionBaseLightTest(true) {
     addHtml("test.html", """
             <div data-sly-resource='$DOLLAR{@ $CARET}'></div>
         """)
-    shouldContain(listOf("resourceType") + CONTEXT_PARAMETERS)
+    shouldContain(listOf("resourceType", "wcmmode", "decorationTagName", "cssClassName") + CONTEXT_PARAMETERS)
   }
 
   fun testOptionsResourceTypeVariants() = completionTest {
@@ -105,6 +105,34 @@ class OptionsCompletionTest : CompletionBaseLightTest(true) {
     shouldNotContain(
         "/apps/myapp/components/comp1"
     )
+  }
+
+  fun testDataSlyListOptions() = completionTest {
+    addHtml("test.html", """
+            <div data-sly-list='$DOLLAR{@ $CARET}'></div>
+        """)
+    shouldContain(listOf("begin", "step", "end"))
+  }
+
+  fun testDataSlyListOptionsFilterOutExisted() = completionTest {
+    addHtml("test.html", """
+            <div data-sly-list='$DOLLAR{@ step=1, $CARET}'></div>
+        """)
+    shouldContain(listOf("begin", "end"))
+  }
+
+  fun testDataSlyRepeatOptions() = completionTest {
+    addHtml("test.html", """
+            <div data-sly-list='$DOLLAR{@ $CARET}'></div>
+        """)
+    shouldContain(listOf("begin", "step", "end"))
+  }
+
+  fun testDataSlyRepeatOptionsFilterOutExisted() = completionTest {
+    addHtml("test.html", """
+            <div data-sly-list='$DOLLAR{@ begin=0, $CARET}'></div>
+        """)
+    shouldContain(listOf("step", "end"))
   }
 
 }

@@ -1,10 +1,6 @@
 package com.aemtools.completion.htl.model.declaration
 
-import com.aemtools.codeinsight.htl.model.DeclarationAttributeType
-import com.aemtools.codeinsight.htl.model.DeclarationType
-import com.aemtools.codeinsight.htl.model.HtlListHelperDeclaration
-import com.aemtools.codeinsight.htl.model.HtlUseVariableDeclaration
-import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
+import com.aemtools.codeinsight.htl.model.*
 import com.aemtools.test.util.mock
 import com.intellij.psi.xml.XmlAttribute
 import org.assertj.core.api.Assertions.assertThat
@@ -42,6 +38,28 @@ class HtlVariableDeclarationTest {
           HtlVariableDeclaration::class.java,
           "condition",
           DeclarationAttributeType.DATA_SLY_TEST,
+          DeclarationType.VARIABLE
+      )
+  )
+
+  @Test
+  fun `create data-sly-set`() = builderTest(
+      attribute("data-sly-set.variable", ""),
+      ExpectedVariable(
+          HtlVariableDeclaration::class.java,
+          "variable",
+          DeclarationAttributeType.DATA_SLY_SET,
+          DeclarationType.VARIABLE
+      )
+  )
+
+  @Test
+  fun `create data-sly-unwrap`() = builderTest(
+      attribute("data-sly-unwrap.condition", ""),
+      ExpectedVariable(
+          HtlVariableDeclaration::class.java,
+          "condition",
+          DeclarationAttributeType.DATA_SLY_UNWRAP,
           DeclarationType.VARIABLE
       )
   )

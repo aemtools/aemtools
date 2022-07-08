@@ -62,6 +62,34 @@ $CARET
     myFixture.checkHighlighting(true, true, true)
   }
 
+  fun testDataSlyListOptions() {
+    myFixture.configureByText("test.html", """
+            <div <info descr="null">data-sly-list</info>="$DOLLAR{ @  <weak_warning descr="Iterable Parameter">begin</weak_warning>=''}"></div>
+        """)
+    myFixture.checkHighlighting(true, true, true)
+  }
+
+  fun testDataSlyRepeatOptions() {
+    myFixture.configureByText("test.html", """
+            <div <info descr="null">data-sly-list</info>="$DOLLAR{ @  <weak_warning descr="Iterable Parameter">begin</weak_warning>=''}"></div>
+        """)
+    myFixture.checkHighlighting(true, true, true)
+  }
+
+  fun testDataSlyResourceResourceTypeOption() {
+    myFixture.configureByText("test.html", """
+            <div <info descr="null">data-sly-resource</info>="$DOLLAR{ 'content' @  <weak_warning descr="Standard Option">resourceType</weak_warning>=''}"></div>
+        """)
+    myFixture.checkHighlighting(true, true, true)
+  }
+
+  fun testDataSlyResourceWcmModeOption() {
+    myFixture.configureByText("test.html", """
+            <div <info descr="null">data-sly-resource</info>="$DOLLAR{ 'content' @  <weak_warning descr="Standard Option">wcmmode</weak_warning>=''}"></div>
+        """)
+    myFixture.checkHighlighting(true, true, true)
+  }
+
   private fun testStandardOptionHighlight(option: String) {
     myFixture.configureByText("test.html", """
             $DOLLAR{'' @ <weak_warning descr="Standard Option">$option</weak_warning>=''}

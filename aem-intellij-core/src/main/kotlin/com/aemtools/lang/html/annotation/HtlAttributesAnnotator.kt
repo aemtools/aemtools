@@ -2,10 +2,11 @@ package com.aemtools.lang.html.annotation
 
 import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
+import com.aemtools.common.constant.const.htl.DATA_SLY_SET
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
+import com.aemtools.common.constant.const.htl.DATA_SLY_UNWRAP
 import com.aemtools.common.constant.const.htl.DATA_SLY_USE
 import com.aemtools.common.util.createInfoAnnotation
-import com.aemtools.common.util.createInfoAnnotationBuilder
 import com.aemtools.common.util.incomingReferences
 import com.aemtools.common.util.nameRange
 import com.aemtools.lang.htl.colorscheme.HtlColors.HTL_ATTRIBUTE
@@ -67,6 +68,8 @@ class HtlAttributesAnnotator : Annotator {
                        holder: AnnotationHolder) {
     when (attributeName) {
       DATA_SLY_USE,
+      DATA_SLY_SET,
+      DATA_SLY_UNWRAP,
       DATA_SLY_TEST -> annotateSingleVariable(range, attribute, variableName, holder)
       DATA_SLY_LIST,
       DATA_SLY_REPEAT -> annotateIterable(range, attribute, variableName, holder)

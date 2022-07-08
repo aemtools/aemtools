@@ -1,149 +1,149 @@
 [
   {
     "name": "context",
-    "type": "String",
+    "type": ["String"],
     "description": "Override automatically recognized context.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#121-display-context"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#121-display-context"
   },
   {
     "name": "format",
-    "type": "String, Array<String>",
+    "type": ["String, Array<String>"],
     "description": "Formats the main string.",
     "examples": [
       "${'Assets {0}' @ format=properties.assetName}",
       "${'Assets {0}' @ format=[properties.assetName]}",
       "${'Assets {0} - {1} of {2}' @ format=[properties.first, properties.last, properties.total]}"
     ],
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#122-format"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#122-format"
   },
   {
     "name": "i18n",
-    "type": "none",
+    "type": [],
     "description": "Internationalises the main string.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#123-i18n"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#123-i18n"
   },
   {
     "name": "join",
-    "type": "String",
+    "type": ["String"],
     "description": "Controls the output of an array object using given separator string.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#124-array-join"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#124-array-join"
   },
   {
     "name": "scheme",
-    "type": "String",
+    "type": ["String"],
     "description": "Applies given scheme to URI set within the main string.",
     "examples": [
       "${'example.com/path/page.html' @ scheme='http'} -> http://example.com/path/page.html",
       "${'//example.com/path/page.html' @ scheme='http'} -> http://example.com/path/page.html",
       "${'http://example.com/path/page.html' @ scheme='https'} -> https://example.com/path/page.html"
     ],
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
   },
   {
     "name": "domain",
-    "type": "String",
+    "type": ["String"],
     "description": "Applies given domain to URI set within the main string.",
     "examples": [
       "${'///path/page.html' @ domain='example.org'} -> //example.org/path/page.html",
       "${'http:///path/page.html' @ domain='example.org'} -> http://example.org/path/page.html",
       "${'http://www.example.com/path/page.html' @ domain='www.example.org'} -> http://www.example.org/path/page.html"
     ],
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
   },
   {
     "name": "path",
-    "type": "String",
+    "type": ["String"],
     "description": "Modifies the path that identifies a resource.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
   },
   {
     "name": "prependPath",
-    "type": "String",
+    "type": ["String"],
     "description": "Prepends its content to the path that identifies a resource.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
   },
   {
     "name": "appendPath",
-    "type": "String",
+    "type": ["String"],
     "description": "Appends its content to the path that identifies a resource.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
   },
   {
     "name": "selectors",
-    "type": "String, Array<String>",
+    "type": ["String, Array<String>"],
     "description": "Modifies or removes the selectors from a URI; the selectors are the URI segments between the part that identifies a resource (the resource's path) and the extension used for representing the resource.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
   },
   {
     "name": "addSelectors",
-    "type": "String, Array<String>",
+    "type": ["String, Array<String>"],
     "description": "Add the provided selectors (selectors string or selectors array) to the URI.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
   },
   {
     "name": "removeSelectors",
-    "type": "String, Array<String>",
+    "type": ["String, Array<String>"],
     "description": "Remove the provided selectors (selectors string or selectors array) from the URI.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
   },
   {
     "name": "extension",
-    "type": "String",
+    "type": ["String"],
     "description": "Apply given extension to a URI.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
   },
   {
     "name": "suffix",
-    "type": "String",
+    "type": ["String"],
     "description": "Apply given suffix to a URI.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
   },
   {
     "name": "prependSuffix",
-    "type": "String",
+    "type": ["String"],
     "description": "Prepend suffix to a URI.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
   },
   {
     "name": "appendSuffix",
-    "type": "String",
+    "type": ["String"],
     "description": "Append suffix to a URI.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
   },
   {
     "name": "query",
-    "type": "Map<String, String>",
+    "type": ["String, Array<String>"],
     "description": "Set the query segment of a URI.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
   },
   {
     "name": "addQuery",
-    "type": "Map<String, String>",
+    "type": ["String, Array<String>"],
     "description": "Add given query to the query segment of a URI.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
   },
   {
     "name": "removeQuery",
-    "type": "String, Array<String>",
+    "type": ["String, Array<String>"],
     "description": "Remove identified parameters from an existing query segment of a URI.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
   },
   {
     "name": "fragment",
-    "type": "String",
+    "type": ["String"],
     "description": "Set the fragment segment of a URI.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
+    "link": "https://github.com/adobe/htl-spec/blob/1.2/SPECIFICATION.md#125-uri-manipulation"
   },
   {
     "name": "timezone",
-    "type": "String",
+    "type": ["String"],
     "description": "",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#1222-dates"
+    "link": "https://github.com/adobe/htl-spec/blob/master/SPECIFICATION.md#1222-dates"
   },
   {
     "name": "locale",
-    "type": "String",
+    "type": ["String"],
     "description": "Explicitly specify locale for i18n.",
-    "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#1221-strings"
+    "link": "https://github.com/adobe/htl-spec/blob/master/SPECIFICATION.md#1221-strings"
   }
 ]
