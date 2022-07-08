@@ -8,6 +8,7 @@ import com.intellij.openapi.fileTypes.FileTypeEditorHighlighterProviders
 import com.intellij.openapi.fileTypes.LanguageFileType
 import com.intellij.openapi.fileTypes.TemplateLanguageFileType
 import com.intellij.openapi.fileTypes.ex.FileTypeIdentifiableByVirtualFile
+import com.intellij.openapi.project.ProjectLocator
 import com.intellij.openapi.vfs.VirtualFile
 import javax.swing.Icon
 
@@ -32,8 +33,14 @@ object HtlFileType
       return false
     }
 
+    val project = ProjectLocator.getInstance().guessProjectForFile(file)
     val path = file.path
-    return HtlDetectionService.isHtlFile(path)
+
+    return if (project == null) {
+      HtlDetectionService.isHtlFile(path)
+    } else {
+      HtlDetectionService.isHtlFile(path, project)
+    }
   }
 
   override fun getIcon(): Icon = HTL_FILE_ICON
