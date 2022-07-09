@@ -23,6 +23,7 @@ class HtlLexerTest : LexerBaseTest(), HtlTestCase {
   fun testComparison() = doTest()
   fun testEquality() = doTest()
   fun testGroupedBooleanExpression() = doTest()
+  fun testRelationalOperatorUsage() = doTest()
 
   fun testSimpleOption() = doTest()
   fun testMultipleOptions() = doTest()

@@ -11,6 +11,7 @@ object CompletionPriority {
   const val PREDEFINED_PARAMETER: Double = 1.1
 
   const val RESOURCE_TYPE: Double = 1.0
+  const val ITERABLE_OPTION: Double = 1.0
 
   const val CLOSE_CLASS: Double = 1.2
   const val FAR_CLASS: Double = 0.7

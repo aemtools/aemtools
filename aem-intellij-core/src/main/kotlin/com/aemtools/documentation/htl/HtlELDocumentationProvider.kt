@@ -30,7 +30,7 @@ open class HtlELDocumentationProvider : AbstractDocumentationProvider() {
     val text = originalElement?.text ?: return super.generateDoc(element, originalElement)
     return when {
       optionName.accepts(originalElement) -> {
-        HtlAttributesRepository.getHtlOptions().find {
+        getAllHtlOptions().find {
           it.name == text
         }?.let(HtlOption::description)
             ?: super.generateDoc(element, originalElement)
@@ -84,5 +84,10 @@ open class HtlELDocumentationProvider : AbstractDocumentationProvider() {
       else -> super.generateDoc(element, originalElement)
     }
   }
+
+  private fun getAllHtlOptions(): List<HtlOption> =
+      HtlAttributesRepository.getAttributesData().flatMap {
+        it.options ?: listOf()
+      } + HtlAttributesRepository.getHtlOptions()
 
 }

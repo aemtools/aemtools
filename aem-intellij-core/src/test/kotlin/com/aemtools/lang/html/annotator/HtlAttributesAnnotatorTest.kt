@@ -1,7 +1,6 @@
 package com.aemtools.lang.html.annotator
 
 import com.aemtools.test.base.BaseLightTest
-import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase
 
 /**
  * Test for [HtlAttributesAnnotator].
@@ -20,6 +19,20 @@ class HtlAttributesAnnotatorTest : BaseLightTest() {
   fun testUnusedDataSlyTest() {
     myFixture.configureByText("test.html", """
             <div data-sly-test.<warning descr="null">test</warning>=""></div>
+        """)
+    myFixture.testHighlighting()
+  }
+
+  fun testUnusedDataSlySet() {
+    myFixture.configureByText("test.html", """
+            <div data-sly-set.<warning descr="null">test</warning>=""></div>
+        """)
+    myFixture.testHighlighting()
+  }
+
+  fun testUnusedDataSlyUnwrap() {
+    myFixture.configureByText("test.html", """
+            <div data-sly-unwrap.<warning descr="null">test</warning>=""></div>
         """)
     myFixture.testHighlighting()
   }

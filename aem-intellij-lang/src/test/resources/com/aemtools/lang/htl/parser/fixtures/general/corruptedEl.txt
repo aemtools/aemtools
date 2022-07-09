@@ -12,7 +12,7 @@ HtlFile:corruptedEl.html
               HtlVariableNameImpl([Htl] VARIABLE_NAME)
                 PsiElement([Htl] VAR_NAME)('bla')
     PsiWhiteSpace(' ')
-    PsiErrorElement:<access identifier>, <logical operator>, <operator>, '[Htl] ?', '[Htl] @' or '[Htl] }' expected, got '"'
+    PsiErrorElement:<access identifier>, <logical operator>, <operator>, '[Htl] ?', '[Htl] @', '[Htl] in' or '[Htl] }' expected, got '"'
       PsiElement([Htl] ")('"')
     PsiElement([Htl] ")('"')
     PsiElement([Htl] })('}')

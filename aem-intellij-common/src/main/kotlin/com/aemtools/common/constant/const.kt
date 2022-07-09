@@ -52,6 +52,7 @@ object const {
     private const val HTL_PREFIX = "data-sly-"
     const val DATA_SLY_USE = "${HTL_PREFIX}use"
     const val DATA_SLY_TEST = "${HTL_PREFIX}test"
+    const val DATA_SLY_SET = "${HTL_PREFIX}set"
     const val DATA_SLY_REPEAT = "${HTL_PREFIX}repeat"
     const val DATA_SLY_LIST = "${HTL_PREFIX}list"
     const val DATA_SLY_TEMPLATE = "${HTL_PREFIX}template"
@@ -64,6 +65,7 @@ object const {
     const val DATA_SLY_RESOURCE = "${HTL_PREFIX}resource"
     val HTL_ATTRIBUTES = listOf(
         DATA_SLY_USE,
+        DATA_SLY_SET,
         DATA_SLY_TEST,
         DATA_SLY_REPEAT,
         DATA_SLY_LIST,
@@ -78,7 +80,6 @@ object const {
     )
 
     val DECLARATION_ATTRIBUTES = HTL_ATTRIBUTES - listOf(
-        DATA_SLY_UNWRAP,
         DATA_SLY_CALL,
         DATA_SLY_TEXT,
         DATA_SLY_RESOURCE,

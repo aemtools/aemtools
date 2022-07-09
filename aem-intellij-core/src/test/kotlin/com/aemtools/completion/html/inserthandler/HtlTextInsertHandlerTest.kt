@@ -7,6 +7,8 @@ class HtlTextInsertHandlerTest : BaseVariantsCheckContributorTest(
 
   fun testHtlAttributesInsertExpressionDataSlyTest() = checkAutoCompletion()
 
+  fun testHtlAttributesInsertExpressionDataSlySet() = checkAutoCompletion()
+
   fun testHtlAttributesInsertExpressionDataSlyList() = checkAutoCompletion()
 
   fun testHtlAttributesInsertExpressionDataSlyRepeat() = checkAutoCompletion()

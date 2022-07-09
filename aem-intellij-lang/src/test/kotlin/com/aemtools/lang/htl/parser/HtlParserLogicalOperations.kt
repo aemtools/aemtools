@@ -17,4 +17,8 @@ class HtlParserLogicalOperations
   fun testMultipleOperations() = doTest()
   fun testBracedLogicalExpression() = doTest()
 
+  fun testRelationOperatorWithStringLiteral() = doTest()
+  fun testRelationOperatorWithProperty() = doTest()
+  fun testRelationOperatorWithArray() = doTest()
+  fun testRelationOperatorWithNumber() = doTest()
 }

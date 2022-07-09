@@ -110,8 +110,7 @@ class CompletionRelevanceTest : CompletionBaseLightTest(true) {
         """)
     shouldContain(listOf(
         "bean",
-        *DEFAULT_CONTEXT_OBJECTS.toTypedArray(),
-        "test"
+        *DEFAULT_CONTEXT_OBJECTS.toTypedArray()
     ))
   }
 

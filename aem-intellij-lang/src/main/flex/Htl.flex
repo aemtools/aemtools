@@ -106,6 +106,7 @@ STRING_CONTENT=.
      "true"                      { return TRUE; }
      "false"                     { return FALSE; }
      "null"                      { return NULL_LITERAL_TOKEN; }
+     "in"                        { return IN; }
      {DOUBLE_QUOTED_STRING_BOUNDARY} {
         yybegin(DQ); return DOUBLE_QUOTE;
      }

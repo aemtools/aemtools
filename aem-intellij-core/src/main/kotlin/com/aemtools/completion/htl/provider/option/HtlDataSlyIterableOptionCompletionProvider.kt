@@ -1,8 +1,7 @@
 package com.aemtools.completion.htl.provider.option
 
-import com.aemtools.common.constant.const
 import com.aemtools.common.util.findParentByType
-import com.aemtools.completion.htl.CompletionPriority.RESOURCE_TYPE
+import com.aemtools.completion.htl.CompletionPriority
 import com.aemtools.completion.model.htl.HtlOption
 import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.aemtools.service.repository.inmemory.HtlAttributesRepository
@@ -13,9 +12,12 @@ import com.intellij.codeInsight.completion.PrioritizedLookupElement
 import com.intellij.util.ProcessingContext
 
 /**
- * @author Dmytro Primshyts
+ * @author Kostiantyn Diachenko
  */
-object HtlDataSlyResourceOptionCompletionProvider : CompletionProvider<CompletionParameters>() {
+class HtlDataSlyIterableOptionCompletionProvider(
+    private val iterableAttributeName: String
+) : CompletionProvider<CompletionParameters>() {
+
   override fun addCompletions(
       parameters: CompletionParameters,
       context: ProcessingContext,
@@ -27,17 +29,16 @@ object HtlDataSlyResourceOptionCompletionProvider : CompletionProvider<Completio
     val names = hel.getOptions().map { it.name() }
         .filterNot { it == "" }
 
-    val dataSlyResourceOptions = HtlAttributesRepository.getAttributesData()
-        .filter { it.name == const.htl.DATA_SLY_RESOURCE }
+    val dataSlyIterableOptions = HtlAttributesRepository.getAttributesData()
+        .filter { it.name == iterableAttributeName }
         .flatMap { it.options ?: listOf() }
-    val options = dataSlyResourceOptions + HtlAttributesRepository.getHtlOptions()
 
-    val completionVariants = options
+    val completionVariants = dataSlyIterableOptions
         .filterNot { names.contains(it.name) }
         .map(HtlOption::toLookupElement)
         .map {
-          if (it.lookupString in dataSlyResourceOptions.optionNames()) {
-            PrioritizedLookupElement.withPriority(it, RESOURCE_TYPE)
+          if (it.lookupString in dataSlyIterableOptions.optionNames()) {
+            PrioritizedLookupElement.withPriority(it, CompletionPriority.ITERABLE_OPTION)
           } else {
             it
           }
@@ -49,5 +50,4 @@ object HtlDataSlyResourceOptionCompletionProvider : CompletionProvider<Completio
   }
 
   private fun List<HtlOption>.optionNames() = this.map { it.name }
-
 }

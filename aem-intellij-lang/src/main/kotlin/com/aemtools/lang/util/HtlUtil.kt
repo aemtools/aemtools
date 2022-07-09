@@ -2,22 +2,9 @@ package com.aemtools.lang.util
 
 import com.aemtools.common.constant.const
 import com.aemtools.common.constant.const.SLY_TAG
-import com.aemtools.common.util.findChildrenByType
-import com.aemtools.common.util.findParentByType
-import com.aemtools.common.util.getHtmlFile
-import com.aemtools.common.util.getPsi
-import com.aemtools.common.util.hasParentOfType
-import com.aemtools.common.util.isHtlAttributeName
+import com.aemtools.common.util.*
 import com.aemtools.lang.htl.HtlLanguage
-import com.aemtools.lang.htl.psi.HtlAssignmentValue
-import com.aemtools.lang.htl.psi.HtlContextExpression
-import com.aemtools.lang.htl.psi.HtlExpression
-import com.aemtools.lang.htl.psi.HtlHel
-import com.aemtools.lang.htl.psi.HtlHtlEl
-import com.aemtools.lang.htl.psi.HtlPsiBaseElement
-import com.aemtools.lang.htl.psi.HtlPsiFile
-import com.aemtools.lang.htl.psi.HtlStringLiteral
-import com.aemtools.lang.htl.psi.HtlVariableName
+import com.aemtools.lang.htl.psi.*
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.intellij.psi.PsiElement
@@ -270,7 +257,9 @@ fun XmlAttribute.isHtlDeclarationAttribute(): Boolean =
     with(this.name) {
       when {
         startsWith(const.htl.DATA_SLY_USE) && length > const.htl.DATA_SLY_USE.length -> true
+        startsWith(const.htl.DATA_SLY_SET) && length > const.htl.DATA_SLY_SET.length -> true
         startsWith(const.htl.DATA_SLY_TEST) && length > const.htl.DATA_SLY_TEST.length -> true
+        startsWith(const.htl.DATA_SLY_UNWRAP) && length > const.htl.DATA_SLY_UNWRAP.length -> true
         startsWith(const.htl.DATA_SLY_TEMPLATE) -> true
         startsWith(const.htl.DATA_SLY_LIST) -> true
         startsWith(const.htl.DATA_SLY_REPEAT) -> true
