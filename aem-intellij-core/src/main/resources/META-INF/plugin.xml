@@ -202,7 +202,8 @@
 
         <projectConfigurable id="aemProjectConfiguration"
                              parentId="language"
-                             instance="com.aemtools.lang.settings.AemProjectSettingsConfigurable"/>
+                             instance="com.aemtools.lang.settings.ui.AemProjectSettingsConfigurable"/>
+        <postStartupActivity implementation="com.aemtools.lang.settings.init.VersionsDiscoveringStartupActivity"/>
 
         <projectService
                 serviceInterface="com.aemtools.inspection.service.IInspectionService"

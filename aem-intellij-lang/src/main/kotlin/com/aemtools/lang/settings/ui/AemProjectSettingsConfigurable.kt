@@ -1,11 +1,15 @@
-package com.aemtools.lang.settings
+package com.aemtools.lang.settings.ui
 
-import com.aemtools.lang.settings.components.AemProjectSettingsPanel
+import com.aemtools.lang.settings.AemProjectSettings
+import com.aemtools.lang.settings.ui.components.AemProjectSettingsPanel
 import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.project.Project
 import org.jetbrains.annotations.Nls
 import javax.swing.JComponent
 
+/**
+ * @author Kostiantyn Diachenko
+ */
 class AemProjectSettingsConfigurable(val project: Project): Configurable {
 
   lateinit var component: AemProjectSettingsPanel

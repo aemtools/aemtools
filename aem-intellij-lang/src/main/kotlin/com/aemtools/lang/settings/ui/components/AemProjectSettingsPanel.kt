@@ -1,4 +1,4 @@
-package com.aemtools.lang.settings.components
+package com.aemtools.lang.settings.ui.components
 
 import com.aemtools.lang.settings.AemProjectSettings
 import com.aemtools.lang.settings.model.AemVersion
@@ -10,6 +10,9 @@ import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.dsl.builder.*
 import com.intellij.ui.layout.selected
 
+/**
+ * @author Kostiantyn Diachenko
+ */
 class AemProjectSettingsPanel(private val currentState: AemProjectSettings) {
 
   private val htlVersionsModel = CollectionComboBoxModel(HtlVersion.versions(), currentState.htlVersion)
@@ -63,8 +66,10 @@ class AemProjectSettingsPanel(private val currentState: AemProjectSettings) {
         return@AemVersionComboBoxModel
       }
       val aemVersion = AemVersion.fromVersion(it)
-      val suggestedHtlVersion = HtlVersion.getFirstCompatibleWith(aemVersion)
-      htlVersionsModel.selectedItem = suggestedHtlVersion.version
+      aemVersion?.let {
+        val suggestedHtlVersion = HtlVersion.getFirstCompatibleWith(aemVersion)
+        htlVersionsModel.selectedItem = suggestedHtlVersion.version
+      }
     }
   }
 }

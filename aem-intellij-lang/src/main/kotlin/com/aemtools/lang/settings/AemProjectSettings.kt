@@ -7,6 +7,11 @@ import com.intellij.openapi.components.StoragePathMacros
 import com.intellij.openapi.project.Project
 import com.intellij.util.xmlb.annotations.Tag
 
+/**
+ * Storage for AEM project settings.
+ *
+ * @author Kostiantyn Diachenko
+ */
 @State(
     name = "AemProjectConfiguration",
     storages = [(Storage(StoragePathMacros.WORKSPACE_FILE))]
@@ -14,10 +19,10 @@ import com.intellij.util.xmlb.annotations.Tag
 class AemProjectSettings : PersistentStateComponent<AemProjectSettings> {
 
   @Tag
-  var aemVersion: String = "6.5"
+  var aemVersion: String = ""
 
   @Tag
-  var htlVersion: String = "1.4"
+  var htlVersion: String = ""
 
   override fun getState(): AemProjectSettings = this
 
@@ -25,6 +30,8 @@ class AemProjectSettings : PersistentStateComponent<AemProjectSettings> {
     aemVersion = state.aemVersion
     htlVersion = state.htlVersion
   }
+
+  fun isInitialized(): Boolean = aemVersion.isNotEmpty() && htlVersion.isNotEmpty()
 
   companion object {
 

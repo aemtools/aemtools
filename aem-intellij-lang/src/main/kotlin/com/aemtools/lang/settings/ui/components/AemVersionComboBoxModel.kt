@@ -1,7 +1,10 @@
-package com.aemtools.lang.settings.components
+package com.aemtools.lang.settings.ui.components
 
 import com.intellij.ui.CollectionComboBoxModel
 
+/**
+ * @author Kostiantyn Diachenko
+ */
 class AemVersionComboBoxModel(
     items: List<String>,
     selection: String,

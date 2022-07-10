@@ -1,5 +1,10 @@
 package com.aemtools.lang.settings.model
 
+/**
+ * Represents supported HTL minor versions.
+ *
+ * @author Kostiantyn Diachenko
+ */
 enum class HtlVersion(val version: String) {
   V_1_3("1.3"),
   V_1_4("1.4");
