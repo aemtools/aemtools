@@ -196,9 +196,13 @@
         <lang.psiStructureViewFactory language="Htl"
                                       implementationClass="com.aemtools.ide.HtlStructureViewProvider"/>
 
-        <projectService
-                serviceInterface="com.aemtools.lang.settings.HtlRootDirectories"
-                serviceImplementation="com.aemtools.lang.settings.HtlRootDirectories"/>
+        <projectService serviceImplementation="com.aemtools.lang.settings.HtlRootDirectories"/>
+
+        <projectService serviceImplementation="com.aemtools.lang.settings.AemProjectSettings"/>
+
+        <projectConfigurable id="aemProjectConfiguration"
+                             parentId="language"
+                             instance="com.aemtools.lang.settings.AemProjectSettingsConfigurable"/>
 
         <projectService
                 serviceInterface="com.aemtools.inspection.service.IInspectionService"
