@@ -28,19 +28,18 @@ class VersionsDiscoveringStartupActivity : StartupActivity {
   override fun runActivity(project: Project) {
     val aemProjectSettings = AemProjectSettings.getInstance(project)
     if (aemProjectSettings.isInitialized()) {
-      notifyAboutCurrentVersions(aemProjectSettings, project)
       return
     }
 
-    val aemVersion = findAemVersion(project) ?: AemVersion.values().last()
+    val aemVersion = findAemVersion(project) ?: AemVersion.latest()
     saveDiscoveredVersions(aemVersion, aemProjectSettings)
     notifyAboutDiscoveredVersions(aemProjectSettings, project)
   }
 
   private fun saveDiscoveredVersions(aemVersion: AemVersion, aemProjectSettings: AemProjectSettings) {
     val newState = AemProjectSettings()
-    newState.aemVersion = aemVersion.version
-    newState.htlVersion = HtlVersion.getFirstCompatibleWith(aemVersion).version
+    newState.aemVersion = aemVersion
+    newState.htlVersion = HtlVersion.getFirstCompatibleWith(aemVersion)
     aemProjectSettings.loadState(newState)
   }
 
@@ -70,34 +69,18 @@ class VersionsDiscoveringStartupActivity : StartupActivity {
           && this.name == "artifactId"
           && this.value.text == "uber-jar"
 
-  private fun notifyUser(contentTitle: String, aemProjectSettings: AemProjectSettings, project: Project) {
+  private fun notifyAboutDiscoveredVersions(aemProjectSettings: AemProjectSettings, project: Project) {
     val notification = Notification("Project Settings",
         "AEM Tools plugin configuration",
         """
-            ${contentTitle}:
-            <strong>AEM version</strong>: ${aemProjectSettings.aemVersion}
-            <strong>HTL version</strong>: ${aemProjectSettings.htlVersion}<br>
+            Discovered versions:
+            <strong>AEM version</strong>: ${aemProjectSettings.aemVersion.version}
+            <strong>HTL version</strong>: ${aemProjectSettings.htlVersion.version}<br>
           """.trimIndent(),
         NotificationType.INFORMATION
     )
     notification.addAction(setVersionsManuallyNotificationAction(project))
     Notifications.Bus.notify(notification)
-  }
-
-  private fun notifyAboutDiscoveredVersions(aemProjectSettings: AemProjectSettings, project: Project) {
-    notifyUser(
-        "Discovered versions",
-        aemProjectSettings,
-        project
-    )
-  }
-
-  private fun notifyAboutCurrentVersions(aemProjectSettings: AemProjectSettings, project: Project) {
-    notifyUser(
-        "Saved versions",
-        aemProjectSettings,
-        project
-    )
   }
 
   private fun findPomFiles(project: Project): List<XmlFile> {

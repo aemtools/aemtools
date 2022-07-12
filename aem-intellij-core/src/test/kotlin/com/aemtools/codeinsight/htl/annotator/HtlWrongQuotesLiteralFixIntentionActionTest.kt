@@ -1,5 +1,6 @@
 package com.aemtools.codeinsight.htl.annotator
 
+import com.aemtools.codeinsight.htl.intention.HtlWrongQuotesLiteralFixIntentionAction
 import com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin
 import com.aemtools.test.junit.MockitoExtension
 import com.intellij.openapi.editor.Document

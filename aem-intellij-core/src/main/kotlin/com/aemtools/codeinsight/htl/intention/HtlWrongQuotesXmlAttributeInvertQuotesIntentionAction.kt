@@ -1,5 +1,7 @@
-package com.aemtools.codeinsight.htl.annotator
+package com.aemtools.codeinsight.htl.intention
 
+import com.aemtools.codeinsight.htl.annotator.toDoubleQuoted
+import com.aemtools.codeinsight.htl.annotator.toSingleQuoted
 import com.aemtools.common.intention.BaseHtlIntentionAction
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.common.util.findParentByType

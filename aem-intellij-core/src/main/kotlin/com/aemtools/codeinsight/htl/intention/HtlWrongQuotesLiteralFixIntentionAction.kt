@@ -1,5 +1,6 @@
-package com.aemtools.codeinsight.htl.annotator
+package com.aemtools.codeinsight.htl.intention
 
+import com.aemtools.codeinsight.htl.annotator.swapQuotes
 import com.aemtools.common.intention.BaseHtlIntentionAction
 import com.aemtools.common.util.psiDocumentManager
 import com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin

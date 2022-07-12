@@ -17,5 +17,7 @@ enum class AemVersion(val version: String) {
 
     fun fromVersion(version: String): AemVersion? =
         AemVersion.values().firstOrNull { version.startsWith(it.version) }
+
+    fun latest() = AemVersion.values().last()
   }
 }

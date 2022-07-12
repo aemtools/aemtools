@@ -171,6 +171,18 @@
         <annotator language="Htl"
                    implementationClass="com.aemtools.codeinsight.htl.annotator.HtlWrongQuotesAnnotator"/>
 
+        <annotator language="Htl"
+                   implementationClass="com.aemtools.codeinsight.htl.annotator.versioning.DataSlyIterableOptionsUnsupportedAnnotator"/>
+
+        <annotator language="Htl"
+                   implementationClass="com.aemtools.codeinsight.htl.annotator.versioning.RelationalOperatorUnsupportedAnnotator"/>
+
+        <annotator language="XML"
+                   implementationClass="com.aemtools.codeinsight.htl.annotator.versioning.DataSlySetUnsupportedAnnotator"/>
+
+        <annotator language="XML"
+                   implementationClass="com.aemtools.codeinsight.htl.annotator.versioning.DataSlyUnwrapUnsupportedAnnotator"/>
+
         <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
                        order="before xmlTagRenameHandler"/>
 
@@ -200,7 +212,7 @@
 
         <projectService serviceImplementation="com.aemtools.lang.settings.AemProjectSettings"/>
 
-        <projectConfigurable id="aemProjectConfiguration"
+        <projectConfigurable id="language.AemProjectSettings"
                              parentId="language"
                              instance="com.aemtools.lang.settings.ui.AemProjectSettingsConfigurable"/>
         <postStartupActivity implementation="com.aemtools.lang.settings.init.VersionsDiscoveringStartupActivity"/>

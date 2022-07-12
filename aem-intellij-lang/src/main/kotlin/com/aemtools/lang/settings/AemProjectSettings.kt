@@ -1,5 +1,7 @@
 package com.aemtools.lang.settings
 
+import com.aemtools.lang.settings.model.AemVersion
+import com.aemtools.lang.settings.model.HtlVersion
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
@@ -19,19 +21,26 @@ import com.intellij.util.xmlb.annotations.Tag
 class AemProjectSettings : PersistentStateComponent<AemProjectSettings> {
 
   @Tag
-  var aemVersion: String = ""
+  var aemVersion: AemVersion = AemVersion.latest()
 
   @Tag
-  var htlVersion: String = ""
+  var htlVersion: HtlVersion = HtlVersion.latest()
+
+  @Tag
+  var isManuallyDefinedHtlVersion: Boolean = false
+
+  var wasInitialized: Boolean = false
 
   override fun getState(): AemProjectSettings = this
 
   override fun loadState(state: AemProjectSettings) {
     aemVersion = state.aemVersion
     htlVersion = state.htlVersion
+    isManuallyDefinedHtlVersion = state.isManuallyDefinedHtlVersion
+    wasInitialized = true
   }
 
-  fun isInitialized(): Boolean = aemVersion.isNotEmpty() && htlVersion.isNotEmpty()
+  fun isInitialized(): Boolean = wasInitialized
 
   companion object {
 

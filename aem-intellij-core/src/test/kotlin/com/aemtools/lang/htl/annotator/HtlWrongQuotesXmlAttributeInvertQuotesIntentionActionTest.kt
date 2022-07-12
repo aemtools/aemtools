@@ -1,12 +1,10 @@
 package com.aemtools.lang.htl.annotator
 
-import com.aemtools.codeinsight.htl.annotator.HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction
+import com.aemtools.codeinsight.htl.intention.HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction
 import com.aemtools.common.util.writeCommand
 import com.aemtools.test.base.BaseLightTest
-import com.aemtools.test.base.BaseLightTest.Companion.DOLLAR
 import com.aemtools.test.util.notNull
 import com.aemtools.test.util.quickFix
-import com.intellij.testFramework.InspectionFixtureTestCase
 import org.assertj.core.api.Assertions.assertThat
 
 /**

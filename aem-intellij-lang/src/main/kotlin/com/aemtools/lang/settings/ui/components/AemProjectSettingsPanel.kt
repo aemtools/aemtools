@@ -15,7 +15,7 @@ import com.intellij.ui.layout.selected
  */
 class AemProjectSettingsPanel(private val currentState: AemProjectSettings) {
 
-  private val htlVersionsModel = CollectionComboBoxModel(HtlVersion.versions(), currentState.htlVersion)
+  private val htlVersionsModel = CollectionComboBoxModel(HtlVersion.versions(), currentState.htlVersion.version)
   private val aemVersionsModel = buildAemComboboxModel(currentState)
 
   private lateinit var isSetHtlVersionManuallyCheckbox: Cell<JBCheckBox>
@@ -34,6 +34,9 @@ class AemProjectSettingsPanel(private val currentState: AemProjectSettings) {
             By default, it is set automatically based on AEM version.
             An implementation of version 1.4 of the HTL is available in AEM 6.3 SP3 and AEM 6.4 SP1.
           """.trimIndent())
+            .applyToComponent {
+              this.isSelected = currentState.isManuallyDefinedHtlVersion
+            }
             .actionListener { _, component ->
               if (!component.selected()) {
                 htlVersionsModel.selectedItem = currentState.htlVersion
@@ -49,11 +52,13 @@ class AemProjectSettingsPanel(private val currentState: AemProjectSettings) {
 
   fun getPanelState(): AemProjectSettings {
     val newState = AemProjectSettings()
-    newState.aemVersion = aemVersionsModel.selected ?: currentState.aemVersion
+    newState.aemVersion = aemVersionsModel.selected?.let { AemVersion.fromVersion(it) } ?: currentState.aemVersion
     if (isSetHtlVersionManuallyCheckbox.selected()) {
-      newState.htlVersion = htlVersionsModel.selected ?: currentState.htlVersion
+      newState.htlVersion = htlVersionsModel.selected?.let { HtlVersion.fromVersion(it) } ?: currentState.htlVersion
+      newState.isManuallyDefinedHtlVersion = true
     } else {
       newState.htlVersion = currentState.htlVersion
+      newState.isManuallyDefinedHtlVersion = false
     }
     return newState
   }
@@ -61,7 +66,7 @@ class AemProjectSettingsPanel(private val currentState: AemProjectSettings) {
   private fun buildAemComboboxModel(
       currentState: AemProjectSettings
   ): CollectionComboBoxModel<String> {
-    return AemVersionComboBoxModel(AemVersion.versions(), currentState.aemVersion) {
+    return AemVersionComboBoxModel(AemVersion.versions(), currentState.aemVersion.version) {
       if (isSetHtlVersionManuallyCheckbox.selected()) {
         return@AemVersionComboBoxModel
       }
