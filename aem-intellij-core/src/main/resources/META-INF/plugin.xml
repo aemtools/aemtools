@@ -160,7 +160,7 @@
         <customPropertyScopeProvider implementation="com.aemtools.findusages.HtlPropertyScopeProvider"/>
 
         <annotator language="HTML"
-                   implementationClass="com.aemtools.lang.html.annotation.HtlAttributesAnnotator"/>
+                   implementationClass="com.aemtools.codeinsight.html.annotator.HtlAttributesAnnotator"/>
 
         <annotator language="Htl"
                    implementationClass="com.aemtools.codeinsight.htl.annotator.HtlVariablesAnnotator"/>

@@ -11,6 +11,8 @@ import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.psi.PsiElement
 
 /**
+ * Annotates data-sly-list and data-sly-repeat not supported HTL options in HTL 1.3.
+ *
  * @author Kostiantyn Diachenko
  */
 class DataSlyIterableOptionsUnsupportedAnnotator : VersionedHtlElementAnnotator(HtlVersion.V_1_4) {
@@ -30,7 +32,7 @@ class DataSlyIterableOptionsUnsupportedAnnotator : VersionedHtlElementAnnotator(
 
   private fun HtlVariableName.isBlockSpecificOption(blockName: String): Boolean =
       this.isInsideOf(blockName)
-          && HtlAttributesRepository.getAttributesData()
+          && HtlAttributesRepository.getAttributesData(HtlVersion.V_1_4)
           .filter { it.name == blockName }
           .flatMap { it.options ?: listOf() }
           .any { it.name == this.varName.text }

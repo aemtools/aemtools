@@ -4,6 +4,9 @@ import com.aemtools.common.util.findParentByType
 import com.aemtools.completion.htl.CompletionPriority
 import com.aemtools.completion.model.htl.HtlOption
 import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
+import com.aemtools.lang.settings.model.HtlVersion
+import com.aemtools.lang.util.getHtlVersion
+import com.aemtools.lang.util.notSupportsHtlVersion
 import com.aemtools.service.repository.inmemory.HtlAttributesRepository
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
@@ -23,13 +26,17 @@ class HtlDataSlyIterableOptionCompletionProvider(
       context: ProcessingContext,
       result: CompletionResultSet) {
     val currentPosition = parameters.position
+    val project = currentPosition.project
+    if (project.notSupportsHtlVersion(HtlVersion.V_1_4)) {
+      return
+    }
     val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
         ?: return
 
     val names = hel.getOptions().map { it.name() }
         .filterNot { it == "" }
 
-    val dataSlyIterableOptions = HtlAttributesRepository.getAttributesData()
+    val dataSlyIterableOptions = HtlAttributesRepository.getAttributesData(project.getHtlVersion())
         .filter { it.name == iterableAttributeName }
         .flatMap { it.options ?: listOf() }
 

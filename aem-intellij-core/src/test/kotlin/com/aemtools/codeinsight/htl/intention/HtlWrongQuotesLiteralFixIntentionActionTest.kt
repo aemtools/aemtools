@@ -1,6 +1,5 @@
-package com.aemtools.lang.htl.annotator
+package com.aemtools.codeinsight.htl.intention
 
-import com.aemtools.codeinsight.htl.intention.HtlWrongQuotesLiteralFixIntentionAction
 import com.aemtools.common.util.writeCommand
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.util.notNull
@@ -23,17 +22,10 @@ class HtlWrongQuotesLiteralFixIntentionActionTest : BaseLightTest() {
       myFixture.quickFix("test.html")
     }
 
-    assertThat(fix.familyName)
-        .isEqualTo("HTL Intentions")
-
-    assertThat(fix.startInWriteAction())
-        .isTrue()
-
-    assertThat(fix.text)
-        .isEqualTo("Invert HTL Literal quotes")
-
-    assertThat(fix.isAvailable(project, editor, null))
-        .isTrue()
+    assertThat(fix.familyName).isEqualTo("HTL Intentions")
+    assertThat(fix.startInWriteAction()).isTrue
+    assertThat(fix.text).isEqualTo("Invert HTL Literal quotes")
+    assertThat(fix.isAvailable(project, editor, null)).isTrue
   }
 
   fun testApplyForDoubleQuoted() {

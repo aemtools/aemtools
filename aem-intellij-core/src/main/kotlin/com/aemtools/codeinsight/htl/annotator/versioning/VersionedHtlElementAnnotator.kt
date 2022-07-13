@@ -1,8 +1,9 @@
 package com.aemtools.codeinsight.htl.annotator.versioning
 
-import com.aemtools.codeinsight.htl.util.getHtlVersion
 import com.aemtools.codeinsight.htl.util.notSupportedHtlFeatureText
 import com.aemtools.lang.settings.model.HtlVersion
+import com.aemtools.lang.util.getHtlVersion
+import com.aemtools.lang.util.supportsHtlVersion
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.openapi.project.Project
@@ -15,7 +16,7 @@ abstract class VersionedHtlElementAnnotator(
     private val sinceVersion: HtlVersion
 ) : Annotator {
   override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-    if (element.project.supportHtlVersion(sinceVersion)) {
+    if (element.project.supportsHtlVersion(sinceVersion)) {
       return
     }
     annotateNotSupportedElement(element, holder)
@@ -26,8 +27,5 @@ abstract class VersionedHtlElementAnnotator(
   fun getSinceVersion() = sinceVersion
 
   fun getMessage(project: Project) = notSupportedHtlFeatureText(project.getHtlVersion(), sinceVersion)
-
-  private fun Project.supportHtlVersion(sinceVersion: HtlVersion): Boolean =
-      this.getHtlVersion().ordinal >= sinceVersion.ordinal
 
 }

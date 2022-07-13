@@ -9,6 +9,8 @@ enum class HtlVersion(val version: String) {
   V_1_3("1.3"),
   V_1_4("1.4");
 
+  fun isAtLeast(htlVersion: HtlVersion): Boolean = this.ordinal >= htlVersion.ordinal
+
   companion object {
     fun versions() = HtlVersion.values().map { it.version }
 

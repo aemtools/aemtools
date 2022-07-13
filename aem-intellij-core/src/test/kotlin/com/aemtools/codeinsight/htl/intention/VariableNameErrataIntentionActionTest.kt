@@ -1,4 +1,4 @@
-package com.aemtools.lang.htl.annotator
+package com.aemtools.codeinsight.htl.intention
 
 import com.aemtools.common.util.writeCommand
 import com.aemtools.inspection.fix.VariableNameErrataIntentionAction
@@ -16,25 +16,18 @@ class VariableNameErrataIntentionActionTest : BaseLightTest() {
 
   fun testFixErrataCorrectFormat() {
     myFixture.configureByText("test.html", """
-            <div data-sly-use.myModel=""></div>
-            $DOLLAR{mymodel}
-        """.trimIndent())
+        <div data-sly-use.myModel=""></div>
+        $DOLLAR{mymodel}
+    """.trimIndent())
 
     val fix by notNull<VariableNameErrataIntentionAction> {
       myFixture.quickFix("test.html")
     }
 
-    assertThat(fix.familyName)
-        .isEqualTo("HTL Intentions")
-
-    assertThat(fix.startInWriteAction())
-        .isTrue()
-
-    assertThat(fix.text)
-        .isEqualTo("Change to 'myModel'")
-
-    assertThat(fix.isAvailable(project, editor, null))
-        .isTrue()
+    assertThat(fix.familyName).isEqualTo("HTL Intentions")
+    assertThat(fix.startInWriteAction()).isTrue
+    assertThat(fix.text).isEqualTo("Change to 'myModel'")
+    assertThat(fix.isAvailable(project, editor, null)).isTrue
   }
 
   fun testFixErrata() {

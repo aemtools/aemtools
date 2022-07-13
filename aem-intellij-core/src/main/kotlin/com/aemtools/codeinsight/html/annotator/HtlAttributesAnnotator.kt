@@ -1,4 +1,4 @@
-package com.aemtools.lang.html.annotation
+package com.aemtools.codeinsight.html.annotator
 
 import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT

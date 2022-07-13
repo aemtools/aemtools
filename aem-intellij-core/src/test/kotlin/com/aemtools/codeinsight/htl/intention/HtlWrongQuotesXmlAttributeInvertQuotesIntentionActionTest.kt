@@ -1,6 +1,5 @@
-package com.aemtools.lang.htl.annotator
+package com.aemtools.codeinsight.htl.intention
 
-import com.aemtools.codeinsight.htl.intention.HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction
 import com.aemtools.common.util.writeCommand
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.util.notNull
@@ -23,14 +22,9 @@ class HtlWrongQuotesXmlAttributeInvertQuotesIntentionActionTest : BaseLightTest(
       myFixture.quickFix("test.html")
     }
 
-    assertThat(fix.familyName)
-        .isEqualTo("HTL Intentions")
-
-    assertThat(fix.text)
-        .isEqualTo("Invert XML Attribute quotes")
-
-    assertThat(fix.isAvailable(project, editor, null))
-        .isTrue()
+    assertThat(fix.familyName).isEqualTo("HTL Intentions")
+    assertThat(fix.text).isEqualTo("Invert XML Attribute quotes")
+    assertThat(fix.isAvailable(project, editor, null)).isTrue
   }
 
   fun testApplyForDoubleQuoted() {

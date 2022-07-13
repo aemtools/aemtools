@@ -1,8 +1,6 @@
-package com.aemtools.lang.htl.annotator
+package com.aemtools.codeinsight.htl.annotator
 
-import com.aemtools.common.constant.const.DOLLAR
 import com.aemtools.test.base.BaseLightTest
-import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase
 
 /**
  * @author Dmytro Primshyts

@@ -7,6 +7,8 @@ import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.psi.PsiElement
 
 /**
+ * Annotates relational 'in' operator as not supported in HTL 1.3.
+ *
  * @author Kostiantyn Diachenko
  */
 class RelationalOperatorUnsupportedAnnotator : VersionedHtlElementAnnotator(HtlVersion.V_1_4) {

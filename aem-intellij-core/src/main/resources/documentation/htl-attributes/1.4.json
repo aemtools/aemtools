@@ -36,7 +36,7 @@
     "general": "Declares an HTML block, naming it with an identifier and defining the parameters it can get.",
     "element": "never shown.",
     "elementContent": "shown upon calling the template with <strong>data-sly-call</strong>.",
-    "link": "https://github.com/adobe/htl-spec/blob/1.4/SPECIFICATION.md#2212-set",
+    "link": "https://github.com/adobe/htl-spec/blob/master/SPECIFICATION.md#2212-set",
     "scope": "The identifier set by the <strong>data-sly-set</strong> block element is global to the script and can be used anywhere after its declaration.",
     "attributeValue": {
       "required": "false",
@@ -122,19 +122,25 @@
       {
         "name": "begin",
         "description": "iteration begins at the item located at the specified index; first item of the collection has index 0",
-        "type": ["Long"],
+        "type": [
+          "Long"
+        ],
         "link": "https://github.com/adobe/htl-spec/blob/master/SPECIFICATION.md#226-list"
       },
       {
         "name": "step",
         "description": "iteration will only process every step items of the collection, starting with the first one",
-        "type": ["Long"],
+        "type": [
+          "Long"
+        ],
         "link": "https://github.com/adobe/htl-spec/blob/master/SPECIFICATION.md#226-list"
       },
       {
         "name": "end",
         "description": "iteration ends at the item located at the specified index (inclusive)",
-        "type": ["Long"],
+        "type": [
+          "Long"
+        ],
         "link": "https://github.com/adobe/htl-spec/blob/master/SPECIFICATION.md#226-list"
       }
     ]
@@ -161,19 +167,25 @@
       {
         "name": "begin",
         "description": "iteration begins at the item located at the specified index; first item of the collection has index 0",
-        "type": ["Long"],
+        "type": [
+          "Long"
+        ],
         "link": "https://github.com/adobe/htl-spec/blob/master/SPECIFICATION.md#227-repeat"
       },
       {
         "name": "step",
         "description": "iteration will only process every step items of the collection, starting with the first one",
-        "type": ["Long"],
+        "type": [
+          "Long"
+        ],
         "link": "https://github.com/adobe/htl-spec/blob/master/SPECIFICATION.md#227-repeat"
       },
       {
         "name": "end",
         "description": "iteration ends at the item located at the specified index (inclusive)",
-        "type": ["Long"],
+        "type": [
+          "Long"
+        ],
         "link": "https://github.com/adobe/htl-spec/blob/master/SPECIFICATION.md#227-repeat"
       }
     ]
@@ -208,25 +220,33 @@
     "options": [
       {
         "name": "resourceType",
-        "type": ["String"],
+        "type": [
+          "String"
+        ],
         "description": "forces the type of the rendered resource",
         "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#1221-strings"
       },
       {
         "name": "wcmmode",
-        "type": ["String"],
+        "type": [
+          "String"
+        ],
         "description": "changes the WCM mode",
         "link": "https://experienceleague.adobe.com/docs/experience-manager-htl/using/htl/block-statements.html?lang=en#resource"
       },
       {
         "name": "decorationTagName",
-        "type": ["String"],
+        "type": [
+          "String"
+        ],
         "description": "wraps included resources with tag",
         "link": "https://experienceleague.adobe.com/docs/experience-manager-htl/using/htl/block-statements.html?lang=en#resource"
       },
       {
         "name": "cssClassName",
-        "type": ["String"],
+        "type": [
+          "String"
+        ],
         "description": "adds CSS class to the element",
         "link": "https://experienceleague.adobe.com/docs/experience-manager-htl/using/htl/block-statements.html?lang=en#resource"
       }
@@ -265,7 +285,7 @@
     "element": "shown if expression evaluates to false.",
     "elementContent": "always shown.",
     "scope": "The identifier set by the <strong>data-sly-unwrap</strong> block element is global to the script and can be used anywhere after its declaration.",
-    "link": "https://github.com/adobe/htl-spec/blob/1.4/SPECIFICATION.md#2211-unwrap",
+    "link": "https://github.com/adobe/htl-spec/blob/master/SPECIFICATION.md#2211-unwrap",
     "attributeValue": {
       "required": "false",
       "description": "An expression evaluated as Boolean; defaults to true if the value is omitted."

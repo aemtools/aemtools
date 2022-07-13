@@ -5,6 +5,7 @@ import com.aemtools.common.util.findParentByType
 import com.aemtools.completion.htl.CompletionPriority.RESOURCE_TYPE
 import com.aemtools.completion.model.htl.HtlOption
 import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
+import com.aemtools.lang.util.getHtlVersion
 import com.aemtools.service.repository.inmemory.HtlAttributesRepository
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
@@ -27,10 +28,11 @@ object HtlDataSlyResourceOptionCompletionProvider : CompletionProvider<Completio
     val names = hel.getOptions().map { it.name() }
         .filterNot { it == "" }
 
-    val dataSlyResourceOptions = HtlAttributesRepository.getAttributesData()
+    val htlVersion = currentPosition.project.getHtlVersion()
+    val dataSlyResourceOptions = HtlAttributesRepository.getAttributesData(htlVersion)
         .filter { it.name == const.htl.DATA_SLY_RESOURCE }
         .flatMap { it.options ?: listOf() }
-    val options = dataSlyResourceOptions + HtlAttributesRepository.getHtlOptions()
+    val options = dataSlyResourceOptions + HtlAttributesRepository.getHtlOptions(htlVersion)
 
     val completionVariants = options
         .filterNot { names.contains(it.name) }

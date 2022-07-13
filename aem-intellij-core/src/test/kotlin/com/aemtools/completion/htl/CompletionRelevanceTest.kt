@@ -2,6 +2,7 @@ package com.aemtools.completion.htl
 
 import com.aemtools.common.constant.const.JCR_ROOT
 import com.aemtools.common.constant.const.java.SLING_MODEL
+import com.aemtools.lang.settings.model.HtlVersion
 import com.aemtools.test.BaseVariantsCheckContributorTest.Companion.DEFAULT_CONTEXT_OBJECTS
 import com.aemtools.test.base.model.fixture.ITestFixture
 import com.aemtools.test.completion.CompletionBaseLightTest
@@ -110,6 +111,38 @@ class CompletionRelevanceTest : CompletionBaseLightTest(true) {
         """)
     shouldContain(listOf(
         "bean",
+        *DEFAULT_CONTEXT_OBJECTS.toTypedArray()
+    ))
+  }
+
+  fun `test variable completion in HTL 1_4`() = completionTest {
+    myFixture.setHtlVersion(HtlVersion.V_1_4)
+    addHtml("test.html", """
+        <div data-sly-use.bean=""></div>
+        <div data-sly-test.test=""></div>
+        <div data-sly-set.set=""></div>
+        <div data-sly-list.list=""></div>
+        <div data-sly-repeat.repeat=""></div>
+        $DOLLAR{$CARET}
+    """)
+    shouldContain(listOf(
+        "bean", "test",  "set",
+        *DEFAULT_CONTEXT_OBJECTS.toTypedArray()
+    ))
+  }
+
+  fun `test variable completion in HTL 1_3`() = completionTest {
+    myFixture.setHtlVersion(HtlVersion.V_1_3)
+    addHtml("test.html", """
+        <div data-sly-use.bean=""></div>
+        <div data-sly-test.test=""></div>
+        <div data-sly-set.set=""></div>
+        <div data-sly-list.list=""></div>
+        <div data-sly-repeat.repeat=""></div>
+        $DOLLAR{$CARET}
+    """)
+    shouldContain(listOf(
+        "bean", "test",
         *DEFAULT_CONTEXT_OBJECTS.toTypedArray()
     ))
   }

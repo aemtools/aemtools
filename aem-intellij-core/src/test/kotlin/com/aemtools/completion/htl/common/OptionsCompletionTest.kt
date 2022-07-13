@@ -8,7 +8,7 @@ import com.aemtools.test.completion.CompletionBaseLightTest
 /**
  * @author Dmytro Primshyts
  */
-class OptionsCompletionTest : CompletionBaseLightTest(true) {
+abstract class OptionsCompletionTest : CompletionBaseLightTest(true) {
 
   fun testOptionsContextValues() = completionTest {
     addHtml("test.html", """
@@ -64,13 +64,6 @@ class OptionsCompletionTest : CompletionBaseLightTest(true) {
     shouldContain(DEFAULT_CONTEXT_OBJECTS)
   }
 
-  fun testOptionsWithinDataSlyResourceShouldHaveResourceTypeAsFirstOption() = completionTest {
-    addHtml("test.html", """
-            <div data-sly-resource='$DOLLAR{@ $CARET}'></div>
-        """)
-    shouldContain(listOf("resourceType", "wcmmode", "decorationTagName", "cssClassName") + CONTEXT_PARAMETERS)
-  }
-
   fun testOptionsResourceTypeVariants() = completionTest {
     addHtml("/jcr_root/apps/components/component/test.html", """
             <div data-sly-resource='$DOLLAR{@ resourceType="$CARET"}'></div>
@@ -105,34 +98,6 @@ class OptionsCompletionTest : CompletionBaseLightTest(true) {
     shouldNotContain(
         "/apps/myapp/components/comp1"
     )
-  }
-
-  fun testDataSlyListOptions() = completionTest {
-    addHtml("test.html", """
-            <div data-sly-list='$DOLLAR{@ $CARET}'></div>
-        """)
-    shouldContain(listOf("begin", "step", "end"))
-  }
-
-  fun testDataSlyListOptionsFilterOutExisted() = completionTest {
-    addHtml("test.html", """
-            <div data-sly-list='$DOLLAR{@ step=1, $CARET}'></div>
-        """)
-    shouldContain(listOf("begin", "end"))
-  }
-
-  fun testDataSlyRepeatOptions() = completionTest {
-    addHtml("test.html", """
-            <div data-sly-list='$DOLLAR{@ $CARET}'></div>
-        """)
-    shouldContain(listOf("begin", "step", "end"))
-  }
-
-  fun testDataSlyRepeatOptionsFilterOutExisted() = completionTest {
-    addHtml("test.html", """
-            <div data-sly-list='$DOLLAR{@ begin=0, $CARET}'></div>
-        """)
-    shouldContain(listOf("step", "end"))
   }
 
 }

@@ -5,6 +5,7 @@ import com.aemtools.completion.model.htl.HtlAttributeMetaInfo
 import com.aemtools.completion.model.htl.HtlAttributeValueDescription
 import com.aemtools.completion.model.htl.HtlOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.htlAttribute
+import com.aemtools.lang.util.getHtlVersion
 import com.aemtools.lang.util.htlAttributeName
 import com.aemtools.service.ServiceFacade
 import com.intellij.lang.documentation.AbstractDocumentationProvider
@@ -25,7 +26,7 @@ class HtlAttributesDocumentationProvider : AbstractDocumentationProvider() {
           ?: return super.generateDoc(element, originalElement)
 
       return ServiceFacade.getHtlAttributesRepository()
-          .getAttributesData()
+          .getAttributesData(originalElement.project.getHtlVersion())
           .find { it.name == name }
           .let {
             if (it == null) {

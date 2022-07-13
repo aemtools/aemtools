@@ -7,7 +7,7 @@ import org.intellij.lang.annotations.Language
 /**
  * @author Dmytro Primshyts
  */
-class HtlElDocumentationOptionTest
+abstract class HtlElDocumentationOptionTest
   : BaseDocumentationTest(HtlELDocumentationProvider()) {
 
   fun testDocForOptionNameContext() = docCase {
@@ -176,70 +176,16 @@ class HtlElDocumentationOptionTest
     documentation("""forces the type of the rendered resource""")
   }
 
-  fun testDataSlyResourceWcmModeOption() = docCase {
-    dataSlyResourceOption("wcmmode")
-
-    documentation("""changes the WCM mode""")
-  }
-
-  fun testDataSlyResourceDecorationTagNameOption() = docCase {
-    dataSlyResourceOption("decorationTagName")
-
-    documentation("""wraps included resources with tag""")
-  }
-
-  fun testDataSlyResourceCssClassNameOption() = docCase {
-    dataSlyResourceOption("cssClassName")
-
-    documentation("""adds CSS class to the element""")
-  }
-
-  fun testDataSlyListBeginOption() = docCase {
-    dataSlyListOption("begin")
-
-    documentation("""iteration begins at the item located at the specified index; first item of the collection has index 0""")
-  }
-
-  fun testDataSlyListStepOption() = docCase {
-    dataSlyListOption("step")
-
-    documentation("""iteration will only process every step items of the collection, starting with the first one""")
-  }
-
-  fun testDataSlyListEndOption() = docCase {
-    dataSlyListOption("end")
-
-    documentation("""iteration ends at the item located at the specified index (inclusive)""")
-  }
-
-  fun testDataSlyRepeatBeginOption() = docCase {
-    dataSlyRepeatOption("begin")
-
-    documentation("""iteration begins at the item located at the specified index; first item of the collection has index 0""")
-  }
-
-  fun testDataSlyRepeatStepOption() = docCase {
-    dataSlyRepeatOption("step")
-
-    documentation("""iteration will only process every step items of the collection, starting with the first one""")
-  }
-
-  fun testDataSlyRepeatEndOption() = docCase {
-    dataSlyRepeatOption("end")
-
-    documentation("""iteration ends at the item located at the specified index (inclusive)""")
-  }
-
-  private fun IDocTestFixture.dataSlyResourceOption(@Language("Htl") option: String) =
+  fun IDocTestFixture.dataSlyResourceOption(@Language("Htl") option: String) =
       this.addHtml("test.html", """<sly data-sly-resource="$DOLLAR{ @ $CARET$option}"/>""")
 
-  private fun IDocTestFixture.dataSlyListOption(@Language("Htl") option: String) =
+  fun IDocTestFixture.dataSlyListOption(@Language("Htl") option: String) =
       this.addHtml("test.html", """<sly data-sly-list="$DOLLAR{ @ $CARET$option}"/>""")
 
-  private fun IDocTestFixture.dataSlyRepeatOption(@Language("Htl") option: String) =
+  fun IDocTestFixture.dataSlyRepeatOption(@Language("Htl") option: String) =
       this.addHtml("test.html", """<sly data-sly-repeat="$DOLLAR{ @ $CARET$option}"/>""")
 
-  private fun IDocTestFixture.option(@Language("Htl") option: String) =
+  fun IDocTestFixture.option(@Language("Htl") option: String) =
       this.addHtml("test.html", "$DOLLAR{@ $CARET$option}")
 
 }

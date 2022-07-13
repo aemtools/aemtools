@@ -19,7 +19,9 @@ import com.aemtools.common.util.findParentByType
 import com.aemtools.completion.html.inserthandler.HtlExpressionInsertHandler
 import com.aemtools.completion.html.inserthandler.HtlIdentifierInsertHandler
 import com.aemtools.completion.html.inserthandler.HtlTemplateInsertHandler
+import com.aemtools.lang.settings.model.HtlVersion
 import com.aemtools.lang.util.isSlyTag
+import com.aemtools.lang.util.notSupportsHtlVersion
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -73,6 +75,9 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
     val obsoleteAttributes = ArrayList<String>()
     if (tag.isSlyTag()) {
       obsoleteAttributes.add(DATA_SLY_UNWRAP)
+    }
+    if (tag.project.notSupportsHtlVersion(HtlVersion.V_1_4)) {
+      obsoleteAttributes.add(DATA_SLY_SET)
     }
 
     obsoleteAttributes.addAll(getUniqueHtlAttributes(tag))

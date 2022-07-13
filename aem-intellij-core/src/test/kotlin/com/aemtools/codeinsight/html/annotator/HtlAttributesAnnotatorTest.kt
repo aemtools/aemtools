@@ -1,4 +1,4 @@
-package com.aemtools.lang.html.annotator
+package com.aemtools.codeinsight.html.annotator
 
 import com.aemtools.test.base.BaseLightTest
 
@@ -7,7 +7,7 @@ import com.aemtools.test.base.BaseLightTest
  *
  * @author Dmytro Primshyts
  */
-class HtlAttributesAnnotatorTest : BaseLightTest() {
+abstract class HtlAttributesAnnotatorTest : BaseLightTest() {
 
   fun testUnusedDataSlyUse() {
     myFixture.configureByText("test.html", """
@@ -19,20 +19,6 @@ class HtlAttributesAnnotatorTest : BaseLightTest() {
   fun testUnusedDataSlyTest() {
     myFixture.configureByText("test.html", """
             <div data-sly-test.<warning descr="null">test</warning>=""></div>
-        """)
-    myFixture.testHighlighting()
-  }
-
-  fun testUnusedDataSlySet() {
-    myFixture.configureByText("test.html", """
-            <div data-sly-set.<warning descr="null">test</warning>=""></div>
-        """)
-    myFixture.testHighlighting()
-  }
-
-  fun testUnusedDataSlyUnwrap() {
-    myFixture.configureByText("test.html", """
-            <div data-sly-unwrap.<warning descr="null">test</warning>=""></div>
         """)
     myFixture.testHighlighting()
   }

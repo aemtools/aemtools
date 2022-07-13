@@ -14,15 +14,17 @@ import com.intellij.psi.xml.XmlAttribute
 import com.intellij.refactoring.suggested.startOffset
 
 /**
+ * Annotates data-sly-set as supported HTL attribute in HTL 1.3.
+ *
  * @author Kostiantyn Diachenko
  */
 class DataSlySetUnsupportedAnnotator : VersionedHtlElementAnnotator(HtlVersion.V_1_4) {
   override fun annotateNotSupportedElement(element: PsiElement, holder: AnnotationHolder) {
-    if (element !is XmlAttribute || !element.isHtlAttribute()) {
+    if (element !is XmlAttribute || !element.isHtlAttribute(true)) {
       return
     }
 
-    val htlAttributeName = element.htlAttributeName() ?: return
+    val htlAttributeName = element.htlAttributeName(true) ?: return
     if (htlAttributeName == DATA_SLY_SET) {
       val textRange = with(element.nameElement.startOffset) {
         TextRange.create(this, this + htlAttributeName.length)

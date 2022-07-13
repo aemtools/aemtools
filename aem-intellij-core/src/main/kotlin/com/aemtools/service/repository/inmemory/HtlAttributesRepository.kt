@@ -3,6 +3,7 @@ package com.aemtools.service.repository.inmemory
 import com.aemtools.completion.model.htl.ContextObject
 import com.aemtools.completion.model.htl.HtlAttributeMetaInfo
 import com.aemtools.completion.model.htl.HtlOption
+import com.aemtools.lang.settings.model.HtlVersion
 import com.aemtools.service.repository.const
 import com.aemtools.service.repository.inmemory.util.readJson
 
@@ -18,9 +19,11 @@ object HtlAttributesRepository {
                              val description: String,
                              val additionalDescription: String?)
 
-  private val attributesData: List<HtlAttributeMetaInfo> = readJson(const.file.SIGHTLY_ATTRIBUTES_DOCUMENTATION)
+  private val versionedAttributesDataMap: Map<HtlVersion, List<HtlAttributeMetaInfo>> =
+      loadVersionedDocumentation(const.file.SIGHTLY_ATTRIBUTES_DOCUMENTATION_DIRECTORY)
   private val contextObjects: List<ContextObject> = readJson(const.file.CONTEXT_OBJECTS)
-  private val htlOptions: List<HtlOption> = readJson(const.file.HTL_OPTIONS)
+  private val versionedHtlOptionsMap: Map<HtlVersion, List<HtlOption>> =
+      loadVersionedDocumentation(const.file.HTL_OPTIONS_DIRECTORY)
   private val htlContextValues: List<HtlContextValue> = readJson(const.file.HTL_CONTEXT_VALUES)
 
   /**
@@ -28,7 +31,8 @@ object HtlAttributesRepository {
    *
    * @return list of htl attribute meta info objects
    */
-  fun getAttributesData(): List<HtlAttributeMetaInfo> = attributesData
+  fun getAttributesData(htlVersion: HtlVersion): List<HtlAttributeMetaInfo> =
+      versionedAttributesDataMap[htlVersion] ?: emptyList()
 
   /**
    * Getter for context objects.
@@ -42,7 +46,8 @@ object HtlAttributesRepository {
    *
    * @return list of htl option objects
    */
-  fun getHtlOptions(): List<HtlOption> = htlOptions
+  fun getHtlOptions(htlVersion: HtlVersion): List<HtlOption> =
+      versionedHtlOptionsMap[htlVersion] ?: emptyList()
 
   /**
    * Getter for htl context values.
@@ -61,4 +66,8 @@ object HtlAttributesRepository {
   fun findContextObject(name: String): ContextObject? =
       contextObjects.find { it.name == name }
 
+  private inline fun <reified T> loadVersionedDocumentation(directoryPath: String): Map<HtlVersion, List<T>> {
+    return HtlVersion.values()
+        .associateWith { readJson("$directoryPath/${it.version}.json") }
+  }
 }
