@@ -7,7 +7,7 @@ import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogPanel
 import com.intellij.ui.CollectionComboBoxModel
 import com.intellij.ui.components.JBCheckBox
-import com.intellij.ui.dsl.builder.*
+import com.intellij.ui.layout.panel
 import com.intellij.ui.layout.selected
 
 /**
@@ -18,34 +18,40 @@ class AemProjectSettingsPanel(private val currentState: AemProjectSettings) {
   private val htlVersionsModel = CollectionComboBoxModel(HtlVersion.versions(), currentState.htlVersion.version)
   private val aemVersionsModel = buildAemComboboxModel(currentState)
 
-  private lateinit var isSetHtlVersionManuallyCheckbox: Cell<JBCheckBox>
-  private lateinit var htlVersionComboBox: Cell<ComboBox<String>>
+  var aemVersion: String = currentState.aemVersion.version
+  var htlVersion: String = currentState.htlVersion.version
+
+  private lateinit var isSetHtlVersionManuallyCheckbox: JBCheckBox
+  private lateinit var htlVersionComboBox: ComboBox<String>
 
   fun getPanel(): DialogPanel = panel {
     row("AEM Version:") {
-      comboBox(aemVersionsModel)
-          .comment("Select AEM version on the current project")
+      comboBox(aemVersionsModel, ::aemVersion)
+          .comment("Select AEM version of the current project")
     }
-    group("HTL Configuration") {
+    buttonGroup {
       row {
         isSetHtlVersionManuallyCheckbox = checkBox("Set HTL versions manually")
-            .gap(RightGap.SMALL)
+            .withLeftGap()
             .comment("""
-            By default, it is set automatically based on AEM version.
-            An implementation of version 1.4 of the HTL is available in AEM 6.3 SP3 and AEM 6.4 SP1.
-          """.trimIndent())
-            .applyToComponent {
-              this.isSelected = currentState.isManuallyDefinedHtlVersion
-            }
-            .actionListener { _, component ->
-              if (!component.selected()) {
+              By default, it is set automatically based on AEM version.
+              An implementation of version 1.4 of the HTL is available in AEM 6.3 SP3 and AEM 6.4 SP1.
+            """.trimIndent())
+            .component
+
+        isSetHtlVersionManuallyCheckbox.apply {
+          this.isSelected = currentState.isManuallyDefinedHtlVersion
+        }
+            .addActionListener {
+              if (isSetHtlVersionManuallyCheckbox.isSelected) {
                 htlVersionsModel.selectedItem = currentState.htlVersion
               }
             }
       }
       row("HTL version:") {
-        htlVersionComboBox = comboBox(htlVersionsModel)
-            .enabledIf(isSetHtlVersionManuallyCheckbox.selected)
+        htlVersionComboBox = comboBox(htlVersionsModel, ::htlVersion)
+            .enableIf(isSetHtlVersionManuallyCheckbox.selected)
+            .component
       }
     }
   }
