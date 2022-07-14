@@ -16,14 +16,14 @@ class DataSlyUnwrapUnsupportedAnnotatorTest : BaseLightTest() {
 
   fun `test annotating of unsupported identifier and value of data-sly-unwrap attribute`() {
     myFixture.configureByText("test.html", """
-      <sly <info descr="null">data-sly-unwrap</info>.<error descr="Support for this option starts with HTL version 1.4. Current project version - 1.3.">var1</error>=<error descr="Support for this option starts with HTL version 1.3.">""</error>/>
+      <sly <info descr="null">data-sly-unwrap</info>.<error descr="Support for this option starts with HTL version 1.4. Current project version - 1.3.">var1</error>=<weak_warning descr="This expression has no effect in current HTL version 1.3. Support for this feature starts with HTL version 1.4.">""</weak_warning>/>
     """)
     myFixture.checkHighlighting(true, true, true)
   }
 
   fun `test annotating of unsupported identifier of data-sly-unwrap attribute`() {
     myFixture.configureByText("test.html", """
-      <sly <info descr="null">data-sly-unwrap</info>=<error descr="Support for this option starts with HTL version 1.3.">""</error>/>
+      <sly <info descr="null">data-sly-unwrap</info>=<weak_warning descr="This expression has no effect in current HTL version 1.3. Support for this feature starts with HTL version 1.4.">""</weak_warning>/>
     """)
     myFixture.checkHighlighting(true, true, true)
   }

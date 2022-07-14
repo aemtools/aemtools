@@ -1,13 +1,15 @@
 package com.aemtools.codeinsight.htl.annotator.versioning
 
-import com.aemtools.codeinsight.htl.util.notSupportedHtlFeatureAnnotationBuilder
+import com.aemtools.codeinsight.htl.intention.ChangeHtlVersionAction
 import com.aemtools.common.constant.const
 import com.aemtools.lang.htl.psi.HtlContextExpression
 import com.aemtools.lang.htl.psi.HtlVariableName
 import com.aemtools.lang.settings.model.HtlVersion
+import com.aemtools.lang.util.getHtlVersion
 import com.aemtools.lang.util.isInsideOf
 import com.aemtools.service.repository.inmemory.HtlAttributesRepository
 import com.intellij.lang.annotation.AnnotationHolder
+import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
 
 /**
@@ -25,7 +27,12 @@ class DataSlyIterableOptionsUnsupportedAnnotator : VersionedHtlElementAnnotator(
         || element.assignment?.variableName?.isBlockSpecificOption(const.htl.DATA_SLY_REPEAT) == true) {
 
       val variableNameTextRange = element.assignment?.variableName?.textRange ?: element.textRange
-      holder.notSupportedHtlFeatureAnnotationBuilder(element, getMessage(element.project), variableNameTextRange)
+      val currentHtlVersion = element.project.getHtlVersion().version
+      val message = "This option has no effect in current HTL version $currentHtlVersion. " +
+          "Support for this option starts with HTL version ${HtlVersion.V_1_4.version}."
+      holder.newAnnotation(HighlightSeverity.WEAK_WARNING, message)
+          .range(variableNameTextRange)
+          .withFix(ChangeHtlVersionAction())
           .create()
     }
   }

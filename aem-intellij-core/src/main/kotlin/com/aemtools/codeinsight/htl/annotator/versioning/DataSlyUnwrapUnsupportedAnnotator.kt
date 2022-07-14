@@ -1,14 +1,17 @@
 package com.aemtools.codeinsight.htl.annotator.versioning
 
+import com.aemtools.codeinsight.htl.intention.ChangeHtlVersionAction
 import com.aemtools.codeinsight.htl.intention.RemoveHtlIdentifierAction
 import com.aemtools.codeinsight.htl.intention.RemoveRedundantDataSlyUnwrapValueAction
 import com.aemtools.codeinsight.htl.util.notSupportedHtlFeatureAnnotationBuilder
 import com.aemtools.common.constant.const.htl.DATA_SLY_UNWRAP
 import com.aemtools.common.util.toSmartPointer
 import com.aemtools.lang.settings.model.HtlVersion
+import com.aemtools.lang.util.getHtlVersion
 import com.aemtools.lang.util.htlAttributeName
 import com.aemtools.lang.util.isHtlAttribute
 import com.intellij.lang.annotation.AnnotationHolder
+import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
@@ -26,7 +29,7 @@ class DataSlyUnwrapUnsupportedAnnotator : VersionedHtlElementAnnotator(HtlVersio
       return
     }
 
-    val htlVariableName = element.name.substringAfterLast("." ,"")
+    val htlVariableName = element.name.substringAfterLast(".", "")
     if (htlVariableName.isNotEmpty()) {
       val identifierTextRange = with(element.nameElement.textRange) {
         TextRange(this.endOffset - htlVariableName.length, this.endOffset)
@@ -38,7 +41,13 @@ class DataSlyUnwrapUnsupportedAnnotator : VersionedHtlElementAnnotator(HtlVersio
 
     if (element.valueElement != null) {
       val xmlAttributeValue = element.valueElement as PsiElement
-      holder.notSupportedHtlFeatureAnnotationBuilder(xmlAttributeValue)
+
+      val currentHtlVersion = element.project.getHtlVersion().version
+      val message = "This expression has no effect in current HTL version $currentHtlVersion. " +
+          "Support for this feature starts with HTL version ${HtlVersion.V_1_4.version}."
+      holder.newAnnotation(HighlightSeverity.WEAK_WARNING, message)
+          .range(xmlAttributeValue)
+          .withFix(ChangeHtlVersionAction())
           .withFix(RemoveRedundantDataSlyUnwrapValueAction(element.toSmartPointer()))
           .create()
     }

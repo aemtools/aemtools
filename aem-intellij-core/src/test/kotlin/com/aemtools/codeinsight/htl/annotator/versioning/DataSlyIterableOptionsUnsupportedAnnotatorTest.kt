@@ -13,7 +13,7 @@ class DataSlyIterableOptionsUnsupportedAnnotatorTest : BaseLightTest() {
   fun `test annotating of unsupported data-sly-list options`() {
     myFixture.setHtlVersion(HtlVersion.V_1_3)
     myFixture.configureByText("test.html", """
-      <div <info descr="null">data-sly-list</info>="$DOLLAR{ @ <error descr="Support for this option starts with HTL version 1.4. Current project version - 1.3.">begin</error>=''}"></div>
+      <div <info descr="null">data-sly-list</info>="$DOLLAR{ @ <weak_warning descr="This option has no effect in current HTL version 1.3. Support for this option starts with HTL version 1.4.">begin</weak_warning>=''}"></div>
     """)
     myFixture.checkHighlighting(true, true, true)
   }
@@ -21,7 +21,7 @@ class DataSlyIterableOptionsUnsupportedAnnotatorTest : BaseLightTest() {
   fun `test annotating of unsupported data-sly-repeat options`() {
     myFixture.setHtlVersion(HtlVersion.V_1_3)
     myFixture.configureByText("test.html", """
-      <div <info descr="null">data-sly-repeat</info>="$DOLLAR{ @ <error descr="Support for this option starts with HTL version 1.4. Current project version - 1.3.">step</error>=''}"></div>
+      <div <info descr="null">data-sly-repeat</info>="$DOLLAR{ @ <weak_warning descr="This option has no effect in current HTL version 1.3. Support for this option starts with HTL version 1.4.">step</weak_warning>=''}"></div>
     """)
     myFixture.checkHighlighting(true, true, true)
   }

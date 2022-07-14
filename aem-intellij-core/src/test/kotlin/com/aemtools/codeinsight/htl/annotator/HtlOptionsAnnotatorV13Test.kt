@@ -16,14 +16,14 @@ class HtlOptionsAnnotatorV13Test : HtlOptionsAnnotatorTest() {
 
   fun testUnsupportedDataSlyListOptions() {
     myFixture.configureByText("test.html", """
-      <div <info descr="null">data-sly-list</info>="$DOLLAR{ @  <error descr="Support for this option starts with HTL version 1.4. Current project version - 1.3.">begin</error>=''}"></div>
+      <div <info descr="null">data-sly-list</info>="$DOLLAR{ @  <weak_warning descr="This option has no effect in current HTL version 1.3. Support for this option starts with HTL version 1.4.">begin</weak_warning>=''}"></div>
     """)
     myFixture.checkHighlighting(true, true, true)
   }
 
   fun testUnsupportedDataSlyRepeatOptions() {
     myFixture.configureByText("test.html", """
-      <div <info descr="null">data-sly-repeat</info>="$DOLLAR{ @  <error descr="Support for this option starts with HTL version 1.4. Current project version - 1.3.">begin</error>=''}"></div>
+      <div <info descr="null">data-sly-repeat</info>="$DOLLAR{ @  <weak_warning descr="This option has no effect in current HTL version 1.3. Support for this option starts with HTL version 1.4.">begin</weak_warning>=''}"></div>
     """)
     myFixture.checkHighlighting(true, true, true)
   }

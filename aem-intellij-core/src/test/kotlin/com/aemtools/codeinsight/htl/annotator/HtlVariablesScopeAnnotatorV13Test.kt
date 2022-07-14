@@ -26,7 +26,7 @@ class HtlVariablesScopeAnnotatorV13Test : HtlVariablesScopeAnnotatorTest() {
   fun `test variable usage after declaration in the unsupported data-sly-unwrap`() {
     myFixture.configureByText("test.html", """
         <div>
-          <sly <info descr="null">data-sly-unwrap</info>.<error descr="Support for this option starts with HTL version 1.4. Current project version - 1.3.">var1</error>=<error descr="Support for this option starts with HTL version 1.3.">""</error>/>
+          <sly <info descr="null">data-sly-unwrap</info>.<error descr="Support for this option starts with HTL version 1.4. Current project version - 1.3.">var1</error>=<weak_warning descr="This expression has no effect in current HTL version 1.3. Support for this feature starts with HTL version 1.4.">""</weak_warning>/>
           $DOLLAR{<weak_warning descr="Cannot resolve symbol 'var1'">var1</weak_warning>}
         </div>
     """)

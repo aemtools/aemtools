@@ -23,7 +23,7 @@ class HtlAttributesAnnotatorV13Test: HtlAttributesAnnotatorTest() {
 
   fun testUnusedDataSlyUnwrap() {
     myFixture.configureByText("test.html", """
-      <div data-sly-unwrap.<error descr="Support for this option starts with HTL version 1.4. Current project version - 1.3.">test</error>=<error descr="Support for this option starts with HTL version 1.3.">""</error>>
+      <div data-sly-unwrap.<error descr="Support for this option starts with HTL version 1.4. Current project version - 1.3.">test</error>=<weak_warning descr="This expression has no effect in current HTL version 1.3. Support for this feature starts with HTL version 1.4.">""</weak_warning>>
       </div>
     """.trimIndent())
     myFixture.testHighlighting()
