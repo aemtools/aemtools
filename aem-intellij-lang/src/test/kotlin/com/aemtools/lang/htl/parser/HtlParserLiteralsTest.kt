@@ -9,6 +9,7 @@ class HtlParserLiteralsTest
   fun testBooleanLiteralFalse() = doTest()
   fun testBooleanLiteralTrue() = doTest()
   fun testInteger() = doTest()
+  fun testFloat() = doTest()
   fun testNullLiteral() = doTest()
 
   fun testSingleQuotedString() = doTest()

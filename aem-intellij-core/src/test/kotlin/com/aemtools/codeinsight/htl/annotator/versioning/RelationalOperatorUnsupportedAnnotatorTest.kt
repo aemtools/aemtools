@@ -38,7 +38,7 @@ class RelationalOperatorUnsupportedAnnotatorTest : BaseLightTest() {
 
   fun `test error in parser with not relational operator operand after relational operator`() {
     myFixture.configureByText("test.html", """
-       <sly <info descr="null">data-sly-test</info>.<warning descr="null">check</warning>="$DOLLAR{100 in <error descr="<relational operator operand> expected, got '100'">100</error>}"/>
+       <sly data-sly-test.<warning descr="null">check</warning>="$DOLLAR{100 <error descr="Support for this option starts with HTL version 1.4. Current project version - 1.3.">in</error> 100}"/>
     """)
     myFixture.checkHighlighting(true, false, false)
   }

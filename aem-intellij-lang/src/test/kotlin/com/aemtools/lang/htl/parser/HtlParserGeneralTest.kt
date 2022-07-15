@@ -19,12 +19,19 @@ class HtlParserGeneralTest
   fun testContextAndComplexExpression() = doTest()
   fun testContextWithMultipleAssignments() = doTest()
   fun testContextWithBothAssignmentAndNonAssignment() = doTest()
+  fun testContextAndRelationalExpression() = doTest()
+  fun testContextAndRelationalExpressionInParenthesis() = doTest()
+  fun testContextAndComplexExpressionInParenthesis() = doTest()
+  fun testContextAndComplexExpressionInParenthesis2() = doTest()
 
   fun testMultipleEl() = doTest()
 
   fun testUnclosedEl() = doTest()
   fun testEmptyEl() = doTest()
   fun testDataSlyUse() = doTest()
+
+  fun testGroupingParenthesis() = doTest()
+  fun testGroupingParenthesisInArray() = doTest()
 
   fun testCorruptedEl() = doTest()
 
@@ -33,6 +40,12 @@ class HtlParserGeneralTest
   fun testTernaryOperator() = doTest()
   fun testTernaryOperatorWithLogicalOperator() = doTest()
   fun testTernaryOperatorWithThreeElements() = doTest()
+  fun testTernaryOperatorWithRelationalOperator() = doTest()
+  fun testTernaryOperatorWithRelationalOperatorAfterColon() = doTest()
+  fun testTernaryOperatorWithRelationalOperatorAfterQuestion() = doTest()
+  fun testTernaryOperatorInArrayWithRelationalOperator() = doTest()
+  fun testTernaryOperatorInArrayWithRelationalOperatorAfterColon() = doTest()
+  fun testTernaryOperatorInArrayWithRelationalOperatorAfterQuestion() = doTest()
 
   fun testComment() = doTest()
   fun testCommentMultiline() = doTest()
