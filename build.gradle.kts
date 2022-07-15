@@ -11,6 +11,7 @@ val platformPlugins: String by extra
 val javaVersion: String by extra
 val kotlinVersion: String by extra
 val rootProjectDirectory = projectDir
+val rootProject = project
 
 plugins {
   id("java")
@@ -166,6 +167,12 @@ allprojects {
       events("standardOut", "passed", "skipped", "failed")
       showStandardStreams = true
     }
+
+    val testJavaDir = rootProject.allprojects.first {
+      it.name == "test-framework"
+    }.projectDir.absolutePath + "/src/main/resources/java"
+    logger.lifecycle("Test java directory: $testJavaDir")
+    systemProperty("test.java.dir", testJavaDir)
   }
 
   tasks.withType<Detekt>().configureEach {
