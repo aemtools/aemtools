@@ -3,6 +3,7 @@ package com.aemtools.completion.htl.provider.option
 import com.aemtools.common.util.findParentByType
 import com.aemtools.completion.model.htl.HtlOption
 import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
+import com.aemtools.lang.util.getHtlVersion
 import com.aemtools.service.repository.inmemory.HtlAttributesRepository
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
@@ -24,7 +25,7 @@ object HtlOptionCompletionProvider : CompletionProvider<CompletionParameters>() 
     val names = hel.getOptions().map { it.name() }
         .filterNot { it == "" }
 
-    val completionVariants = HtlAttributesRepository.getHtlOptions()
+    val completionVariants = HtlAttributesRepository.getHtlOptions(currentPosition.project.getHtlVersion())
         .filterNot { names.contains(it.name) }
         .map(HtlOption::toLookupElement)
 

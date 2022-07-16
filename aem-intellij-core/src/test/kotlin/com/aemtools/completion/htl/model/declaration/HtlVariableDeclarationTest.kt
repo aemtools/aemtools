@@ -1,10 +1,16 @@
 package com.aemtools.completion.htl.model.declaration
 
 import com.aemtools.codeinsight.htl.model.*
+import com.aemtools.lang.settings.AemProjectSettings
+import com.aemtools.lang.settings.model.HtlVersion
+import com.aemtools.test.junit.MockitoExtension
 import com.aemtools.test.util.mock
+import com.intellij.openapi.project.Project
 import com.intellij.psi.xml.XmlAttribute
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.Mock
 import org.mockito.Mockito.`when`
 
 /**
@@ -12,7 +18,14 @@ import org.mockito.Mockito.`when`
  *
  * @author Dmytro Primshyts
  */
+@ExtendWith(MockitoExtension::class)
 class HtlVariableDeclarationTest {
+
+  @Mock
+  lateinit var currentProject: Project
+
+  @Mock
+  lateinit var aemProjectSettings: AemProjectSettings
 
   @Test
   fun `create with non htl attribute`() {
@@ -43,8 +56,8 @@ class HtlVariableDeclarationTest {
   )
 
   @Test
-  fun `create data-sly-set`() = builderTest(
-      attribute("data-sly-set.variable", ""),
+  fun `create data-sly-set in HTL v 1_4`() = builderTest(
+      attribute("data-sly-set.variable", "", HtlVersion.V_1_4),
       ExpectedVariable(
           HtlVariableDeclaration::class.java,
           "variable",
@@ -54,14 +67,24 @@ class HtlVariableDeclarationTest {
   )
 
   @Test
-  fun `create data-sly-unwrap`() = builderTest(
-      attribute("data-sly-unwrap.condition", ""),
+  fun `not create data-sly-set in HTL v 1_3`() = builderTest(
+      attribute("data-sly-set.variable", "")
+  )
+
+  @Test
+  fun `create data-sly-unwrap in HTL v 1_4`() = builderTest(
+      attribute("data-sly-unwrap.condition", "", HtlVersion.V_1_4),
       ExpectedVariable(
           HtlVariableDeclaration::class.java,
           "condition",
           DeclarationAttributeType.DATA_SLY_UNWRAP,
           DeclarationType.VARIABLE
       )
+  )
+
+  @Test
+  fun `not create data-sly-unwrap in HTL v 1_3`() = builderTest(
+      attribute("data-sly-unwrap.condition", "")
   )
 
   @Test
@@ -163,10 +186,14 @@ class HtlVariableDeclarationTest {
       val type: DeclarationType
   )
 
-  private fun attribute(name: String, value: String = ""): XmlAttribute
-      = mock<XmlAttribute>().apply {
-    `when`(this.name).thenReturn(name)
-    `when`(this.value).thenReturn(value)
-  }
+  private fun attribute(name: String, value: String = "",
+                        sinceVersion: HtlVersion = HtlVersion.V_1_3): XmlAttribute =
+      mock<XmlAttribute>().apply {
+        `when`(this.name).thenReturn(name)
+        `when`(this.value).thenReturn(value)
+        `when`(this.project).thenReturn(currentProject)
+        `when`(currentProject.getService(AemProjectSettings::class.java)).thenReturn(aemProjectSettings)
+        `when`(aemProjectSettings.htlVersion).thenReturn(sinceVersion)
+      }
 
 }

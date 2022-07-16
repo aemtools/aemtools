@@ -1,5 +1,7 @@
 package com.aemtools.codeinsight.htl.annotator
 
+import com.aemtools.codeinsight.htl.intention.HtlWrongQuotesLiteralFixIntentionAction
+import com.aemtools.codeinsight.htl.intention.HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction
 import com.aemtools.common.util.isDoubleQuoted
 import com.aemtools.common.util.toSmartPointer
 import com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin

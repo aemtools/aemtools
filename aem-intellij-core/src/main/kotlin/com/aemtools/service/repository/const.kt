@@ -20,9 +20,9 @@ object const {
 
     val CONTEXT_OBJECTS = "$DOCUMENTATION_DIR/context-objects.json"
 
-    val SIGHTLY_ATTRIBUTES_DOCUMENTATION = "$DOCUMENTATION_DIR/htl-attributes.json"
+    val SIGHTLY_ATTRIBUTES_DOCUMENTATION_DIRECTORY = "$DOCUMENTATION_DIR/htl-attributes"
 
-    val HTL_OPTIONS = "$DOCUMENTATION_DIR/htl-options.json"
+    val HTL_OPTIONS_DIRECTORY = "$DOCUMENTATION_DIR/htl-options"
 
     val HTL_CONTEXT_VALUES = "$DOCUMENTATION_DIR/htl-context-values.json"
 

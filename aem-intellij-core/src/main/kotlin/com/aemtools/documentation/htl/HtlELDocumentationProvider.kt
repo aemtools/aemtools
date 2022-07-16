@@ -14,6 +14,8 @@ import com.aemtools.lang.htl.psi.pattern.HtlPatterns.contextOptionAssignment
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.memberAccess
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.optionName
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.resourceTypeOptionAssignment
+import com.aemtools.lang.settings.model.HtlVersion
+import com.aemtools.lang.util.getHtlVersion
 import com.aemtools.service.repository.inmemory.HtlAttributesRepository
 import com.intellij.lang.documentation.AbstractDocumentationProvider
 import com.intellij.psi.PsiElement
@@ -30,7 +32,7 @@ open class HtlELDocumentationProvider : AbstractDocumentationProvider() {
     val text = originalElement?.text ?: return super.generateDoc(element, originalElement)
     return when {
       optionName.accepts(originalElement) -> {
-        getAllHtlOptions().find {
+        getAllHtlOptions(originalElement.project.getHtlVersion()).find {
           it.name == text
         }?.let(HtlOption::description)
             ?: super.generateDoc(element, originalElement)
@@ -85,9 +87,9 @@ open class HtlELDocumentationProvider : AbstractDocumentationProvider() {
     }
   }
 
-  private fun getAllHtlOptions(): List<HtlOption> =
-      HtlAttributesRepository.getAttributesData().flatMap {
+  private fun getAllHtlOptions(htlVersion: HtlVersion): List<HtlOption> =
+      HtlAttributesRepository.getAttributesData(htlVersion).flatMap {
         it.options ?: listOf()
-      } + HtlAttributesRepository.getHtlOptions()
+      } + HtlAttributesRepository.getHtlOptions(htlVersion)
 
 }

@@ -7,6 +7,9 @@ import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.*
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
+import com.aemtools.lang.settings.AemProjectSettings
+import com.aemtools.lang.settings.model.HtlVersion
+import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.xml.XmlAttribute
@@ -149,11 +152,13 @@ fun HtlPsiBaseElement.containerAttribute(): XmlAttribute? {
  * class -> null
  * ```
  *
+ * @param ignoreVersioning flag to use language version check; *true* - to ignore language versioning
+ *
  * @receiver [XmlAttribute]
  * @return the name of Htl attribute, _null_ if current attribute is not Htl one
  */
-fun XmlAttribute.htlAttributeName(): String? {
-  if (!isHtlAttribute()) {
+fun XmlAttribute.htlAttributeName(ignoreVersioning: Boolean = false): String? {
+  if (!isHtlAttribute(ignoreVersioning)) {
     return null
   }
 
@@ -172,11 +177,13 @@ fun XmlAttribute.htlAttributeName(): String? {
  * data-sly-use -> null
  * ```
  *
+ * @param ignoreVersioning flag to use language version check; *true* - to ignore language versioning
+ *
  * @receiver [XmlAttribute]
  * @return the name of Htl variable declared in current Htl attribute
  */
-fun XmlAttribute.htlVariableName(): String? {
-  if (!isHtlDeclarationAttribute()) {
+fun XmlAttribute.htlVariableName(ignoreVersioning: Boolean = false): String? {
+  if (!isHtlDeclarationAttribute(ignoreVersioning)) {
     return null
   }
 
@@ -235,9 +242,25 @@ fun XmlAttribute.isDataSlyUse(): Boolean = this.name.startsWith("${const.htl.DAT
 /**
  * Check if current [XmlAttribute] is Htl attribute.
  *
+ * @param ignoreVersioning flag to use language version check; *true* - to ignore language versioning
+ *
  * @return __true__ if current element is Htl attribute
  */
-fun XmlAttribute.isHtlAttribute(): Boolean = this.name.isHtlAttributeName()
+fun XmlAttribute.isHtlAttribute(ignoreVersioning: Boolean = false): Boolean {
+  if (!ignoreVersioning && this.isDataSlySet() && this.project.notSupportsHtlVersion(HtlVersion.V_1_4)) {
+    return false
+  }
+  return this.name.isHtlAttributeName()
+}
+
+/**
+ * Check if current [XmlAttribute] is `data-sly-set` attribute.
+ *
+ * @receiver [XmlAttribute]
+ * @return *true* if current attribute is data-sly-set, *false* otherwise
+ */
+private fun XmlAttribute.isDataSlySet(): Boolean = this.name.startsWith("${const.htl.DATA_SLY_SET}.")
+    || this.name == const.htl.DATA_SLY_SET
 
 /**
  * Check if current element is Htl attribute which declares some variable.
@@ -250,22 +273,40 @@ fun XmlAttribute.isHtlAttribute(): Boolean = this.name.isHtlAttributeName()
  * data-sly-list -> true
  * ```
  *
+ * @param ignoreVersioning flag to use language version check; *true* - to ignore language versioning
+ *
  * @receiver [XmlAttribute]
  * @return *true* if current element declares some variable
  */
-fun XmlAttribute.isHtlDeclarationAttribute(): Boolean =
-    with(this.name) {
-      when {
-        startsWith(const.htl.DATA_SLY_USE) && length > const.htl.DATA_SLY_USE.length -> true
-        startsWith(const.htl.DATA_SLY_SET) && length > const.htl.DATA_SLY_SET.length -> true
-        startsWith(const.htl.DATA_SLY_TEST) && length > const.htl.DATA_SLY_TEST.length -> true
-        startsWith(const.htl.DATA_SLY_UNWRAP) && length > const.htl.DATA_SLY_UNWRAP.length -> true
-        startsWith(const.htl.DATA_SLY_TEMPLATE) -> true
-        startsWith(const.htl.DATA_SLY_LIST) -> true
-        startsWith(const.htl.DATA_SLY_REPEAT) -> true
-        else -> false
-      }
+fun XmlAttribute.isHtlDeclarationAttribute(ignoreVersioning: Boolean = false): Boolean {
+  val project = this.project
+  return with(this.name) {
+    when {
+      hasVariableDeclaration(const.htl.DATA_SLY_USE) -> true
+      hasVariableDeclaration(const.htl.DATA_SLY_SET)
+          && !ignoreVersioning && project.supportsHtlVersion(HtlVersion.V_1_4) -> true
+      hasVariableDeclaration(const.htl.DATA_SLY_TEST) -> true
+      hasVariableDeclaration(const.htl.DATA_SLY_UNWRAP)
+          && !ignoreVersioning && project.supportsHtlVersion(HtlVersion.V_1_4) -> true
+      startsWith(const.htl.DATA_SLY_TEMPLATE) -> true
+      startsWith(const.htl.DATA_SLY_LIST) -> true
+      startsWith(const.htl.DATA_SLY_REPEAT) -> true
+      else -> false
     }
+  }
+}
+
+/**
+ * Check if attribute is HTL attributes has declared variable.
+ *
+ * @param htlAttributeName HTL attribute name
+ *
+ * @receiver XML attribute name
+ * @return *true* if current attribute is HTL attribute and declares some variable
+ */
+private fun String.hasVariableDeclaration(htlAttributeName: String): Boolean {
+  return this.startsWith(htlAttributeName) && this.length > htlAttributeName.length
+}
 
 /**
  * Check if current attribute is "local" declaration attribute
@@ -361,3 +402,32 @@ private fun extractBeanNameFromEl(el: String): String? {
   }
   return null
 }
+
+/**
+ * Returns current project HTL version.
+ *
+ * @receiver [Project]
+ */
+fun Project.getHtlVersion(): HtlVersion = AemProjectSettings.getInstance(this).htlVersion
+
+/**
+ * Checks if the current project supports HTL version.
+ *
+ * @param version initial HTL version for support
+ *
+ * @receiver [Project]
+ * @return true if project supports version
+ */
+fun Project.supportsHtlVersion(version: HtlVersion): Boolean =
+    this.getHtlVersion().isAtLeast(version)
+
+/**
+ * Checks if the current project doesn't support HTL version.
+ *
+ * @param version initial HTL version for support
+ *
+ * @receiver [Project]
+ * @return true if project doesn't support version
+ */
+fun Project.notSupportsHtlVersion(version: HtlVersion): Boolean =
+    !this.supportsHtlVersion(version)

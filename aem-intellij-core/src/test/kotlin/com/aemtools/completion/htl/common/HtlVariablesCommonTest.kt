@@ -1,6 +1,7 @@
 package com.aemtools.completion.htl.common
 
 import com.aemtools.common.constant.const
+import com.aemtools.lang.settings.model.HtlVersion
 import com.aemtools.test.BaseVariantsCheckContributorTest.Companion.CUSTOM_MODEL_FIELDS
 import com.aemtools.test.BaseVariantsCheckContributorTest.Companion.DATA_SLY_SUITABLE_CLASSES
 import com.aemtools.test.completion.CompletionBaseLightTest
@@ -28,16 +29,34 @@ class HtlVariablesCommonTest : CompletionBaseLightTest(true),
     shouldContain(DATA_SLY_SUITABLE_CLASSES + const.CLIENTLIB_TEMPLATE)
   }
 
-  fun testDataSlySetValue() = completionTest {
+  fun `test data-sly-set value in HTL 1_3`() = completionTest {
+    myFixture.setHtlVersion(HtlVersion.V_1_3)
     addHtml("test.html", """
-      <div data-sly-set.bean="$DOLLAR{'$CARET'}"></div>
+      <div data-sly-set.bean="$DOLLAR{$CARET}"></div>
     """)
     shouldContain(emptyList())
   }
 
-  fun testDataSlyTestValue() = completionTest {
+  fun `test data-sly-set value in HTL 1_4`() = completionTest {
+    myFixture.setHtlVersion(HtlVersion.V_1_4)
     addHtml("test.html", """
-      <div data-sly-test.bean="$DOLLAR{'$CARET'}"></div>
+      <div data-sly-set.bean="$DOLLAR{$CARET}"></div>
+    """)
+    shouldContain(emptyList())
+  }
+
+  fun `test data-sly-test value in HTL v 1_3`() = completionTest {
+    myFixture.setHtlVersion(HtlVersion.V_1_3)
+    addHtml("test.html", """
+      <div data-sly-test.bean="$DOLLAR{$CARET}"></div>
+    """)
+    shouldContain(emptyList())
+  }
+
+  fun `test data-sly-test value in HTL v 1_4`() = completionTest {
+    myFixture.setHtlVersion(HtlVersion.V_1_4)
+    addHtml("test.html", """
+      <div data-sly-test.bean="$DOLLAR{$CARET}"></div>
     """)
     shouldContain(emptyList())
   }
