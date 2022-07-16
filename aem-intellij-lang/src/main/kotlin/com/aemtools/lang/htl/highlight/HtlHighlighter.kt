@@ -30,7 +30,8 @@ class HtlHighlighter : SyntaxHighlighterBase() {
     HtlTypes.INVALID_CHARACTER_ESCAPE_TOKEN,
     HtlTypes.INVALID_UNICODE_ESCAPE_TOKEN -> HtlColors.INVALID_ESCAPE_SEQUENCE
 
-    HtlTypes.INTEGER -> HtlColors.INTEGER
+    HtlTypes.INTEGER,
+    HtlTypes.FLOAT -> HtlColors.NUMBER
 
     HtlTypes.NULL_LITERAL_TOKEN -> HtlColors.NULL
 
@@ -50,7 +51,8 @@ class HtlHighlighter : SyntaxHighlighterBase() {
     HtlTypes.GTE,
     HtlTypes.LTE,
     HtlTypes.AND_AND,
-    HtlTypes.OR_OR -> HtlColors.OPERATOR
+    HtlTypes.OR_OR,
+    HtlTypes.IN -> HtlColors.OPERATOR
 
     HtlTypes.VAR_NAME -> HtlColors.IDENTIFIER
 

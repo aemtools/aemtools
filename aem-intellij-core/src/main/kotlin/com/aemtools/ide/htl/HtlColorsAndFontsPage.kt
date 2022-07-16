@@ -19,7 +19,7 @@ class HtlColorsAndFontsPage : ColorSettingsPage {
   private val previewTags: MutableMap<String, TextAttributesKey> = mutableMapOf(
       "HTL_EL_BOOLEAN" to HtlColors.BOOLEAN,
       "HTL_EL_STRING" to HtlColors.STRING,
-      "HTL_EL_INTEGER" to HtlColors.INTEGER,
+      "HTL_EL_NUMBER" to HtlColors.NUMBER,
       "HTL_El_VARIABLE" to HtlColors.VARIABLE,
       "HTL_El_AT" to HtlColors.DELIMITER,
       "HTL_EL_BRACKET" to HtlColors.BRACKET,
@@ -45,7 +45,7 @@ class HtlColorsAndFontsPage : ColorSettingsPage {
   private val attributes: Array<AttributesDescriptor> = arrayOf(
       AttributesDescriptor("Boolean", HtlColors.BOOLEAN),
       AttributesDescriptor("String", HtlColors.STRING),
-      AttributesDescriptor("Integer", HtlColors.INTEGER),
+      AttributesDescriptor("Number", HtlColors.NUMBER),
       AttributesDescriptor("Variable", HtlColors.VARIABLE),
       AttributesDescriptor("Delimiter", HtlColors.DELIMITER),
       AttributesDescriptor("Bracket", HtlColors.BRACKET),
@@ -88,7 +88,7 @@ class HtlColorsAndFontsPage : ColorSettingsPage {
 
   override fun getDemoText(): String = buildString {
     append("<div")
-    append(" <HTL_ATTRIBUTE>data-sly-use.</HTL_ATTRIBUTE><HTL_VARIABLE_DECLARATION>bean</HTL_VARIABLE_DECLARATION>")
+    append(" <HTL_ATTRIBUTE>data-sly-use.</HTL_ATTRIBUTE><HTL_VARIABLE_DECLARATION>bean</HTL_VARIABLE_DECLARATION>=")
     append("$DOLLAR{'com.test.Bean' @ <HTL_EL_OPTION>option</HTL_EL_OPTION>=true}\"")
     append(">\n")
     append("$DOLLAR{<HTL_EL_LOCAL_VARIABLE>bean</HTL_EL_LOCAL_VARIABLE>.field @ ")

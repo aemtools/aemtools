@@ -11,7 +11,7 @@ import com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributes
 object HtlColors {
   val BOOLEAN = r("HTL_EL_BOOLEAN", dc.KEYWORD)
   val STRING = r("HTL_EL_STRING", dc.STRING)
-  val INTEGER = r("HTL_EL_INTEGER", dc.NUMBER)
+  val NUMBER = r("HTL_EL_NUMBER", dc.NUMBER)
   val VARIABLE = r("HTL_EL_VARIABLE", dc.LOCAL_VARIABLE)
   val DELIMITER = r("HTL_EL_AT", dc.KEYWORD)
   val BRACKET = r("HTL_EL_BRACKET", dc.BRACKETS)

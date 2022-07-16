@@ -16,9 +16,21 @@ import com.aemtools.lang.htl.psi.HtlArrayLiteral
 import com.aemtools.lang.htl.psi.HtlExpression
 import com.aemtools.lang.htl.psi.HtlHtlEl
 import com.aemtools.lang.htl.psi.HtlStringLiteral
-import com.aemtools.lang.htl.psi.HtlTypes.*
+import com.aemtools.lang.htl.psi.HtlTypes.ACCESS_IDENTIFIER
+import com.aemtools.lang.htl.psi.HtlTypes.ARRAY_LIKE_ACCESS
+import com.aemtools.lang.htl.psi.HtlTypes.ASSIGNMENT
+import com.aemtools.lang.htl.psi.HtlTypes.ASSIGNMENT_VALUE
+import com.aemtools.lang.htl.psi.HtlTypes.CONTEXT_EXPRESSION
+import com.aemtools.lang.htl.psi.HtlTypes.EL_START
+import com.aemtools.lang.htl.psi.HtlTypes.STRING_LITERAL
+import com.aemtools.lang.htl.psi.HtlTypes.VARIABLE_NAME
+import com.aemtools.lang.htl.psi.HtlTypes.VAR_NAME
 import com.intellij.patterns.ElementPattern
-import com.intellij.patterns.PlatformPatterns.*
+import com.intellij.patterns.PlatformPatterns.and
+import com.intellij.patterns.PlatformPatterns.or
+import com.intellij.patterns.PlatformPatterns.psiElement
+import com.intellij.patterns.PlatformPatterns.psiFile
+import com.intellij.patterns.PlatformPatterns.string
 import com.intellij.patterns.PsiElementPattern
 import com.intellij.patterns.StandardPatterns
 import com.intellij.patterns.XmlPatterns.xmlAttribute
@@ -311,7 +323,7 @@ object HtlPatterns {
           psiElement().withParent(psiElement().afterLeafSkipping(
               psiElement(TokenType.WHITE_SPACE),
               psiElement(EL_START))),
-          psiElement().withAncestor(7,
+          psiElement().withAncestor(8,
               psiElement(HtlHtlEl::class.java)
                   .withChild(psiElement()
                       .withText(const.htl.options.I18N))
