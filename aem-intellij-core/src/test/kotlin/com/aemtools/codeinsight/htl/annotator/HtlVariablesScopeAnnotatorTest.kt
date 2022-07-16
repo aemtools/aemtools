@@ -177,4 +177,11 @@ abstract class HtlVariablesScopeAnnotatorTest : BaseLightTest() {
     """)
     myFixture.checkHighlighting(true, true, true)
   }
+
+  fun `test unresolved variable in the declaration attribute`() {
+    myFixture.configureByText("test.html", """
+      <div data-sly-test.<warning descr="null">var</warning>="$DOLLAR{<weak_warning descr="Cannot resolve symbol 'var'">var</weak_warning>}"></div>
+    """.trimIndent())
+    myFixture.testHighlighting()
+  }
 }

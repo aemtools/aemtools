@@ -14,11 +14,13 @@ class HtlParserLogicalOperations
   fun testNotEquals() = doTest()
 
   fun testNestedBraces() = doTest()
-  fun testMultipleOperations() = doTest()
   fun testBracedLogicalExpression() = doTest()
 
-  fun testRelationOperatorWithStringLiteral() = doTest()
-  fun testRelationOperatorWithProperty() = doTest()
-  fun testRelationOperatorWithArray() = doTest()
-  fun testRelationOperatorWithNumber() = doTest()
+  fun testRelationalOperatorWithStringLiteral() = doTest()
+  fun testRelationalOperatorWithProperty() = doTest()
+  fun testRelationalOperatorWithArray() = doTest()
+  fun testRelationalOperatorWithNumber() = doTest()
+  fun testRelationalOperatorWithExpressionAndArray() = doTest()
+  fun testRelationalOperatorWithTwoArrays() = doTest()
+  fun testRelationalOperatorWithTwoProperties() = doTest()
 }

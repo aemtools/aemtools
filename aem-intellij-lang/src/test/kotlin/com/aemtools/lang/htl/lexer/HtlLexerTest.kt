@@ -31,6 +31,9 @@ class HtlLexerTest : LexerBaseTest(), HtlTestCase {
 
   fun testTernaryOperator() = doTest()
   fun testTernaryOperatorWithLogicalOperator() = doTest()
+  fun testTernaryOperatorWithRelationalOperator() = doTest()
+  fun testTernaryOperatorWithRelationalOperatorAfterColon() = doTest()
+  fun testTernaryOperatorWithRelationalOperatorAfterQuestion() = doTest()
 
   fun testVariableAccess() = doTest()
   fun testVariableAccessWithContext() = doTest()

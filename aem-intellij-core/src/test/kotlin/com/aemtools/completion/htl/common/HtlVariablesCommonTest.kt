@@ -4,6 +4,7 @@ import com.aemtools.common.constant.const
 import com.aemtools.lang.settings.model.HtlVersion
 import com.aemtools.test.BaseVariantsCheckContributorTest.Companion.CUSTOM_MODEL_FIELDS
 import com.aemtools.test.BaseVariantsCheckContributorTest.Companion.DATA_SLY_SUITABLE_CLASSES
+import com.aemtools.test.BaseVariantsCheckContributorTest.Companion.DEFAULT_CONTEXT_OBJECTS
 import com.aemtools.test.completion.CompletionBaseLightTest
 import com.aemtools.test.fixture.TestClassesMixin
 
@@ -98,6 +99,52 @@ class HtlVariablesCommonTest : CompletionBaseLightTest(true),
       <div data-sly-use.bean="$DOLLAR{'com.aemtools.completion.htl.fixtures.classes.CustomSlingModel'
             @ opt=properties}">
         $DOLLAR{bean.$CARET}
+      </div>
+    """)
+    shouldContain(CUSTOM_MODEL_FIELDS)
+  }
+
+  fun testSecondLevelVariableDeclaredInContextExpression() = completionTest {
+    addHtml("test.html", """
+      <div data-sly-use.bean="$DOLLAR{'com.aemtools.completion.htl.fixtures.classes.CustomSlingModel' @ option='test'}">
+        $DOLLAR{ @ opt=bean.$CARET}
+      </div>
+    """)
+    shouldContain(CUSTOM_MODEL_FIELDS)
+  }
+
+  fun testSecondLevelVariableDeclaredInContextExpressionWithMinus() = completionTest {
+    addHtml("test.html", """
+      <div data-sly-use.bean="$DOLLAR{'com.aemtools.completion.htl.fixtures.classes.CustomSlingModel' @ option='test'}">
+        $DOLLAR{ @ opt=-bean.$CARET}
+      </div>
+    """)
+    shouldContain(CUSTOM_MODEL_FIELDS)
+  }
+
+  fun testSecondLevelVariableDeclaredInContextExpressionWithExclamation() = completionTest {
+    addHtml("test.html", """
+      <div data-sly-use.bean="$DOLLAR{'com.aemtools.completion.htl.fixtures.classes.CustomSlingModel' @ option='test'}">
+        $DOLLAR{ @ opt=!bean.$CARET}
+      </div>
+    """)
+    shouldContain(CUSTOM_MODEL_FIELDS)
+  }
+
+  fun testFirstLevelVariableDeclaredInContextExpressionWithMinus() = completionTest {
+    addHtml("test.html", """
+      <div data-sly-use.bean="$DOLLAR{'com.aemtools.completion.htl.fixtures.classes.CustomSlingModel'
+            @ opt=properties}">
+        $DOLLAR{ @ opt=!$CARET}
+      </div>
+    """)
+    shouldContain(DEFAULT_CONTEXT_OBJECTS + "bean")
+  }
+
+  fun testFirstLevelVariableDeclaredInContextExpressionWithExclamation() = completionTest {
+    addHtml("test.html", """
+      <div data-sly-use.bean="$DOLLAR{'com.aemtools.completion.htl.fixtures.classes.CustomSlingModel' @ option='test'}">
+        $DOLLAR{ @ opt=!bean.$CARET}
       </div>
     """)
     shouldContain(CUSTOM_MODEL_FIELDS)
