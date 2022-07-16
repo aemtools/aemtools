@@ -7,6 +7,7 @@ import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlElement
 import com.intellij.psi.xml.XmlTag
 import com.intellij.psi.xml.XmlTokenType
+import com.intellij.refactoring.suggested.endOffset
 
 /**
  * @author Dmytro Primshyts
@@ -67,10 +68,24 @@ fun PsiElement.isNotPartOf(element: XmlElement): Boolean {
   return !isPartOf(element)
 }
 
+/**
+ * Check if current [PsiElement] is used after declaration [XmlAttribute]
+ *  e.g. given: element - this, elementDeclaration - the element declaration attribute to check:
+ *
+ *  ```
+ *      <div elementDeclaration=""> <element> </div> --> true
+ *      <div elementDeclaration="" anotherDeclaration="<element>"></div> --> true
+ *      <div elementDeclaration=""></div> <element> --> true
+ *      <div elementDeclaration="<element>"></div> --> false
+ *      <element> <div elementDeclaration=""></div> --> false
+ *  ```
+ *
+ *  @return __true__ in case if current element is after declaration
+ */
 fun PsiElement.isAfterDeclaration(xmlAttribute: XmlAttribute): Boolean {
   val tag = xmlAttribute.findParentByType(XmlTag::class.java) ?: return false
   return when {
-    isPartOf(tag) -> true
-    else -> textOffset > xmlAttribute.textOffset
+    isPartOf(tag) -> isNotPartOf(xmlAttribute)
+    else -> textOffset > xmlAttribute.endOffset
   }
 }

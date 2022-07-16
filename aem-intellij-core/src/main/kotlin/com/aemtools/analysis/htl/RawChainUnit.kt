@@ -10,7 +10,7 @@ import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.util.extractHtlHel
 import com.aemtools.lang.util.extractPropertyAccess
 import com.intellij.psi.PsiElement
-import java.util.LinkedList
+import java.util.*
 
 /**
  * The call chain unit
@@ -41,7 +41,7 @@ open class RawChainUnit(
 fun PropertyAccessMixin.rawCallChain(): LinkedList<RawChainUnit> {
   var result = LinkedList<RawChainUnit>()
 
-  val myChain = LinkedList(listOf(*this.children))
+  val myChain: LinkedList<PsiElement> = LinkedList(listOf(*this.children).filterIsInstance<VariableNameMixin>())
 
   val firstElement = myChain.first() as VariableNameMixin
   val firstName = firstElement.variableName()
