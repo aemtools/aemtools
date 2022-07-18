@@ -93,7 +93,7 @@ array_expression ::= LSQRBRACKET operand (COMMA operand)+ LSQRBRACKET
 
 expression ::= statement
 
-statement ::= ternary_operation (logical_operator operand)+
+private statement ::= ternary_operation (logical_operator operand)+
     | ternary_operation
     | operation
 
@@ -164,5 +164,5 @@ context_expression ::= assignment
 
 assignment ::= variable_name SINGLE_EQ assignment_value
 
-assignment_value ::= operation
+assignment_value ::= statement
 
