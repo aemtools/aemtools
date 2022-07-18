@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [0.9.3] 
-[0.9.2]: https://github.com/aemtools/aemtools/tree/v0.9.3
+[0.9.3]: https://github.com/aemtools/aemtools/tree/v0.9.3
 ### New features
 - [HTL: Add support for 1.4 grammar](https://github.com/aemtools/aemtools/issues/173)
 - [HTL: Add versioning of HTL](https://github.com/aemtools/aemtools/issues/171)
