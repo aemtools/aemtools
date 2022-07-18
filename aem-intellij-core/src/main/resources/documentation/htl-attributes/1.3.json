@@ -1,0 +1,192 @@
+[
+  {
+    "name": "data-sly-use",
+    "general": "Exposes logic to the template",
+    "element": "always shown",
+    "link": "https://github.com/adobe/htl-spec/blob/1.3.1/SPECIFICATION.md#221-use",
+    "attributeValue": {
+      "required": "true",
+      "type": [
+        "String"
+      ],
+      "description": "the object to instantiate."
+    },
+    "attributeIdentifier": {
+      "required": "false",
+      "description": "Customised identifier name to access the instantiated logic"
+    }
+  },
+  {
+    "name": "data-sly-text",
+    "general": "Sets the content for the current element.",
+    "element": "always shown",
+    "elementContent": "replaced with evaluated result.",
+    "link": "https://github.com/adobe/htl-spec/blob/1.3.1/SPECIFICATION.md#222-text",
+    "attributeValue": {
+      "required": "true",
+      "type": [
+        "String"
+      ],
+      "description": "The element content"
+    }
+  },
+  {
+    "name": "data-sly-attribute",
+    "general": "Sets an attribute or group of attributes on the current element.",
+    "element": "always shown",
+    "elementContent": "always shown",
+    "link": "https://github.com/adobe/htl-spec/blob/1.3.1/SPECIFICATION.md#223-attribute",
+    "attributeValue": {
+      "required": "false",
+      "type": [
+        "String",
+        "Boolean",
+        "Object"
+      ],
+      "description": "<strong>String</strong> for setting attribute content, or <strong>Boolean</strong> for setting boolean attributes, or <strong>Object</strong> for setting multiple attributes; removes the attribute if the value is omitted."
+    },
+    "attributeIdentifier": {
+      "required": "false",
+      "description": "the attribute name; must be omitted only if attribute value is an <strong>Object</strong>"
+    }
+  },
+  {
+    "name": "data-sly-element",
+    "general": "Replaces the element's tag name",
+    "element": "always shown",
+    "elementContent": "always shown",
+    "link": "https://github.com/adobe/htl-spec/blob/1.3.1/SPECIFICATION.md#224-element",
+    "attributeValue": {
+      "required": "true",
+      "type": [
+        "String"
+      ],
+      "description": "The element's tag name."
+    }
+  },
+  {
+    "name": "data-sly-test",
+    "general": "Keeps, or removes the element depending on the attribute value.",
+    "element": "shown if test evaluates to <strong>true</strong>.",
+    "elementContent": "shown if test evaluates to <strong>true</strong>.",
+    "link": "https://github.com/adobe/htl-spec/blob/1.3.1/SPECIFICATION.md#225-test",
+    "attributeValue": {
+      "required": "false",
+      "type": [
+        "Boolean"
+      ],
+      "description": "The attribute is evaluated as <strong>Boolean</strong> (but not type-casted to <strong>Boolean</strong> when exposed in a variable). Evaluates to <strong>false</strong> if the value is omitted."
+    },
+    "attributeIdentifier": {
+      "required": "false",
+      "description": "Identifier name to access the result of the test."
+    }
+  },
+  {
+    "name": "data-sly-list",
+    "general": "Iterates over the content of each item in the attribute value.",
+    "element": "shown only if the number of items from the attribute value is greater than 0, or if the attribute value is a string or number.",
+    "elementContent": "repeated as many times as there are items in the attribute value.",
+    "link": "https://github.com/adobe/htl-spec/blob/1.3.1/SPECIFICATION.md#226-list",
+    "attributeValue": {
+      "required": "false",
+      "type": [
+        "Iterable"
+      ],
+      "description": "If omitted the content will not be shown."
+    },
+    "attributeIdentifier": {
+      "required": "false",
+      "description": "Customised identifier name to access the item within the list element."
+    }
+  },
+  {
+    "name": "data-sly-repeat",
+    "general": "Iterates over the content of each item in the attribute value and displays the containing element as many times as items in the attribute value.",
+    "element": "shown only if the number of items from the attribute value is greater than 0, or if the attribute value is a string or number.",
+    "elementContent": "repeated as many times as there are items in the attribute value.",
+    "link": "https://github.com/adobe/htl-spec/blob/1.3.1/SPECIFICATION.md#227-repeat",
+    "attributeValue": {
+      "required": "false",
+      "type": [
+        "Iterable"
+      ],
+      "description": "If omitted the content will not be shown."
+    },
+    "attributeIdentifier": {
+      "required": "false",
+      "description": "Customised identifier name to access the item within the list element."
+    }
+  },
+  {
+    "name": "data-sly-include",
+    "general": "Includes the output of rendering script run with the current context.",
+    "element": "always shown",
+    "elementContent": "replaced with the content of the included script.",
+    "link": "https://github.com/adobe/htl-spec/blob/1.3.1/SPECIFICATION.md#228-include",
+    "attributeValue": {
+      "required": "true",
+      "type": [
+        "String"
+      ],
+      "description": "The file to include."
+    }
+  },
+  {
+    "name": "data-sly-resource",
+    "general": "Includes a rendered resource.",
+    "element": "always shown.",
+    "elementContent": "replaced with the content of the resource.",
+    "link": "https://github.com/adobe/htl-spec/blob/1.3.1/SPECIFICATION.md#229-resource",
+    "attributeValue": {
+      "required": "true",
+      "type": [
+        "String"
+      ],
+      "description": "The path to include."
+    },
+    "options": [
+      {
+        "name": "resourceType",
+        "type": [
+          "String"
+        ],
+        "description": "forces the type of the rendered resource",
+        "link": "https://github.com/Adobe-Marketing-Cloud/htl-spec/blob/master/SPECIFICATION.md#1221-strings"
+      }
+    ]
+  },
+  {
+    "name": "data-sly-template",
+    "general": "Declares an HTML block, naming it with an identifier and defining the parameters it can get.",
+    "element": "never shown.",
+    "elementContent": "shown upon calling the template with <strong>data-sly-call</strong>.",
+    "link": "https://github.com/adobe/htl-spec/blob/1.3.1/SPECIFICATION.md#22101-template",
+    "attributeValue": {
+      "required": "false",
+      "description": "An expression with only options, defining the parameters it can get."
+    },
+    "attributeIdentifier": {
+      "required": "true",
+      "description": "The template identifier to declare."
+    }
+  },
+  {
+    "name": "data-sly-call",
+    "general": "Calls a declared HTML block, passing parameters to it.",
+    "element": "always shown.",
+    "elementContent": "replaced with the content of the called <strong>data-sly-template</strong> element.",
+    "link": "https://github.com/adobe/htl-spec/blob/1.3.1/SPECIFICATION.md#22102-call",
+    "attributeValue": {
+      "required": "false",
+      "description": "An expression defining the template identifier and the parameters to pass."
+    }
+  },
+  {
+    "name": "data-sly-unwrap",
+    "general": "Removes containing tag.",
+    "element": "never shown.",
+    "elementContent": "always shown.",
+    "link": "https://github.com/adobe/htl-spec/blob/1.3.1/SPECIFICATION.md#2211-unwrap"
+  }
+]

@@ -1,23 +1,16 @@
 package com.aemtools.completion.htl
 
 import com.aemtools.common.completion.BaseCompletionContributor
-import com.aemtools.completion.htl.provider.HtlDataSlyUseCompletionProvider
-import com.aemtools.completion.htl.provider.HtlElDataSlyCallVariableCompletionProvider
-import com.aemtools.completion.htl.provider.HtlElMemberAccessCompletionProvider
-import com.aemtools.completion.htl.provider.HtlElVariableNameCompletionProvider
-import com.aemtools.completion.htl.provider.HtlI18NKeyCompletionProvider
-import com.aemtools.completion.htl.provider.HtlListSmartCompletionProvider
-import com.aemtools.completion.htl.provider.option.HtlClientLibraryTemplateCategoryCompletionProvider
-import com.aemtools.completion.htl.provider.option.HtlContextOptionAssignmentCompletionProvider
-import com.aemtools.completion.htl.provider.option.HtlDataSlyCallOptionCompletionProvider
-import com.aemtools.completion.htl.provider.option.HtlDataSlyResourceOptionCompletionProvider
-import com.aemtools.completion.htl.provider.option.HtlDataSlyTemplateOptionCompletionProvider
-import com.aemtools.completion.htl.provider.option.HtlOptionCompletionProvider
-import com.aemtools.completion.htl.provider.option.HtlResourceTypeOptionAssignmentCompletionProvider
+import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
+import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
+import com.aemtools.completion.htl.provider.*
+import com.aemtools.completion.htl.provider.option.*
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.categoriesOptionAssignment
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.categoriesOptionAssignmentViaArray
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.contextOptionAssignment
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyCallOption
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyListOption
+import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyRepeatOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyResourceOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyTemplateOption
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.dataSlyUseMainString
@@ -49,6 +42,10 @@ class HtlElCompletionContributor : BaseCompletionContributor({
   basic(dataSlyTemplateOption, HtlDataSlyTemplateOptionCompletionProvider)
   basic(dataSlyCallOption, HtlDataSlyCallOptionCompletionProvider)
   basic(dataSlyResourceOption, HtlDataSlyResourceOptionCompletionProvider)
+
+  basic(dataSlyListOption, HtlDataSlyIterableOptionCompletionProvider(DATA_SLY_LIST))
+  basic(dataSlyRepeatOption, HtlDataSlyIterableOptionCompletionProvider(DATA_SLY_REPEAT))
+
   basic(optionName, HtlOptionCompletionProvider)
 
   smart(or(mainVariableInsideOfDataSlyList, mainVariableInsideOfDataSlyRepeat),

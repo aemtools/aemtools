@@ -34,6 +34,7 @@ WHITE_SPACE_CHARS=[ \n\r\t\f]+
 EL_START= "${"
 
 INTEGER=[0-9]+
+FLOAT=\d+([\.]\d*)?([eE][+-]?\d+)?
 VAR_NAME=[\w\d:]+
 COMMENT_START="<!--/*"
 COMMENT_END="*/-->"
@@ -106,6 +107,7 @@ STRING_CONTENT=.
      "true"                      { return TRUE; }
      "false"                     { return FALSE; }
      "null"                      { return NULL_LITERAL_TOKEN; }
+     "in"                        { return IN; }
      {DOUBLE_QUOTED_STRING_BOUNDARY} {
         yybegin(DQ); return DOUBLE_QUOTE;
      }
@@ -113,6 +115,7 @@ STRING_CONTENT=.
         yybegin(SQ); return SINGLE_QUOTE;
      }
      {INTEGER}                   { return INTEGER; }
+     {FLOAT}                     { return FLOAT; }
      {VAR_NAME}                  { return VAR_NAME; }
 
      [^]                         { yybegin(YYINITIAL); return OUTER_LANGUAGE; }

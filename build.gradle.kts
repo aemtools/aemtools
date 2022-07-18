@@ -11,11 +11,12 @@ val platformPlugins: String by extra
 val javaVersion: String by extra
 val kotlinVersion: String by extra
 val rootProjectDirectory = projectDir
+val rootProject = project
 
 plugins {
   id("java")
   kotlin("jvm") version "1.6.10"
-  id("org.jetbrains.intellij") version "1.5.2"
+  id("org.jetbrains.intellij") version "1.7.0"
   id("org.jetbrains.changelog") version "1.3.1" apply false
   id("io.gitlab.arturbosch.detekt") version "1.19.0"
   id("org.jetbrains.kotlinx.kover") version "0.5.0"
@@ -166,6 +167,12 @@ allprojects {
       events("standardOut", "passed", "skipped", "failed")
       showStandardStreams = true
     }
+
+    val testJavaDir = rootProject.allprojects.first {
+      it.name == "test-framework"
+    }.projectDir.absolutePath + "/src/main/resources/java"
+    logger.lifecycle("Test java directory: $testJavaDir")
+    systemProperty("test.java.dir", testJavaDir)
   }
 
   tasks.withType<Detekt>().configureEach {

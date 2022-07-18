@@ -1,8 +1,11 @@
 package com.aemtools.completion.htl.provider.option
 
+import com.aemtools.common.constant.const
 import com.aemtools.common.util.findParentByType
 import com.aemtools.completion.htl.CompletionPriority.RESOURCE_TYPE
 import com.aemtools.completion.model.htl.HtlOption
+import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
+import com.aemtools.lang.util.getHtlVersion
 import com.aemtools.service.repository.inmemory.HtlAttributesRepository
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
@@ -19,21 +22,23 @@ object HtlDataSlyResourceOptionCompletionProvider : CompletionProvider<Completio
       context: ProcessingContext,
       result: CompletionResultSet) {
     val currentPosition = parameters.position
-    val hel = currentPosition.findParentByType(com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin::class.java)
+    val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
         ?: return
 
     val names = hel.getOptions().map { it.name() }
         .filterNot { it == "" }
 
-    // todo temporary solution
-    val resourceType = HtlOption("resourceType", "string", "", emptyList(), "")
-    val options = listOf(resourceType) + HtlAttributesRepository.getHtlOptions()
+    val htlVersion = currentPosition.project.getHtlVersion()
+    val dataSlyResourceOptions = HtlAttributesRepository.getAttributesData(htlVersion)
+        .filter { it.name == const.htl.DATA_SLY_RESOURCE }
+        .flatMap { it.options ?: listOf() }
+    val options = dataSlyResourceOptions + HtlAttributesRepository.getHtlOptions(htlVersion)
 
     val completionVariants = options
         .filterNot { names.contains(it.name) }
         .map(HtlOption::toLookupElement)
         .map {
-          if (it.lookupString == "resourceType") {
+          if (it.lookupString in dataSlyResourceOptions.optionNames()) {
             PrioritizedLookupElement.withPriority(it, RESOURCE_TYPE)
           } else {
             it
@@ -44,5 +49,7 @@ object HtlDataSlyResourceOptionCompletionProvider : CompletionProvider<Completio
 
     result.stopHere()
   }
+
+  private fun List<HtlOption>.optionNames() = this.map { it.name }
 
 }

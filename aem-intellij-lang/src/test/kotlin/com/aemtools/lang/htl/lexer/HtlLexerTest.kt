@@ -23,6 +23,7 @@ class HtlLexerTest : LexerBaseTest(), HtlTestCase {
   fun testComparison() = doTest()
   fun testEquality() = doTest()
   fun testGroupedBooleanExpression() = doTest()
+  fun testRelationalOperatorUsage() = doTest()
 
   fun testSimpleOption() = doTest()
   fun testMultipleOptions() = doTest()
@@ -30,6 +31,9 @@ class HtlLexerTest : LexerBaseTest(), HtlTestCase {
 
   fun testTernaryOperator() = doTest()
   fun testTernaryOperatorWithLogicalOperator() = doTest()
+  fun testTernaryOperatorWithRelationalOperator() = doTest()
+  fun testTernaryOperatorWithRelationalOperatorAfterColon() = doTest()
+  fun testTernaryOperatorWithRelationalOperatorAfterQuestion() = doTest()
 
   fun testVariableAccess() = doTest()
   fun testVariableAccessWithContext() = doTest()

@@ -16,6 +16,7 @@ The plugin is available in official JetBrains repository:
 ## Features
 1. HTL (Sightly) support
    * Syntax highlighting
+   * Versioning (supports v1.3-v1.4)
    * Code Completion 
    * Code Navigation
    * Refactoring

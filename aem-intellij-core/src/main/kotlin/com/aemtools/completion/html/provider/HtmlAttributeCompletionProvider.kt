@@ -8,6 +8,7 @@ import com.aemtools.common.constant.const.htl.DATA_SLY_ELEMENT
 import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.common.constant.const.htl.DATA_SLY_RESOURCE
+import com.aemtools.common.constant.const.htl.DATA_SLY_SET
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEXT
@@ -18,7 +19,9 @@ import com.aemtools.common.util.findParentByType
 import com.aemtools.completion.html.inserthandler.HtlExpressionInsertHandler
 import com.aemtools.completion.html.inserthandler.HtlIdentifierInsertHandler
 import com.aemtools.completion.html.inserthandler.HtlTemplateInsertHandler
+import com.aemtools.lang.settings.model.HtlVersion
 import com.aemtools.lang.util.isSlyTag
+import com.aemtools.lang.util.notSupportsHtlVersion
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -45,7 +48,8 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
       DATA_SLY_ELEMENT,
       DATA_SLY_CALL,
       DATA_SLY_RESOURCE,
-      DATA_SLY_ATTRIBUTE
+      DATA_SLY_ATTRIBUTE,
+      DATA_SLY_UNWRAP
   )
 
   override fun addCompletions(parameters: CompletionParameters,
@@ -72,6 +76,9 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
     if (tag.isSlyTag()) {
       obsoleteAttributes.add(DATA_SLY_UNWRAP)
     }
+    if (tag.project.notSupportsHtlVersion(HtlVersion.V_1_4)) {
+      obsoleteAttributes.add(DATA_SLY_SET)
+    }
 
     obsoleteAttributes.addAll(getUniqueHtlAttributes(tag))
     return vars.filter { !obsoleteAttributes.contains(it.lookupString) }
@@ -84,9 +91,8 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
       in HTL_ATTRIBUTES_WITH_EXPRESSION -> result.withInsertHandler(HtlExpressionInsertHandler())
 
       DATA_SLY_TEMPLATE -> result.withInsertHandler(HtlTemplateInsertHandler())
-      DATA_SLY_USE -> result.withInsertHandler(HtlIdentifierInsertHandler())
-
-      DATA_SLY_UNWRAP -> result
+      DATA_SLY_USE,
+      DATA_SLY_SET -> result.withInsertHandler(HtlIdentifierInsertHandler())
 
       else -> result.withInsertHandler(XmlAttributeInsertHandler())
     }

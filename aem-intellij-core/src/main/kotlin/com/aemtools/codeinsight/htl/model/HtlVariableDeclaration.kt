@@ -3,8 +3,10 @@ package com.aemtools.codeinsight.htl.model
 import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
+import com.aemtools.common.constant.const.htl.DATA_SLY_SET
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
+import com.aemtools.common.constant.const.htl.DATA_SLY_UNWRAP
 import com.aemtools.common.constant.const.htl.DATA_SLY_USE
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.index.util.extractTemplateDefinition
@@ -13,16 +15,13 @@ import com.aemtools.lang.htl.icons.HtlIcons.DATA_SLY_REPEAT_ICON
 import com.aemtools.lang.htl.icons.HtlIcons.HTL_FILE_ICON
 import com.aemtools.lang.htl.icons.HtlIcons.LIST_HELPER_ICON
 import com.aemtools.lang.htl.icons.HtlIcons.REPEAT_HELPER_ICON
+import com.aemtools.lang.htl.icons.HtlIcons.SLY_SET_VARIABLE_ICON
 import com.aemtools.lang.htl.icons.HtlIcons.SLY_TEST_VARIABLE_ICON
+import com.aemtools.lang.htl.icons.HtlIcons.SLY_UNWRAP_VARIABLE_ICON
 import com.aemtools.lang.htl.icons.HtlIcons.SLY_USE_VARIABLE_ICON
 import com.aemtools.lang.htl.icons.HtlIcons.TEMPLATE_PARAMETER_ICON
 import com.aemtools.lang.htl.psi.HtlVariableName
-import com.aemtools.lang.util.extractHtlHel
-import com.aemtools.lang.util.extractItemAndItemListNames
-import com.aemtools.lang.util.htlAttributeName
-import com.aemtools.lang.util.htlVariableName
-import com.aemtools.lang.util.isOption
-import com.aemtools.lang.util.resolveUseClass
+import com.aemtools.lang.util.*
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.psi.xml.XmlAttribute
 
@@ -70,6 +69,22 @@ open class HtlVariableDeclaration internal constructor(
         val varClass = xmlAttribute.resolveUseClass()
         result = result.withTypeText("Sly Test Variable")
             .withIcon(SLY_TEST_VARIABLE_ICON)
+        if (!varClass.isNullOrEmpty()) {
+          result = result.withTailText("($varClass)")
+        }
+      }
+      DeclarationAttributeType.DATA_SLY_SET -> {
+        val varClass = xmlAttribute.resolveUseClass()
+        result = result.withTypeText("Sly Set Variable")
+            .withIcon(SLY_SET_VARIABLE_ICON)
+        if (!varClass.isNullOrEmpty()) {
+          result = result.withTailText("($varClass)")
+        }
+      }
+      DeclarationAttributeType.DATA_SLY_UNWRAP -> {
+        val varClass = xmlAttribute.resolveUseClass()
+        result = result.withTypeText("Sly Sly Unwrap")
+            .withIcon(SLY_UNWRAP_VARIABLE_ICON)
         if (!varClass.isNullOrEmpty()) {
           result = result.withTailText("($varClass)")
         }
@@ -124,6 +139,17 @@ open class HtlVariableDeclaration internal constructor(
               )
           )
         }
+        htlAttributeName == DATA_SLY_SET
+            && htlVariableName != null -> {
+          listOf(
+              HtlVariableDeclaration(
+                  attribute,
+                  htlVariableName,
+                  DeclarationAttributeType.DATA_SLY_SET,
+                  DeclarationType.VARIABLE
+              )
+          )
+        }
         htlAttributeName == DATA_SLY_TEST
             && htlVariableName != null -> {
           listOf(
@@ -131,6 +157,17 @@ open class HtlVariableDeclaration internal constructor(
                   attribute,
                   htlVariableName,
                   DeclarationAttributeType.DATA_SLY_TEST,
+                  DeclarationType.VARIABLE
+              )
+          )
+        }
+        htlAttributeName == DATA_SLY_UNWRAP
+            && htlVariableName != null -> {
+          listOf(
+              HtlVariableDeclaration(
+                  attribute,
+                  htlVariableName,
+                  DeclarationAttributeType.DATA_SLY_UNWRAP,
                   DeclarationType.VARIABLE
               )
           )

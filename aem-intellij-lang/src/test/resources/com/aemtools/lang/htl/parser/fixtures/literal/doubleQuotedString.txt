@@ -4,7 +4,7 @@ HtlFile:doubleQuotedString.html
       PsiElement([Htl] ${)('${')
     HtlHelImpl([Htl] HEL)
       HtlExpressionImpl([Htl] EXPRESSION)
-        HtlStatementImpl([Htl] STATEMENT)
+        HtlOperationImpl([Htl] OPERATION)
           HtlOperandImpl([Htl] OPERAND)
             HtlLiteralImpl([Htl] LITERAL)
               HtlStringLiteralImpl([Htl] STRING_LITERAL)

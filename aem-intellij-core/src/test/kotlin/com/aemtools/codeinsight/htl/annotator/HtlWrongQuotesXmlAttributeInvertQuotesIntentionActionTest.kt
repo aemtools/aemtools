@@ -1,5 +1,6 @@
 package com.aemtools.codeinsight.htl.annotator
 
+import com.aemtools.codeinsight.htl.intention.HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction
 import com.aemtools.test.junit.MockitoExtension
 import com.intellij.psi.SmartPsiElementPointer
 import com.intellij.psi.xml.XmlAttribute

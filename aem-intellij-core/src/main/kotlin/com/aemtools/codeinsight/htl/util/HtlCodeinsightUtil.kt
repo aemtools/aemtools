@@ -5,6 +5,7 @@ import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
 import com.aemtools.common.util.findParentByType
 import com.aemtools.common.util.getHtmlFile
 import com.aemtools.lang.htl.psi.HtlHtlEl
+import com.aemtools.lang.htl.psi.util.isAfterDeclaration
 import com.aemtools.lang.htl.psi.util.isNotPartOf
 import com.aemtools.lang.htl.psi.util.isPartOf
 import com.aemtools.lang.htl.psi.util.isWithin
@@ -12,7 +13,6 @@ import com.aemtools.lang.util.isHtlDeclarationAttribute
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
-import java.util.ArrayList
 
 /**
  * Extract list of Htl variable declarations from current [XmlAttribute] collection.
@@ -35,10 +35,12 @@ fun List<XmlAttribute>.extractDeclarations(): List<HtlVariableDeclaration> {
 fun List<HtlVariableDeclaration>.filterForPosition(position: PsiElement): List<HtlVariableDeclaration> {
   val applicableDeclarations = this.filter {
     when (it.attributeType) {
-      DeclarationAttributeType.DATA_SLY_USE ->
-        true
-      DeclarationAttributeType.DATA_SLY_TEST ->
-        true
+      DeclarationAttributeType.DATA_SLY_USE,
+      DeclarationAttributeType.DATA_SLY_TEST,
+      DeclarationAttributeType.DATA_SLY_UNWRAP,
+      DeclarationAttributeType.DATA_SLY_SET -> {
+        position.isAfterDeclaration(it.xmlAttribute)
+      }
       DeclarationAttributeType.DATA_SLY_LIST,
       DeclarationAttributeType.LIST_HELPER -> {
         val tag = it.xmlAttribute.findParentByType(XmlTag::class.java) ?: return@filter false

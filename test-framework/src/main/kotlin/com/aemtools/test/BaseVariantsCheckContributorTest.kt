@@ -1,17 +1,17 @@
 package com.aemtools.test
 
+import com.aemtools.lang.settings.model.HtlVersion
+import com.aemtools.test.fixture.HtlVersioningFixtureMixin
 import com.aemtools.test.fixture.JdkProjectDescriptor
 import com.aemtools.test.fixture.TestClassesMixin
 import com.aemtools.test.fixture.UberJarFixtureMixin
 import com.intellij.codeInsight.completion.LightFixtureCompletionTestCase
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.openapi.roots.LanguageLevelProjectExtension
-import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess
 import com.intellij.pom.java.LanguageLevel
 import com.intellij.testFramework.LightProjectDescriptor
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 import org.assertj.core.api.Assertions.assertThat
-import java.io.File
 
 /**
  * @author Dmytro Primshyts.
@@ -19,6 +19,7 @@ import java.io.File
 abstract class BaseVariantsCheckContributorTest(val dataPath: String)
   : LightFixtureCompletionTestCase(),
     HtlTestCase,
+    HtlVersioningFixtureMixin,
     TestClassesMixin,
     UberJarFixtureMixin {
 
@@ -182,6 +183,7 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
     //VfsRootAccess.allowRootAccess(myFixture.projectDisposable, File("src/test").absolutePath)
     myFixture.addUberJar()
     myFixture.addClasses()
+    myFixture.setHtlVersion(HtlVersion.V_1_4)
   }
 
   override fun tearDown() {

@@ -7,7 +7,7 @@ import org.intellij.lang.annotations.Language
 /**
  * @author Dmytro Primshyts
  */
-class HtlElDocumentationOptionTest
+abstract class HtlElDocumentationOptionTest
   : BaseDocumentationTest(HtlELDocumentationProvider()) {
 
   fun testDocForOptionNameContext() = docCase {
@@ -170,7 +170,22 @@ class HtlElDocumentationOptionTest
         """)
   }
 
-  private fun IDocTestFixture.option(@Language("Htl") option: String) =
+  fun testDataSlyResourceResourceTypeOption() = docCase {
+    dataSlyResourceOption("resourceType")
+
+    documentation("""forces the type of the rendered resource""")
+  }
+
+  fun IDocTestFixture.dataSlyResourceOption(@Language("Htl") option: String) =
+      this.addHtml("test.html", """<sly data-sly-resource="$DOLLAR{ @ $CARET$option}"/>""")
+
+  fun IDocTestFixture.dataSlyListOption(@Language("Htl") option: String) =
+      this.addHtml("test.html", """<sly data-sly-list="$DOLLAR{ @ $CARET$option}"/>""")
+
+  fun IDocTestFixture.dataSlyRepeatOption(@Language("Htl") option: String) =
+      this.addHtml("test.html", """<sly data-sly-repeat="$DOLLAR{ @ $CARET$option}"/>""")
+
+  fun IDocTestFixture.option(@Language("Htl") option: String) =
       this.addHtml("test.html", "$DOLLAR{@ $CARET$option}")
 
 }

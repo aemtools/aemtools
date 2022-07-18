@@ -32,7 +32,7 @@
             <option name="FOREGROUND" value="0" />
         </value>
     </option>
-    <option name="HTL_EL_INTEGER">
+    <option name="HTL_EL_NUMBER">
         <value>
             <option name="FOREGROUND" value="ff" />
         </value>

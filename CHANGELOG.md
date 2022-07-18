@@ -1,7 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [0.9.2]
+## [0.9.3] 
+[0.9.2]: https://github.com/aemtools/aemtools/tree/v0.9.3
+### New features
+- [HTL: Add support for 1.4 grammar](https://github.com/aemtools/aemtools/issues/173)
+- [HTL: Add versioning of HTL](https://github.com/aemtools/aemtools/issues/171)
+
+### Bug fixes
+- [IDE: Mark directory as HTL root doesn't work](https://github.com/aemtools/aemtools/issues/214)
+- [Fixed unary operator recognition in the EL context option expression](https://github.com/aemtools/aemtools/issues/218)
+- [Fixed error with annotating variable in the declaration](https://github.com/aemtools/aemtools/issues/181)
+
+## [0.9.2] - 2022-07-04
 [0.9.2]: https://github.com/aemtools/aemtools/tree/v0.9.2
 ### New features
 - [IDE: resolve OSGi configs for declarative services (OSGi R6-R7 annotations)](https://github.com/aemtools/aemtools/issues/84)

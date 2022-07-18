@@ -160,7 +160,7 @@
         <customPropertyScopeProvider implementation="com.aemtools.findusages.HtlPropertyScopeProvider"/>
 
         <annotator language="HTML"
-                   implementationClass="com.aemtools.lang.html.annotation.HtlAttributesAnnotator"/>
+                   implementationClass="com.aemtools.codeinsight.html.annotator.HtlAttributesAnnotator"/>
 
         <annotator language="Htl"
                    implementationClass="com.aemtools.codeinsight.htl.annotator.HtlVariablesAnnotator"/>
@@ -170,6 +170,18 @@
 
         <annotator language="Htl"
                    implementationClass="com.aemtools.codeinsight.htl.annotator.HtlWrongQuotesAnnotator"/>
+
+        <annotator language="Htl"
+                   implementationClass="com.aemtools.codeinsight.htl.annotator.versioning.DataSlyIterableOptionsUnsupportedAnnotator"/>
+
+        <annotator language="Htl"
+                   implementationClass="com.aemtools.codeinsight.htl.annotator.versioning.RelationalOperatorUnsupportedAnnotator"/>
+
+        <annotator language="XML"
+                   implementationClass="com.aemtools.codeinsight.htl.annotator.versioning.DataSlySetUnsupportedAnnotator"/>
+
+        <annotator language="XML"
+                   implementationClass="com.aemtools.codeinsight.htl.annotator.versioning.DataSlyUnwrapUnsupportedAnnotator"/>
 
         <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
                        order="before xmlTagRenameHandler"/>
@@ -196,9 +208,14 @@
         <lang.psiStructureViewFactory language="Htl"
                                       implementationClass="com.aemtools.ide.HtlStructureViewProvider"/>
 
-        <projectService
-                serviceInterface="com.aemtools.lang.settings.HtlRootDirectories"
-                serviceImplementation="com.aemtools.lang.settings.HtlRootDirectories"/>
+        <projectService serviceImplementation="com.aemtools.lang.settings.HtlRootDirectories"/>
+
+        <projectService serviceImplementation="com.aemtools.lang.settings.AemProjectSettings"/>
+
+        <projectConfigurable id="language.AemProjectSettings"
+                             parentId="language"
+                             instance="com.aemtools.lang.settings.ui.AemProjectSettingsConfigurable"/>
+        <postStartupActivity implementation="com.aemtools.lang.settings.init.VersionsDiscoveringStartupActivity"/>
 
         <projectService
                 serviceInterface="com.aemtools.inspection.service.IInspectionService"

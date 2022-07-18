@@ -6,8 +6,10 @@ import com.aemtools.common.constant.const.htl.DATA_SLY_INCLUDE
 import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
 import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
 import com.aemtools.common.constant.const.htl.DATA_SLY_RESOURCE
+import com.aemtools.common.constant.const.htl.DATA_SLY_SET
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEMPLATE
 import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
+import com.aemtools.common.constant.const.htl.DATA_SLY_UNWRAP
 import com.aemtools.common.constant.const.htl.DATA_SLY_USE
 import com.aemtools.common.constant.const.htl.HTL_ATTRIBUTES
 import com.aemtools.lang.htl.psi.HtlArrayLiteral
@@ -94,6 +96,26 @@ object HtlPatterns {
    */
   val dataSlyResourceOption: ElementPattern<PsiElement> =
       optionInsideAttribute(DATA_SLY_RESOURCE)
+
+  /**
+   * Matches option inside of data-sly-list , e.g.:
+   *
+   * ```
+   *  <div data-sly-list="${@ <caret>}"
+   * ```
+   */
+  val dataSlyListOption: ElementPattern<PsiElement> =
+      optionInsideAttribute(DATA_SLY_LIST)
+
+  /**
+   * Matches option inside of data-sly-repeat, e.g.:
+   *
+   * ```
+   *  <div data-sly-repeat="${@ <caret>}"
+   * ```
+   */
+  val dataSlyRepeatOption: ElementPattern<PsiElement> =
+      optionInsideAttribute(DATA_SLY_REPEAT)
 
   /**
    * Matches the following:
@@ -225,7 +247,9 @@ object HtlPatterns {
           or(
               string().oneOfIgnoreCase(*HTL_ATTRIBUTES.toTypedArray()),
               string().startsWith("$DATA_SLY_USE."),
+              string().startsWith("$DATA_SLY_SET."),
               string().startsWith("$DATA_SLY_TEST."),
+              string().startsWith("$DATA_SLY_UNWRAP."),
               string().startsWith("$DATA_SLY_LIST."),
               string().startsWith("$DATA_SLY_REPEAT."),
               string().startsWith("$DATA_SLY_TEMPLATE.")
@@ -299,7 +323,7 @@ object HtlPatterns {
           psiElement().withParent(psiElement().afterLeafSkipping(
               psiElement(TokenType.WHITE_SPACE),
               psiElement(EL_START))),
-          psiElement().withAncestor(7,
+          psiElement().withAncestor(8,
               psiElement(HtlHtlEl::class.java)
                   .withChild(psiElement()
                       .withText(const.htl.options.I18N))

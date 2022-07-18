@@ -8,7 +8,7 @@ import com.aemtools.test.completion.CompletionBaseLightTest
 /**
  * @author Dmytro Primshyts
  */
-class OptionsCompletionTest : CompletionBaseLightTest(true) {
+abstract class OptionsCompletionTest : CompletionBaseLightTest(true) {
 
   fun testOptionsContextValues() = completionTest {
     addHtml("test.html", """
@@ -62,13 +62,6 @@ class OptionsCompletionTest : CompletionBaseLightTest(true) {
             $DOLLAR{@ option=$CARET}
         """)
     shouldContain(DEFAULT_CONTEXT_OBJECTS)
-  }
-
-  fun testOptionsWithinDataSlyResourceShouldHaveResourceTypeAsFirstOption() = completionTest {
-    addHtml("test.html", """
-            <div data-sly-resource='$DOLLAR{@ $CARET}'></div>
-        """)
-    shouldContain(listOf("resourceType") + CONTEXT_PARAMETERS)
   }
 
   fun testOptionsResourceTypeVariants() = completionTest {
