@@ -14,7 +14,6 @@ import org.junit.Before
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
-import org.mockito.Mockito.any
 import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
@@ -77,7 +76,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into ClientLibraryFolder embed`() = testAttributeInjection {
+  fun `should inject into ClientLibraryFolder embed`() = testAttribute {
     fileName = ".content.xml"
     primaryType = "cq:ClientLibraryFolder"
     attributeName = "embed"
@@ -86,7 +85,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into ClientLibraryFolder categories`() = testAttributeInjection {
+  fun `should inject into ClientLibraryFolder categories`() = testAttribute {
     fileName = ".content.xml"
     primaryType = "cq:ClientLibraryFolder"
     attributeName = "categories"
@@ -95,7 +94,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into ClientLibraryFolder channels`() = testAttributeInjection {
+  fun `should inject into ClientLibraryFolder channels`() = testAttribute {
     fileName = ".content.xml"
     primaryType = "cq:ClientLibraryFolder"
     attributeName = "dependencies"
@@ -104,7 +103,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into ClientLibraryFolder dependencies`() = testAttributeInjection {
+  fun `should inject into ClientLibraryFolder dependencies`() = testAttribute {
     fileName = ".content.xml"
     primaryType = "cq:ClientLibraryFolder"
     attributeName = "dependencies"
@@ -113,7 +112,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into OSGi config`() = testAttributeInjection {
+  fun `should inject into OSGi config`() = testAttribute {
     fileName = ".content.xml"
     primaryType = "sling:OsgiConfig"
     attributeName = "some.key"
@@ -122,7 +121,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into OSGi config with empty value`() = testNeverAttributeInjection {
+  fun `should inject into OSGi config with empty value`() = testAttribute {
     fileName = ".content.xml"
     primaryType = "sling:OsgiConfig"
     attributeName = "some.key"
@@ -131,7 +130,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into cqComponent componentGroup`() = testAttributeInjection {
+  fun `should inject into cqComponent componentGroup`() = testAttribute {
     fileName = ".content.xml"
     primaryType = "cq:Component"
     attributeName = "componentGroup"
@@ -140,7 +139,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into cqComponent sling resourceSuperType`() = testAttributeInjection {
+  fun `should inject into cqComponent sling resourceSuperType`() = testAttribute {
     fileName = ".content.xml"
     primaryType = "cq:Component"
     attributeName = "sling:resourceSuperType"
@@ -149,7 +148,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into cqComponent cq isContainer`() = testAttributeInjection {
+  fun `should inject into cqComponent cq isContainer`() = testAttribute {
     fileName = ".content.xml"
     primaryType = "cq:Component"
     attributeName = "cq:isContainer"
@@ -158,7 +157,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into cqComponent cq noDecoration`() = testAttributeInjection {
+  fun `should inject into cqComponent cq noDecoration`() = testAttribute {
     fileName = ".content.xml"
     primaryType = "cq:Component"
     attributeName = "cq:noDecoration"
@@ -167,7 +166,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into cq EditConfig jcr_primaryType`() = testAttributeInjection {
+  fun `should inject into cq EditConfig jcr_primaryType`() = testAttribute {
     fileName = "_cq_editConfig.xml"
     primaryType = "cq:EditConfig"
     attributeName = "jcr:primaryType"
@@ -176,7 +175,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into cq EditConfig cq_actions`() = testAttributeInjection {
+  fun `should inject into cq EditConfig cq_actions`() = testAttribute {
     fileName = "_cq_editConfig.xml"
     primaryType = "cq:EditConfig"
     attributeName = "cq:actions"
@@ -185,7 +184,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into cq EditConfig cq_layout`() = testAttributeInjection {
+  fun `should inject into cq EditConfig cq_layout`() = testAttribute {
     fileName = "_cq_editConfig.xml"
     primaryType = "cq:EditConfig"
     attributeName = "cq:layout"
@@ -194,7 +193,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into cq EditConfig cq_dialogMode`() = testAttributeInjection {
+  fun `should inject into cq EditConfig cq_dialogMode`() = testAttribute {
     fileName = "_cq_editConfig.xml"
     primaryType = "cq:EditConfig"
     attributeName = "cq:dialogMode"
@@ -203,7 +202,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into cq EditConfig cq_emptyText`() = testAttributeInjection {
+  fun `should inject into cq EditConfig cq_emptyText`() = testAttribute {
     fileName = "_cq_editConfig.xml"
     primaryType = "cq:EditConfig"
     attributeName = "cq:emptyText"
@@ -212,7 +211,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into cq EditConfig cq_inherit`() = testAttributeInjection {
+  fun `should inject into cq EditConfig cq_inherit`() = testAttribute {
     fileName = "_cq_editConfig.xml"
     primaryType = "cq:EditConfig"
     attributeName = "cq:inherit"
@@ -221,7 +220,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into rep_policy jcr_primaryType`() = testAttributeInjection {
+  fun `should inject into rep_policy jcr_primaryType`() = testAttribute {
     fileName = "_rep_policy.xml"
     primaryType = ""
     attributeName = "jcr:primaryType"
@@ -230,7 +229,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into rep_policy rep_principalName`() = testAttributeInjection {
+  fun `should inject into rep_policy rep_principalName`() = testAttribute {
     fileName = "_rep_policy.xml"
     primaryType = ""
     attributeName = "rep:principalName"
@@ -239,7 +238,7 @@ class JcrPropertyInjectorTest {
   }
 
   @Test
-  fun `should inject into rep_policy rep_privileges`() = testAttributeInjection {
+  fun `should inject into rep_policy rep_privileges`() = testAttribute {
     fileName = "_rep_policy.xml"
     primaryType = ""
     attributeName = "rep:privileges"
@@ -247,7 +246,7 @@ class JcrPropertyInjectorTest {
     expectedTextRange = TextRange.create(1, 4)
   }
 
-  private fun testAttributeInjection(jcrPropertyInjectorTestParams: JcrPropertyInjectorTestParams.() -> Unit) {
+  private fun testAttribute(jcrPropertyInjectorTestParams: JcrPropertyInjectorTestParams.() -> Unit) {
     val params = JcrPropertyInjectorTestParams().apply(jcrPropertyInjectorTestParams)
     mockXmlAttributeName(params.attributeName!!)
     mockXmlAttributeValue(params.attributeValue!!)
@@ -267,22 +266,6 @@ class JcrPropertyInjectorTest {
             params.expectedTextRange!!
         )
     verify(registrar).doneInjecting()
-  }
-
-  private fun testNeverAttributeInjection(jcrPropertyInjectorTestParams: JcrPropertyInjectorTestParams.() -> Unit) {
-    val params = JcrPropertyInjectorTestParams().apply(jcrPropertyInjectorTestParams)
-    mockXmlAttributeName(params.attributeName!!)
-    mockXmlAttributeValue(params.attributeValue!!)
-    mockContainingFile(params.fileName!!)
-
-    val mockedPrimaryType = createXmlAttribute("jcr:primaryType", params.primaryType!!)
-    mockXmlTagAttributes(arrayOf(mockedPrimaryType))
-
-    tested.getLanguagesToInject(registrar, xmlAttributeValue)
-
-    verify(registrar, never()).startInjecting(JcrPropertyLanguage)
-    verify(registrar, never()).addPlace(any(), any(), any(), any(TextRange::class.java))
-    verify(registrar, never()).doneInjecting()
   }
 
   private fun mockXmlTagAttributes(mockClientLibAttributes: Array<XmlAttribute>) {

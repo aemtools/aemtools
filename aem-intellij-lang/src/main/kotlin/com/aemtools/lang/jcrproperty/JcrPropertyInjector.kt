@@ -135,15 +135,18 @@ class JcrPropertyInjector : MultiHostInjector {
       registrar: MultiHostRegistrar,
       context: PsiLanguageInjectionHost,
       attributeValue: XmlAttributeValue) {
-    if (attributeValue.text.length > 2) {
-      registrar.startInjecting(JcrPropertyLanguage)
-      registrar.addPlace(
-          null, null,
-          context,
-          TextRange.create(1, attributeValue.text.length - 1)
-      )
-      registrar.doneInjecting()
+    registrar.startInjecting(JcrPropertyLanguage)
+    val textRange = if (attributeValue.text.length > 2) {
+      TextRange.create(1, attributeValue.text.length - 1)
+    } else {
+      TextRange.create(0, 0)
     }
+    registrar.addPlace(
+        null, null,
+        context,
+        textRange
+    )
+    registrar.doneInjecting()
   }
 
 }
