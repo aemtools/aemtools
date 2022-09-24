@@ -15,14 +15,14 @@ import com.intellij.ui.layout.selected
  */
 class AemProjectSettingsPanel(private val currentState: AemProjectSettings) {
 
-  private val htlVersionsModel = CollectionComboBoxModel(HtlVersion.versions(), currentState.htlVersion.version)
-  private val aemVersionsModel = buildAemComboboxModel(currentState)
+  lateinit var isSetHtlVersionManuallyCheckbox: JBCheckBox
+  lateinit var htlVersionComboBox: ComboBox<String>
+
+  val htlVersionsModel = CollectionComboBoxModel(HtlVersion.versions(), currentState.htlVersion.version)
+  val aemVersionsModel = buildAemComboboxModel(currentState)
 
   var aemVersion: String = currentState.aemVersion.version
   var htlVersion: String = currentState.htlVersion.version
-
-  private lateinit var isSetHtlVersionManuallyCheckbox: JBCheckBox
-  private lateinit var htlVersionComboBox: ComboBox<String>
 
   fun getPanel(): DialogPanel = panel {
     row("AEM Version:") {
@@ -58,9 +58,13 @@ class AemProjectSettingsPanel(private val currentState: AemProjectSettings) {
 
   fun getPanelState(): AemProjectSettings {
     val newState = AemProjectSettings()
-    newState.aemVersion = aemVersionsModel.selected?.let { AemVersion.fromVersion(it) } ?: currentState.aemVersion
+    val selectedAemVersion = aemVersionsModel.selected ?: currentState.aemVersion.version
+    newState.aemVersion = AemVersion.fromVersion(selectedAemVersion) ?: currentState.aemVersion
+
     if (isSetHtlVersionManuallyCheckbox.selected()) {
-      newState.htlVersion = htlVersionsModel.selected?.let { HtlVersion.fromVersion(it) } ?: currentState.htlVersion
+      val selectedHtlVersion = htlVersionsModel.selected ?: currentState.htlVersion.version
+      newState.htlVersion = HtlVersion.fromVersion(selectedHtlVersion) ?: currentState.htlVersion
+
       newState.isManuallyDefinedHtlVersion = true
     } else {
       newState.htlVersion = currentState.htlVersion
