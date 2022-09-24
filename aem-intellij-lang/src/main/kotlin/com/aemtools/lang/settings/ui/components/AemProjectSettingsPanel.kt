@@ -44,7 +44,7 @@ class AemProjectSettingsPanel(private val currentState: AemProjectSettings) {
         }
             .addActionListener {
               if (isSetHtlVersionManuallyCheckbox.isSelected) {
-                htlVersionsModel.selectedItem = currentState.htlVersion
+                htlVersionsModel.selectedItem = currentState.htlVersion.version
               }
             }
       }
