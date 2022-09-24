@@ -85,7 +85,7 @@ class VersionsDiscoveringStartupActivity : StartupActivity {
 
   private fun findPomFiles(project: Project): List<XmlFile> {
     val poms = FilenameIndex.getVirtualFilesByName(project, "pom.xml", GlobalSearchScope.projectScope(project))
-    return poms.map { it.toPsiFile(project) as XmlFile }
+    return poms.mapNotNull { it.toPsiFile(project) as? XmlFile }
   }
 
   private fun setVersionsManuallyNotificationAction(project: Project): NotificationAction {
