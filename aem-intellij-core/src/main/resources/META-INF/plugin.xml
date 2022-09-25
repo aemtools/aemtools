@@ -127,6 +127,8 @@
                                  forClass="com.aemtools.lang.htl.psi.HtlPropertyAccess"/>
         <lang.elementManipulator implementationClass="com.aemtools.lang.htl.manipulator.HtlVariableNameManipulator"
                                  forClass="com.aemtools.lang.htl.psi.HtlVariableName"/>
+        <lang.elementManipulator implementationClass="com.aemtools.lang.clientlib.manipulator.CdIncludeManipulator"
+                                 forClass="com.aemtools.lang.clientlib.psi.CdInclude"/>
 
         <lang.fileViewProviderFactory language="Htl"
                                       implementationClass="com.aemtools.lang.htl.file.HtlViewProviderFactory"/>
