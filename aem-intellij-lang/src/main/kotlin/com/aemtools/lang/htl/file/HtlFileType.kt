@@ -8,7 +8,7 @@ import com.intellij.openapi.fileTypes.FileTypeEditorHighlighterProviders
 import com.intellij.openapi.fileTypes.LanguageFileType
 import com.intellij.openapi.fileTypes.TemplateLanguageFileType
 import com.intellij.openapi.fileTypes.ex.FileTypeIdentifiableByVirtualFile
-import com.intellij.openapi.project.guessProjectForContentFile
+import com.intellij.openapi.project.ProjectLocator
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.newvfs.impl.FakeVirtualFile
 import javax.swing.Icon
@@ -35,7 +35,7 @@ object HtlFileType
       return false
     }
 
-    val project = guessProjectForContentFile(file)
+    val project = ProjectLocator.getInstance().guessProjectForFile(file)
     val path = file.path
 
     return if (project == null) {
