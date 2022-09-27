@@ -28,5 +28,8 @@
                   language="JcrProperty"
                   implementationClass="com.aemtools.lang.jcrproperty.file.JpFileType"/>
 
+        <lang.elementManipulator implementationClass="com.aemtools.lang.clientlib.manipulator.CdIncludeManipulator"
+                                 forClass="com.aemtools.lang.clientlib.psi.CdInclude"/>
+
     </extensions>
 </idea-plugin>

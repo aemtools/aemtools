@@ -1,6 +1,7 @@
 package com.aemtools.index.search
 
 import com.aemtools.common.constant.const
+import com.aemtools.common.util.OpenApiUtil.findFileByRelativePath
 import com.aemtools.index.HtlTemplateIndex
 import com.aemtools.index.model.TemplateDefinition
 import com.intellij.openapi.project.Project
@@ -50,10 +51,14 @@ object HtlTemplateSearch {
         it.normalizedPath == name
       }
     } else {
-      val path = file.originalFile.containingDirectory.virtualFile.path
-      val fileName = "$path/$name"
-      templates.filter {
-        it.fullName == fileName
+      val containingDirectoryPath = file.originalFile.containingDirectory?.virtualFile?.path
+      val filePath = if (containingDirectoryPath != null) {
+        "$containingDirectoryPath/$name"
+      } else {
+        findFileByRelativePath(name, file.project) ?: return listOf()
+      }
+      return templates.filter {
+        it.fullName == filePath
       }
     }
   }

@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.9.4]
+[0.9.4]: https://github.com/aemtools/aemtools/tree/v0.9.4
+### Bug fixes
+- [Startup version discovery issue with pom.xml](https://github.com/aemtools/aemtools/issues/231)
+- [AEM Project Configuration issue with manually selected HTL version](https://github.com/aemtools/aemtools/issues/228)
+- [HTL file type recognition inside read action](https://github.com/aemtools/aemtools/issues/229)
+- [Jcr Property Injector injects wrong xml attribute value range](https://github.com/aemtools/aemtools/issues/230)
+- [HTL: template/use file searching using in-memory file object](https://github.com/aemtools/aemtools/issues/225)
+- [Client Library: cannot rename files into client library definition](https://github.com/aemtools/aemtools/issues/227)
+
 ## [0.9.3] 
 [0.9.3]: https://github.com/aemtools/aemtools/tree/v0.9.3
 ### New features

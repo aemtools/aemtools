@@ -35,7 +35,7 @@ object HtlIndexFacade {
       return null
     }
 
-    val normalizedName = normalizeName(name, psiFile)
+    val normalizedName = normalizeName(name, psiFile) ?: return null
 
     val files = FilenameIndex
         .getAllFilesByExt(psiFile.project,
@@ -62,7 +62,7 @@ object HtlIndexFacade {
       return null
     }
 
-    val normalizedName = normalizeName(name, psiFile)
+    val normalizedName = normalizeName(name, psiFile) ?: return null
 
     val files = FilenameIndex
         .getAllFilesByExt(psiFile.project,
@@ -146,11 +146,12 @@ object HtlIndexFacade {
    * @param psiFile the file in which the file inclusion is present
    * @return normalized name
    */
-  private fun normalizeName(name: String, psiFile: PsiFile): String {
+  private fun normalizeName(name: String, psiFile: PsiFile): String? {
     return if (isAbsolutePath(name)) {
       name
     } else {
-      with(psiFile.virtualFile.path) {
+      val path = psiFile.virtualFile?.path ?: return null
+      with(path) {
         substring(0, lastIndexOf('/')) + "/$name"
       }
     }
