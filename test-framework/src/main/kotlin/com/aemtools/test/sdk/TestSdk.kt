@@ -13,8 +13,7 @@ class TestSdk {
   companion object {
     private val TEST_SDK_JAVA_11: Sdk = IdeaTestUtil.createMockJdk(
         "mockedTestJava11",
-        Paths.get(System.getProperty("test.java.dir")).absolutePathString(),
-        false)
+        Paths.get(System.getProperty("test.java.dir")).absolutePathString())
 
     @JvmStatic
     fun getSdk() = TEST_SDK_JAVA_11

@@ -16,7 +16,7 @@ val rootProject = project
 plugins {
   id("java")
   kotlin("jvm") version "1.6.10"
-  id("org.jetbrains.intellij") version "1.9.0"
+  id("org.jetbrains.intellij") version "1.10.0"
   id("org.jetbrains.changelog") version "1.3.1" apply false
   id("io.gitlab.arturbosch.detekt") version "1.19.0"
   id("org.jetbrains.kotlinx.kover") version "0.5.0"
