@@ -12,6 +12,5 @@ environment:
   JAVA_OPTS: "-Xms256m -Xmx2048M -Djdk.tls.client.protocols=TLSv1.2"
   matrix:
     - ORG_GRADLE_PROJECT_ideaVersion: 2022.1
-    #- ORG_GRADLE_PROJECT_ideaVersion: LATEST-EAP-SNAPSHOT
 #cache:
 #  - C:\Users\appveyor\.gradle
