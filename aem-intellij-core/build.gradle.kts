@@ -87,7 +87,10 @@ tasks {
     }
   }
 
-  runPluginVerifier { enabled = true }
+  runPluginVerifier {
+    enabled = true
+    subsystemsToCheck.set("without-android")
+  }
   listProductsReleases { enabled = true }
   verifyPlugin { enabled = true }
 
