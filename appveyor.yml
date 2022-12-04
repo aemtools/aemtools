@@ -2,16 +2,15 @@ build:
   verbosity: detailed
 
 build_script:
-  - gradlew.bat buildPlugin --info --no-daemon
+  - gradlew.bat buildPlugin --info
 
 test_script:
-  - gradlew.bat test koverMergedHtmlReport runPluginVerifier --info --no-daemon
+  - gradlew.bat test koverMergedHtmlReport runPluginVerifier --info
 
 environment:
   JAVA_HOME: C:\Program Files\Java\jdk11
   JAVA_OPTS: "-Xms256m -Xmx2048M -Djdk.tls.client.protocols=TLSv1.2"
   matrix:
     - ORG_GRADLE_PROJECT_ideaVersion: 2022.1
-    #- ORG_GRADLE_PROJECT_ideaVersion: LATEST-EAP-SNAPSHOT
 #cache:
 #  - C:\Users\appveyor\.gradle
