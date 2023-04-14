@@ -242,6 +242,13 @@
                              id="preference.AEMTools"
                              instance="com.aemtools.integration.sync.settings.SyncSettings"/>
         -->
+
+        <dependencySupport coordinate="com.adobe.aem:uber-jar" kind="java"/>
+        <dependencySupport coordinate="org.osgi:osgi.core" kind="java"/>
+        <dependencySupport coordinate="org.osgi:org.osgi.service.metatype.annotations" kind="java"/>
+        <dependencySupport coordinate="org.osgi:org.osgi.service.component.annotations" kind="java"/>
+        <dependencySupport coordinate="org.apache.felix:org.apache.felix.scr.ant" kind="java"/>
+        <dependencySupport coordinate="org.apache.sling:org.apache.sling.models.api" kind="java"/>
     </extensions>
 
     <application-components>

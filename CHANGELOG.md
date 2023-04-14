@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.9.5]
+[0.9.5]: https://github.com/aemtools/aemtools/tree/v0.9.5
+### New features
+- Add support of 2023+ IDEA versions
+
 ## [0.9.4]
 [0.9.4]: https://github.com/aemtools/aemtools/tree/v0.9.4
 ### Bug fixes
