@@ -87,10 +87,14 @@ tasks {
     }
   }
 
-  listProductsReleases { enabled = true }
+  listProductsReleases {
+    enabled = true
+    types.set(listOf("IC"))
+  }
   runPluginVerifier {
     enabled = true
     subsystemsToCheck.set("without-android")
+    ideVersions.set(listOf("IC-2022.2.5", "IC-2022.3.3", "IC-2023.1.1"))
     dependsOn(listProductsReleases)
   }
   verifyPlugin { enabled = true }

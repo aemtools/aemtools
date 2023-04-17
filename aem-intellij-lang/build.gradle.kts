@@ -7,7 +7,7 @@ plugins {
   java
   kotlin("jvm")
   id("org.jetbrains.intellij")
-  id("org.jetbrains.grammarkit") version "2021.2.2"
+  id("org.jetbrains.grammarkit") version "2022.3.1"
 }
 
 buildscript {
@@ -39,7 +39,7 @@ tasks {
 
   task<GenerateLexerTask>("generateCdLexer") {
     group = "grammar"
-    source.set("src/main/flex/Htl.flex")
+    sourceFile.set(file(file("src/main/flex/Htl.flex")))
     targetDir.set("src/main/gen/com/aemtools/lang/htl/lexer")
     targetClass.set("_HtlLexer")
     purgeOldFiles.set(true)
@@ -47,7 +47,7 @@ tasks {
 
   task<GenerateLexerTask>("generateHtlLexer") {
     group = "grammar"
-    source.set("src/main/flex/_ClientlibDeclarationLexer.flex")
+    sourceFile.set(file("src/main/flex/_ClientlibDeclarationLexer.flex"))
     targetDir.set("src/main/gen/com/aemtools/lang/clientlib")
     targetClass.set("_ClientlibDeclarationLexer")
     purgeOldFiles.set(true)
@@ -55,7 +55,7 @@ tasks {
 
   task<GenerateLexerTask>("generateJpLexer") {
     group = "grammar"
-    source.set("src/main/flex/JcrPropertyLexer.flex")
+    sourceFile.set(file("src/main/flex/JcrPropertyLexer.flex"))
     targetDir.set("src/main/gen/com/aemtools/lang/jcrproperty")
     targetClass.set("_JcrPropertyLexer")
     purgeOldFiles.set(true)
@@ -63,7 +63,7 @@ tasks {
 
   task<GenerateLexerTask>("generateElLexer") {
     group = "grammar"
-    source.set("src/main/flex/el.flex")
+    sourceFile.set(file("src/main/flex/el.flex"))
     targetDir.set("src/main/gen/com/aemtools/lang/el")
     targetClass.set("_ElLexer")
     purgeOldFiles.set(true)
@@ -71,7 +71,7 @@ tasks {
 
   task<GenerateParserTask>("generateHtlPsiAndParser") {
     group = "grammar"
-    source.set("src/main/bnf/Htl.bnf")
+    sourceFile.set(file("src/main/bnf/Htl.bnf"))
     targetRoot.set("src/main/gen")
     pathToParser.set("/com/aemtools/lang/htl/HtlParser.java")
     pathToPsiRoot.set("/com/aemtools/lang/htl/psi")
@@ -80,7 +80,7 @@ tasks {
 
   task<GenerateParserTask>("generateCdPsiAndParser") {
     group = "grammar"
-    source.set("src/main/bnf/clientlibdeclaration.bnf")
+    sourceFile.set(file("src/main/bnf/clientlibdeclaration.bnf"))
     targetRoot.set("src/main/gen")
     pathToParser.set("/com/aemtools/lang/clientlib/ClientlibDeclarationParser.java")
     pathToPsiRoot.set("/com/aemtools/lang/clientlib/psi")
@@ -89,7 +89,7 @@ tasks {
 
   task<GenerateParserTask>("generateJpPsiAndParser") {
     group = "grammar"
-    source.set("src/main/bnf/jcrproperty.bnf")
+    sourceFile.set(file("src/main/bnf/jcrproperty.bnf"))
     targetRoot.set("src/main/gen")
     pathToParser.set("/com/aemtools/lang/jcrproperty/JcrPropertyParser.java")
     pathToPsiRoot.set("/com/aemtools/lang/jcrproperty/psi")
@@ -98,7 +98,7 @@ tasks {
 
   task<GenerateParserTask>("generateElPsiAndParser") {
     group = "grammar"
-    source.set("src/main/bnf/el.bnf")
+    sourceFile.set(file("src/main/bnf/el.bnf"))
     targetRoot.set("src/main/gen")
     pathToParser.set("/com/aemtools/lang/el/ElParser.java")
     pathToPsiRoot.set("/com/aemtools/lang/el/psi")

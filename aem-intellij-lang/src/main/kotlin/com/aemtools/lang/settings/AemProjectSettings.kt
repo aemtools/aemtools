@@ -53,5 +53,11 @@ class AemProjectSettings : PersistentStateComponent<AemProjectSettings> {
     fun getInstance(project: Project): AemProjectSettings =
         project.getService(AemProjectSettings::class.java)
 
+    fun clone(aemProjectSettings: AemProjectSettings): AemProjectSettings {
+      val newAemProjectSettings = AemProjectSettings()
+      newAemProjectSettings.loadState(aemProjectSettings)
+      return newAemProjectSettings
+    }
+
   }
 }

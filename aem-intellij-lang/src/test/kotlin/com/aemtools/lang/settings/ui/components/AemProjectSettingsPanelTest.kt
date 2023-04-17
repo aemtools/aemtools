@@ -19,8 +19,8 @@ class AemProjectSettingsPanelTest {
   fun `should save custom HTL version`() {
     val panel = initAemProjectSettingsPanel()
 
-    panel.htlVersionsModel.selectedItem = HtlVersion.V_1_3.version
-    panel.isSetHtlVersionManuallyCheckbox.isSelected = true
+    panel.newHtlVersion.set(HtlVersion.V_1_3.version)
+    panel.isManuallyDefinedHtlVersion.set(true)
 
     val panelState = panel.getPanelState()
 
@@ -44,7 +44,7 @@ class AemProjectSettingsPanelTest {
   fun `should save custom AEM version`() {
     val panel = initAemProjectSettingsPanel()
 
-    panel.aemVersionsModel.selectedItem = AemVersion.V_6_4.version
+    panel.newAemVersion.set(AemVersion.V_6_4.version)
 
     val panelState = panel.getPanelState()
 
