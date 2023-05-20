@@ -18,6 +18,7 @@ plugins {
   kotlin("jvm")
   id("org.jetbrains.intellij")
   id("org.jetbrains.changelog")
+  id("org.jetbrains.kotlinx.kover")
 }
 
 intellij {

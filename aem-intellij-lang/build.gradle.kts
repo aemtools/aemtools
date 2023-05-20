@@ -8,6 +8,7 @@ plugins {
   kotlin("jvm")
   id("org.jetbrains.intellij")
   id("org.jetbrains.grammarkit") version "2022.3.1"
+  id("org.jetbrains.kotlinx.kover")
 }
 
 buildscript {

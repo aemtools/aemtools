@@ -1,4 +1,5 @@
 import io.gitlab.arturbosch.detekt.Detekt
+import kotlinx.kover.gradle.plugin.dsl.MetricType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 fun properties(key: String) = project.findProperty(key).toString()
@@ -19,7 +20,7 @@ plugins {
   id("org.jetbrains.intellij") version "1.13.2"
   id("org.jetbrains.changelog") version "1.3.1" apply false
   id("io.gitlab.arturbosch.detekt") version "1.19.0"
-  id("org.jetbrains.kotlinx.kover") version "0.5.0"
+  id("org.jetbrains.kotlinx.kover") version "0.7.0-Alpha"
 }
 
 group = pluginGroup
@@ -46,39 +47,35 @@ intellij {
 }
 
 kover {
-  isDisabled = false
-  coverageEngine.set(kotlinx.kover.api.CoverageEngine.INTELLIJ)
-  //coverageEngine.set(kotlinx.kover.api.CoverageEngine.JACOCO)
-  intellijEngineVersion.set("1.0.656")
-  jacocoEngineVersion.set("0.8.8")
-  runAllTestsForProjectTask = true
-  generateReportOnCheck = true
+  disabledForProject = false
+  useKoverTool()
 }
 
-tasks {
-  koverMergedHtmlReport {
-    isEnabled = true
-    htmlReportDir.set(layout.buildDirectory.dir("merged-report/html"))
-
-    //includes = listOf("com.aemtools.*")
-    excludes = listOf("generated.psi.impl.*", "com.aemtools.test.*")
+koverReport {
+  filters {
+    excludes {
+      classes("generated.psi.impl.*", "com.aemtools.test.*")
+    }
   }
 
-  koverMergedXmlReport {
-    isEnabled = true
-    excludes = listOf("generated.psi.impl.*")
+  html {
+    title = "AEM Tool test coverage merged report"
+    onCheck = true
+    setReportDir(layout.buildDirectory.dir("merged-report/html"))
   }
 
-  koverMergedVerify {
-    isEnabled = false
-    excludes = listOf("generated.psi.impl.*")
+  verify {
+    onCheck = true
     rule {
-      name = "Minimal line coverage rate in percent"
       bound {
+        metric = MetricType.LINE
         minValue = 80
       }
     }
   }
+}
+
+tasks {
 
   wrapper {
     gradleVersion = properties("gradleVersion")
@@ -98,6 +95,14 @@ tasks {
   runPluginVerifier { enabled = false }
   listProductsReleases { enabled = false }
   verifyPlugin { enabled = false }
+}
+
+dependencies {
+  kover(project(":aem-intellij-common"))
+  kover(project(":aem-intellij-core"))
+  kover(project(":aem-intellij-lang"))
+  kover(project(":aem-intellij-index"))
+  kover(project(":aem-intellij-inspection"))
 }
 
 buildscript {
@@ -155,8 +160,8 @@ allprojects {
 
   tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = javaVersion
-    kotlinOptions.apiVersion = "1.6"
-    kotlinOptions.languageVersion = "1.6"
+    kotlinOptions.apiVersion = "1.7"
+    kotlinOptions.languageVersion = "1.7"
   }
 
   tasks.withType<Test>().configureEach {
