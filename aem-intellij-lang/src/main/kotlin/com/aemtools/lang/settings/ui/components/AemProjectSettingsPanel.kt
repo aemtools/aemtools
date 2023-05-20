@@ -17,7 +17,6 @@ class AemProjectSettingsPanel(private val currentState: AemProjectSettings) {
   lateinit var isSetHtlVersionManuallyCheckbox: Cell<JBCheckBox>
   lateinit var htlVersionComboBox: Cell<ComboBox<String>>
 
-  var configurableAemProjectSettings: AemProjectSettings = AemProjectSettings.clone(currentState)
   var newAemVersion = AtomicProperty(currentState.aemVersion.version)
   var newHtlVersion = AtomicProperty(currentState.htlVersion.version)
   var isManuallyDefinedHtlVersion = AtomicProperty(currentState.isManuallyDefinedHtlVersion)
@@ -32,7 +31,7 @@ class AemProjectSettingsPanel(private val currentState: AemProjectSettings) {
             if (isManuallyDefinedHtlVersion.get()) {
               return@whenItemSelectedFromUi
             }
-            val selectedAemVersion = AemVersion.fromVersion(aemVersion)
+            val selectedAemVersion = AemVersion.fromFullVersion(aemVersion)
             selectedAemVersion?.apply {
               val suggestedHtlVersion = HtlVersion.getFirstCompatibleWith(selectedAemVersion)
               newHtlVersion.set(suggestedHtlVersion.version)
@@ -56,7 +55,7 @@ class AemProjectSettingsPanel(private val currentState: AemProjectSettings) {
                 newHtlVersion.set(currentState.htlVersion.version)
               }
               if (newAemVersion.get() != currentState.aemVersion.version) {
-                val selectedAemVersion = AemVersion.fromVersion(newAemVersion.get())
+                val selectedAemVersion = AemVersion.fromFullVersion(newAemVersion.get())
                 selectedAemVersion?.apply {
                   val suggestedHtlVersion = HtlVersion.getFirstCompatibleWith(selectedAemVersion)
                   newHtlVersion.set(suggestedHtlVersion.version)
@@ -74,7 +73,7 @@ class AemProjectSettingsPanel(private val currentState: AemProjectSettings) {
 
   fun getPanelState(): AemProjectSettings {
     val newState = AemProjectSettings()
-    newState.aemVersion = AemVersion.fromVersion(newAemVersion.get()) ?: currentState.aemVersion
+    newState.aemVersion = AemVersion.fromFullVersion(newAemVersion.get()) ?: currentState.aemVersion
     newState.htlVersion = HtlVersion.fromVersion(newHtlVersion.get()) ?: currentState.htlVersion
     newState.isManuallyDefinedHtlVersion = isManuallyDefinedHtlVersion.get()
     return newState
