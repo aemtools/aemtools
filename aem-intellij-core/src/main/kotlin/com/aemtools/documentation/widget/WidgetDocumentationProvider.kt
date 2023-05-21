@@ -1,6 +1,7 @@
 package com.aemtools.documentation.widget
 
 import com.aemtools.common.constant.const
+import com.aemtools.common.constant.const.file_names.DIALOG_XML
 import com.aemtools.completion.model.WidgetDoc
 import com.aemtools.completion.model.WidgetMember
 import com.aemtools.completion.model.psi.SelectedAttribute
@@ -24,12 +25,9 @@ open class WidgetDocumentationProvider : AbstractDocumentationProvider() {
    * *false* otherwise
    */
   fun acceptGenerateDoc(element: PsiElement): Boolean {
-    if (element.containingFile
+    return element.containingFile
         .originalFile
-        .name != const.DIALOG_XML) {
-      return false
-    }
-    return true
+        .name == DIALOG_XML
   }
 
   override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {

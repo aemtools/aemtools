@@ -183,6 +183,9 @@
         <annotator language="XML"
                    implementationClass="com.aemtools.codeinsight.htl.annotator.versioning.DataSlyUnwrapUnsupportedAnnotator"/>
 
+        <xml.schemaProvider implementation="com.aemtools.codeinsight.xml.schema.AemFileVaultSchemaProvider" />
+        <standardResourceProvider implementation="com.aemtools.codeinsight.xml.schema.AemFileVaultSchemaResourceProvider"/>
+
         <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
                        order="before xmlTagRenameHandler"/>
 
