@@ -7,7 +7,7 @@ import com.aemtools.test.base.BaseLightTest
 /**
  * @author Dmytro Primshyts
  */
-class OSGiConfigIndexTest : BaseLightTest() {
+class XmlOSGiConfigIndexTest : BaseLightTest() {
 
   fun testOSGiIndexMain() = fileCase {
     addXml("config/com.test.Service.xml", """

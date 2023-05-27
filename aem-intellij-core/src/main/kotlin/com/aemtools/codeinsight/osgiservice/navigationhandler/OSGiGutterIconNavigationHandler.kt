@@ -5,9 +5,11 @@ import com.aemtools.index.model.sortByMods
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler
 import com.intellij.codeInsight.daemon.impl.PsiElementListNavigator
 import com.intellij.ide.util.PsiElementListCellRenderer
+import com.intellij.openapi.util.Iconable
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiIdentifier
+import com.intellij.util.text.nullize
 import java.awt.event.MouseEvent
 
 /**
@@ -31,19 +33,19 @@ class OSGiGutterIconNavigationHandler(
   override fun navigate(e: MouseEvent, elt: PsiElement?) {
     val sortedConfigs = getSortedConfigs()
     PsiElementListNavigator.openTargets(e,
-        sortedConfigs.map { it.xmlFile }.toTypedArray(),
+        sortedConfigs.map { it.file }.toTypedArray(),
         myTitle, null, createListCellRenderer(sortedConfigs))
   }
 
   fun getSortedConfigs() = configsProvider().sortByMods()
 
   private fun prepareOsgiConfigCellDescriptors(configs: List<OSGiConfiguration>): Map<String, CellDescriptor> =
-      configs.flatMap {
-        val path = it.xmlFile?.virtualFile?.path
+      configs.flatMap {osgiConfig ->
+        val path = osgiConfig.file?.virtualFile?.path
         if (path != null) {
           listOf(path to CellDescriptor(
-              it.mods.joinToString { it },
-              it.suffix()))
+              osgiConfig.mods.joinToString { it },
+              osgiConfig.suffix()))
         } else {
           listOf()
         }
@@ -53,9 +55,7 @@ class OSGiGutterIconNavigationHandler(
     val osgiConfigCellDescriptors = prepareOsgiConfigCellDescriptors(configs)
 
     return object : PsiElementListCellRenderer<PsiFile>() {
-      override fun getIconFlags(): Int {
-        return 0
-      }
+      override fun getIconFlags(): Int = Iconable.ICON_FLAG_READ_STATUS
 
       override fun getElementText(element: PsiFile?): String {
         val path = element?.virtualFile?.path
@@ -66,9 +66,8 @@ class OSGiGutterIconNavigationHandler(
 
       override fun getContainerText(element: PsiFile?, name: String?): String? {
         val path = element?.virtualFile?.path
-            ?: return ""
-        return osgiConfigCellDescriptors[path]?.containerText
-            ?: ""
+            ?: return null
+        return osgiConfigCellDescriptors[path]?.containerText.nullize()
       }
 
     }

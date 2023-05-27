@@ -1,6 +1,7 @@
 package com.aemtools.codeinsight.osgiservice.markerinfo
 
 import com.aemtools.codeinsight.osgiservice.navigationhandler.OSGiPropertyNavigationHandler
+import com.aemtools.codeinsight.osgiservice.property.OSGiPropertyDescriptor
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.editor.markup.GutterIconRenderer

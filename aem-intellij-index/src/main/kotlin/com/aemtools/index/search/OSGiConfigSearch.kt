@@ -2,13 +2,13 @@ package com.aemtools.index.search
 
 import com.aemtools.common.util.allScope
 import com.aemtools.common.util.toPsiFile
-import com.aemtools.index.OSGiConfigIndex
+import com.aemtools.index.JsonOSGiConfigIndex
+import com.aemtools.index.XmlOSGiConfigIndex
 import com.aemtools.index.model.OSGiConfiguration
 import com.aemtools.index.model.OSGiConfigurationIndexModel
 import com.intellij.openapi.project.Project
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
-import com.intellij.psi.xml.XmlFile
 import com.intellij.util.indexing.FileBasedIndex
 
 /**
@@ -23,32 +23,32 @@ object OSGiConfigSearch {
    *
    * @param fqn the full qualified name of class to look for
    * @param project the project
-   * @param fillXmlFile (_default false_) defines if the [OSGiConfiguration.xmlFile] should be filled
+   * @param fillFile (_default false_) defines if the [OSGiConfiguration.file] should be filled
    *
    * @return list of all available OSGi configurations,
    * empty list will be returned if no OSGi configuration was found
    */
-  fun findConfigsForClass(fqn: String, project: Project, fillXmlFile: Boolean = false): List<OSGiConfiguration> {
+  fun findConfigsForClass(fqn: String, project: Project, fillFile: Boolean = false): List<OSGiConfiguration> {
     val configs = getAllConfigs(project)
 
     val mapped = configs
         .map { OSGiConfiguration(it.path, it.parameters) }
         .filter { it.fullQualifiedName == fqn }
-    return if (!fillXmlFile) {
+    return if (!fillFile) {
       mapped
     } else {
       val fileNames = mapped.map { it.fileName }
           .toSet()
 
       val virtualFiles = fileNames.flatMap {
-        FilenameIndex.getVirtualFilesByName(project, it, GlobalSearchScope.projectScope(project))
+        FilenameIndex.getVirtualFilesByName(it, GlobalSearchScope.projectScope(project))
       }
 
       mapped.forEach { config ->
         val matchedFile = virtualFiles.find { virtualFile ->
           virtualFile.path == config.path
-        }?.toPsiFile(project) as? XmlFile
-        config.xmlFile = matchedFile
+        }?.toPsiFile(project)
+        config.file = matchedFile
       }
       mapped
     }
@@ -62,13 +62,17 @@ object OSGiConfigSearch {
    */
   private fun getAllConfigs(project: Project): List<OSGiConfigurationIndexModel> {
     val fbi = FileBasedIndex.getInstance()
-    val keys = fbi.getAllKeys(OSGiConfigIndex.OSGI_INDEX_ID, project)
+    val xmlConfigsKeys = fbi.getAllKeys(XmlOSGiConfigIndex.XML_OSGI_INDEX_ID, project)
+    val jsonConfigsKeys = fbi.getAllKeys(JsonOSGiConfigIndex.JSON_OSGI_INDEX_ID, project)
 
-    val values = keys.flatMap {
-      fbi.getValues(OSGiConfigIndex.OSGI_INDEX_ID, it, project.allScope())
+    val xmlConfigs = xmlConfigsKeys.flatMap {
+      fbi.getValues(XmlOSGiConfigIndex.XML_OSGI_INDEX_ID, it, project.allScope())
+    }.filterNotNull()
+    val jsonConfigs = jsonConfigsKeys.flatMap {
+      fbi.getValues(JsonOSGiConfigIndex.JSON_OSGI_INDEX_ID, it, project.allScope())
     }.filterNotNull()
 
-    return values
+    return xmlConfigs + jsonConfigs
   }
 
 }

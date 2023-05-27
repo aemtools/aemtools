@@ -1,17 +1,23 @@
 package com.aemtools.codeinsight.osgiservice.property.provider
 
-import com.aemtools.codeinsight.osgiservice.markerinfo.OSGiPropertyDescriptor
-import com.aemtools.common.util.findChildrenByType
+import com.aemtools.codeinsight.osgiservice.property.OSGiPropertyDescriptor
+import com.aemtools.codeinsight.osgiservice.property.provider.converter.OSGiConfigPropertyConverter
+import com.aemtools.codeinsight.osgiservice.property.provider.converter.impl.JsonOSGiConfigPropertyConverter
+import com.aemtools.codeinsight.osgiservice.property.provider.converter.impl.XmlOSGiConfigPropertyConverter
 import com.aemtools.index.model.OSGiConfiguration
 import com.aemtools.index.model.sortByMods
 import com.aemtools.index.search.OSGiConfigSearch
 import com.intellij.psi.PsiClass
-import com.intellij.psi.xml.XmlAttribute
 
 /**
  * @author Kostiantyn Diachenko
  */
 object OSGiPropertyDescriptorsProvider {
+  val converters: List<OSGiConfigPropertyConverter> = listOf(
+      XmlOSGiConfigPropertyConverter(),
+      JsonOSGiConfigPropertyConverter(),
+  )
+
   fun get(referencedOsgiComponentClass: PsiClass, configPropertyName: String): List<OSGiPropertyDescriptor> {
     val containingClassFqn = referencedOsgiComponentClass.qualifiedName
         ?: return emptyList()
@@ -31,19 +37,7 @@ object OSGiPropertyDescriptorsProvider {
                                   value: String): List<OSGiPropertyDescriptor> {
     return configs.sortByMods()
         .mapNotNull { config ->
-          val file = config.xmlFile ?: return@mapNotNull null
-          val attribute = file
-              .findChildrenByType(XmlAttribute::class.java)
-              .find { it.name == value }
-
-          val attributeValue = attribute?.value ?: "<no value set>"
-
-          OSGiPropertyDescriptor(
-              config.mods.joinToString { it },
-              attributeValue,
-              attribute,
-              file
-          )
+          toPropertyDescriptor(config, value)
         }
         .let { propertyDescriptors ->
           padModsByMaxModLength(propertyDescriptors)
@@ -64,5 +58,11 @@ object OSGiPropertyDescriptorsProvider {
           )
       )
     }
+  }
+
+  private fun toPropertyDescriptor(osgiConfiguration: OSGiConfiguration, propertyName: String)
+      : OSGiPropertyDescriptor? {
+    return converters.find { it.canConvert(osgiConfiguration) }
+        ?.convert(osgiConfiguration, propertyName)
   }
 }

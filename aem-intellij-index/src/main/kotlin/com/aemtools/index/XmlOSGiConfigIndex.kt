@@ -1,7 +1,7 @@
 package com.aemtools.index
 
 import com.aemtools.index.dataexternalizer.OSGiConfigurationExternalizer
-import com.aemtools.index.indexer.OSGiConfigIndexer
+import com.aemtools.index.indexer.XmlOSGiConfigIndexer
 import com.aemtools.index.model.OSGiConfigurationIndexModel
 import com.intellij.ide.highlighter.XmlFileType
 import com.intellij.util.indexing.DataIndexer
@@ -16,14 +16,14 @@ import com.intellij.xml.index.XmlIndex
  *
  * @author Dmytro Primshyts
  */
-class OSGiConfigIndex : XmlIndex<OSGiConfigurationIndexModel>() {
+class XmlOSGiConfigIndex : XmlIndex<OSGiConfigurationIndexModel>() {
 
   companion object {
-    val OSGI_INDEX_ID: ID<String, OSGiConfigurationIndexModel>
-        = ID.create<String, OSGiConfigurationIndexModel>("OSGiConfigIndex")
+    val XML_OSGI_INDEX_ID: ID<String, OSGiConfigurationIndexModel>
+        = ID.create("OSGiConfigIndex")
   }
 
-  override fun getIndexer(): DataIndexer<String, OSGiConfigurationIndexModel, FileContent> = OSGiConfigIndexer
+  override fun getIndexer(): DataIndexer<String, OSGiConfigurationIndexModel, FileContent> = XmlOSGiConfigIndexer
 
   override fun getInputFilter(): FileBasedIndex.InputFilter = FileBasedIndex.InputFilter {
     it.fileType == XmlFileType.INSTANCE && it.path.contains("config")
@@ -31,6 +31,6 @@ class OSGiConfigIndex : XmlIndex<OSGiConfigurationIndexModel>() {
 
   override fun getValueExternalizer(): DataExternalizer<OSGiConfigurationIndexModel> = OSGiConfigurationExternalizer
 
-  override fun getName(): ID<String, OSGiConfigurationIndexModel> = OSGI_INDEX_ID
+  override fun getName(): ID<String, OSGiConfigurationIndexModel> = XML_OSGI_INDEX_ID
 
 }

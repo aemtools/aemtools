@@ -1,6 +1,7 @@
 <idea-plugin url="https://www.jetbrains.com/idea">
     <extensions defaultExtensionNs="com.intellij">
-        <fileBasedIndex implementation="com.aemtools.index.OSGiConfigIndex"/>
+        <fileBasedIndex implementation="com.aemtools.index.XmlOSGiConfigIndex"/>
+        <fileBasedIndex implementation="com.aemtools.index.JsonOSGiConfigIndex"/>
 
         <psi.referenceContributor
                 language="HTML"
@@ -16,7 +17,10 @@
 
         <codeInsight.lineMarkerProvider
                 language="XML"
-                implementationClass="com.aemtools.codeinsight.osgiconfig.OSGiConfigGotoClassLineMarkerProvider"/>
+                implementationClass="com.aemtools.codeinsight.osgiconfig.XmlOSGiConfigGotoClassLineMarkerProvider"/>
+        <codeInsight.lineMarkerProvider
+                language="JSON"
+                implementationClass="com.aemtools.codeinsight.osgiconfig.JsonOSGiConfigGotoClassLineMarkerProvider"/>
 
         <applicationService
                 serviceInterface="com.aemtools.service.IJavaSearchService"

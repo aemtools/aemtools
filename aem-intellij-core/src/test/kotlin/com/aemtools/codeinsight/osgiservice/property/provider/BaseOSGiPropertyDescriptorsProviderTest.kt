@@ -8,7 +8,7 @@ import com.aemtools.test.fixture.JavaMixin
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin
 import com.aemtools.test.fixture.OSGiDsAnnotationsMixin
 
-class OSGiPropertyDescriptorsProviderTest : BaseLightTest(),
+abstract class BaseOSGiPropertyDescriptorsProviderTest(private val osgiConfigExtension: String) : BaseLightTest(),
     OSGiConfigFixtureMixin,
     OSGiDsAnnotationsMixin,
     JavaMixin {
@@ -52,16 +52,10 @@ class OSGiPropertyDescriptorsProviderTest : BaseLightTest(),
       }
     """)
 
-    addEmptyOSGiConfigs("/config/com.test.MyService.xml")
-    osgiConfig("/config/author/com.test.MyService.xml", """
-      testProperty="a"
-    """)
-    osgiConfig("/config/publish/com.test.MyService.xml", """
-      testProperty="b"
-    """)
-    osgiConfig("/config/publish.prod/com.test.MyService.xml", """
-      testProperty="c"
-    """)
+    addEmptyOSGiConfigs("/config/com.test.MyService$osgiConfigExtension")
+    osgiConfig("/config/author/com.test.MyService$osgiConfigExtension", mapOf("testProperty" to "a"))
+    osgiConfig("/config/publish/com.test.MyService$osgiConfigExtension", mapOf("testProperty" to "b"))
+    osgiConfig("/config/publish.prod/com.test.MyService$osgiConfigExtension", mapOf("testProperty" to "c"))
 
     verify {
       val osgiOcdPsiClass = JavaSearch.findClass("com.test.Config", project)

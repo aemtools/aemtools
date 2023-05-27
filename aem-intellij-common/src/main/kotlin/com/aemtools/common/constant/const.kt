@@ -260,6 +260,7 @@ object const {
 
   object osgi {
     const val DESIGNATE_OCD_ANNOTATION_ATTRIBUTE = "ocd"
+    const val NO_PROPERTY_VALUE_SET = "<no value set>"
   }
 
   /**
