@@ -5,8 +5,8 @@ import com.aemtools.codeinsight.osgiservice.property.provider.converter.OSGiConf
 import com.aemtools.common.constant.const.osgi.NO_PROPERTY_VALUE_SET
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.common.util.toNavigatable
-import com.aemtools.index.indexer.osgi.impl.XmlOSGiPropertyMapper
 import com.aemtools.index.model.OSGiConfiguration
+import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlFile
 
@@ -17,20 +17,17 @@ class XmlOSGiConfigPropertyConverter : OSGiConfigPropertyConverter {
 
   override fun convert(osgiConfig: OSGiConfiguration, propertyName: String): OSGiPropertyDescriptor? {
     val xmlFile = osgiConfig.file as? XmlFile ?: return null
-    val attribute = xmlFile
-        .findChildrenByType(XmlAttribute::class.java)
-        .find { it.name == propertyName }
-
-    val attributeValue = if (attribute != null) {
-      XmlOSGiPropertyMapper.map(attribute).second ?: NO_PROPERTY_VALUE_SET
-    } else {
-      NO_PROPERTY_VALUE_SET
+    val containingPsiElement: PsiElement? by lazy {
+      xmlFile
+          .findChildrenByType(XmlAttribute::class.java)
+          .find { it.name == propertyName }
+          ?.toNavigatable()
     }
 
     return OSGiPropertyDescriptor(
         osgiConfig.mods.joinToString { it },
-        attributeValue,
-        attribute?.toNavigatable(),
+        osgiConfig.parameters[propertyName] ?: NO_PROPERTY_VALUE_SET,
+        containingPsiElement,
         xmlFile
     )
   }

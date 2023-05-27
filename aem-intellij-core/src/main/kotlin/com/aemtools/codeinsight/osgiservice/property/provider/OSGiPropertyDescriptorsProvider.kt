@@ -13,7 +13,7 @@ import com.intellij.psi.PsiClass
  * @author Kostiantyn Diachenko
  */
 object OSGiPropertyDescriptorsProvider {
-  val converters: List<OSGiConfigPropertyConverter> = listOf(
+  private val converters: List<OSGiConfigPropertyConverter> = listOf(
       XmlOSGiConfigPropertyConverter(),
       JsonOSGiConfigPropertyConverter(),
   )
