@@ -1,12 +1,8 @@
 package com.aemtools.codeinsight.osgiservice
 
-import com.aemtools.codeinsight.osgiservice.markerinfo.OSGiPropertyMarkerInfo
-import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.JavaMixin
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin
 import com.aemtools.test.fixture.OSGiDsAnnotationsMixin
-import com.intellij.codeInsight.daemon.LineMarkerInfo
-import org.assertj.core.api.Assertions
 import org.assertj.core.groups.Tuple
 
 /**
@@ -14,7 +10,8 @@ import org.assertj.core.groups.Tuple
  *
  * @author Kostiantyn Diachenko
  */
-class OSGiObjectClassDefinitionLineMarkerTest : BaseOSGiPropertyLineMarkerTest(),
+abstract class BasedOSGiObjectClassDefinitionLineMarkerTest(private val osgiConfigExtension: String)
+  : BaseOSGiPropertyLineMarkerTest(),
     OSGiConfigFixtureMixin,
     OSGiDsAnnotationsMixin,
     JavaMixin {
@@ -54,12 +51,10 @@ class OSGiObjectClassDefinitionLineMarkerTest : BaseOSGiPropertyLineMarkerTest()
     """)
 
     addEmptyOSGiConfigs(
-        "/config/com.test.MyService.xml"
+        "/config/com.test.MyService$osgiConfigExtension"
     )
 
-    osgiConfig("/config/author/com.test.MyService.xml", """
-      test1Property="test value"
-    """)
+    osgiConfig("/config/author/com.test.MyService$osgiConfigExtension", mapOf("test1Property" to "test value"))
 
     verify {
       hasOSGiPropertyLineMarker(
@@ -97,12 +92,10 @@ class OSGiObjectClassDefinitionLineMarkerTest : BaseOSGiPropertyLineMarkerTest()
     """)
 
     addEmptyOSGiConfigs(
-        "/config/com.test.MyService.xml"
+        "/config/com.test.MyService$osgiConfigExtension"
     )
 
-    osgiConfig("/config/author/com.test.MyService.xml", """
-      test2Property="test value"
-    """)
+    osgiConfig("/config/author/com.test.MyService$osgiConfigExtension", mapOf("test2Property" to "test value"))
 
     verify {
       hasOSGiPropertyLineMarker(
@@ -143,12 +136,10 @@ class OSGiObjectClassDefinitionLineMarkerTest : BaseOSGiPropertyLineMarkerTest()
     """)
 
     addEmptyOSGiConfigs(
-        "/config/com.test.MyService.xml"
+        "/config/com.test.MyService$osgiConfigExtension"
     )
 
-    osgiConfig("/config/author/com.test.MyService.xml", """
-      test1.property="test value"
-    """)
+    osgiConfig("/config/author/com.test.MyService$osgiConfigExtension", mapOf("test1.property" to "test value"))
 
     verify {
       hasOSGiPropertyLineMarker(

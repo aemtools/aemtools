@@ -183,6 +183,9 @@
         <annotator language="XML"
                    implementationClass="com.aemtools.codeinsight.htl.annotator.versioning.DataSlyUnwrapUnsupportedAnnotator"/>
 
+        <xml.schemaProvider implementation="com.aemtools.codeinsight.xml.schema.AemFileVaultSchemaProvider" />
+        <standardResourceProvider implementation="com.aemtools.codeinsight.xml.schema.AemFileVaultSchemaResourceProvider"/>
+
         <renameHandler implementation="com.aemtools.refactoring.htl.rename.HtlDeclarationAttributeRenameHandler"
                        order="before xmlTagRenameHandler"/>
 
@@ -243,12 +246,13 @@
                              instance="com.aemtools.integration.sync.settings.SyncSettings"/>
         -->
 
-        <dependencySupport coordinate="com.adobe.aem:uber-jar" kind="java"/>
-        <dependencySupport coordinate="org.osgi:osgi.core" kind="java"/>
-        <dependencySupport coordinate="org.osgi:org.osgi.service.metatype.annotations" kind="java"/>
-        <dependencySupport coordinate="org.osgi:org.osgi.service.component.annotations" kind="java"/>
-        <dependencySupport coordinate="org.apache.felix:org.apache.felix.scr.ant" kind="java"/>
-        <dependencySupport coordinate="org.apache.sling:org.apache.sling.models.api" kind="java"/>
+        <dependencySupport coordinate="com.adobe.aem:uber-jar" kind="java" displayName="Adobe AEM Uber JAR"/>
+        <dependencySupport coordinate="com.adobe.aem:aem-sdk-api" kind="java" displayName="Adobe Experience Manager SDK"/>
+        <dependencySupport coordinate="org.osgi:osgi.core" kind="java" displayName="OSGi Core"/>
+        <dependencySupport coordinate="org.osgi:org.osgi.service.metatype.annotations" kind="java" displayName="OSGi Service Metatype Annotations"/>
+        <dependencySupport coordinate="org.osgi:org.osgi.service.component.annotations" kind="java" displayName="OSGi Service Component Annotations"/>
+        <dependencySupport coordinate="org.apache.felix:org.apache.felix.scr.annotations" kind="java" displayName="Annotations For SCR"/>
+        <dependencySupport coordinate="org.apache.sling:org.apache.sling.models.api" kind="java" displayName="Apache Sling Models API"/>
     </extensions>
 
     <application-components>

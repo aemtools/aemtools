@@ -5,8 +5,6 @@ import com.aemtools.common.constant.const.xml.SLING_OSGI_CONFIG
 import com.aemtools.common.util.hasAttribute
 import com.aemtools.common.util.xmlAttributeMatcher
 import com.aemtools.lang.java.JavaSearch
-import com.intellij.codeHighlighting.Pass
-import com.intellij.codeInsight.daemon.GutterIconNavigationHandler
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerProvider
 import com.intellij.codeInsight.daemon.impl.PsiElementListNavigator
@@ -14,14 +12,12 @@ import com.intellij.icons.AllIcons
 import com.intellij.openapi.editor.markup.GutterIconRenderer
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlTag
-import com.intellij.util.Function
-import java.util.function.Supplier
 import javax.swing.DefaultListCellRenderer
 
 /**
  * @author Dmytro Primshyts
  */
-class OSGiConfigGotoClassLineMarkerProvider : LineMarkerProvider {
+class XmlOSGiConfigGotoClassLineMarkerProvider : LineMarkerProvider {
   override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<PsiElement>? {
     val xmlTag = element as? XmlTag ?: return null
 
@@ -41,8 +37,8 @@ class OSGiConfigGotoClassLineMarkerProvider : LineMarkerProvider {
           xmlTag.firstChild,
           xmlTag.firstChild.textRange,
           AllIcons.FileTypes.JavaClass,
-          Function { "Open associated OSGi service" },
-          GutterIconNavigationHandler { mouseEvent, _ ->
+          { "Open associated OSGi service" },
+          { mouseEvent, _ ->
             PsiElementListNavigator.openTargets(
                 mouseEvent,
                 arrayOf(serviceClass),
@@ -52,7 +48,7 @@ class OSGiConfigGotoClassLineMarkerProvider : LineMarkerProvider {
             )
           },
           GutterIconRenderer.Alignment.CENTER,
-          Supplier { "Open associated OSGi service" }
+          { "Open associated OSGi service" }
       )
     }
 

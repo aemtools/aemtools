@@ -19,5 +19,12 @@
                 hasStaticDescription="true"
                 implementationClass="com.aemtools.inspection.html.RedundantElInspection"/>
 
+        <localInspection
+                language="XML"
+                enabledByDefault="true"
+                hasStaticDescription="true"
+                implementationClass="com.aemtools.inspection.xml.AemMissedCqNamespaceInspection"/>
+
+        <implicitUsageProvider implementation="com.aemtools.codeinsight.xml.schema.CqNamespaceImplicitUsageProvider"/>
     </extensions>
 </idea-plugin>

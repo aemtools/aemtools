@@ -3,7 +3,6 @@ package com.aemtools.test.fix
 import com.aemtools.common.util.writeCommand
 import com.aemtools.test.base.BaseLightTest
 import com.intellij.codeInspection.LocalInspectionTool
-import com.intellij.openapi.application.runWriteAction
 import junit.framework.TestCase
 import org.intellij.lang.annotations.Language
 
@@ -69,6 +68,9 @@ class QuickFixDsl {
   var after: FileDescriptor? = null
 
   fun html(name: String, @Language("HTML") text: String) =
+      FileDescriptor(name, text)
+
+  fun xml(name: String, @Language("XML") text: String) =
       FileDescriptor(name, text)
 
 }

@@ -12,14 +12,14 @@ import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlTag
 
 /**
- * Test for [OSGiConfigGotoClassLineMarkerProvider].
+ * Test for [XmlOSGiConfigGotoClassLineMarkerProvider].
  *
  * @author Dmytro Primshyts
  */
-class OSGiConfigGotoClassLineMarkerProviderTest : BaseLightTest(),
+class XmlOSGiConfigGotoClassLineMarkerProviderTest : BaseLightTest(),
     OSGiConfigFixtureMixin {
 
-  var tested = OSGiConfigGotoClassLineMarkerProvider()
+  var tested = XmlOSGiConfigGotoClassLineMarkerProvider()
 
   fun testShouldMarkOSGiServiceConfiguration() = fileCase {
     addEmptyOSGiConfigs("/config/com.test.Bean.xml")

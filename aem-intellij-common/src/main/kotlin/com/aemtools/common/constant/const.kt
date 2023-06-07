@@ -23,12 +23,6 @@ object const {
   const val JCR_DESCRIPTION: String = "jcr:description"
   const val SLING_RESOURCE_SUPER_TYPE: String = "sling:resourceSuperType"
 
-  const val DIALOG_XML: String = "dialog.xml"
-
-  const val CQ_EDITCONFIG_XML: String = "_cq_editConfig.xml"
-
-  const val REP_POLICY: String = "_rep_policy.xml"
-
   const val SLY_TAG: String = "sly"
 
   const val CLIENTLIB_TEMPLATE: String = "/libs/granite/sightly/templates/clientlib.html"
@@ -43,6 +37,15 @@ object const {
     const val IS_CONTAINER: String = "cq:isContainer"
 
     const val CQ_ICON: String = "cq:icon"
+  }
+
+  object file_names {
+    const val FILE_VAULT_FILE_NAME: String = ".content.xml"
+    const val DIALOG_XML: String = "dialog.xml"
+    const val CQ_DIALOG_XML: String = "_cq_dialog.xml"
+    const val CQ_DIALOG_FOLDER_NAME: String = "_cq_dialog"
+    const val CQ_EDITCONFIG_XML: String = "_cq_editConfig.xml"
+    const val REP_POLICY: String = "_rep_policy.xml"
   }
 
   /**
@@ -257,6 +260,7 @@ object const {
 
   object osgi {
     const val DESIGNATE_OCD_ANNOTATION_ATTRIBUTE = "ocd"
+    const val NO_PROPERTY_VALUE_SET = "<no value set>"
   }
 
   /**

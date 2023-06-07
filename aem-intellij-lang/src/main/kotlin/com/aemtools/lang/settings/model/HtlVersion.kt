@@ -20,7 +20,8 @@ enum class HtlVersion(val version: String) {
     fun getFirstCompatibleWith(aemVersion: AemVersion) = when (aemVersion) {
       AemVersion.V_6_3,
       AemVersion.V_6_4,
-      AemVersion.V_6_5 -> V_1_4
+      AemVersion.V_6_5,
+      AemVersion.CLOUD -> V_1_4
       else -> V_1_3
     }
 

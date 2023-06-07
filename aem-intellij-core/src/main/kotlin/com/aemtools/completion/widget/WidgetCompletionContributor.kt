@@ -1,7 +1,7 @@
 package com.aemtools.completion.widget
 
 import com.aemtools.common.completion.BaseCompletionContributor
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.const.file_names.DIALOG_XML
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -34,7 +34,7 @@ private class WidgetCompletionProvider : CompletionProvider<CompletionParameters
   }
 
   private fun accept(parameters: CompletionParameters): Boolean {
-    return const.DIALOG_XML == parameters.originalFile.name
+    return DIALOG_XML == parameters.originalFile.name
   }
 
 }

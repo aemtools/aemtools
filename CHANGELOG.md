@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.0.0]
+[1.0.0]: https://github.com/aemtools/aemtools/tree/v1.0.0
+### New features
+- Add AEM SDK dependency to plugin suggestions
+- Add inspection for missed "cq" namespace in files with that namespace
+- Mark AEM FileVault namespaces schema url as known
+- Add .cfg.json OSGi config support
+
 ## [0.9.5]
 [0.9.5]: https://github.com/aemtools/aemtools/tree/v0.9.5
 ### New features

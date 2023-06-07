@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problems>
+    <problem>
+        <file>.content.xml</file>
+        <line>2</line>
+        <problem_class id="AemMissedCqNamespace" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missed 'cq' namespace for 'cq:' files</problem_class>
+        <description>Missed 'cq' namespace</description>
+        <highlighted_element>jcr:root</highlighted_element>
+        <language>XML</language>
+        <offset>1</offset>
+        <length>8</length>
+    </problem>
+
+</problems>

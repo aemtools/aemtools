@@ -10,7 +10,8 @@ import org.assertj.core.groups.Tuple
  *
  * @author Dmytro Primshyts
  */
-class FelixOSGiPropertyLineMarkerTest : BaseOSGiPropertyLineMarkerTest(),
+abstract class BaseFelixOSGiPropertyLineMarkerTest(private val osgiConfigExtension: String)
+  : BaseOSGiPropertyLineMarkerTest(),
     OSGiConfigFixtureMixin,
     OSGiFelixAnnotationsMixin,
     JavaMixin {
@@ -35,12 +36,10 @@ class FelixOSGiPropertyLineMarkerTest : BaseOSGiPropertyLineMarkerTest(),
     """)
 
     addEmptyOSGiConfigs(
-        "/config/com.test.MyService.xml"
+        "/config/com.test.MyService$osgiConfigExtension"
     )
 
-    osgiConfig("/config/author/com.test.MyService.xml", """
-      test.property="test value"
-    """)
+    osgiConfig("/config/author/com.test.MyService.xml", mapOf("test.property" to "test value"))
 
     verify {
       hasOSGiPropertyLineMarker(
@@ -97,12 +96,10 @@ class FelixOSGiPropertyLineMarkerTest : BaseOSGiPropertyLineMarkerTest(),
     """)
 
     addEmptyOSGiConfigs(
-        "/config/com.test.MyService.xml"
+        "/config/com.test.MyService$osgiConfigExtension"
     )
 
-    osgiConfig("/config/author/com.test.MyService.xml", """
-      test.property="test value"
-    """)
+    osgiConfig("/config/author/com.test.MyService$osgiConfigExtension", mapOf("test.property" to "test value"))
 
     verify {
       hasOSGiPropertyLineMarker(
@@ -138,9 +135,7 @@ class FelixOSGiPropertyLineMarkerTest : BaseOSGiPropertyLineMarkerTest(),
       }
     """)
 
-    osgiConfig("/config/author/com.test.MyService.xml", """
-      test.property="test value"
-    """)
+    osgiConfig("/config/author/com.test.MyService$osgiConfigExtension", mapOf("test.property" to "test value"))
 
     verify {
       hasOSGiPropertyLineMarker(
@@ -176,7 +171,7 @@ class FelixOSGiPropertyLineMarkerTest : BaseOSGiPropertyLineMarkerTest(),
       }
     """)
 
-    addEmptyOSGiConfigs("/config/author/com.test.MyService.xml")
+    addEmptyOSGiConfigs("/config/author/com.test.MyService$osgiConfigExtension")
 
     verify {
       hasNotOSGIPropertyLineMarker()
@@ -213,9 +208,7 @@ class FelixOSGiPropertyLineMarkerTest : BaseOSGiPropertyLineMarkerTest(),
       }
     """)
 
-    osgiConfig("/config/author/com.test.MyService.xml", """
-      another.test.property="test value"
-    """)
+    osgiConfig("/config/author/com.test.MyService$osgiConfigExtension", mapOf("test.property" to "test value"))
 
     verify {
       hasOSGiPropertyLineMarker(
