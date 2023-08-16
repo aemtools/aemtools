@@ -1,10 +1,10 @@
 package com.aemtools.action
 
+import com.aemtools.common.util.psiManager
 import com.aemtools.index.HtlTemplateIndex
 import com.aemtools.lang.htl.icons.HtlIcons
-import com.aemtools.lang.settings.HtlRootDirectories
-import com.aemtools.common.util.psiManager
 import com.aemtools.lang.htl.service.HtlDetectionService
+import com.aemtools.lang.settings.HtlRootDirectories
 import com.intellij.openapi.actionSystem.ActionPlaces
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys

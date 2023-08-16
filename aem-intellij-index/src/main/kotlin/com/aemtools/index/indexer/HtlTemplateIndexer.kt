@@ -26,11 +26,7 @@ object HtlTemplateIndexer : DataIndexer<String, TemplateDefinition, FileContent>
 
       val templateDefinitions: List<TemplateDefinition> = templates.flatMap {
         with(it.extractTemplateDefinition()) {
-          if (this != null) {
-            listOf(this)
-          } else {
-            listOf()
-          }
+          listOf(this)
         }
       }
       val path = inputData.file.path

@@ -6,6 +6,7 @@ import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.AbstractElementManipulator
 import com.intellij.util.IncorrectOperationException
+import java.util.*
 
 /**
  * @author Dmytro Primshyts
@@ -43,9 +44,9 @@ class HtlPropertyAccessManipulator : AbstractElementManipulator<HtlPropertyAcces
           || (oldName.startsWith("is") && newName.startsWith("is")) ->
         newName
       !oldName.startsWith("get") && newName.startsWith("get") ->
-        newName.substringAfter("get").decapitalize()
+        newName.substringAfter("get").replaceFirstChar { it.lowercase(Locale.getDefault()) }
       !oldName.startsWith("is") && newName.startsWith("is") ->
-        newName.substringAfter("is").decapitalize()
+        newName.substringAfter("is").replaceFirstChar { it.lowercase(Locale.getDefault()) }
       else -> newName
     }
   }

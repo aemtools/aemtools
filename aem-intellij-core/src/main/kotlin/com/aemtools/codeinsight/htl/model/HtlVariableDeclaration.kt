@@ -21,7 +21,12 @@ import com.aemtools.lang.htl.icons.HtlIcons.SLY_UNWRAP_VARIABLE_ICON
 import com.aemtools.lang.htl.icons.HtlIcons.SLY_USE_VARIABLE_ICON
 import com.aemtools.lang.htl.icons.HtlIcons.TEMPLATE_PARAMETER_ICON
 import com.aemtools.lang.htl.psi.HtlVariableName
-import com.aemtools.lang.util.*
+import com.aemtools.lang.util.extractHtlHel
+import com.aemtools.lang.util.extractItemAndItemListNames
+import com.aemtools.lang.util.htlAttributeName
+import com.aemtools.lang.util.htlVariableName
+import com.aemtools.lang.util.isOption
+import com.aemtools.lang.util.resolveUseClass
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.psi.xml.XmlAttribute
 
@@ -210,7 +215,7 @@ open class HtlVariableDeclaration internal constructor(
 
           val templateName = attribute.htlVariableName()
           val templateDefinition = attribute.extractTemplateDefinition()
-          if (templateName != null && templateDefinition != null) {
+          if (templateName != null) {
             templateParameters + HtlTemplateDeclaration(
                 templateDefinition,
                 templateParameters,

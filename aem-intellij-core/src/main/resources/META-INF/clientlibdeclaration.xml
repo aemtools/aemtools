@@ -1,7 +1,10 @@
 <idea-plugin url="https://www.jetbrains.com/idea">
     <extensions defaultExtensionNs="com.intellij">
-        <fileTypeFactory
-                implementation="com.aemtools.lang.clientlib.file.CdFileTypeFactory"/>
+        <fileType language="Cd"
+                  extensions="cd"
+                  name="Clientlib definition"
+                  implementationClass="com.aemtools.lang.clientlib.file.CdFileType"
+                  fieldName="INSTANCE"/>
         <lang.parserDefinition
                 language="Cd"
                 implementationClass="com.aemtools.lang.clientlib.CdParserDefinition"/>

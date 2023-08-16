@@ -4,7 +4,6 @@
                 language="El"
                 implementationClass="com.aemtools.lang.el.ElParserDefinition"/>
 
-        <fileTypeFactory implementation="com.aemtools.lang.el.file.ElFileTypeFactory"/>
         <lang.syntaxHighlighterFactory
                 language="El"
                 implementationClass="com.aemtools.lang.el.highlight.ElHighlighterFactory"/>

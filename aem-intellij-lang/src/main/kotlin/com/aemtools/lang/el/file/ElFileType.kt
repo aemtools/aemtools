@@ -1,7 +1,7 @@
 package com.aemtools.lang.el.file
 
 import com.aemtools.lang.el.ElLanguage
-import com.intellij.icons.AllIcons
+import com.intellij.ide.ui.ProductIcons
 import com.intellij.openapi.fileTypes.LanguageFileType
 import javax.swing.Icon
 
@@ -10,7 +10,7 @@ import javax.swing.Icon
  */
 object ElFileType : LanguageFileType(ElLanguage) {
 
-  override fun getIcon(): Icon = AllIcons.Icon
+  override fun getIcon(): Icon = ProductIcons.getInstance().productIcon
 
   override fun getName(): String = "Expression Language"
 

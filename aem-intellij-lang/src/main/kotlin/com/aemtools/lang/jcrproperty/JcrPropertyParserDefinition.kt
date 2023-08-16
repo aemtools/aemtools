@@ -28,7 +28,7 @@ class JcrPropertyParserDefinition : ParserDefinition {
   override fun createFile(viewProvider: FileViewProvider): PsiFile =
       JpPsiFile(viewProvider)
 
-  override fun spaceExistanceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements
+  override fun spaceExistenceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements
       = ParserDefinition.SpaceRequirements.MAY
 
   override fun getStringLiteralElements(): TokenSet = TokenSet.create(

@@ -41,7 +41,7 @@ class HtlDeclarationAttributeRenameHandler : RenameHandler {
     val element = getElement(dataContext)
         ?: BaseRefactoringAction.getElementAtCaret(editor, file)
         ?: return
-    if (dataContext == null || editor == null || file == null) {
+    if (dataContext == null || file == null) {
       return
     }
 

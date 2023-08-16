@@ -5,11 +5,21 @@ import com.aemtools.codeinsight.osgiservice.property.mapper.OSGiComponentPropert
 import com.aemtools.codeinsight.osgiservice.property.provider.OSGiPropertyDescriptorsProvider
 import com.aemtools.common.constant.const.java.DS_DESIGNATE_ANNOTATION
 import com.aemtools.common.constant.const.osgi.DESIGNATE_OCD_ANNOTATION_ATTRIBUTE
-import com.aemtools.common.util.*
+import com.aemtools.common.util.findChildrenByType
+import com.aemtools.common.util.findParentByType
+import com.aemtools.common.util.incomingReferences
+import com.aemtools.common.util.isDsOSGiConfig
+import com.aemtools.common.util.isDsOSGiConfigProperty
 import com.aemtools.index.search.OSGiConfigSearch
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerProvider
-import com.intellij.psi.*
+import com.intellij.psi.PsiAnnotation
+import com.intellij.psi.PsiClass
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiIdentifier
+import com.intellij.psi.PsiJavaCodeReferenceElement
+import com.intellij.psi.PsiMethod
+import com.intellij.psi.PsiNameValuePair
 
 /**
  * Line marker provider for OSGI (R6, R7) Object Class Definition properties.

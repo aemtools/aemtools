@@ -1,7 +1,7 @@
 package com.aemtools.service.repository.inmemory.util
 
 import com.google.gson.Gson
-import org.apache.sanselan.util.IOUtils
+import com.intellij.openapi.util.io.FileUtil
 
 /**
  * @author Dmytro Primshyts
@@ -16,9 +16,9 @@ object FileUtils {
    */
   fun readFileAsString(fileName: String): String {
     val input = FileUtils::class.java.classLoader
-        .getResourceAsStream(fileName)
+        .getResourceAsStream(fileName) ?: return ""
 
-    return String(IOUtils.getInputStreamBytes(input))
+    return String(FileUtil.loadBytes(input))
   }
 
 }

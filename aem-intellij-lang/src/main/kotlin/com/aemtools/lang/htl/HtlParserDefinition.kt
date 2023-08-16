@@ -31,7 +31,7 @@ class HtlParserDefinition : ParserDefinition {
   override fun createFile(viewProvider: FileViewProvider): PsiFile
       = HtlPsiFile(viewProvider)
 
-  override fun spaceExistanceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements
+  override fun spaceExistenceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements
       = ParserDefinition.SpaceRequirements.MUST
 
   override fun getStringLiteralElements(): TokenSet

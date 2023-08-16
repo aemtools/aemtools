@@ -4,7 +4,7 @@ import com.aemtools.common.constant.const.java.POJO_USE
 import com.aemtools.common.constant.const.java.USE_INTERFACE
 import com.aemtools.common.constant.const.java.WCM_USE_CLASS
 import com.aemtools.service.IJavaSearchService
-import com.intellij.openapi.components.ServiceManager
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.psi.JavaPsiFacade
 import com.intellij.psi.PsiClass
@@ -83,6 +83,7 @@ object JavaSearch {
           ?.findWcmUseClasses(project)
           ?: emptyList()
 
-  private fun service(): IJavaSearchService? = ServiceManager.getService(IJavaSearchService::class.java)
+  private fun service(): IJavaSearchService? =
+          ApplicationManager.getApplication().getService(IJavaSearchService::class.java)
 
 }

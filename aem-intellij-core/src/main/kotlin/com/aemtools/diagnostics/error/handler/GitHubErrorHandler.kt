@@ -9,10 +9,9 @@ import com.aemtools.diagnostics.error.handler.provider.impl.GitHubAccessTokenHol
 import com.aemtools.diagnostics.error.handler.provider.impl.GitHubIssueInfoFactory
 import com.google.gson.Gson
 import com.intellij.ide.DataManager
+import com.intellij.notification.BrowseNotificationAction
 import com.intellij.notification.Notification
-import com.intellij.notification.NotificationListener.URL_OPENING_LISTENER
 import com.intellij.notification.NotificationType
-import com.intellij.notification.Notifications
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.diagnostic.ErrorReportSubmitter
 import com.intellij.openapi.diagnostic.IdeaLoggingEvent
@@ -20,8 +19,8 @@ import com.intellij.openapi.diagnostic.SubmittedReportInfo
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.progress.Task
+import com.intellij.openapi.project.Project
 import com.intellij.util.Consumer
-import org.apache.commons.lang3.StringUtils
 import org.apache.http.HttpEntity
 import org.apache.http.HttpStatus
 import org.apache.http.client.methods.HttpPost
@@ -61,16 +60,19 @@ class GitHubErrorHandler : ErrorReportSubmitter() {
         indicator.text = "Issue reporting..."
 
         val request = createRequest()
-        populateHeaders(request) ?: return
+        populateHeaders(request, project) ?: return
         request.entity = getIssueContent(events, additionalInfo)
         createHttpClient().use {
           val execute = it.execute(request)
           when (execute.statusLine.statusCode) {
-            HttpStatus.SC_CREATED -> notifyUser(
-                "Report successful",
-                "<a href=${extractLinkToIssue(execute.entity)}>Click to open created issue</a>",
-                NotificationType.INFORMATION)
-            else -> notifyUser("Report error", StringUtils.EMPTY, NotificationType.WARNING)
+            HttpStatus.SC_CREATED -> {
+              val linkToIssue = extractLinkToIssue(execute.entity)
+              notifyUser(NotificationData("Report successful",
+                  "Thank you for reporting this issue. "
+                          + "The issue on the GitHub issue-tracking project has been created.",
+                      linkToIssue, NotificationType.INFORMATION), project)
+            }
+            else -> notifyUser(NotificationData("Report error", NotificationType.WARNING), project)
           }
         }
       }
@@ -99,23 +101,23 @@ class GitHubErrorHandler : ErrorReportSubmitter() {
     return HttpPost("https://api.github.com/repos/${config.userId}/${config.repoName}/issues")
   }
 
-  fun notifyUser(title: String, text: String, notificationType: NotificationType) {
+  fun notifyUser(notificationData: NotificationData, project: Project?) {
     val notification = Notification(pluginDescriptor.pluginId.idString,
-        title,
-        text,
-        notificationType,
-        URL_OPENING_LISTENER)
-    Notifications.Bus.notify(notification)
+            notificationData.title, notificationData.text, notificationData.notificationType)
+    if (notificationData.url.isNotEmpty()) {
+      notification.addAction(BrowseNotificationAction("Click to open created issue", notificationData.url))
+    }
+    notification.notify(project)
   }
 
-  fun populateHeaders(request: HttpPost): HttpPost? {
+  fun populateHeaders(request: HttpPost, project: Project?): HttpPost? {
     try {
       request.addHeader(BasicHeader("Authorization",
           "token ${accessTokenHolder().getToken()}"))
       request.addHeader(BasicHeader("Accept", "application/vnd.github.v3+json"))
       request.addHeader(BasicHeader("Content-Type", "application/json"))
     } catch (ex: TokenInitializationException) {
-      notifyUser("Report error", StringUtils.EMPTY, NotificationType.WARNING)
+      notifyUser(NotificationData("Report error", NotificationType.WARNING), project)
       return null
     }
     return request
@@ -126,6 +128,15 @@ class GitHubErrorHandler : ErrorReportSubmitter() {
       val readText = it.readText()
       return@use gson.fromJson(readText, CreatedGitHubIssue::class.java).htmlUrl
     } ?: ""
+  }
+
+  data class NotificationData(
+          val title: String,
+          val text: String,
+          val url: String,
+          val notificationType: NotificationType
+  ) {
+    constructor(title: String, notificationType: NotificationType) : this(title, "", "", notificationType)
   }
 }
 

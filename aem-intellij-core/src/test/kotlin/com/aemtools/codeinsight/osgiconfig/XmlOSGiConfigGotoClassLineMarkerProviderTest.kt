@@ -1,6 +1,7 @@
 package com.aemtools.codeinsight.osgiconfig
 
 import com.aemtools.common.util.findChildrenByType
+import com.aemtools.common.util.toPsiFile
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin
 import com.intellij.codeHighlighting.Pass
@@ -26,12 +27,11 @@ class XmlOSGiConfigGotoClassLineMarkerProviderTest : BaseLightTest(),
     addClass("com.test.Bean.java", "package com.test; class Bean{}")
 
     verify {
-      val config = FilenameIndex.getFilesByName(
-          project,
+      val config = FilenameIndex.getVirtualFilesByName(
           "com.test.Bean.xml",
           GlobalSearchScope.allScope(project)).first()
 
-      val rootTag = config.findChildrenByType(XmlTag::class.java).first()
+      val rootTag = config.toPsiFile(project).findChildrenByType(XmlTag::class.java).first()
 
       val lineMarkerInfo = tested.getLineMarkerInfo(rootTag)
 

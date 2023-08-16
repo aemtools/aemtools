@@ -4,7 +4,6 @@ import com.aemtools.lang.el.colorscheme.ElColors
 import com.aemtools.lang.el.psi.ElTypes.AND0
 import com.aemtools.lang.el.psi.ElTypes.AND1
 import com.aemtools.lang.el.psi.ElTypes.BOOLEAN_LITERAL
-import com.aemtools.lang.el.psi.ElTypes.EMPTY
 import com.aemtools.lang.el.psi.ElTypes.END_EXPRESSION
 import com.aemtools.lang.el.psi.ElTypes.GE0
 import com.aemtools.lang.el.psi.ElTypes.GE1
@@ -27,6 +26,7 @@ import com.aemtools.lang.el.psi.ElTypes.START_DYNAMIC_EXPRESSION
 import com.aemtools.lang.el.psi.ElTypes.STRING_LITERAL
 import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.colors.TextAttributesKey
+import com.intellij.openapi.editor.colors.TextAttributesKey.EMPTY_ARRAY
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
 import com.intellij.psi.tree.IElementType
 
@@ -48,7 +48,7 @@ class ElHighlighter : SyntaxHighlighterBase() {
     LT0, LT1,
     GT0, GT0,
     NULL_LITERAL_TOKEN,
-    EMPTY,
+    EMPTY_ARRAY,
     BOOLEAN_LITERAL -> ElColors.OPERATOR
 
     STRING_LITERAL -> ElColors.STRING

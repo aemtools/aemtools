@@ -18,8 +18,6 @@ class HtlAttributeDescriptor(val attributeName: String, private val parentTag: X
 
   override fun validateValue(context: XmlElement?, value: String?): String? = null
 
-  override fun getDependences(): Array<Any> = emptyArray()
-
   override fun getName(context: PsiElement?): String {
     return attributeName
   }

@@ -6,7 +6,7 @@ import com.intellij.openapi.editor.colors.EditorColorsScheme
 import com.intellij.openapi.editor.ex.util.LayerDescriptor
 import com.intellij.openapi.editor.ex.util.LayeredLexerEditorHighlighter
 import com.intellij.openapi.fileTypes.FileType
-import com.intellij.openapi.fileTypes.StdFileTypes
+import com.intellij.openapi.fileTypes.FileTypeManager
 import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
@@ -21,7 +21,7 @@ class HtlTemplateHighlighter(val project: Project?,
     LayeredLexerEditorHighlighter(HtlHighlighter(), scheme) {
   init {
     var type: FileType = if (project == null || virtualFile == null) {
-      StdFileTypes.PLAIN_TEXT
+      FileTypeManager.getInstance().getStdFileType("PLAIN_TEXT")
     } else {
       val language = TemplateDataLanguageMappings.getInstance(project).getMapping(virtualFile)
       if (language != null && language.associatedFileType != null) {

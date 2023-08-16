@@ -1,12 +1,11 @@
 package com.aemtools.lang.settings
 
 import com.intellij.openapi.components.PersistentStateComponent
-import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 import com.intellij.openapi.components.StoragePathMacros.WORKSPACE_FILE
 import com.intellij.openapi.project.Project
-import com.intellij.util.xmlb.annotations.AbstractCollection
+import com.intellij.util.xmlb.annotations.OptionTag
 import com.intellij.util.xmlb.annotations.Tag
 
 /**
@@ -21,7 +20,7 @@ import com.intellij.util.xmlb.annotations.Tag
 class HtlRootDirectories : PersistentStateComponent<HtlRootDirectories> {
 
   @Tag("htl-roots")
-  @AbstractCollection(surroundWithTag = true)
+  @OptionTag(tag = "list")
   val directories: MutableList<String> = ArrayList()
 
   /**
@@ -59,7 +58,7 @@ class HtlRootDirectories : PersistentStateComponent<HtlRootDirectories> {
      * @return htl root directories instance, may be *null*
      */
     fun getInstance(project: Project): HtlRootDirectories? =
-        ServiceManager.getService(project, HtlRootDirectories::class.java)
+        project.getService(HtlRootDirectories::class.java)
 
   }
 
