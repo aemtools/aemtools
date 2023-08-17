@@ -7,7 +7,6 @@ import com.aemtools.inspection.java.constants.ConstantDescriptor
 import com.aemtools.inspection.java.fix.ReplaceHardcodedLiteralWithFqnAction
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
-import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
 import com.intellij.psi.JavaPsiFacade
@@ -74,9 +73,8 @@ class JavaInspectionService : IJavaInspectionService {
      * @param project the project
      * @return instance of java inspection service
      */
-    fun getInstance(project: Project): IJavaInspectionService? {
-      return ServiceManager.getService(project, IJavaInspectionService::class.java)
-    }
+    fun getInstance(project: Project): IJavaInspectionService? =
+            project.getService(IJavaInspectionService::class.java)
 
   }
 

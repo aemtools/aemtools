@@ -30,7 +30,7 @@ class CdCommenterUnitTest {
           .isNull()
 
   @Test
-  fun `getLineCommentPrefix should return "# "`() {
+  fun `getLineCommentPrefix should return '# '`() {
     assertThat(CdCommenter().lineCommentPrefix)
         .isEqualTo("# ")
   }

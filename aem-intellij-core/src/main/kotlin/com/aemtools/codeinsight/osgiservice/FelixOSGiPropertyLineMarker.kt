@@ -9,7 +9,14 @@ import com.aemtools.common.util.isOSGiService
 import com.aemtools.index.search.OSGiConfigSearch
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerProvider
-import com.intellij.psi.*
+import com.intellij.psi.PsiAnnotation
+import com.intellij.psi.PsiClass
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiField
+import com.intellij.psi.PsiIdentifier
+import com.intellij.psi.PsiLiteralExpression
+import com.intellij.psi.PsiNameValuePair
+import com.intellij.psi.PsiReferenceExpression
 
 /**
  * Line marker provider for SCR properties.

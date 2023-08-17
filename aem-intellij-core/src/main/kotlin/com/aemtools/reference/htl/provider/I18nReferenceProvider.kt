@@ -84,7 +84,7 @@ object I18nReferenceProvider : PsiReferenceProvider() {
   }
 
   private class I18nResolveResult(private val xmlTag: XmlTag,
-                          private val localizationModel: LocalizationModel) : PsiElementResolveResult(xmlTag) {
+                                  private val localizationModel: LocalizationModel) : PsiElementResolveResult(xmlTag) {
     override fun getElement(): PsiElement {
       return I18nNavigationWrapper(xmlTag, localizationModel)
     }
@@ -93,16 +93,15 @@ object I18nReferenceProvider : PsiReferenceProvider() {
   }
 
   private class I18nNavigationWrapper(val xmlTag: XmlTag,
-                              val localizationModel: LocalizationModel) : NavigationItem,
-      XmlTag by xmlTag {
+                                      val localizationModel: LocalizationModel)
+    : NavigationItem, XmlTag by xmlTag {
     override fun navigate(requestFocus: Boolean) {
       val offset = xmlTag.textOffset
       val virtualFile = PsiUtilCore.getVirtualFile(xmlTag)
       if (virtualFile != null && virtualFile.isValid) {
         PsiNavigationSupport.getInstance()
-            .createNavigatable(xmlTag.project,
-                virtualFile,
-                offset).navigate(requestFocus)
+            .createNavigatable(xmlTag.project, virtualFile, offset)
+            .navigate(requestFocus)
       }
     }
 

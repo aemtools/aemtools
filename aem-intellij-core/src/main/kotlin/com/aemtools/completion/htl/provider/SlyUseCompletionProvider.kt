@@ -21,6 +21,7 @@ import com.intellij.icons.AllIcons
 import com.intellij.psi.PsiClass
 import com.intellij.util.ProcessingContext
 import org.apache.commons.lang.StringUtils
+import java.util.*
 
 /**
  * Code completion for __data-sly-use.*__ attribute. (e.g. <div data-sly-use.bean="<caret>")
@@ -80,11 +81,11 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
   }
 
   private fun normalizedClassName(fqn: String): String =
-      fqn.substringAfterLast(".").toLowerCase()
+          fqn.substringAfterLast(".").lowercase(Locale.getDefault())
 
   private fun normalizedFileName(parameters: CompletionParameters): String =
-      parameters.originalFile.parent?.name?.toLowerCase()
-          ?: parameters.originalFile.name.toLowerCase()
+      parameters.originalFile.parent?.name?.lowercase(Locale.getDefault())
+          ?: parameters.originalFile.name.lowercase(Locale.getDefault())
               .let { it.replace("-", "") }
 
   private fun extractCompletions(
@@ -103,8 +104,7 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
           .withPresentableText(name)
           .withIcon(it.getIcon(0))
           .withTypeText(type)
-          .withTailText(
-              "(${qualifiedName.substringAfterLast(".")})", true)
+          .withTailText("(${qualifiedName.substringAfterLast(".")})", true)
           .withPriority(classCompletionPriority(currentFileName, name))
 
       return@flatMap listOf(result)

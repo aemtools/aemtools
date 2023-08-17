@@ -2,7 +2,6 @@ package com.aemtools.common.util
 
 import com.aemtools.common.constant.const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION
 import com.aemtools.common.constant.const.java.DS_COMPONENT_ANNOTATION
-import com.aemtools.common.constant.const.java.DS_DESIGNATE_ANNOTATION
 import com.aemtools.common.constant.const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION
 import com.aemtools.common.constant.const.java.FELIX_PROPERTY_ANNOTATION
 import com.aemtools.common.constant.const.java.FELIX_SERVICE_ANNOTATION
@@ -22,6 +21,7 @@ import com.intellij.psi.PsiModifierListOwner
 import com.intellij.psi.PsiType
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiTypesUtil
+import java.util.*
 
 /**
  * @author Dmytro Primshyts
@@ -175,8 +175,8 @@ fun PsiMember.resolveReturnType(): PsiType? = when (this) {
  */
 fun PsiMethod.elName() = this.name.run {
   when {
-    startsWith("is") -> substringAfter("is").decapitalize()
-    startsWith("get") -> substringAfter("get").decapitalize()
+    startsWith("is") -> substringAfter("is").replaceFirstChar { it.lowercase(Locale.getDefault()) }
+    startsWith("get") -> substringAfter("get").replaceFirstChar { it.lowercase(Locale.getDefault()) }
     else -> this
   }
 }

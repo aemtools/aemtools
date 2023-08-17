@@ -9,6 +9,7 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiReferenceBase
+import java.util.*
 
 /**
  * @author Dmytro Primshyts
@@ -32,7 +33,7 @@ class HtlPropertyAccessReference(
   override fun getValue(): String {
     return if (referencedElement.text.startsWith("get")) {
       referencedElement.text.substringAfter("get")
-          .decapitalize()
+              .replaceFirstChar { it.lowercase(Locale.getDefault()) }
     } else {
       referencedElement.text
     }
@@ -73,8 +74,10 @@ class HtlPropertyAccessReference(
       when {
         oldName.startsWith("is") && newName.startsWith("is") -> newName
         oldName.startsWith("get") && newName.startsWith("get") -> newName
-        newName.startsWith("is") -> newName.substringAfter("is").decapitalize()
-        newName.startsWith("get") -> newName.substringAfter("get").decapitalize()
+        newName.startsWith("is") ->
+          newName.substringAfter("is").replaceFirstChar { it.lowercase(Locale.getDefault()) }
+        newName.startsWith("get") ->
+          newName.substringAfter("get").replaceFirstChar { it.lowercase(Locale.getDefault()) }
         else -> newName
       }
 

@@ -108,7 +108,11 @@
         <psi.referenceContributor language="Htl"
                                   implementation="com.aemtools.reference.htl.contributor.HtlReferenceContributor"/>
 
-        <fileTypeFactory implementation="com.aemtools.lang.htl.file.HtlFileTypeFactory"/>
+        <fileType name="HTL"
+                  language="Htl"
+                  extensions="htl"
+                  implementationClass="com.aemtools.lang.htl.file.HtlFileType"
+                  fieldName="INSTANCE"/>
 
         <fileBasedIndex implementation="com.aemtools.index.HtlTemplateIndex"/>
         <fileBasedIndex implementation="com.aemtools.index.AemComponentDeclarationIndex"/>
@@ -217,6 +221,7 @@
 
         <projectConfigurable id="language.AemProjectSettings"
                              parentId="language"
+                             displayName="AEM Project Configuration"
                              instance="com.aemtools.lang.settings.ui.AemProjectSettingsConfigurable"/>
         <postStartupActivity implementation="com.aemtools.lang.settings.init.VersionsDiscoveringStartupActivity"/>
 
@@ -237,6 +242,7 @@
         <colorSettingsPage implementation="com.aemtools.ide.htl.HtlColorsAndFontsPage"/>
 
         <postStartupActivity implementation="com.aemtools.init.AemIntellijStartupActivity"/>
+
         <errorHandler implementation="com.aemtools.diagnostics.error.handler.GitHubErrorHandler"/>
 
         <!--

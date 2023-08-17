@@ -16,8 +16,7 @@ import com.intellij.psi.templateLanguages.ConfigurableTemplateLanguageFileViewPr
 import com.intellij.psi.templateLanguages.TemplateDataElementType
 import com.intellij.psi.templateLanguages.TemplateDataLanguageMappings
 import com.intellij.psi.tree.OuterLanguageElementType
-import com.intellij.util.containers.ContainerUtil
-import gnu.trove.THashSet
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
 /**
@@ -34,7 +33,7 @@ class HtlFileViewProvider @JvmOverloads constructor(
 
   companion object {
     private val TEMPLATE_DATA_TO_LANG: ConcurrentMap<String, TemplateDataElementType>
-        = ContainerUtil.newConcurrentMap()
+        = ConcurrentHashMap()
 
     private fun getTemplateDataElementType(lang: Language): TemplateDataElementType {
       var result = TEMPLATE_DATA_TO_LANG.get(lang.id)
@@ -59,7 +58,7 @@ class HtlFileViewProvider @JvmOverloads constructor(
   override fun supportsIncrementalReparse(rootLanguage: Language): Boolean = false
 
   override fun getLanguages(): Set<Language> {
-    return THashSet<Language>(listOf(myBaseLanguage, myTemplateLanguage))
+    return HashSet(listOf(myBaseLanguage, myTemplateLanguage))
   }
 
   override fun cloneInner(virtualFile: VirtualFile): MultiplePsiFilesPerDocumentFileViewProvider {
@@ -112,7 +111,8 @@ fun getTemplateDataLanguage(manager: PsiManager, virtualFile: VirtualFile): Lang
     dataLang = getDefaultTemplateLang().language
   }
 
-  val substituteLanguage = LanguageSubstitutors.INSTANCE.substituteLanguage(dataLang, virtualFile, manager.project)
+  val substituteLanguage = LanguageSubstitutors.getInstance()
+          .substituteLanguage(dataLang, virtualFile, manager.project)
 
   if (TemplateDataLanguageMappings.getTemplateableLanguages().contains(substituteLanguage)) {
     dataLang = substituteLanguage

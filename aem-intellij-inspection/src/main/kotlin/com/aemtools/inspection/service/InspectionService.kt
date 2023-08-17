@@ -9,7 +9,6 @@ import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 import com.intellij.codeInsight.daemon.impl.analysis.RemoveAttributeIntentionFix
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
-import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.module.ModuleUtil
 import com.intellij.openapi.project.Project
@@ -72,9 +71,8 @@ class InspectionService : IInspectionService {
      * @param project the project
      * @return instance of inspection service
      */
-    fun getInstance(project: Project): IInspectionService? {
-      return ServiceManager.getService(project, IInspectionService::class.java)
-    }
+    fun getInstance(project: Project): IInspectionService? =
+            project.getService(IInspectionService::class.java)
 
   }
 

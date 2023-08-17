@@ -5,7 +5,11 @@ import com.intellij.lang.html.HTMLLanguage
 import com.intellij.lang.xml.XMLLanguage
 import com.intellij.openapi.application.runReadAction
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.psi.*
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiFile
+import com.intellij.psi.PsiReference
+import com.intellij.psi.SmartPointerManager
+import com.intellij.psi.SmartPsiElementPointer
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.util.PsiUtilCore
 import com.intellij.psi.xml.XmlFile

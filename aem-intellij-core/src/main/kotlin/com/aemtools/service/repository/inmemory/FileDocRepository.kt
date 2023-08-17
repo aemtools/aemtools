@@ -5,7 +5,7 @@ import com.aemtools.service.repository.WidgetDocRepository
 import com.aemtools.service.repository.const
 import com.google.common.collect.Lists
 import com.google.gson.Gson
-import org.apache.sanselan.util.IOUtils
+import com.intellij.openapi.util.io.FileUtil
 
 /**
  * [WidgetDocRepository] implementation that uses json files as the storage.
@@ -36,8 +36,8 @@ object FileDocRepository : WidgetDocRepository {
 
   private fun getDocumentationFromClasspath(): ByteArray? {
     val input = FileDocRepository::class.java.classLoader.getResourceAsStream(
-        const.file.WIDGET_DOCUMENTATION)
-    return IOUtils.getInputStreamBytes(input)
+        const.file.WIDGET_DOCUMENTATION) ?: return null
+    return FileUtil.loadBytes(input)
   }
 
   override fun findByXType(xtype: String): WidgetDoc? {

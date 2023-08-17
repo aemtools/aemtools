@@ -10,7 +10,6 @@ import com.intellij.openapi.extensions.PluginDescriptor
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.Task
 import com.intellij.openapi.project.Project
-import org.apache.commons.lang.StringUtils
 import org.apache.http.StatusLine
 import org.apache.http.client.methods.CloseableHttpResponse
 import org.apache.http.client.methods.HttpPost
@@ -20,10 +19,15 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito.*
+import org.mockito.Mockito.any
+import org.mockito.Mockito.doAnswer
+import org.mockito.Mockito.doNothing
+import org.mockito.Mockito.doReturn
+import org.mockito.Mockito.doThrow
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.mockito.Spy
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.argumentCaptor
@@ -97,8 +101,7 @@ class GitHubErrorHandlerTest {
     doReturn(gitHubIssue).`when`(issueInfoFactory).create(loggingEvent, pluginDescriptor, null)
     doReturn(response).`when`(httpClient).execute(any())
     doReturn(statusLine).`when`(response).statusLine
-    doNothing().`when`(target).notifyUser(
-        ArgumentMatchers.anyString(), ArgumentMatchers.anyString(), org.mockito.kotlin.any())
+    doNothing().`when`(target).notifyUser(org.mockito.kotlin.any(), org.mockito.kotlin.any())
   }
 
   @Test
@@ -150,7 +153,7 @@ class GitHubErrorHandlerTest {
 
     target.submit(events, null, component, {})
 
-    verify(target).notifyUser("Report error", StringUtils.EMPTY, NotificationType.WARNING)
+    verify(target).notifyUser(GitHubErrorHandler.NotificationData("Report error", NotificationType.WARNING), project)
   }
 
   @Test
@@ -160,7 +163,12 @@ class GitHubErrorHandlerTest {
 
     target.submit(events, null, component) {}
 
-    verify(target).notifyUser("Report successful", "<a href=>Click to open created issue</a>", NotificationType.INFORMATION)
+    verify(target).notifyUser(
+            GitHubErrorHandler.NotificationData(
+            "Report successful",
+            "Thank you for reporting this issue. The issue on the GitHub issue-tracking project has been created.",
+             "", NotificationType.INFORMATION),
+            project)
   }
 
   @Test
@@ -170,6 +178,6 @@ class GitHubErrorHandlerTest {
 
     target.submit(events, null, component) {}
 
-    verify(target).notifyUser("Report error", StringUtils.EMPTY, NotificationType.WARNING)
+    verify(target).notifyUser(GitHubErrorHandler.NotificationData("Report error", NotificationType.WARNING), project)
   }
 }

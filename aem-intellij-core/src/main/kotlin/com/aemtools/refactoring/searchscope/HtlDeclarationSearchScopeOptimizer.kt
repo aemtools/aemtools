@@ -29,16 +29,16 @@ class HtlDeclarationSearchScopeOptimizer : ScopeOptimizer {
     )
   }
 
-  override fun getScopeToExclude(element: PsiElement): GlobalSearchScope? {
+  override fun getRestrictedUseScope(element: PsiElement): GlobalSearchScope? {
     if (element is XmlAttribute
         && element.htlAttributeName() in FILE_SCOPE_DECLARATION) {
       val originalFile = element.containingFile
       val htlFile = originalFile.getHtlFile()
           ?: return null
 
-      return GlobalSearchScope.notScope(GlobalSearchScope.filesScope(
+      return GlobalSearchScope.filesScope(
           element.project,
-          mutableListOf(originalFile.virtualFile, htlFile.virtualFile)))
+          mutableListOf(originalFile.virtualFile, htlFile.virtualFile))
     }
     return null
   }

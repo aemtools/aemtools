@@ -4,7 +4,7 @@ import com.aemtools.service.repository.IRepositoryService
 import com.aemtools.service.repository.WidgetDocRepository
 import com.aemtools.service.repository.inmemory.HtlAttributesRepository
 import com.aemtools.service.repository.inmemory.RepPolicyRepository
-import com.intellij.openapi.components.ServiceManager
+import com.intellij.openapi.application.ApplicationManager
 
 /**
  * @author Dmytro Primshyts
@@ -16,9 +16,10 @@ object ServiceFacade {
    *
    * @return instance of widget doc repository
    */
-  fun getWidgetRepository(): WidgetDocRepository = ServiceManager
-      .getService(IRepositoryService::class.java)
-      .getWidgetDocRepository()
+  fun getWidgetRepository(): WidgetDocRepository =
+          ApplicationManager.getApplication()
+                  .getService(IRepositoryService::class.java)
+                  .getWidgetDocRepository()
 
   /**
    * Get [HtlAttributesRepository] instance.

@@ -2,8 +2,6 @@ package com.aemtools.common.util
 
 import com.aemtools.common.constant.const.htl.DECLARATION_ATTRIBUTES
 import com.aemtools.common.constant.const.htl.SINGLE_ATTRIBUTES
-import com.intellij.codeInsight.completion.PrioritizedLookupElement
-import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.template.TemplateManager
 import com.intellij.lang.injection.InjectedLanguageManager
 import com.intellij.openapi.application.ApplicationManager
@@ -87,12 +85,10 @@ object OpenApiUtil {
    * @return instance of VirtualFile, *null* if no file was found by given path
    */
   fun findFileByRelativePath(relativePath: String, project: Project): VirtualFile? {
-    val files = FilenameIndex.getFilesByName(
-        project,
-        relativePath.substringAfterLast("/"),
-        GlobalSearchScope.projectScope(project))
-    return files.find { it.virtualFile.path.endsWith(relativePath) }
-        ?.virtualFile
+    return FilenameIndex.getVirtualFilesByName(
+            relativePath.substringAfterLast("/"),
+            GlobalSearchScope.projectScope(project))
+            .find { it.path.endsWith(relativePath) }
   }
 
 }
