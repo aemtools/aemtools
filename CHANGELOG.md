@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.0.3]
+[1.0.3]: https://github.com/aemtools/aemtools/tree/v1.0.3
+### Maintenance
+- Update supported version range and fix deprecated issues
+
 ## [1.0.2]
 [1.0.2]: https://github.com/aemtools/aemtools/tree/v1.0.2
 ### Maintenance

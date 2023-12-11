@@ -20,7 +20,7 @@ import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.icons.AllIcons
 import com.intellij.psi.PsiClass
 import com.intellij.util.ProcessingContext
-import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang3.StringUtils
 import java.util.*
 
 /**
