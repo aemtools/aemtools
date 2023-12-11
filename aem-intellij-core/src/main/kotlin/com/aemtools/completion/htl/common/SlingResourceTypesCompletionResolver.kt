@@ -5,7 +5,7 @@ import com.aemtools.index.search.AemComponentSearch
 import com.intellij.codeInsight.completion.PrioritizedLookupElement
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.openapi.project.Project
-import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang3.StringUtils
 
 object SlingResourceTypesCompletionResolver {
 

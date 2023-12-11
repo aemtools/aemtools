@@ -12,7 +12,7 @@ import com.aemtools.common.util.toStringBuilder
 import com.aemtools.lang.htl.icons.HtlIcons
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.psi.xml.XmlTag
-import org.apache.commons.lang.BooleanUtils
+import org.apache.commons.lang3.BooleanUtils
 import java.io.Serializable
 
 /**

@@ -21,7 +21,7 @@ import com.intellij.refactoring.RefactoringBundle
 import com.intellij.refactoring.util.CommonRefactoringUtil
 import com.intellij.util.indexing.FileBasedIndex
 import com.intellij.util.indexing.ID
-import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang3.StringUtils
 import java.io.Serializable
 
 /**
