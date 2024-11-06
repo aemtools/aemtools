@@ -16,8 +16,7 @@ class MarkAsHtlRootDirectoryActionActionPerformedTest
 
   var targetAction: MarkAsHtlRootDirectoryAction = MarkAsHtlRootDirectoryAction()
 
-  //FIXME test
-  /*@Test
+  @Test
   fun `actionPerformed should ignore if presentation is disabled`() {
     `when`(actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY))
       .thenReturn(arrayOf(virtualFile));
@@ -110,6 +109,6 @@ class MarkAsHtlRootDirectoryActionActionPerformedTest
 
     verify(rootDirectories).removeRoot("/jcr_root/directory")
     verify(rootDirectories, never()).addRoot("/jcr_root/directory")
-  }*/
+  }
 
 }
