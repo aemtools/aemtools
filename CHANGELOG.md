@@ -1,6 +1,19 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### Bug fixes
+- Fix `com.intellij.diagnostic.PluginException: ActionUpdateThread.OLD_EDT is deprecated and going to be removed soon.
+  'com.aemtools.action.MarkAsHtlRootDirectoryAction' must override getActionUpdateThread() and chose EDT or BGT`
+
+### Maintenance
+- Dropped support for Intellij version 222 (2022.2) due to the above.
+
+## [1.0.5]
+[1.0.5]: https://github.com/aemtools/aemtools/tree/v1.0.5
+### Maintenance
+- Compatibility with the latest Intellij versions (242.+)
+
 ## [1.0.4]
 [1.0.4]: https://github.com/aemtools/aemtools/tree/v1.0.4
 ### New features
