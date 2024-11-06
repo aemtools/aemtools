@@ -6,6 +6,7 @@ import com.aemtools.lang.htl.icons.HtlIcons
 import com.aemtools.lang.htl.service.HtlDetectionService
 import com.aemtools.lang.settings.HtlRootDirectories
 import com.intellij.openapi.actionSystem.ActionPlaces
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.project.DumbAwareAction
@@ -22,6 +23,10 @@ import com.intellij.util.FileContentUtil.reparseOpenedFiles
  * @author Dmytro Primshyts
  */
 class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
+
+  override fun getActionUpdateThread(): ActionUpdateThread {
+    return ActionUpdateThread.BGT
+  }
 
   override fun update(event: AnActionEvent) {
     val file = event.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
