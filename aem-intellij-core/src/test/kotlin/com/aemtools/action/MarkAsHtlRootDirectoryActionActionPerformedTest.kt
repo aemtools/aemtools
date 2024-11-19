@@ -6,7 +6,12 @@ import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.psi.PsiManager
 import com.intellij.util.indexing.FileBasedIndex
 import org.junit.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.anyInt
+import org.mockito.Mockito.anyString
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.never
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 
 /**
  * @author Dmytro Troynikov
@@ -16,8 +21,7 @@ class MarkAsHtlRootDirectoryActionActionPerformedTest
 
   var targetAction: MarkAsHtlRootDirectoryAction = MarkAsHtlRootDirectoryAction()
 
-  //FIXME test
-  /*@Test
+  @Test
   fun `actionPerformed should ignore if presentation is disabled`() {
     `when`(actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY))
       .thenReturn(arrayOf(virtualFile));
@@ -110,6 +114,6 @@ class MarkAsHtlRootDirectoryActionActionPerformedTest
 
     verify(rootDirectories).removeRoot("/jcr_root/directory")
     verify(rootDirectories, never()).addRoot("/jcr_root/directory")
-  }*/
+  }
 
 }

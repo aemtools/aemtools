@@ -4,11 +4,10 @@ import com.aemtools.lang.htl.icons.HtlIcons
 import com.aemtools.lang.settings.HtlRootDirectories
 import com.intellij.openapi.actionSystem.ActionPlaces
 import com.intellij.openapi.actionSystem.CommonDataKeys
-import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 
 /**
  * @author Dmytro Primshyts
@@ -16,8 +15,7 @@ import org.mockito.Mockito.verify
 class MarkAsHtlRootDirectoryActionUpdateTest
   : MarkAsHtlRootDirectoryActionBaseTest() {
 
-  //FIXME test
-  /*@Test
+  @Test
   fun `should disable if file is null`() {
     `when`(actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY))
         .thenReturn(emptyArray())
@@ -76,18 +74,14 @@ class MarkAsHtlRootDirectoryActionUpdateTest
   fun `should change presentation text for htl root directory`() {
     `when`(virtualFile.path)
         .thenReturn("/marked/directory")
-    `when`(picoContainer.getComponentInstance("HtlRootDirectories"))
-        .thenReturn(rootDirectories)
     `when`(rootDirectories.directories)
         .thenReturn(mutableListOf("/marked/directory"))
     `when`(mockProject.getService(HtlRootDirectories::class.java))
-      .thenReturn(rootDirectories)
-     `when`(actionEvent.place)
-      .thenReturn(ActionPlaces.PROJECT_VIEW_POPUP)
+        .thenReturn(rootDirectories)
+    `when`(actionEvent.place)
+        .thenReturn(ActionPlaces.PROJECT_VIEW_POPUP)
     `when`(virtualFile.isDirectory)
         .thenReturn(true)
-    `when`(mockProject.picoContainer)
-      .thenReturn(picoContainer)
 
     action.update(actionEvent)
 
@@ -99,8 +93,8 @@ class MarkAsHtlRootDirectoryActionUpdateTest
 
   @Test
   fun `should set icon if directory is eligible to mark as htl root`() {
-     `when`(actionEvent.place)
-      .thenReturn(ActionPlaces.PROJECT_VIEW_POPUP)
+    `when`(actionEvent.place)
+        .thenReturn(ActionPlaces.PROJECT_VIEW_POPUP)
     `when`(virtualFile.isDirectory)
         .thenReturn(true)
     `when`(virtualFile.path)
@@ -110,6 +104,6 @@ class MarkAsHtlRootDirectoryActionUpdateTest
 
     verify(presentation)
         .icon = HtlIcons.HTL_ROOT
-  }*/
+  }
 
 }

@@ -6,6 +6,7 @@ import com.aemtools.lang.htl.icons.HtlIcons
 import com.aemtools.lang.htl.service.HtlDetectionService
 import com.aemtools.lang.settings.HtlRootDirectories
 import com.intellij.openapi.actionSystem.ActionPlaces
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.project.DumbAwareAction
@@ -68,6 +69,8 @@ class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
       HtlTemplateIndex.rebuildIndex()
     }
   }
+
+  override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.BGT
 
   private fun shouldAdd(event: AnActionEvent) = event.presentation.text == "HTL Root"
 

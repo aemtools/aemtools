@@ -9,8 +9,9 @@ Intellij IDEA plugin containing AEM (Adobe Experience Manager) related features.
 It is compatible with Intellij IDEA **2020.3+** versions. [IntelliJ Platform Based Products of Recent IDE Versions.](https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html#intellij-platform-based-products-of-recent-ide-versions)
 
 Latest versions:
-* 203-222 branches - [0.9.4.1](https://github.com/aemtools/aemtools/releases/tag/v0.9.4.1)
-* 222+ branches - [0.9.5](https://github.com/aemtools/aemtools/releases/tag/v0.9.5)
+* [203,222) branches - [0.9.4.1](https://github.com/aemtools/aemtools/releases/tag/v0.9.4.1)
+* [222-243) branches - [1.0.5](https://github.com/aemtools/aemtools/releases/tag/v1.0.5)
+* 223+ branches - [1.0.6](https://github.com/aemtools/aemtools/releases/tag/v1.0.6)
 
 ## Installation 
 The plugin is available in official JetBrains repository:

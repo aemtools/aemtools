@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.0.6]
+[1.0.6]: https://github.com/aemtools/aemtools/tree/v1.0.6
+### New features
+- Add support of 2024.3 IDEA versions
+
+## [1.0.5]
+[1.0.5]: https://github.com/aemtools/aemtools/tree/v1.0.5
+### New features
+- Add support of 2024.2 IDEA versions
+
 ## [1.0.4]
 [1.0.4]: https://github.com/aemtools/aemtools/tree/v1.0.4
 ### New features

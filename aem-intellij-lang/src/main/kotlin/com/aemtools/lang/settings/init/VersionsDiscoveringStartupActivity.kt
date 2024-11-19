@@ -31,7 +31,7 @@ class VersionsDiscoveringStartupActivity : StartupActivity {
       return
     }
 
-    val aemVersion = findAemVersion(project) ?: AemVersion.latest()
+    val aemVersion = findAemVersion(project) ?: return
     saveDiscoveredVersions(aemVersion, aemProjectSettings)
     notifyAboutDiscoveredVersions(aemProjectSettings, project)
   }
