@@ -52,7 +52,8 @@
     </change-notes>
 
     <depends>com.intellij.modules.platform</depends>
-
+    <!--To support OSGi configs in JSON format-->
+    <depends>com.intellij.modules.json</depends>
     <depends optional="true" config-file="java.xml">com.intellij.java</depends>
     <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
     <depends optional="true" config-file="inspections.xml">com.intellij.modules.lang</depends>

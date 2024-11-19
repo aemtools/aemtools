@@ -1,13 +1,5 @@
 package com.aemtools.action
 
-import com.aemtools.lang.settings.HtlRootDirectories
-import com.intellij.ide.plugins.PluginUtil
-import com.intellij.openapi.actionSystem.CommonDataKeys
-import com.intellij.psi.PsiManager
-import com.intellij.util.indexing.FileBasedIndex
-import org.junit.Test
-import org.mockito.Mockito.*
-
 /**
  * @author Dmytro Troynikov
  */
@@ -15,9 +7,8 @@ class MarkAsHtlRootDirectoryActionActionPerformedTest
   : MarkAsHtlRootDirectoryActionBaseTest() {
 
   var targetAction: MarkAsHtlRootDirectoryAction = MarkAsHtlRootDirectoryAction()
-
-  //FIXME test
-  /*@Test
+/*
+  @Test
   fun `actionPerformed should ignore if presentation is disabled`() {
     `when`(actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY))
       .thenReturn(arrayOf(virtualFile));
@@ -110,6 +101,6 @@ class MarkAsHtlRootDirectoryActionActionPerformedTest
 
     verify(rootDirectories).removeRoot("/jcr_root/directory")
     verify(rootDirectories, never()).addRoot("/jcr_root/directory")
-  }*/
-
+  }
+*/
 }
