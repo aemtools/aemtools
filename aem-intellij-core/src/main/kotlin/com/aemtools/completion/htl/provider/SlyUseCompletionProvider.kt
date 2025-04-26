@@ -20,7 +20,7 @@ import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.icons.AllIcons
 import com.intellij.psi.PsiClass
 import com.intellij.util.ProcessingContext
-import org.apache.commons.lang3.StringUtils
+import org.apache.commons.text.similarity.LevenshteinDistance
 import java.util.*
 
 /**
@@ -75,7 +75,7 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
   }
 
   private fun closeName(normalizedClassName: String, currentFileName: String): Boolean {
-    return StringUtils.getLevenshteinDistance(
+    return LevenshteinDistance.getDefaultInstance().apply(
         normalizedClassName,
         currentFileName) < (currentFileName.length / 2).inc()
   }
@@ -112,7 +112,7 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
   }
 
   private fun classCompletionPriority(fileName: String, className: String): Double =
-      base(fileName, className) - StringUtils.getLevenshteinDistance(fileName, className) / ONE_HUNDRED
+      base(fileName, className) - LevenshteinDistance.getDefaultInstance().apply(fileName, className) / ONE_HUNDRED
 
   private fun base(name1: String, name2: String): Double = if (closeName(name1, name2)) {
     CLOSE_CLASS

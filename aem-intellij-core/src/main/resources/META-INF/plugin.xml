@@ -60,7 +60,7 @@
     <depends optional="true" config-file="expression-language.xml">com.intellij.modules.lang</depends>
     <depends optional="true" config-file="jcr-property-language.xml">com.intellij.modules.lang</depends>
 
-    <idea-version since-build="222"/>
+    <idea-version since-build="223"/>
 
     <extensions defaultExtensionNs="com.intellij">
 

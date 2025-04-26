@@ -6,7 +6,6 @@ import com.aemtools.diagnostics.error.handler.provider.IssueInfoFactory
 import com.intellij.ide.plugins.IdeaPluginDescriptor
 import com.intellij.openapi.diagnostic.IdeaLoggingEvent
 import com.intellij.openapi.extensions.PluginDescriptor
-import org.apache.commons.lang3.StringUtils
 import java.io.PrintWriter
 import java.io.StringWriter
 
@@ -29,7 +28,7 @@ class GitHubIssueInfoFactory(private val envInfoProvider: EnvironmentInfoProvide
       if (pluginDescriptor != null && pluginDescriptor is IdeaPluginDescriptor) {
         pluginDescriptor.version
       } else {
-        StringUtils.EMPTY
+        ""
       }
 
   private fun createIssueOverview(event: IdeaLoggingEvent,

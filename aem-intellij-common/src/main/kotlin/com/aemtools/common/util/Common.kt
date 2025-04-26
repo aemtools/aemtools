@@ -21,7 +21,7 @@ import com.intellij.refactoring.RefactoringBundle
 import com.intellij.refactoring.util.CommonRefactoringUtil
 import com.intellij.util.indexing.FileBasedIndex
 import com.intellij.util.indexing.ID
-import org.apache.commons.lang3.StringUtils
+import org.apache.commons.text.similarity.LevenshteinDistance
 import java.io.Serializable
 
 /**
@@ -135,11 +135,11 @@ fun String.toStringBuilder() = StringBuilder(this)
  *
  * @param other the string to calculate distance with
  * @receiver [String]
- * @see [StringUtils.getLevenshteinDistance]
+ * @see [LevenshteinDistance]
  * @return the distance
  */
 fun String.distanceTo(other: String): Int =
-    StringUtils.getLevenshteinDistance(this, other)
+    LevenshteinDistance.getDefaultInstance().apply(this, other)
 
 /**
  * Find the string with the smallest levenshtein distance relative to current string

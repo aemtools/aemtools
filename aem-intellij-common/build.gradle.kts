@@ -1,3 +1,5 @@
+val apacheCommonsTextVersion: String by extra
+
 plugins {
   java
   kotlin("jvm")
@@ -7,4 +9,5 @@ plugins {
 
 dependencies {
   testImplementation(project(":test-framework"))
+  implementation("org.apache.commons:commons-text:$apacheCommonsTextVersion")
 }

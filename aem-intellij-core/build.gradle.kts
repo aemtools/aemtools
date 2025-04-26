@@ -4,6 +4,7 @@ import org.jetbrains.changelog.markdownToHTML
 val kotlinVersion: String by extra
 val gsonVersion: String by extra
 val apacheCommonsVersion: String by extra
+val apacheCommonsTextVersion: String by extra
 val pluginSinceBuild: String by extra
 val pluginUntilBuild: String by extra
 val pluginVersion: String by extra
@@ -45,6 +46,7 @@ dependencies {
 
   implementation("com.google.code.gson:gson:$gsonVersion")
   implementation("org.apache.commons:commons-lang3:$apacheCommonsVersion")
+  implementation("org.apache.commons:commons-text:$apacheCommonsTextVersion")
 
   testImplementation(project(":test-framework"))
 }
