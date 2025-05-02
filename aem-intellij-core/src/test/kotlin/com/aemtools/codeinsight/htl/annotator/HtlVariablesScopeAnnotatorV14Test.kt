@@ -18,14 +18,14 @@ class HtlVariablesScopeAnnotatorV14Test : HtlVariablesScopeAnnotatorTest() {
     myFixture.configureByText("test.html", """
         <nav <info descr="null">data-sly-set</info>.<weak_warning descr="null">vals</weak_warning>="$DOLLAR{['testval1', 'testval2']}">
           <ul <info descr="null">data-sly-list</info>="$DOLLAR{<weak_warning descr="null">vals</weak_warning>}">
-            <li data-position="$DOLLAR{<weak_warning descr="null">itemList</weak_warning>.index}">
+            <li data-position="$DOLLAR{itemList.index}">
               $DOLLAR{<weak_warning descr="null">item</weak_warning>}
             </li>
-            $DOLLAR{<weak_warning descr="null">itemList</weak_warning>.count}
-            $DOLLAR{<weak_warning descr="null">itemList</weak_warning>.first}
-            $DOLLAR{<weak_warning descr="null">itemList</weak_warning>.middle}
-            $DOLLAR{<weak_warning descr="null">itemList</weak_warning>.last}
-            $DOLLAR{<weak_warning descr="null">itemList</weak_warning>.odd}
+            $DOLLAR{itemList.count}
+            $DOLLAR{itemList.first}
+            $DOLLAR{itemList.middle}
+            $DOLLAR{itemList.last}
+            $DOLLAR{itemList.odd}
             $DOLLAR{<weak_warning descr="null">itemList</weak_warning>.even}
           </ul>
         </nav>
@@ -37,8 +37,8 @@ class HtlVariablesScopeAnnotatorV14Test : HtlVariablesScopeAnnotatorTest() {
     myFixture.configureByText("test.html", """
         <nav <info descr="null">data-sly-set</info>.<weak_warning descr="null">vals</weak_warning>="$DOLLAR{['testval1', 'testval2']}">
           <ul <info descr="null">data-sly-list</info>="$DOLLAR{<weak_warning descr="null">vals</weak_warning>}">
-            <li data-position="$DOLLAR{<weak_warning descr="null">itemList</weak_warning>.index}">
-              $DOLLAR{<weak_warning descr="null">item</weak_warning>}
+            <li data-position="$DOLLAR{itemList.index}">
+              $DOLLAR{item}
             </li>
           </ul>
           $DOLLAR{<weak_warning descr="Cannot resolve symbol 'itemList'">itemList</weak_warning>.index}
@@ -52,8 +52,8 @@ class HtlVariablesScopeAnnotatorV14Test : HtlVariablesScopeAnnotatorTest() {
     myFixture.configureByText("test.html", """
         <nav <info descr="null">data-sly-set</info>.<weak_warning descr="null">vals</weak_warning>="$DOLLAR{['testval1', 'testval2']}">
           <ul <info descr="null">data-sly-list</info>.<weak_warning descr="null">myVal</weak_warning>="$DOLLAR{<weak_warning descr="null">vals</weak_warning>}">
-            <li data-position="$DOLLAR{<weak_warning descr="null">myValList</weak_warning>.index}">
-              $DOLLAR{<weak_warning descr="null">myVal</weak_warning>}
+            <li data-position="$DOLLAR{myValList.index}">
+              $DOLLAR{myVal}
             </li>
           </ul>
           $DOLLAR{<weak_warning descr="Cannot resolve symbol 'myValList'">myValList</weak_warning>.index}
