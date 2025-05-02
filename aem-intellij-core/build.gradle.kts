@@ -1,15 +1,6 @@
-val kotlinVersion: String by extra
-val gsonVersion: String by extra
-val apacheCommonsVersion: String by extra
-val apacheCommonsTextVersion: String by extra
-val pluginSinceBuild: String by extra
-val pluginUntilBuild: String by extra
-val pluginVersion: String by extra
-val pluginGroup: String by extra
-val platformVersion: String by extra
-val platformType: String by extra
-val platformPlugins: String by extra
-fun properties(key: String) = project.findProperty(key).toString()
+val gsonVersion = providers.gradleProperty("gsonVersion").get()
+val apacheCommonsVersion = providers.gradleProperty("apacheCommonsVersion").get()
+val apacheCommonsTextVersion = providers.gradleProperty("apacheCommonsTextVersion").get()
 
 plugins {
   java
@@ -18,42 +9,6 @@ plugins {
   id("org.jetbrains.changelog")
   id("org.jetbrains.kotlinx.kover")
 }
-
-/*intellijPlatform {
-  buildSearchableOptions = false
-  pluginConfiguration {
-    name = properties("pluginName")
-  }
-  pluginVerification {
-    subsystemsToCheck = VerifyPluginTask.Subsystems.ALL
-    ides {
-      select {
-        types.set(listOf(IntelliJPlatformType.IntellijIdeaCommunity))
-        channels.set(listOf(ProductRelease.Channel.RELEASE))
-        sinceBuild = pluginSinceBuild
-        untilBuild = pluginUntilBuild
-      }
-    }
-  }
-}*/
-
-/*
-intellij {
-  pluginName.set(properties("pluginName"))
-  version.set(platformVersion)
-  type.set(platformType)
-  plugins.set(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
-}
-*/
-
-/*changelog {
-  version.set(pluginVersion)
-  path.set("${project.parent?.projectDir}/CHANGELOG.md")
-  header.set(provider { "[$version] - ${date()}" })
-  itemPrefix.set("-")
-  keepUnreleasedSection.set(true)
-  groups.set(listOf("New features", "Bug fixes", "Maintenance"))
-}*/
 
 dependencies {
   implementation(project(":aem-intellij-common"))
@@ -66,67 +21,4 @@ dependencies {
   implementation("org.apache.commons:commons-text:$apacheCommonsTextVersion")
 
   testImplementation(project(":test-framework"))
-
-  /*intellijPlatform {
-    intellijIdeaCommunity(platformVersion)
-    bundledPlugins(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
-    pluginModule(implementation(project(":aem-intellij-common")))
-    pluginModule(implementation(project(":aem-intellij-core")))
-    pluginModule(implementation(project(":aem-intellij-lang")))
-    pluginModule(implementation(project(":aem-intellij-inspection")))
-    pluginModule(implementation(project(":aem-intellij-index")))
-
-    testFramework(TestFrameworkType.Platform)
-  }*/
-}
-
-tasks {
-
-  /*patchPluginXml {
-    version = pluginVersion
-    sinceBuild.set(pluginSinceBuild)
-    untilBuild.set(pluginUntilBuild)
-
-    project.parent?.projectDir?.let {
-      pluginDescription.set(
-          it.resolve("README.md").readText().lines().run {
-            val startMarkerText = "<!-- Plugin description -->"
-            val endMarkerText = "<!-- Plugin description end -->"
-
-            if (!containsAll(listOf(startMarkerText, endMarkerText))) {
-              throw GradleException("Plugin description section not found in README.md:\n$startMarkerText ... $endMarkerText")
-            }
-            subList(indexOf(startMarkerText) + 1, indexOf(endMarkerText))
-          }.joinToString("\n").run { markdownToHTML(this) }
-      )
-    }
-    changeNotes.set(provider { changelog.getLatest().toHTML() })
-
-    inputFile.set(file("$projectDir/src/main/resources/META-INF/plugin.xml"))
-    //pluginXmlFiles.set(fileTree("$projectDir/src/main/resources/META-INF").filter { it.isFile() }.files)
-  }*/
-
- /* buildPlugin {
-    archiveFileName.set("$pluginGroup-$pluginVersion.zip")
-
-    doLast {
-      delete("../build/distributions").also {
-        copy {
-          from("build/distributions")
-          include("*.zip")
-          into("../build/distributions")
-        }
-      }
-    }
-  }*/
-
-  /*runPluginVerifier {
-    enabled = true
-    subsystemsToCheck.set("without-android")
-    ideVersions.set(listOf("IC-2024.3", "IC-2025.1"))
-    dependsOn(listProductsReleases)
-  }*/
-
-  //verifyPlugin { enabled = true }
-
 }

@@ -9,25 +9,24 @@ import org.jetbrains.intellij.platform.gradle.models.ProductRelease
 import org.jetbrains.intellij.platform.gradle.tasks.VerifyPluginTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-fun properties(key: String) = project.findProperty(key).toString()
-val pluginName: String by extra
-val pluginGroup: String by extra
-val pluginVersion: String by extra
-val platformVersion: String by extra
-val platformType: String by extra
-val platformPlugins: String by extra
-val javaVersion: String by extra
-val kotlinVersion: String by extra
+fun properties(key: String) = providers.gradleProperty(key).get()
+val pluginName = properties("pluginName")
+val pluginGroup = properties("pluginGroup")
+val pluginVersion = properties("pluginVersion")
+val platformVersion = properties("platformVersion")
+val platformBundledPlugins = properties("platformBundledPlugins")
+val javaVersion = properties("javaVersion")
+val kotlinVersion = properties("kotlinVersion")
 val rootProjectDirectory = projectDir
 val rootProject = project
-val pluginSinceBuild: String by extra
-val pluginUntilBuild: String by extra
+val pluginSinceBuild = properties("pluginSinceBuild")
+val pluginUntilBuild = properties("pluginUntilBuild")
+
 
 plugins {
   id("java")
   kotlin("jvm") version "1.9.20"
   id("org.jetbrains.intellij.platform") version "2.5.0"
-  id("org.jetbrains.intellij.platform.migration") version "2.5.0"
   id("org.jetbrains.changelog") version "1.3.1"
   id("io.gitlab.arturbosch.detekt") version "1.19.0"
   id("org.jetbrains.kotlinx.kover") version "0.7.0-Alpha"
@@ -52,13 +51,12 @@ java {
   }
 }
 
-
 intellijPlatform {
   buildSearchableOptions = false
-  //instrumentCode = true
+  instrumentCode = true
   pluginConfiguration {
-    name = properties("pluginName")
-    version = properties("pluginVersion")
+    name = pluginName
+    version = pluginVersion
 
     ideaVersion {
       sinceBuild = pluginSinceBuild
@@ -103,7 +101,7 @@ changelog {
 dependencies {
   intellijPlatform {
     intellijIdeaCommunity(platformVersion)
-    bundledPlugins(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
+    bundledPlugins(platformBundledPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
 
     pluginModule(implementation(project(":aem-intellij-common")))
     pluginModule(implementation(project(":aem-intellij-core")))
@@ -114,8 +112,13 @@ dependencies {
     testFramework(TestFrameworkType.Platform, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
     testFramework(TestFrameworkType.Plugin.Java, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
   }
-}
 
+  kover(project(":aem-intellij-common"))
+  kover(project(":aem-intellij-core"))
+  kover(project(":aem-intellij-lang"))
+  kover(project(":aem-intellij-index"))
+  kover(project(":aem-intellij-inspection"))
+}
 
 kover {
   disabledForProject = false
@@ -147,7 +150,6 @@ koverReport {
 }
 
 tasks {
-
   wrapper {
     gradleVersion = properties("gradleVersion")
   }
@@ -155,14 +157,6 @@ tasks {
   patchPluginXml {
     inputFile.set(file(file("$projectDir/aem-intellij-core/src/main/resources/META-INF/plugin.xml")))
   }
-}
-
-dependencies {
-  kover(project(":aem-intellij-common"))
-  kover(project(":aem-intellij-core"))
-  kover(project(":aem-intellij-lang"))
-  kover(project(":aem-intellij-index"))
-  kover(project(":aem-intellij-inspection"))
 }
 
 buildscript {
@@ -234,10 +228,11 @@ allprojects {
     val testJavaDir = rootProject.allprojects.first {
       it.name == "test-framework"
     }.projectDir.absolutePath + "/src/main/resources/java"
-    logger.lifecycle("Test java directory: $testJavaDir")
     systemProperty("test.java.dir", testJavaDir)
-    systemProperty("idea.log.debug.categories", "com.my.plugin.ui,com.my.plugin.backend")
-    systemProperty("idea.split.test.logs", "true")
+
+    // uncomment to debug tests
+    //systemProperty("idea.log.debug.categories", "com.my.plugin.ui,com.my.plugin.backend")
+    //systemProperty("idea.split.test.logs", "true")
   }
 
   tasks.withType<Detekt>().configureEach {
@@ -261,13 +256,12 @@ subprojects {
     buildSearchableOptions = false
   }
 
-  val kotlinVersion: String by extra
-  val mockitoKotlinVersion: String by extra
-  val spekVersion: String by extra
-  val junit4Version: String by extra
-  val junitBomVersion: String by extra
-  val assertjVersion: String by extra
-  val mockitoVersion: String by extra
+  val mockitoKotlinVersion = properties("mockitoKotlinVersion")
+  val spekVersion = properties("spekVersion")
+  val junit4Version = properties("junit4Version")
+  val junitBomVersion = properties("junitBomVersion")
+  val assertjVersion = properties("assertjVersion")
+  val mockitoVersion = properties("mockitoVersion")
 
   dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
@@ -318,14 +312,12 @@ subprojects {
 
     intellijPlatform {
       intellijIdeaCommunity(platformVersion)
-      bundledPlugins(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
+      bundledPlugins(platformBundledPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
 
       testFramework(TestFrameworkType.Platform, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
       testFramework(TestFrameworkType.Plugin.Java, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
     }
-
   }
-
 }
 
 apply {

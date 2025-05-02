@@ -1,28 +1,12 @@
 import org.jetbrains.grammarkit.tasks.GenerateLexerTask
 import org.jetbrains.grammarkit.tasks.GenerateParserTask
 
-fun properties(key: String) = project.findProperty(key).toString()
-
 plugins {
   java
   kotlin("jvm")
   id("org.jetbrains.intellij.platform.module")
   id("org.jetbrains.grammarkit") version "2022.3.2.2"
   id("org.jetbrains.kotlinx.kover")
-}
-
-buildscript {
-
-  repositories {
-    mavenCentral()
-    maven { url = uri("https://www.jetbrains.com/intellij-repository/releases") }
-  }
-
-}
-
-grammarKit {
-  // Version of IntelliJ patched JFlex (see the link below), Default is 1.7.0-1
-  //jflexRelease.set("1.7.0-1")
 }
 
 dependencies {
@@ -42,7 +26,6 @@ tasks {
     group = "grammar"
     sourceFile.set(file(file("src/main/flex/Htl.flex")))
     targetOutputDir.set(file("src/main/gen/com/aemtools/lang/htl/lexer"))
-    //targetClass.set("_HtlLexer")
     purgeOldFiles.set(true)
   }
 
@@ -50,7 +33,6 @@ tasks {
     group = "grammar"
     sourceFile.set(file("src/main/flex/_ClientlibDeclarationLexer.flex"))
     targetOutputDir.set(file("src/main/gen/com/aemtools/lang/clientlib"))
-    //targetClass.set("_ClientlibDeclarationLexer")
     purgeOldFiles.set(true)
   }
 
@@ -58,7 +40,6 @@ tasks {
     group = "grammar"
     sourceFile.set(file("src/main/flex/JcrPropertyLexer.flex"))
     targetOutputDir.set(file("src/main/gen/com/aemtools/lang/jcrproperty"))
-    //targetClass.set("_JcrPropertyLexer")
     purgeOldFiles.set(true)
   }
 
@@ -66,7 +47,6 @@ tasks {
     group = "grammar"
     sourceFile.set(file("src/main/flex/el.flex"))
     targetOutputDir.set(file("src/main/gen/com/aemtools/lang/el"))
-    //targetClass.set("_ElLexer")
     purgeOldFiles.set(true)
   }
 

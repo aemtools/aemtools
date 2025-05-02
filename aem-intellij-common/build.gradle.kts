@@ -1,4 +1,4 @@
-val apacheCommonsTextVersion: String by extra
+val apacheCommonsTextVersion = providers.gradleProperty("apacheCommonsTextVersion").get()
 
 plugins {
   java

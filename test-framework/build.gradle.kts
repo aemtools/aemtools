@@ -1,24 +1,19 @@
 import org.jetbrains.intellij.platform.gradle.Constants
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 
-val kotlinVersion: String by extra
-val mockitoKotlinVersion: String by extra
-val spekVersion: String by extra
-var junit4Version: String by extra
-var junitBomVersion: String by extra
-val assertjVersion: String by extra
-val mockitoVersion: String by extra
-val platformVersion: String by extra
-val platformPlugins: String by extra
+fun properties(key: String) = providers.gradleProperty(key).get()
+val platformBundledPlugins = properties("platformBundledPlugins")
+val platformVersion = properties("platformVersion")
+val mockitoKotlinVersion = properties("mockitoKotlinVersion")
+val spekVersion = properties("spekVersion")
+val junit4Version = properties("junit4Version")
+val junitBomVersion = properties("junitBomVersion")
+val assertjVersion = properties("assertjVersion")
+val mockitoVersion = properties("mockitoVersion")
 
 plugins {
   kotlin("jvm")
   id("org.jetbrains.intellij.platform.module")
-}
-
-val intellijPlugins = listOf("com.intellij.java", "org.jetbrains.kotlin")
-ext {
-  set("intellijPlugins", intellijPlugins)
 }
 
 repositories {
@@ -37,13 +32,7 @@ intellijPlatform {
 dependencies {
   intellijPlatform {
     intellijIdeaCommunity(platformVersion)
-    //bundledPlugins(intellijPlugins)
-    bundledPlugins(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
-
-    /*testFramework(TestFrameworkType.Platform)
-    testFramework(TestFrameworkType.Bundled)
-    testFramework(TestFrameworkType.JUnit5)
-    testFramework(TestFrameworkType.Plugin.Java)*/
+    bundledPlugins(platformBundledPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
 
     testFramework(TestFrameworkType.Platform, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
     testFramework(TestFrameworkType.Plugin.Java, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
