@@ -1,5 +1,5 @@
 language: java
-jdk: oraclejdk17
+jdk: oraclejdk21
 dist: trusty
 sudo: required
 
@@ -7,7 +7,7 @@ env:
   global:
   - ORG_GRADLE_PROJECT_downloadIdeaSources=false
 
-script: ./gradlew test koverMergedHtmlReport detektCheck
+script: ./gradlew test koverHtmlReport detektCheck
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
@@ -24,11 +24,10 @@ jobs:
   include:
     - stage: Build and Test
       env: ORG_GRADLE_PROJECT_ideaVersion=LATEST-EAP-SNAPSHOT
-    - env: ORG_GRADLE_PROJECT_ideaVersion=2022.3
-#    - env: ORG_GRADLE_PROJECT_ideaVersion=2017.1.5
+    - env: ORG_GRADLE_PROJECT_ideaVersion=2024.3
     - stage: Deploy new Release
       script: skip
-      env: ORG_GRADLE_PROJECT_ideaVersion=2022.3
+      env: ORG_GRADLE_PROJECT_ideaVersion=2024.3
       deploy:
         - provider: script
           script: ./gradlew publishPlugin
