@@ -33,21 +33,27 @@ tasks {
     group = "grammar"
     sourceFile.set(file("src/main/flex/_ClientlibDeclarationLexer.flex"))
     targetOutputDir.set(file("src/main/gen/com/aemtools/lang/clientlib"))
-    purgeOldFiles.set(true)
+    //purgeOldFiles.set(true)
+
+    mustRunAfter(generateCdLexer)
   }
 
   val generateJpLexer by register<GenerateLexerTask>("generateJpLexer") {
     group = "grammar"
     sourceFile.set(file("src/main/flex/JcrPropertyLexer.flex"))
     targetOutputDir.set(file("src/main/gen/com/aemtools/lang/jcrproperty"))
-    purgeOldFiles.set(true)
+    //purgeOldFiles.set(true)
+
+    mustRunAfter(generateHtlLexer)
   }
 
   val generateElLexer by register<GenerateLexerTask>("generateElLexer") {
     group = "grammar"
     sourceFile.set(file("src/main/flex/el.flex"))
     targetOutputDir.set(file("src/main/gen/com/aemtools/lang/el"))
-    purgeOldFiles.set(true)
+    //purgeOldFiles.set(true)
+
+    mustRunAfter(generateJpLexer)
   }
 
   val generateHtlPsiAndParser by register<GenerateParserTask>("generateHtlPsiAndParser") {
@@ -56,9 +62,9 @@ tasks {
     targetRootOutputDir.set(file("src/main/gen"))
     pathToParser.set("/com/aemtools/lang/htl/HtlParser.java")
     pathToPsiRoot.set("/com/aemtools/lang/htl/psi")
-    purgeOldFiles.set(true)
+    //purgeOldFiles.set(true)
 
-    mustRunAfter(generateHtlLexer)
+    mustRunAfter(generateElLexer)
   }
 
   val generateCdPsiAndParser by register<GenerateParserTask>("generateCdPsiAndParser") {
@@ -67,7 +73,7 @@ tasks {
     targetRootOutputDir.set(file("src/main/gen"))
     pathToParser.set("/com/aemtools/lang/clientlib/ClientlibDeclarationParser.java")
     pathToPsiRoot.set("/com/aemtools/lang/clientlib/psi")
-    purgeOldFiles.set(true)
+    //purgeOldFiles.set(true)
 
     mustRunAfter(generateHtlPsiAndParser)
   }
@@ -78,7 +84,7 @@ tasks {
     targetRootOutputDir.set(file("src/main/gen"))
     pathToParser.set("/com/aemtools/lang/jcrproperty/JcrPropertyParser.java")
     pathToPsiRoot.set("/com/aemtools/lang/jcrproperty/psi")
-    purgeOldFiles.set(true)
+    //purgeOldFiles.set(true)
 
     mustRunAfter(generateCdPsiAndParser)
   }
@@ -89,7 +95,7 @@ tasks {
     targetRootOutputDir.set(file("src/main/gen"))
     pathToParser.set("/com/aemtools/lang/el/ElParser.java")
     pathToPsiRoot.set("/com/aemtools/lang/el/psi")
-    purgeOldFiles.set(true)
+    //purgeOldFiles.set(true)
 
     mustRunAfter(generateJpPsiAndParser)
   }
