@@ -136,6 +136,10 @@ kover {
         onCheck = true
         htmlDir = layout.buildDirectory.dir("merged-report/html")
       }
+      xml {
+        onCheck = true
+        xmlFile = layout.buildDirectory.file("merged-report/xml/report.xml")
+      }
 
       filters {
         excludes {
