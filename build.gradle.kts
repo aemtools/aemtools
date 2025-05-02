@@ -21,14 +21,14 @@ val rootProjectDirectory = projectDir
 val rootProject = project
 val pluginSinceBuild = properties("pluginSinceBuild")
 val pluginUntilBuild = properties("pluginUntilBuild")
-
+val detektVersion = properties("detektVersion")
 
 plugins {
   id("java")
   kotlin("jvm") version "1.9.20"
   id("org.jetbrains.intellij.platform") version "2.5.0"
   id("org.jetbrains.changelog") version "1.3.1"
-  id("io.gitlab.arturbosch.detekt") version "1.19.0"
+  id("io.gitlab.arturbosch.detekt") version "1.23.5"
   id("org.jetbrains.kotlinx.kover") version "0.7.0-Alpha"
 }
 
@@ -118,6 +118,8 @@ dependencies {
   kover(project(":aem-intellij-lang"))
   kover(project(":aem-intellij-index"))
   kover(project(":aem-intellij-inspection"))
+
+  detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detektVersion")
 }
 
 kover {
@@ -159,17 +161,6 @@ tasks {
   }
 }
 
-buildscript {
-
-  repositories {
-    mavenCentral()
-
-    dependencies {
-      classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.19.0")
-    }
-  }
-}
-
 allprojects {
   apply {
     plugin("io.gitlab.arturbosch.detekt")
@@ -181,14 +172,14 @@ allprojects {
   }
 
   detekt {
-    toolVersion = "1.19.0"
-    config = files("$rootProjectDirectory/config/detekt.yml")
+    toolVersion = detektVersion
+    config.setFrom("$rootProjectDirectory/config/detekt.yml")
     parallel = true
     ignoreFailures = true
     buildUponDefaultConfig = true
     disableDefaultRuleSets = true
     autoCorrect = true
-    source = files("src/main/java", "src/main/kotlin")
+    source.setFrom(files("src/main/java", "src/main/kotlin"))
   }
 
   java {
@@ -236,7 +227,19 @@ allprojects {
   }
 
   tasks.withType<Detekt>().configureEach {
+    jvmTarget = javaVersion
     exclude("com.aemtools.test.*", ".*test.*")
+
+    reports {
+      html.required.set(true)
+      xml.required.set(true)
+      sarif.required.set(true)
+      md.required.set(true)
+    }
+  }
+
+  dependencies {
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detektVersion")
   }
 }
 
