@@ -111,6 +111,8 @@ dependencies {
 
     testFramework(TestFrameworkType.Platform, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
     testFramework(TestFrameworkType.Plugin.Java, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
+
+    pluginVerifier(version = "1.383") // Workaround to fix OutOfMemory (MP-7366)
   }
 
   kover(project(":aem-intellij-common"))
@@ -324,6 +326,8 @@ subprojects {
 
       testFramework(TestFrameworkType.Platform, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
       testFramework(TestFrameworkType.Plugin.Java, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
+
+      pluginVerifier(version = "1.383") // Workaround to fix OutOfMemory (MP-7366)
     }
   }
 }
