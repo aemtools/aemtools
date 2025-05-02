@@ -6,8 +6,8 @@ fun properties(key: String) = project.findProperty(key).toString()
 plugins {
   java
   kotlin("jvm")
-  id("org.jetbrains.intellij")
-  id("org.jetbrains.grammarkit") version "2022.3.1"
+  id("org.jetbrains.intellij.platform.module")
+  id("org.jetbrains.grammarkit") version "2022.3.2.2"
   id("org.jetbrains.kotlinx.kover")
 }
 
@@ -22,7 +22,7 @@ buildscript {
 
 grammarKit {
   // Version of IntelliJ patched JFlex (see the link below), Default is 1.7.0-1
-  jflexRelease.set("1.7.0-1")
+  //jflexRelease.set("1.7.0-1")
 }
 
 dependencies {
@@ -38,91 +38,93 @@ configure<SourceSetContainer> {
 
 tasks {
 
-  task<GenerateLexerTask>("generateCdLexer") {
+  register<GenerateLexerTask>("generateCdLexer") {
     group = "grammar"
     sourceFile.set(file(file("src/main/flex/Htl.flex")))
-    targetDir.set("src/main/gen/com/aemtools/lang/htl/lexer")
-    targetClass.set("_HtlLexer")
+    targetOutputDir.set(file("src/main/gen/com/aemtools/lang/htl/lexer"))
+    //targetClass.set("_HtlLexer")
     purgeOldFiles.set(true)
   }
 
-  task<GenerateLexerTask>("generateHtlLexer") {
+  register<GenerateLexerTask>("generateHtlLexer") {
     group = "grammar"
     sourceFile.set(file("src/main/flex/_ClientlibDeclarationLexer.flex"))
-    targetDir.set("src/main/gen/com/aemtools/lang/clientlib")
-    targetClass.set("_ClientlibDeclarationLexer")
+    targetOutputDir.set(file("src/main/gen/com/aemtools/lang/clientlib"))
+    //targetClass.set("_ClientlibDeclarationLexer")
     purgeOldFiles.set(true)
   }
 
-  task<GenerateLexerTask>("generateJpLexer") {
+  register<GenerateLexerTask>("generateJpLexer") {
     group = "grammar"
     sourceFile.set(file("src/main/flex/JcrPropertyLexer.flex"))
-    targetDir.set("src/main/gen/com/aemtools/lang/jcrproperty")
-    targetClass.set("_JcrPropertyLexer")
+    targetOutputDir.set(file("src/main/gen/com/aemtools/lang/jcrproperty"))
+    //targetClass.set("_JcrPropertyLexer")
     purgeOldFiles.set(true)
   }
 
-  task<GenerateLexerTask>("generateElLexer") {
+  register<GenerateLexerTask>("generateElLexer") {
     group = "grammar"
     sourceFile.set(file("src/main/flex/el.flex"))
-    targetDir.set("src/main/gen/com/aemtools/lang/el")
-    targetClass.set("_ElLexer")
+    targetOutputDir.set(file("src/main/gen/com/aemtools/lang/el"))
+    //targetClass.set("_ElLexer")
     purgeOldFiles.set(true)
   }
 
-  task<GenerateParserTask>("generateHtlPsiAndParser") {
+  register<GenerateParserTask>("generateHtlPsiAndParser") {
     group = "grammar"
     sourceFile.set(file("src/main/bnf/Htl.bnf"))
-    targetRoot.set("src/main/gen")
+    targetRootOutputDir.set(file("src/main/gen"))
     pathToParser.set("/com/aemtools/lang/htl/HtlParser.java")
     pathToPsiRoot.set("/com/aemtools/lang/htl/psi")
     purgeOldFiles.set(true)
   }
 
-  task<GenerateParserTask>("generateCdPsiAndParser") {
+  register<GenerateParserTask>("generateCdPsiAndParser") {
     group = "grammar"
     sourceFile.set(file("src/main/bnf/clientlibdeclaration.bnf"))
-    targetRoot.set("src/main/gen")
+    targetRootOutputDir.set(file("src/main/gen"))
     pathToParser.set("/com/aemtools/lang/clientlib/ClientlibDeclarationParser.java")
     pathToPsiRoot.set("/com/aemtools/lang/clientlib/psi")
     purgeOldFiles.set(true)
   }
 
-  task<GenerateParserTask>("generateJpPsiAndParser") {
+  register<GenerateParserTask>("generateJpPsiAndParser") {
     group = "grammar"
     sourceFile.set(file("src/main/bnf/jcrproperty.bnf"))
-    targetRoot.set("src/main/gen")
+    targetRootOutputDir.set(file("src/main/gen"))
     pathToParser.set("/com/aemtools/lang/jcrproperty/JcrPropertyParser.java")
     pathToPsiRoot.set("/com/aemtools/lang/jcrproperty/psi")
     purgeOldFiles.set(true)
   }
 
-  task<GenerateParserTask>("generateElPsiAndParser") {
+  register<GenerateParserTask>("generateElPsiAndParser") {
     group = "grammar"
     sourceFile.set(file("src/main/bnf/el.bnf"))
-    targetRoot.set("src/main/gen")
+    targetRootOutputDir.set(file("src/main/gen"))
     pathToParser.set("/com/aemtools/lang/el/ElParser.java")
     pathToPsiRoot.set("/com/aemtools/lang/el/psi")
     purgeOldFiles.set(true)
   }
 
-  task("generateGrammar") {
+  register("generateGrammar") {
     group = "grammar"
-    dependsOn.run {
-      add("generateCdLexer")
-      add("generateCdPsiAndParser")
+    dependsOn(
+        "generateCdLexer",
+        "generateCdPsiAndParser",
 
-      add("generateHtlLexer")
-      add("generateHtlPsiAndParser")
+        "generateHtlLexer",
+        "generateHtlPsiAndParser",
 
-      add("generateJpLexer")
-      add("generateJpPsiAndParser")
+        "generateJpLexer",
+        "generateJpPsiAndParser",
 
-      add("generateElLexer")
-      add("generateElPsiAndParser")
-    }
+        "generateElLexer",
+        "generateElPsiAndParser"
+    )
   }
 
-  getTasksByName("compileKotlin", true).first()
-    .dependsOn("generateGrammar")
+  compileKotlin {
+    dependsOn("generateGrammar")
+  }
+
 }

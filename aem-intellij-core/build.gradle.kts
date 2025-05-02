@@ -1,6 +1,3 @@
-import org.jetbrains.changelog.date
-import org.jetbrains.changelog.markdownToHTML
-
 val kotlinVersion: String by extra
 val gsonVersion: String by extra
 val apacheCommonsVersion: String by extra
@@ -17,26 +14,46 @@ fun properties(key: String) = project.findProperty(key).toString()
 plugins {
   java
   kotlin("jvm")
-  id("org.jetbrains.intellij")
+  id("org.jetbrains.intellij.platform.module")
   id("org.jetbrains.changelog")
   id("org.jetbrains.kotlinx.kover")
 }
 
+/*intellijPlatform {
+  buildSearchableOptions = false
+  pluginConfiguration {
+    name = properties("pluginName")
+  }
+  pluginVerification {
+    subsystemsToCheck = VerifyPluginTask.Subsystems.ALL
+    ides {
+      select {
+        types.set(listOf(IntelliJPlatformType.IntellijIdeaCommunity))
+        channels.set(listOf(ProductRelease.Channel.RELEASE))
+        sinceBuild = pluginSinceBuild
+        untilBuild = pluginUntilBuild
+      }
+    }
+  }
+}*/
+
+/*
 intellij {
   pluginName.set(properties("pluginName"))
   version.set(platformVersion)
   type.set(platformType)
   plugins.set(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
 }
+*/
 
-changelog {
+/*changelog {
   version.set(pluginVersion)
   path.set("${project.parent?.projectDir}/CHANGELOG.md")
   header.set(provider { "[$version] - ${date()}" })
   itemPrefix.set("-")
   keepUnreleasedSection.set(true)
   groups.set(listOf("New features", "Bug fixes", "Maintenance"))
-}
+}*/
 
 dependencies {
   implementation(project(":aem-intellij-common"))
@@ -49,34 +66,47 @@ dependencies {
   implementation("org.apache.commons:commons-text:$apacheCommonsTextVersion")
 
   testImplementation(project(":test-framework"))
+
+  /*intellijPlatform {
+    intellijIdeaCommunity(platformVersion)
+    bundledPlugins(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
+    pluginModule(implementation(project(":aem-intellij-common")))
+    pluginModule(implementation(project(":aem-intellij-core")))
+    pluginModule(implementation(project(":aem-intellij-lang")))
+    pluginModule(implementation(project(":aem-intellij-inspection")))
+    pluginModule(implementation(project(":aem-intellij-index")))
+
+    testFramework(TestFrameworkType.Platform)
+  }*/
 }
 
 tasks {
 
-  patchPluginXml {
-    version.set(pluginVersion)
+  /*patchPluginXml {
+    version = pluginVersion
     sinceBuild.set(pluginSinceBuild)
     untilBuild.set(pluginUntilBuild)
 
     project.parent?.projectDir?.let {
       pluginDescription.set(
-        it.resolve("README.md").readText().lines().run {
-          val startMarkerText = "<!-- Plugin description -->"
-          val endMarkerText = "<!-- Plugin description end -->"
+          it.resolve("README.md").readText().lines().run {
+            val startMarkerText = "<!-- Plugin description -->"
+            val endMarkerText = "<!-- Plugin description end -->"
 
-          if (!containsAll(listOf(startMarkerText, endMarkerText))) {
-            throw GradleException("Plugin description section not found in README.md:\n$startMarkerText ... $endMarkerText")
-          }
-          subList(indexOf(startMarkerText) + 1, indexOf(endMarkerText))
-        }.joinToString("\n").run { markdownToHTML(this) }
+            if (!containsAll(listOf(startMarkerText, endMarkerText))) {
+              throw GradleException("Plugin description section not found in README.md:\n$startMarkerText ... $endMarkerText")
+            }
+            subList(indexOf(startMarkerText) + 1, indexOf(endMarkerText))
+          }.joinToString("\n").run { markdownToHTML(this) }
       )
     }
     changeNotes.set(provider { changelog.getLatest().toHTML() })
 
-    pluginXmlFiles.set(fileTree("$projectDir/src/main/resources/META-INF").filter { it.isFile() }.files)
-  }
+    inputFile.set(file("$projectDir/src/main/resources/META-INF/plugin.xml"))
+    //pluginXmlFiles.set(fileTree("$projectDir/src/main/resources/META-INF").filter { it.isFile() }.files)
+  }*/
 
-  buildPlugin {
+ /* buildPlugin {
     archiveFileName.set("$pluginGroup-$pluginVersion.zip")
 
     doLast {
@@ -88,18 +118,15 @@ tasks {
         }
       }
     }
-  }
+  }*/
 
-  listProductsReleases {
-    enabled = true
-    types.set(listOf("IC"))
-  }
-  runPluginVerifier {
+  /*runPluginVerifier {
     enabled = true
     subsystemsToCheck.set("without-android")
-    ideVersions.set(listOf("IC-2022.3.3", "IC-2025.1"))
+    ideVersions.set(listOf("IC-2024.3", "IC-2025.1"))
     dependsOn(listProductsReleases)
-  }
-  verifyPlugin { enabled = true }
+  }*/
+
+  //verifyPlugin { enabled = true }
 
 }

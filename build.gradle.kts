@@ -1,5 +1,12 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import kotlinx.kover.gradle.plugin.dsl.MetricType
+import org.jetbrains.changelog.date
+import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.intellij.platform.gradle.Constants
+import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
+import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+import org.jetbrains.intellij.platform.gradle.models.ProductRelease
+import org.jetbrains.intellij.platform.gradle.tasks.VerifyPluginTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 fun properties(key: String) = project.findProperty(key).toString()
@@ -13,12 +20,15 @@ val javaVersion: String by extra
 val kotlinVersion: String by extra
 val rootProjectDirectory = projectDir
 val rootProject = project
+val pluginSinceBuild: String by extra
+val pluginUntilBuild: String by extra
 
 plugins {
   id("java")
-  kotlin("jvm") version "1.7.10"
-  id("org.jetbrains.intellij") version "1.13.2"
-  id("org.jetbrains.changelog") version "1.3.1" apply false
+  kotlin("jvm") version "1.9.20"
+  id("org.jetbrains.intellij.platform") version "2.5.0"
+  id("org.jetbrains.intellij.platform.migration") version "2.5.0"
+  id("org.jetbrains.changelog") version "1.3.1"
   id("io.gitlab.arturbosch.detekt") version "1.19.0"
   id("org.jetbrains.kotlinx.kover") version "0.7.0-Alpha"
 }
@@ -28,6 +38,9 @@ version = pluginVersion
 
 repositories {
   mavenCentral()
+  intellijPlatform {
+    defaultRepositories()
+  }
 }
 
 java {
@@ -39,12 +52,70 @@ java {
   }
 }
 
-intellij {
-  pluginName.set(properties("pluginName"))
-  version.set(platformVersion)
-  type.set(platformType)
-  plugins.set(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
+
+intellijPlatform {
+  buildSearchableOptions = false
+  //instrumentCode = true
+  pluginConfiguration {
+    name = properties("pluginName")
+    version = properties("pluginVersion")
+
+    ideaVersion {
+      sinceBuild = pluginSinceBuild
+      untilBuild = pluginUntilBuild
+    }
+
+    description = providers.fileContents(rootProject.layout.projectDirectory.file("README.md")).asText.map {
+      val start = "<!-- Plugin description -->"
+      val end = "<!-- Plugin description end -->"
+
+      with(it.lines()) {
+        if (!containsAll(listOf(start, end))) {
+          throw GradleException("Plugin description section not found in README.md:\n$start ... $end")
+        }
+        subList(indexOf(start) + 1, indexOf(end)).joinToString("\n").let(::markdownToHTML)
+      }
+    }
+    changeNotes = rootProject.changelog.getLatest().toHTML()
+  }
+  pluginVerification {
+    subsystemsToCheck = VerifyPluginTask.Subsystems.ALL
+    ides {
+      select {
+        types.set(listOf(IntelliJPlatformType.IntellijIdeaCommunity))
+        channels.set(listOf(ProductRelease.Channel.RELEASE))
+        sinceBuild = pluginSinceBuild
+        untilBuild = pluginUntilBuild
+      }
+    }
+  }
 }
+
+changelog {
+  version.set(pluginVersion)
+  path.set("${project.projectDir}/CHANGELOG.md")
+  header.set(provider { "[$version] - ${date()}" })
+  itemPrefix.set("-")
+  keepUnreleasedSection.set(true)
+  groups.set(listOf("New features", "Bug fixes", "Maintenance"))
+}
+
+dependencies {
+  intellijPlatform {
+    intellijIdeaCommunity(platformVersion)
+    bundledPlugins(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
+
+    pluginModule(implementation(project(":aem-intellij-common")))
+    pluginModule(implementation(project(":aem-intellij-core")))
+    pluginModule(implementation(project(":aem-intellij-lang")))
+    pluginModule(implementation(project(":aem-intellij-inspection")))
+    pluginModule(implementation(project(":aem-intellij-index")))
+
+    testFramework(TestFrameworkType.Platform, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
+    testFramework(TestFrameworkType.Plugin.Java, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
+  }
+}
+
 
 kover {
   disabledForProject = false
@@ -81,20 +152,9 @@ tasks {
     gradleVersion = properties("gradleVersion")
   }
 
-  buildSearchableOptions {
-    enabled = false
+  patchPluginXml {
+    inputFile.set(file(file("$projectDir/aem-intellij-core/src/main/resources/META-INF/plugin.xml")))
   }
-
-  runIde {
-    configDir.set(file("${project(":aem-intellij-core").buildDir}/idea-sandbox/config"))
-    pluginsDir.set(file("${project(":aem-intellij-core").buildDir}/idea-sandbox/plugins"))
-    systemDir.set(file("${project(":aem-intellij-core").buildDir}/idea-sandbox/system"))
-  }
-
-  buildSearchableOptions { enabled = false }
-  runPluginVerifier { enabled = false }
-  listProductsReleases { enabled = false }
-  verifyPlugin { enabled = false }
 }
 
 dependencies {
@@ -109,7 +169,6 @@ buildscript {
 
   repositories {
     mavenCentral()
-    maven { url = uri("https://www.jetbrains.com/intellij-repository/releases") }
 
     dependencies {
       classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.19.0")
@@ -125,7 +184,6 @@ allprojects {
 
   repositories {
     mavenCentral()
-    maven { url = uri("https://www.jetbrains.com/intellij-repository/releases") }
   }
 
   detekt {
@@ -160,8 +218,8 @@ allprojects {
 
   tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = javaVersion
-    kotlinOptions.apiVersion = "1.7"
-    kotlinOptions.languageVersion = "1.7"
+    kotlinOptions.apiVersion = "1.9"
+    kotlinOptions.languageVersion = "1.9"
   }
 
   tasks.withType<Test>().configureEach {
@@ -178,6 +236,8 @@ allprojects {
     }.projectDir.absolutePath + "/src/main/resources/java"
     logger.lifecycle("Test java directory: $testJavaDir")
     systemProperty("test.java.dir", testJavaDir)
+    systemProperty("idea.log.debug.categories", "com.my.plugin.ui,com.my.plugin.backend")
+    systemProperty("idea.split.test.logs", "true")
   }
 
   tasks.withType<Detekt>().configureEach {
@@ -187,26 +247,18 @@ allprojects {
 
 subprojects {
   apply {
-    plugin("org.jetbrains.intellij")
+    plugin("org.jetbrains.intellij.platform.module")
   }
 
   repositories {
     mavenCentral()
-    maven { url = uri("https://www.jetbrains.com/intellij-repository/releases") }
+    intellijPlatform {
+      defaultRepositories()
+    }
   }
 
-  intellij {
-    pluginName.set(properties("pluginName"))
-    version.set(platformVersion)
-    type.set(platformType)
-    plugins.set(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
-  }
-
-  tasks {
-    buildSearchableOptions { enabled = false }
-    runPluginVerifier { enabled = false }
-    listProductsReleases { enabled = false }
-    verifyPlugin { enabled = false }
+  intellijPlatform {
+    buildSearchableOptions = false
   }
 
   val kotlinVersion: String by extra
@@ -264,14 +316,16 @@ subprojects {
       exclude(group = "org.junit.platform")
     }
 
+    intellijPlatform {
+      intellijIdeaCommunity(platformVersion)
+      bundledPlugins(platformPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
+
+      testFramework(TestFrameworkType.Platform, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
+      testFramework(TestFrameworkType.Plugin.Java, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
+    }
+
   }
 
-  // gross patch to address windows "too long classpath" issue
-  /*if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-    project.apply {
-      from("${project.rootProject.projectDir}/buildSrc/win-patch.gradle.kts")
-    }
-  }*/
 }
 
 apply {
