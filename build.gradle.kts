@@ -1,5 +1,5 @@
 import io.gitlab.arturbosch.detekt.Detekt
-import kotlinx.kover.gradle.plugin.dsl.MetricType
+import kotlinx.kover.gradle.plugin.dsl.CoverageUnit
 import org.jetbrains.changelog.date
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.Constants
@@ -29,7 +29,7 @@ plugins {
   id("org.jetbrains.intellij.platform") version "2.5.0"
   id("org.jetbrains.changelog") version "1.3.1"
   id("io.gitlab.arturbosch.detekt") version "1.23.5"
-  id("org.jetbrains.kotlinx.kover") version "0.7.0-Alpha"
+  id("org.jetbrains.kotlinx.kover") version "0.9.1"
 }
 
 group = pluginGroup
@@ -123,29 +123,30 @@ dependencies {
 }
 
 kover {
-  disabledForProject = false
-  useKoverTool()
-}
-
-koverReport {
-  filters {
-    excludes {
-      classes("generated.psi.impl.*", "com.aemtools.test.*")
+  currentProject {
+    instrumentation {
+      disabledForTestTasks.add("test")
     }
   }
 
-  html {
-    title = "AEM Tool test coverage merged report"
-    onCheck = true
-    setReportDir(layout.buildDirectory.dir("merged-report/html"))
-  }
+  reports {
+    total {
+      html {
+        title = "AEM Tool test coverage merged report"
+        onCheck = true
+        htmlDir = layout.buildDirectory.dir("merged-report/html")
+      }
 
-  verify {
-    onCheck = true
-    rule {
-      bound {
-        metric = MetricType.LINE
-        minValue = 80
+      filters {
+        excludes {
+          classes("generated.psi.impl.*", "com.aemtools.test.*")
+        }
+      }
+
+      verify {
+        rule {
+          minBound(80, CoverageUnit.LINE)
+        }
       }
     }
   }
