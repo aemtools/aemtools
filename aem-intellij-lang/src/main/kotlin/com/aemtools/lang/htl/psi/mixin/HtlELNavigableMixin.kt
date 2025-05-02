@@ -10,8 +10,8 @@ import com.intellij.psi.NavigatablePsiElement
  */
 abstract class HtlELNavigableMixin(node: ASTNode)
   : ASTWrapperPsiElement(node), NavigatablePsiElement, ContributedReferenceHost {
-  override fun canNavigate(): Boolean = super.canNavigate()
+  override fun canNavigate(): Boolean = super<ASTWrapperPsiElement>.canNavigate()
 
-  override fun canNavigateToSource(): Boolean = super.canNavigateToSource()
+  override fun canNavigateToSource(): Boolean = super<ASTWrapperPsiElement>.canNavigateToSource()
 
 }

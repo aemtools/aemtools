@@ -11,9 +11,10 @@ import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnActionEvent
+import com.intellij.openapi.application.ex.ApplicationManagerEx
 import com.intellij.openapi.options.ShowSettingsUtil
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.startup.StartupActivity
+import com.intellij.openapi.startup.ProjectActivity
 import com.intellij.psi.search.FilenameIndex
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.xml.XmlFile
@@ -24,8 +25,15 @@ import com.intellij.psi.xml.XmlTag
  *
  * @author Kostiantyn Diachenko
  */
-class VersionsDiscoveringStartupActivity : StartupActivity {
-  override fun runActivity(project: Project) {
+class VersionsDiscoveringStartupActivity : ProjectActivity {
+  override suspend fun execute(project: Project) {
+    val application = ApplicationManagerEx.getApplicationEx()
+    if (application == null
+        || application.isUnitTestMode
+        || application.isHeadlessEnvironment) {
+      return
+    }
+
     val aemProjectSettings = AemProjectSettings.getInstance(project)
     if (aemProjectSettings.isInitialized()) {
       return

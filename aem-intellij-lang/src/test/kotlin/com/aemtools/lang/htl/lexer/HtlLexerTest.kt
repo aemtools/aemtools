@@ -52,6 +52,6 @@ class HtlLexerTest : LexerBaseTest(), HtlTestCase {
   fun testComment() = doTest()
   fun testCommentMultiline() = doTest()
 
-  override fun getDirPath(): String? = "com.aemtools.lang.htl.lexer"
+  override fun getDirPath(): String = "com.aemtools.lang.htl.lexer"
 
 }

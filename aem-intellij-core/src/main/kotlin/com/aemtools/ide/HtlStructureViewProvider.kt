@@ -10,7 +10,6 @@ import com.intellij.ide.structureView.impl.common.PsiTreeElementBase
 import com.intellij.lang.LanguageStructureViewBuilder
 import com.intellij.lang.PsiStructureViewFactory
 import com.intellij.openapi.editor.Editor
-import com.intellij.openapi.fileEditor.FileEditor
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
@@ -24,7 +23,7 @@ class HtlStructureViewProvider : PsiStructureViewFactory {
     val htmlFile = psiFile.getHtmlFile() as? HtmlFileImpl
     var htmlStructureViewBuilder: StructureViewBuilder? = null
     if (htmlFile != null) {
-      htmlStructureViewBuilder = LanguageStructureViewBuilder.INSTANCE.getStructureViewBuilder(htmlFile)
+      htmlStructureViewBuilder = LanguageStructureViewBuilder.getInstance().getStructureViewBuilder(htmlFile)
     }
     return object : TreeBasedStructureViewBuilder() {
       override fun createStructureViewModel(editor: Editor?): StructureViewModel {

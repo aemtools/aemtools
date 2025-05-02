@@ -9,8 +9,8 @@ import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.openapi.vfs.impl.local.LocalFileSystemBase
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFileFactory
@@ -74,7 +74,7 @@ object OpenApiUtil {
    * @return instance of VirtualFile, *null* if no file was found by given path
    */
   fun findFileByPath(path: String): VirtualFile? {
-    return LocalFileSystemBase.getInstance().findFileByPath(path)
+    return LocalFileSystem.getInstance().findFileByPath(path)
   }
 
   /**

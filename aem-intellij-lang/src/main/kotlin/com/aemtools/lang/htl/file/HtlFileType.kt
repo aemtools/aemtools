@@ -22,7 +22,7 @@ object HtlFileType
     FileTypeIdentifiableByVirtualFile {
 
   init {
-    FileTypeEditorHighlighterProviders.INSTANCE.addExplicitExtension(this)
+    FileTypeEditorHighlighterProviders.getInstance().addExplicitExtension(this)
     { project, _, virtualFile, colors ->
       HtlTemplateHighlighter(project, virtualFile, colors)
     }

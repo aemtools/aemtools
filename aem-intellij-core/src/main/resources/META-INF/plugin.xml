@@ -224,7 +224,7 @@
                              parentId="language"
                              displayName="AEM Project Configuration"
                              instance="com.aemtools.lang.settings.ui.AemProjectSettingsConfigurable"/>
-        <postStartupActivity implementation="com.aemtools.lang.settings.init.VersionsDiscoveringStartupActivity"/>
+        <backgroundPostStartupActivity implementation="com.aemtools.lang.settings.init.VersionsDiscoveringStartupActivity"/>
 
         <projectService
                 serviceInterface="com.aemtools.inspection.service.IInspectionService"
@@ -242,7 +242,7 @@
                 file="com/aemtools/ide/colorscheme/HtlDarcula.xml"/>
         <colorSettingsPage implementation="com.aemtools.ide.htl.HtlColorsAndFontsPage"/>
 
-        <postStartupActivity implementation="com.aemtools.init.AemIntellijStartupActivity"/>
+        <backgroundPostStartupActivity implementation="com.aemtools.init.AemIntellijStartupActivity"/>
 
         <errorHandler implementation="com.aemtools.diagnostics.error.handler.GitHubErrorHandler"/>
 

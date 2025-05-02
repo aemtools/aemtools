@@ -1,9 +1,7 @@
 package com.aemtools.test.sdk
 
-import com.intellij.openapi.projectRoots.Sdk
+import com.intellij.pom.java.LanguageLevel
 import com.intellij.testFramework.IdeaTestUtil
-import java.nio.file.Paths
-import kotlin.io.path.absolutePathString
 
 /**
  * @author Kostiantyn Diachenko
@@ -11,11 +9,10 @@ import kotlin.io.path.absolutePathString
 class TestSdk {
 
   companion object {
-    private val TEST_SDK_JAVA_11: Sdk = IdeaTestUtil.createMockJdk(
-        "mockedTestJava11",
-        Paths.get(System.getProperty("test.java.dir")).absolutePathString())
+    @JvmStatic
+    fun getSdk() = IdeaTestUtil.getMockJdk11()
 
     @JvmStatic
-    fun getSdk() = TEST_SDK_JAVA_11
+    fun getSdkLanguageLevel() = LanguageLevel.JDK_11
   }
 }

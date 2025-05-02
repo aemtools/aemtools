@@ -10,8 +10,8 @@ import com.aemtools.lang.util.isHtlAttribute
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
+import com.intellij.psi.util.startOffset
 import com.intellij.psi.xml.XmlAttribute
-import com.intellij.refactoring.suggested.startOffset
 
 /**
  * Annotates data-sly-set as supported HTL attribute in HTL 1.3.
