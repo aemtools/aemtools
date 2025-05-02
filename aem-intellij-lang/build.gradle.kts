@@ -69,7 +69,7 @@ tasks {
     pathToPsiRoot.set("/com/aemtools/lang/clientlib/psi")
     purgeOldFiles.set(true)
 
-    mustRunAfter(generateCdLexer)
+    mustRunAfter(generateHtlPsiAndParser)
   }
 
   val generateJpPsiAndParser by register<GenerateParserTask>("generateJpPsiAndParser") {
@@ -80,7 +80,7 @@ tasks {
     pathToPsiRoot.set("/com/aemtools/lang/jcrproperty/psi")
     purgeOldFiles.set(true)
 
-    mustRunAfter(generateJpLexer)
+    mustRunAfter(generateCdPsiAndParser)
   }
 
   val generateElPsiAndParser by register<GenerateParserTask>("generateElPsiAndParser") {
@@ -91,22 +91,20 @@ tasks {
     pathToPsiRoot.set("/com/aemtools/lang/el/psi")
     purgeOldFiles.set(true)
 
-    mustRunAfter(generateElLexer)
+    mustRunAfter(generateJpPsiAndParser)
   }
 
   val generateGrammar by register("generateGrammar") {
     group = "grammar"
     dependsOn(
         generateCdLexer,
-        generateCdPsiAndParser,
-
         generateHtlLexer,
-        generateHtlPsiAndParser,
-
         generateJpLexer,
-        generateJpPsiAndParser,
-
         generateElLexer,
+
+        generateCdPsiAndParser,
+        generateHtlPsiAndParser,
+        generateJpPsiAndParser,
         generateElPsiAndParser
     )
   }
