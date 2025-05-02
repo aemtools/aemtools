@@ -22,89 +22,97 @@ configure<SourceSetContainer> {
 
 tasks {
 
-  register<GenerateLexerTask>("generateCdLexer") {
+  val generateCdLexer by register<GenerateLexerTask>("generateCdLexer") {
     group = "grammar"
     sourceFile.set(file(file("src/main/flex/Htl.flex")))
     targetOutputDir.set(file("src/main/gen/com/aemtools/lang/htl/lexer"))
     purgeOldFiles.set(true)
   }
 
-  register<GenerateLexerTask>("generateHtlLexer") {
+  val generateHtlLexer by register<GenerateLexerTask>("generateHtlLexer") {
     group = "grammar"
     sourceFile.set(file("src/main/flex/_ClientlibDeclarationLexer.flex"))
     targetOutputDir.set(file("src/main/gen/com/aemtools/lang/clientlib"))
     purgeOldFiles.set(true)
   }
 
-  register<GenerateLexerTask>("generateJpLexer") {
+  val generateJpLexer by register<GenerateLexerTask>("generateJpLexer") {
     group = "grammar"
     sourceFile.set(file("src/main/flex/JcrPropertyLexer.flex"))
     targetOutputDir.set(file("src/main/gen/com/aemtools/lang/jcrproperty"))
     purgeOldFiles.set(true)
   }
 
-  register<GenerateLexerTask>("generateElLexer") {
+  val generateElLexer by register<GenerateLexerTask>("generateElLexer") {
     group = "grammar"
     sourceFile.set(file("src/main/flex/el.flex"))
     targetOutputDir.set(file("src/main/gen/com/aemtools/lang/el"))
     purgeOldFiles.set(true)
   }
 
-  register<GenerateParserTask>("generateHtlPsiAndParser") {
+  val generateHtlPsiAndParser by register<GenerateParserTask>("generateHtlPsiAndParser") {
     group = "grammar"
     sourceFile.set(file("src/main/bnf/Htl.bnf"))
     targetRootOutputDir.set(file("src/main/gen"))
     pathToParser.set("/com/aemtools/lang/htl/HtlParser.java")
     pathToPsiRoot.set("/com/aemtools/lang/htl/psi")
     purgeOldFiles.set(true)
+
+    mustRunAfter(generateHtlLexer)
   }
 
-  register<GenerateParserTask>("generateCdPsiAndParser") {
+  val generateCdPsiAndParser by register<GenerateParserTask>("generateCdPsiAndParser") {
     group = "grammar"
     sourceFile.set(file("src/main/bnf/clientlibdeclaration.bnf"))
     targetRootOutputDir.set(file("src/main/gen"))
     pathToParser.set("/com/aemtools/lang/clientlib/ClientlibDeclarationParser.java")
     pathToPsiRoot.set("/com/aemtools/lang/clientlib/psi")
     purgeOldFiles.set(true)
+
+    mustRunAfter(generateCdLexer)
   }
 
-  register<GenerateParserTask>("generateJpPsiAndParser") {
+  val generateJpPsiAndParser by register<GenerateParserTask>("generateJpPsiAndParser") {
     group = "grammar"
     sourceFile.set(file("src/main/bnf/jcrproperty.bnf"))
     targetRootOutputDir.set(file("src/main/gen"))
     pathToParser.set("/com/aemtools/lang/jcrproperty/JcrPropertyParser.java")
     pathToPsiRoot.set("/com/aemtools/lang/jcrproperty/psi")
     purgeOldFiles.set(true)
+
+    mustRunAfter(generateJpLexer)
   }
 
-  register<GenerateParserTask>("generateElPsiAndParser") {
+  val generateElPsiAndParser by register<GenerateParserTask>("generateElPsiAndParser") {
     group = "grammar"
     sourceFile.set(file("src/main/bnf/el.bnf"))
     targetRootOutputDir.set(file("src/main/gen"))
     pathToParser.set("/com/aemtools/lang/el/ElParser.java")
     pathToPsiRoot.set("/com/aemtools/lang/el/psi")
     purgeOldFiles.set(true)
+
+    mustRunAfter(generateElLexer)
   }
 
-  register("generateGrammar") {
+  val generateGrammar by register("generateGrammar") {
     group = "grammar"
     dependsOn(
-        "generateCdLexer",
-        "generateCdPsiAndParser",
+        generateCdLexer,
+        generateCdPsiAndParser,
 
-        "generateHtlLexer",
-        "generateHtlPsiAndParser",
+        generateHtlLexer,
+        generateHtlPsiAndParser,
 
-        "generateJpLexer",
-        "generateJpPsiAndParser",
+        generateJpLexer,
+        generateJpPsiAndParser,
 
-        "generateElLexer",
-        "generateElPsiAndParser"
+        generateElLexer,
+        generateElPsiAndParser
     )
   }
 
   compileKotlin {
-    dependsOn("generateGrammar")
+    dependsOn(generateGrammar)
   }
 
 }
