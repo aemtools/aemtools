@@ -3,8 +3,12 @@ All notable changes to this project will be documented in this file.
 
 ## [1.0.7]
 [1.0.7]: https://github.com/aemtools/aemtools/tree/v1.0.7
-### New features
-- Add support of 2025.1 IDEA version
+### Maintenance
+- Add support of 2024.3+ IDEA versions
+- Migrate to Intellij Platform Gradle Plugin 2.5.0
+- Update Detekt version to 1.23.5
+- Update Kover version to 0.9.1
+- Fix deprecations
 
 ## [1.0.6]
 [1.0.6]: https://github.com/aemtools/aemtools/tree/v1.0.6
