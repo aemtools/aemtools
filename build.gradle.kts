@@ -86,6 +86,15 @@ intellijPlatform {
         untilBuild = pluginUntilBuild
       }
     }
+    failureLevel.set(
+        setOf(
+            // Temporarily disabled due to https://platform.jetbrains.com/t/plugin-verifier-fails-with-plugin-com-intellij-modules-json-not-declared-as-a-plugin-dependency/580
+            // TODO: Uncomment when https://youtrack.jetbrains.com/issue/MP-7366 is fixed
+            // VerifyPluginTask.FailureLevel.COMPATIBILITY_PROBLEMS,
+            VerifyPluginTask.FailureLevel.INTERNAL_API_USAGES,
+            VerifyPluginTask.FailureLevel.INVALID_PLUGIN,
+        )
+    )
   }
 }
 
@@ -112,7 +121,10 @@ dependencies {
     testFramework(TestFrameworkType.Platform, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
     testFramework(TestFrameworkType.Plugin.Java, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
 
-    pluginVerifier(version = "1.383") // Workaround to fix OutOfMemory (MP-7366)
+    // Use a specific version of the verifier
+    // TODO: remove when https://youtrack.jetbrains.com/issue/MP-7366 is fixed
+    // TODO: track updates https://platform.jetbrains.com/t/plugin-verifier-fails-with-plugin-com-intellij-modules-json-not-declared-as-a-plugin-dependency/580
+    pluginVerifier(version = "1.383")
   }
 
   kover(project(":aem-intellij-common"))
@@ -327,7 +339,10 @@ subprojects {
       testFramework(TestFrameworkType.Platform, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
       testFramework(TestFrameworkType.Plugin.Java, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
 
-      pluginVerifier(version = "1.383") // Workaround to fix OutOfMemory (MP-7366)
+      // Use a specific version of the verifier
+      // TODO: remove when https://youtrack.jetbrains.com/issue/MP-7366 is fixed
+      // TODO: track updates https://platform.jetbrains.com/t/plugin-verifier-fails-with-plugin-com-intellij-modules-json-not-declared-as-a-plugin-dependency/580
+      pluginVerifier(version = "1.383")
     }
   }
 }
