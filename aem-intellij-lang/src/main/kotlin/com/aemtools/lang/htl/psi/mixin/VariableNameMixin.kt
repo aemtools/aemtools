@@ -68,6 +68,7 @@ abstract class VariableNameMixin(node: ASTNode)
     return (other as? VariableNameMixin)?.variableName() == variableName()
   }
 
+  //fixme
   override fun hashCode(): Int {
     return variableName().hashCode()
   }

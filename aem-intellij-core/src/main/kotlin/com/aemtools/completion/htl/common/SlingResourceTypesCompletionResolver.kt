@@ -5,7 +5,7 @@ import com.aemtools.index.search.AemComponentSearch
 import com.intellij.codeInsight.completion.PrioritizedLookupElement
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.openapi.project.Project
-import org.apache.commons.lang3.StringUtils
+import org.apache.commons.text.similarity.LevenshteinDistance
 
 object SlingResourceTypesCompletionResolver {
 
@@ -30,7 +30,7 @@ object SlingResourceTypesCompletionResolver {
           }
 
   private fun calcPriority(lookupElement: LookupElement, myDirectory: String): Double {
-    return BASE_LINE - StringUtils.getLevenshteinDistance(lookupElement.lookupString, myDirectory)
+    return BASE_LINE - LevenshteinDistance.getDefaultInstance().apply(lookupElement.lookupString, myDirectory)
         .toDouble() / ONE_HUNDRED
   }
 }

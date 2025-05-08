@@ -33,8 +33,8 @@ output-reports:
 
 potential-bugs:
   active: true
-  DuplicateCaseInWhenExpression:
-    active: true
+  #DuplicateCaseInWhenExpression:
+  #  active: true
   EqualsAlwaysReturnsTrueOrFalse:
     active: false
   EqualsWithHashCodeExist:
@@ -67,7 +67,11 @@ exceptions:
   active: true
   ExceptionRaisedInUnexpectedLocation:
     active: false
-    methodNames: 'toString,hashCode,equals,finalize'
+    methodNames:
+      - toString
+      - hashCode
+      - equals
+      - finalize
   SwallowedException:
     active: false
   TooGenericExceptionCaught:
@@ -142,7 +146,7 @@ complexity:
     functionThreshold: 5
   LargeClass:
     threshold: 150
-  ComplexMethod:
+  CyclomaticComplexMethod:
     threshold: 10
   TooManyFunctions:
     thresholdInFiles: 30
@@ -167,8 +171,9 @@ complexity:
 formatting:
   active: true
   #useTabs: false
+  autoCorrect: false
   Indentation:
-    active: true
+    active: false
     indentSize: 2
   NoConsecutiveBlankLines:
     active: true
@@ -200,6 +205,50 @@ formatting:
   NoSemicolons:
     active: true
     autoCorrect: true
+  NoBlankLineBeforeRbrace:
+    active: false
+  Wrapping:
+    active: false
+  ArgumentListWrapping:
+    active: false
+  ParameterListWrapping:
+    active: false
+  NoLineBreakBeforeAssignment:
+    active: false
+  ChainWrapping:
+    active: false
+  FunctionStartOfBodySpacing:
+    active: false
+  ClassName:
+    active: false
+  EnumWrapping:
+    active: false
+  FunctionName:
+    active: false
+  IfElseBracing:
+    active: false
+  IfElseWrapping:
+    active: false
+  MultilineExpressionWrapping:
+    active: false
+  NoBlankLineInList:
+    active: false
+  NoConsecutiveComments:
+    active: false
+  NoEmptyFirstLineInClassBody:
+    active: false
+  NoSingleLineBlockCommentRule:
+    active: false
+  ParameterWrapping:
+    active: false
+  PropertyName:
+    active: false
+  PropertyWrapping:
+    active: false
+  StringTemplateIndent:
+    active: false
+  TryCatchFinallySpacing:
+    active: false
 
 style:
   active: true
@@ -210,21 +259,31 @@ style:
     active: false
   OptionalAbstractKeyword:
     active: true
-  OptionalWhenBraces:
+  BracesOnWhenStatements:
     active: false
   EqualsNullCall:
     active: false
   ForbiddenComment:
     active: true
-    values: 'TODO:,FIXME:,STOPSHIP:'
+    comments:
+      - reason: 'Forbidden FIXME todo marker in comment, please fix the problem.'
+        value: 'FIXME:'
+      - reason: 'Forbidden STOPSHIP todo marker in comment, please address the problem before shipping the code.'
+        value: 'STOPSHIP:'
+      - reason: 'Forbidden TODO todo marker in comment, please do the changes.'
+        value: 'TODO:'
   ForbiddenImport:
     active: false
-    imports: ''
+    imports: []
   ModifierOrder:
     active: true
   MagicNumber:
     active: true
-    ignoreNumbers: '-1,0,1,2'
+    ignoreNumbers:
+      - '-1'
+      - '0'
+      - '1'
+      - '2'
     ignoreHashCodeFunction: false
     ignorePropertyDeclaration: false
     ignoreAnnotation: false
@@ -282,7 +341,7 @@ naming:
     minimumVariableNameLength: 3
   ForbiddenClassName:
     active: false
-    forbiddenName: ''
+    forbiddenName: []
 
 comments:
   active: true

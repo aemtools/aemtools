@@ -5,10 +5,11 @@ import com.aemtools.test.fixture.HtlVersioningFixtureMixin
 import com.aemtools.test.fixture.JdkProjectDescriptor
 import com.aemtools.test.fixture.TestClassesMixin
 import com.aemtools.test.fixture.UberJarFixtureMixin
+import com.aemtools.test.sdk.TestSdk
 import com.intellij.codeInsight.completion.LightFixtureCompletionTestCase
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.openapi.roots.LanguageLevelProjectExtension
-import com.intellij.pom.java.LanguageLevel
+import com.intellij.testFramework.IdeaTestUtil
 import com.intellij.testFramework.LightProjectDescriptor
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 import org.assertj.core.api.Assertions.assertThat
@@ -178,17 +179,14 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
 
   override fun setUp() {
     super.setUp()
-    LanguageLevelProjectExtension.getInstance(project).languageLevel = LanguageLevel.JDK_11
-    //VfsRootAccess.allowRootAccess(myFixture.testRootDisposable, File("src/test").absolutePath)
-    //VfsRootAccess.allowRootAccess(myFixture.projectDisposable, File("src/test").absolutePath)
+    IdeaTestUtil.setProjectLanguageLevel(project, TestSdk.getSdkLanguageLevel())
+    LanguageLevelProjectExtension.getInstance(project).languageLevel = TestSdk.getSdkLanguageLevel()
     myFixture.addUberJar()
     myFixture.addClasses()
     myFixture.setHtlVersion(HtlVersion.V_1_4)
   }
 
   override fun tearDown() {
-    //VfsRootAccess.disallowRootAccess(File("src/test").absolutePath)
-
     super.tearDown()
   }
 

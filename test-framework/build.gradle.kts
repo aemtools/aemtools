@@ -1,17 +1,45 @@
-val kotlinVersion: String by extra
-val mockitoKotlinVersion: String by extra
-val spekVersion: String by extra
-var junit4Version: String by extra
-var junitBomVersion: String by extra
-val assertjVersion: String by extra
-val mockitoVersion: String by extra
+import org.jetbrains.intellij.platform.gradle.Constants
+import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+
+fun properties(key: String) = providers.gradleProperty(key).get()
+val platformBundledPlugins = properties("platformBundledPlugins")
+val platformVersion = properties("platformVersion")
+val mockitoKotlinVersion = properties("mockitoKotlinVersion")
+val spekVersion = properties("spekVersion")
+val junit4Version = properties("junit4Version")
+val junitBomVersion = properties("junitBomVersion")
+val assertjVersion = properties("assertjVersion")
+val mockitoVersion = properties("mockitoVersion")
 
 plugins {
   kotlin("jvm")
-  id("org.jetbrains.intellij")
+  id("org.jetbrains.intellij.platform.module")
+}
+
+repositories {
+  mavenCentral()
+  intellijPlatform {
+    defaultRepositories()
+    localPlatformArtifacts()
+  }
+}
+
+intellijPlatform {
+  buildSearchableOptions = false
+  instrumentCode = false
 }
 
 dependencies {
+  intellijPlatform {
+    intellijIdeaCommunity(platformVersion)
+    bundledPlugins(platformBundledPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
+
+    testFramework(TestFrameworkType.Platform, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
+    testFramework(TestFrameworkType.Plugin.Java, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
+  }
+
+  implementation(kotlin("test"))
+
   implementation(project(":aem-intellij-core"))
   implementation(project(":aem-intellij-common"))
   implementation(project(":aem-intellij-lang"))

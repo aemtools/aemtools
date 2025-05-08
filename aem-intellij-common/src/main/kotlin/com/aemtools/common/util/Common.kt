@@ -9,8 +9,8 @@ import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.openapi.vfs.impl.local.LocalFileSystemBase
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFileFactory
@@ -21,7 +21,7 @@ import com.intellij.refactoring.RefactoringBundle
 import com.intellij.refactoring.util.CommonRefactoringUtil
 import com.intellij.util.indexing.FileBasedIndex
 import com.intellij.util.indexing.ID
-import org.apache.commons.lang3.StringUtils
+import org.apache.commons.text.similarity.LevenshteinDistance
 import java.io.Serializable
 
 /**
@@ -74,7 +74,7 @@ object OpenApiUtil {
    * @return instance of VirtualFile, *null* if no file was found by given path
    */
   fun findFileByPath(path: String): VirtualFile? {
-    return LocalFileSystemBase.getInstance().findFileByPath(path)
+    return LocalFileSystem.getInstance().findFileByPath(path)
   }
 
   /**
@@ -135,11 +135,11 @@ fun String.toStringBuilder() = StringBuilder(this)
  *
  * @param other the string to calculate distance with
  * @receiver [String]
- * @see [StringUtils.getLevenshteinDistance]
+ * @see [LevenshteinDistance]
  * @return the distance
  */
 fun String.distanceTo(other: String): Int =
-    StringUtils.getLevenshteinDistance(this, other)
+    LevenshteinDistance.getDefaultInstance().apply(this, other)
 
 /**
  * Find the string with the smallest levenshtein distance relative to current string

@@ -1,7 +1,7 @@
 fun properties(key: String) = project.findProperty(key).toString()
 
 plugins {
-  id("org.jetbrains.intellij")
+  id("org.jetbrains.intellij.platform.module")
 }
 
 buildscript {
@@ -18,7 +18,7 @@ buildscript {
 apply {
   plugin("java")
   plugin("kotlin")
-  plugin("org.jetbrains.intellij")
+  plugin("org.jetbrains.intellij.platform")
 }
 
 dependencies {

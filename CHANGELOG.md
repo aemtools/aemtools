@@ -1,15 +1,24 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.0.7]
+[1.0.7]: https://github.com/aemtools/aemtools/tree/v1.0.7
+### Maintenance
+- Add support of 2024.3+ IDEA versions
+- Migrate to Intellij Platform Gradle Plugin 2.5.0
+- Update Detekt version to 1.23.5
+- Update Kover version to 0.9.1
+- Fix deprecations
+
 ## [1.0.6]
 [1.0.6]: https://github.com/aemtools/aemtools/tree/v1.0.6
 ### New features
-- Add support of 2024.3 IDEA versions
+- Add support of 2024.3 IDEA version
 
 ## [1.0.5]
 [1.0.5]: https://github.com/aemtools/aemtools/tree/v1.0.5
 ### New features
-- Add support of 2024.2 IDEA versions
+- Add support of 2024.2 IDEA version
 
 ## [1.0.4]
 [1.0.4]: https://github.com/aemtools/aemtools/tree/v1.0.4

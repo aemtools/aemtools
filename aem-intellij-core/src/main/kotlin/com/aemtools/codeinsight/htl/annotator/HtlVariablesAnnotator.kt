@@ -1,6 +1,11 @@
 package com.aemtools.codeinsight.htl.annotator
 
-import com.aemtools.common.util.*
+import com.aemtools.common.util.closest
+import com.aemtools.common.util.createInfoAnnotation
+import com.aemtools.common.util.createInfoAnnotationBuilder
+import com.aemtools.common.util.distanceTo
+import com.aemtools.common.util.hasParentOfType
+import com.aemtools.common.util.toSmartPointer
 import com.aemtools.completion.htl.common.FileVariablesResolver
 import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.model.htl.ContextObject
@@ -13,6 +18,7 @@ import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.util.isOption
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
+import com.intellij.openapi.project.DumbAware
 import com.intellij.psi.PsiElement
 
 /**
@@ -20,7 +26,7 @@ import com.intellij.psi.PsiElement
  *
  * @author Dmytro Primshyts
  */
-class HtlVariablesAnnotator : Annotator {
+class HtlVariablesAnnotator : Annotator, DumbAware {
   override fun annotate(element: PsiElement, holder: AnnotationHolder) {
     if (element !is VariableNameMixin
         || element.isOption()

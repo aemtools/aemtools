@@ -2,7 +2,7 @@
 plugins {
   java
   kotlin("jvm")
-  id("org.jetbrains.intellij")
+  id("org.jetbrains.intellij.platform.module")
   id("org.jetbrains.kotlinx.kover")
 }
 

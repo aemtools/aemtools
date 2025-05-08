@@ -6,9 +6,9 @@ import com.aemtools.test.base.model.fixture.TestFixture
 import com.aemtools.test.fixture.HtlVersioningFixtureMixin
 import com.aemtools.test.fixture.JdkProjectDescriptor
 import com.aemtools.test.fixture.UberJarFixtureMixin
+import com.aemtools.test.sdk.TestSdk
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.roots.LanguageLevelProjectExtension
-import com.intellij.pom.java.LanguageLevel
+import com.intellij.testFramework.IdeaTestUtil
 import com.intellij.testFramework.LightProjectDescriptor
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture.CARET_MARKER
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
@@ -45,9 +45,7 @@ abstract class BaseLightTest(private val withAemUberJar: Boolean = false)
 
   override fun setUp() {
     super.setUp()
-    LanguageLevelProjectExtension.getInstance(project).languageLevel = LanguageLevel.JDK_11
-    //VfsRootAccess.allowRootAccess(myFixture.testRootDisposable, File("src/test").absolutePath)
-    //VfsRootAccess.allowRootAccess(myFixture.projectDisposable, File("src/test").absolutePath)
+    IdeaTestUtil.setProjectLanguageLevel(project, TestSdk.getSdkLanguageLevel())
     myFixture.setHtlVersion(HtlVersion.V_1_4)
 
     if (withAemUberJar) {
@@ -57,7 +55,6 @@ abstract class BaseLightTest(private val withAemUberJar: Boolean = false)
 
   override fun tearDown() {
     super.tearDown()
-    //VfsRootAccess.disallowRootAccess(File("src/test").absolutePath)
   }
 
   companion object {

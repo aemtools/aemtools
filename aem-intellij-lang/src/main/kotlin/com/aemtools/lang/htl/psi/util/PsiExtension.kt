@@ -3,11 +3,11 @@ package com.aemtools.lang.htl.psi.util
 import com.aemtools.common.util.findParentByType
 import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.tree.CompositeElement
+import com.intellij.psi.util.endOffset
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlElement
 import com.intellij.psi.xml.XmlTag
 import com.intellij.psi.xml.XmlTokenType
-import com.intellij.refactoring.suggested.endOffset
 
 /**
  * @author Dmytro Primshyts
