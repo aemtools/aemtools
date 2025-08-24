@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.0.8]
+[1.0.8]: https://github.com/aemtools/aemtools/tree/v1.0.8
+### Maintenance
+- Add support of 2025.2 IDEA version
+
 ## [1.0.7]
 [1.0.7]: https://github.com/aemtools/aemtools/tree/v1.0.7
 ### Maintenance
