@@ -25,7 +25,7 @@ val detektVersion = properties("detektVersion")
 plugins {
   id("java")
   kotlin("jvm") version "1.9.20"
-  id("org.jetbrains.intellij.platform") version "2.10.5"
+  id("org.jetbrains.intellij.platform") version "2.5.0"
   id("org.jetbrains.changelog") version "1.3.1"
   id("io.gitlab.arturbosch.detekt") version "1.23.5"
   id("org.jetbrains.kotlinx.kover") version "0.9.1"
