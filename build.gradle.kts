@@ -3,9 +3,7 @@ import kotlinx.kover.gradle.plugin.dsl.CoverageUnit
 import org.jetbrains.changelog.date
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.Constants
-import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
-import org.jetbrains.intellij.platform.gradle.models.ProductRelease
 import org.jetbrains.intellij.platform.gradle.tasks.VerifyPluginTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -13,6 +11,7 @@ fun properties(key: String) = providers.gradleProperty(key).get()
 val pluginName = properties("pluginName")
 val pluginGroup = properties("pluginGroup")
 val pluginVersion = properties("pluginVersion")
+val platformType = properties("platformType")
 val platformVersion = properties("platformVersion")
 val platformBundledPlugins = properties("platformBundledPlugins")
 val javaVersion = properties("javaVersion")
@@ -26,7 +25,7 @@ val detektVersion = properties("detektVersion")
 plugins {
   id("java")
   kotlin("jvm") version "1.9.20"
-  id("org.jetbrains.intellij.platform") version "2.5.0"
+  id("org.jetbrains.intellij.platform") version "2.10.5"
   id("org.jetbrains.changelog") version "1.3.1"
   id("io.gitlab.arturbosch.detekt") version "1.23.5"
   id("org.jetbrains.kotlinx.kover") version "0.9.1"
@@ -79,18 +78,19 @@ intellijPlatform {
   pluginVerification {
     subsystemsToCheck = VerifyPluginTask.Subsystems.ALL
     ides {
-      select {
+      recommended()
+      /*select {
         types.set(listOf(IntelliJPlatformType.IntellijIdeaCommunity))
         channels.set(listOf(ProductRelease.Channel.RELEASE))
         sinceBuild = pluginSinceBuild
         untilBuild = pluginUntilBuild
-      }
+      }*/
     }
     failureLevel.set(
         setOf(
             // Temporarily disabled due to https://platform.jetbrains.com/t/plugin-verifier-fails-with-plugin-com-intellij-modules-json-not-declared-as-a-plugin-dependency/580
             // TODO: Uncomment when https://youtrack.jetbrains.com/issue/MP-7366 is fixed
-            // VerifyPluginTask.FailureLevel.COMPATIBILITY_PROBLEMS,
+            VerifyPluginTask.FailureLevel.COMPATIBILITY_PROBLEMS,
             VerifyPluginTask.FailureLevel.INTERNAL_API_USAGES,
             VerifyPluginTask.FailureLevel.INVALID_PLUGIN,
         )
@@ -109,7 +109,8 @@ changelog {
 
 dependencies {
   intellijPlatform {
-    intellijIdeaCommunity(platformVersion)
+    create(platformType, platformVersion)
+
     bundledPlugins(platformBundledPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
 
     pluginModule(implementation(project(":aem-intellij-common")))
@@ -124,7 +125,7 @@ dependencies {
     // Use a specific version of the verifier
     // TODO: remove when https://youtrack.jetbrains.com/issue/MP-7366 is fixed
     // TODO: track updates https://platform.jetbrains.com/t/plugin-verifier-fails-with-plugin-com-intellij-modules-json-not-declared-as-a-plugin-dependency/580
-    pluginVerifier(version = "1.383")
+    //pluginVerifier(version = "1.383")
   }
 
   kover(project(":aem-intellij-common"))
@@ -333,7 +334,7 @@ subprojects {
     }
 
     intellijPlatform {
-      intellijIdeaCommunity(platformVersion)
+      create(platformType, platformVersion)
       bundledPlugins(platformBundledPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
 
       testFramework(TestFrameworkType.Platform, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
@@ -342,7 +343,7 @@ subprojects {
       // Use a specific version of the verifier
       // TODO: remove when https://youtrack.jetbrains.com/issue/MP-7366 is fixed
       // TODO: track updates https://platform.jetbrains.com/t/plugin-verifier-fails-with-plugin-com-intellij-modules-json-not-declared-as-a-plugin-dependency/580
-      pluginVerifier(version = "1.383")
+      //pluginVerifier(version = "1.383")
     }
   }
 }
