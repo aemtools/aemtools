@@ -3,7 +3,7 @@ branches:
     - develop
 
 cache:
-  - C:\Users\appveyor\.gradle
+  - C:\Users\appveyor\.gradle -> gradle/wrapper/gradle-wrapper.properties
   - .gradle
 
 build:
