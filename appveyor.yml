@@ -2,15 +2,14 @@ branches:
   only:
     - develop
 
-cache:
-  - C:\Users\appveyor\.gradle -> gradle/wrapper/gradle-wrapper.properties
-  - .gradle
-
 build:
   verbosity: detailed
 
 build_script:
-  - gradlew.bat buildPlugin koverHtmlReport verifyPlugin --build-cache --info
+  - gradlew.bat buildPlugin --info
+
+test_script:
+  - gradlew.bat koverHtmlReport verifyPlugin --info
 
 environment:
   JAVA_HOME: C:\Program Files\Java\jdk21
