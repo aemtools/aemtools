@@ -12,6 +12,7 @@ import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.application.ex.ApplicationManagerEx
+import com.intellij.openapi.application.readAction
 import com.intellij.openapi.options.ShowSettingsUtil
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.startup.ProjectActivity
@@ -44,7 +45,7 @@ class VersionsDiscoveringStartupActivity : ProjectActivity {
     notifyAboutDiscoveredVersions(aemProjectSettings, project)
   }
 
-  fun findAemVersion(project: Project): AemVersion? {
+  suspend fun findAemVersion(project: Project): AemVersion? {
     val xmlFiles = findPomFiles(project)
     return xmlFiles.flatMap {
       it.findChildrenByType(XmlTag::class.java)
@@ -108,9 +109,11 @@ class VersionsDiscoveringStartupActivity : ProjectActivity {
     notification.notify(project)
   }
 
-  private fun findPomFiles(project: Project): List<XmlFile> {
-    val poms = FilenameIndex.getVirtualFilesByName("pom.xml", GlobalSearchScope.projectScope(project))
-    return poms.mapNotNull { it.toPsiFile(project) as? XmlFile }
+  private suspend fun findPomFiles(project: Project): List<XmlFile> {
+    return readAction {
+      val poms = FilenameIndex.getVirtualFilesByName("pom.xml", GlobalSearchScope.projectScope(project))
+      poms.mapNotNull { it.toPsiFile(project) as? XmlFile }
+    }
   }
 
   private fun setVersionsManuallyNotificationAction(project: Project): NotificationAction {
