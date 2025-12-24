@@ -5,8 +5,8 @@ package com.aemtools.completion.model.psi
  * @author Dmytro Primshyts
  */
 data class SelectedAttribute(
-    val name: String,
-    val value: String?,
-    val nameSelected: Boolean,
-    val valueSelected: Boolean
+  val name: String,
+  val value: String?,
+  val nameSelected: Boolean,
+  val valueSelected: Boolean
 )

@@ -15,30 +15,33 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 object DataSlyCallPropertiesReferenceProvider : PsiReferenceProvider() {
-  override fun getReferencesByElement(element: PsiElement,
-                                      context: ProcessingContext): Array<PsiReference> {
+  override fun getReferencesByElement(
+    element: PsiElement,
+    context: ProcessingContext
+  ): Array<PsiReference> {
     val variableName = element as? com.aemtools.lang.htl.psi.mixin.VariableNameMixin
-        ?: return arrayOf()
+      ?: return arrayOf()
 
     if (!variableName.isOption()) {
       return arrayOf()
     }
 
     val hel = element.findParentByType(com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin::class.java)
-        ?: return arrayOf()
+      ?: return arrayOf()
 
     val outputType = hel
-        .getMainPropertyAccess()
-        ?.callchain()
-        ?.getLastOutputType()
-        as? TemplateTypeDescriptor
-        ?: return arrayOf()
+      .getMainPropertyAccess()
+      ?.callchain()
+      ?.getLastOutputType()
+      as? TemplateTypeDescriptor
+      ?: return arrayOf()
 
     val myName = variableName.variableName()
     val parameterDeclaration = outputType.template.parameterDeclarationElement(element.project, myName)
-        ?: return emptyArray()
+      ?: return emptyArray()
 
-    return arrayOf(HtlTemplateArgumentReference(parameterDeclaration, element, TextRange.create(0, element.textLength)))
+    return arrayOf(
+      HtlTemplateArgumentReference(parameterDeclaration, element, TextRange.create(0, element.textLength))
+    )
   }
-
 }

@@ -14,9 +14,8 @@ class HtmlToJavaReferenceContributor : PsiReferenceContributor() {
 
   override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
     registrar.registerReferenceProvider(
-        XmlPatterns.xmlAttributeValue(),
-        DataSlyUseJavaReferenceProvider)
-
+      XmlPatterns.xmlAttributeValue(),
+      DataSlyUseJavaReferenceProvider
+    )
   }
-
 }

@@ -6,5 +6,5 @@ import com.aemtools.index.model.dialog.AemComponentClassicDialogDefinition
 /**
  * @author Dmytro Primshyts
  */
-object AemComponentClassicDialogDefinitionExternalizer
-  : BaseExternalizer<AemComponentClassicDialogDefinition>()
+object AemComponentClassicDialogDefinitionExternalizer :
+  BaseExternalizer<AemComponentClassicDialogDefinition>()

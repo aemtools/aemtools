@@ -14,10 +14,12 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 object CdImportReferenceProvider : PsiReferenceProvider() {
-  override fun getReferencesByElement(element: PsiElement,
-                                      context: ProcessingContext): Array<PsiReference> {
+  override fun getReferencesByElement(
+    element: PsiElement,
+    context: ProcessingContext
+  ): Array<PsiReference> {
     val include = element.originalElement as? CdInclude
-        ?: return emptyArray()
+      ?: return emptyArray()
 
     val path = addBasePath(include.text, include)
 
@@ -38,5 +40,4 @@ object CdImportReferenceProvider : PsiReferenceProvider() {
       path
     }
   }
-
 }

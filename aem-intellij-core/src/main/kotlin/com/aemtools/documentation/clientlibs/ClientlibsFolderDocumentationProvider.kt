@@ -17,10 +17,12 @@ import com.intellij.psi.PsiFile
  */
 open class ClientlibsFolderDocumentationProvider : AbstractDocumentationProvider() {
 
-  override fun getCustomDocumentationElement(editor: Editor,
-                                             file: PsiFile,
-                                             contextElement: PsiElement?,
-                                             targetOffset: Int): PsiElement? {
+  override fun getCustomDocumentationElement(
+    editor: Editor,
+    file: PsiFile,
+    contextElement: PsiElement?,
+    targetOffset: Int
+  ): PsiElement? {
     return contextElement?.parent as? JpArrayValue
   }
 
@@ -29,17 +31,16 @@ open class ClientlibsFolderDocumentationProvider : AbstractDocumentationProvider
       return super.generateDoc(element, originalElement)
     }
 
-    if (jcrArrayValueOfCategories.accepts(originalElement)
-        || jcrArrayValueOfDependencies.accepts(originalElement)
-        || jcrArrayValueOfEmbeds.accepts(originalElement)) {
-
+    if (jcrArrayValueOfCategories.accepts(originalElement) ||
+      jcrArrayValueOfDependencies.accepts(originalElement) ||
+      jcrArrayValueOfEmbeds.accepts(originalElement)
+    ) {
       val categoryPsiElement = element as? JpArrayValue
       val category = categoryPsiElement?.text
-          ?: return super.generateDoc(element, originalElement)
+        ?: return super.generateDoc(element, originalElement)
 
       return ClientlibDocumentationGenerator.generateDoc(categoryPsiElement, category)
-          ?: super.generateDoc(element, originalElement)
-
+        ?: super.generateDoc(element, originalElement)
     }
     return super.generateDoc(element, originalElement)
   }

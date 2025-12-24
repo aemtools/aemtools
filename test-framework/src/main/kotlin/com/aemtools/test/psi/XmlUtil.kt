@@ -41,7 +41,7 @@ fun XmlTag.mockAttribute(name: String, value: String = ""): XmlAttribute {
   }
 
   `when`(this.attributes).thenReturn(
-      attributesConcat
+    attributesConcat
   )
 
   `when`(this.getAttribute(name)).thenReturn(attribute)

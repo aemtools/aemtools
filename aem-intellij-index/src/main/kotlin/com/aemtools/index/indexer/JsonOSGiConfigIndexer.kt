@@ -17,14 +17,14 @@ object JsonOSGiConfigIndexer : DataIndexer<String, OSGiConfigurationIndexModel, 
     }
 
     val jsonFile = inputData.psiFile.viewProvider.getPsi(JsonLanguage.INSTANCE) as? JsonFile
-        ?: return mutableMapOf()
+      ?: return mutableMapOf()
 
     val jsonObject = jsonFile.topLevelValue as? JsonObject
-        ?: return mutableMapOf()
+      ?: return mutableMapOf()
 
     val parameters = jsonObject.propertyList
-        .map { JsonOSGiPropertyMapper.map(it) }
-        .toMap()
+      .map { JsonOSGiPropertyMapper.map(it) }
+      .toMap()
 
     val path = inputData.file.path
     return mutableMapOf(path to OSGiConfigurationIndexModel(path, parameters))

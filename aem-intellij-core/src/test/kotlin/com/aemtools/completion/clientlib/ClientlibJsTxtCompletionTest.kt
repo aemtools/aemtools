@@ -1,7 +1,6 @@
 package com.aemtools.completion.clientlib
 
-import com.aemtools.common.constant.const.JCR_ROOT
-import com.aemtools.reference.clientlib.CdReferenceContributor
+import com.aemtools.common.constant.Const.JCR_ROOT
 import com.aemtools.test.completion.CompletionBaseLightTest
 
 /**

@@ -1,8 +1,8 @@
 package com.aemtools.completion.html
 
-import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
-import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
-import com.aemtools.common.constant.const.htl.DATA_SLY_UNWRAP
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_LIST
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_REPEAT
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_UNWRAP
 import com.aemtools.test.BaseVariantsCheckContributorTest
 
 /**

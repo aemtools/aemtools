@@ -1,6 +1,6 @@
 package com.aemtools.lang.java
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.intellij.psi.PsiClass
 
 /**
@@ -15,8 +15,8 @@ object JavaUtilities {
    * @return *true* if given class implements iterable interface,
    * *false* otherwise
    */
-  fun isIterable(psiClass: PsiClass): Boolean
-      = isInheritorOf(psiClass, const.java.ITERABLE)
+  fun isIterable(psiClass: PsiClass): Boolean =
+    isInheritorOf(psiClass, Const.Java.ITERABLE)
 
   /**
    * Check if given class is [java.util.Iterator].
@@ -25,8 +25,8 @@ object JavaUtilities {
    * @return *true* if given class implements iterator interface,
    * *false* otherwise
    */
-  fun isIterator(psiClass: PsiClass): Boolean
-      = isInheritorOf(psiClass, const.java.ITERATOR)
+  fun isIterator(psiClass: PsiClass): Boolean =
+    isInheritorOf(psiClass, Const.Java.ITERATOR)
 
   /**
    * Check if given class is [java.util.Map].
@@ -35,14 +35,13 @@ object JavaUtilities {
    * @return *true* if given class implements map interface,
    * *false* otherwise
    */
-  fun isMap(psiClass: PsiClass): Boolean
-      = isInheritorOf(psiClass, const.java.MAP)
+  fun isMap(psiClass: PsiClass): Boolean =
+    isInheritorOf(psiClass, Const.Java.MAP)
 
   private fun isInheritorOf(psiClass: PsiClass, other: String): Boolean {
     val otherClass = JavaSearch.findClass(other, psiClass.project)
-        ?: return false
-    return psiClass.isEquivalentTo(otherClass)
-        || psiClass.isInheritor(otherClass, true)
+      ?: return false
+    return psiClass.isEquivalentTo(otherClass) ||
+      psiClass.isInheritor(otherClass, true)
   }
-
 }

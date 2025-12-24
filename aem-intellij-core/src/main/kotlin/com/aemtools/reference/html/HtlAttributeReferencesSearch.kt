@@ -1,8 +1,8 @@
 package com.aemtools.reference.html
 
-import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
-import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
-import com.aemtools.common.constant.const.htl.DATA_SLY_TEMPLATE
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_LIST
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_REPEAT
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_TEMPLATE
 import com.aemtools.lang.htl.file.HtlFileType
 import com.aemtools.lang.util.extractItemAndItemListNames
 import com.aemtools.lang.util.htlAttributeName
@@ -23,7 +23,7 @@ class HtlAttributeReferencesSearch : QueryExecutorBase<PsiReference, ReferencesS
 
   override fun processQuery(queryParameters: ReferencesSearch.SearchParameters, consumer: Processor<in PsiReference>) {
     val attribute = queryParameters.elementToSearch as? XmlAttribute
-        ?: return
+      ?: return
 
     if (!attribute.isHtlAttribute() || !attribute.isHtlDeclarationAttribute()) {
       return
@@ -41,17 +41,18 @@ class HtlAttributeReferencesSearch : QueryExecutorBase<PsiReference, ReferencesS
       }
       DATA_SLY_TEMPLATE -> {
         val name = attribute.htlVariableName()
-            ?: return
+          ?: return
 
         val scope = GlobalSearchScope.getScopeRestrictedByFileTypes(
-            GlobalSearchScope.projectScope(attribute.project),
-            HtlFileType)
+          GlobalSearchScope.projectScope(attribute.project),
+          HtlFileType
+        )
         val optimizer = queryParameters.optimizer
         optimizer.searchWord(name, scope, true, attribute)
       }
       else -> {
         val name = attribute.htlVariableName()
-            ?: return
+          ?: return
         val scope = queryParameters.effectiveSearchScope
         val optimizer = queryParameters.optimizer
         optimizer.searchWord(name, scope, true, attribute)

@@ -23,36 +23,39 @@ import com.intellij.psi.PsiElement
 class HtlWrongQuotesAnnotator : Annotator {
   override fun annotate(element: PsiElement, holder: AnnotationHolder) {
     val literal = element as? HtlStringLiteralMixin
-        ?: return
+      ?: return
 
     val parentAttribute = literal.containerAttribute()
-        ?: return
+      ?: return
 
     when {
-      literal.isDoubleQuoted()
-          && parentAttribute.isDoubleQuoted() -> {
+      literal.isDoubleQuoted() &&
+        parentAttribute.isDoubleQuoted() -> {
         holder.newAnnotation(HighlightSeverity.ERROR, "Incorrect quotes")
-            .newFix(HtlWrongQuotesLiteralFixIntentionAction(literal.toSmartPointer()))
-            .registerFix()
-            .newFix(HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction(
-                parentAttribute.toSmartPointer()))
-            .registerFix()
-            .create()
+          .newFix(HtlWrongQuotesLiteralFixIntentionAction(literal.toSmartPointer()))
+          .registerFix()
+          .newFix(
+            HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction(
+              parentAttribute.toSmartPointer()
+            )
+          )
+          .registerFix()
+          .create()
       }
 
-      !literal.isDoubleQuoted()
-          && !parentAttribute.isDoubleQuoted() -> {
+      !literal.isDoubleQuoted() &&
+        !parentAttribute.isDoubleQuoted() -> {
         holder.newAnnotation(HighlightSeverity.ERROR, "Incorrect quotes")
-            .newFix(HtlWrongQuotesLiteralFixIntentionAction(literal.toSmartPointer()))
-            .registerFix()
-            .newFix(HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction(
-                parentAttribute.toSmartPointer()))
-            .registerFix()
-            .create()
+          .newFix(HtlWrongQuotesLiteralFixIntentionAction(literal.toSmartPointer()))
+          .registerFix()
+          .newFix(
+            HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction(
+              parentAttribute.toSmartPointer()
+            )
+          )
+          .registerFix()
+          .create()
       }
     }
-
   }
-
 }
-

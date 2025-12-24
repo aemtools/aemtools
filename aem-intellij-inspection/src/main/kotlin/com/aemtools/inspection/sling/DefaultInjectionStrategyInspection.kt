@@ -1,6 +1,6 @@
 package com.aemtools.inspection.sling
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.common.util.annotations
 import com.aemtools.common.util.findParentByType
 import com.aemtools.inspection.common.AemIntellijInspection
@@ -21,21 +21,23 @@ import com.intellij.psi.PsiElementVisitor
  * @author Dmytro Primshyts
  */
 class DefaultInjectionStrategyInspection : AemIntellijInspection(
-    groupName = "AEM",
-    name = "Default Injection Strategy",
-    description = """
+  groupName = "AEM",
+  name = "Default Injection Strategy",
+  description = """
        This inspection checks that <i>@Optional</i>
        is not used with <i>defaultInjectionStrategy</i> set
        to <i>OPTIONAL</i>
     """
 ) {
-  private fun checkAnnotation(annotation: PsiAnnotation,
-                              containerClass: PsiClass,
-                              holder: ProblemsHolder) {
+  private fun checkAnnotation(
+    annotation: PsiAnnotation,
+    containerClass: PsiClass,
+    holder: ProblemsHolder
+  ) {
     val modelAnnotation = containerClass.annotations()
-        .find {
-          it.qualifiedName == const.java.SLING_MODEL
-        } ?: return
+      .find {
+        it.qualifiedName == Const.Java.SLING_MODEL
+      } ?: return
 
     val injectionStrategy = modelAnnotation.parameterList.attributes.find { nameValuePair ->
       nameValuePair.name == "defaultInjectionStrategy"
@@ -43,12 +45,13 @@ class DefaultInjectionStrategyInspection : AemIntellijInspection(
 
     if (injectionStrategy.value?.text?.contains("OPTIONAL") == true) {
       holder.registerProblem(
+        annotation,
+        "Redundant annotation",
+        ProblemHighlightType.LIKE_UNUSED_SYMBOL,
+        RemoveAnnotationQuickFix(
           annotation,
-          "Redundant annotation",
-          ProblemHighlightType.LIKE_UNUSED_SYMBOL,
-          RemoveAnnotationQuickFix(
-              annotation, null
-          )
+          null
+        )
       )
     }
   }
@@ -56,12 +59,12 @@ class DefaultInjectionStrategyInspection : AemIntellijInspection(
   override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
     return object : JavaElementVisitor() {
       override fun visitAnnotation(annotation: PsiAnnotation) {
-        if (annotation.qualifiedName == const.java.OPTIONAL) {
+        if (annotation.qualifiedName == Const.Java.OPTIONAL) {
           val containerClass = annotation.findParentByType(PsiClass::class.java) ?: return
           checkAnnotation(
-              annotation,
-              containerClass,
-              holder
+            annotation,
+            containerClass,
+            holder
           )
         }
       }

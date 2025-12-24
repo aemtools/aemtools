@@ -23,7 +23,7 @@ object DataSlyUseJavaReferenceProvider : JavaClassReferenceProvider() {
     val value = attr.valueElement?.value ?: return arrayOf()
     if (attr.isDataSlyUse()) {
       val psiClass = JavaSearch.findClass(value, element.project)
-          ?: return arrayOf()
+        ?: return arrayOf()
 
       return getReferencesByString(psiClass.qualifiedName, element, 1)
     }

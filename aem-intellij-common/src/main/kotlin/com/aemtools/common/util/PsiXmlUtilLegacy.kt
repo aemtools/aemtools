@@ -1,6 +1,6 @@
 package com.aemtools.common.util
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.intellij.psi.PsiElement
 import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlTag
@@ -9,7 +9,7 @@ import com.intellij.psi.xml.XmlTag
  * @author Dmytro Primshyts
  */
 @Deprecated("Use corresponding extension functions instead")
-object PsiXmlUtil {
+object PsiXmlUtilLegacy {
 
   /**
    * Extracts the tag containing given element (itself in case if passed element is tag itself)
@@ -40,16 +40,17 @@ object PsiXmlUtil {
    *
    *    "IntellijIdeaRulezzz" -> ""
    * @param input string to process.
-   * @return the input string without caret placeholder.
+   * @return the input string without a caret placeholder.
    */
   @Deprecated("Legacy code")
+  @Suppress("ReturnCount")
   fun removeCaretPlaceholder(input: String?): String? {
     if (input == null) {
       return null
     }
 
-    if (input.contains(const.IDEA_STRING_CARET_PLACEHOLDER)) {
-      return input.substring(0, input.indexOf(const.IDEA_STRING_CARET_PLACEHOLDER))
+    if (input.contains(Const.IDEA_STRING_CARET_PLACEHOLDER)) {
+      return input.substring(0, input.indexOf(Const.IDEA_STRING_CARET_PLACEHOLDER))
     }
 
     return input
@@ -59,14 +60,14 @@ object PsiXmlUtil {
    * Extract name of attribute associated with given PsiElement
    */
   @Deprecated("Legacy code", ReplaceWith("PsiElement?.findParentByType(XmlAttribute::class.java)?.name"))
+  @Suppress("ReturnCount")
   fun nameOfAttribute(element: PsiElement?): String? {
     if (element == null) {
       return null
     }
 
-    val attr: PsiElement? = element.findParentByType(XmlAttribute::class.java) ?: return null
+    val attr: PsiElement = element.findParentByType(XmlAttribute::class.java) ?: return null
 
     return (attr as? XmlAttribute)?.name
   }
-
 }

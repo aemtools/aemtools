@@ -16,11 +16,10 @@ object FileUtils {
    */
   fun readFileAsString(fileName: String): String {
     val input = FileUtils::class.java.classLoader
-        .getResourceAsStream(fileName) ?: return ""
+      .getResourceAsStream(fileName) ?: return ""
 
     return String(FileUtil.loadBytes(input))
   }
-
 }
 
 /**

@@ -8,8 +8,10 @@ import com.intellij.psi.PsiClass
  *
  * @author Dmytro Primshyts
  */
-data class ResolutionResult(val psiClass: PsiClass? = null,
-                            val predefined: List<LookupElement>? = null) {
+data class ResolutionResult(
+  val psiClass: PsiClass? = null,
+  val predefined: List<LookupElement>? = null
+) {
 
   /**
    * Check if current [ResolutionResult] is empty.
@@ -31,8 +33,8 @@ data class ResolutionResult(val psiClass: PsiClass? = null,
     val myPredefined = predefined ?: emptyList()
     val otherPredefined = other.predefined ?: emptyList()
     return ResolutionResult(
-        other.psiClass ?: this.psiClass,
-        myPredefined + otherPredefined
+      other.psiClass ?: this.psiClass,
+      myPredefined + otherPredefined
     )
   }
 }

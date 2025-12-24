@@ -16,7 +16,7 @@ object ClientLibraryIndexFacade {
    * @return list of [ClientlibraryModel] objects
    */
   fun getAllClientLibraryModels(project: Project): List<ClientlibraryModel> =
-      allFromFbi(ClientlibraryIndex.CLIENTLIBRARY_ID, project)
+    allFromFbi(ClientlibraryIndex.CLIENTLIBRARY_ID, project)
 
   /**
    * Find all clientlibraries that contain given category.
@@ -27,5 +27,4 @@ object ClientLibraryIndexFacade {
    */
   fun findClientlibsByCategory(project: Project, category: String): List<ClientlibraryModel> =
     getAllClientLibraryModels(project).filter { it.categories.contains(category) }
-
 }

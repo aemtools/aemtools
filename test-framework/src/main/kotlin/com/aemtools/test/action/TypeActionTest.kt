@@ -17,10 +17,12 @@ interface TypeActionTest {
    * @param result "after" state of file
    * @receiver [BaseLightTest]
    */
-  fun BaseLightTest.typedActionTest(fileName: String,
-                                    before: String,
-                                    type: String,
-                                    result: String) {
+  fun BaseLightTest.typedActionTest(
+    fileName: String,
+    before: String,
+    type: String,
+    result: String
+  ) {
     fixture.apply {
       configureByText(fileName, before)
       type(type)
@@ -39,10 +41,10 @@ interface TypeActionTest {
    * @receiver [BasePlatformLightTest]
    */
   fun BasePlatformLightTest.typedActionTest(
-      fileName: String,
-      before: String,
-      type: String,
-      result: String
+    fileName: String,
+    before: String,
+    type: String,
+    result: String
   ) {
     fixture().apply {
       configureByText(fileName, before)
@@ -50,5 +52,4 @@ interface TypeActionTest {
       checkResult(result)
     }
   }
-
 }

@@ -24,13 +24,14 @@ object DataSlyUseReferenceProvider : PsiReferenceProvider() {
       val psiFile = HtlIndexFacade.resolveUseFile(value, attr.containingFile)
 
       if (psiFile != null) {
-        val fileReference = PsiFileReference(psiFile,
-            valueElement,
-            TextRange(1, valueElement.textLength - 1))
+        val fileReference = PsiFileReference(
+          psiFile,
+          valueElement,
+          TextRange(1, valueElement.textLength - 1)
+        )
         return arrayOf(fileReference)
       }
     }
     return emptyArray()
   }
-
 }

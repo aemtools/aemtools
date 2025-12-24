@@ -14,15 +14,15 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Dmytro Primshyts
  */
 class HtlUseVariableDeclaration(
-    xmlAttribute: XmlAttribute,
-    variableName: String,
-    attributeType: DeclarationAttributeType,
-    type: DeclarationType = DeclarationType.VARIABLE
+  xmlAttribute: XmlAttribute,
+  variableName: String,
+  attributeType: DeclarationAttributeType,
+  type: DeclarationType = DeclarationType.VARIABLE
 ) : HtlVariableDeclaration(
-    xmlAttribute,
-    variableName,
-    attributeType,
-    type
+  xmlAttribute,
+  variableName,
+  attributeType,
+  type
 ) {
 
   /**
@@ -32,7 +32,7 @@ class HtlUseVariableDeclaration(
    */
   fun useClass(): PsiClass? {
     val useClassName = xmlAttribute.resolveUseClass()
-        ?: return null
+      ?: return null
     return JavaSearch.findClass(useClassName, xmlAttribute.project)
   }
 
@@ -59,8 +59,10 @@ class HtlUseVariableDeclaration(
 
     val template = template()
     if (template.isNotEmpty()) {
-      return TemplateHolderTypeDescriptor(template,
-          xmlAttribute.project)
+      return TemplateHolderTypeDescriptor(
+        template,
+        xmlAttribute.project
+      )
     }
 
     return TypeDescriptor.empty()
@@ -74,5 +76,4 @@ class HtlUseVariableDeclaration(
         else -> UseType.UNKNOWN
       }
     }
-
 }

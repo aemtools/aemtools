@@ -1,6 +1,6 @@
 package com.aemtools.reference.htl
 
-import com.aemtools.common.constant.const.JCR_ROOT
+import com.aemtools.common.constant.Const.JCR_ROOT
 import com.aemtools.test.reference.BaseReferenceTest
 import com.intellij.psi.xml.XmlTag
 

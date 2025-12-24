@@ -1,6 +1,6 @@
 package com.aemtools.index.search
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.common.util.OpenApiUtil.findFileByRelativePath
 import com.aemtools.index.HtlTemplateIndex
 import com.aemtools.index.model.TemplateDefinition
@@ -66,25 +66,28 @@ object HtlTemplateSearch {
   private fun String.isAbsolutePath(): Boolean = this.startsWith("/")
 
   private fun predefinedTemplate(name: String): List<TemplateDefinition> {
-    return if (name == const.CLIENTLIB_TEMPLATE) {
-      listOf(TemplateDefinition(
-          const.CLIENTLIB_TEMPLATE,
+    return if (name == Const.CLIENTLIB_TEMPLATE) {
+      listOf(
+        TemplateDefinition(
+          Const.CLIENTLIB_TEMPLATE,
           "js",
           listOf("categories")
-      ), TemplateDefinition(
-          const.CLIENTLIB_TEMPLATE,
+        ),
+        TemplateDefinition(
+          Const.CLIENTLIB_TEMPLATE,
           "all",
           listOf("categories")
-      ), TemplateDefinition(
-          const.CLIENTLIB_TEMPLATE,
+        ),
+        TemplateDefinition(
+          Const.CLIENTLIB_TEMPLATE,
           "css",
           listOf("categories")
-      ))
+        )
+      )
     } else {
       emptyList()
     }
   }
 
-  private fun isPredefinedTemplate(name: String) = name == const.CLIENTLIB_TEMPLATE
-
+  private fun isPredefinedTemplate(name: String) = name == Const.CLIENTLIB_TEMPLATE
 }

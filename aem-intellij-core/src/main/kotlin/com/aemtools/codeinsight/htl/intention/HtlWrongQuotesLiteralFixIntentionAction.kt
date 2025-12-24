@@ -15,15 +15,15 @@ import com.intellij.psi.SmartPsiElementPointer
  * @author Dmytro Primshyts
  */
 class HtlWrongQuotesLiteralFixIntentionAction(
-    private val pointer: SmartPsiElementPointer<HtlStringLiteralMixin>
+  private val pointer: SmartPsiElementPointer<HtlStringLiteralMixin>
 ) : BaseHtlIntentionAction(
-    text = { "Invert HTL Literal quotes" }
+  text = { "Invert HTL Literal quotes" }
 ) {
 
   override fun invoke(project: Project, editor: Editor, file: PsiFile) {
     val element = pointer.element ?: return
     val document = project.psiDocumentManager().getDocument(file)
-        ?: return
+      ?: return
 
     val newValue = element.swapQuotes()
 
@@ -32,5 +32,4 @@ class HtlWrongQuotesLiteralFixIntentionAction(
     document.replaceString(start, end, newValue)
     project.psiDocumentManager().commitDocument(document)
   }
-
 }

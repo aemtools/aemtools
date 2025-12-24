@@ -11,9 +11,10 @@ import javax.swing.Icon
 /**
  * @author Dmytro Primshyts
  */
-abstract class VariableNameMixin(node: ASTNode)
-  : com.aemtools.lang.htl.psi.mixin.HtlELNavigableMixin(node),
-    PsiNamedElement, PsiNameIdentifierOwner {
+abstract class VariableNameMixin(node: ASTNode) :
+  com.aemtools.lang.htl.psi.mixin.HtlELNavigableMixin(node),
+  PsiNamedElement,
+  PsiNameIdentifierOwner {
 
   override fun getName(): String? {
     return text
@@ -49,17 +50,17 @@ abstract class VariableNameMixin(node: ASTNode)
       override fun getIcon(unused: Boolean): Icon? = null
 
       override fun getPresentableText(): String? =
-          if (this@VariableNameMixin.isOption()) {
-            "context option"
-          } else {
-            "htl variable"
-          }
+        if (this@VariableNameMixin.isOption()) {
+          "context option"
+        } else {
+          "htl variable"
+        }
     }
   }
 
   override fun isEquivalentTo(another: PsiElement?): Boolean {
     val other = another as? VariableNameMixin
-        ?: return false
+      ?: return false
 
     return variableName() == other.variableName()
   }
@@ -68,9 +69,8 @@ abstract class VariableNameMixin(node: ASTNode)
     return (other as? VariableNameMixin)?.variableName() == variableName()
   }
 
-  //fixme
+  // fixme
   override fun hashCode(): Int {
     return variableName().hashCode()
   }
-
 }

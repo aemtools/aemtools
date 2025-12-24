@@ -10,7 +10,6 @@ import com.intellij.openapi.util.text.StringUtil
 import com.intellij.testFramework.LexerTestCase
 import com.intellij.testFramework.UsefulTestCase
 import java.io.IOException
-import java.nio.file.Path
 import java.nio.file.Paths
 
 /**
@@ -42,7 +41,10 @@ abstract class LexerBaseTest : LexerTestCase(), HtlTestCase {
     if (expected != null) {
       UsefulTestCase.assertSameLines(expected, result)
     } else {
-      UsefulTestCase.assertSameLinesWithFile(pathToGoldTestFile(getTestName(true), getOutExtension()).toFile().canonicalPath, result)
+      UsefulTestCase.assertSameLinesWithFile(
+        pathToGoldTestFile(getTestName(true), getOutExtension()).toFile().canonicalPath,
+        result
+      )
     }
   }
 }

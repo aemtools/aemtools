@@ -67,5 +67,4 @@ class ElHighlighter : SyntaxHighlighterBase() {
 
     else -> null
   }
-
 }

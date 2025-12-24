@@ -7,15 +7,17 @@ import com.intellij.psi.AbstractElementManipulator
 
 class CdIncludeManipulator : AbstractElementManipulator<CdInclude>() {
   override fun handleContentChange(
-      element: CdInclude,
-      range: TextRange,
-      newContent: String): CdInclude {
+    element: CdInclude,
+    range: TextRange,
+    newContent: String
+  ): CdInclude {
     val oldFileName = element.text.substringAfterLast("/")
     val newFilePath = element.text.replace(oldFileName, newContent)
 
     val newCdSimpleInclude = CdElementFactory.createCdInclude(
-        newFilePath,
-        element.project) ?: return element
+      newFilePath,
+      element.project
+    ) ?: return element
 
     element.node.getChildren(null).forEach {
       element.node.removeChild(it)

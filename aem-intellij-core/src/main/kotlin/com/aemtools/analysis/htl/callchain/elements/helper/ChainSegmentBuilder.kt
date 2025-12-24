@@ -18,24 +18,24 @@ import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
  * @property chain
  *              call chain element list.
  */
-class SegmentDataHolder(var inputType: TypeDescriptor = TypeDescriptor.empty(),
-                        var outputType: TypeDescriptor = TypeDescriptor.empty(),
-                        var declarationType: HtlVariableDeclaration? = null,
-                        var chain: List<CallChainElement> = listOf()) {
+class SegmentDataHolder(
+  var inputType: TypeDescriptor = TypeDescriptor.empty(),
+  var outputType: TypeDescriptor = TypeDescriptor.empty(),
+  var declarationType: HtlVariableDeclaration? = null,
+  var chain: List<CallChainElement> = listOf()
+) {
   /**
    * Build call chain segment.
    *
    * @return call chain segment instance
    */
   fun build() = BaseCallChainSegment(
-      inputType,
-      outputType,
-      declarationType,
-      chain
+    inputType,
+    outputType,
+    declarationType,
+    chain
   )
-
 }
-
 
 /**
  * Call chain segment builder entry method.

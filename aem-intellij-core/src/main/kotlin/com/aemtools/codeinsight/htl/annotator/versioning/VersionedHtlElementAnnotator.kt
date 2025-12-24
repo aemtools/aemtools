@@ -13,7 +13,7 @@ import com.intellij.psi.PsiElement
  * @author Kostiantyn Diachenko
  */
 abstract class VersionedHtlElementAnnotator(
-    private val sinceVersion: HtlVersion
+  private val sinceVersion: HtlVersion
 ) : Annotator {
   override fun annotate(element: PsiElement, holder: AnnotationHolder) {
     if (element.project.supportsHtlVersion(sinceVersion)) {
@@ -27,5 +27,4 @@ abstract class VersionedHtlElementAnnotator(
   fun getSinceVersion() = sinceVersion
 
   fun getMessage(project: Project) = notSupportedHtlFeatureText(project.getHtlVersion(), sinceVersion)
-
 }

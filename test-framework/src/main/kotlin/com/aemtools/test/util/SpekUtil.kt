@@ -1,5 +1,6 @@
 package com.aemtools.test.util
 
+import io.kotest.core.spec.style.ExpectSpec
 import org.jetbrains.spek.api.dsl.SpecBody
 import org.jetbrains.spek.api.lifecycle.CachingMode
 import org.jetbrains.spek.api.lifecycle.LifecycleAware
@@ -16,10 +17,18 @@ import org.jetbrains.spek.api.lifecycle.LifecycleAware
  * @param initializer factory function
  * @return lifecycle aware instance
  */
-inline fun <reified MOCK> SpecBody.memo(crossinline initializer: () -> MOCK = {
-  com.aemtools.test.util.mock<MOCK>()
-}): LifecycleAware<MOCK> {
+inline fun <reified MOCK> SpecBody.memo(
+  crossinline initializer: () -> MOCK = {
+    com.aemtools.test.util.mock<MOCK>()
+  }
+): LifecycleAware<MOCK> {
   return memoized(CachingMode.TEST) {
     initializer()
   }
+}
+
+inline fun <reified MOCK> ExpectSpec.memo2(
+  crossinline initializer: () -> MOCK = { mock<MOCK>() }
+): MOCK {
+  return initializer()
 }

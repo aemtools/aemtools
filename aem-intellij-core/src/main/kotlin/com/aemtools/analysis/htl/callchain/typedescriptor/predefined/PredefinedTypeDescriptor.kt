@@ -16,11 +16,10 @@ class PredefinedTypeDescriptor(val predefined: List<PredefinedCompletion>) : Bas
 
   override fun myVariants(): List<LookupElement> {
     return predefined.map(PredefinedCompletion::toLookupElement)
-        .map { it.withPriority(CompletionPriority.PREDEFINED_PARAMETER) }
+      .map { it.withPriority(CompletionPriority.PREDEFINED_PARAMETER) }
   }
 
   override fun subtype(identifier: String): TypeDescriptor =
-      predefined.find { it.completionText == identifier }?.asTypeDescriptor()
-          ?: TypeDescriptor.empty()
-
+    predefined.find { it.completionText == identifier }?.asTypeDescriptor()
+      ?: TypeDescriptor.empty()
 }

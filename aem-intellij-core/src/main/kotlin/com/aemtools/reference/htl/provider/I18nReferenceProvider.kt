@@ -34,17 +34,17 @@ object I18nReferenceProvider : PsiReferenceProvider() {
       val value = htlString.name
 
       val localizations = HtlIndexFacade
-          .getLocalizationModelsForKey(htlString.project, value)
+        .getLocalizationModelsForKey(htlString.project, value)
 
       val filtered = localizations.filter { it.key == value }
-          .mapNotNull {
-            val declaration = it.resolve(element.project)
-            if (declaration != null) {
-              it to declaration
-            } else {
-              null
-            }
-          }.toMap()
+        .mapNotNull {
+          val declaration = it.resolve(element.project)
+          if (declaration != null) {
+            it to declaration
+          } else {
+            null
+          }
+        }.toMap()
 
       if (filtered.isEmpty()) {
         return emptyArray()
@@ -58,18 +58,18 @@ object I18nReferenceProvider : PsiReferenceProvider() {
 
   private fun localizationMainString(position: PsiElement): Boolean {
     return position.findParentByType(HtlHtlEl::class.java)
-        ?.findChildrenByType(PsiElement::class.java)
-        ?.any { it.text == "i18n" }
-        ?: false
+      ?.findChildrenByType(PsiElement::class.java)
+      ?.any { it.text == "i18n" }
+      ?: false
   }
 
   private class I18nReference(
-      val declarations: Map<LocalizationModel, XmlTag>,
-      htlStringLiteralMixin: HtlStringLiteralMixin
+    val declarations: Map<LocalizationModel, XmlTag>,
+    htlStringLiteralMixin: HtlStringLiteralMixin
   ) : PsiPolyVariantReferenceBase<HtlStringLiteralMixin>(
-      htlStringLiteralMixin,
-      TextRange.create(1, htlStringLiteralMixin.name.length + 1),
-      true
+    htlStringLiteralMixin,
+    TextRange.create(1, htlStringLiteralMixin.name.length + 1),
+    true
   ) {
     override fun getVariants(): Array<Any> {
       return emptyArray()
@@ -80,11 +80,12 @@ object I18nReferenceProvider : PsiReferenceProvider() {
         I18nResolveResult(it.value, it.key)
       }.toTypedArray()
     }
-
   }
 
-  private class I18nResolveResult(private val xmlTag: XmlTag,
-                                  private val localizationModel: LocalizationModel) : PsiElementResolveResult(xmlTag) {
+  private class I18nResolveResult(
+    private val xmlTag: XmlTag,
+    private val localizationModel: LocalizationModel
+  ) : PsiElementResolveResult(xmlTag) {
     override fun getElement(): PsiElement {
       return I18nNavigationWrapper(xmlTag, localizationModel)
     }
@@ -92,16 +93,18 @@ object I18nReferenceProvider : PsiReferenceProvider() {
     override fun isValidResult(): Boolean = true
   }
 
-  private class I18nNavigationWrapper(val xmlTag: XmlTag,
-                                      val localizationModel: LocalizationModel)
-    : NavigationItem, XmlTag by xmlTag {
+  private class I18nNavigationWrapper(
+    val xmlTag: XmlTag,
+    val localizationModel: LocalizationModel
+  ) :
+    NavigationItem, XmlTag by xmlTag {
     override fun navigate(requestFocus: Boolean) {
       val offset = xmlTag.textOffset
       val virtualFile = PsiUtilCore.getVirtualFile(xmlTag)
       if (virtualFile != null && virtualFile.isValid) {
         PsiNavigationSupport.getInstance()
-            .createNavigatable(xmlTag.project, virtualFile, offset)
-            .navigate(requestFocus)
+          .createNavigatable(xmlTag.project, virtualFile, offset)
+          .navigate(requestFocus)
       }
     }
 
@@ -126,7 +129,5 @@ object I18nReferenceProvider : PsiReferenceProvider() {
     override fun getName(): String = localizationModel.key
 
     override fun canNavigateToSource(): Boolean = true
-
   }
-
 }

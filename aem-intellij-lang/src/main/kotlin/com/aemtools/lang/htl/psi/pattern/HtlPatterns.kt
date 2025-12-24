@@ -1,17 +1,17 @@
 package com.aemtools.lang.htl.psi.pattern
 
-import com.aemtools.common.constant.const
-import com.aemtools.common.constant.const.htl.DATA_SLY_CALL
-import com.aemtools.common.constant.const.htl.DATA_SLY_INCLUDE
-import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
-import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
-import com.aemtools.common.constant.const.htl.DATA_SLY_RESOURCE
-import com.aemtools.common.constant.const.htl.DATA_SLY_SET
-import com.aemtools.common.constant.const.htl.DATA_SLY_TEMPLATE
-import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
-import com.aemtools.common.constant.const.htl.DATA_SLY_UNWRAP
-import com.aemtools.common.constant.const.htl.DATA_SLY_USE
-import com.aemtools.common.constant.const.htl.HTL_ATTRIBUTES
+import com.aemtools.common.constant.Const
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_CALL
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_INCLUDE
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_LIST
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_REPEAT
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_RESOURCE
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_SET
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_TEMPLATE
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_TEST
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_UNWRAP
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_USE
+import com.aemtools.common.constant.Const.Htl.HTL_ATTRIBUTES
 import com.aemtools.lang.htl.psi.HtlArrayLiteral
 import com.aemtools.lang.htl.psi.HtlExpression
 import com.aemtools.lang.htl.psi.HtlHtlEl
@@ -52,15 +52,21 @@ object HtlPatterns {
    * ```
    */
   val optionName: ElementPattern<PsiElement> =
-      or(
-          psiElement()
-              .withParent(psiElement(VARIABLE_NAME)
-                  .withParent(psiElement(CONTEXT_EXPRESSION))),
-          psiElement()
-              .withParent(psiElement(VARIABLE_NAME)
-                  .withParent(psiElement(ASSIGNMENT)
-                      .withParent(psiElement(CONTEXT_EXPRESSION))))
-      )
+    or(
+      psiElement()
+        .withParent(
+          psiElement(VARIABLE_NAME)
+            .withParent(psiElement(CONTEXT_EXPRESSION))
+        ),
+      psiElement()
+        .withParent(
+          psiElement(VARIABLE_NAME)
+            .withParent(
+              psiElement(ASSIGNMENT)
+                .withParent(psiElement(CONTEXT_EXPRESSION))
+            )
+        )
+    )
 
   /**
    * Matches option inside of data-sly-call, e.g.:
@@ -70,12 +76,14 @@ object HtlPatterns {
    * ```
    */
   val dataSlyCallOption: ElementPattern<PsiElement> =
-      and(
-          optionName,
+    and(
+      optionName,
+      psiElement()
+        .inside(
           psiElement()
-              .inside(psiElement()
-                  .with(HtlTemplatePattern(DATA_SLY_CALL)))
-      )
+            .with(HtlTemplatePattern(DATA_SLY_CALL))
+        )
+    )
 
   /**
    * Matches option inside of data-sly-template, e.g.:
@@ -85,7 +93,7 @@ object HtlPatterns {
    * ```
    */
   val dataSlyTemplateOption: ElementPattern<PsiElement> =
-      optionInsideAttribute(DATA_SLY_TEMPLATE)
+    optionInsideAttribute(DATA_SLY_TEMPLATE)
 
   /**
    * Matches option inside of data-sly-resource, e.g.:
@@ -95,7 +103,7 @@ object HtlPatterns {
    * ```
    */
   val dataSlyResourceOption: ElementPattern<PsiElement> =
-      optionInsideAttribute(DATA_SLY_RESOURCE)
+    optionInsideAttribute(DATA_SLY_RESOURCE)
 
   /**
    * Matches option inside of data-sly-list , e.g.:
@@ -105,7 +113,7 @@ object HtlPatterns {
    * ```
    */
   val dataSlyListOption: ElementPattern<PsiElement> =
-      optionInsideAttribute(DATA_SLY_LIST)
+    optionInsideAttribute(DATA_SLY_LIST)
 
   /**
    * Matches option inside of data-sly-repeat, e.g.:
@@ -115,7 +123,7 @@ object HtlPatterns {
    * ```
    */
   val dataSlyRepeatOption: ElementPattern<PsiElement> =
-      optionInsideAttribute(DATA_SLY_REPEAT)
+    optionInsideAttribute(DATA_SLY_REPEAT)
 
   /**
    * Matches the following:
@@ -128,14 +136,14 @@ object HtlPatterns {
    * ```
    */
   val variableName: ElementPattern<PsiElement> =
-      or<PsiElement>(
-          psiElement(VAR_NAME)
-              .andNot(psiElement().inside(psiElement(ACCESS_IDENTIFIER)))
-              .andNot(optionName),
-          psiElement(VAR_NAME)
-              .inside(psiElement(ARRAY_LIKE_ACCESS))
-              .andNot(optionName)
-      )
+    or<PsiElement>(
+      psiElement(VAR_NAME)
+        .andNot(psiElement().inside(psiElement(ACCESS_IDENTIFIER)))
+        .andNot(optionName),
+      psiElement(VAR_NAME)
+        .inside(psiElement(ARRAY_LIKE_ACCESS))
+        .andNot(optionName)
+    )
 
   /**
    * Matches the following:
@@ -147,7 +155,7 @@ object HtlPatterns {
    * ```
    */
   val stringLiteralValue: ElementPattern<PsiElement> =
-      psiElement().inside(psiElement(STRING_LITERAL))
+    psiElement().inside(psiElement(STRING_LITERAL))
 
   /**
    * Matches the following:
@@ -157,7 +165,7 @@ object HtlPatterns {
    * ```
    */
   val contextOptionAssignment: ElementPattern<PsiElement> =
-      namedOptionAssignment(const.htl.options.CONTEXT)
+    namedOptionAssignment(Const.Htl.Options.CONTEXT)
 
   /**
    * Matches the following:
@@ -167,7 +175,7 @@ object HtlPatterns {
    * ```
    */
   val resourceTypeOptionAssignment: ElementPattern<PsiElement> =
-      namedOptionAssignment(const.htl.options.RESOURCE_TYPE)
+    namedOptionAssignment(Const.Htl.Options.RESOURCE_TYPE)
 
   /**
    * Matches the following:
@@ -177,7 +185,7 @@ object HtlPatterns {
    * ```
    */
   val categoriesOptionAssignment: ElementPattern<PsiElement> =
-      namedOptionAssignment(const.htl.options.CATEGORIES)
+    namedOptionAssignment(Const.Htl.Options.CATEGORIES)
 
   /**
    * Matches the following:
@@ -187,12 +195,12 @@ object HtlPatterns {
    * ```
    */
   val categoriesOptionAssignmentViaArray: ElementPattern<PsiElement> =
-      StandardPatterns.and(
-          categoriesOptionAssignment,
-          psiElement()
-              .inside(HtlStringLiteral::class.java)
-              .inside(psiElement(HtlArrayLiteral::class.java))
-      )
+    StandardPatterns.and(
+      categoriesOptionAssignment,
+      psiElement()
+        .inside(HtlStringLiteral::class.java)
+        .inside(psiElement(HtlArrayLiteral::class.java))
+    )
 
   /**
    * Matches the following:
@@ -202,11 +210,11 @@ object HtlPatterns {
    * ```
    */
   val memberAccess: ElementPattern<PsiElement> =
-      or(
-          psiElement().inside(psiElement(STRING_LITERAL))
-              .inside(psiElement(ARRAY_LIKE_ACCESS)),
-          psiElement(VAR_NAME).inside(psiElement(ACCESS_IDENTIFIER))
-      )
+    or(
+      psiElement().inside(psiElement(STRING_LITERAL))
+        .inside(psiElement(ARRAY_LIKE_ACCESS)),
+      psiElement(VAR_NAME).inside(psiElement(ACCESS_IDENTIFIER))
+    )
 
   /**
    * Matches the following:
@@ -217,14 +225,16 @@ object HtlPatterns {
    * ```
    */
   val dataSlyUseNoEl: ElementPattern<PsiElement> =
-      psiElement()
-          .inside(xmlAttributeValue().withLocalName(
-              or(
-                  string().equalTo(DATA_SLY_USE),
-                  string().startsWith("$DATA_SLY_USE.")
-              )
-          ))
-          .inFile(psiFile().with(HtlFilePattern))
+    psiElement()
+      .inside(
+        xmlAttributeValue().withLocalName(
+          or(
+            string().equalTo(DATA_SLY_USE),
+            string().startsWith("$DATA_SLY_USE.")
+          )
+        )
+      )
+      .inFile(psiFile().with(HtlFilePattern))
 
   /**
    * Matches the following:
@@ -234,27 +244,31 @@ object HtlPatterns {
    * ```
    */
   val dataSlyIncludeNoEl: ElementPattern<PsiElement> =
-      psiElement()
-          .inside(xmlAttributeValue()
-              .withLocalName(string().equalTo(DATA_SLY_INCLUDE)))
-          .inFile(psiFile().with(HtlFilePattern))
+    psiElement()
+      .inside(
+        xmlAttributeValue()
+          .withLocalName(string().equalTo(DATA_SLY_INCLUDE))
+      )
+      .inFile(psiFile().with(HtlFilePattern))
 
   /**
    * Matches Htl xml attribute
    */
   val htlAttribute: ElementPattern<PsiElement> =
-      psiElement(XML_NAME).withParent(xmlAttribute().withName(
-          or(
-              string().oneOfIgnoreCase(*HTL_ATTRIBUTES.toTypedArray()),
-              string().startsWith("$DATA_SLY_USE."),
-              string().startsWith("$DATA_SLY_SET."),
-              string().startsWith("$DATA_SLY_TEST."),
-              string().startsWith("$DATA_SLY_UNWRAP."),
-              string().startsWith("$DATA_SLY_LIST."),
-              string().startsWith("$DATA_SLY_REPEAT."),
-              string().startsWith("$DATA_SLY_TEMPLATE.")
-          )
-      ))
+    psiElement(XML_NAME).withParent(
+      xmlAttribute().withName(
+        or(
+          string().oneOfIgnoreCase(*HTL_ATTRIBUTES.toTypedArray()),
+          string().startsWith("$DATA_SLY_USE."),
+          string().startsWith("$DATA_SLY_SET."),
+          string().startsWith("$DATA_SLY_TEST."),
+          string().startsWith("$DATA_SLY_UNWRAP."),
+          string().startsWith("$DATA_SLY_LIST."),
+          string().startsWith("$DATA_SLY_REPEAT."),
+          string().startsWith("$DATA_SLY_TEMPLATE.")
+        )
+      )
+    )
 
   /**
    * Matches the following:
@@ -264,8 +278,8 @@ object HtlPatterns {
    * ```
    */
   val mainVariableInsideOfDataSlyCall: ElementPattern<PsiElement> =
-      mainVariable()
-          .inside(psiElement().with(HtlTemplatePattern(DATA_SLY_CALL)))
+    mainVariable()
+      .inside(psiElement().with(HtlTemplatePattern(DATA_SLY_CALL)))
 
   /**
    * Matches:
@@ -275,8 +289,8 @@ object HtlPatterns {
    * ```
    */
   val mainVariableInsideOfDataSlyList: ElementPattern<PsiElement> =
-      mainVariable()
-          .inside(psiElement().with(HtlTemplatePattern(DATA_SLY_LIST)))
+    mainVariable()
+      .inside(psiElement().with(HtlTemplatePattern(DATA_SLY_LIST)))
 
   /**
    * Matches:
@@ -286,8 +300,8 @@ object HtlPatterns {
    * ```
    */
   val mainVariableInsideOfDataSlyRepeat: ElementPattern<PsiElement> =
-      mainVariable()
-          .inside(psiElement().with(HtlTemplatePattern(DATA_SLY_REPEAT)))
+    mainVariable()
+      .inside(psiElement().with(HtlTemplatePattern(DATA_SLY_REPEAT)))
 
   /**
    * Matches the following:
@@ -297,7 +311,7 @@ object HtlPatterns {
    * ```
    */
   val dataSlyIncludeMainString: ElementPattern<PsiElement> =
-      mainStringInAttribute(DATA_SLY_INCLUDE)
+    mainStringInAttribute(DATA_SLY_INCLUDE)
 
   /**
    * Matches the following:
@@ -308,7 +322,7 @@ object HtlPatterns {
    * ```
    */
   val dataSlyUseMainString: ElementPattern<PsiElement> =
-      mainStringInAttribute(DATA_SLY_USE)
+    mainStringInAttribute(DATA_SLY_USE)
 
   /**
    * Matches the following:
@@ -318,17 +332,23 @@ object HtlPatterns {
    * ```
    */
   val localizationMainString: ElementPattern<PsiElement> =
-      and(
-          stringLiteralValue,
-          psiElement().withParent(psiElement().afterLeafSkipping(
-              psiElement(TokenType.WHITE_SPACE),
-              psiElement(EL_START))),
-          psiElement().withAncestor(8,
-              psiElement(HtlHtlEl::class.java)
-                  .withChild(psiElement()
-                      .withText(const.htl.options.I18N))
+    and(
+      stringLiteralValue,
+      psiElement().withParent(
+        psiElement().afterLeafSkipping(
+          psiElement(TokenType.WHITE_SPACE),
+          psiElement(EL_START)
+        )
+      ),
+      psiElement().withAncestor(
+        8,
+        psiElement(HtlHtlEl::class.java)
+          .withChild(
+            psiElement()
+              .withText(Const.Htl.Options.I18N)
           )
       )
+    )
 
   /**
    * Create pattern which will match main string in given htl attribute.
@@ -337,14 +357,17 @@ object HtlPatterns {
    * @return new element pattern
    */
   private fun mainStringInAttribute(attribute: String): ElementPattern<PsiElement> =
-      and(
-          stringLiteralValue,
-          psiElement().withParent(psiElement().afterLeafSkipping(
-              psiElement(TokenType.WHITE_SPACE),
+    and(
+      stringLiteralValue,
+      psiElement().withParent(
+        psiElement().afterLeafSkipping(
+          psiElement(TokenType.WHITE_SPACE),
 
-              psiElement(EL_START))
-              .inside(psiElement().with(HtlTemplatePattern(attribute)))
-          ))
+          psiElement(EL_START)
+        )
+          .inside(psiElement().with(HtlTemplatePattern(attribute)))
+      )
+    )
 
   /**
    * Create pattern which will match option name inside of given htl attribute.
@@ -353,12 +376,14 @@ object HtlPatterns {
    * @return new element pattern
    */
   private fun optionInsideAttribute(attribute: String): ElementPattern<PsiElement> =
-      and(
-          optionName,
+    and(
+      optionName,
+      psiElement()
+        .inside(
           psiElement()
-              .inside(psiElement()
-                  .with(HtlTemplatePattern(attribute)))
-      )
+            .with(HtlTemplatePattern(attribute))
+        )
+    )
 
   /**
    * Create matcher for assignment of option with given name.
@@ -374,20 +399,20 @@ object HtlPatterns {
    * @return new element pattern
    */
   private fun namedOptionAssignment(option: String): ElementPattern<PsiElement> =
-      and(
-          stringLiteralValue,
-          psiElement().inside(psiElement(CONTEXT_EXPRESSION)),
-          psiElement().inside(
-              psiElement(ASSIGNMENT_VALUE)
-                  .afterSibling(psiElement(VARIABLE_NAME).withText(option))
-          )
+    and(
+      stringLiteralValue,
+      psiElement().inside(psiElement(CONTEXT_EXPRESSION)),
+      psiElement().inside(
+        psiElement(ASSIGNMENT_VALUE)
+          .afterSibling(psiElement(VARIABLE_NAME).withText(option))
       )
+    )
 
   private fun mainVariable(): PsiElementPattern.Capture<PsiElement> {
     return psiElement().inside(psiElement(HtlExpression::class.java))
-        .afterLeafSkipping(
-            psiElement(TokenType.WHITE_SPACE),
-            psiElement(EL_START))
+      .afterLeafSkipping(
+        psiElement(TokenType.WHITE_SPACE),
+        psiElement(EL_START)
+      )
   }
-
 }

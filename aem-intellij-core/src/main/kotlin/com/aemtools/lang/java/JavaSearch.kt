@@ -1,8 +1,8 @@
 package com.aemtools.lang.java
 
-import com.aemtools.common.constant.const.java.POJO_USE
-import com.aemtools.common.constant.const.java.USE_INTERFACE
-import com.aemtools.common.constant.const.java.WCM_USE_CLASS
+import com.aemtools.common.constant.Const.Java.POJO_USE
+import com.aemtools.common.constant.Const.Java.USE_INTERFACE
+import com.aemtools.common.constant.Const.Java.WCM_USE_CLASS
 import com.aemtools.service.IJavaSearchService
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
@@ -29,10 +29,9 @@ object JavaSearch {
    * @see JavaPsiFacade
    * @return [PsiClass] instance, __null__ if no instance was found
    */
-  fun findClass(qualifiedName: String, project: Project)
-      : PsiClass? =
-      service()
-          ?.findClass(qualifiedName, project)
+  fun findClass(qualifiedName: String, project: Project): PsiClass? =
+    service()
+      ?.findClass(qualifiedName, project)
 
   /**
    * Search for inheritors of given [PsiClass].
@@ -44,9 +43,9 @@ object JavaSearch {
    * @return list of inheritors of given class
    */
   fun findInheritors(psiClass: PsiClass, project: Project): List<PsiClass> =
-      service()
-          ?.findInheritors(psiClass, project)
-          ?: emptyList()
+    service()
+      ?.findInheritors(psiClass, project)
+      ?: emptyList()
 
   /**
    * Search classes annotated by given annotation.
@@ -58,9 +57,9 @@ object JavaSearch {
    * @return list of annotated classes
    */
   fun findAnnotatedClasses(annotation: PsiClass, project: Project): List<PsiClass> =
-      service()
-          ?.findAnnotatedClasses(annotation, project)
-          ?: emptyList()
+    service()
+      ?.findAnnotatedClasses(annotation, project)
+      ?: emptyList()
 
   /**
    * Find all sling models in the project.
@@ -68,9 +67,9 @@ object JavaSearch {
    * @return list of sling models
    */
   fun findSlingModels(project: Project): List<PsiClass> =
-      service()
-          ?.findSlingModels(project)
-          ?: emptyList()
+    service()
+      ?.findSlingModels(project)
+      ?: emptyList()
 
   /**
    * Find all __io.sightly.java.api.Use__ and __com.adobe.cq.sightly.WCMUse__
@@ -79,11 +78,10 @@ object JavaSearch {
    * @return list of inheritors
    */
   fun findWcmUseClasses(project: Project): List<PsiClass> =
-      service()
-          ?.findWcmUseClasses(project)
-          ?: emptyList()
+    service()
+      ?.findWcmUseClasses(project)
+      ?: emptyList()
 
   private fun service(): IJavaSearchService? =
-          ApplicationManager.getApplication().getService(IJavaSearchService::class.java)
-
+    ApplicationManager.getApplication().getService(IJavaSearchService::class.java)
 }

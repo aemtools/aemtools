@@ -32,5 +32,4 @@ interface WidgetDocRepository {
    * @return collection of suitable xtypes
    */
   fun findXTypes(query: String?): List<String>
-
 }

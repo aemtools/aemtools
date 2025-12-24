@@ -17,5 +17,4 @@ object ElFileType : LanguageFileType(ElLanguage) {
   override fun getDefaultExtension(): String = "el"
 
   override fun getDescription(): String = "EL Test File"
-
 }

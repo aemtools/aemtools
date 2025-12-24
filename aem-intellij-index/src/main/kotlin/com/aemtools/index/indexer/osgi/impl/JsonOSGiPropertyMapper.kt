@@ -12,8 +12,8 @@ object JsonOSGiPropertyMapper : OSGiPropertyMapper<JsonProperty> {
       is JsonNumberLiteral -> getJsonLiteralStringValue(psiElement.value as JsonLiteral)
 
       is JsonArray -> (psiElement.value as JsonArray).valueList
-          .filterIsInstance<JsonLiteral>()
-          .joinToString(separator = ",") { getJsonLiteralStringValue(it) ?: it.text }
+        .filterIsInstance<JsonLiteral>()
+        .joinToString(separator = ",") { getJsonLiteralStringValue(it) ?: it.text }
 
       else -> null
     }
@@ -21,10 +21,10 @@ object JsonOSGiPropertyMapper : OSGiPropertyMapper<JsonProperty> {
   }
 
   private fun getJsonLiteralStringValue(jsonLiteral: JsonLiteral): String? =
-      when (jsonLiteral) {
-        is JsonStringLiteral -> JsonPsiImplUtils.getValue(jsonLiteral)
-        is JsonBooleanLiteral -> JsonPsiImplUtils.getValue(jsonLiteral).toString()
-        is JsonNumberLiteral -> JsonPsiImplUtils.getValue(jsonLiteral).toString()
-        else -> null
-      }
+    when (jsonLiteral) {
+      is JsonStringLiteral -> JsonPsiImplUtils.getValue(jsonLiteral)
+      is JsonBooleanLiteral -> JsonPsiImplUtils.getValue(jsonLiteral).toString()
+      is JsonNumberLiteral -> JsonPsiImplUtils.getValue(jsonLiteral).toString()
+      else -> null
+    }
 }

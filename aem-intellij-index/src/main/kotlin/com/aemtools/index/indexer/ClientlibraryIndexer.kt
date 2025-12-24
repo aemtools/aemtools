@@ -14,17 +14,17 @@ object ClientlibraryIndexer : DataIndexer<String, ClientlibraryModel, FileConten
 
     if (content.contains("jcr:primaryType=\"cq:ClientLibraryFolder\"")) {
       val file = inputData.psiFile.getXmlFile()
-          ?: return mutableMapOf()
+        ?: return mutableMapOf()
 
       val mainTag = file.rootTag
-          ?: return mutableMapOf()
+        ?: return mutableMapOf()
 
       val path = inputData.file.path
       val model = ClientlibraryModel.fromTag(mainTag, path)
-          ?: return mutableMapOf()
+        ?: return mutableMapOf()
 
       return mutableMapOf(
-          path to model
+        path to model
       )
     }
 

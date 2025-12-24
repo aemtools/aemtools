@@ -18,7 +18,8 @@ interface JavaSearchMixin {
    * @receiver [BaseLightTest]
    * @throws AssertionError in case if given class not found
    */
-  fun BaseLightTest.psiClass(fqn: String): PsiClass = (JavaSearch.findClass(fqn, project)
-      ?: throw AssertionError("Unable to find fixture class: $fqn"))
-
+  fun BaseLightTest.psiClass(fqn: String): PsiClass = (
+    JavaSearch.findClass(fqn, project)
+      ?: throw AssertionError("Unable to find fixture class: $fqn")
+    )
 }

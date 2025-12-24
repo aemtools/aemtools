@@ -2,7 +2,7 @@ package com.aemtools.completion.htl.provider
 
 import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.completion.withPriority
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.common.util.normalizeToJcrRoot
 import com.aemtools.common.util.relativeTo
 import com.aemtools.completion.htl.CompletionPriority.CLOSE_CLASS
@@ -32,9 +32,11 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
 
   private const val ONE_HUNDRED: Double = 100.0
 
-  override fun addCompletions(parameters: CompletionParameters,
-                              context: ProcessingContext,
-                              result: CompletionResultSet) {
+  override fun addCompletions(
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     result.addAllElements(useSuggestions(parameters))
   }
 
@@ -58,40 +60,42 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
       useClassesVariants + slingModelVariants
     } else {
       (useClassesVariants + slingModelVariants)
-          .filter {
-            closeName(normalizedClassName(it.lookupString), currentFileName)
-          }
+        .filter {
+          closeName(normalizedClassName(it.lookupString), currentFileName)
+        }
     }
 
     val templates = extractTemplates(parameters)
 
     return allClasses + templates + listOf(
-        lookupElement(const.CLIENTLIB_TEMPLATE)
-            .withIcon(AllIcons.FileTypes.Html)
-            .withTypeText("HTL Template")
-            .withTailText("(${const.CLIENTLIB_TEMPLATE})", true)
-            .withPresentableText("clientlib.html")
+      lookupElement(Const.CLIENTLIB_TEMPLATE)
+        .withIcon(AllIcons.FileTypes.Html)
+        .withTypeText("HTL Template")
+        .withTailText("(${Const.CLIENTLIB_TEMPLATE})", true)
+        .withPresentableText("clientlib.html")
     )
   }
 
   private fun closeName(normalizedClassName: String, currentFileName: String): Boolean {
     return LevenshteinDistance.getDefaultInstance().apply(
-        normalizedClassName,
-        currentFileName) < (currentFileName.length / 2).inc()
+      normalizedClassName,
+      currentFileName
+    ) < (currentFileName.length / 2).inc()
   }
 
   private fun normalizedClassName(fqn: String): String =
-          fqn.substringAfterLast(".").lowercase(Locale.getDefault())
+    fqn.substringAfterLast(".").lowercase(Locale.getDefault())
 
   private fun normalizedFileName(parameters: CompletionParameters): String =
-      parameters.originalFile.parent?.name?.lowercase(Locale.getDefault())
-          ?: parameters.originalFile.name.lowercase(Locale.getDefault())
-              .let { it.replace("-", "") }
+    parameters.originalFile.parent?.name?.lowercase(Locale.getDefault())
+      ?: parameters.originalFile.name.lowercase(Locale.getDefault())
+        .let { it.replace("-", "") }
 
   private fun extractCompletions(
-      classes: List<PsiClass>,
-      currentFileName: String,
-      type: String): List<LookupElement> {
+    classes: List<PsiClass>,
+    currentFileName: String,
+    type: String
+  ): List<LookupElement> {
     return classes.flatMap {
       val qualifiedName = it.qualifiedName
       val name = it.name
@@ -100,19 +104,19 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
       }
 
       val result = lookupElement(qualifiedName)
-          .withLookupString(name)
-          .withPresentableText(name)
-          .withIcon(it.getIcon(0))
-          .withTypeText(type)
-          .withTailText("(${qualifiedName.substringAfterLast(".")})", true)
-          .withPriority(classCompletionPriority(currentFileName, name))
+        .withLookupString(name)
+        .withPresentableText(name)
+        .withIcon(it.getIcon(0))
+        .withTypeText(type)
+        .withTailText("(${qualifiedName.substringAfterLast(".")})", true)
+        .withPriority(classCompletionPriority(currentFileName, name))
 
       return@flatMap listOf(result)
     }
   }
 
   private fun classCompletionPriority(fileName: String, className: String): Double =
-      base(fileName, className) - LevenshteinDistance.getDefaultInstance().apply(fileName, className) / ONE_HUNDRED
+    base(fileName, className) - LevenshteinDistance.getDefaultInstance().apply(fileName, className) / ONE_HUNDRED
 
   private fun base(name1: String, name2: String): Double = if (closeName(name1, name2)) {
     CLOSE_CLASS
@@ -129,23 +133,24 @@ object SlyUseCompletionProvider : CompletionProvider<CompletionParameters>() {
       val allTemplates = getTemplates(parameters.position.project)
       allTemplates.filter { "${it.containingDirectory}/".startsWith("${dir.path}/") }
     }.groupBy { it.normalizedPath }
-        .flatMap { it.value }
-        .filter {
-          it.fullName != parameters.originalFile.virtualFile.path
-        }
+      .flatMap { it.value }
+      .filter {
+        it.fullName != parameters.originalFile.virtualFile.path
+      }
 
     return result.map {
       lookupElement(it.normalizedPath.relativeTo(dirPath.normalizeToJcrRoot()))
-          .withTypeText("HTL Template")
-          .withTailText("(${it.normalizedPath})", true)
-          .withPresentableText(it.fileName)
-          .withIcon(AllIcons.FileTypes.Html)
-          .withPriority(if ("${it.containingDirectory}/".startsWith("${dir.path}/")) {
+        .withTypeText("HTL Template")
+        .withTailText("(${it.normalizedPath})", true)
+        .withPresentableText(it.fileName)
+        .withIcon(AllIcons.FileTypes.Html)
+        .withPriority(
+          if ("${it.containingDirectory}/".startsWith("${dir.path}/")) {
             CLOSE_TEMPLATE
           } else {
             FAR_TEMPLATE
-          })
+          }
+        )
     }
   }
-
 }

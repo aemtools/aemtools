@@ -1,6 +1,6 @@
 package com.aemtools.completion.small.patterns
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.completion.small.patterns.JcrPatterns.attributeInClientLibraryFolder
 import com.aemtools.completion.small.patterns.JcrPatterns.jcrArrayValue
 import com.aemtools.completion.small.patterns.JcrPatterns.jcrType
@@ -19,7 +19,7 @@ class JcrPatternsTest : BasePatternsTest() {
   fun testAttributeInClientLibraryFolder() = xmlPattern(
       attributeInClientLibraryFolder,
       """
-        <jcr:root jcr:primaryType="${const.xml.CQ_CLIENTLIBRARY_FOLDER}"
+        <jcr:root jcr:primaryType="${Const.Xml.CQ_CLIENTLIBRARY_FOLDER}"
             $CARET
       """,
       true
@@ -28,7 +28,7 @@ class JcrPatternsTest : BasePatternsTest() {
   fun testAttributeInClientLibraryFolderWrongFileName() = xmlPattern(
       attributeInClientLibraryFolder,
       """
-        <jcr:root jcr:primaryType="${const.xml.CQ_CLIENTLIBRARY_FOLDER}"
+        <jcr:root jcr:primaryType="${Const.Xml.CQ_CLIENTLIBRARY_FOLDER}"
             $CARET
       """,
       false,
@@ -38,7 +38,7 @@ class JcrPatternsTest : BasePatternsTest() {
   fun testJcrArrayValue() = xmlPattern(
       jcrArrayValue,
       """
-          <jcr:root jcr:primaryType="${const.xml.CQ_CLIENTLIBRARY_FOLDER}"
+          <jcr:root jcr:primaryType="${Const.Xml.CQ_CLIENTLIBRARY_FOLDER}"
             embed="[$CARET]"
       """,
       true
@@ -47,7 +47,7 @@ class JcrPatternsTest : BasePatternsTest() {
   fun testJcrArrayValueSecond() = xmlPattern(
       jcrArrayValue,
       """
-          <jcr:root jcr:primaryType="${const.xml.CQ_CLIENTLIBRARY_FOLDER}"
+          <jcr:root jcr:primaryType="${Const.Xml.CQ_CLIENTLIBRARY_FOLDER}"
             embed="[first, $CARET]"
       """,
       true
@@ -56,7 +56,7 @@ class JcrPatternsTest : BasePatternsTest() {
   fun testJcrType() = xmlPattern(
       jcrType,
       """
-          <jcr:root jcr:primaryType="${const.xml.CQ_CLIENTLIBRARY_FOLDER}"
+          <jcr:root jcr:primaryType="${Const.Xml.CQ_CLIENTLIBRARY_FOLDER}"
             embed="{$CARET"
       """,
       true
@@ -65,7 +65,7 @@ class JcrPatternsTest : BasePatternsTest() {
   fun testJcrTypeNegative() = xmlPattern(
       jcrType,
       """
-          <jcr:root jcr:primaryType="${const.xml.CQ_CLIENTLIBRARY_FOLDER}"
+          <jcr:root jcr:primaryType="${Const.Xml.CQ_CLIENTLIBRARY_FOLDER}"
             embed="[$CARET]"
       """,
       false

@@ -17,7 +17,7 @@ class HtmlLinkCheckerDocumentationProvider : AbstractDocumentationProvider() {
         "Link checker configuration"
       valueOfXLinkChecker.accepts(originalElement) -> {
         val attribute = originalElement as? XmlToken
-            ?: return super.generateDoc(element, originalElement)
+          ?: return super.generateDoc(element, originalElement)
 
         val value = attribute.text
 
@@ -31,5 +31,4 @@ class HtmlLinkCheckerDocumentationProvider : AbstractDocumentationProvider() {
       else -> super.generateDoc(element, originalElement)
     }
   }
-
 }

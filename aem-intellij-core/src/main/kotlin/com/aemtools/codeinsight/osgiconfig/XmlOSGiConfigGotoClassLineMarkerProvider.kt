@@ -1,7 +1,7 @@
 package com.aemtools.codeinsight.osgiconfig
 
-import com.aemtools.common.constant.const.JCR_PRIMARY_TYPE
-import com.aemtools.common.constant.const.xml.SLING_OSGI_CONFIG
+import com.aemtools.common.constant.Const.JCR_PRIMARY_TYPE
+import com.aemtools.common.constant.Const.Xml.SLING_OSGI_CONFIG
 import com.aemtools.common.util.hasAttribute
 import com.aemtools.common.util.xmlAttributeMatcher
 import com.aemtools.lang.java.JavaSearch
@@ -22,42 +22,44 @@ class XmlOSGiConfigGotoClassLineMarkerProvider : LineMarkerProvider {
     val xmlTag = element as? XmlTag ?: return null
 
     if (xmlTag hasAttribute xmlAttributeMatcher(
-            name = JCR_PRIMARY_TYPE,
-            value = SLING_OSGI_CONFIG
-        )) {
+        name = JCR_PRIMARY_TYPE,
+        value = SLING_OSGI_CONFIG
+      )
+    ) {
       val fileName = xmlTag.containingFile.name
 
       val className = fileName.substringBeforeLast(".")
-          .substringBefore("-")
+        .substringBefore("-")
 
       val serviceClass = JavaSearch.findClass(className, xmlTag.project)
-          ?: return null
+        ?: return null
 
       return LineMarkerInfo(
-          xmlTag.firstChild,
-          xmlTag.firstChild.textRange,
-          AllIcons.FileTypes.JavaClass,
-          { "Open associated OSGi service" },
-          { mouseEvent, _ ->
-            PsiElementListNavigator.openTargets(
-                mouseEvent,
-                arrayOf(serviceClass),
-                "Open associated OSGi service",
-                null,
-                DefaultListCellRenderer()
-            )
-          },
-          GutterIconRenderer.Alignment.CENTER,
-          { "Open associated OSGi service" }
+        xmlTag.firstChild,
+        xmlTag.firstChild.textRange,
+        AllIcons.FileTypes.JavaClass,
+        { "Open associated OSGi service" },
+        { mouseEvent, _ ->
+          PsiElementListNavigator.openTargets(
+            mouseEvent,
+            arrayOf(serviceClass),
+            "Open associated OSGi service",
+            null,
+            DefaultListCellRenderer()
+          )
+        },
+        GutterIconRenderer.Alignment.CENTER,
+        { "Open associated OSGi service" }
       )
     }
 
     return null
   }
 
-  override fun collectSlowLineMarkers(elements: MutableList<out PsiElement>,
-                                      result: MutableCollection<in LineMarkerInfo<*>>) {
+  override fun collectSlowLineMarkers(
+    elements: MutableList<out PsiElement>,
+    result: MutableCollection<in LineMarkerInfo<*>>
+  ) {
 //    super.collectSlowLineMarkers(elements, result)
   }
-
 }

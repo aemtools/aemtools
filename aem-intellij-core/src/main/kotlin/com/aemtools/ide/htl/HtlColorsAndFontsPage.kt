@@ -1,6 +1,6 @@
 package com.aemtools.ide.htl
 
-import com.aemtools.common.constant.const.DOLLAR
+import com.aemtools.common.constant.Const.DOLLAR
 import com.aemtools.lang.htl.colorscheme.HtlColors
 import com.aemtools.lang.htl.highlight.HtlHighlighter
 import com.aemtools.lang.htl.icons.HtlIcons
@@ -17,78 +17,74 @@ import javax.swing.Icon
 class HtlColorsAndFontsPage : ColorSettingsPage {
 
   private val previewTags: MutableMap<String, TextAttributesKey> = mutableMapOf(
-      "HTL_EL_BOOLEAN" to HtlColors.BOOLEAN,
-      "HTL_EL_STRING" to HtlColors.STRING,
-      "HTL_EL_NUMBER" to HtlColors.NUMBER,
-      "HTL_El_VARIABLE" to HtlColors.VARIABLE,
-      "HTL_El_AT" to HtlColors.DELIMITER,
-      "HTL_EL_BRACKET" to HtlColors.BRACKET,
-      "HTL_EL_OPERATOR" to HtlColors.OPERATOR,
-      "HTL_EL_IDENTIFIER" to HtlColors.IDENTIFIER,
-      "HTL_EL_TEMPLATE_ARGUMENT" to HtlColors.TEMPLATE_ARGUMENT,
-      "HTL_EL_TEMPLATE_PARAMETER" to HtlColors.TEMPLATE_PARAMETER,
-      "HTL_EL_STANDARD_OPTION" to HtlColors.STANDARD_OPTION,
-      "HTL_EL_OPTION" to HtlColors.OPTION,
-      "HTL_EL_NULL" to HtlColors.NULL,
-      "HTL_EL_PARENTHESES" to HtlColors.PARENTHESES,
+    "HTL_EL_BOOLEAN" to HtlColors.BOOLEAN,
+    "HTL_EL_STRING" to HtlColors.STRING,
+    "HTL_EL_NUMBER" to HtlColors.NUMBER,
+    "HTL_El_VARIABLE" to HtlColors.VARIABLE,
+    "HTL_El_AT" to HtlColors.DELIMITER,
+    "HTL_EL_BRACKET" to HtlColors.BRACKET,
+    "HTL_EL_OPERATOR" to HtlColors.OPERATOR,
+    "HTL_EL_IDENTIFIER" to HtlColors.IDENTIFIER,
+    "HTL_EL_TEMPLATE_ARGUMENT" to HtlColors.TEMPLATE_ARGUMENT,
+    "HTL_EL_TEMPLATE_PARAMETER" to HtlColors.TEMPLATE_PARAMETER,
+    "HTL_EL_STANDARD_OPTION" to HtlColors.STANDARD_OPTION,
+    "HTL_EL_OPTION" to HtlColors.OPTION,
+    "HTL_EL_NULL" to HtlColors.NULL,
+    "HTL_EL_PARENTHESES" to HtlColors.PARENTHESES,
 
-      "HTL_ATTRIBUTE" to HtlColors.HTL_ATTRIBUTE,
+    "HTL_ATTRIBUTE" to HtlColors.HTL_ATTRIBUTE,
 
-      "HTL_VARIABLE_DECLARATION" to HtlColors.HTL_VARIABLE_DECLARATION,
-      "HTL_VARIABLE_UNUSED" to HtlColors.HTL_VARIABLE_UNUSED,
+    "HTL_VARIABLE_DECLARATION" to HtlColors.HTL_VARIABLE_DECLARATION,
+    "HTL_VARIABLE_UNUSED" to HtlColors.HTL_VARIABLE_UNUSED,
 
-      "HTL_EL_GLOBAL_VARIABLE" to HtlColors.HTL_EL_GLOBAL_VARIABLE,
-      "HTL_EL_LOCAL_VARIABLE" to HtlColors.HTL_EL_LOCAL_VARIABLE,
-      "HTL_EL_UNRESOLVED_VARIABLE" to HtlColors.HTL_EL_UNRESOLVED_VARIABLE
+    "HTL_EL_GLOBAL_VARIABLE" to HtlColors.HTL_EL_GLOBAL_VARIABLE,
+    "HTL_EL_LOCAL_VARIABLE" to HtlColors.HTL_EL_LOCAL_VARIABLE,
+    "HTL_EL_UNRESOLVED_VARIABLE" to HtlColors.HTL_EL_UNRESOLVED_VARIABLE
   )
 
   private val attributes: Array<AttributesDescriptor> = arrayOf(
-      AttributesDescriptor("Boolean", HtlColors.BOOLEAN),
-      AttributesDescriptor("String", HtlColors.STRING),
-      AttributesDescriptor("Number", HtlColors.NUMBER),
-      AttributesDescriptor("Variable", HtlColors.VARIABLE),
-      AttributesDescriptor("Delimiter", HtlColors.DELIMITER),
-      AttributesDescriptor("Bracket", HtlColors.BRACKET),
-      AttributesDescriptor("Operator", HtlColors.OPERATOR),
-      AttributesDescriptor("Identifier", HtlColors.IDENTIFIER),
-      AttributesDescriptor("Template argument", HtlColors.TEMPLATE_ARGUMENT),
-      AttributesDescriptor("Template parameter", HtlColors.TEMPLATE_PARAMETER),
-      AttributesDescriptor("Standard option", HtlColors.STANDARD_OPTION),
-      AttributesDescriptor("Option", HtlColors.OPTION),
-      AttributesDescriptor("Null", HtlColors.NULL),
-      AttributesDescriptor("Parentheses", HtlColors.PARENTHESES),
+    AttributesDescriptor("Boolean", HtlColors.BOOLEAN),
+    AttributesDescriptor("String", HtlColors.STRING),
+    AttributesDescriptor("Number", HtlColors.NUMBER),
+    AttributesDescriptor("Variable", HtlColors.VARIABLE),
+    AttributesDescriptor("Delimiter", HtlColors.DELIMITER),
+    AttributesDescriptor("Bracket", HtlColors.BRACKET),
+    AttributesDescriptor("Operator", HtlColors.OPERATOR),
+    AttributesDescriptor("Identifier", HtlColors.IDENTIFIER),
+    AttributesDescriptor("Template argument", HtlColors.TEMPLATE_ARGUMENT),
+    AttributesDescriptor("Template parameter", HtlColors.TEMPLATE_PARAMETER),
+    AttributesDescriptor("Standard option", HtlColors.STANDARD_OPTION),
+    AttributesDescriptor("Option", HtlColors.OPTION),
+    AttributesDescriptor("Null", HtlColors.NULL),
+    AttributesDescriptor("Parentheses", HtlColors.PARENTHESES),
 
-      AttributesDescriptor("HTL attribute", HtlColors.HTL_ATTRIBUTE),
+    AttributesDescriptor("HTL attribute", HtlColors.HTL_ATTRIBUTE),
 
-      AttributesDescriptor("Variable declaration", HtlColors.HTL_VARIABLE_DECLARATION),
-      AttributesDescriptor("Unused variable", HtlColors.HTL_VARIABLE_UNUSED),
+    AttributesDescriptor("Variable declaration", HtlColors.HTL_VARIABLE_DECLARATION),
+    AttributesDescriptor("Unused variable", HtlColors.HTL_VARIABLE_UNUSED),
 
-      AttributesDescriptor("Global variable", HtlColors.HTL_EL_GLOBAL_VARIABLE),
-      AttributesDescriptor("Local variable", HtlColors.HTL_EL_LOCAL_VARIABLE),
-      AttributesDescriptor("Unresolved variable", HtlColors.HTL_EL_UNRESOLVED_VARIABLE)
+    AttributesDescriptor("Global variable", HtlColors.HTL_EL_GLOBAL_VARIABLE),
+    AttributesDescriptor("Local variable", HtlColors.HTL_EL_LOCAL_VARIABLE),
+    AttributesDescriptor("Unresolved variable", HtlColors.HTL_EL_UNRESOLVED_VARIABLE)
   )
 
-  override fun getHighlighter(): SyntaxHighlighter
-      = HtlHighlighter()
+  override fun getHighlighter(): SyntaxHighlighter = HtlHighlighter()
 
-  override fun getAdditionalHighlightingTagToDescriptorMap(): MutableMap<String, TextAttributesKey>
-      = previewTags
+  override fun getAdditionalHighlightingTagToDescriptorMap(): MutableMap<String, TextAttributesKey> = previewTags
 
-  override fun getIcon(): Icon
-      = HtlIcons.HTL_FILE_ICON
+  override fun getIcon(): Icon = HtlIcons.HTL_FILE_ICON
 
-  override fun getAttributeDescriptors(): Array<AttributesDescriptor>
-      = attributes
+  override fun getAttributeDescriptors(): Array<AttributesDescriptor> = attributes
 
-  override fun getColorDescriptors(): Array<ColorDescriptor>
-      = ColorDescriptor.EMPTY_ARRAY
+  override fun getColorDescriptors(): Array<ColorDescriptor> = ColorDescriptor.EMPTY_ARRAY
 
-  override fun getDisplayName(): String
-      = "HTML Markup Language (HTL)"
+  override fun getDisplayName(): String = "HTML Markup Language (HTL)"
 
   override fun getDemoText(): String = buildString {
     append("<div")
-    append(" <HTL_ATTRIBUTE>data-sly-use.</HTL_ATTRIBUTE><HTL_VARIABLE_DECLARATION>bean</HTL_VARIABLE_DECLARATION>=")
+    append(
+      " <HTL_ATTRIBUTE>data-sly-use.</HTL_ATTRIBUTE><HTL_VARIABLE_DECLARATION>bean</HTL_VARIABLE_DECLARATION>="
+    )
     append("$DOLLAR{'com.test.Bean' @ <HTL_EL_OPTION>option</HTL_EL_OPTION>=true}\"")
     append(">\n")
     append("$DOLLAR{<HTL_EL_LOCAL_VARIABLE>bean</HTL_EL_LOCAL_VARIABLE>.field @ ")
@@ -105,5 +101,4 @@ class HtlColorsAndFontsPage : ColorSettingsPage {
     append("<div <HTL_ATTRIBUTE>data-sly-call</HTL_ATTRIBUTE>=\"")
     append("$DOLLAR{template @ <HTL_EL_TEMPLATE_ARGUMENT>param1</HTL_EL_TEMPLATE_ARGUMENT>=true}\"\n")
   }
-
 }

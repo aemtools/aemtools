@@ -16,26 +16,28 @@ import generated.psi.impl.HtlStringLiteralImpl
  */
 object ResourceTypeReferenceProvider : PsiReferenceProvider() {
   override fun getReferencesByElement(
-      element: PsiElement,
-      context: ProcessingContext): Array<PsiReference> {
+    element: PsiElement,
+    context: ProcessingContext
+  ): Array<PsiReference> {
     val literal = element as? HtlStringLiteralImpl
-        ?: return emptyArray()
+      ?: return emptyArray()
 
     val resourceType = literal.name
     val component = AemComponentSearch.findByResourceType(resourceType, literal.project)
-        ?: return emptyArray()
+      ?: return emptyArray()
 
     val componentFile = OpenApiUtil.findFileByRelativePath(component.fullPath, literal.project)
-        ?: return emptyArray()
+      ?: return emptyArray()
 
     val parentDir = componentFile.parent.toPsiDirectory(literal.project)
-        ?: return emptyArray()
+      ?: return emptyArray()
 
-    return arrayOf(PsiDirectoryReference(
+    return arrayOf(
+      PsiDirectoryReference(
         parentDir,
         literal,
         TextRange(1, literal.textLength - 1)
-    ))
+      )
+    )
   }
-
 }

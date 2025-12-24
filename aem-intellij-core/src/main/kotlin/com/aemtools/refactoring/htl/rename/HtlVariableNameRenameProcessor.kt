@@ -16,17 +16,17 @@ class HtlVariableNameRenameProcessor : RenamePsiElementProcessor() {
   }
 
   override fun renameElement(
-      element: PsiElement,
-      newName: String,
-      usages: Array<out UsageInfo>,
-      listener: RefactoringElementListener?) {
+    element: PsiElement,
+    newName: String,
+    usages: Array<out UsageInfo>,
+    listener: RefactoringElementListener?
+  ) {
     val variableName = element as? com.aemtools.lang.htl.psi.mixin.VariableNameMixin
-        ?: return
+      ?: return
 
     variableName.setName(newName)
     usages.forEach { it.reference?.handleElementRename(newName) }
 
     listener?.elementRenamed(variableName)
   }
-
 }

@@ -15,33 +15,33 @@ import com.intellij.util.indexing.FileContent
 object AemComponentTouchUIDialogIndexer : DataIndexer<String, AemComponentTouchUIDialogDefinition, FileContent> {
   override fun map(inputData: FileContent): MutableMap<String, AemComponentTouchUIDialogDefinition> {
     val file = inputData.psiFile.getXmlFile()
-        ?: return mutableMapOf()
+      ?: return mutableMapOf()
 
     val mainTag = file.rootTag
-        ?: return mutableMapOf()
+      ?: return mutableMapOf()
 
     val resourceType = inputData.file.path.normalizeToJcrRoot()
-        .substringBefore("/_cq_dialog")
+      .substringBefore("/_cq_dialog")
 
     val dialogDefinition = AemComponentTouchUIDialogDefinition(
-        inputData.file.path,
-        resourceType,
-        mainTag.findChildrenByType(XmlTag::class.java).mapNotNull {
-          val slingResourceType = it.getAttribute("sling:resourceType")?.value
-          val name = it.getAttribute("name")?.value
-          if (slingResourceType != null && name != null) {
-            TouchUIDialogParameterDeclaration(
-                slingResourceType,
-                name
-            )
-          } else {
-            null
-          }
+      inputData.file.path,
+      resourceType,
+      mainTag.findChildrenByType(XmlTag::class.java).mapNotNull {
+        val slingResourceType = it.getAttribute("sling:resourceType")?.value
+        val name = it.getAttribute("name")?.value
+        if (slingResourceType != null && name != null) {
+          TouchUIDialogParameterDeclaration(
+            slingResourceType,
+            name
+          )
+        } else {
+          null
         }
+      }
     )
 
     return mutableMapOf(
-        resourceType to dialogDefinition
+      resourceType to dialogDefinition
     )
   }
 }

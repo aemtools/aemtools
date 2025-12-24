@@ -21,9 +21,9 @@ import com.intellij.psi.xml.XmlTag
  */
 fun List<XmlAttribute>.extractDeclarations(): List<HtlVariableDeclaration> {
   return filter { it.isHtlDeclarationAttribute() }
-      .flatMap {
-        HtlVariableDeclaration.create(it)
-      }
+    .flatMap {
+      HtlVariableDeclaration.create(it)
+    }
 }
 
 /**
@@ -68,12 +68,10 @@ fun List<HtlVariableDeclaration>.filterForPosition(position: PsiElement): List<H
 
   val groupedByName = applicableDeclarations.groupBy { it.variableName }
   val result = if (groupedByName.values.find { it.size > 1 } != null) {
-
     groupedByName.values.flatMap {
       if (it.size == 1) {
         it
       } else {
-
         val parentTags = position.run {
           val html = position.containingFile.getHtmlFile() ?: return@run listOf<XmlTag>()
           val parent = position.findParentByType(HtlHtlEl::class.java) ?: return@run listOf<XmlTag>()
@@ -92,7 +90,7 @@ fun List<HtlVariableDeclaration>.filterForPosition(position: PsiElement): List<H
 
         val closest = it.minByOrNull {
           val myTag = it.xmlAttribute.findParentByType(XmlTag::class.java)
-              ?: return@minByOrNull 100
+            ?: return@minByOrNull 100
 
           val myIndex = parentTags.indexOf(myTag)
           return@minByOrNull if (myIndex > -1) {
@@ -105,7 +103,6 @@ fun List<HtlVariableDeclaration>.filterForPosition(position: PsiElement): List<H
         listOf(closest)
       }
     }
-
   } else {
     applicableDeclarations
   }

@@ -13,5 +13,4 @@ object DataSlyIncludeElReferenceProvider : DataSlyIncludeReferenceProviderBase()
     val literal = element as? com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin
     return literal?.name
   }
-
 }

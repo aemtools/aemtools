@@ -1,6 +1,6 @@
 package com.aemtools.index
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.common.util.myRelativeFile
 import com.aemtools.common.util.normalizeToJcrRoot
 import com.aemtools.common.util.toPsiFile
@@ -23,8 +23,8 @@ object ClientlibDeclarationIndexFacade {
     val suggestionFileExtensions = resolveFileExtensions(psiFile.name)
 
     return suggestionFileExtensions
-        .flatMap { FilenameIndex.getAllFilesByExt(project, it, GlobalSearchScope.projectScope(project)) }
-        .filter { it.path.contains(const.JCR_ROOT_SEPARATED) }
+      .flatMap { FilenameIndex.getAllFilesByExt(project, it, GlobalSearchScope.projectScope(project)) }
+      .filter { it.path.contains(Const.JCR_ROOT_SEPARATED) }
   }
 
   fun findFileByPath(path: String, containingFile: PsiFile): PsiFile? {
@@ -40,21 +40,21 @@ object ClientlibDeclarationIndexFacade {
   private fun findFileByAbsolutePath(path: String, project: Project): VirtualFile? {
     return PathUtil.getFileExtension(path)?.let { extension ->
       FilenameIndex.getAllFilesByExt(project, extension, GlobalSearchScope.projectScope(project))
-          .find { it.path.normalizeToJcrRoot() == path }
+        .find { it.path.normalizeToJcrRoot() == path }
     }
   }
 
   private fun findFileByRelativePath(containingFile: PsiFile, path: String) =
-      containingFile.containingDirectory?.myRelativeFile(path)
+    containingFile.containingDirectory?.myRelativeFile(path)
 
   fun isMatchedByExtension(fileToCheck: PsiFile, clientlibDeclarationFileName: String) =
-      resolveFileExtensions(clientlibDeclarationFileName)
-          .any { fileExtension -> fileToCheck.name.endsWith(fileExtension) }
+    resolveFileExtensions(clientlibDeclarationFileName)
+      .any { fileExtension -> fileToCheck.name.endsWith(fileExtension) }
 
   private fun resolveFileExtensions(currentFileName: String): List<String> =
-      when (currentFileName) {
-        "js.txt" -> JS_FILES_EXTENSIONS
-        "css.txt" -> CSS_FILES_EXTENSIONS
-        else -> emptyList()
-      }
+    when (currentFileName) {
+      "js.txt" -> JS_FILES_EXTENSIONS
+      "css.txt" -> CSS_FILES_EXTENSIONS
+      else -> emptyList()
+    }
 }

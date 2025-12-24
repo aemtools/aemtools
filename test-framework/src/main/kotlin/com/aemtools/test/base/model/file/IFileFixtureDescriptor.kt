@@ -14,5 +14,4 @@ interface IFileFixtureDescriptor {
    * Add current file fixture to actual fixture.
    */
   fun initialize()
-
 }

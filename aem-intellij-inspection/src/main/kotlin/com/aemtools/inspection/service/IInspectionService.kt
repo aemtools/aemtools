@@ -37,7 +37,6 @@ interface IInspectionService {
    */
   fun redundantDataSlyUnwrap(holder: ProblemsHolder, attribute: XmlAttribute)
 
-
   /**
    * Find [Module] for given [PsiElement].
    *
@@ -53,6 +52,4 @@ interface IInspectionService {
    * @param problemsHolder the problems holder
    */
   fun reportRedundantEl(element: HtlElExpressionMixin, problemsHolder: ProblemsHolder)
-
-
 }

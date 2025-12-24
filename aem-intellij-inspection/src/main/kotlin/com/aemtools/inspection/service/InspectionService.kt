@@ -24,38 +24,38 @@ class InspectionService : IInspectionService {
 
   override fun redundantDataSlyUnwrap(holder: ProblemsHolder, attribute: XmlAttribute) {
     holder.registerProblem(
-        attribute,
-        REDUNDANT_DATA_SLY_UNWRAP_MESSAGE,
-        ProblemHighlightType.WEAK_WARNING,
-        RemoveRedundantDataSlyUnwrapAction(attribute.toSmartPointer())
+      attribute,
+      REDUNDANT_DATA_SLY_UNWRAP_MESSAGE,
+      ProblemHighlightType.WEAK_WARNING,
+      RemoveRedundantDataSlyUnwrapAction(attribute.toSmartPointer())
     )
   }
 
   override fun reportRedundantEl(element: HtlElExpressionMixin, problemsHolder: ProblemsHolder) {
     problemsHolder.registerProblem(
-        element,
-        "Redundant expression",
-        ProblemHighlightType.WEAK_WARNING,
-        RemoveRedundantElAction(element.toSmartPointer())
+      element,
+      "Redundant expression",
+      ProblemHighlightType.WEAK_WARNING,
+      RemoveRedundantElAction(element.toSmartPointer())
     )
   }
 
   override fun messedDataSlyAttribute(
-      holder: ProblemsHolder,
-      attribute: XmlAttribute,
-      variableName: String
+    holder: ProblemsHolder,
+    attribute: XmlAttribute,
+    variableName: String
   ) {
     holder.registerProblem(
-        attribute,
-        "$variableName is not allowed in data-sly-attribute",
-        ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
-        RemoveAttributeIntentionFix(
-            attribute.name
-        ),
-        SubstituteWithRawAttributeIntentionAction(
-            attribute.toSmartPointer(),
-            "Replace with: $variableName=\"${attribute.value}\""
-        )
+      attribute,
+      "$variableName is not allowed in data-sly-attribute",
+      ProblemHighlightType.GENERIC_ERROR_OR_WARNING,
+      RemoveAttributeIntentionFix(
+        attribute.name
+      ),
+      SubstituteWithRawAttributeIntentionAction(
+        attribute.toSmartPointer(),
+        "Replace with: $variableName=\"${attribute.value}\""
+      )
     )
   }
 
@@ -72,8 +72,6 @@ class InspectionService : IInspectionService {
      * @return instance of inspection service
      */
     fun getInstance(project: Project): IInspectionService? =
-            project.getService(IInspectionService::class.java)
-
+      project.getService(IInspectionService::class.java)
   }
-
 }

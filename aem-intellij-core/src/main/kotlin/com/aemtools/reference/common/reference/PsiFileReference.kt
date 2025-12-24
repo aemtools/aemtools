@@ -11,13 +11,14 @@ import com.intellij.psi.impl.source.resolve.reference.impl.providers.PsiFileRefe
  *
  * @author Dmytro Primshyts
  */
-class PsiFileReference(val psiFile: PsiElement?,
-                       holder: PsiElement,
-                       range: TextRange) : PsiReferenceBase<PsiElement>(holder, range, true),
-    PsiFileReference {
+class PsiFileReference(
+  val psiFile: PsiElement?,
+  holder: PsiElement,
+  range: TextRange
+) : PsiReferenceBase<PsiElement>(holder, range, true),
+  PsiFileReference {
 
   override fun multiResolve(incompleteCode: Boolean): Array<out ResolveResult> {
-
     return arrayOf(object : ResolveResult {
       override fun getElement(): PsiElement? {
         return psiFile
@@ -26,7 +27,6 @@ class PsiFileReference(val psiFile: PsiElement?,
       override fun isValidResult(): Boolean {
         return true
       }
-
     })
   }
 
@@ -37,5 +37,4 @@ class PsiFileReference(val psiFile: PsiElement?,
   override fun getVariants(): Array<out Any> {
     return arrayOf()
   }
-
 }

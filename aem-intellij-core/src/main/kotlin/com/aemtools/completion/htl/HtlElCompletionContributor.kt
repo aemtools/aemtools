@@ -1,8 +1,8 @@
 package com.aemtools.completion.htl
 
 import com.aemtools.common.completion.BaseCompletionContributor
-import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
-import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_LIST
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_REPEAT
 import com.aemtools.completion.htl.provider.*
 import com.aemtools.completion.htl.provider.option.*
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.categoriesOptionAssignment
@@ -48,13 +48,14 @@ class HtlElCompletionContributor : BaseCompletionContributor({
 
   basic(optionName, HtlOptionCompletionProvider)
 
-  smart(or(mainVariableInsideOfDataSlyList, mainVariableInsideOfDataSlyRepeat),
-      HtlListSmartCompletionProvider)
+  smart(
+    or(mainVariableInsideOfDataSlyList, mainVariableInsideOfDataSlyRepeat),
+    HtlListSmartCompletionProvider
+  )
 
   basic(contextOptionAssignment, HtlContextOptionAssignmentCompletionProvider)
   basic(resourceTypeOptionAssignment, HtlResourceTypeOptionAssignmentCompletionProvider)
 
   basic(categoriesOptionAssignment, HtlClientLibraryTemplateCategoryCompletionProvider)
   basic(categoriesOptionAssignmentViaArray, HtlClientLibraryTemplateCategoryCompletionProvider)
-
 })

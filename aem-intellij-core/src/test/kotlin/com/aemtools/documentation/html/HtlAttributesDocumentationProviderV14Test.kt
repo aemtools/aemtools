@@ -1,6 +1,6 @@
 package com.aemtools.documentation.html
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.lang.settings.model.HtlVersion
 
 /**
@@ -16,7 +16,7 @@ class HtlAttributesDocumentationProviderV14Test: HtlAttributesDocumentationProvi
   }
 
   fun testDataSlyUseDocumentation() = docCase {
-    htlAttribute(const.htl.DATA_SLY_USE)
+    htlAttribute(Const.Htl.DATA_SLY_USE)
     documentation("""
             <h2>data-sly-use</h2>
             <b>Description:</b> Exposes logic to the template<br>
@@ -34,7 +34,7 @@ class HtlAttributesDocumentationProviderV14Test: HtlAttributesDocumentationProvi
   }
 
   fun testDataSlyTestDocumentation() = docCase {
-    htlAttribute(const.htl.DATA_SLY_TEST)
+    htlAttribute(Const.Htl.DATA_SLY_TEST)
     documentation("""
             <h2>data-sly-test</h2>
             <b>Description:</b> Keeps, or removes the element depending on the attribute value.<br>
@@ -53,7 +53,7 @@ class HtlAttributesDocumentationProviderV14Test: HtlAttributesDocumentationProvi
   }
 
   fun testDataSlySetDocumentation() = docCase {
-    htlAttribute(const.htl.DATA_SLY_SET)
+    htlAttribute(Const.Htl.DATA_SLY_SET)
     documentation("""
             <h2>data-sly-set</h2>
             <b>Description:</b> Declares an HTML block, naming it with an identifier and defining the parameters it can get.<br>
@@ -71,7 +71,7 @@ class HtlAttributesDocumentationProviderV14Test: HtlAttributesDocumentationProvi
   }
 
   fun testDataSlyRepeatDocumentation() = docCase {
-    htlAttribute(const.htl.DATA_SLY_REPEAT)
+    htlAttribute(Const.Htl.DATA_SLY_REPEAT)
     documentation("""
             <h2>data-sly-repeat</h2>
             <b>Description:</b> Iterates over the content of each item in the attribute value and displays the containing element as many times as items in the attribute value.<br>
@@ -94,7 +94,7 @@ class HtlAttributesDocumentationProviderV14Test: HtlAttributesDocumentationProvi
   }
 
   fun testDataSlyListDocumentation() = docCase {
-    htlAttribute(const.htl.DATA_SLY_LIST)
+    htlAttribute(Const.Htl.DATA_SLY_LIST)
     documentation("""
             <h2>data-sly-list</h2>
             <b>Description:</b> Iterates over the content of each item in the attribute value.<br>
@@ -117,7 +117,7 @@ class HtlAttributesDocumentationProviderV14Test: HtlAttributesDocumentationProvi
   }
 
   fun testDataSlyTemplateDocumentation() = docCase {
-    htlAttribute(const.htl.DATA_SLY_TEMPLATE)
+    htlAttribute(Const.Htl.DATA_SLY_TEMPLATE)
     documentation("""
             <h2>data-sly-template</h2>
             <b>Description:</b> Declares an HTML block, naming it with an identifier and defining the parameters it can get.<br>
@@ -135,7 +135,7 @@ class HtlAttributesDocumentationProviderV14Test: HtlAttributesDocumentationProvi
   }
 
   fun testDataSlyAttributeDocumentation() = docCase {
-    htlAttribute(const.htl.DATA_SLY_ATTRIBUTE)
+    htlAttribute(Const.Htl.DATA_SLY_ATTRIBUTE)
     documentation("""
             <h2>data-sly-attribute</h2>
             <b>Description:</b> Sets an attribute or group of attributes on the current element.<br>
@@ -153,7 +153,7 @@ class HtlAttributesDocumentationProviderV14Test: HtlAttributesDocumentationProvi
   }
 
   fun testDataSlyElementDocumentation() = docCase {
-    htlAttribute(const.htl.DATA_SLY_ELEMENT)
+    htlAttribute(Const.Htl.DATA_SLY_ELEMENT)
     documentation("""
             <h2>data-sly-element</h2>
             <b>Description:</b> Replaces the element's tag name<br>
@@ -168,7 +168,7 @@ class HtlAttributesDocumentationProviderV14Test: HtlAttributesDocumentationProvi
   }
 
   fun testDataSlyCallDocumentation() = docCase {
-    htlAttribute(const.htl.DATA_SLY_CALL)
+    htlAttribute(Const.Htl.DATA_SLY_CALL)
     documentation("""
             <h2>data-sly-call</h2>
             <b>Description:</b> Calls a declared HTML block, passing parameters to it.<br>
@@ -182,7 +182,7 @@ class HtlAttributesDocumentationProviderV14Test: HtlAttributesDocumentationProvi
   }
 
   fun testDataSlyIncludeDocumentation() = docCase {
-    htlAttribute(const.htl.DATA_SLY_INCLUDE)
+    htlAttribute(Const.Htl.DATA_SLY_INCLUDE)
     documentation("""
             <h2>data-sly-include</h2>
             <b>Description:</b> Includes the output of rendering script run with the current context.<br>
@@ -197,7 +197,7 @@ class HtlAttributesDocumentationProviderV14Test: HtlAttributesDocumentationProvi
   }
 
   fun testDataSlyUnwrapDocumentation() = docCase {
-    htlAttribute(const.htl.DATA_SLY_UNWRAP)
+    htlAttribute(Const.Htl.DATA_SLY_UNWRAP)
     documentation("""
             <h2>data-sly-unwrap</h2>
             <b>Description:</b> Unwraps the element.<br>
@@ -215,7 +215,7 @@ class HtlAttributesDocumentationProviderV14Test: HtlAttributesDocumentationProvi
   }
 
   fun testDataSlyTextDocumentation() = docCase {
-    htlAttribute(const.htl.DATA_SLY_TEXT)
+    htlAttribute(Const.Htl.DATA_SLY_TEXT)
     documentation("""
             <h2>data-sly-text</h2>
             <b>Description:</b> Sets the content for the current element.<br>
@@ -230,7 +230,7 @@ class HtlAttributesDocumentationProviderV14Test: HtlAttributesDocumentationProvi
   }
 
   fun testDataSlyResourceDocumentation() = docCase {
-    htlAttribute(const.htl.DATA_SLY_RESOURCE)
+    htlAttribute(Const.Htl.DATA_SLY_RESOURCE)
     documentation("""
             <h2>data-sly-resource</h2>
             <b>Description:</b> Includes a rendered resource.<br>

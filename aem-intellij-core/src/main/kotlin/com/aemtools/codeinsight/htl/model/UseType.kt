@@ -9,14 +9,17 @@ enum class UseType {
    * Implementor of `Use` interface or a `Sling` model.
    */
   BEAN,
+
   /**
    * Javascript file.
    */
   JAVASCRIPT,
+
   /**
    * The HTL file.
    */
   HTL,
+
   /**
    * Unable to resolve data-sly-use.
    */

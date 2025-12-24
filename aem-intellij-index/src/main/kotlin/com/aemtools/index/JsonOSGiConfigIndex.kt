@@ -9,11 +9,11 @@ import com.intellij.util.io.DataExternalizer
 import com.intellij.util.io.EnumeratorStringDescriptor
 import com.intellij.util.io.KeyDescriptor
 
-class JsonOSGiConfigIndex: FileBasedIndexExtension<String, OSGiConfigurationIndexModel>() {
+class JsonOSGiConfigIndex : FileBasedIndexExtension<String, OSGiConfigurationIndexModel>() {
 
   companion object {
-    val JSON_OSGI_INDEX_ID: ID<String, OSGiConfigurationIndexModel>
-        = ID.create("JsonOSGiConfigIndex")
+    val JSON_OSGI_INDEX_ID: ID<String, OSGiConfigurationIndexModel> =
+      ID.create("JsonOSGiConfigIndex")
   }
 
   override fun getName(): ID<String, OSGiConfigurationIndexModel> = JSON_OSGI_INDEX_ID
@@ -27,11 +27,10 @@ class JsonOSGiConfigIndex: FileBasedIndexExtension<String, OSGiConfigurationInde
   override fun getVersion(): Int = 1
 
   override fun getInputFilter(): FileBasedIndex.InputFilter = FileBasedIndex.InputFilter {
-    it.fileType == JsonFileType.INSTANCE
-        && it.path.contains("config")
-        && it.path.endsWith(".cfg.json")
+    it.fileType == JsonFileType.INSTANCE &&
+      it.path.contains("config") &&
+      it.path.endsWith(".cfg.json")
   }
 
   override fun dependsOnFileContent(): Boolean = true
-
 }

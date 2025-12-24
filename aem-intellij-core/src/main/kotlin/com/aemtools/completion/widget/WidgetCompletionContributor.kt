@@ -1,7 +1,7 @@
 package com.aemtools.completion.widget
 
 import com.aemtools.common.completion.BaseCompletionContributor
-import com.aemtools.common.constant.const.file_names.DIALOG_XML
+import com.aemtools.common.constant.Const.FileNames.DIALOG_XML
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -14,13 +14,15 @@ import com.intellij.util.ProcessingContext
 class WidgetCompletionContributor : BaseCompletionContributor({
 
   basic(PlatformPatterns.psiElement(), WidgetCompletionProvider())
-
 })
 
 private class WidgetCompletionProvider : CompletionProvider<CompletionParameters>() {
 
-  override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext,
-                              result: CompletionResultSet) {
+  override fun addCompletions(
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     if (!accept(parameters)) {
       return
     }
@@ -36,6 +38,4 @@ private class WidgetCompletionProvider : CompletionProvider<CompletionParameters
   private fun accept(parameters: CompletionParameters): Boolean {
     return DIALOG_XML == parameters.originalFile.name
   }
-
 }
-

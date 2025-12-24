@@ -33,11 +33,12 @@ class HtmlAttributeUsagesProvider : FindUsagesHandlerFactory() {
   class HtlAttributesFindUsagesHandler(val xmlAttribute: XmlAttribute) : FindUsagesHandler(xmlAttribute) {
 
     override fun findReferencesToHighlight(
-        target: PsiElement,
-        searchScope: SearchScope): MutableCollection<PsiReference> {
+      target: PsiElement,
+      searchScope: SearchScope
+    ): MutableCollection<PsiReference> {
       return super.findReferencesToHighlight(target, searchScope)
-          .filter { it is HtlDeclarationReference || it is HtlListHelperReference }
-          .toMutableList()
+        .filter { it is HtlDeclarationReference || it is HtlListHelperReference }
+        .toMutableList()
     }
 
     override fun getSecondaryElements(): Array<PsiElement> {
@@ -45,7 +46,5 @@ class HtmlAttributeUsagesProvider : FindUsagesHandlerFactory() {
         it.element
       }.toTypedArray()
     }
-
   }
-
 }

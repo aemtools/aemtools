@@ -1,6 +1,6 @@
 package com.aemtools.completion.htl.dataslycall
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.test.completion.CompletionBaseLightTest
 
 /**
@@ -20,12 +20,12 @@ class DataSlyCallOptionsCompletionTest : CompletionBaseLightTest() {
   }
 
   fun testDataSlyCallParametersFromAnotherFile() = completionTest {
-    addHtml("${const.JCR_ROOT}/apps/components/comp/comp.html", """
+    addHtml("${Const.JCR_ROOT}/apps/components/comp/comp.html", """
             <div data-sly-use.template="template.html">
                 <div data-sly-call="$DOLLAR{template.template @ $CARET}"></div>
             </div>
         """)
-    addHtml("${const.JCR_ROOT}/apps/components/comp/template.html", """
+    addHtml("${Const.JCR_ROOT}/apps/components/comp/template.html", """
             <div data-sly-template.template="$DOLLAR{@ param1, param2}"></div>
         """)
     shouldContain(listOf("param1", "param2"))

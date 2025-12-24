@@ -15,6 +15,7 @@ interface VirtualCallChainElement {
    * Name of current call chain element.
    */
   val name: String
+
   /**
    * Type descriptor of current call chain element.
    */
@@ -32,4 +33,3 @@ interface VirtualCallChainElement {
    */
   fun toLookupElement(): LookupElement
 }
-

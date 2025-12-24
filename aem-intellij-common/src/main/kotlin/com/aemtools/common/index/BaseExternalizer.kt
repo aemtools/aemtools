@@ -14,7 +14,7 @@ import java.io.Serializable
 open class BaseExternalizer<T : Serializable> : DataExternalizer<T> {
   companion object {
     val MARKER_BYTES: ByteArray =
-        byteArrayOf(Byte.MAX_VALUE, Byte.MAX_VALUE)
+      byteArrayOf(Byte.MAX_VALUE, Byte.MAX_VALUE)
   }
 
   override fun save(out: DataOutput, value: T?) {
@@ -41,7 +41,6 @@ open class BaseExternalizer<T : Serializable> : DataExternalizer<T> {
     val resultString = result.copyOfRange(0, result.size - 2).toString(charset("ISO-8859-1"))
     return ObjectSerializer.deserialize(resultString)
   }
-
 }
 
 /**

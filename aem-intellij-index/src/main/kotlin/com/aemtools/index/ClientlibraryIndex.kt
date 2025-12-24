@@ -15,7 +15,9 @@ import com.intellij.xml.index.XmlIndex
  */
 class ClientlibraryIndex : XmlIndex<ClientlibraryModel>() {
   companion object {
-    val CLIENTLIBRARY_ID: ID<String, ClientlibraryModel> = ID.create<String, ClientlibraryModel>("ClientlibraryIndex")
+    val CLIENTLIBRARY_ID: ID<String, ClientlibraryModel> = ID.create<String, ClientlibraryModel>(
+      "ClientlibraryIndex"
+    )
   }
 
   override fun getValueExternalizer(): DataExternalizer<ClientlibraryModel> = ClientlibraryExternalizer()
@@ -29,5 +31,4 @@ class ClientlibraryIndex : XmlIndex<ClientlibraryModel>() {
       it.name == ".content.xml"
     }
   }
-
 }

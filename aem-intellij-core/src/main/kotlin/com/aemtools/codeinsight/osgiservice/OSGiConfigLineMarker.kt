@@ -18,7 +18,7 @@ class OSGiConfigLineMarker : LineMarkerProvider {
   override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<PsiElement>? {
     if (element is PsiIdentifier && element.parent is PsiClass) {
       val psiClass = element.parent as? PsiClass
-          ?: return null
+        ?: return null
 
       if (psiClass.isOSGiService()) {
         val fqn = psiClass.qualifiedName ?: return null
@@ -35,7 +35,9 @@ class OSGiConfigLineMarker : LineMarkerProvider {
     return null
   }
 
-  override fun collectSlowLineMarkers(elements: MutableList<out PsiElement>,
-                                      result: MutableCollection<in LineMarkerInfo<*>>) {
+  override fun collectSlowLineMarkers(
+    elements: MutableList<out PsiElement>,
+    result: MutableCollection<in LineMarkerInfo<*>>
+  ) {
   }
 }

@@ -11,11 +11,11 @@ import com.intellij.psi.AbstractElementManipulator
 class HtlVariableNameManipulator : AbstractElementManipulator<HtlVariableName>() {
   override fun handleContentChange(element: HtlVariableName, range: TextRange, newContent: String): HtlVariableName {
     val newElement = com.aemtools.lang.htl.psi.HtlElementFactory.createOption(newContent, element.project)
-        ?: return element
+      ?: return element
 
     element.node.replaceChild(
-        element.node.firstChildNode,
-        newElement.node.firstChildNode
+      element.node.firstChildNode,
+      newElement.node.firstChildNode
     )
     return element
   }

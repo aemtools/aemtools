@@ -13,16 +13,18 @@ import java.lang.reflect.Type
  */
 class XmlAttributeDefinitionDeserializer : JsonDeserializer<XmlAttributeDefinition> {
 
-  override fun deserialize(json: JsonElement?, typeOfT: Type?,
-                           context: JsonDeserializationContext?): XmlAttributeDefinition? {
-
+  override fun deserialize(
+    json: JsonElement?,
+    typeOfT: Type?,
+    context: JsonDeserializationContext?
+  ): XmlAttributeDefinition? {
     val jsonObject = json as JsonObject
 
     return XmlAttributeDefinition(
-        jsonObject.get("name").asString,
-        extractTypeInfo(jsonObject),
-        extractValues(jsonObject).orEmpty(),
-        jsonObject.get("delimiter")?.asString.orEmpty()
+      jsonObject.get("name").asString,
+      extractTypeInfo(jsonObject),
+      extractValues(jsonObject).orEmpty(),
+      jsonObject.get("delimiter")?.asString.orEmpty()
     )
   }
 
@@ -34,5 +36,4 @@ class XmlAttributeDefinitionDeserializer : JsonDeserializer<XmlAttributeDefiniti
     val rawString = jsonObject.get("type")?.asString ?: ""
     return JsTypeInfo(rawString.split("|"))
   }
-
 }

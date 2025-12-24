@@ -31,5 +31,4 @@ interface IReferenceTestFixture : ITestFixture {
    * Perform the test.
    */
   fun test()
-
 }

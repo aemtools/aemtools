@@ -1,6 +1,6 @@
 package com.aemtools.index
 
-import com.aemtools.common.constant.const.JCR_ROOT
+import com.aemtools.common.constant.Const.JCR_ROOT
 import com.aemtools.index.model.dialog.AemComponentClassicDialogDefinition
 import com.aemtools.index.model.dialog.parameter.ClassicDialogParameterDeclaration
 import com.aemtools.test.base.BaseLightTest
@@ -29,7 +29,7 @@ class AemComponentClassicDialogIndexTest : BaseLightTest() {
       val fbi = FileBasedIndex.getInstance()
 
       val value = fbi.getValues(
-          AemComponentClassicDialogIndex.AEM_COMPONENT_CLASSIC_DIALOG_INDEX_ID,
+          AEM_COMPONENT_CLASSIC_DIALOG_INDEX_ID,
           "/apps/components/comp",
           GlobalSearchScope.projectScope(project))
           .first()

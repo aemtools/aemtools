@@ -15,14 +15,14 @@ class HtlAttributesDescriptorsProvider : XmlAttributeDescriptorsProvider {
   }
 
   override fun getAttributeDescriptor(attributeName: String?, context: XmlTag?): XmlAttributeDescriptor? {
-    if (attributeName != null
-        && context != null
-        && attributeName.isHtlAttributeName()
-        && context.containingFile.isHtlFile()) {
+    if (attributeName != null &&
+      context != null &&
+      attributeName.isHtlAttributeName() &&
+      context.containingFile.isHtlFile()
+    ) {
       return HtlAttributeDescriptor(attributeName, context)
     }
 
     return null
   }
-
 }

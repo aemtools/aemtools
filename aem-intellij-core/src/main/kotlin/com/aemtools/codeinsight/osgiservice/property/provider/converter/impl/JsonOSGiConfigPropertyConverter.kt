@@ -2,7 +2,7 @@ package com.aemtools.codeinsight.osgiservice.property.provider.converter.impl
 
 import com.aemtools.codeinsight.osgiservice.property.OSGiPropertyDescriptor
 import com.aemtools.codeinsight.osgiservice.property.provider.converter.OSGiConfigPropertyConverter
-import com.aemtools.common.constant.const.osgi.NO_PROPERTY_VALUE_SET
+import com.aemtools.common.constant.Const.Osgi.NO_PROPERTY_VALUE_SET
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.index.model.OSGiConfiguration
 import com.intellij.json.psi.JsonFile
@@ -19,15 +19,15 @@ class JsonOSGiConfigPropertyConverter : OSGiConfigPropertyConverter {
 
     val containingPsiElement: PsiElement? by lazy {
       file
-          .findChildrenByType(JsonProperty::class.java)
-          .find { it.name == propertyName }
+        .findChildrenByType(JsonProperty::class.java)
+        .find { it.name == propertyName }
     }
 
     return OSGiPropertyDescriptor(
-        osgiConfig.mods.joinToString { it },
-        osgiConfig.parameters[propertyName] ?: NO_PROPERTY_VALUE_SET,
-        containingPsiElement,
-        file
+      osgiConfig.mods.joinToString { it },
+      osgiConfig.parameters[propertyName] ?: NO_PROPERTY_VALUE_SET,
+      containingPsiElement,
+      file
     )
   }
 }

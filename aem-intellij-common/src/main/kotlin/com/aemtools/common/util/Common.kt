@@ -1,7 +1,7 @@
 package com.aemtools.common.util
 
-import com.aemtools.common.constant.const.htl.DECLARATION_ATTRIBUTES
-import com.aemtools.common.constant.const.htl.SINGLE_ATTRIBUTES
+import com.aemtools.common.constant.Const.Htl.DECLARATION_ATTRIBUTES
+import com.aemtools.common.constant.Const.Htl.SINGLE_ATTRIBUTES
 import com.intellij.codeInsight.template.TemplateManager
 import com.intellij.lang.injection.InjectedLanguageManager
 import com.intellij.openapi.application.ApplicationManager
@@ -36,9 +36,9 @@ object OpenApiUtil {
    */
   fun isCurrentElementSelected(element: PsiElement): Boolean {
     val editor: Editor = FileEditorManager
-        .getInstance(element.project)
-        .selectedTextEditor
-        ?: return false
+      .getInstance(element.project)
+      .selectedTextEditor
+      ?: return false
     val selectionModel = editor.selectionModel
     if (!selectionModel.hasSelection()) {
       return false
@@ -55,8 +55,7 @@ object OpenApiUtil {
    * @see [com.intellij.openapi.application.Application.isDispatchThread]
    * @return *true* if current thread is dispatch thread, *false* otherwise
    */
-  fun isCurrentThreadIsDispatch(): Boolean
-      = ApplicationManager.getApplication().isDispatchThread
+  fun isCurrentThreadIsDispatch(): Boolean = ApplicationManager.getApplication().isDispatchThread
 
   /**
    * Check if current IDEA process is executed within a test.
@@ -86,11 +85,11 @@ object OpenApiUtil {
    */
   fun findFileByRelativePath(relativePath: String, project: Project): VirtualFile? {
     return FilenameIndex.getVirtualFilesByName(
-            relativePath.substringAfterLast("/"),
-            GlobalSearchScope.projectScope(project))
-            .find { it.path.endsWith(relativePath) }
+      relativePath.substringAfterLast("/"),
+      GlobalSearchScope.projectScope(project)
+    )
+      .find { it.path.endsWith(relativePath) }
   }
-
 }
 
 /**
@@ -139,7 +138,7 @@ fun String.toStringBuilder() = StringBuilder(this)
  * @return the distance
  */
 fun String.distanceTo(other: String): Int =
-    LevenshteinDistance.getDefaultInstance().apply(this, other)
+  LevenshteinDistance.getDefaultInstance().apply(this, other)
 
 /**
  * Find the string with the smallest levenshtein distance relative to current string
@@ -151,7 +150,7 @@ fun String.distanceTo(other: String): Int =
  * @return the closest element, *null* in case if given set is empty
  */
 fun String.closest(others: Set<String>): String? =
-    others.minByOrNull { this.distanceTo(it) }
+  others.minByOrNull { this.distanceTo(it) }
 
 /**
  * Get [PsiFileFactory] associated with current project.
@@ -192,7 +191,7 @@ fun Project.templateManager(): TemplateManager = TemplateManager.getInstance(thi
  * @return instance of injected language manager
  */
 fun Project.injectedLanguageManager(): InjectedLanguageManager =
-    InjectedLanguageManager.getInstance(this)
+  InjectedLanguageManager.getInstance(this)
 
 /**
  * Get [GlobalSearchScope] associated with current project.
@@ -211,11 +210,11 @@ fun Project.allScope(): GlobalSearchScope = GlobalSearchScope.allScope(this)
  */
 fun showErrorMessage(project: Project, editor: Editor?, message: String) {
   CommonRefactoringUtil.showErrorHint(
-      project,
-      editor,
-      message,
-      RefactoringBundle.message("rename.title"),
-      null
+    project,
+    editor,
+    message,
+    RefactoringBundle.message("rename.title"),
+    null
   )
 }
 
@@ -232,12 +231,13 @@ fun showErrorMessage(project: Project, editor: Editor?, message: String) {
  *
  * @return collection of all models stored under given index id
  */
-inline fun <reified MODEL : Serializable> allFromFbi(indexId: ID<String, MODEL>,
-                                                     project: Project,
-                                                     scope: GlobalSearchScope = project.allScope())
-    : List<MODEL> = FileBasedIndex.getInstance().let { fbi ->
+inline fun <reified MODEL : Serializable> allFromFbi(
+  indexId: ID<String, MODEL>,
+  project: Project,
+  scope: GlobalSearchScope = project.allScope()
+): List<MODEL> = FileBasedIndex.getInstance().let { fbi ->
   fbi.getAllKeys(indexId, project)
-      .flatMap {
-        fbi.getValues(indexId, it, scope)
-      }
+    .flatMap {
+      fbi.getValues(indexId, it, scope)
+    }
 }

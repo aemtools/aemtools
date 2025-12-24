@@ -22,30 +22,22 @@ import com.intellij.psi.tree.TokenSet
 class ElParserDefinition : ParserDefinition {
   override fun createParser(project: Project?): PsiParser = ElParser()
 
-  override fun createFile(viewProvider: FileViewProvider): PsiFile
-      = ElPsiFile(viewProvider)
+  override fun createFile(viewProvider: FileViewProvider): PsiFile = ElPsiFile(viewProvider)
 
-  override fun spaceExistenceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements
-      = ParserDefinition.SpaceRequirements.MAY
+  override fun spaceExistenceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements =
+    ParserDefinition.SpaceRequirements.MAY
 
-  override fun getStringLiteralElements(): TokenSet
-      = TokenSet.create(ElTypes.STRING_LITERAL)
+  override fun getStringLiteralElements(): TokenSet = TokenSet.create(ElTypes.STRING_LITERAL)
 
-  override fun getFileNodeType(): IFileElementType
-      = ElFileElementType
+  override fun getFileNodeType(): IFileElementType = ElFileElementType
 
-  override fun getWhitespaceTokens(): TokenSet
-      = TokenSet.create(
-      TokenType.WHITE_SPACE
+  override fun getWhitespaceTokens(): TokenSet = TokenSet.create(
+    TokenType.WHITE_SPACE
   )
 
-  override fun createLexer(project: Project?): Lexer
-      = ElLexer()
+  override fun createLexer(project: Project?): Lexer = ElLexer()
 
-  override fun createElement(node: ASTNode?): PsiElement
-      = ElTypes.Factory.createElement(node)
+  override fun createElement(node: ASTNode?): PsiElement = ElTypes.Factory.createElement(node)
 
-  override fun getCommentTokens(): TokenSet
-      = TokenSet.EMPTY
-
+  override fun getCommentTokens(): TokenSet = TokenSet.EMPTY
 }

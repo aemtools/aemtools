@@ -28,8 +28,8 @@ abstract class HtlElExpressionMixin(node: ASTNode) : ASTWrapperPsiElement(node),
    * @return list of options
    */
   fun getOptions(): List<HtlOptionModel> =
-      this.findChildrenByClass(HtlContextExpression::class.java)
-          .map(::HtlOptionModel)
+    this.findChildrenByClass(HtlContextExpression::class.java)
+      .map(::HtlOptionModel)
 
   /**
    * Get main property access.
@@ -37,7 +37,6 @@ abstract class HtlElExpressionMixin(node: ASTNode) : ASTWrapperPsiElement(node),
    * @return property access mixin, *null* if no property access available
    */
   fun getMainPropertyAccess(): PropertyAccessMixin? =
-      this.findChildrenByType(PropertyAccessMixin::class.java)
-          .firstOrNull()
-
+    this.findChildrenByType(PropertyAccessMixin::class.java)
+      .firstOrNull()
 }

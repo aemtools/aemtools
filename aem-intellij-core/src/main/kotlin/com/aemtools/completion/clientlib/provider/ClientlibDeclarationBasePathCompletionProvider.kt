@@ -21,14 +21,15 @@ import com.intellij.util.ProcessingContext
  */
 object ClientlibDeclarationBasePathCompletionProvider : CompletionProvider<CompletionParameters>(), DumbAware {
   override fun addCompletions(
-      parameters: CompletionParameters,
-      context: ProcessingContext,
-      result: CompletionResultSet) {
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     if (result.isStopped) {
       return
     }
     val currentElement = parameters.position.findParentByType(CdInclude::class.java)
-        ?: return
+      ?: return
     if (currentElement.absoluteInclude != null || currentElement.relativeInclude != null) {
       handleDirectoryPathInclude(currentElement, parameters, result)
     } else {
@@ -36,25 +37,31 @@ object ClientlibDeclarationBasePathCompletionProvider : CompletionProvider<Compl
     }
   }
 
-  private fun handleDirectoryPathInclude(currentElement: CdInclude,
-                                         parameters: CompletionParameters,
-                                         result: CompletionResultSet) {
+  private fun handleDirectoryPathInclude(
+    currentElement: CdInclude,
+    parameters: CompletionParameters,
+    result: CompletionResultSet
+  ) {
     val baseDirectoryPath = resolveBaseDirectoryPath(currentElement, parameters) ?: return
     val baseDirectoryPathWithTrailingSlash = "$baseDirectoryPath/"
 
     val groupedSuggestedDirectories = ClientlibDeclarationIndexFacade.findAllTypedFiles(parameters.originalFile)
-        .groupBy { getContainingDirectoryPath(it) }
-        .filter { it.key.startsWith(baseDirectoryPathWithTrailingSlash) }
+      .groupBy { getContainingDirectoryPath(it) }
+      .filter { it.key.startsWith(baseDirectoryPathWithTrailingSlash) }
 
-    result.addAllElements(groupedSuggestedDirectories.map {
-      lookupElement(it.key.replaceFirst(baseDirectoryPathWithTrailingSlash, ""))
+    result.addAllElements(
+      groupedSuggestedDirectories.map {
+        lookupElement(it.key.replaceFirst(baseDirectoryPathWithTrailingSlash, ""))
           .withTailText("(items: ${it.value.size})")
-    })
+      }
+    )
     result.stopHere()
   }
 
-  private fun resolveBaseDirectoryPath(currentElement: CdInclude,
-                                       parameters: CompletionParameters): String? {
+  private fun resolveBaseDirectoryPath(
+    currentElement: CdInclude,
+    parameters: CompletionParameters
+  ): String? {
     if (currentElement.relativeInclude != null) {
       val relativePathExpression = SelectedString.create(currentElement.relativeInclude?.text)?.value ?: ""
       val baseDirectory = parameters.originalFile.containingDirectory.myRelativeDirectory(relativePathExpression)
@@ -69,9 +76,11 @@ object ClientlibDeclarationBasePathCompletionProvider : CompletionProvider<Compl
 
   private fun handleSimpleInclude(parameters: CompletionParameters, result: CompletionResultSet) {
     val suitableDirs = collectSuitableDirs(parameters)
-    result.addAllElements(suitableDirs.map {
-      lookupElement(it)
-    })
+    result.addAllElements(
+      suitableDirs.map {
+        lookupElement(it)
+      }
+    )
     result.stopHere()
   }
 
@@ -81,19 +90,25 @@ object ClientlibDeclarationBasePathCompletionProvider : CompletionProvider<Compl
 
     fun dirsCollector(dir: PsiDirectory): List<String> {
       val result = ArrayList<String>()
-      if (dir.files.any { ClientlibDeclarationIndexFacade.isMatchedByExtension(it, clientlibDeclarationFileName) }) {
+      if (dir.files.any {
+          ClientlibDeclarationIndexFacade.isMatchedByExtension(
+            it,
+            clientlibDeclarationFileName
+          )
+        }
+      ) {
         result.add(dir.virtualFile.path.relativeTo(containingDirectory.virtualFile.path))
       }
 
       dir.subdirectories
-          .forEach {
-            result.addAll(dirsCollector(it))
-          }
+        .forEach {
+          result.addAll(dirsCollector(it))
+        }
       return result
     }
 
     return containingDirectory.subdirectories
-        .flatMap(::dirsCollector)
+      .flatMap(::dirsCollector)
   }
 
   private fun getContainingDirectoryPath(it: VirtualFile) = it.parent.path.normalizeToJcrRoot()

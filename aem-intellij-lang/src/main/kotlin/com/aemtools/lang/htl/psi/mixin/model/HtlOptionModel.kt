@@ -24,5 +24,4 @@ class HtlOptionModel(val contextExpression: HtlContextExpression) {
     }
     return ""
   }
-
 }

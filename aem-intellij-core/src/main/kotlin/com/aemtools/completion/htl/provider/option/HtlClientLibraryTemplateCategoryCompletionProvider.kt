@@ -4,7 +4,7 @@ import com.aemtools.analysis.htl.callchain
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
 import com.aemtools.common.completion.lookupElement
 import com.aemtools.common.completion.withPriority
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.common.util.findParentByType
 import com.aemtools.index.ClientLibraryIndexFacade
 import com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
@@ -19,25 +19,26 @@ import com.intellij.util.ProcessingContext
  */
 object HtlClientLibraryTemplateCategoryCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(
-      parameters: CompletionParameters,
-      context: ProcessingContext,
-      result: CompletionResultSet) {
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     if (result.isStopped) {
       return
     }
 
     val currentPosition = parameters.position
     val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
-        ?: return
+      ?: return
 
     val outputType = hel
-        .getMainPropertyAccess()
-        ?.callchain()
-        ?.getLastOutputType()
-        as? TemplateTypeDescriptor
-        ?: return
+      .getMainPropertyAccess()
+      ?.callchain()
+      ?.getLastOutputType()
+      as? TemplateTypeDescriptor
+      ?: return
 
-    if (outputType.template.fullName != const.CLIENTLIB_TEMPLATE) {
+    if (outputType.template.fullName != Const.CLIENTLIB_TEMPLATE) {
       return
     }
 
@@ -46,18 +47,19 @@ object HtlClientLibraryTemplateCategoryCompletionProvider : CompletionProvider<C
     models.flatMap { clientLibraryModel ->
       clientLibraryModel.categories.map { category ->
         lookupElement(category)
-            .withIcon(if (outputType.template.name == "css") {
+          .withIcon(
+            if (outputType.template.name == "css") {
               AllIcons.FileTypes.Css
             } else {
               AllIcons.FileTypes.JavaScript
-            })
-            .withPriority(clientLibraryModel.embed.size.toDouble())
+            }
+          )
+          .withPriority(clientLibraryModel.embed.size.toDouble())
       }
     }
-        .apply {
-          result.addAllElements(this)
-          result.stopHere()
-        }
+      .apply {
+        result.addAllElements(this)
+        result.stopHere()
+      }
   }
-
 }

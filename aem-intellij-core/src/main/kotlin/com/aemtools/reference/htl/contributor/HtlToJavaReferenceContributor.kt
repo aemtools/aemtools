@@ -13,8 +13,8 @@ import com.intellij.psi.PsiReferenceRegistrar
 class HtlToJavaReferenceContributor : PsiReferenceContributor() {
   override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
     registrar.registerReferenceProvider(
-        HtlPatterns.dataSlyUseMainString,
-        DataSlyUseElJavaReferenceProvider)
+      HtlPatterns.dataSlyUseMainString,
+      DataSlyUseElJavaReferenceProvider
+    )
   }
-
 }

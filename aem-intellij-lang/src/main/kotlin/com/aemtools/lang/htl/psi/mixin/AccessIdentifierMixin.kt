@@ -14,13 +14,13 @@ import com.intellij.psi.PsiElement
 abstract class AccessIdentifierMixin(node: ASTNode) : com.aemtools.lang.htl.psi.mixin.VariableNameMixin(node) {
 
   override fun getName(): String? =
-      variableName()
+    variableName()
 
   override fun setName(name: String): PsiElement {
     val newElement = when {
       this.hasChild(HtlArrayLikeAccess::class.java) -> {
         val stringLiteral = this.findChildrenByType(HtlStringLiteral::class.java)
-            .firstOrNull() ?: return this
+          .firstOrNull() ?: return this
 
         if (stringLiteral.text.startsWith("\"")) {
           HtlElementFactory.createArrayLikeAccessDoublequoted(name, project)
@@ -58,5 +58,4 @@ abstract class AccessIdentifierMixin(node: ASTNode) : com.aemtools.lang.htl.psi.
       else -> ""
     }
   }
-
 }

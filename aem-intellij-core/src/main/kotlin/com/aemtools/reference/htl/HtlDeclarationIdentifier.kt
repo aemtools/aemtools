@@ -16,8 +16,8 @@ import javax.swing.Icon
  *
  * @author Dmytro Primshyts
  */
-open class HtlDeclarationIdentifier(val xmlAttribute: XmlAttribute)
-  : FakePsiElement(), PsiNamedElement {
+open class HtlDeclarationIdentifier(val xmlAttribute: XmlAttribute) :
+  FakePsiElement(), PsiNamedElement {
 
   override fun getText(): String? {
     return xmlAttribute.name.substringAfter(".", "item")

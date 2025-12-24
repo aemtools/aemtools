@@ -18,5 +18,4 @@ abstract class BaseRenameTest(withUberJar: Boolean = false) : BaseLightTest(with
 
     renameFixture.test()
   }
-
 }

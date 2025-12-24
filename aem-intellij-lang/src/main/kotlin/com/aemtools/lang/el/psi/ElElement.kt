@@ -6,5 +6,5 @@ import com.intellij.psi.tree.IElementType
 /**
  * @author Dmytro Primshyts
  */
-class ElElement(debugName: String)
-  : IElementType(debugName, ElLanguage)
+class ElElement(debugName: String) :
+  IElementType(debugName, ElLanguage)

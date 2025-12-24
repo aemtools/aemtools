@@ -6,5 +6,5 @@ import com.aemtools.index.model.dialog.AemComponentTouchUIDialogDefinition
 /**
  * @author Dmytro Primshyts
  */
-object AemComponentTouchUIDialogDefinitionExternalizer
-  : BaseExternalizer<AemComponentTouchUIDialogDefinition>()
+object AemComponentTouchUIDialogDefinitionExternalizer :
+  BaseExternalizer<AemComponentTouchUIDialogDefinition>()

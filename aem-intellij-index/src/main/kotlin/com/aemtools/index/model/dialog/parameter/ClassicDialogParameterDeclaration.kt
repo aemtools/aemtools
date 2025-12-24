@@ -8,8 +8,8 @@ package com.aemtools.index.model.dialog.parameter
  * @author Dmytro Primshyts
  */
 data class ClassicDialogParameterDeclaration(
-    val xtype: String,
-    override val name: String
+  val xtype: String,
+  override val name: String
 ) : BaseParameterDeclaration() {
 
   companion object {
@@ -19,5 +19,4 @@ data class ClassicDialogParameterDeclaration(
 
   override val tailText: String
     get() = xtype
-
 }

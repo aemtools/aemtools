@@ -7,8 +7,8 @@ import com.intellij.openapi.project.Project
 /**
  * @author Kostiantyn Diachenko
  */
-class RemoveAnnotationAttributeAction(val text: String)
-  : LocalQuickFix {
+class RemoveAnnotationAttributeAction(val text: String) :
+  LocalQuickFix {
 
   override fun getFamilyName(): String = text
 

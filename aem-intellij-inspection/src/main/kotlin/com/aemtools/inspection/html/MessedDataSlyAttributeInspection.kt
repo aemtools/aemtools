@@ -1,6 +1,6 @@
 package com.aemtools.inspection.html
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.inspection.service.InspectionService
 import com.aemtools.lang.util.htlAttributeName
 import com.intellij.codeInspection.ProblemsHolder
@@ -30,28 +30,29 @@ attributes that take JavaScript as input (e.g. onclick, onmousemove, etc).
     """.trimIndent()
   }
 
-  public override fun checkAttribute(attribute: XmlAttribute,
-                                     holder: ProblemsHolder,
-                                     isOnTheFly: Boolean) {
+  public override fun checkAttribute(
+    attribute: XmlAttribute,
+    holder: ProblemsHolder,
+    isOnTheFly: Boolean
+  ) {
     val inspectionService = InspectionService.getInstance(attribute.project)
-        ?: return
+      ?: return
     if (!inspectionService.validTarget(attribute)) {
       return
     }
 
     val htlAttributeName = attribute.htlAttributeName()
-    if (htlAttributeName != const.htl.DATA_SLY_ATTRIBUTE) {
+    if (htlAttributeName != Const.Htl.DATA_SLY_ATTRIBUTE) {
       return
     }
 
     val htlVariableName = attribute.name.substringAfter(".")
-    if (htlVariableName == "style" || htlVariableName in const.html.JS_ATTRIBUTES) {
+    if (htlVariableName == "style" || htlVariableName in Const.html.JS_ATTRIBUTES) {
       inspectionService.messedDataSlyAttribute(
-          holder,
-          attribute,
-          htlVariableName
+        holder,
+        attribute,
+        htlVariableName
       )
     }
   }
-
 }

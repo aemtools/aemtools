@@ -50,7 +50,7 @@ object ObjectSerializer {
    */
   @Suppress("UNCHECKED_CAST")
   fun <T : Serializable> deserialize(string: String): T? =
-      deserialize(string.toByteArray(charset("ISO-8859-1")))
+    deserialize(string.toByteArray(charset("ISO-8859-1")))
 
   /**
    * Deserialize given [ByteArray] using [ObjectInputStream].
@@ -68,7 +68,6 @@ object ObjectSerializer {
 
     return ois.readObject() as T
   }
-
 }
 
 /**

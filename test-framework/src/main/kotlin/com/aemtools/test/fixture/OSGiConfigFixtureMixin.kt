@@ -87,5 +87,4 @@ interface OSGiConfigFixtureMixin {
   fun ITestFixture.addEmptyOSGiConfigs(vararg names: String) = names.forEach {
     this.osgiConfig(it, "")
   }
-
 }

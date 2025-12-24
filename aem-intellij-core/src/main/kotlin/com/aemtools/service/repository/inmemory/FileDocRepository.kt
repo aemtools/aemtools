@@ -1,8 +1,8 @@
 package com.aemtools.service.repository.inmemory
 
 import com.aemtools.completion.model.WidgetDoc
+import com.aemtools.service.repository.Const
 import com.aemtools.service.repository.WidgetDocRepository
-import com.aemtools.service.repository.const
 import com.google.common.collect.Lists
 import com.google.gson.Gson
 import com.intellij.openapi.util.io.FileUtil
@@ -27,16 +27,17 @@ object FileDocRepository : WidgetDocRepository {
     val docs: Array<WidgetDoc> = Gson().fromJson(jsonString.toString(), emptyArray<WidgetDoc>().javaClass)
     documents += docs
     documents.filterNot { it.xtype.isNullOrBlank() }
-        .forEach {
-          groupedByXtype[it.xtype as String] = it
-          xtypes.add(it.xtype as String)
-        }
+      .forEach {
+        groupedByXtype[it.xtype as String] = it
+        xtypes.add(it.xtype as String)
+      }
     documents.forEach { groupedByClass[it.className] = it }
   }
 
   private fun getDocumentationFromClasspath(): ByteArray? {
     val input = FileDocRepository::class.java.classLoader.getResourceAsStream(
-        const.file.WIDGET_DOCUMENTATION) ?: return null
+      Const.File.WIDGET_DOCUMENTATION
+    ) ?: return null
     return FileUtil.loadBytes(input)
   }
 
@@ -55,5 +56,4 @@ object FileDocRepository : WidgetDocRepository {
 
     return xtypes.filter { it.startsWith(query) }
   }
-
 }

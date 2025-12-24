@@ -8,7 +8,6 @@ import com.aemtools.common.util.getHtmlFile
 import com.aemtools.lang.util.getHtlFile
 import com.aemtools.lang.util.htlAttributes
 import com.intellij.codeInsight.completion.CompletionParameters
-import com.intellij.lang.StdLanguages
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.xml.XmlAttribute
@@ -26,17 +25,19 @@ object FileVariablesResolver {
    * @param element the element
    * @return the declaration element
    */
-  fun findDeclaration(variableName: String,
-                      element: PsiElement): HtlVariableDeclaration? {
+  fun findDeclaration(
+    variableName: String,
+    element: PsiElement
+  ): HtlVariableDeclaration? {
     val htmlFile = element.containingFile.getHtmlFile() ?: return null
     val xmlAttributes = htmlFile.findChildrenByType(XmlAttribute::class.java)
-        .toList()
+      .toList()
 
     val elements = xmlAttributes.htlAttributes()
 
     val result = elements.extractDeclarations()
-        .filterForPosition(element)
-        .find { it.variableName == variableName }
+      .filterForPosition(element)
+      .find { it.variableName == variableName }
 
     return result
   }
@@ -48,9 +49,11 @@ object FileVariablesResolver {
    * @param position position to start variable lookup
    * @return *true* if variable with given name is valid in given context
    */
-  fun validVariable(variableName: String,
-                    position: PsiElement): Boolean =
-      findDeclaration(variableName, position) != null
+  fun validVariable(
+    variableName: String,
+    position: PsiElement
+  ): Boolean =
+    findDeclaration(variableName, position) != null
 
   /**
    * Collect [HtlVariableDeclaration] objects suitable for given position.
@@ -58,16 +61,18 @@ object FileVariablesResolver {
    * @param completionParameters the completion parameters
    * @return list of htl variable declarations
    */
-  fun declarationsForPosition(position: PsiElement, completionParameters: CompletionParameters)
-      : List<HtlVariableDeclaration> {
+  fun declarationsForPosition(
+    position: PsiElement,
+    completionParameters: CompletionParameters
+  ): List<HtlVariableDeclaration> {
     val htlFile = completionParameters.originalFile
     val htmlFile = htlFile.getHtmlFile()
 
     val attributes: List<XmlAttribute> = PsiTreeUtil.findChildrenOfType(htmlFile, XmlAttribute::class.java)
-        .toList()
+      .toList()
 
     return attributes.extractDeclarations()
-        .filterForPosition(position).toList()
+      .filterForPosition(position).toList()
   }
 
   /**
@@ -77,15 +82,14 @@ object FileVariablesResolver {
    */
   fun declarationsForPosition(position: PsiElement): List<HtlVariableDeclaration> {
     val htlFile = position.containingFile.originalFile.getHtlFile()
-        ?: return emptyList()
+      ?: return emptyList()
     val htmlFile = htlFile.getHtmlFile()
-        ?: return emptyList()
+      ?: return emptyList()
 
     val attributes: List<XmlAttribute> = PsiTreeUtil.findChildrenOfType(htmlFile, XmlAttribute::class.java)
-        .toList()
+      .toList()
 
     return attributes.extractDeclarations()
-        .filterForPosition(position).toList()
+      .filterForPosition(position).toList()
   }
-
 }

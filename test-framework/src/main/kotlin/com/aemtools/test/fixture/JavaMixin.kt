@@ -13,11 +13,13 @@ interface JavaMixin {
    * @receiver [ITestFixture]
    */
   fun ITestFixture.javaLangString() {
-    addClass("String.java", """
+    addClass(
+      "String.java",
+      """
         package java.lang;
 
         public class String {}
-    """)
+    """
+    )
   }
-
 }

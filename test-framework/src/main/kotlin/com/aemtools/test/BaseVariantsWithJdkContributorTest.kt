@@ -6,10 +6,9 @@ import com.intellij.testFramework.LightProjectDescriptor
 /**
  * @author Dmytro Primshyts
  */
-abstract class BaseVariantsWithJdkContributorTest(dataPath: String)
-  : BaseVariantsCheckContributorTest(dataPath) {
+abstract class BaseVariantsWithJdkContributorTest(dataPath: String) :
+  BaseVariantsCheckContributorTest(dataPath) {
 
-  override fun getProjectDescriptor(): LightProjectDescriptor
-      = JdkProjectDescriptor()
-
+  override fun getProjectDescriptor(): LightProjectDescriptor =
+    JdkProjectDescriptor()
 }

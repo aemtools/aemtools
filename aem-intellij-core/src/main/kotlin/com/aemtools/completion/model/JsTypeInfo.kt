@@ -7,7 +7,7 @@ package com.aemtools.completion.model
  * @author Dmytro Primshyts
  */
 class JsTypeInfo(
-    val types: List<String>
+  val types: List<String>
 ) {
   companion object {
 

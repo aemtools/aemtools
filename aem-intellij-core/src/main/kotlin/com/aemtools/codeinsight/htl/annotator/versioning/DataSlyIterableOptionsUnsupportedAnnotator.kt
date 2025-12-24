@@ -1,7 +1,7 @@
 package com.aemtools.codeinsight.htl.annotator.versioning
 
 import com.aemtools.codeinsight.htl.intention.ChangeHtlVersionAction
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.lang.htl.psi.HtlContextExpression
 import com.aemtools.lang.htl.psi.HtlVariableName
 import com.aemtools.lang.settings.model.HtlVersion
@@ -23,24 +23,24 @@ class DataSlyIterableOptionsUnsupportedAnnotator : VersionedHtlElementAnnotator(
       return
     }
 
-    if (element.assignment?.variableName?.isBlockSpecificOption(const.htl.DATA_SLY_LIST) == true
-        || element.assignment?.variableName?.isBlockSpecificOption(const.htl.DATA_SLY_REPEAT) == true) {
-
+    if (element.assignment?.variableName?.isBlockSpecificOption(Const.Htl.DATA_SLY_LIST) == true ||
+      element.assignment?.variableName?.isBlockSpecificOption(Const.Htl.DATA_SLY_REPEAT) == true
+    ) {
       val variableNameTextRange = element.assignment?.variableName?.textRange ?: element.textRange
       val currentHtlVersion = element.project.getHtlVersion().version
       val message = "This option has no effect in current HTL version $currentHtlVersion. " +
-          "Support for this option starts with HTL version ${HtlVersion.V_1_4.version}."
+        "Support for this option starts with HTL version ${HtlVersion.V_1_4.version}."
       holder.newAnnotation(HighlightSeverity.WEAK_WARNING, message)
-          .range(variableNameTextRange)
-          .withFix(ChangeHtlVersionAction())
-          .create()
+        .range(variableNameTextRange)
+        .withFix(ChangeHtlVersionAction())
+        .create()
     }
   }
 
   private fun HtlVariableName.isBlockSpecificOption(blockName: String): Boolean =
-      this.isInsideOf(blockName)
-          && HtlAttributesRepository.getAttributesData(HtlVersion.V_1_4)
-          .filter { it.name == blockName }
-          .flatMap { it.options ?: listOf() }
-          .any { it.name == this.varName.text }
+    this.isInsideOf(blockName) &&
+      HtlAttributesRepository.getAttributesData(HtlVersion.V_1_4)
+        .filter { it.name == blockName }
+        .flatMap { it.options ?: listOf() }
+        .any { it.name == this.varName.text }
 }

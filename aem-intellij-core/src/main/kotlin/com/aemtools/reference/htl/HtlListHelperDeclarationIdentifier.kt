@@ -8,7 +8,7 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Dmytro Primshyts
  */
 class HtlListHelperDeclarationIdentifier(
-    val attribute: XmlAttribute
+  val attribute: XmlAttribute
 ) : HtlDeclarationIdentifier(attribute), PsiNamedElement {
   override fun getParent(): PsiElement = attribute
   override fun getName(): String {

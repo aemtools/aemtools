@@ -16,7 +16,6 @@ class RenameState : IRenameState {
   override fun addFile(name: String, text: String) {
     files.add(SimpleFileDescriptor(name, text))
   }
-
 }
 
 data class SimpleFileDescriptor(val name: String, val text: String)

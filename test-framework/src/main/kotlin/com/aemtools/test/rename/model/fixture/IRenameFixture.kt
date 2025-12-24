@@ -25,5 +25,4 @@ interface IRenameFixture {
    * @param state object which describes the state after rename
    */
   fun after(state: IRenameState.() -> Unit)
-
 }

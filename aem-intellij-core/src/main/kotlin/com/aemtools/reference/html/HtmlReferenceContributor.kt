@@ -16,19 +16,19 @@ class HtmlReferenceContributor : PsiReferenceContributor() {
 
   override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
     registrar.registerReferenceProvider(
-        XmlPatterns.xmlAttribute(),
-        HtmlAttributeReferenceProvider)
-
-    registrar.registerReferenceProvider(
-        XmlPatterns.xmlAttributeValue(),
-        DataSlyUseReferenceProvider)
-
-    registrar.registerReferenceProvider(
-        XmlPatterns.xmlAttributeValue()
-            .withAncestor(1, XmlPatterns.xmlAttribute("data-sly-include")),
-        DataSlyIncludeReferenceProvider
+      XmlPatterns.xmlAttribute(),
+      HtmlAttributeReferenceProvider
     )
 
-  }
+    registrar.registerReferenceProvider(
+      XmlPatterns.xmlAttributeValue(),
+      DataSlyUseReferenceProvider
+    )
 
+    registrar.registerReferenceProvider(
+      XmlPatterns.xmlAttributeValue()
+        .withAncestor(1, XmlPatterns.xmlAttribute("data-sly-include")),
+      DataSlyIncludeReferenceProvider
+    )
+  }
 }

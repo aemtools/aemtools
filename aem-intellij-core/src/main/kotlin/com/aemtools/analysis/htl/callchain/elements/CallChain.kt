@@ -31,7 +31,7 @@ class CallChain(val callChainSegments: List<CallChainSegment>) {
    * @return last output type descriptor
    */
   fun getLastOutputType(): TypeDescriptor? =
-      callChainSegments.lastOrNull()?.outputType()
+    callChainSegments.lastOrNull()?.outputType()
 
   companion object {
     private val EMPTY_CHAIN = CallChain(listOf())

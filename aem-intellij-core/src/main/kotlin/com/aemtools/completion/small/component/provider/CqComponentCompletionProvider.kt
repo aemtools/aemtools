@@ -19,9 +19,10 @@ import com.intellij.util.ProcessingContext
 object CqComponentCompletionProvider : CompletionProvider<CompletionParameters>() {
 
   override fun addCompletions(
-      parameters: CompletionParameters,
-      context: ProcessingContext,
-      result: CompletionResultSet) {
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     if (result.isStopped) {
       return
     }
@@ -29,17 +30,16 @@ object CqComponentCompletionProvider : CompletionProvider<CompletionParameters>(
     val tag = parameters.position.findParentByType(XmlTag::class.java) ?: return
 
     CqComponentRepository.getNodeProperties()
-        .map { it.name }
-        .filterNot { attributeName ->
-          tag.hasAttribute { it.name == attributeName }
-        }.map {
-          lookupElement(it).withInsertHandler(XmlAttributeInsertHandler())
-        }.apply {
-          if (this.isNotEmpty()) {
-            result.addAllElements(this)
-            result.stopHere()
-          }
+      .map { it.name }
+      .filterNot { attributeName ->
+        tag.hasAttribute { it.name == attributeName }
+      }.map {
+        lookupElement(it).withInsertHandler(XmlAttributeInsertHandler())
+      }.apply {
+        if (this.isNotEmpty()) {
+          result.addAllElements(this)
+          result.stopHere()
         }
+      }
   }
-
 }

@@ -1,6 +1,7 @@
 package com.aemtools.test.util
 
 import com.intellij.openapi.project.Project
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 
@@ -13,6 +14,11 @@ import org.mockito.Mockito.`when`
 inline fun <reified TYPE> mock(): TYPE = Mockito.mock(TYPE::class.java)
 
 /**
+ * Helper to use Mockito's any() with Kotlin non-nullable types.
+ */
+fun <T> anyKotlin(): T = any()
+
+/**
  * Mock given service as component.
  *
  * @param project the project to attach the component to
@@ -20,5 +26,5 @@ inline fun <reified TYPE> mock(): TYPE = Mockito.mock(TYPE::class.java)
  */
 inline fun <reified SERVICE> mockComponent(project: Project, service: SERVICE) {
   `when`(project.getComponent(SERVICE::class.java))
-      .thenReturn(service)
+    .thenReturn(service)
 }

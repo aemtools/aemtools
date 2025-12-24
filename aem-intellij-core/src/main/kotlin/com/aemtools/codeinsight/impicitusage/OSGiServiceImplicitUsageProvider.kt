@@ -1,7 +1,7 @@
 package com.aemtools.codeinsight.impicitusage
 
-import com.aemtools.common.constant.const.java.FELIX_SERVICE_REFERENCE_ANNOTATION
-import com.aemtools.common.constant.const.java.OSGI_SERVICE_REFERENCE_ANNOTATION
+import com.aemtools.common.constant.Const.Java.FELIX_SERVICE_REFERENCE_ANNOTATION
+import com.aemtools.common.constant.Const.Java.OSGI_SERVICE_REFERENCE_ANNOTATION
 import com.intellij.codeInsight.daemon.ImplicitUsageProvider
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiField
@@ -24,10 +24,10 @@ class OSGiServiceImplicitUsageProvider : ImplicitUsageProvider {
   }
 
   private fun annotatedWithOsgiReferenceAnnotations(psiField: PsiMember): Boolean =
-      OSGI_REFERENCE_ANNOTATIONS.any { psiField.hasAnnotation(it) }
+    OSGI_REFERENCE_ANNOTATIONS.any { psiField.hasAnnotation(it) }
 
   companion object {
     val OSGI_REFERENCE_ANNOTATIONS: List<String> =
-        listOf(FELIX_SERVICE_REFERENCE_ANNOTATION, OSGI_SERVICE_REFERENCE_ANNOTATION)
+      listOf(FELIX_SERVICE_REFERENCE_ANNOTATION, OSGI_SERVICE_REFERENCE_ANNOTATION)
   }
 }

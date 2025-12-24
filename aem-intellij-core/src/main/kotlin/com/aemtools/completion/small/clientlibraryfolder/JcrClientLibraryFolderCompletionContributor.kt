@@ -13,24 +13,22 @@ import com.aemtools.completion.small.patterns.JcrPatterns.jcrType
  */
 class JcrClientLibraryFolderCompletionContributor : BaseCompletionContributor({
   basic(
-      jcrArrayValueOfCategories,
-      ValueOfCategoriesCompletionProvider
+    jcrArrayValueOfCategories,
+    ValueOfCategoriesCompletionProvider
   )
 
   basic(
-      jcrArrayValueOfDependencies,
-      ValueOfCategoriesCompletionProvider
+    jcrArrayValueOfDependencies,
+    ValueOfCategoriesCompletionProvider
   )
 
   basic(
-      jcrArrayValueOfEmbeds,
-      ValueOfCategoriesCompletionProvider
+    jcrArrayValueOfEmbeds,
+    ValueOfCategoriesCompletionProvider
   )
 
   basic(
-      jcrType,
-      JcrTypeCompletionProvider
+    jcrType,
+    JcrTypeCompletionProvider
   )
 })
-
-

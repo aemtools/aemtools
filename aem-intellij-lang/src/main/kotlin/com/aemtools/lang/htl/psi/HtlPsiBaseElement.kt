@@ -11,6 +11,5 @@ import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry
 open class HtlPsiBaseElement(node: ASTNode) : ASTWrapperPsiElement(node) {
 
   override fun getReferences(): Array<PsiReference> =
-      ReferenceProvidersRegistry.getReferencesFromProviders(this)
-
+    ReferenceProvidersRegistry.getReferencesFromProviders(this)
 }

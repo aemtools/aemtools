@@ -14,26 +14,29 @@ import com.intellij.util.ProcessingContext
  */
 object CqComponentGroupCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(
-      parameters: CompletionParameters,
-      context: ProcessingContext,
-      result: CompletionResultSet) {
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     if (result.isStopped) {
       return
     }
 
     val allProjectComponentGroups = AemComponentSearch.allComponentDeclarations(parameters.position.project)
-        .filter { it.componentGroup != null && it.componentGroup != ".hidden" }
-        .groupingBy { it.componentGroup }.eachCount()
-        .map { Pair(it.key, it.value) }
-        .sortedByDescending { it.second }
-        .mapNotNull { it.first }
+      .filter { it.componentGroup != null && it.componentGroup != ".hidden" }
+      .groupingBy { it.componentGroup }.eachCount()
+      .map { Pair(it.key, it.value) }
+      .sortedByDescending { it.second }
+      .mapNotNull { it.first }
 
-    result.addAllElements(listOf(
+    result.addAllElements(
+      listOf(
         ".hidden",
         *allProjectComponentGroups.toTypedArray()
-    ).map {
-      lookupElement(it)
-    })
+      ).map {
+        lookupElement(it)
+      }
+    )
     result.stopHere()
   }
 }

@@ -8,4 +8,4 @@ import com.intellij.codeInsight.editorActions.SimpleTokenSetQuoteHandler
  * @author Dmytro Primshyts
  */
 class HtlQuoteHandler :
-    SimpleTokenSetQuoteHandler(SINGLE_QUOTE, DOUBLE_QUOTE)
+  SimpleTokenSetQuoteHandler(SINGLE_QUOTE, DOUBLE_QUOTE)

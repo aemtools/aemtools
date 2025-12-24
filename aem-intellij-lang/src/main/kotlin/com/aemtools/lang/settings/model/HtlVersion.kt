@@ -15,7 +15,7 @@ enum class HtlVersion(val version: String) {
     fun versions() = HtlVersion.values().map { it.version }
 
     fun fromVersion(version: String): HtlVersion? =
-        HtlVersion.values().firstOrNull { version == it.version }
+      HtlVersion.values().firstOrNull { version == it.version }
 
     fun getFirstCompatibleWith(aemVersion: AemVersion) = when (aemVersion) {
       AemVersion.V_6_3,

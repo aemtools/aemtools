@@ -24,10 +24,10 @@ abstract class BaseParameterDeclaration : Serializable {
    * @return lookup element
    */
   fun toLookupElement(): LookupElement =
-      lookupElement(name.normalize())
-          .withIcon(AllIcons.Nodes.Parameter)
-          .withTailText("($tailText)", true)
-          .withTypeText("Dialog")
+    lookupElement(name.normalize())
+      .withIcon(AllIcons.Nodes.Parameter)
+      .withTailText("($tailText)", true)
+      .withTypeText("Dialog")
 
   /**
    * Normalize dialog parameter name.
@@ -41,5 +41,4 @@ abstract class BaseParameterDeclaration : Serializable {
   } else {
     this
   }
-
 }

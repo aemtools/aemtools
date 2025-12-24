@@ -1,7 +1,7 @@
 package com.aemtools.lang.htl.service
 
-import com.aemtools.common.constant.const.JCR_ROOT
-import com.aemtools.common.constant.const.JCR_ROOT_SEPARATED
+import com.aemtools.common.constant.Const.JCR_ROOT
+import com.aemtools.common.constant.Const.JCR_ROOT_SEPARATED
 import com.aemtools.common.util.OpenApiUtil.iAmTest
 import com.aemtools.lang.settings.HtlRootDirectories
 import com.intellij.openapi.project.Project
@@ -58,9 +58,9 @@ object HtlDetectionService {
    * @return *true* if given directory is Htl root, *false* otherwise
    */
   fun isHtlRootDirectory(path: String, project: Project): Boolean =
-      HtlRootDirectories.getInstance(project)
-          ?.directories?.contains(path) ?: false
-          || path.substringAfterLast("/") == JCR_ROOT
+    HtlRootDirectories.getInstance(project)
+      ?.directories?.contains(path) ?: false ||
+      path.substringAfterLast("/") == JCR_ROOT
 
   /**
    * Check if given path lays under some of Htl roots.
@@ -99,6 +99,5 @@ object HtlDetectionService {
   }
 
   private fun isJcrRoot(path: String): Boolean =
-      path.substringAfterLast("/", "") == JCR_ROOT
-
+    path.substringAfterLast("/", "") == JCR_ROOT
 }

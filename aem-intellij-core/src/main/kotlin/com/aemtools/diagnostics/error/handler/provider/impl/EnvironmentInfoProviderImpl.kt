@@ -35,5 +35,4 @@ class EnvironmentInfoProviderImpl : EnvironmentInfoProvider {
   private fun getOsVersion() = System.getProperty("os.version")
 
   private fun getOsArchitecture() = System.getProperty("os.arch")
-
 }

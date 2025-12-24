@@ -7,11 +7,7 @@ import com.aemtools.test.base.model.fixture.ITestFixture
  *
  * @author Dmytro Primshyts
  */
-interface ClientlibraryMixin {
-
-
-}
-
+interface ClientlibraryMixin
 
 /**
  * Add clientlibrary definition to current [ITestFixture].
@@ -25,19 +21,22 @@ interface ClientlibraryMixin {
  * @receiver [ITestFixture]
  */
 fun ITestFixture.clientLibrary(
-    fileName: String,
-    categories: List<String>,
-    dependencies: List<String> = emptyList(),
-    embed: List<String> = emptyList(),
-    channels: List<String> = emptyList()
+  fileName: String,
+  categories: List<String>,
+  dependencies: List<String> = emptyList(),
+  embed: List<String> = emptyList(),
+  channels: List<String> = emptyList()
 ) {
-  addXml(fileName, """
+  addXml(
+    fileName,
+    """
         <jcr:root jcr:primaryType="cq:ClientLibraryFolder"
              categories="${toPrintedArray(categories)}"
              dependencies="${toPrintedArray(dependencies)}"
              embed="${toPrintedArray(embed)}"
              channels="${toPrintedArray(channels)}"
-    """.trimIndent())
+    """.trimIndent()
+  )
 }
 
 private fun toPrintedArray(categories: List<String>) = categories.joinToString(",", "[", "]")

@@ -20,21 +20,21 @@ class HtlAttributesDocumentationProvider : AbstractDocumentationProvider() {
   override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {
     if (htlAttribute.accepts(originalElement)) {
       val parentAttribute = originalElement?.parent as? XmlAttribute
-          ?: return super.generateDoc(element, originalElement)
+        ?: return super.generateDoc(element, originalElement)
 
       val name = parentAttribute.htlAttributeName()
-          ?: return super.generateDoc(element, originalElement)
+        ?: return super.generateDoc(element, originalElement)
 
       return ServiceFacade.getHtlAttributesRepository()
-          .getAttributesData(originalElement.project.getHtlVersion())
-          .find { it.name == name }
-          .let {
-            if (it == null) {
-              super.generateDoc(element, originalElement)
-            } else {
-              generateDocumentation(it)
-            }
+        .getAttributesData(originalElement.project.getHtlVersion())
+        .find { it.name == name }
+        .let {
+          if (it == null) {
+            super.generateDoc(element, originalElement)
+          } else {
+            generateDocumentation(it)
           }
+        }
     } else {
       return super.generateDoc(element, originalElement)
     }
@@ -67,16 +67,16 @@ class HtlAttributesDocumentationProvider : AbstractDocumentationProvider() {
   }
 
   private fun attributeValueBlock(value: HtlAttributeValueDescription?): String =
-      if (value != null && value.isNotEmpty()) {
-        buildString {
-          append("<b>Attribute value:</b><br>")
-          append(renderBlock(value.required) { " - required: ${value.required}<br>" })
-          append(renderBlock(value.printType()) { " - type: ${value.printType()}<br>" })
-          append(renderBlock(value.description) { " - description: ${value.description}<br>" })
-        }
-      } else {
-        ""
+    if (value != null && value.isNotEmpty()) {
+      buildString {
+        append("<b>Attribute value:</b><br>")
+        append(renderBlock(value.required) { " - required: ${value.required}<br>" })
+        append(renderBlock(value.printType()) { " - type: ${value.printType()}<br>" })
+        append(renderBlock(value.description) { " - description: ${value.description}<br>" })
       }
+    } else {
+      ""
+    }
 
   private fun renderBlock(value: String?, unit: () -> String): String {
     return if (value != null) {

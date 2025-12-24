@@ -1,6 +1,6 @@
 package com.aemtools.completion.html
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.lang.settings.model.HtlVersion
 
 /**
@@ -15,5 +15,5 @@ class HtlAttributesContributorV14Test : HtlAttributesContributorTest() {
     myFixture.setHtlVersion(HtlVersion.V_1_4)
   }
 
-  fun testHtlAttributes() = assertVariantsPresent(const.htl.HTL_ATTRIBUTES)
+  fun testHtlAttributes() = assertVariantsPresent(Const.Htl.HTL_ATTRIBUTES)
 }

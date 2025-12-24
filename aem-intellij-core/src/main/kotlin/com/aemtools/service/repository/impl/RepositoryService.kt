@@ -14,5 +14,4 @@ class RepositoryService : IRepositoryService {
   override fun getWidgetDocRepository(): WidgetDocRepository {
     return widgetRepository
   }
-
 }

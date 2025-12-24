@@ -1,6 +1,6 @@
 package com.aemtools.index
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.index.search.OSGiConfigSearch
 import com.aemtools.test.base.BaseLightTest
 
@@ -28,7 +28,7 @@ class JsonOSGiConfigIndexTest : BaseLightTest() {
   }
 
   fun testOSGiIndexMain2() = fileCase {
-    addJson("/${const.JCR_ROOT}/configurations/config.author/com.test.config.Service.cfg.json", """
+    addJson("/${Const.JCR_ROOT}/configurations/config.author/com.test.config.Service.cfg.json", """
         {
         "param1":"value1",
         "param2":"value2",
@@ -53,7 +53,7 @@ class JsonOSGiConfigIndexTest : BaseLightTest() {
   }
 
   fun testOSGiConfigPropertyMapper() = fileCase {
-    addJson("/${const.JCR_ROOT}/configurations/config.author/com.test.config.Service.cfg.json", """
+    addJson("/${Const.JCR_ROOT}/configurations/config.author/com.test.config.Service.cfg.json", """
         {
         "param1":"value1",
         "param2": true,
@@ -98,7 +98,7 @@ class JsonOSGiConfigIndexTest : BaseLightTest() {
   }
 
   fun testOSGiIndexDotInName() = fileCase {
-    addJson("/${const.JCR_ROOT}/configurations/config.author/com.test.config.Service.factory-one.cfg.json", """
+    addJson("/${Const.JCR_ROOT}/configurations/config.author/com.test.config.Service.factory-one.cfg.json", """
         {}
     """)
 

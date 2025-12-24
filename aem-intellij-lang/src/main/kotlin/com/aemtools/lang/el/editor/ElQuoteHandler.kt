@@ -7,4 +7,4 @@ import com.intellij.codeInsight.editorActions.SimpleTokenSetQuoteHandler
  * @author Dmytro Primshyts
  */
 class ElQuoteHandler :
-    SimpleTokenSetQuoteHandler(ElTypes.STRING_LITERAL)
+  SimpleTokenSetQuoteHandler(ElTypes.STRING_LITERAL)

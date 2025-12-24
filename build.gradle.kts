@@ -5,6 +5,7 @@ import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.Constants
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 import org.jetbrains.intellij.platform.gradle.tasks.VerifyPluginTask
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 fun properties(key: String) = providers.gradleProperty(key).get()
@@ -29,6 +30,7 @@ plugins {
   id("org.jetbrains.changelog") version "1.3.1"
   id("io.gitlab.arturbosch.detekt") version "1.23.5"
   id("org.jetbrains.kotlinx.kover") version "0.9.1"
+  id("org.jetbrains.kotlin.plugin.power-assert") version "2.2.0"
 }
 
 group = pluginGroup
@@ -222,9 +224,15 @@ allprojects {
   }
 
   tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = javaVersion
-    kotlinOptions.apiVersion = "1.9"
-    kotlinOptions.languageVersion = "1.9"
+    compilerOptions {
+      this.jvmTarget.set(JvmTarget.fromTarget(javaVersion))
+//      apiVersion.set(KotlinVersion.CURRENT)
+//      languageVersion.set(KotlinVersion.CURRENT)
+    }
+
+//    kotlinOptions.jvmTarget = javaVersion
+//    kotlinOptions.apiVersion = "1.9"
+//    kotlinOptions.languageVersion = "1.9"
   }
 
   tasks.withType<Test>().configureEach {

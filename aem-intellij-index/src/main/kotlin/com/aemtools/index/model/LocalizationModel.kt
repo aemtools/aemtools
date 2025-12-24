@@ -1,6 +1,6 @@
 package com.aemtools.index.model
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.common.util.OpenApiUtil.findFileByPath
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.common.util.toPsiFile
@@ -29,33 +29,33 @@ import java.io.Serializable
  * @author Dmytro Primshyts
  */
 data class LocalizationModel(
-    /**
-     * The name of containing file.
-     */
-    val fileName: String,
-    /**
-     * The language property (jcr:language) value.
-     * I.E. the locale.
-     */
-    val language: String,
-    /**
-     * The message key.
-     * Set by `sling:key` or by tag's name.
-     */
-    val key: String,
-    /**
-     * Value of `sling:message` property.
-     * May contain "placeholders" e.g.:
-     *
-     * ```
-     *  "Message with placeholder {0}"
-     * ```
-     * "{0}" is a placeholder that may be substituted
-     * via `format` option.
-     *
-     * @see [placeholdersAmount]
-     */
-    val message: String
+  /**
+   * The name of containing file.
+   */
+  val fileName: String,
+  /**
+   * The language property (jcr:language) value.
+   * I.E. the locale.
+   */
+  val language: String,
+  /**
+   * The message key.
+   * Set by `sling:key` or by tag's name.
+   */
+  val key: String,
+  /**
+   * Value of `sling:message` property.
+   * May contain "placeholders" e.g.:
+   *
+   * ```
+   *  "Message with placeholder {0}"
+   * ```
+   * "{0}" is a placeholder that may be substituted
+   * via `format` option.
+   *
+   * @see [placeholdersAmount]
+   */
+  val message: String
 ) : Serializable {
 
   /**
@@ -66,8 +66,8 @@ data class LocalizationModel(
    */
   fun placeholdersAmount(): Int = message.let {
     "\\{\\d}".toRegex()
-        .findAll(it)
-        .count()
+      .findAll(it)
+      .count()
   }
 
   /**
@@ -80,7 +80,7 @@ data class LocalizationModel(
     val virtualFile = findFileByPath(this.fileName) ?: return null
     val psiFile = virtualFile.toPsiFile(project) ?: return null
     return psiFile.findChildrenByType(XmlTag::class.java)
-        .find { it.name == key }
+      .find { it.name == key }
   }
 
   companion object {
@@ -95,22 +95,23 @@ data class LocalizationModel(
      * @return new localization model, *null* in case if
      * given tag do not contain all required attributes
      */
-    fun create(tag: XmlTag,
-               fileName: String,
-               language: String): LocalizationModel? {
-      val key = tag.getAttributeValue(const.xml.SLING_KEY)
-          ?: tag.name
+    fun create(
+      tag: XmlTag,
+      fileName: String,
+      language: String
+    ): LocalizationModel? {
+      val key = tag.getAttributeValue(Const.Xml.SLING_KEY)
+        ?: tag.name
 
-      val message = tag.getAttributeValue(const.xml.SLING_MESSAGE)
-          ?: return null
+      val message = tag.getAttributeValue(Const.Xml.SLING_MESSAGE)
+        ?: return null
 
       return LocalizationModel(
-          fileName,
-          language,
-          key,
-          message
+        fileName,
+        language,
+        key,
+        message
       )
     }
   }
-
 }

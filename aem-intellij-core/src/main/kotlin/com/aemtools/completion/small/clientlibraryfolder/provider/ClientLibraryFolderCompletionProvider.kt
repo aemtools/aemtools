@@ -16,9 +16,10 @@ import com.intellij.util.ProcessingContext
 object ClientLibraryFolderCompletionProvider : CompletionProvider<CompletionParameters>() {
 
   override fun addCompletions(
-      parameters: CompletionParameters,
-      context: ProcessingContext,
-      result: CompletionResultSet) {
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     if (result.isStopped) {
       return
     }
@@ -29,7 +30,7 @@ object ClientLibraryFolderCompletionProvider : CompletionProvider<CompletionPara
       tag.hasAttribute { it.name == attributeName }
     }.map {
       lookupElement(it)
-          .withInsertHandler(JcrArrayInsertHandler())
+        .withInsertHandler(JcrArrayInsertHandler())
     }.apply {
       if (this.isNotEmpty()) {
         result.addAllElements(this)
@@ -39,10 +40,9 @@ object ClientLibraryFolderCompletionProvider : CompletionProvider<CompletionPara
   }
 
   val attributes: List<String> = listOf(
-      "channels",
-      "categories",
-      "dependencies",
-      "embed"
+    "channels",
+    "categories",
+    "dependencies",
+    "embed"
   )
-
 }

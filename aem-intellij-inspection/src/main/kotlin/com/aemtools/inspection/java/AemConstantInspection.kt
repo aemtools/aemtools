@@ -45,14 +45,15 @@ hardcode.
     val inspectionService = InspectionService.getInstance(project) ?: return
     val javaInspectionService = JavaInspectionService.getInstance(project) ?: return
 
-    if (!inspectionService.validTarget(psiLiteralExpression)
-        || !javaInspectionService.isJavaLangString(psiLiteralExpression)) {
+    if (!inspectionService.validTarget(psiLiteralExpression) ||
+      !javaInspectionService.isJavaLangString(psiLiteralExpression)
+    ) {
       return
     }
 
     val literalValue = psiLiteralExpression.value
     val module = inspectionService.moduleForPsiElement(psiLiteralExpression)
-        ?: return
+      ?: return
 
     val allConstants = javaInspectionService.standardConstants(project, module)
 
@@ -62,9 +63,10 @@ hardcode.
 
     if (filteredConstants.isNotEmpty()) {
       javaInspectionService.reportHardcodedConstant(
-          holder,
-          psiLiteralExpression,
-          filteredConstants)
+        holder,
+        psiLiteralExpression,
+        filteredConstants
+      )
     }
   }
 
@@ -75,5 +77,4 @@ hardcode.
       }
     }
   }
-
 }

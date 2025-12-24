@@ -1,7 +1,7 @@
 package com.aemtools.lang.util
 
-import com.aemtools.common.constant.const
-import com.aemtools.common.constant.const.SLY_TAG
+import com.aemtools.common.constant.Const
+import com.aemtools.common.constant.Const.SLY_TAG
 import com.aemtools.common.util.*
 import com.aemtools.lang.htl.HtlLanguage
 import com.aemtools.lang.htl.psi.*
@@ -33,10 +33,10 @@ import com.intellij.psi.xml.XmlTag
  */
 fun extractItemAndItemListNames(value: String): Pair<String, String> {
   val item: String = when {
-    value.startsWith(const.htl.DATA_SLY_REPEAT) && value.length > const.htl.DATA_SLY_REPEAT.length + 1 -> {
+    value.startsWith(Const.Htl.DATA_SLY_REPEAT) && value.length > Const.Htl.DATA_SLY_REPEAT.length + 1 -> {
       value.substring(value.lastIndexOf(".") + 1)
     }
-    value.startsWith(const.htl.DATA_SLY_LIST) && value.length > const.htl.DATA_SLY_LIST.length + 1 -> {
+    value.startsWith(Const.Htl.DATA_SLY_LIST) && value.length > Const.Htl.DATA_SLY_LIST.length + 1 -> {
       value.substring(value.lastIndexOf(".") + 1)
     }
     else -> {
@@ -71,8 +71,8 @@ fun HtlStringLiteral.isMainString(): Boolean {
  * @return *true* if current variable name is "option", *false* otherwise
  */
 fun HtlVariableName.isOption(): Boolean {
-  return this.hasParentOfType(HtlContextExpression::class.java)
-      && !this.hasParentOfType(HtlAssignmentValue::class.java)
+  return this.hasParentOfType(HtlContextExpression::class.java) &&
+    !this.hasParentOfType(HtlAssignmentValue::class.java)
 }
 
 /**
@@ -83,9 +83,9 @@ fun HtlVariableName.isOption(): Boolean {
  * @return *true* if current variable is "option", *false* otherwise
  */
 fun VariableNameMixin.isOption(): Boolean =
-    (this as? HtlVariableName)
-        ?.isOption()
-        ?: false
+  (this as? HtlVariableName)
+    ?.isOption()
+    ?: false
 
 /**
  * Extract first (top level) [PropertyAccessMixin].
@@ -109,9 +109,9 @@ fun HtlHtlEl.extractPropertyAccess(): PropertyAccessMixin? {
  */
 fun HtlHtlEl.isInsideOF(attributeName: String): Boolean {
   val html = this.containingFile.getHtmlFile()
-      ?: return false
+    ?: return false
   val attribute = html.findElementAt(this.textOffset - 1)
-      .findParentByType(XmlAttribute::class.java) ?: return false
+    .findParentByType(XmlAttribute::class.java) ?: return false
 
   return attribute.name.startsWith(attributeName)
 }
@@ -140,7 +140,7 @@ fun HtlPsiBaseElement.containerAttribute(): XmlAttribute? {
   val html = containingFile.getHtmlFile() ?: return null
 
   return html.findElementAt(htlHtlEl.textOffset - 1)
-      .findParentByType(XmlAttribute::class.java)
+    .findParentByType(XmlAttribute::class.java)
 }
 
 /**
@@ -208,7 +208,7 @@ fun XmlTag.isSlyTag(): Boolean = this.name == SLY_TAG
  */
 fun XmlAttribute.extractHtlHel(): HtlHtlEl? {
   val htlFile = containingFile?.viewProvider?.getPsi(HtlLanguage)
-      ?: return null
+    ?: return null
   val valueElement = valueElement ?: return null
   val helStart = htlFile.findElementAt(valueElement.textOffset + 1)
   return helStart.findParentByType(HtlHtlEl::class.java)
@@ -236,8 +236,8 @@ fun PsiFile.isHtlFile(): Boolean = getHtlFile() != null
  * @receiver [XmlAttribute]
  * @return *true* if current attribute is data-sly-use, *false* otherwise
  */
-fun XmlAttribute.isDataSlyUse(): Boolean = this.name.startsWith("${const.htl.DATA_SLY_USE}.")
-    || this.name == const.htl.DATA_SLY_USE
+fun XmlAttribute.isDataSlyUse(): Boolean = this.name.startsWith("${Const.Htl.DATA_SLY_USE}.") ||
+  this.name == Const.Htl.DATA_SLY_USE
 
 /**
  * Check if current [XmlAttribute] is Htl attribute.
@@ -259,8 +259,8 @@ fun XmlAttribute.isHtlAttribute(ignoreVersioning: Boolean = false): Boolean {
  * @receiver [XmlAttribute]
  * @return *true* if current attribute is data-sly-set, *false* otherwise
  */
-private fun XmlAttribute.isDataSlySet(): Boolean = this.name.startsWith("${const.htl.DATA_SLY_SET}.")
-    || this.name == const.htl.DATA_SLY_SET
+private fun XmlAttribute.isDataSlySet(): Boolean = this.name.startsWith("${Const.Htl.DATA_SLY_SET}.") ||
+  this.name == Const.Htl.DATA_SLY_SET
 
 /**
  * Check if current element is Htl attribute which declares some variable.
@@ -282,15 +282,15 @@ fun XmlAttribute.isHtlDeclarationAttribute(ignoreVersioning: Boolean = false): B
   val project = this.project
   return with(this.name) {
     when {
-      hasVariableDeclaration(const.htl.DATA_SLY_USE) -> true
-      hasVariableDeclaration(const.htl.DATA_SLY_SET)
-          && !ignoreVersioning && project.supportsHtlVersion(HtlVersion.V_1_4) -> true
-      hasVariableDeclaration(const.htl.DATA_SLY_TEST) -> true
-      hasVariableDeclaration(const.htl.DATA_SLY_UNWRAP)
-          && !ignoreVersioning && project.supportsHtlVersion(HtlVersion.V_1_4) -> true
-      startsWith(const.htl.DATA_SLY_TEMPLATE) -> true
-      startsWith(const.htl.DATA_SLY_LIST) -> true
-      startsWith(const.htl.DATA_SLY_REPEAT) -> true
+      hasVariableDeclaration(Const.Htl.DATA_SLY_USE) -> true
+      hasVariableDeclaration(Const.Htl.DATA_SLY_SET) &&
+        !ignoreVersioning && project.supportsHtlVersion(HtlVersion.V_1_4) -> true
+      hasVariableDeclaration(Const.Htl.DATA_SLY_TEST) -> true
+      hasVariableDeclaration(Const.Htl.DATA_SLY_UNWRAP) &&
+        !ignoreVersioning && project.supportsHtlVersion(HtlVersion.V_1_4) -> true
+      startsWith(Const.Htl.DATA_SLY_TEMPLATE) -> true
+      startsWith(Const.Htl.DATA_SLY_LIST) -> true
+      startsWith(Const.Htl.DATA_SLY_REPEAT) -> true
       else -> false
     }
   }
@@ -316,7 +316,7 @@ private fun String.hasVariableDeclaration(htlAttributeName: String): Boolean {
  * @return *true* if current attribute is local declaration attribute
  */
 fun XmlAttribute.isHtlLocalDeclarationAttribute(): Boolean =
-    isHtlDeclarationAttribute() && !isHtlGlobalDeclarationAttribute()
+  isHtlDeclarationAttribute() && !isHtlGlobalDeclarationAttribute()
 
 /**
  * Check if current attribute is "global" declaration attribute
@@ -326,12 +326,12 @@ fun XmlAttribute.isHtlLocalDeclarationAttribute(): Boolean =
  * @return *true* if current element is global declaration attribute
  */
 fun XmlAttribute.isHtlGlobalDeclarationAttribute(): Boolean =
-    with(this.name) {
-      when {
-        startsWith(const.htl.DATA_SLY_TEMPLATE) -> true
-        else -> false
-      }
+  with(this.name) {
+    when {
+      startsWith(Const.Htl.DATA_SLY_TEMPLATE) -> true
+      else -> false
     }
+  }
 
 /**
  * Extract template parameters from current [XmlAttribute]
@@ -348,16 +348,15 @@ fun XmlAttribute.isHtlGlobalDeclarationAttribute(): Boolean =
  * or in case if the attribute is not `data-sly-template`
  */
 fun XmlAttribute.extractTemplateParameters(): List<String> {
-  if (!this.name.startsWith(const.htl.DATA_SLY_TEMPLATE)) {
+  if (!this.name.startsWith(Const.Htl.DATA_SLY_TEMPLATE)) {
     return listOf()
   }
 
   val htlHel = this.extractHtlHel() ?: return listOf()
 
   return htlHel.findChildrenByType(HtlVariableName::class.java)
-      .filter(HtlVariableName::isOption).map { it.text }
+    .filter(HtlVariableName::isOption).map { it.text }
 }
-
 
 /**
  * Extract Htl attributes from given [XmlAttribute] collection.
@@ -366,7 +365,7 @@ fun XmlAttribute.extractTemplateParameters(): List<String> {
  * @return new collection with only Htl attributes
  */
 fun List<XmlAttribute>.htlAttributes(): List<XmlAttribute> =
-    filter { it.isHtlAttribute() }
+  filter { it.isHtlAttribute() }
 
 /**
  * Resolves the class of variable declared in current [XmlAttribute] element.
@@ -419,7 +418,7 @@ fun Project.getHtlVersion(): HtlVersion = AemProjectSettings.getInstance(this).h
  * @return true if project supports version
  */
 fun Project.supportsHtlVersion(version: HtlVersion): Boolean =
-    this.getHtlVersion().isAtLeast(version)
+  this.getHtlVersion().isAtLeast(version)
 
 /**
  * Checks if the current project doesn't support HTL version.
@@ -430,4 +429,4 @@ fun Project.supportsHtlVersion(version: HtlVersion): Boolean =
  * @return true if project doesn't support version
  */
 fun Project.notSupportsHtlVersion(version: HtlVersion): Boolean =
-    !this.supportsHtlVersion(version)
+  !this.supportsHtlVersion(version)

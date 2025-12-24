@@ -11,5 +11,4 @@ interface IRepositoryService {
    * @return widget doc repository instance
    */
   fun getWidgetDocRepository(): WidgetDocRepository
-
 }

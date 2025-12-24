@@ -14,8 +14,8 @@ import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 /**
  * @author Dmytro Primshyts
  */
-class RenameFixture(val fixture: JavaCodeInsightTestFixture)
-  : IRenameFixture, ITestFixtureInternal {
+class RenameFixture(val fixture: JavaCodeInsightTestFixture) :
+  IRenameFixture, ITestFixtureInternal {
   var before: RenameState? = null
   var beforeInitializer: IRenameState.() -> Unit = {}
 

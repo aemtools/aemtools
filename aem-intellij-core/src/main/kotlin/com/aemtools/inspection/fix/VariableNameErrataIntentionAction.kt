@@ -14,21 +14,20 @@ import com.intellij.psi.SmartPsiElementPointer
  * @author Dmytro Primshyts
  */
 class VariableNameErrataIntentionAction(
-    private val possiblyCorrectName: String,
-    private val pointer: SmartPsiElementPointer<PsiElement>
+  private val possiblyCorrectName: String,
+  private val pointer: SmartPsiElementPointer<PsiElement>
 ) : BaseHtlIntentionAction(
-    text = { "Change to '$possiblyCorrectName'" }
+  text = { "Change to '$possiblyCorrectName'" }
 ) {
 
   override fun invoke(project: Project, editor: Editor, file: PsiFile) {
     val element = pointer.element ?: return
     val document = project.psiDocumentManager().getDocument(file)
-        ?: return
+      ?: return
 
     val (start, end) = element.textRange.startOffset to element.textRange.endOffset
 
     document.replaceString(start, end, possiblyCorrectName)
     project.psiDocumentManager().commitDocument(document)
   }
-
 }

@@ -11,8 +11,9 @@ import com.intellij.psi.xml.XmlAttributeValue
  * @author Dmytro Primshyts
  */
 class ElInjector : MultiHostInjector {
-  override fun elementsToInjectIn(): MutableList<out Class<out PsiElement>>
-      = listOf(XmlAttributeValue::class.java).toMutableList()
+  override fun elementsToInjectIn(): MutableList<out Class<out PsiElement>> = listOf(
+    XmlAttributeValue::class.java
+  ).toMutableList()
 
   override fun getLanguagesToInject(registrar: MultiHostRegistrar, context: PsiElement) {
     val xmlAttributeValue = context as? XmlAttributeValue ?: return
@@ -30,10 +31,11 @@ class ElInjector : MultiHostInjector {
         registrar.startInjecting(ElLanguage)
         if (context is PsiLanguageInjectionHost) {
           registrar.addPlace(
-              null,
-              null,
-              context,
-              textRange)
+            null,
+            null,
+            context,
+            textRange
+          )
         }
         registrar.doneInjecting()
       }
@@ -98,5 +100,4 @@ class ElInjector : MultiHostInjector {
 
     return -1
   }
-
 }

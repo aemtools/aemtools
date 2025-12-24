@@ -9,8 +9,8 @@ import com.intellij.lang.documentation.AbstractDocumentationProvider
  * @author Dmytro Primshyts
  */
 abstract class BaseDocumentationTest(
-    val tested: AbstractDocumentationProvider,
-    withAemUberJar: Boolean = false
+  val tested: AbstractDocumentationProvider,
+  withAemUberJar: Boolean = false
 ) : BaseLightTest(withAemUberJar) {
 
   fun docCase(case: IDocTestFixture.() -> Unit) {
@@ -22,5 +22,4 @@ abstract class BaseDocumentationTest(
 
     fixture.test()
   }
-
 }

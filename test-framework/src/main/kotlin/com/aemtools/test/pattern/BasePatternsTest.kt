@@ -1,6 +1,6 @@
 package com.aemtools.test.pattern
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.common.util.getHtmlFile
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.base.model.assertion.IAssertionContext
@@ -18,62 +18,72 @@ import junit.framework.TestCase
  */
 abstract class BasePatternsTest : BaseLightTest() {
 
-  fun testPattern(pattern: ElementPattern<out PsiElement>,
-                  text: String,
-                  result: Boolean,
-                  addCompletionPlaceholder: Boolean = true,
-                  fixtureSetup: ITestFixture.(textToAdd: String) -> Unit) = fileCase {
+  fun testPattern(
+    pattern: ElementPattern<out PsiElement>,
+    text: String,
+    result: Boolean,
+    addCompletionPlaceholder: Boolean = true,
+    fixtureSetup: ITestFixture.(textToAdd: String) -> Unit
+  ) = fileCase {
     val textToAdd = preprocessText(text, addCompletionPlaceholder)
 
     fixtureSetup.invoke(this, textToAdd)
     verify {
       assertEquals(
-          assertionMessage(pattern, file, text),
-          result,
-          pattern.accepts(elementUnderCaret()))
+        assertionMessage(pattern, file, text),
+        result,
+        pattern.accepts(elementUnderCaret())
+      )
     }
   }
 
-  inline fun <reified T> testCondition(condition: PatternCondition<T>,
-                                       text: String,
-                                       result: Boolean,
-                                       addCompletionPlaceholder: Boolean = true,
-                                       crossinline fixtureSetup: ITestFixture.(textToAdd: String) -> Unit,
-                                       crossinline elementSelector: IAssertionContext.() -> T) = fileCase {
+  inline fun <reified T> testCondition(
+    condition: PatternCondition<T>,
+    text: String,
+    result: Boolean,
+    addCompletionPlaceholder: Boolean = true,
+    crossinline fixtureSetup: ITestFixture.(textToAdd: String) -> Unit,
+    crossinline elementSelector: IAssertionContext.() -> T
+  ) = fileCase {
     val textToAdd = preprocessText(text, addCompletionPlaceholder)
 
     fixtureSetup.invoke(this, textToAdd)
 
     verify {
       val element = elementSelector.invoke(this)!!
-      TestCase.assertEquals(result,
-          condition.accepts(element, null))
+      TestCase.assertEquals(
+        result,
+        condition.accepts(element, null)
+      )
     }
-
   }
 
-  inline fun <reified T> testCondition(condition: PatternCondition<T>,
-                                       text: String,
-                                       result: Boolean,
-                                       addCompletionPlaceholder: Boolean = true,
-                                       crossinline fixtureSetup: ITestFixture.(textToAdd: String) -> Unit,
-                                       crossinline elementSelector: IAssertionContext.() -> T,
-                                       crossinline fixtureTearDown: ITestFixture.() -> Unit) = fileCase {
+  inline fun <reified T> testCondition(
+    condition: PatternCondition<T>,
+    text: String,
+    result: Boolean,
+    addCompletionPlaceholder: Boolean = true,
+    crossinline fixtureSetup: ITestFixture.(textToAdd: String) -> Unit,
+    crossinline elementSelector: IAssertionContext.() -> T,
+    crossinline fixtureTearDown: ITestFixture.() -> Unit
+  ) = fileCase {
     testCondition(condition, text, result, addCompletionPlaceholder, fixtureSetup, elementSelector)
 
     fixtureTearDown.invoke(this)
   }
 
   fun preprocessText(textToAdd: String, addCompletionPlaceholder: Boolean): String =
-      if (addCompletionPlaceholder) {
-        textToAdd.addIdeaPlaceholder()
-      } else {
-        textToAdd
-      }
+    if (addCompletionPlaceholder) {
+      textToAdd.addIdeaPlaceholder()
+    } else {
+      textToAdd
+    }
 
-  private fun assertionMessage(pattern: ElementPattern<out PsiElement>,
-                               file: PsiFile,
-                               text: String): String {
+  private fun assertionMessage(
+    pattern: ElementPattern<out PsiElement>,
+    file: PsiFile,
+    text: String
+  ): String {
     val builder = StringBuilder()
     with(builder) {
       append("\nPattern:\n$pattern")
@@ -88,10 +98,11 @@ abstract class BasePatternsTest : BaseLightTest() {
   }
 
   private fun String.addIdeaPlaceholder(): String =
-      StringBuilder(this)
-          .insert(this.indexOf(CodeInsightTestFixture.CARET_MARKER)
-              + CodeInsightTestFixture.CARET_MARKER.length,
-              const.IDEA_STRING_CARET_PLACEHOLDER)
-          .toString()
-
+    StringBuilder(this)
+      .insert(
+        this.indexOf(CodeInsightTestFixture.CARET_MARKER) +
+          CodeInsightTestFixture.CARET_MARKER.length,
+        Const.IDEA_STRING_CARET_PLACEHOLDER
+      )
+      .toString()
 }

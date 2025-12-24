@@ -14,13 +14,13 @@ import com.intellij.util.ProcessingContext
 abstract class DataSlyIncludeReferenceProviderBase : PsiReferenceProvider() {
   override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
     val name = name(element, context)
-        ?: return emptyArray()
+      ?: return emptyArray()
 
     val psiFile = HtlIndexFacade.resolveIncludeFile(name, element.containingFile)
-        ?: return emptyArray()
+      ?: return emptyArray()
 
     return arrayOf(
-        PsiFileReference(psiFile, element, TextRange(1, element.textLength - 1))
+      PsiFileReference(psiFile, element, TextRange(1, element.textLength - 1))
     )
   }
 
@@ -30,5 +30,4 @@ abstract class DataSlyIncludeReferenceProviderBase : PsiReferenceProvider() {
    * @return the name of included resource
    */
   abstract fun name(element: PsiElement, context: ProcessingContext): String?
-
 }

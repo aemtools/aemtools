@@ -10,12 +10,8 @@ import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiLiteralExpression
 import com.intellij.psi.SmartPsiElementPointer
+import io.kotest.core.spec.style.ShouldSpec
 import org.assertj.core.api.Assertions.assertThat
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.describe
-import org.jetbrains.spek.api.dsl.it
-import org.jetbrains.spek.api.dsl.on
-import org.jetbrains.spek.api.lifecycle.CachingMode
 import org.mockito.Mockito.*
 
 /**
@@ -23,117 +19,110 @@ import org.mockito.Mockito.*
  *
  * @author Dmytro Primshyts
  */
-object ReplaceHardcodedLiteralWithFqnActionSpec : Spek({
+object ReplaceHardcodedLiteralWithFqnActionSpec : ShouldSpec({
 
-  on("style check") {
-    val psiLiteralPointer by memoized {
+  context("style check") {
+    val psiLiteralPointer =
       mock<SmartPsiElementPointer<PsiLiteralExpression>>()
-    }
 
     val message = "Test Message"
 
     val tested = ReplaceHardcodedLiteralWithFqnAction(
-        message,
-        ConstantDescriptor(
-            "com.test.Class",
-            "name",
-            "value"
-        ),
-        psiLiteralPointer
+      message,
+      ConstantDescriptor(
+        "com.test.Class",
+        "name",
+        "value"
+      ),
+      psiLiteralPointer
     )
 
-    it("should have correct family") {
+    should("have correct family") {
       assertThat(tested.familyName)
-          .isEqualTo("AEM Inspections")
+        .isEqualTo("AEM Inspections")
     }
 
-    it("should have message unchanged") {
+    should("should have message unchanged") {
       assertThat(tested.text)
-          .isEqualTo(message)
+        .isEqualTo(message)
     }
   }
 
-  describe("invoke") {
-    val psiLiteralExpression by memoized(CachingMode.TEST) {
+  context("invoke") {
+    val psiLiteralExpression =
       mock<PsiLiteralExpression>()
-    }
-    val project by memoized(CachingMode.TEST) {
+
+    val project =
       mock<Project>()
-    }
-    val smartPsiElementPointer by memoized(CachingMode.TEST) {
+
+    val smartPsiElementPointer =
       mock<SmartPsiElementPointer<PsiLiteralExpression>>()
-    }
 
-    val psiDocumentManger by memoized(CachingMode.TEST) {
+    val psiDocumentManger =
       mock<PsiDocumentManager>()
-    }
 
-    val textRange by memoized(CachingMode.TEST) {
+    val textRange =
       TextRange.from(10, 10)
-    }
 
-    val document by memoized(CachingMode.TEST) {
+    val document =
       mock<Document>()
-    }
 
-    val psiFile by memoized(CachingMode.TEST) {
+    val psiFile =
       mock<PsiFile>()
-    }
 
-    val editor by memoized(CachingMode.TEST) {
+    val editor =
       mock<Editor>()
-    }
 
-    val tested by memoized(CachingMode.TEST) {
+    val tested =
       ReplaceHardcodedLiteralWithFqnAction(
-          "Test Message",
-          ConstantDescriptor(
-              "com.test.Class",
-              "name",
-              "value"
-          ),
-          smartPsiElementPointer
+        "Test Message",
+        ConstantDescriptor(
+          "com.test.Class",
+          "name",
+          "value"
+        ),
+        smartPsiElementPointer
       )
-    }
 
-    beforeEachTest {
+
+    beforeEach {
       `when`(smartPsiElementPointer.element)
-          .thenReturn(psiLiteralExpression)
+        .thenReturn(psiLiteralExpression)
       `when`(project.getService(PsiDocumentManager::class.java))
-          .thenReturn(psiDocumentManger)
+        .thenReturn(psiDocumentManger)
       `when`(psiLiteralExpression.textRange)
-          .thenReturn(textRange)
+        .thenReturn(textRange)
       `when`(psiDocumentManger.getDocument(psiFile))
-          .thenReturn(document)
+        .thenReturn(document)
     }
 
-    it("should ignore if no element available") {
+    should("ignore if no element available") {
       `when`(smartPsiElementPointer.element)
-          .thenReturn(null)
+        .thenReturn(null)
 
       tested.invoke(project, editor, psiFile)
 
       verify(project, never())
-          .getService(PsiDocumentManager::class.java)
+        .getService(PsiDocumentManager::class.java)
     }
 
-    it ("should ignore if no document available") {
+    should("ignore if no document available") {
       `when`(psiDocumentManger.getDocument(psiFile))
-          .thenReturn(null)
+        .thenReturn(null)
 
       tested.invoke(project, editor, psiFile)
 
       verify(psiLiteralExpression, never())
-          .textRange
+        .textRange
     }
 
-    it("should replace string correctly if all data in place") {
+    should("replace string correctly if all data in place") {
       tested.invoke(project, editor, psiFile)
 
       verify(document)
-          .replaceString(10, 20, "com.test.Class.name")
+        .replaceString(10, 20, "com.test.Class.name")
       verify(psiDocumentManger)
-          .commitDocument(document)
+        .commitDocument(document)
     }
   }
 

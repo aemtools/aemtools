@@ -108,5 +108,4 @@ interface TypeDescriptor {
    * @return instance of resolution result
    */
   fun asResolutionResult(): ResolutionResult = ResolutionResult(predefined = myVariants())
-
 }

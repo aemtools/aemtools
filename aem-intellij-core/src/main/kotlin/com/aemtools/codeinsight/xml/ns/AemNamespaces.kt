@@ -8,5 +8,5 @@ enum class AemNamespaces(val prefix: String, val namespace: String) {
   NT("nt", "http://www.jcp.org/jcr/nt/1.0"),
   OAK("oak", "http://jackrabbit.apache.org/oak/ns/1.0"),
   SLING("sling", "http://sling.apache.org/jcr/sling/1.0"),
-  MIX("mix", "http://www.jcp.org/jcr/mix/1.0");
+  MIX("mix", "http://www.jcp.org/jcr/mix/1.0")
 }

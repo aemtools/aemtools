@@ -26,5 +26,4 @@ object CompletionPriority {
   const val CONTAINING_CLASS: Double = 1.0
   const val OBJECT_CLASS: Double = 0.0
   const val MIDDLE_CLASS: Double = 0.5
-
 }

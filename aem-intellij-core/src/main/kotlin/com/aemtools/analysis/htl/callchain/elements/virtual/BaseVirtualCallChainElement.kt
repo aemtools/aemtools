@@ -13,9 +13,9 @@ import com.intellij.codeInsight.lookup.LookupElement
  * @author Dmytro Primshyts
  */
 class BaseVirtualCallChainElement(
-    override val name: String,
-    override val type: TypeDescriptor,
-    override val previous: VirtualCallChainElement? = null
+  override val name: String,
+  override val type: TypeDescriptor,
+  override val previous: VirtualCallChainElement? = null
 ) : VirtualCallChainElement {
   override fun toLookupElement(): LookupElement {
     val lookupString = buildString {

@@ -16,8 +16,10 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 object HtmlAttributeReferenceProvider : PsiReferenceProvider() {
-  override fun getReferencesByElement(element: PsiElement,
-                                      context: ProcessingContext): Array<out PsiReference> {
+  override fun getReferencesByElement(
+    element: PsiElement,
+    context: ProcessingContext
+  ): Array<out PsiReference> {
     val attr = element as XmlAttribute
 
     if (attr.isHtlAttribute()) {
@@ -45,4 +47,3 @@ object HtmlAttributeReferenceProvider : PsiReferenceProvider() {
     }
   }
 }
-

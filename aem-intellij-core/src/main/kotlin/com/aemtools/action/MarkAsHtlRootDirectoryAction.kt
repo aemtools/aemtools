@@ -26,11 +26,12 @@ class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
 
   override fun update(event: AnActionEvent) {
     val file = event.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
-        ?.firstOrNull()
+      ?.firstOrNull()
     val project = event.project
-    if (file == null
-        || project == null
-        || shouldDisable(file, project, event)) {
+    if (file == null ||
+      project == null ||
+      shouldDisable(file, project, event)
+    ) {
       event.presentation.isEnabledAndVisible = false
       return
     }
@@ -45,7 +46,7 @@ class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
 
   override fun actionPerformed(event: AnActionEvent) {
     val file = event.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
-        ?.firstOrNull() ?: return
+      ?.firstOrNull() ?: return
     val project = event.project
     if (!event.presentation.isEnabledAndVisible || project == null) {
       return
@@ -54,7 +55,7 @@ class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
     val path = file.path
 
     val htlRootDirectories = HtlRootDirectories.getInstance(project)
-        ?: return
+      ?: return
 
     if (shouldAdd(event)) {
       htlRootDirectories.addRoot(path)
@@ -74,12 +75,15 @@ class MarkAsHtlRootDirectoryAction : DumbAwareAction() {
 
   private fun shouldAdd(event: AnActionEvent) = event.presentation.text == "HTL Root"
 
-  private fun shouldDisable(file: VirtualFile,
-                            project: Project,
-                            event: AnActionEvent): Boolean {
-    return (!file.isDirectory
-        && event.place != ActionPlaces.PROJECT_VIEW_POPUP
-        || !HtlDetectionService.mayBeMarked(file.path, project))
+  private fun shouldDisable(
+    file: VirtualFile,
+    project: Project,
+    event: AnActionEvent
+  ): Boolean {
+    return (
+      !file.isDirectory &&
+        event.place != ActionPlaces.PROJECT_VIEW_POPUP ||
+        !HtlDetectionService.mayBeMarked(file.path, project)
+      )
   }
-
 }

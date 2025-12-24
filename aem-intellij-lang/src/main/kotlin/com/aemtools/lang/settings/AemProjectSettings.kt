@@ -15,8 +15,8 @@ import com.intellij.util.xmlb.annotations.Tag
  * @author Kostiantyn Diachenko
  */
 @State(
-    name = "AemProjectConfiguration",
-    storages = [(Storage(StoragePathMacros.WORKSPACE_FILE))]
+  name = "AemProjectConfiguration",
+  storages = [(Storage(StoragePathMacros.WORKSPACE_FILE))]
 )
 class AemProjectSettings : PersistentStateComponent<AemProjectSettings> {
 
@@ -51,7 +51,6 @@ class AemProjectSettings : PersistentStateComponent<AemProjectSettings> {
      * @return htl root directories instance, may be *null*
      */
     fun getInstance(project: Project): AemProjectSettings =
-        project.getService(AemProjectSettings::class.java)
-
+      project.getService(AemProjectSettings::class.java)
   }
 }

@@ -1,7 +1,7 @@
 package com.aemtools.documentation.widget
 
-import com.aemtools.common.constant.const
-import com.aemtools.common.constant.const.file_names.DIALOG_XML
+import com.aemtools.common.constant.Const
+import com.aemtools.common.constant.Const.FileNames.DIALOG_XML
 import com.aemtools.completion.model.WidgetDoc
 import com.aemtools.completion.model.WidgetMember
 import com.aemtools.completion.model.psi.SelectedAttribute
@@ -26,8 +26,8 @@ open class WidgetDocumentationProvider : AbstractDocumentationProvider() {
    */
   fun acceptGenerateDoc(element: PsiElement): Boolean {
     return element.containingFile
-        .originalFile
-        .name == DIALOG_XML
+      .originalFile
+      .name == DIALOG_XML
   }
 
   override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {
@@ -37,7 +37,7 @@ open class WidgetDocumentationProvider : AbstractDocumentationProvider() {
 
     val widgetDefinition = WidgetDefinitionUtil.extract(originalElement) ?: return null
 
-    val widgetXType = widgetDefinition.getFieldValue(const.XTYPE) ?: return null
+    val widgetXType = widgetDefinition.getFieldValue(Const.XTYPE) ?: return null
 
     val widgetDocumentation = ServiceFacade.getWidgetRepository().findByXType(widgetXType) ?: return null
 
@@ -58,7 +58,7 @@ open class WidgetDocumentationProvider : AbstractDocumentationProvider() {
     return """
             <h2>${widgetDoc.className}</h2>
             <p>${widgetDoc.description}</p>
-        """.trimIndent().replace(Regex("\n|\r"), "")
+    """.trimIndent().replace(Regex("\n|\r"), "")
   }
 
   private fun fieldDocumentation(widgetDoc: WidgetDoc, widgetMember: WidgetMember): String {
@@ -73,7 +73,6 @@ open class WidgetDocumentationProvider : AbstractDocumentationProvider() {
             <p>
                 ${widgetMember.description}
             </p>
-        """.trimIndent().replace("\n", "")
+    """.trimIndent().replace("\n", "")
   }
-
 }

@@ -38,5 +38,4 @@ interface IRenameState {
    * @param text the content of the file
    */
   fun addFile(name: String, text: String)
-
 }

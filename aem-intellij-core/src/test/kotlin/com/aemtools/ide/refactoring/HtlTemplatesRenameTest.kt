@@ -1,6 +1,6 @@
 package com.aemtools.ide.refactoring
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.test.rename.BaseRenameTest
 
 /**
@@ -10,11 +10,11 @@ class HtlTemplatesRenameTest : BaseRenameTest() {
 
   fun testRenameTemplateFromAttribute() = renameCase {
     before {
-      addHtml("${const.JCR_ROOT}/myapp/component/component.html", """
+      addHtml("${Const.JCR_ROOT}/myapp/component/component.html", """
                 <div ${CARET}data-sly-template.myTemplate=""></div>
                 <div data-sly-call="$DOLLAR{myTemplate}"></div>
             """)
-      addHtml("${const.JCR_ROOT}/myapp/component/other.html", """
+      addHtml("${Const.JCR_ROOT}/myapp/component/other.html", """
                 <div data-sly-use.template="component.html">
                     <div data-sly-call="$DOLLAR{template.myTemplate}"></div>
                 </div>
@@ -22,11 +22,11 @@ class HtlTemplatesRenameTest : BaseRenameTest() {
     }
     renameTo("renamed")
     after {
-      addHtml("${const.JCR_ROOT}/myapp/component/component.html", """
+      addHtml("${Const.JCR_ROOT}/myapp/component/component.html", """
                 <div data-sly-template.renamed=""></div>
                 <div data-sly-call="$DOLLAR{renamed}"></div>
             """)
-      addHtml("${const.JCR_ROOT}/myapp/component/other.html", """
+      addHtml("${Const.JCR_ROOT}/myapp/component/other.html", """
                 <div data-sly-use.template="component.html">
                     <div data-sly-call="$DOLLAR{template.renamed}"></div>
                 </div>
@@ -36,11 +36,11 @@ class HtlTemplatesRenameTest : BaseRenameTest() {
 
   fun testRenameTemplateFromLocalUsage() = renameCase {
     before {
-      addHtml("${const.JCR_ROOT}/myapp/component/component.html", """
+      addHtml("${Const.JCR_ROOT}/myapp/component/component.html", """
                 <div data-sly-template.myTemplate=""></div>
                 <div data-sly-call="$DOLLAR{${CARET}myTemplate}"></div>
             """)
-      addHtml("${const.JCR_ROOT}/myapp/component/other.html", """
+      addHtml("${Const.JCR_ROOT}/myapp/component/other.html", """
                 <div data-sly-use.template="component.html">
                     <div data-sly-call="$DOLLAR{template.myTemplate}"></div>
                 </div>
@@ -48,11 +48,11 @@ class HtlTemplatesRenameTest : BaseRenameTest() {
     }
     renameTo("renamed")
     after {
-      addHtml("${const.JCR_ROOT}/myapp/component/component.html", """
+      addHtml("${Const.JCR_ROOT}/myapp/component/component.html", """
                 <div data-sly-template.renamed=""></div>
                 <div data-sly-call="$DOLLAR{renamed}"></div>
             """)
-      addHtml("${const.JCR_ROOT}/myapp/component/other.html", """
+      addHtml("${Const.JCR_ROOT}/myapp/component/other.html", """
                 <div data-sly-use.template="component.html">
                     <div data-sly-call="$DOLLAR{template.renamed}"></div>
                 </div>
@@ -62,11 +62,11 @@ class HtlTemplatesRenameTest : BaseRenameTest() {
 
   fun testRenameTemplateFromOuterUsage() = renameCase {
     before {
-      addHtml("${const.JCR_ROOT}/myapp/component/component.html", """
+      addHtml("${Const.JCR_ROOT}/myapp/component/component.html", """
                 <div data-sly-template.myTemplate=""></div>
                 <div data-sly-call="$DOLLAR{myTemplate}"></div>
             """)
-      addHtml("${const.JCR_ROOT}/myapp/component/other.html", """
+      addHtml("${Const.JCR_ROOT}/myapp/component/other.html", """
                 <div data-sly-use.template="component.html">
                     <div data-sly-call="$DOLLAR{template.${CARET}myTemplate}"></div>
                 </div>
@@ -74,11 +74,11 @@ class HtlTemplatesRenameTest : BaseRenameTest() {
     }
     renameTo("renamed")
     after {
-      addHtml("${const.JCR_ROOT}/myapp/component/component.html", """
+      addHtml("${Const.JCR_ROOT}/myapp/component/component.html", """
                 <div data-sly-template.renamed=""></div>
                 <div data-sly-call="$DOLLAR{renamed}"></div>
             """)
-      addHtml("${const.JCR_ROOT}/myapp/component/other.html", """
+      addHtml("${Const.JCR_ROOT}/myapp/component/other.html", """
                 <div data-sly-use.template="component.html">
                     <div data-sly-call="$DOLLAR{template.renamed}"></div>
                 </div>

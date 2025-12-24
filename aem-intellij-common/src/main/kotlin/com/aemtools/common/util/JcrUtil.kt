@@ -50,10 +50,10 @@ fun XmlTag.jcrPropertyArray(name: String): List<String> {
 
   if (value.contains('[') && value.contains(']')) {
     return value.substringAfter('[')
-        .substringBefore(']')
-        .split(',')
-        .map { it.trim() }
-        .filterNot { it.isEmpty() }
+      .substringBefore(']')
+      .split(',')
+      .map { it.trim() }
+      .filterNot { it.isEmpty() }
   }
 
   return emptyList()

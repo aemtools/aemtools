@@ -24,5 +24,4 @@ abstract class HtlElementVisitor : PsiElementVisitor() {
    * @param htlExpression htl el expression mixin
    */
   open fun visitHtlExpression(htlExpression: HtlElExpressionMixin) {}
-
 }

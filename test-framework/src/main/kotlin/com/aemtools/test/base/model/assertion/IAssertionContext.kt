@@ -11,5 +11,4 @@ interface IAssertionContext {
   fun elementUnderCaret(): PsiElement
 
   fun openedFile(): PsiFile
-
 }

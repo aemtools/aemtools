@@ -7,4 +7,3 @@ import com.aemtools.index.model.TemplateDefinition
  * @author Dmytro Primshyts
  */
 object TemplateDefinitionExternalizer : BaseExternalizer<TemplateDefinition>()
-

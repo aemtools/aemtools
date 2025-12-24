@@ -15,7 +15,7 @@ fun CdInclude.basePathElement(): CdBasePath? {
     element = element?.prevSibling
     element
   }
-      .map { it as? CdBasePath }
-      .filterNotNull()
-      .firstOrNull()
+    .map { it as? CdBasePath }
+    .filterNotNull()
+    .firstOrNull()
 }

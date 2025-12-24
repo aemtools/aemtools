@@ -7,10 +7,12 @@ import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 /**
  * @author Dmytro Primshyts
  */
-abstract class BaseFileFixtureDescriptor(protected val _name: String,
-                                         protected val _text: String,
-                                         protected val fixture: JavaCodeInsightTestFixture)
-  : IFileFixtureDescriptor {
+abstract class BaseFileFixtureDescriptor(
+  protected val _name: String,
+  protected val _text: String,
+  protected val fixture: JavaCodeInsightTestFixture
+) :
+  IFileFixtureDescriptor {
   protected var initialized = false
   protected var psiFile: PsiFile? = null
 
@@ -18,5 +20,4 @@ abstract class BaseFileFixtureDescriptor(protected val _name: String,
 
   var text: String = _text
     get() = _text
-
 }

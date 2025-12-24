@@ -36,22 +36,21 @@ abstract class AemComponentDialogBase<out PARAMETER : Serializable> : Serializab
    */
   fun declarationElement(name: String, project: Project): PsiElement? {
     val file = OpenApiUtil
-        .findFileByRelativePath(
-            fullPath.normalizeToJcrRoot(),
-            project
-        )
-        ?.toPsiFile(project) as? XmlFile
-        ?: return null
+      .findFileByRelativePath(
+        fullPath.normalizeToJcrRoot(),
+        project
+      )
+      ?.toPsiFile(project) as? XmlFile
+      ?: return null
 
     val rootTag = file.rootTag
-        ?: return null
+      ?: return null
 
     return rootTag.findChildrenByType(XmlTag::class.java)
-        .find {
-          it.attributes.any {
-            it.value in listOf(name, "./$name")
-          }
+      .find {
+        it.attributes.any {
+          it.value in listOf(name, "./$name")
         }
+      }
   }
-
 }

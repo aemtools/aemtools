@@ -26,9 +26,11 @@ interface ICompletionTestFixture : ITestFixture {
    * it may contain some additional variants. true is default.
    * @param ordered *true* means that variants should be checked to go in given order
    */
-  fun shouldContain(variants: List<String>,
-                    strict: Boolean = true,
-                    ordered: Boolean = false)
+  fun shouldContain(
+    variants: List<String>,
+    strict: Boolean = true,
+    ordered: Boolean = false
+  )
 
   /**
    * Vararg version of [shouldContain].

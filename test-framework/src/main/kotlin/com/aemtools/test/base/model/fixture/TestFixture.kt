@@ -10,8 +10,8 @@ import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
 /**
  * @author Dmytro Primshyts
  */
-open class TestFixture(val fixture: JavaCodeInsightTestFixture)
-  : ITestFixture, ITestFixtureInternal {
+open class TestFixture(val fixture: JavaCodeInsightTestFixture) :
+  ITestFixture, ITestFixtureInternal {
 
   override fun assertionContext(): IAssertionContext {
     checkInitialized()

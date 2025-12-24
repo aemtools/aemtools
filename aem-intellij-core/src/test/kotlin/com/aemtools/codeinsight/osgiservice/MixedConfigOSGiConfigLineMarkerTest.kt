@@ -1,7 +1,7 @@
 package com.aemtools.codeinsight.osgiservice
 
 import com.aemtools.codeinsight.osgiservice.navigationhandler.OSGiGutterIconNavigationHandler
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.lang.java.JavaSearch
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin
@@ -21,7 +21,7 @@ class MixedConfigOSGiConfigLineMarkerTest : BaseLightTest(),
     addClass("MyService.java", """
             package com.test;
 
-            import ${const.java.FELIX_SERVICE_ANNOTATION};
+            import ${Const.Java.FELIX_SERVICE_ANNOTATION};
 
             @Service
             public class MyService {}
@@ -66,7 +66,7 @@ class MixedConfigOSGiConfigLineMarkerTest : BaseLightTest(),
     addClass("MyService.java", """
             package com.test;
 
-            import ${const.java.FELIX_SERVICE_ANNOTATION};
+            import ${Const.Java.FELIX_SERVICE_ANNOTATION};
 
             @Service
             public class MyService {}
@@ -108,7 +108,7 @@ class MixedConfigOSGiConfigLineMarkerTest : BaseLightTest(),
     addClass("MyService.java", """
             package com.test;
 
-            import ${const.java.FELIX_SERVICE_ANNOTATION};
+            import ${Const.Java.FELIX_SERVICE_ANNOTATION};
 
             @Service
             public class MyService {}

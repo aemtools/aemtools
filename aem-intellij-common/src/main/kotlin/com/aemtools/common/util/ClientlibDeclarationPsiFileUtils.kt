@@ -15,7 +15,7 @@ fun PsiDirectory.myRelativeDirectory(path: String): PsiDirectory? {
     path.contains("/") -> {
       val subdirName = path.split("/")[0]
       val subdir = this.findSubdirectory(subdirName)
-          ?: return null
+        ?: return null
       val subPath = path.substring(path.indexOf("/") + 1)
       return subdir.myRelativeDirectory(subPath)
     }
@@ -41,7 +41,7 @@ fun PsiDirectory.myRelativeFile(path: String): PsiFile? {
     normalizedPath.contains("/") -> {
       val subdirName = normalizedPath.split("/")[0]
       val subdir = this.findSubdirectory(subdirName)
-          ?: return null
+        ?: return null
       val subPath = normalizedPath.substring(normalizedPath.indexOf("/") + 1)
       return subdir.myRelativeFile(subPath)
     }

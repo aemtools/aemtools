@@ -1,6 +1,6 @@
 package com.aemtools.index.indexer
 
-import com.aemtools.common.constant.const.xml.JCR_PRIMARY_TYPE_CQ_DIALOG
+import com.aemtools.common.constant.Const.Xml.JCR_PRIMARY_TYPE_CQ_DIALOG
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.common.util.getXmlFile
 import com.aemtools.common.util.normalizeToJcrRoot
@@ -19,30 +19,30 @@ object AemComponentClassicDialogIndexer : DataIndexer<String, AemComponentClassi
 
     if (content.contains(JCR_PRIMARY_TYPE_CQ_DIALOG)) {
       val file = inputData.psiFile.getXmlFile()
-          ?: return mutableMapOf()
+        ?: return mutableMapOf()
 
       val mainTag = file.rootTag
-          ?: return mutableMapOf()
+        ?: return mutableMapOf()
 
       val resourceType = inputData.file.path.normalizeToJcrRoot()
-          .substringBeforeLast("/")
+        .substringBeforeLast("/")
 
       val dialogDefinition = AemComponentClassicDialogDefinition(
-          inputData.file.path,
-          resourceType,
-          mainTag.findChildrenByType(XmlTag::class.java).mapNotNull {
-            val xtype = it.getAttribute("xtype")?.value
-            val name = it.getAttribute("name")?.value
-            if (xtype != null && name != null) {
-              ClassicDialogParameterDeclaration(xtype, name)
-            } else {
-              null
-            }
+        inputData.file.path,
+        resourceType,
+        mainTag.findChildrenByType(XmlTag::class.java).mapNotNull {
+          val xtype = it.getAttribute("xtype")?.value
+          val name = it.getAttribute("name")?.value
+          if (xtype != null && name != null) {
+            ClassicDialogParameterDeclaration(xtype, name)
+          } else {
+            null
           }
+        }
       )
 
       return mutableMapOf(
-          resourceType to dialogDefinition
+        resourceType to dialogDefinition
       )
     }
 

@@ -30,9 +30,11 @@ import java.util.ArrayList
  *
  * @author Dmytro Primshyts
  */
-open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
-                                      open val psiMember: PsiMember? = null,
-                                      open val originalType: PsiType? = null) : TypeDescriptor {
+open class JavaPsiClassTypeDescriptor(
+  open val psiClass: PsiClass,
+  open val psiMember: PsiMember? = null,
+  open val originalType: PsiType? = null
+) : TypeDescriptor {
   override fun isArray(): Boolean = originalType is PsiArrayType
 
   override fun isIterable(): Boolean = JavaUtilities.isIterable(psiClass)
@@ -54,8 +56,8 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
         methodNames.add(name)
       }
       var lookupElement = lookupElement(name)
-          .withIcon(it.getIcon(0))
-          .withTailText(" ${it.name}()", true)
+        .withIcon(it.getIcon(0))
+        .withTailText(" ${it.name}()", true)
 
       val returnType = it.returnType
       if (returnType != null) {
@@ -66,8 +68,8 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
     }
     fields.forEach {
       val lookupElement = lookupElement(it.name.toString())
-          .withIcon(it.getIcon(0))
-          .withTypeText(it.type.presentableText, true)
+        .withIcon(it.getIcon(0))
+        .withTypeText(it.type.presentableText, true)
 
       result.add(lookupElement.withPriority(extractPriority(it, psiClass)))
     }
@@ -85,10 +87,10 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
 
   override fun subtype(identifier: String): TypeDescriptor {
     val psiMember = psiClass.findElMemberByName(identifier)
-        ?: return TypeDescriptor.empty()
+      ?: return TypeDescriptor.empty()
 
     val psiType = psiMember.resolveReturnType()
-        ?: return TypeDescriptor.empty()
+      ?: return TypeDescriptor.empty()
 
     val className = with(psiType) {
       when {
@@ -97,8 +99,8 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
         }
         this is PsiClassType -> this.className
         this is PsiPrimitiveType -> this.getBoxedType(
-            psiClass.project.psiManager(),
-            psiClass.project.allScope()
+          psiClass.project.psiManager(),
+          psiClass.project.allScope()
         )?.canonicalText
         this is PsiArrayType -> {
           this.componentType.canonicalText
@@ -108,16 +110,16 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
     } ?: return TypeDescriptor.empty()
 
     val typeClass = JavaSearch.findClass(className, psiClass.project)
-        ?: return TypeDescriptor.unresolved(psiMember)
+      ?: return TypeDescriptor.unresolved(psiMember)
 
     return JavaPsiClassTypeDescriptor.create(typeClass, psiMember, psiType)
   }
 
   override fun referencedElement(): PsiElement? =
-      psiMember
+    psiMember
 
   override fun asResolutionResult(): ResolutionResult =
-      ResolutionResult(psiClass, myVariants())
+    ResolutionResult(psiClass, myVariants())
 
   fun qualifiedName(): String? = psiClass.qualifiedName
 
@@ -131,14 +133,16 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
      *
      * @return new java psi class type descriptor
      */
-    fun create(psiClass: PsiClass,
-               psiMember: PsiMember? = null,
-               psiType: PsiType? = null): JavaPsiClassTypeDescriptor {
+    fun create(
+      psiClass: PsiClass,
+      psiMember: PsiMember? = null,
+      psiType: PsiType? = null
+    ): JavaPsiClassTypeDescriptor {
       return when (psiType) {
         is PsiClassReferenceType -> {
           when {
-            JavaUtilities.isIterable(psiClass)
-                || JavaUtilities.isIterator(psiClass) ->
+            JavaUtilities.isIterable(psiClass) ||
+              JavaUtilities.isIterator(psiClass) ->
               IterableJavaTypeDescriptor(psiClass, psiMember, psiType)
 
             JavaUtilities.isMap(psiClass) ->
@@ -156,5 +160,4 @@ open class JavaPsiClassTypeDescriptor(open val psiClass: PsiClass,
       }
     }
   }
-
 }

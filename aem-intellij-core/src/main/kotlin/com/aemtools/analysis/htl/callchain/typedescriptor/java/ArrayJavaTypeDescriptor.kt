@@ -9,10 +9,12 @@ import com.intellij.psi.PsiType
 /**
  * @author Dmytro Primshyts
  */
-class ArrayJavaTypeDescriptor(psiClass: PsiClass,
-                              psiMember: PsiMember?,
-                              originalType: PsiType? = null)
-  : JavaPsiClassTypeDescriptor(psiClass, psiMember, originalType), ArrayTypeDescriptor {
+class ArrayJavaTypeDescriptor(
+  psiClass: PsiClass,
+  psiMember: PsiMember?,
+  originalType: PsiType? = null
+) :
+  JavaPsiClassTypeDescriptor(psiClass, psiMember, originalType), ArrayTypeDescriptor {
 
   override fun isArray() = true
 
@@ -20,7 +22,6 @@ class ArrayJavaTypeDescriptor(psiClass: PsiClass,
 
   override fun isMap() = false
 
-  //for array the 'arrayType' is the same as main type
+  // for array the 'arrayType' is the same as main type
   override fun arrayType(): TypeDescriptor = this
-
 }

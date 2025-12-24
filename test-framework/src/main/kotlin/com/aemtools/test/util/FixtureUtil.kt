@@ -29,5 +29,5 @@ inline fun <reified FIX : IntentionAction> CodeInsightTestFixture.quickFix(fileN
  * @return list of quick fixes, will be empty if no fixes with given type found
  */
 inline fun <reified FIX : IntentionAction> CodeInsightTestFixture.quickFixes(fileName: String): List<FIX> =
-    getAllQuickFixes(fileName)
-        .mapNotNull { it as? FIX }
+  getAllQuickFixes(fileName)
+    .mapNotNull { it as? FIX }

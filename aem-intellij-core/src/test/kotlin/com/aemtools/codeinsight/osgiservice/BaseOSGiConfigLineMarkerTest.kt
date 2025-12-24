@@ -1,8 +1,8 @@
 package com.aemtools.codeinsight.osgiservice
 
 import com.aemtools.codeinsight.osgiservice.navigationhandler.OSGiGutterIconNavigationHandler
-import com.aemtools.common.constant.const.java.DS_COMPONENT_ANNOTATION
-import com.aemtools.common.constant.const.java.FELIX_SERVICE_ANNOTATION
+import com.aemtools.common.constant.Const.Java.DS_COMPONENT_ANNOTATION
+import com.aemtools.common.constant.Const.Java.FELIX_SERVICE_ANNOTATION
 import com.aemtools.lang.java.JavaSearch
 import com.aemtools.test.base.BaseLightTest
 import com.aemtools.test.fixture.OSGiConfigFixtureMixin

@@ -3,7 +3,6 @@ package com.aemtools.inspection.service
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.Project
 
-
 /**
  * Run given action with required service.
  * As a required service may be specified:
@@ -24,7 +23,7 @@ inline fun <reified SERVICE> withServices(project: Project, action: (service: SE
 
   if (service == null) {
     Logger.getInstance("aemtools")
-        .warn("Unable to execute action with service: ${SERVICE::class.java.name}")
+      .warn("Unable to execute action with service: ${SERVICE::class.java.name}")
     return
   }
 

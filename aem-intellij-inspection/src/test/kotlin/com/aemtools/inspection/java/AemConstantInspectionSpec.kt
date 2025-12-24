@@ -3,16 +3,13 @@ package com.aemtools.inspection.java
 import com.aemtools.inspection.java.constants.ConstantDescriptor
 import com.aemtools.inspection.service.IInspectionService
 import com.aemtools.inspection.service.IJavaInspectionService
-import com.aemtools.test.util.memo
+import com.aemtools.test.util.mock
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiLiteralExpression
+import io.kotest.core.spec.style.ShouldSpec
 import org.assertj.core.api.Assertions.assertThat
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.describe
-import org.jetbrains.spek.api.dsl.it
-import org.jetbrains.spek.api.dsl.on
 import org.mockito.ArgumentMatchers.anyList
 import org.mockito.Mockito.*
 import org.mockito.kotlin.any
@@ -22,125 +19,131 @@ import org.mockito.kotlin.any
  *
  * @author Dmytro Primshyts
  */
-object AemConstantInspectionSpec : Spek({
+object AemConstantInspectionSpec : ShouldSpec({
   val tested = AemConstantInspection()
 
-  on("style check") {
-    it("should have correct group display name") {
+  context("style check") {
+    should("have correct group display name") {
       assertThat(tested.groupDisplayName)
-          .isEqualTo("AEM")
+        .isEqualTo("AEM")
     }
 
-    it("should have correct display name") {
+    should("have correct display name") {
       assertThat(tested.displayName)
-          .isEqualTo("Hardcoded AEM specific literal")
+        .isEqualTo("Hardcoded AEM specific literal")
     }
 
-    it("should have correct static description") {
+    should("have correct static description") {
       assertThat(tested.staticDescription)
-          .isEqualTo("""
+        .isEqualTo(
+          """
 <html>
 <body>
 This inspection verifies that predefined AEM constants are used instead of
 hardcode.
 </body>
-</html>""".trimIndent())
+</html>""".trimIndent()
+        )
     }
   }
-  describe("check literal") {
-    val psiLiteralExpression: PsiLiteralExpression by memo()
-    val project: Project by memo()
-    val inspectionService: IInspectionService by memo()
-    val javaInspectionService: IJavaInspectionService by memo()
-    val module: Module by memo()
-    val problemsHolder: ProblemsHolder by memo()
+  context("check literal") {
+    val psiLiteralExpression: PsiLiteralExpression = mock()
+    val project: Project = mock()
+    val inspectionService: IInspectionService = mock()
+    val javaInspectionService: IJavaInspectionService = mock()
+    val module: Module = mock()
+    val problemsHolder: ProblemsHolder = mock()
 
-    beforeEachTest {
+    beforeEach {
       `when`(project.getService(IJavaInspectionService::class.java))
-          .thenReturn(javaInspectionService)
+        .thenReturn(javaInspectionService)
       `when`(project.getService(IInspectionService::class.java))
-          .thenReturn(inspectionService)
+        .thenReturn(inspectionService)
       `when`(psiLiteralExpression.project)
-          .thenReturn(project)
+        .thenReturn(project)
       `when`(inspectionService.validTarget(psiLiteralExpression))
-          .thenReturn(true)
+        .thenReturn(true)
       `when`(javaInspectionService.isJavaLangString(psiLiteralExpression))
-          .thenReturn(true)
+        .thenReturn(true)
       `when`(psiLiteralExpression.value)
-          .thenReturn("com.test.Bean")
+        .thenReturn("com.test.Bean")
       `when`(inspectionService.moduleForPsiElement(psiLiteralExpression))
-          .thenReturn(module)
+        .thenReturn(module)
 
       `when`(javaInspectionService.standardConstants(project, module))
-          .thenReturn(listOf(
-              ConstantDescriptor(
-                  "com.test.Constants1",
-                  "Name1",
-                  "value1"
-              ),
-              ConstantDescriptor(
-                  "com.test.Constants2",
-                  "Name2",
-                  "value2"
-              )
-          ))
+        .thenReturn(
+          listOf(
+            ConstantDescriptor(
+              "com.test.Constants1",
+              "Name1",
+              "value1"
+            ),
+            ConstantDescriptor(
+              "com.test.Constants2",
+              "Name2",
+              "value2"
+            )
+          )
+        )
     }
 
-    it("should return if target is invalid") {
+    should("return if target is invalid") {
       `when`(inspectionService.validTarget(psiLiteralExpression))
-          .thenReturn(false)
+        .thenReturn(false)
 
       tested.checkLiteral(psiLiteralExpression, problemsHolder)
       verify(javaInspectionService, never())
-          .reportHardcodedConstant(
-              any(),
-              any(),
-              anyList()
-          )
+        .reportHardcodedConstant(
+          any(),
+          any(),
+          anyList()
+        )
 
     }
 
-    it("should return if literal is not `java.lang.String`") {
+    should("return if literal is not `java.lang.String`") {
       `when`(javaInspectionService.isJavaLangString(psiLiteralExpression))
-          .thenReturn(false)
+        .thenReturn(false)
 
       tested.checkLiteral(psiLiteralExpression, problemsHolder)
       verify(javaInspectionService, never())
-          .reportHardcodedConstant(
-              any(),
-              any(),
-              anyList()
-          )
+        .reportHardcodedConstant(
+          any(),
+          any(),
+          anyList()
+        )
     }
 
-    it("should return if no module was found") {
+    should("return if no module was found") {
       `when`(inspectionService.moduleForPsiElement(psiLiteralExpression))
-          .thenReturn(null)
+        .thenReturn(null)
 
       tested.checkLiteral(psiLiteralExpression, problemsHolder)
       verify(javaInspectionService, never())
-          .reportHardcodedConstant(
-              any(),
-              any(),
-              anyList()
-          )
+        .reportHardcodedConstant(
+          any(),
+          any(),
+          anyList()
+        )
     }
 
-    it("should report matched standard constant") {
+    should("report matched standard constant") {
       `when`(psiLiteralExpression.value)
-          .thenReturn("value1")
+        .thenReturn("value1")
 
       tested.checkLiteral(psiLiteralExpression, problemsHolder)
       verify(javaInspectionService)
-          .reportHardcodedConstant(
-              problemsHolder,
-              psiLiteralExpression,
-              listOf(
-                  ConstantDescriptor("com.test.Constants1",
-                      "Name1",
-                      "value1")
-              )
+        .reportHardcodedConstant(
+          problemsHolder,
+          psiLiteralExpression,
+          listOf(
+            ConstantDescriptor(
+              "com.test.Constants1",
+              "Name1",
+              "value1"
+            )
           )
+        )
     }
 
   }

@@ -14,8 +14,8 @@ import com.intellij.util.xmlb.annotations.Tag
  * @author Dmytro Primshyts
  */
 @State(
-    name = "HtlRootsConfiguration",
-    storages = [(Storage(WORKSPACE_FILE))]
+  name = "HtlRootsConfiguration",
+  storages = [(Storage(WORKSPACE_FILE))]
 )
 class HtlRootDirectories : PersistentStateComponent<HtlRootDirectories> {
 
@@ -58,8 +58,6 @@ class HtlRootDirectories : PersistentStateComponent<HtlRootDirectories> {
      * @return htl root directories instance, may be *null*
      */
     fun getInstance(project: Project): HtlRootDirectories? =
-        project.getService(HtlRootDirectories::class.java)
-
+      project.getService(HtlRootDirectories::class.java)
   }
-
 }

@@ -1,6 +1,6 @@
 package com.aemtools.completion.small.patterns
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.completion.small.patterns.ClientlibraryFolderPatterns.jcrArrayValueOfCategories
 import com.aemtools.completion.small.patterns.ClientlibraryFolderPatterns.jcrArrayValueOfDependencies
 import com.aemtools.completion.small.patterns.ClientlibraryFolderPatterns.jcrArrayValueOfEmbeds
@@ -19,7 +19,7 @@ class ClientlibraryFolderPatternsTest : BasePatternsTest() {
   fun testJcrArrayValueOfCategories() = xmlPattern(
       jcrArrayValueOfCategories,
       """
-          <jcr:root jcr:primaryType="${const.xml.CQ_CLIENTLIBRARY_FOLDER}"
+          <jcr:root jcr:primaryType="${Const.Xml.CQ_CLIENTLIBRARY_FOLDER}"
             categories="[first, $CARET]" />
       """,
       true
@@ -28,7 +28,7 @@ class ClientlibraryFolderPatternsTest : BasePatternsTest() {
   fun testJcrArrayValueOfCategoriesNegative() = xmlPattern(
       jcrArrayValueOfCategories,
       """
-          <jcr:root jcr:primaryType="${const.xml.CQ_CLIENTLIBRARY_FOLDER}"
+          <jcr:root jcr:primaryType="${Const.Xml.CQ_CLIENTLIBRARY_FOLDER}"
             embed="[first, $CARET]"
       """,
       false
@@ -37,7 +37,7 @@ class ClientlibraryFolderPatternsTest : BasePatternsTest() {
   fun testJcrArrayValueOfDependencies() = xmlPattern(
       jcrArrayValueOfDependencies,
       """
-          <jcr:root jcr:primaryType="${const.xml.CQ_CLIENTLIBRARY_FOLDER}"
+          <jcr:root jcr:primaryType="${Const.Xml.CQ_CLIENTLIBRARY_FOLDER}"
             dependencies="[first, $CARET]" />
       """,
       true
@@ -46,7 +46,7 @@ class ClientlibraryFolderPatternsTest : BasePatternsTest() {
   fun testJcrArrayValueOfDependenciesNegative() = xmlPattern(
       jcrArrayValueOfDependencies,
       """
-          <jcr:root jcr:primaryType="${const.xml.CQ_CLIENTLIBRARY_FOLDER}"
+          <jcr:root jcr:primaryType="${Const.Xml.CQ_CLIENTLIBRARY_FOLDER}"
             categories="[first, $CARET]" />
       """,
       false
@@ -55,7 +55,7 @@ class ClientlibraryFolderPatternsTest : BasePatternsTest() {
   fun testJcrArrayValueOfEmbeds() = xmlPattern(
       jcrArrayValueOfEmbeds,
       """
-          <jcr:root jcr:primaryType="${const.xml.CQ_CLIENTLIBRARY_FOLDER}"
+          <jcr:root jcr:primaryType="${Const.Xml.CQ_CLIENTLIBRARY_FOLDER}"
             embed="[first, $CARET]" />
       """,
       true
@@ -64,7 +64,7 @@ class ClientlibraryFolderPatternsTest : BasePatternsTest() {
   fun testJcrArrayValueOfEmbedsNegative() = xmlPattern(
       jcrArrayValueOfEmbeds,
       """
-          <jcr:root jcr:primaryType="${const.xml.CQ_CLIENTLIBRARY_FOLDER}"
+          <jcr:root jcr:primaryType="${Const.Xml.CQ_CLIENTLIBRARY_FOLDER}"
             dependencies="[first, $CARET]" />
       """,
       false

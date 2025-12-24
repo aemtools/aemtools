@@ -26,5 +26,4 @@ class CdHighlighter : SyntaxHighlighterBase() {
   }
 
   override fun getHighlightingLexer(): Lexer = LayeredLexer(CdLexer())
-
 }

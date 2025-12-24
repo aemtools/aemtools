@@ -1,6 +1,6 @@
 package com.aemtools.lang.htl.psi.pattern
 
-import com.aemtools.common.constant.const.JCR_ROOT
+import com.aemtools.common.constant.Const.JCR_ROOT
 import com.aemtools.lang.htl.service.HtlDetectionService
 import com.aemtools.test.pattern.BasePatternsTest
 

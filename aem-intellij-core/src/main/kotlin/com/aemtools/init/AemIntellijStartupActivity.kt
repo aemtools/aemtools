@@ -13,9 +13,10 @@ import com.intellij.profile.codeInspection.ProjectInspectionProfileManager
 class AemIntellijStartupActivity : ProjectActivity {
   override suspend fun execute(project: Project) {
     val application = ApplicationManagerEx.getApplicationEx()
-    if (application == null
-        || application.isUnitTestMode
-        || application.isHeadlessEnvironment) {
+    if (application == null ||
+      application.isUnitTestMode ||
+      application.isHeadlessEnvironment
+    ) {
       return
     }
 
@@ -26,22 +27,21 @@ class AemIntellijStartupActivity : ProjectActivity {
     val currentProfile = ProjectInspectionProfileManager.getInstance(project).currentProfile
     currentProfile.modifyProfile {
       it.getInspectionTool("HtmlUnknownAttribute", project)
-          ?.let {
-            val htmlUnknownAttribute = it.tool
-            if (htmlUnknownAttribute is HtmlUnknownAttributeInspection) {
-              htmlUnknownAttribute.addEntry("x-cq-linkchecker")
-            }
+        ?.let {
+          val htmlUnknownAttribute = it.tool
+          if (htmlUnknownAttribute is HtmlUnknownAttributeInspection) {
+            htmlUnknownAttribute.addEntry("x-cq-linkchecker")
           }
+        }
 
       it.getInspectionTool("HtmlUnknownTag", project)
-          ?.let {
-            val htmlUnknownTag = it.tool
+        ?.let {
+          val htmlUnknownTag = it.tool
 
-            if (htmlUnknownTag is HtmlUnknownTagInspection) {
-              htmlUnknownTag.addEntry("sly")
-            }
+          if (htmlUnknownTag is HtmlUnknownTagInspection) {
+            htmlUnknownTag.addEntry("sly")
           }
+        }
     }
   }
-
 }

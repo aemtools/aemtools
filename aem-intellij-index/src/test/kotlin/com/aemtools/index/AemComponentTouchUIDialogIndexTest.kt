@@ -1,6 +1,6 @@
 package com.aemtools.index
 
-import com.aemtools.common.constant.const.JCR_ROOT
+import com.aemtools.common.constant.Const.JCR_ROOT
 import com.aemtools.index.model.dialog.AemComponentTouchUIDialogDefinition
 import com.aemtools.index.model.dialog.parameter.TouchUIDialogParameterDeclaration
 import com.aemtools.test.base.BaseLightTest

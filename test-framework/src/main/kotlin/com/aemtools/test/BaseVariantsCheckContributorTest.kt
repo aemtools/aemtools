@@ -17,12 +17,12 @@ import org.assertj.core.api.Assertions.assertThat
 /**
  * @author Dmytro Primshyts.
  */
-abstract class BaseVariantsCheckContributorTest(val dataPath: String)
-  : LightFixtureCompletionTestCase(),
-    HtlTestCase,
-    HtlVersioningFixtureMixin,
-    TestClassesMixin,
-    UberJarFixtureMixin {
+abstract class BaseVariantsCheckContributorTest(val dataPath: String) :
+  LightFixtureCompletionTestCase(),
+  HtlTestCase,
+  HtlVersioningFixtureMixin,
+  TestClassesMixin,
+  UberJarFixtureMixin {
 
   companion object {
     /**
@@ -31,92 +31,103 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
     val OBJECT_VARIANTS = listOf("class", "hashCode", "toString")
 
     val DEFAULT_CONTEXT_OBJECTS = listOf(
-        "component",
-        "componentContext",
-        "currentDesign",
-        "currentNode",
-        "currentPage",
-        "currentSession",
-        "currentStyle",
-        "properties",
-        "pageProperties",
-        "inheritedPageProperties",
-        "designer",
-        "editContext",
-        "log",
-        "out",
-        "pageManager",
-        "reader",
-        "request",
-        "resource",
-        "resourceDesign",
-        "resourcePage",
-        "response",
-        "sling",
-        "slyWcmHelper",
-        "wcmmode",
-        "xssAPI"
+      "component",
+      "componentContext",
+      "currentDesign",
+      "currentNode",
+      "currentPage",
+      "currentSession",
+      "currentStyle",
+      "properties",
+      "pageProperties",
+      "inheritedPageProperties",
+      "designer",
+      "editContext",
+      "log",
+      "out",
+      "pageManager",
+      "reader",
+      "request",
+      "resource",
+      "resourceDesign",
+      "resourcePage",
+      "response",
+      "sling",
+      "slyWcmHelper",
+      "wcmmode",
+      "xssAPI"
     ).sorted()
 
     /**
      * Values available as the 'context' option value (${@ context='<caret>'})
      */
-    val CONTEXT_VALUES = listOf("text",
-        "html", "attribute", "uri", "number", "attributeName",
-        "elementName", "scriptToken", "scriptString", "scriptComment",
-        "styleToken", "styleString", "styleComment", "unsafe")
+    val CONTEXT_VALUES = listOf(
+      "text",
+      "html", "attribute", "uri", "number", "attributeName",
+      "elementName", "scriptToken", "scriptString", "scriptComment",
+      "styleToken", "styleString", "styleComment", "unsafe"
+    )
 
     /**
      * Values available as options (${@ <caret>}
      */
-    val CONTEXT_PARAMETERS = listOf("join",
-        "i18n", "context", "format", "locale",
-        "timezone", "scheme", "domain",
-        "path", "prependPath", "appendPath",
-        "selectors", "addSelectors", "removeSelectors",
-        "extension", "suffix", "prependSuffix", "appendSuffix",
-        "query", "addQuery", "removeQuery", "fragment")
+    val CONTEXT_PARAMETERS = listOf(
+      "join",
+      "i18n", "context", "format", "locale",
+      "timezone", "scheme", "domain",
+      "path", "prependPath", "appendPath",
+      "selectors", "addSelectors", "removeSelectors",
+      "extension", "suffix", "prependSuffix", "appendSuffix",
+      "query", "addQuery", "removeQuery", "fragment"
+    )
     val DATA_SLY_SUITABLE_CLASSES = listOf(
-        "com.aemtools.completion.htl.fixtures.classes.CustomSlingModel",
-        "com.aemtools.completion.htl.fixtures.classes.IterableModel",
-        "com.aemtools.completion.htl.fixtures.classes.CustomUseClass",
-        "com.aemtools.completion.htl.fixtures.classes.CustomWcmUseClass",
-        "com.aemtools.completion.htl.fixtures.classes.RequestModel"
+      "com.aemtools.completion.htl.fixtures.classes.CustomSlingModel",
+      "com.aemtools.completion.htl.fixtures.classes.IterableModel",
+      "com.aemtools.completion.htl.fixtures.classes.CustomUseClass",
+      "com.aemtools.completion.htl.fixtures.classes.CustomWcmUseClass",
+      "com.aemtools.completion.htl.fixtures.classes.RequestModel"
     )
 
     val DEFAULT_LIST_VARIABLES = listOf("item", "itemList")
     val OVERRIDEN_LIST_VARIABLES = listOf("overriden", "overridenList")
-    val LIST_VARIABLE_FIELDS = listOf("index", "count", "first",
-        "middle", "last", "odd", "even")
+    val LIST_VARIABLE_FIELDS = listOf(
+      "index",
+      "count",
+      "first",
+      "middle",
+      "last",
+      "odd",
+      "even"
+    )
 
     val PAGE_FIELDS = listOf(
-        "path", "pageManager", "contentResource",
-        "listChildren", "depth", "parent",
-        "properties", "name", "title", "pageTitle",
-        "navigationTitle", "hideInNav", "hasContent",
-        "valid", "timeUntilValid", "onTime", "offTime",
-        "lastModifiedBy", "lastModified", "vanityUrl",
-        "tags", "locked", "lockOwner", "canUnlock",
-        "description", "template"
+      "path", "pageManager", "contentResource",
+      "listChildren", "depth", "parent",
+      "properties", "name", "title", "pageTitle",
+      "navigationTitle", "hideInNav", "hasContent",
+      "valid", "timeUntilValid", "onTime", "offTime",
+      "lastModifiedBy", "lastModified", "vanityUrl",
+      "tags", "locked", "lockOwner", "canUnlock",
+      "description", "template"
     ) + OBJECT_VARIANTS
 
     val CUSTOM_MODEL_FIELDS = listOf(
-        "booleanField",
-        "isBooleanField",
-        "publicBoolean",
-        "publicString",
-        "publicStringArray",
-        "publicStringList",
-        "publicStringMap",
-        "stringArray",
-        "stringField",
-        "stringList",
-        "stringMap",
-        "modelList",
-        "class",
-        "hashCode",
-        "toString")
-
+      "booleanField",
+      "isBooleanField",
+      "publicBoolean",
+      "publicString",
+      "publicStringArray",
+      "publicStringList",
+      "publicStringMap",
+      "stringArray",
+      "stringField",
+      "stringList",
+      "stringMap",
+      "modelList",
+      "class",
+      "hashCode",
+      "toString"
+    )
   }
 
   override fun getTestDataPath(): String = "${HtlTestCase.testResourcesPath}/$dataPath"
@@ -134,7 +145,7 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
    */
   protected fun assertVariantsPresent(variants: List<String>) {
     assertThat(triggerCompletion().map { it.lookupString })
-        .contains(*variants.toTypedArray())
+      .contains(*variants.toTypedArray())
   }
 
   /**
@@ -142,7 +153,7 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
    */
   protected fun assertVariantsAbsent(variants: List<String>) {
     assertThat(triggerCompletion().map { it.lookupString })
-        .doesNotContain(*variants.toTypedArray())
+      .doesNotContain(*variants.toTypedArray())
   }
 
   /**
@@ -153,7 +164,7 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
     val result = triggerCompletion()
 
     assertThat(result.map { it.lookupString })
-        .containsOnly(*variants.toTypedArray())
+      .containsOnly(*variants.toTypedArray())
   }
 
   private fun triggerCompletion(): List<LookupElement> {
@@ -193,7 +204,6 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
   val fixture: JavaCodeInsightTestFixture
     get() = myFixture
 
-  override fun getProjectDescriptor(): LightProjectDescriptor
-      = JdkProjectDescriptor()
-
+  override fun getProjectDescriptor(): LightProjectDescriptor =
+    JdkProjectDescriptor()
 }

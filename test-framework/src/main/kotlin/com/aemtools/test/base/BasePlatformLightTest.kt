@@ -11,8 +11,8 @@ import com.intellij.testFramework.fixtures.CodeInsightTestFixture
  * @author Dmytro Primshyts
  */
 abstract class BasePlatformLightTest :
-    HtlVersioningFixtureMixin,
-    BasePlatformTestCase() {
+  HtlVersioningFixtureMixin,
+  BasePlatformTestCase() {
 
   fun fixture(): CodeInsightTestFixture = myFixture
 

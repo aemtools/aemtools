@@ -1,6 +1,6 @@
 package com.aemtools.index.indexer
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.common.util.getXmlFile
 import com.aemtools.index.model.LocalizationModel
 import com.intellij.psi.xml.XmlTag
@@ -14,10 +14,10 @@ object LocalizationModelIndexer : DataIndexer<String, LocalizationModel, FileCon
 
   override fun map(inputData: FileContent): MutableMap<String, LocalizationModel> {
     val xmlFile = inputData.psiFile.getXmlFile()
-        ?: return mutableMapOf()
+      ?: return mutableMapOf()
 
     val rootTag = xmlFile.rootTag
-        ?: return mutableMapOf()
+      ?: return mutableMapOf()
 
     if (!containsLanguageMixin(rootTag)) {
       return mutableMapOf()
@@ -26,30 +26,31 @@ object LocalizationModelIndexer : DataIndexer<String, LocalizationModel, FileCon
     val fileName = inputData.file.path
 
     val jcrLanguage = rootTag.attributes.find {
-      it.name == const.xml.JCR_LANGUAGE
+      it.name == Const.Xml.JCR_LANGUAGE
     }
-        ?.value
-        ?: return mutableMapOf()
+      ?.value
+      ?: return mutableMapOf()
 
     val models = rootTag.subTags
-        .mapNotNull {
-          LocalizationModel.create(it,
-              fileName,
-              jcrLanguage)
-        }
+      .mapNotNull {
+        LocalizationModel.create(
+          it,
+          fileName,
+          jcrLanguage
+        )
+      }
 
     return mutableMapOf(
-        *models.map { model ->
-          "${model.fileName}#${model.key}" to model
-        }.toTypedArray()
+      *models.map { model ->
+        "${model.fileName}#${model.key}" to model
+      }.toTypedArray()
     )
   }
 
   private fun containsLanguageMixin(rootTag: XmlTag): Boolean {
     return rootTag.attributes.none {
-      it.name == const.xml.JCR_MIXIN_TYPES
-          && it.value?.contains(const.xml.JCR_LANGUAGE) == true
+      it.name == Const.Xml.JCR_MIXIN_TYPES &&
+        it.value?.contains(Const.Xml.JCR_LANGUAGE) == true
     }
   }
-
 }

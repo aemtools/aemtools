@@ -11,8 +11,10 @@ import com.intellij.openapi.editor.Document
  *
  * @author Dmytro Primshyts
  */
-abstract class HtlTextInsertHandler(private val expression: String,
-                                    private val offset: Int) : InsertHandler<LookupElement> {
+abstract class HtlTextInsertHandler(
+  private val expression: String,
+  private val offset: Int
+) : InsertHandler<LookupElement> {
 
   override fun handleInsert(context: InsertionContext, item: LookupElement) {
     val document = context.document
@@ -26,7 +28,6 @@ abstract class HtlTextInsertHandler(private val expression: String,
   }
 
   private fun tagHasExpression(document: Document, position: Int) =
-      document.hasText("='$expression", position)
-          || document.hasText("=\"$expression", position)
-
+    document.hasText("='$expression", position) ||
+      document.hasText("=\"$expression", position)
 }

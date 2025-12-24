@@ -31,5 +31,4 @@ interface IWithJcrPatterns {
    * Create matcher for `cq:layout` attribute.
    */
   fun cqLayoutAttribute() = XmlPatterns.xmlAttribute().withName("cq:layout")
-
 }

@@ -50,10 +50,12 @@ class GitHubErrorHandler : ErrorReportSubmitter() {
     return "Report on GitHub"
   }
 
-  override fun submit(events: Array<out IdeaLoggingEvent>,
-                      additionalInfo: String?,
-                      parentComponent: Component,
-                      consumer: Consumer<in SubmittedReportInfo>): Boolean {
+  override fun submit(
+    events: Array<out IdeaLoggingEvent>,
+    additionalInfo: String?,
+    parentComponent: Component,
+    consumer: Consumer<in SubmittedReportInfo>
+  ): Boolean {
     val project = currentProject(parentComponent)
     val reportingTask = object : Task.Backgroundable(project, "Submit issue") {
       override fun run(indicator: ProgressIndicator) {
@@ -67,10 +69,16 @@ class GitHubErrorHandler : ErrorReportSubmitter() {
           when (execute.statusLine.statusCode) {
             HttpStatus.SC_CREATED -> {
               val linkToIssue = extractLinkToIssue(execute.entity)
-              notifyUser(NotificationData("Report successful",
-                  "Thank you for reporting this issue. "
-                          + "The issue on the GitHub issue-tracking project has been created.",
-                      linkToIssue, NotificationType.INFORMATION), project)
+              notifyUser(
+                NotificationData(
+                  "Report successful",
+                  "Thank you for reporting this issue. " +
+                    "The issue on the GitHub issue-tracking project has been created.",
+                  linkToIssue,
+                  NotificationType.INFORMATION
+                ),
+                project
+              )
             }
             else -> notifyUser(NotificationData("Report error", NotificationType.WARNING), project)
           }
@@ -82,14 +90,14 @@ class GitHubErrorHandler : ErrorReportSubmitter() {
   }
 
   fun currentProject(parentComponent: Component) =
-      CommonDataKeys.PROJECT.getData(DataManager.getInstance().getDataContext(parentComponent))
+    CommonDataKeys.PROJECT.getData(DataManager.getInstance().getDataContext(parentComponent))
 
   fun accessTokenHolder() = GitHubAccessTokenHolder() as AccessTokenHolder
 
   fun issueInfoHolder() = GitHubIssueInfoFactory(EnvironmentInfoProviderImpl()) as IssueInfoFactory
 
   fun getIssueContent(events: Array<out IdeaLoggingEvent>, additionalInfo: String?) =
-      StringEntity(gson.toJson(issueInfoHolder().create(events[0], pluginDescriptor, additionalInfo)))
+    StringEntity(gson.toJson(issueInfoHolder().create(events[0], pluginDescriptor, additionalInfo)))
 
   fun startReporting(reportingTask: Task) {
     ProgressManager.getInstance().run(reportingTask)
@@ -102,8 +110,12 @@ class GitHubErrorHandler : ErrorReportSubmitter() {
   }
 
   fun notifyUser(notificationData: NotificationData, project: Project?) {
-    val notification = Notification(pluginDescriptor.pluginId.idString,
-            notificationData.title, notificationData.text, notificationData.notificationType)
+    val notification = Notification(
+      pluginDescriptor.pluginId.idString,
+      notificationData.title,
+      notificationData.text,
+      notificationData.notificationType
+    )
     if (notificationData.url.isNotEmpty()) {
       notification.addAction(BrowseNotificationAction("Click to open created issue", notificationData.url))
     }
@@ -112,8 +124,12 @@ class GitHubErrorHandler : ErrorReportSubmitter() {
 
   fun populateHeaders(request: HttpPost, project: Project?): HttpPost? {
     try {
-      request.addHeader(BasicHeader("Authorization",
-          "token ${accessTokenHolder().getToken()}"))
+      request.addHeader(
+        BasicHeader(
+          "Authorization",
+          "token ${accessTokenHolder().getToken()}"
+        )
+      )
       request.addHeader(BasicHeader("Accept", "application/vnd.github.v3+json"))
       request.addHeader(BasicHeader("Content-Type", "application/json"))
     } catch (ex: TokenInitializationException) {
@@ -131,12 +147,11 @@ class GitHubErrorHandler : ErrorReportSubmitter() {
   }
 
   data class NotificationData(
-          val title: String,
-          val text: String,
-          val url: String,
-          val notificationType: NotificationType
+    val title: String,
+    val text: String,
+    val url: String,
+    val notificationType: NotificationType
   ) {
     constructor(title: String, notificationType: NotificationType) : this(title, "", "", notificationType)
   }
 }
-

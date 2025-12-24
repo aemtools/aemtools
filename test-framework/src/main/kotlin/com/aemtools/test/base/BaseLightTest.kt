@@ -17,10 +17,10 @@ import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase
 /**
  * @author Dmytro Primshyts
  */
-abstract class BaseLightTest(private val withAemUberJar: Boolean = false)
-  : LightJavaCodeInsightFixtureTestCase(),
-    HtlVersioningFixtureMixin,
-    UberJarFixtureMixin {
+abstract class BaseLightTest(private val withAemUberJar: Boolean = false) :
+  LightJavaCodeInsightFixtureTestCase(),
+  HtlVersioningFixtureMixin,
+  UberJarFixtureMixin {
 
   val fixture: JavaCodeInsightTestFixture
     get() = super.myFixture
@@ -30,7 +30,7 @@ abstract class BaseLightTest(private val withAemUberJar: Boolean = false)
   }
 
   override fun getProjectDescriptor(): LightProjectDescriptor {
-    return JdkProjectDescriptor();
+    return JdkProjectDescriptor()
   }
 
   fun fileCase(case: ITestFixture.() -> Unit) {
@@ -61,5 +61,4 @@ abstract class BaseLightTest(private val withAemUberJar: Boolean = false)
     const val DOLLAR: String = "$"
     const val CARET: String = CARET_MARKER
   }
-
 }

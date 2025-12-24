@@ -14,5 +14,4 @@ object DataSlyIncludeReferenceProvider : DataSlyIncludeReferenceProviderBase() {
     val valueElement = element as? XmlAttributeValue
     return valueElement?.value
   }
-
 }

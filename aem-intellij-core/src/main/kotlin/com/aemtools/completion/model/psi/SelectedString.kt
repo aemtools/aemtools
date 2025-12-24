@@ -1,6 +1,6 @@
 package com.aemtools.completion.model.psi
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 
 /**
  * Represent String value of Lexeme under user cursor
@@ -8,8 +8,8 @@ import com.aemtools.common.constant.const
  * @author Dmytro Primshyts
  */
 data class SelectedString constructor(
-    val value: String,
-    val cursorPosition: Int
+  val value: String,
+  val cursorPosition: Int
 ) {
 
   companion object {
@@ -25,10 +25,10 @@ data class SelectedString constructor(
         return null
       }
 
-      return SelectedString(value.replace(const.IDEA_STRING_CARET_PLACEHOLDER, ""),
-          value.indexOf(const.IDEA_STRING_CARET_PLACEHOLDER))
+      return SelectedString(
+        value.replace(Const.IDEA_STRING_CARET_PLACEHOLDER, ""),
+        value.indexOf(Const.IDEA_STRING_CARET_PLACEHOLDER)
+      )
     }
-
   }
-
 }

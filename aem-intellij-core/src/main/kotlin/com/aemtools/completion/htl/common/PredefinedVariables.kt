@@ -38,9 +38,9 @@ object PredefinedVariables {
   fun contextObjectsCompletion(): List<LookupElement> {
     return repository.getContextObjects().map {
       lookupElement(it.name)
-          .withTailText("(${it.className})", true)
-          .withTypeText("Context Object")
-          .withIcon(it.elementIcon)
+        .withTailText("(${it.className})", true)
+        .withTypeText("Context Object")
+        .withIcon(it.elementIcon)
     }
   }
 
@@ -61,15 +61,15 @@ object PredefinedVariables {
     return when {
       name == "properties" && psiClass != null && predefined != null && predefined.isNotEmpty() -> {
         MergedTypeDescriptor(
-            PropertiesTypeDescriptor(originalElement),
-            PredefinedTypeDescriptor(predefined),
-            JavaPsiClassTypeDescriptor.create(psiClass)
+          PropertiesTypeDescriptor(originalElement),
+          PredefinedTypeDescriptor(predefined),
+          JavaPsiClassTypeDescriptor.create(psiClass)
         )
       }
       psiClass != null && predefined != null && predefined.isNotEmpty() -> {
         MergedTypeDescriptor(
-            PredefinedTypeDescriptor(predefined),
-            JavaPsiClassTypeDescriptor.create(psiClass)
+          PredefinedTypeDescriptor(predefined),
+          JavaPsiClassTypeDescriptor.create(psiClass)
         )
       }
       psiClass != null -> {
@@ -81,5 +81,4 @@ object PredefinedVariables {
       else -> empty()
     }
   }
-
 }

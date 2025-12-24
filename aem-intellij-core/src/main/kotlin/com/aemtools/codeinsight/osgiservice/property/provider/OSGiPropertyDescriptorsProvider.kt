@@ -14,18 +14,19 @@ import com.intellij.psi.PsiClass
  */
 object OSGiPropertyDescriptorsProvider {
   private val converters: List<OSGiConfigPropertyConverter> = listOf(
-      XmlOSGiConfigPropertyConverter(),
-      JsonOSGiConfigPropertyConverter(),
+    XmlOSGiConfigPropertyConverter(),
+    JsonOSGiConfigPropertyConverter(),
   )
 
   fun get(referencedOsgiComponentClass: PsiClass, configPropertyName: String): List<OSGiPropertyDescriptor> {
     val containingClassFqn = referencedOsgiComponentClass.qualifiedName
-        ?: return emptyList()
+      ?: return emptyList()
 
     val configs = OSGiConfigSearch.findConfigsForClass(
-        containingClassFqn,
-        referencedOsgiComponentClass.project,
-        true)
+      containingClassFqn,
+      referencedOsgiComponentClass.project,
+      true
+    )
     if (configs.isEmpty()) {
       return emptyList()
     }
@@ -33,36 +34,39 @@ object OSGiPropertyDescriptorsProvider {
     return propertyDescriptors(configs, configPropertyName)
   }
 
-  private fun propertyDescriptors(configs: List<OSGiConfiguration>,
-                                  value: String): List<OSGiPropertyDescriptor> {
+  private fun propertyDescriptors(
+    configs: List<OSGiConfiguration>,
+    value: String
+  ): List<OSGiPropertyDescriptor> {
     return configs.sortByMods()
-        .mapNotNull { config ->
-          toPropertyDescriptor(config, value)
-        }
-        .let { propertyDescriptors ->
-          padModsByMaxModLength(propertyDescriptors)
-        }
+      .mapNotNull { config ->
+        toPropertyDescriptor(config, value)
+      }
+      .let { propertyDescriptors ->
+        padModsByMaxModLength(propertyDescriptors)
+      }
   }
 
-  private fun padModsByMaxModLength(propertyDescriptors: List<OSGiPropertyDescriptor>)
-      : List<OSGiPropertyDescriptor> {
+  private fun padModsByMaxModLength(propertyDescriptors: List<OSGiPropertyDescriptor>): List<OSGiPropertyDescriptor> {
     val modsMaxLength = propertyDescriptors
-        .maxByOrNull {
-          it.mods.length
-        }?.mods?.length
-        ?: 0
+      .maxByOrNull {
+        it.mods.length
+      }?.mods?.length
+      ?: 0
     return propertyDescriptors.map {
       it.copy(
-          mods = it.mods.padEnd(
-              modsMaxLength
-          )
+        mods = it.mods.padEnd(
+          modsMaxLength
+        )
       )
     }
   }
 
-  private fun toPropertyDescriptor(osgiConfiguration: OSGiConfiguration, propertyName: String)
-      : OSGiPropertyDescriptor? {
+  private fun toPropertyDescriptor(
+    osgiConfiguration: OSGiConfiguration,
+    propertyName: String
+  ): OSGiPropertyDescriptor? {
     return converters.find { it.canConvert(osgiConfiguration) }
-        ?.convert(osgiConfiguration, propertyName)
+      ?.convert(osgiConfiguration, propertyName)
   }
 }

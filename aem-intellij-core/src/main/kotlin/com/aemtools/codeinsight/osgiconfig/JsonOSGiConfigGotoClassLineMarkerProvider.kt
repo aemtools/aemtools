@@ -17,27 +17,27 @@ class JsonOSGiConfigGotoClassLineMarkerProvider : LineMarkerProvider {
     val fileName = jsonObject.containingFile.name
 
     val className = fileName.substringBeforeLast(".cfg.json")
-        .substringBefore("-")
+      .substringBefore("-")
 
     val serviceClass = JavaSearch.findClass(className, jsonObject.project)
-        ?: return null
+      ?: return null
 
     return LineMarkerInfo(
-        jsonObject.firstChild,
-        jsonObject.firstChild.textRange,
-        AllIcons.FileTypes.JavaClass,
-        { "Open associated OSGi service" },
-        { mouseEvent, _ ->
-          PsiElementListNavigator.openTargets(
-              mouseEvent,
-              arrayOf(serviceClass),
-              "Open associated OSGi service",
-              null,
-              DefaultListCellRenderer()
-          )
-        },
-        GutterIconRenderer.Alignment.CENTER,
-        { "Open associated OSGi service" }
+      jsonObject.firstChild,
+      jsonObject.firstChild.textRange,
+      AllIcons.FileTypes.JavaClass,
+      { "Open associated OSGi service" },
+      { mouseEvent, _ ->
+        PsiElementListNavigator.openTargets(
+          mouseEvent,
+          arrayOf(serviceClass),
+          "Open associated OSGi service",
+          null,
+          DefaultListCellRenderer()
+        )
+      },
+      GutterIconRenderer.Alignment.CENTER,
+      { "Open associated OSGi service" }
     )
   }
 }

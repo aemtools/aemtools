@@ -7,10 +7,11 @@ import com.intellij.psi.tree.TokenSet
 /**
  * @author Dmytro Primshyts
  */
-class HtlLexer : MergingLexerAdapter(HtlRawLexer(),
-    TokenSet.create(
-        HtlTypes.OUTER_LANGUAGE,
-        HtlTypes.COMMENT_TOKEN,
-        HtlTypes.STRING_CONTENT
-    )
+class HtlLexer : MergingLexerAdapter(
+  HtlRawLexer(),
+  TokenSet.create(
+    HtlTypes.OUTER_LANGUAGE,
+    HtlTypes.COMMENT_TOKEN,
+    HtlTypes.STRING_CONTENT
+  )
 )

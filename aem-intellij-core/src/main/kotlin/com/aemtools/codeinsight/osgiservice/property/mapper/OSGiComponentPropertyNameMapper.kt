@@ -8,13 +8,13 @@ import java.util.regex.Pattern
 object OSGiComponentPropertyNameMapper {
 
   private val METHOD_NAME_UTIL_SYMBOLS_PATTERN =
-      Pattern.compile("(__)|(_)|(\\$\\_\\$)|(\\$\\$)|(\\$)")
+    Pattern.compile("(__)|(_)|(\\$\\_\\$)|(\\$\\$)|(\\$)")
   private val COMPONENT_PROPERTY_SYMBOLS_MAPPING = mapOf(
-      "__" to "_",
-      "_" to ".",
-      "\$_\$" to "-",
-      "\$\$" to "\$",
-      "\$" to ""
+    "__" to "_",
+    "_" to ".",
+    "\$_\$" to "-",
+    "\$\$" to "\$",
+    "\$" to ""
   )
 
   /**

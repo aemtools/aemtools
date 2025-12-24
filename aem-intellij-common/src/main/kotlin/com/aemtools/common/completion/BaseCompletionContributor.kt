@@ -11,16 +11,16 @@ import com.intellij.psi.PsiElement
  * @author Dmytro Primshyts
  */
 open class BaseCompletionContributor(
-    contributorDsl: CompletionContributorDsl.() -> Unit
+  contributorDsl: CompletionContributorDsl.() -> Unit
 ) : CompletionContributor() {
   init {
     val result = CompletionContributorDsl()
     contributorDsl.invoke(result)
     result.extensions.forEach { extension ->
       extend(
-          extension.type,
-          extension.pattern,
-          extension.provider
+        extension.type,
+        extension.pattern,
+        extension.provider
       )
     }
   }
@@ -32,9 +32,9 @@ open class BaseCompletionContributor(
 class CompletionContributorDsl {
 
   internal data class ExtensionModel(
-      val type: CompletionType,
-      val pattern: ElementPattern<out PsiElement>,
-      val provider: CompletionProvider<in CompletionParameters>
+    val type: CompletionType,
+    val pattern: ElementPattern<out PsiElement>,
+    val provider: CompletionProvider<in CompletionParameters>
   )
 
   internal val extensions = mutableListOf<ExtensionModel>()
@@ -47,14 +47,14 @@ class CompletionContributorDsl {
    * @param provider the completion provider
    */
   fun extend(
-      type: CompletionType,
-      pattern: ElementPattern<out PsiElement>,
-      provider: CompletionProvider<in CompletionParameters>
+    type: CompletionType,
+    pattern: ElementPattern<out PsiElement>,
+    provider: CompletionProvider<in CompletionParameters>
   ) {
     extensions += ExtensionModel(
-        type,
-        pattern,
-        provider
+      type,
+      pattern,
+      provider
     )
   }
 
@@ -65,8 +65,8 @@ class CompletionContributorDsl {
    * @param provider the completion provider
    */
   fun basic(
-      pattern: ElementPattern<out PsiElement>,
-      provider: CompletionProvider<in CompletionParameters>
+    pattern: ElementPattern<out PsiElement>,
+    provider: CompletionProvider<in CompletionParameters>
   ) = extend(CompletionType.BASIC, pattern, provider)
 
   /**
@@ -76,8 +76,7 @@ class CompletionContributorDsl {
    * @param provider the completion provider
    */
   fun smart(
-      pattern: ElementPattern<out PsiElement>,
-      provider: CompletionProvider<in CompletionParameters>
+    pattern: ElementPattern<out PsiElement>,
+    provider: CompletionProvider<in CompletionParameters>
   ) = extend(CompletionType.SMART, pattern, provider)
-
 }

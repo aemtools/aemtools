@@ -6,13 +6,15 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Dmytro Primshyts
  */
 class HtlListHelperDeclaration(
-    attribute: XmlAttribute,
-    variableName: String,
-    declarationAttributeType: DeclarationAttributeType)
-  : HtlVariableDeclaration(
+  attribute: XmlAttribute,
+  variableName: String,
+  declarationAttributeType: DeclarationAttributeType
+) :
+  HtlVariableDeclaration(
     attribute,
     variableName,
-    declarationAttributeType) {
+    declarationAttributeType
+  ) {
   companion object {
 
     /**
@@ -24,9 +26,11 @@ class HtlListHelperDeclaration(
      *
      * @return instance of list helper object
      */
-    fun createForRepeat(attribute: XmlAttribute,
-                        variableName: String) =
-        HtlListHelperDeclaration(attribute, variableName, DeclarationAttributeType.REPEAT_HELPER)
+    fun createForRepeat(
+      attribute: XmlAttribute,
+      variableName: String
+    ) =
+      HtlListHelperDeclaration(attribute, variableName, DeclarationAttributeType.REPEAT_HELPER)
 
     /**
      * Builder method for [HtlListHelperDeclaration].
@@ -37,9 +41,10 @@ class HtlListHelperDeclaration(
      *
      * @return instance of list helper object
      */
-    fun createForList(attribute: XmlAttribute,
-                      variableName: String) =
-        HtlListHelperDeclaration(attribute, variableName, DeclarationAttributeType.LIST_HELPER)
-
+    fun createForList(
+      attribute: XmlAttribute,
+      variableName: String
+    ) =
+      HtlListHelperDeclaration(attribute, variableName, DeclarationAttributeType.LIST_HELPER)
   }
 }

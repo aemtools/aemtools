@@ -1,6 +1,6 @@
 package com.aemtools.completion.model.psi
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.common.util.OpenApiUtil
 import com.aemtools.common.util.findParentByType
 import com.intellij.psi.PsiElement
@@ -14,9 +14,9 @@ import java.util.LinkedList
  * @author Dmytro Primshyts
  */
 data class PsiWidgetDefinition constructor(
-    val fields: LinkedHashMap<String, String?>,
-    val originalAttributes: LinkedList<XmlAttribute>,
-    val selectedAttribute: SelectedAttribute?
+  val fields: LinkedHashMap<String, String?>,
+  val originalAttributes: LinkedList<XmlAttribute>,
+  val selectedAttribute: SelectedAttribute?
 ) {
 
   companion object {
@@ -28,8 +28,10 @@ data class PsiWidgetDefinition constructor(
      * @param selectedElement selected xml element
      * @return psi widget definition instance
      */
-    fun create(attributes: Array<XmlAttribute>,
-               selectedElement: XmlElement): PsiWidgetDefinition {
+    fun create(
+      attributes: Array<XmlAttribute>,
+      selectedElement: XmlElement
+    ): PsiWidgetDefinition {
       val fields = LinkedHashMap<String, String?>()
       val originalAttributes = LinkedList<XmlAttribute>()
 
@@ -40,22 +42,25 @@ data class PsiWidgetDefinition constructor(
         fields.put(name, value)
       }
 
-      return PsiWidgetDefinition(fields, originalAttributes,
-          tryExtractSelectedAttribute(selectedElement))
+      return PsiWidgetDefinition(
+        fields,
+        originalAttributes,
+        tryExtractSelectedAttribute(selectedElement)
+      )
     }
 
     private fun tryExtractSelectedAttribute(element: XmlElement): SelectedAttribute? {
       val selectedXmlAttribute = element.findParentByType(XmlAttribute::class.java) ?: return null
 
       val attrName = SelectedString.create(selectedXmlAttribute.name)
-          ?: return null
+        ?: return null
       val attrValue = SelectedString.create(selectedXmlAttribute.value)
 
       return SelectedAttribute(
-          attrName.value,
-          attrValue?.value,
-          isTheElementSelected(selectedXmlAttribute.nameElement, element),
-          isTheElementSelected(selectedXmlAttribute.valueElement, element)
+        attrName.value,
+        attrValue?.value,
+        isTheElementSelected(selectedXmlAttribute.nameElement, element),
+        isTheElementSelected(selectedXmlAttribute.valueElement, element)
       )
     }
 
@@ -66,8 +71,8 @@ data class PsiWidgetDefinition constructor(
       if (element == null) {
         return false
       }
-      return (OpenApiUtil.isCurrentThreadIsDispatch() && OpenApiUtil.isCurrentElementSelected(element))
-          || targetElement.text == (element as? XmlAttributeValueImpl)?.value
+      return (OpenApiUtil.isCurrentThreadIsDispatch() && OpenApiUtil.isCurrentElementSelected(element)) ||
+        targetElement.text == (element as? XmlAttributeValueImpl)?.value
     }
   }
 
@@ -90,8 +95,7 @@ data class PsiWidgetDefinition constructor(
     if (selectedAttribute == null) {
       return false
     } else {
-      return selectedAttribute.name == const.XTYPE && selectedAttribute.valueSelected
+      return selectedAttribute.name == Const.XTYPE && selectedAttribute.valueSelected
     }
   }
-
 }

@@ -17,20 +17,25 @@ import javax.swing.Icon
  * @author Dmytro Primshyts
  */
 class OSGiPropertyNavigationHandler(
-    val propertyDescriptors: () -> List<OSGiPropertyDescriptor>
+  val propertyDescriptors: () -> List<OSGiPropertyDescriptor>
 ) : GutterIconNavigationHandler<PsiElement> {
 
   override fun navigate(e: MouseEvent, elt: PsiElement?) {
     val propertyDescriptors = propertyDescriptors()
-    PsiElementListNavigator.openTargets(e,
-        propertyDescriptors.map {
-          (it.containingPsiElement ?: it.containingPsiFile) as NavigatablePsiElement
-        }.toTypedArray(),
-        "OSGi Property", null, createListCellRenderer(propertyDescriptors))
+    PsiElementListNavigator.openTargets(
+      e,
+      propertyDescriptors.map {
+        (it.containingPsiElement ?: it.containingPsiFile) as NavigatablePsiElement
+      }.toTypedArray(),
+      "OSGi Property",
+      null,
+      createListCellRenderer(propertyDescriptors)
+    )
   }
 
-  private fun createListCellRenderer(propertyDescriptors: List<OSGiPropertyDescriptor>)
-      : PsiElementListCellRenderer<PsiElement> {
+  private fun createListCellRenderer(
+    propertyDescriptors: List<OSGiPropertyDescriptor>
+  ): PsiElementListCellRenderer<PsiElement> {
     return object : PsiElementListCellRenderer<PsiElement>() {
       override fun getIconFlags(): Int = Iconable.ICON_FLAG_READ_STATUS
 
@@ -52,8 +57,6 @@ class OSGiPropertyNavigationHandler(
           it.containingPsiElement == element || it.containingPsiFile == element
         }?.mods ?: ""
       }
-
     }
   }
-
 }

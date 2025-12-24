@@ -22,5 +22,4 @@ abstract class CompletionBaseLightTest(withUberJar: Boolean = true) : BaseLightT
   override fun getProjectDescriptor(): LightProjectDescriptor {
     return JdkProjectDescriptor()
   }
-
 }

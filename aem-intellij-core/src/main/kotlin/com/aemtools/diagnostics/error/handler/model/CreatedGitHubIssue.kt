@@ -6,6 +6,6 @@ import com.google.gson.annotations.SerializedName
  * @author Kostiantyn Diachenko
  */
 data class CreatedGitHubIssue(
-    @SerializedName("html_url")
-    val htmlUrl: String
+  @SerializedName("html_url")
+  val htmlUrl: String
 )

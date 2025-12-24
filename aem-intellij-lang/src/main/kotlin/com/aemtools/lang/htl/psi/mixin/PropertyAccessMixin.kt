@@ -12,5 +12,4 @@ abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
   override fun getReferences(): Array<PsiReference> {
     return ReferenceProvidersRegistry.getReferencesFromProviders(this)
   }
-
 }

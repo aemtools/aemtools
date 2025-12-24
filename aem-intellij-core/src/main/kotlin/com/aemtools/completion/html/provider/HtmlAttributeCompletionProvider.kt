@@ -1,19 +1,19 @@
 package com.aemtools.completion.html.provider
 
 import com.aemtools.common.completion.lookupElement
-import com.aemtools.common.constant.const
-import com.aemtools.common.constant.const.htl.DATA_SLY_ATTRIBUTE
-import com.aemtools.common.constant.const.htl.DATA_SLY_CALL
-import com.aemtools.common.constant.const.htl.DATA_SLY_ELEMENT
-import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
-import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
-import com.aemtools.common.constant.const.htl.DATA_SLY_RESOURCE
-import com.aemtools.common.constant.const.htl.DATA_SLY_SET
-import com.aemtools.common.constant.const.htl.DATA_SLY_TEMPLATE
-import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
-import com.aemtools.common.constant.const.htl.DATA_SLY_TEXT
-import com.aemtools.common.constant.const.htl.DATA_SLY_UNWRAP
-import com.aemtools.common.constant.const.htl.DATA_SLY_USE
+import com.aemtools.common.constant.Const
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_ATTRIBUTE
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_CALL
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_ELEMENT
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_LIST
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_REPEAT
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_RESOURCE
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_SET
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_TEMPLATE
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_TEST
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_TEXT
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_UNWRAP
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_USE
 import com.aemtools.common.util.findChildrenByType
 import com.aemtools.common.util.findParentByType
 import com.aemtools.completion.html.inserthandler.HtlExpressionInsertHandler
@@ -41,20 +41,22 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
   // Attributes, which need expression after defining
   // (For example: data-sly-include=${})
   private val HTL_ATTRIBUTES_WITH_EXPRESSION = listOf(
-      DATA_SLY_TEST,
-      DATA_SLY_LIST,
-      DATA_SLY_REPEAT,
-      DATA_SLY_TEXT,
-      DATA_SLY_ELEMENT,
-      DATA_SLY_CALL,
-      DATA_SLY_RESOURCE,
-      DATA_SLY_ATTRIBUTE,
-      DATA_SLY_UNWRAP
+    DATA_SLY_TEST,
+    DATA_SLY_LIST,
+    DATA_SLY_REPEAT,
+    DATA_SLY_TEXT,
+    DATA_SLY_ELEMENT,
+    DATA_SLY_CALL,
+    DATA_SLY_RESOURCE,
+    DATA_SLY_ATTRIBUTE,
+    DATA_SLY_UNWRAP
   )
 
-  override fun addCompletions(parameters: CompletionParameters,
-                              context: ProcessingContext,
-                              result: CompletionResultSet) {
+  override fun addCompletions(
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     if (result.isStopped) {
       return
     }
@@ -84,9 +86,9 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
     return vars.filter { !obsoleteAttributes.contains(it.lookupString) }
   }
 
-  private val vars: List<LookupElement> = const.htl.HTL_ATTRIBUTES.map {
+  private val vars: List<LookupElement> = Const.Htl.HTL_ATTRIBUTES.map {
     val result = lookupElement(it)
-        .withTypeText("HTL Attribute")
+      .withTypeText("HTL Attribute")
     when (it) {
       in HTL_ATTRIBUTES_WITH_EXPRESSION -> result.withInsertHandler(HtlExpressionInsertHandler())
 
@@ -106,15 +108,14 @@ object HtmlAttributeCompletionProvider : CompletionProvider<CompletionParameters
    * @return collection of names of attributes
    */
   private fun getUniqueHtlAttributes(tag: XmlTag?): Collection<String> =
-      tag.findChildrenByType(XmlAttribute::class.java)
-          .filter { it.isUniqueHtlAttribute() }
-          .map { it.name }
+    tag.findChildrenByType(XmlAttribute::class.java)
+      .filter { it.isUniqueHtlAttribute() }
+      .map { it.name }
 
   /**
    * Check if current [PsiElement] is unique. Unique attributes are
    *  `data-sly-unwrap`
    *  `data-sly-list`
    */
-  private fun PsiElement.isUniqueHtlAttribute(): Boolean = const.htl.UNIQUE_HTL_ATTRIBUTES.contains(this.text)
-
+  private fun PsiElement.isUniqueHtlAttribute(): Boolean = Const.Htl.UNIQUE_HTL_ATTRIBUTES.contains(this.text)
 }

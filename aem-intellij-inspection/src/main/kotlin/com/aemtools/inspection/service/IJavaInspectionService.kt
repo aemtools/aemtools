@@ -27,9 +27,10 @@ interface IJavaInspectionService {
    * @param constantDescriptors constant descriptors
    */
   fun reportHardcodedConstant(
-      holder: ProblemsHolder,
-      literal: PsiLiteralExpression,
-      constantDescriptors: List<ConstantDescriptor>)
+    holder: ProblemsHolder,
+    literal: PsiLiteralExpression,
+    constantDescriptors: List<ConstantDescriptor>
+  )
 
   /**
    * Check if given [PsiLiteralExpression] is `java.lang.String`.
@@ -39,7 +40,6 @@ interface IJavaInspectionService {
    * *false* otherwise
    */
   fun isJavaLangString(
-      psiLiteralExpression: PsiLiteralExpression
-  ) : Boolean
-
+    psiLiteralExpression: PsiLiteralExpression
+  ): Boolean
 }

@@ -27,6 +27,6 @@ enum class AemVersion(val version: String) {
     fun latest() = V_6_5
 
     private fun isCloudAemSdkApiVersion(version: String) =
-        version.matches(Regex("\\d{4}\\.\\d+\\.\\d+\\.[\\w\\-]+"))
+      version.matches(Regex("\\d{4}\\.\\d+\\.\\d+\\.[\\w\\-]+"))
   }
 }

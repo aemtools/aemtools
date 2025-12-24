@@ -7,10 +7,10 @@ import com.intellij.psi.xml.XmlAttribute
 
 class CqNamespaceImplicitUsageProvider : ImplicitUsageProvider {
   override fun isImplicitUsage(element: PsiElement): Boolean {
-    if (element is XmlAttribute
-        && element.isNamespaceDeclaration
-        && element.parent.isFileWithCqNamespace()) {
-
+    if (element is XmlAttribute &&
+      element.isNamespaceDeclaration &&
+      element.parent.isFileWithCqNamespace()
+    ) {
       return element.localName == "cq"
     }
     return false

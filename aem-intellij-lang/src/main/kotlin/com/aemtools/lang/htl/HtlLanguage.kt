@@ -16,5 +16,4 @@ object HtlLanguage : Language("Htl"), TemplateLanguage {
    * @return default template file type
    */
   fun getDefaultTemplateLang(): LanguageFileType = HtmlFileType.INSTANCE
-
 }

@@ -1,13 +1,13 @@
 package com.aemtools.common.util
 
-import com.aemtools.common.constant.const.java.DS_ATTRIBUTE_DEFINITION_ANNOTATION
-import com.aemtools.common.constant.const.java.DS_COMPONENT_ANNOTATION
-import com.aemtools.common.constant.const.java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION
-import com.aemtools.common.constant.const.java.FELIX_PROPERTY_ANNOTATION
-import com.aemtools.common.constant.const.java.FELIX_SERVICE_ANNOTATION
-import com.aemtools.common.constant.const.java.SLING_FILTER_ANNOTATION
-import com.aemtools.common.constant.const.java.SLING_HEALTH_CHECK_ANNOTATION
-import com.aemtools.common.constant.const.java.SLING_SERVLET_ANNOTATION
+import com.aemtools.common.constant.Const.Java.DS_ATTRIBUTE_DEFINITION_ANNOTATION
+import com.aemtools.common.constant.Const.Java.DS_COMPONENT_ANNOTATION
+import com.aemtools.common.constant.Const.Java.DS_OBJECT_CLASS_DEFINITION_ANNOTATION
+import com.aemtools.common.constant.Const.Java.FELIX_PROPERTY_ANNOTATION
+import com.aemtools.common.constant.Const.Java.FELIX_SERVICE_ANNOTATION
+import com.aemtools.common.constant.Const.Java.SLING_FILTER_ANNOTATION
+import com.aemtools.common.constant.Const.Java.SLING_HEALTH_CHECK_ANNOTATION
+import com.aemtools.common.constant.Const.Java.SLING_SERVLET_ANNOTATION
 import com.intellij.openapi.module.ModuleUtil
 import com.intellij.psi.PsiAnnotation
 import com.intellij.psi.PsiClass
@@ -35,14 +35,13 @@ import java.util.*
  * @return *true* if class is marked with corresponding OSGi annotations, *false* otherwise
  */
 fun PsiClass.isOSGiService(): Boolean {
-
   return annotations().any {
     it.qualifiedName in listOf(
-        FELIX_SERVICE_ANNOTATION,
-        SLING_SERVLET_ANNOTATION,
-        SLING_FILTER_ANNOTATION,
-        SLING_HEALTH_CHECK_ANNOTATION,
-        DS_COMPONENT_ANNOTATION
+      FELIX_SERVICE_ANNOTATION,
+      SLING_SERVLET_ANNOTATION,
+      SLING_FILTER_ANNOTATION,
+      SLING_HEALTH_CHECK_ANNOTATION,
+      DS_COMPONENT_ANNOTATION
     )
   }
 }
@@ -55,9 +54,9 @@ fun PsiClass.isOSGiService(): Boolean {
  * @return _true_ if current field is felix property
  */
 fun PsiField.isFelixProperty(): Boolean =
-    annotations().any {
-      it.qualifiedName == FELIX_PROPERTY_ANNOTATION
-    }
+  annotations().any {
+    it.qualifiedName == FELIX_PROPERTY_ANNOTATION
+  }
 
 /**
  * Check if current [PsiClass] is an OSGi Declarative Service (R6, R7).
@@ -66,9 +65,9 @@ fun PsiField.isFelixProperty(): Boolean =
  * @return *true* if class is marked with corresponding OSGi annotations, *false* otherwise
  */
 fun PsiClass.isDsOSGiConfig(): Boolean =
-    annotations().any {
-      it.qualifiedName == DS_OBJECT_CLASS_DEFINITION_ANNOTATION
-    }
+  annotations().any {
+    it.qualifiedName == DS_OBJECT_CLASS_DEFINITION_ANNOTATION
+  }
 
 /**
  * Check if current method is OSGi DS config metadata property.
@@ -78,10 +77,9 @@ fun PsiClass.isDsOSGiConfig(): Boolean =
  * @return _true_ if current field is Object Class Definition method
  */
 fun PsiMethod.isDsOSGiConfigProperty(): Boolean =
-    annotations().any {
-      it.qualifiedName == DS_ATTRIBUTE_DEFINITION_ANNOTATION
-    }
-
+  annotations().any {
+    it.qualifiedName == DS_ATTRIBUTE_DEFINITION_ANNOTATION
+  }
 
 /**
  * Get list of [PsiAnnotation] objects from current psi modifier list owner.
@@ -90,7 +88,7 @@ fun PsiMethod.isDsOSGiConfigProperty(): Boolean =
  * @return list of annotations
  */
 fun PsiModifierListOwner.annotations(): List<PsiAnnotation> =
-    modifierList?.annotations?.toList() ?: emptyList()
+  modifierList?.annotations?.toList() ?: emptyList()
 
 /**
  * Find all methods which may used from EL
@@ -108,18 +106,18 @@ fun PsiClass.elMethods(): List<PsiMethod> {
     when {
       it.key == this@elMethods.containingClass -> listOf()
       else -> it.value.filter {
-        !it.isConstructor
-            && it.hasModifierProperty(PsiModifier.PUBLIC)
-            && it.parameterList.parameters.isEmpty()
-            && !it.returnType!!.isAssignableFrom(PsiTypes.voidType())
-            && myMethods.find { myMethod -> it.name == myMethod.name } == null
+        !it.isConstructor &&
+          it.hasModifierProperty(PsiModifier.PUBLIC) &&
+          it.parameterList.parameters.isEmpty() &&
+          !it.returnType!!.isAssignableFrom(PsiTypes.voidType()) &&
+          myMethods.find { myMethod -> it.name == myMethod.name } == null
       }
     }
   } + myMethods.filter {
-    !it.isConstructor
-        && it.hasModifierProperty(PsiModifier.PUBLIC)
-        && it.parameterList.parameters.isEmpty()
-        && !it.returnType!!.isAssignableFrom(PsiTypes.voidType())
+    !it.isConstructor &&
+      it.hasModifierProperty(PsiModifier.PUBLIC) &&
+      it.parameterList.parameters.isEmpty() &&
+      !it.returnType!!.isAssignableFrom(PsiTypes.voidType())
   }
 }
 
@@ -129,10 +127,10 @@ fun PsiClass.elMethods(): List<PsiMethod> {
  * The suitable fields should be public
  */
 fun PsiClass.elFields(): List<PsiField> = this.allFields
-    .filter {
-      it.hasModifierProperty(PsiModifier.PUBLIC)
-          && !it.hasModifierProperty(PsiModifier.STATIC)
-    }
+  .filter {
+    it.hasModifierProperty(PsiModifier.PUBLIC) &&
+      !it.hasModifierProperty(PsiModifier.STATIC)
+  }
 
 /**
  * Find all Htl EL compatible members.
@@ -204,6 +202,7 @@ fun PsiLiteralExpression.isJavaLangString(): Boolean {
   val myModule = ModuleUtil.findModuleForPsiElement(this) ?: return false
 
   return type == PsiType.getJavaLangString(
-      psiManager,
-      GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(myModule))
+    psiManager,
+    GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(myModule)
+  )
 }

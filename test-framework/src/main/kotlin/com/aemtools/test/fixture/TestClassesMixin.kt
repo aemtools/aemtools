@@ -7,7 +7,8 @@ import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
  */
 interface TestClassesMixin {
   fun JavaCodeInsightTestFixture.addClasses() {
-    addClass("""
+    addClass(
+      """
       package com.aemtools.completion.htl.fixtures.classes;
 
       import com.aemtools.completion.htl.fixtures.classes.*;
@@ -104,8 +105,10 @@ interface TestClassesMixin {
           return booleanField;
       }
       }
-    """)
-    addClass("""
+    """
+    )
+    addClass(
+      """
       package com.aemtools.completion.htl.fixtures.classes;
 
       import io.sightly.java.api.Use;
@@ -121,8 +124,10 @@ interface TestClassesMixin {
           public String publicStringField;
 
       }
-    """)
-    addClass("""
+    """
+    )
+    addClass(
+      """
       package com.aemtools.completion.htl.fixtures.classes;
 
       import com.adobe.cq.sightly.WCMUse;
@@ -138,9 +143,11 @@ interface TestClassesMixin {
         public String publicStringField;
 
       }
-    """)
+    """
+    )
 
-    addClass("""
+    addClass(
+      """
       package com.aemtools.completion.htl.fixtures.classes;
 
       import org.apache.sling.models.annotations.Model;
@@ -173,9 +180,11 @@ interface TestClassesMixin {
         }
 
       }
-    """)
+    """
+    )
 
-    addClass("""
+    addClass(
+      """
       package com.aemtools.completion.htl.fixtures.classes;
 
       public class MapModel {
@@ -193,9 +202,11 @@ interface TestClassesMixin {
         }
 
       }
-    """)
+    """
+    )
 
-    addClass("""
+    addClass(
+      """
       package com.aemtools.completion.htl.fixtures.classes;
 
       public class MyModel {
@@ -213,9 +224,11 @@ interface TestClassesMixin {
           }
 
       }
-    """)
+    """
+    )
 
-    addClass("""
+    addClass(
+      """
       package com.aemtools.completion.htl.fixtures.classes;
 
       import org.apache.sling.models.annotations.Model;
@@ -232,9 +245,11 @@ interface TestClassesMixin {
             return null;
         }
       }
-    """)
+    """
+    )
 
-    addClass("""
+    addClass(
+      """
       package com.aemtools.completion.htl.fixtures.classes;
 
       import com.aemtools.completion.htl.fixtures.classes.MyModel;
@@ -248,6 +263,7 @@ interface TestClassesMixin {
        */
       public class WrappedMapClass extends Map<MyModel, MapModel> {
       }
-    """)
+    """
+    )
   }
 }

@@ -1,12 +1,12 @@
 package com.aemtools.index.model
 
 import com.aemtools.common.completion.lookupElement
-import com.aemtools.common.constant.const.JCR_DESCRIPTION
-import com.aemtools.common.constant.const.JCR_TITLE
-import com.aemtools.common.constant.const.SLING_RESOURCE_SUPER_TYPE
-import com.aemtools.common.constant.const.aem_component_declaration.COMPONENT_GROUP
-import com.aemtools.common.constant.const.aem_component_declaration.CQ_ICON
-import com.aemtools.common.constant.const.aem_component_declaration.IS_CONTAINER
+import com.aemtools.common.constant.Const.AemComponentDeclaration.COMPONENT_GROUP
+import com.aemtools.common.constant.Const.AemComponentDeclaration.CQ_ICON
+import com.aemtools.common.constant.Const.AemComponentDeclaration.IS_CONTAINER
+import com.aemtools.common.constant.Const.JCR_DESCRIPTION
+import com.aemtools.common.constant.Const.JCR_TITLE
+import com.aemtools.common.constant.Const.SLING_RESOURCE_SUPER_TYPE
 import com.aemtools.common.util.normalizeToJcrRoot
 import com.aemtools.common.util.toStringBuilder
 import com.aemtools.lang.htl.icons.HtlIcons
@@ -23,42 +23,42 @@ import java.io.Serializable
  */
 data class AemComponentDefinition(
 
-    /**
-     * Represents the `jcr:title` attribute.
-     */
-    val title: String?,
+  /**
+   * Represents the `jcr:title` attribute.
+   */
+  val title: String?,
 
-    /**
-     * Represents the `jcr:description` attribute.
-     */
-    val description: String?,
+  /**
+   * Represents the `jcr:description` attribute.
+   */
+  val description: String?,
 
-    /**
-     * Full path of current component on file system.
-     */
-    val fullPath: String,
+  /**
+   * Full path of current component on file system.
+   */
+  val fullPath: String,
 
-    /**
-     * Represents the `sling:resourceSuperType` attribute.
-     */
-    val resourceSuperType: String?,
+  /**
+   * Represents the `sling:resourceSuperType` attribute.
+   */
+  val resourceSuperType: String?,
 
-    /**
-     * Represents the `componentGroup` attribute.
-     */
-    val componentGroup: String?,
+  /**
+   * Represents the `componentGroup` attribute.
+   */
+  val componentGroup: String?,
 
-    /**
-     * Represents the `cq:isContainer` attribute.
-     *
-     * Default: *false*
-     */
-    val isContainer: Boolean = false,
+  /**
+   * Represents the `cq:isContainer` attribute.
+   *
+   * Default: *false*
+   */
+  val isContainer: Boolean = false,
 
-    /**
-     * Represents the `cq:icon` attribute.
-     */
-    val cqIcon: String? = null
+  /**
+   * Represents the `cq:icon` attribute.
+   */
+  val cqIcon: String? = null
 
 ) : Serializable {
 
@@ -78,8 +78,8 @@ data class AemComponentDefinition(
    * @return component's name
    */
   fun componentName(): String = fullPath
-      .substringBeforeLast("/")
-      .substringAfterLast("/")
+    .substringBeforeLast("/")
+    .substringAfterLast("/")
 
   companion object {
 
@@ -97,19 +97,19 @@ data class AemComponentDefinition(
      */
     fun fromTag(tag: XmlTag, fullPath: String): AemComponentDefinition? {
       val title = tag.getAttributeValue(JCR_TITLE)
-          ?: return null
+        ?: return null
       val group = tag.getAttributeValue(COMPONENT_GROUP)
-          ?: return null
+        ?: return null
       return AemComponentDefinition(
-          title = title,
-          description = tag.getAttributeValue(JCR_DESCRIPTION),
-          fullPath = fullPath,
-          resourceSuperType = tag.getAttributeValue(SLING_RESOURCE_SUPER_TYPE),
-          componentGroup = group,
-          isContainer = BooleanUtils.toBoolean(
-              tag.getAttributeValue(IS_CONTAINER)
-          ),
-          cqIcon = tag.getAttributeValue(CQ_ICON)
+        title = title,
+        description = tag.getAttributeValue(JCR_DESCRIPTION),
+        fullPath = fullPath,
+        resourceSuperType = tag.getAttributeValue(SLING_RESOURCE_SUPER_TYPE),
+        componentGroup = group,
+        isContainer = BooleanUtils.toBoolean(
+          tag.getAttributeValue(IS_CONTAINER)
+        ),
+        cqIcon = tag.getAttributeValue(CQ_ICON)
       )
     }
 
@@ -120,17 +120,17 @@ data class AemComponentDefinition(
      * @return lookup element
      */
     fun AemComponentDefinition.toLookupElement(): LookupElement =
-        lookupElement(resourceType())
-            .withTypeText("AEM Component")
-            .withPresentableText(title ?: componentName())
-            .withIcon(HtlIcons.AEM_COMPONENT)
-            .let {
-              if (title != null) {
-                it.withTailText("(${componentName()})", true)
-              } else {
-                it
-              }
-            }
+      lookupElement(resourceType())
+        .withTypeText("AEM Component")
+        .withPresentableText(title ?: componentName())
+        .withIcon(HtlIcons.AEM_COMPONENT)
+        .let {
+          if (title != null) {
+            it.withTailText("(${componentName()})", true)
+          } else {
+            it
+          }
+        }
 
     /**
      * Create IDEA doc compliable string from current [AemComponentDefinition].
@@ -152,7 +152,5 @@ data class AemComponentDefinition(
       }
       return result.toString()
     }
-
   }
-
 }

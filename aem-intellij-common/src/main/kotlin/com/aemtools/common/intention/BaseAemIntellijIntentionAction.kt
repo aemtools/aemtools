@@ -19,20 +19,19 @@ import com.intellij.psi.PsiFile
  * @author Dmytro Primshyts
  */
 abstract class BaseAemIntellijIntentionAction(
-    private val text: () -> String,
-    private val family: String,
-    private val startInWriteAction: Boolean = true,
-    private val isAvailable: (project: Project, editor: Editor?, file: PsiFile?) -> Boolean = { _, _, _ -> true }
+  private val text: () -> String,
+  private val family: String,
+  private val startInWriteAction: Boolean = true,
+  private val isAvailable: (project: Project, editor: Editor?, file: PsiFile?) -> Boolean = { _, _, _ -> true }
 ) : IntentionAction, LocalQuickFix {
 
-  override fun applyFix(project: Project, descriptor: ProblemDescriptor)
-      = invoke(project, null, null)
+  override fun applyFix(project: Project, descriptor: ProblemDescriptor) =
+    invoke(project, null, null)
 
   override fun getFamilyName(): String = family
   override fun startInWriteAction(): Boolean = startInWriteAction
 
   override fun getText(): String = text.invoke()
-  override fun isAvailable(project: Project, editor: Editor?, file: PsiFile?): Boolean
-      = isAvailable.invoke(project, editor, file)
-
+  override fun isAvailable(project: Project, editor: Editor?, file: PsiFile?): Boolean =
+    isAvailable.invoke(project, editor, file)
 }

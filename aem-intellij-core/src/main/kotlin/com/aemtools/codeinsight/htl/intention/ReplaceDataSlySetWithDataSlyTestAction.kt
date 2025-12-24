@@ -1,7 +1,7 @@
 package com.aemtools.codeinsight.htl.intention
 
-import com.aemtools.common.constant.const.htl.DATA_SLY_SET
-import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_SET
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_TEST
 import com.aemtools.common.intention.BaseHtlIntentionAction
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
@@ -13,9 +13,9 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Kostiantyn Diachenko
  */
 class ReplaceDataSlySetWithDataSlyTestAction(
-    private val pointer: SmartPsiElementPointer<XmlAttribute>,
+  private val pointer: SmartPsiElementPointer<XmlAttribute>,
 ) : BaseHtlIntentionAction(
-    text = { "Replace with data-sly-test" }
+  text = { "Replace with data-sly-test" }
 ) {
   override fun invoke(project: Project, editor: Editor?, file: PsiFile?) {
     val attribute = pointer.element ?: return

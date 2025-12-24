@@ -8,8 +8,8 @@ package com.aemtools.index.model.dialog.parameter
  * @author Dmytro Primshyts
  */
 data class TouchUIDialogParameterDeclaration(
-    val slingResourceType: String,
-    override val name: String
+  val slingResourceType: String,
+  override val name: String
 ) : BaseParameterDeclaration() {
 
   companion object {
@@ -19,5 +19,4 @@ data class TouchUIDialogParameterDeclaration(
 
   override val tailText: String
     get() = slingResourceType
-
 }

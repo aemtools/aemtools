@@ -12,14 +12,16 @@ import com.intellij.util.ProcessingContext
  */
 object JcrTypeCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(
-      parameters: CompletionParameters,
-      context: ProcessingContext,
-      result: CompletionResultSet) {
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     if (result.isStopped) {
       return
     }
 
-    result.addAllElements(listOf(
+    result.addAllElements(
+      listOf(
         "String",
         "Binary",
         "Long",
@@ -32,10 +34,10 @@ object JcrTypeCompletionProvider : CompletionProvider<CompletionParameters>() {
         "Reference",
         "WeakReference",
         "URI"
-    ).map {
-      lookupElement(it)
+      ).map {
+        lookupElement(it)
           .withInsertHandler(JcrPropertyTypeCloseBraceInsertHandler())
-    })
+      }
+    )
   }
-
 }

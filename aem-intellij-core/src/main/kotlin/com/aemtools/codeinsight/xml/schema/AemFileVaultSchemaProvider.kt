@@ -1,10 +1,10 @@
 package com.aemtools.codeinsight.xml.schema
 
 import com.aemtools.codeinsight.xml.ns.AemNamespaces
-import com.aemtools.common.constant.const.file_names.CQ_DIALOG_XML
-import com.aemtools.common.constant.const.file_names.CQ_EDITCONFIG_XML
-import com.aemtools.common.constant.const.file_names.DIALOG_XML
-import com.aemtools.common.constant.const.file_names.FILE_VAULT_FILE_NAME
+import com.aemtools.common.constant.Const.FileNames.CQ_DIALOG_XML
+import com.aemtools.common.constant.Const.FileNames.CQ_EDITCONFIG_XML
+import com.aemtools.common.constant.Const.FileNames.DIALOG_XML
+import com.aemtools.common.constant.Const.FileNames.FILE_VAULT_FILE_NAME
 import com.intellij.openapi.module.Module
 import com.intellij.psi.PsiFile
 import com.intellij.psi.xml.XmlFile

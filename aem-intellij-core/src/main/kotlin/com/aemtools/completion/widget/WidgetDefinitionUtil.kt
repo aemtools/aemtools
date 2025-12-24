@@ -27,6 +27,4 @@ object WidgetDefinitionUtil {
     val attributes = tag.attributes
     return PsiWidgetDefinition.create(attributes, selectedElement)
   }
-
 }
-

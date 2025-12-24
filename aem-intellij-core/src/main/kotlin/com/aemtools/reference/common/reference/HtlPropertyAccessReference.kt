@@ -15,11 +15,11 @@ import java.util.*
  * @author Dmytro Primshyts
  */
 class HtlPropertyAccessReference(
-    val propertyAccess: PropertyAccessMixin,
-    val callChainElement: CallChainElement,
-    textRange: TextRange,
-    val referencedElement: PsiElement,
-    soft: Boolean = true
+  val propertyAccess: PropertyAccessMixin,
+  val callChainElement: CallChainElement,
+  textRange: TextRange,
+  val referencedElement: PsiElement,
+  soft: Boolean = true
 ) : PsiReferenceBase<PropertyAccessMixin>(propertyAccess, textRange, soft) {
 
   override fun resolve(): PsiElement = referencedElement
@@ -33,7 +33,7 @@ class HtlPropertyAccessReference(
   override fun getValue(): String {
     return if (referencedElement.text.startsWith("get")) {
       referencedElement.text.substringAfter("get")
-              .replaceFirstChar { it.lowercase(Locale.getDefault()) }
+        .replaceFirstChar { it.lowercase(Locale.getDefault()) }
     } else {
       referencedElement.text
     }
@@ -41,7 +41,7 @@ class HtlPropertyAccessReference(
 
   override fun handleElementRename(newElementName: String): PsiElement {
     val actualElement = callChainElement.element as? com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
-        ?: return propertyAccess
+      ?: return propertyAccess
 
     val typeDescriptor = callChainElement.type
 
@@ -50,9 +50,11 @@ class HtlPropertyAccessReference(
     return propertyAccess
   }
 
-  private fun preprocessName(newName: String,
-                             actualElement: com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin,
-                             typeDescriptor: TypeDescriptor): String {
+  private fun preprocessName(
+    newName: String,
+    actualElement: com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin,
+    typeDescriptor: TypeDescriptor
+  ): String {
     if (typeDescriptor is JavaPsiClassTypeDescriptor) {
       val psiMember = typeDescriptor.psiMember
       if (psiMember is PsiMethod) {
@@ -71,14 +73,13 @@ class HtlPropertyAccessReference(
   }
 
   private fun persistNameConventionForMethod(oldName: String, newName: String): String =
-      when {
-        oldName.startsWith("is") && newName.startsWith("is") -> newName
-        oldName.startsWith("get") && newName.startsWith("get") -> newName
-        newName.startsWith("is") ->
-          newName.substringAfter("is").replaceFirstChar { it.lowercase(Locale.getDefault()) }
-        newName.startsWith("get") ->
-          newName.substringAfter("get").replaceFirstChar { it.lowercase(Locale.getDefault()) }
-        else -> newName
-      }
-
+    when {
+      oldName.startsWith("is") && newName.startsWith("is") -> newName
+      oldName.startsWith("get") && newName.startsWith("get") -> newName
+      newName.startsWith("is") ->
+        newName.substringAfter("is").replaceFirstChar { it.lowercase(Locale.getDefault()) }
+      newName.startsWith("get") ->
+        newName.substringAfter("get").replaceFirstChar { it.lowercase(Locale.getDefault()) }
+      else -> newName
+    }
 }

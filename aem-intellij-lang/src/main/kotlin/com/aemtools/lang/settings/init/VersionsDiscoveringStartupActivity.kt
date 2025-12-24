@@ -29,9 +29,10 @@ import com.intellij.psi.xml.XmlTag
 class VersionsDiscoveringStartupActivity : ProjectActivity {
   override suspend fun execute(project: Project) {
     val application = ApplicationManagerEx.getApplicationEx()
-    if (application == null
-        || application.isUnitTestMode
-        || application.isHeadlessEnvironment) {
+    if (application == null ||
+      application.isUnitTestMode ||
+      application.isHeadlessEnvironment
+    ) {
       return
     }
 
@@ -64,11 +65,11 @@ class VersionsDiscoveringStartupActivity : ProjectActivity {
   }
 
   private fun getAemVersionOrDefault(version: String?, defaultAemVersion: AemVersion) =
-      if (version != null) {
-        AemVersion.fromFullVersion(version) ?: defaultAemVersion
-      } else {
-        defaultAemVersion
-      }
+    if (version != null) {
+      AemVersion.fromFullVersion(version) ?: defaultAemVersion
+    } else {
+      defaultAemVersion
+    }
 
   private fun saveDiscoveredVersions(aemVersion: AemVersion, aemProjectSettings: AemProjectSettings) {
     val newState = AemProjectSettings()
@@ -83,25 +84,25 @@ class VersionsDiscoveringStartupActivity : ProjectActivity {
   }
 
   private fun XmlTag.isUberJarDependency(): Boolean =
-      this.parentTag?.name == "dependency"
-          && this.name == "artifactId"
-          && this.value.text == "uber-jar"
+    this.parentTag?.name == "dependency" &&
+      this.name == "artifactId" &&
+      this.value.text == "uber-jar"
 
   private fun XmlTag.isAemSdkApiDependency(): Boolean =
-      this.parentTag?.name == "dependency"
-          && this.name == "artifactId"
-          && this.value.text == "aem-sdk-api"
+    this.parentTag?.name == "dependency" &&
+      this.name == "artifactId" &&
+      this.value.text == "aem-sdk-api"
 
   fun createNotification(aemProjectSettings: AemProjectSettings, project: Project): Notification {
     val content = """
         Discovered versions:
         <strong>AEM version</strong>: ${aemProjectSettings.aemVersion.version}
         <strong>HTL version</strong>: ${aemProjectSettings.htlVersion.version}<br>
-      """.trimIndent()
+    """.trimIndent()
     return NotificationGroupManager.getInstance()
-        .getNotificationGroup("Project Settings")
-        .createNotification("AEM Tools plugin configuration", content, NotificationType.INFORMATION)
-        .addAction(setVersionsManuallyNotificationAction(project))
+      .getNotificationGroup("Project Settings")
+      .createNotification("AEM Tools plugin configuration", content, NotificationType.INFORMATION)
+      .addAction(setVersionsManuallyNotificationAction(project))
   }
 
   private fun notifyAboutDiscoveredVersions(aemProjectSettings: AemProjectSettings, project: Project) {

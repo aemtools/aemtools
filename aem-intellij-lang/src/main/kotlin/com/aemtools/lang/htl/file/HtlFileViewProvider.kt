@@ -23,17 +23,18 @@ import java.util.concurrent.ConcurrentMap
  * @author Dmytro Primshyts
  */
 class HtlFileViewProvider @JvmOverloads constructor(
-    manager: PsiManager,
-    virtualFile: VirtualFile,
-    physical: Boolean,
-    val myBaseLanguage: Language,
-    val myTemplateLanguage: Language = getTemplateDataLanguage(manager, virtualFile))
-  : MultiplePsiFilesPerDocumentFileViewProvider(manager, virtualFile, physical),
-    ConfigurableTemplateLanguageFileViewProvider {
+  manager: PsiManager,
+  virtualFile: VirtualFile,
+  physical: Boolean,
+  val myBaseLanguage: Language,
+  val myTemplateLanguage: Language = getTemplateDataLanguage(manager, virtualFile)
+) :
+  MultiplePsiFilesPerDocumentFileViewProvider(manager, virtualFile, physical),
+  ConfigurableTemplateLanguageFileViewProvider {
 
   companion object {
-    private val TEMPLATE_DATA_TO_LANG: ConcurrentMap<String, TemplateDataElementType>
-        = ConcurrentHashMap()
+    private val TEMPLATE_DATA_TO_LANG: ConcurrentMap<String, TemplateDataElementType> =
+      ConcurrentHashMap()
 
     private fun getTemplateDataElementType(lang: Language): TemplateDataElementType {
       var result = TEMPLATE_DATA_TO_LANG.get(lang.id)
@@ -43,7 +44,9 @@ class HtlFileViewProvider @JvmOverloads constructor(
       }
 
       val created = TemplateDataElementType(
-        "SIGHTLY_DATA_TEMPLATE", lang, OUTER_LANGUAGE,
+        "SIGHTLY_DATA_TEMPLATE",
+        lang,
+        OUTER_LANGUAGE,
         OuterLanguageElementType(HEL.toString(), HEL.language)
       )
 
@@ -82,12 +85,12 @@ class HtlFileViewProvider @JvmOverloads constructor(
   }
 
   private fun getDefinition(lang: Language): ParserDefinition? {
-    return if (lang.isKindOf(myBaseLanguage))
+    return if (lang.isKindOf(myBaseLanguage)) {
       LanguageParserDefinitions.INSTANCE.forLanguage(if (lang.`is`(baseLanguage)) lang else baseLanguage)
-    else
+    } else {
       LanguageParserDefinitions.INSTANCE.forLanguage(lang)
+    }
   }
-
 }
 
 /**
@@ -99,7 +102,6 @@ class HtlFileViewProvider @JvmOverloads constructor(
  * @return the template language
  */
 fun getTemplateDataLanguage(manager: PsiManager, virtualFile: VirtualFile): Language {
-
   val mappings = TemplateDataLanguageMappings.getInstance(manager.project)
   var dataLang: Language? = null
 
@@ -112,12 +114,11 @@ fun getTemplateDataLanguage(manager: PsiManager, virtualFile: VirtualFile): Lang
   }
 
   val substituteLanguage = LanguageSubstitutors.getInstance()
-          .substituteLanguage(dataLang, virtualFile, manager.project)
+    .substituteLanguage(dataLang, virtualFile, manager.project)
 
   if (TemplateDataLanguageMappings.getTemplateableLanguages().contains(substituteLanguage)) {
     dataLang = substituteLanguage
   }
 
   return dataLang
-
 }

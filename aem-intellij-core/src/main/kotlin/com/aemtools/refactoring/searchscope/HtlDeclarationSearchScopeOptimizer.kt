@@ -1,11 +1,11 @@
 package com.aemtools.refactoring.searchscope
 
-import com.aemtools.common.constant.const.htl.DATA_SLY_LIST
-import com.aemtools.common.constant.const.htl.DATA_SLY_REPEAT
-import com.aemtools.common.constant.const.htl.DATA_SLY_SET
-import com.aemtools.common.constant.const.htl.DATA_SLY_TEST
-import com.aemtools.common.constant.const.htl.DATA_SLY_UNWRAP
-import com.aemtools.common.constant.const.htl.DATA_SLY_USE
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_LIST
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_REPEAT
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_SET
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_TEST
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_UNWRAP
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_USE
 import com.aemtools.lang.util.getHtlFile
 import com.aemtools.lang.util.htlAttributeName
 import com.intellij.psi.PsiElement
@@ -20,25 +20,27 @@ class HtlDeclarationSearchScopeOptimizer : ScopeOptimizer {
 
   companion object {
     val FILE_SCOPE_DECLARATION: List<String> = listOf(
-        DATA_SLY_USE,
-        DATA_SLY_SET,
-        DATA_SLY_UNWRAP,
-        DATA_SLY_TEST,
-        DATA_SLY_LIST,
-        DATA_SLY_REPEAT
+      DATA_SLY_USE,
+      DATA_SLY_SET,
+      DATA_SLY_UNWRAP,
+      DATA_SLY_TEST,
+      DATA_SLY_LIST,
+      DATA_SLY_REPEAT
     )
   }
 
   override fun getRestrictedUseScope(element: PsiElement): GlobalSearchScope? {
-    if (element is XmlAttribute
-        && element.htlAttributeName() in FILE_SCOPE_DECLARATION) {
+    if (element is XmlAttribute &&
+      element.htlAttributeName() in FILE_SCOPE_DECLARATION
+    ) {
       val originalFile = element.containingFile
       val htlFile = originalFile.getHtlFile()
-          ?: return null
+        ?: return null
 
       return GlobalSearchScope.filesScope(
-          element.project,
-          mutableListOf(originalFile.virtualFile, htlFile.virtualFile))
+        element.project,
+        mutableListOf(originalFile.virtualFile, htlFile.virtualFile)
+      )
     }
     return null
   }

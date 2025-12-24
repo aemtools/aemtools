@@ -15,5 +15,4 @@ object HtlFilePattern : PatternCondition<PsiFile?>("HTL File") {
   override fun accepts(psiFile: PsiFile, context: ProcessingContext?): Boolean {
     return psiFile.isHtlFile()
   }
-
 }

@@ -11,17 +11,15 @@ import com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin
 fun HtlStringLiteralMixin.toSingleQuoted(): String {
   return if (this.isDoubleQuoted()) {
     text
-        // "input ' \" " -> 'input \' " '
-        // escape singlequotes inside the literal
-        .replace("\\'", "'")
-        .replace("'", "\\'")
-
-        // unescape doublequotes inside the literal
-        .replace("\\\"", "\"")
-
-        // swap quotes
-        .replaceFirst("\"", "'")
-        .replaceLast("\"", "'")
+      // "input ' \" " -> 'input \' " '
+      // escape singlequotes inside the literal
+      .replace("\\'", "'")
+      .replace("'", "\\'")
+      // unescape doublequotes inside the literal
+      .replace("\\\"", "\"")
+      // swap quotes
+      .replaceFirst("\"", "'")
+      .replaceLast("\"", "'")
   } else {
     text
   }
@@ -36,17 +34,15 @@ fun HtlStringLiteralMixin.toSingleQuoted(): String {
 fun HtlStringLiteralMixin.toDoubleQuoted(): String {
   return if (!this.isDoubleQuoted()) {
     text
-        // 'input " \' ' -> "input \" ' "
-        // escape doublequotes inside the literal
-        .replace("\\\"", "\"")
-        .replace("\"", "\\\"")
-
-        // unescape singlequotes inside the literal
-        .replace("\\'", "'")
-
-        // swap quotes
-        .replaceFirst("'", "\"")
-        .replaceLast("'", "\"")
+      // 'input " \' ' -> "input \" ' "
+      // escape doublequotes inside the literal
+      .replace("\\\"", "\"")
+      .replace("\"", "\\\"")
+      // unescape singlequotes inside the literal
+      .replace("\\'", "'")
+      // swap quotes
+      .replaceFirst("'", "\"")
+      .replaceLast("'", "\"")
   } else {
     text
   }
@@ -78,6 +74,6 @@ fun HtlStringLiteralMixin.isDoubleQuoted(): Boolean {
 }
 
 private fun String.replaceLast(oldValue: String, newValue: String, ignoreCase: Boolean = false): String =
-    reversed()
-        .replaceFirst(oldValue, newValue, ignoreCase)
-        .reversed()
+  reversed()
+    .replaceFirst(oldValue, newValue, ignoreCase)
+    .reversed()

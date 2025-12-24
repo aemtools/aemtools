@@ -12,14 +12,15 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Dmytro Primshyts
  */
 class RemoveRedundantDataSlyUnwrapAction(
-    val pointer: SmartPsiElementPointer<XmlAttribute>) : BaseHtlIntentionAction(
-    { "Remove attribute." }
+  val pointer: SmartPsiElementPointer<XmlAttribute>
+) : BaseHtlIntentionAction(
+  { "Remove attribute." }
 ) {
   override fun invoke(project: Project, editor: Editor, file: PsiFile) {
     val element = pointer.element ?: return
     val psiDocumentManager = PsiDocumentManager.getInstance(project)
     val document = psiDocumentManager.getDocument(file)
-        ?: return
+      ?: return
 
     val (start, end) = element.textRange.startOffset to element.textRange.endOffset
     document.replaceString(start, end, "")

@@ -8,11 +8,10 @@ import com.intellij.psi.FileViewProvider
 /**
  * @author Dmytro Primshyts
  */
-class JpPsiFile(fileViewProvider: FileViewProvider)
-  : PsiFileBase(fileViewProvider, JcrPropertyLanguage) {
+class JpPsiFile(fileViewProvider: FileViewProvider) :
+  PsiFileBase(fileViewProvider, JcrPropertyLanguage) {
 
   override fun getFileType(): FileType = JpFileType
 
   override fun toString() = "JpFile:$name"
-
 }

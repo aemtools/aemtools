@@ -18,24 +18,25 @@ import java.io.Serializable
  * @author Dmytro Primshyts
  */
 data class TemplateDefinition(
-    /**
-     * Full name
-     */
-    var fullName: String?,
-    /**
-     * The name of the template
-     */
-    val name: String,
-    /**
-     * List of parameters declared in template.
-     * e.g.
-     *
-     * ```
-     * <div data-sly-template.template="${@ param1, param2}> -> [param1, param2]
-     * ```
-     *
-     */
-    val parameters: List<String>) : Serializable {
+  /**
+   * Full name
+   */
+  var fullName: String?,
+  /**
+   * The name of the template
+   */
+  val name: String,
+  /**
+   * List of parameters declared in template.
+   * e.g.
+   *
+   * ```
+   * <div data-sly-template.template="${@ param1, param2}> -> [param1, param2]
+   * ```
+   *
+   */
+  val parameters: List<String>
+) : Serializable {
 
   /**
    * Get [XmlAttribute] in which current template was declared.
@@ -45,8 +46,8 @@ data class TemplateDefinition(
    */
   fun declarationElement(project: Project): XmlAttribute? {
     val file = OpenApiUtil.findFileByRelativePath(normalizedPath, project)
-        ?.toPsiFile(project) as? com.aemtools.lang.htl.psi.HtlPsiFile
-        ?: return null
+      ?.toPsiFile(project) as? com.aemtools.lang.htl.psi.HtlPsiFile
+      ?: return null
     val htmlFile = file.getHtmlFile() ?: return null
     return htmlFile.findChildrenByType(XmlAttribute::class.java).find {
       it.htlVariableName() == name
@@ -62,21 +63,21 @@ data class TemplateDefinition(
    */
   fun parameterDeclarationElement(project: Project, parameter: String): HtlVariableName? {
     val declarationElement = declarationElement(project)
-        ?: return null
+      ?: return null
 
     val hel = declarationElement.extractHtlHel() as? com.aemtools.lang.htl.psi.mixin.HtlElExpressionMixin
 
     return hel?.getOptions()
-        ?.find {
-          it.name() == parameter
-        }
-        ?.contextExpression?.variableName
+      ?.find {
+        it.name() == parameter
+      }
+      ?.contextExpression?.variableName
   }
 
   val containingDirectory: String
     get() {
       val _fullName = fullName
-          ?: return ""
+        ?: return ""
       return _fullName.substring(0, _fullName.lastIndexOf("/"))
     }
 
@@ -106,5 +107,4 @@ data class TemplateDefinition(
     @JvmStatic
     val serialVersionUID: Long = 1L
   }
-
 }

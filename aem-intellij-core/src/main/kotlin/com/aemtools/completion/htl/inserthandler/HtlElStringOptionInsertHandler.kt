@@ -5,5 +5,5 @@ import com.aemtools.completion.html.inserthandler.HtlTextInsertHandler
 /**
  * @author Dmytro Primshyts
  */
-class HtlElStringOptionInsertHandler
-  : HtlTextInsertHandler("=''", offset = 2)
+class HtlElStringOptionInsertHandler :
+  HtlTextInsertHandler("=''", offset = 2)

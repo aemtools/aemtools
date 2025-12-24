@@ -17,21 +17,21 @@ import com.intellij.xml.index.XmlIndex
  */
 class AemComponentTouchUIDialogIndex : XmlIndex<AemComponentTouchUIDialogDefinition>() {
   companion object {
-    val AEM_COMPONENT_TOUCH_UI_DIALOG_INDEX: ID<String, AemComponentTouchUIDialogDefinition>
-        = ID.create("AemComponentTouchUIDialogIndex")
+    val AEM_COMPONENT_TOUCH_UI_DIALOG_INDEX: ID<String, AemComponentTouchUIDialogDefinition> =
+      ID.create("AemComponentTouchUIDialogIndex")
   }
 
-  override fun getValueExternalizer(): DataExternalizer<AemComponentTouchUIDialogDefinition>
-      = AemComponentTouchUIDialogDefinitionExternalizer
+  override fun getValueExternalizer(): DataExternalizer<AemComponentTouchUIDialogDefinition> =
+    AemComponentTouchUIDialogDefinitionExternalizer
 
-  override fun getName(): ID<String, AemComponentTouchUIDialogDefinition>
-      = AEM_COMPONENT_TOUCH_UI_DIALOG_INDEX
+  override fun getName(): ID<String, AemComponentTouchUIDialogDefinition> =
+    AEM_COMPONENT_TOUCH_UI_DIALOG_INDEX
 
-  override fun getIndexer(): DataIndexer<String, AemComponentTouchUIDialogDefinition, FileContent>
-      = AemComponentTouchUIDialogIndexer
+  override fun getIndexer(): DataIndexer<String, AemComponentTouchUIDialogDefinition, FileContent> =
+    AemComponentTouchUIDialogIndexer
 
-  override fun getInputFilter(): FileBasedIndex.InputFilter
-      = FileBasedIndex.InputFilter {
-    it.path.endsWith("_cq_dialog/.content.xml") || it.path.endsWith("_cq_dialog.xml")
-  }
+  override fun getInputFilter(): FileBasedIndex.InputFilter =
+    FileBasedIndex.InputFilter {
+      it.path.endsWith("_cq_dialog/.content.xml") || it.path.endsWith("_cq_dialog.xml")
+    }
 }

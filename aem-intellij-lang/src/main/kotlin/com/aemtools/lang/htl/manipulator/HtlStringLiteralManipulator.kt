@@ -2,7 +2,6 @@ package com.aemtools.lang.htl.manipulator
 
 import com.aemtools.lang.htl.psi.HtlElementFactory
 import com.aemtools.lang.htl.psi.HtlStringLiteral
-import com.aemtools.lang.htl.psi.HtlTypes.STRING_CONTENT
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.AbstractElementManipulator
 
@@ -13,14 +12,16 @@ import com.intellij.psi.AbstractElementManipulator
  */
 class HtlStringLiteralManipulator : AbstractElementManipulator<HtlStringLiteral>() {
   override fun handleContentChange(
-      element: HtlStringLiteral,
-      range: TextRange,
-      newContent: String): HtlStringLiteral {
+    element: HtlStringLiteral,
+    range: TextRange,
+    newContent: String
+  ): HtlStringLiteral {
     val newElement = HtlElementFactory.createStringLiteral(
-        newContent,
-        element.project,
-        element.text.startsWith("\""))
-        ?: return element
+      newContent,
+      element.project,
+      element.text.startsWith("\"")
+    )
+      ?: return element
     element.node.getChildren(null).forEach {
       element.node.removeChild(it)
     }

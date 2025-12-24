@@ -14,5 +14,4 @@ interface IterableTypeDescriptor : TypeDescriptor {
    * @return type descriptor for iterable type
    */
   fun iterableType(): TypeDescriptor
-
 }

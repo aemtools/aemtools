@@ -13,7 +13,7 @@ object ClientlibDocumentationGenerator {
 
   fun generateDoc(originalElement: PsiElement, category: String): String? {
     val clientlibs = ClientLibraryIndexFacade
-        .findClientlibsByCategory(originalElement.project, category)
+      .findClientlibsByCategory(originalElement.project, category)
 
     if (clientlibs.isEmpty()) {
       return null
@@ -21,7 +21,7 @@ object ClientlibDocumentationGenerator {
 
     return buildString {
       append("<html><head></head><body>")
-      append("<h2>Category: ${category}</h2>")
+      append("<h2>Category: $category</h2>")
 
       val dependencies = clientlibs.flatMap { it.dependencies }
       val embeds = clientlibs.flatMap { it.embed }

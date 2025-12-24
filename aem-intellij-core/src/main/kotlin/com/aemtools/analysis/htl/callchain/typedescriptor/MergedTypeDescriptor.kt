@@ -13,22 +13,22 @@ import com.intellij.psi.PsiElement
  */
 class MergedTypeDescriptor(vararg val types: TypeDescriptor) : TypeDescriptor {
   override fun myVariants(): List<LookupElement> =
-      types.flatMap { it.myVariants() }
+    types.flatMap { it.myVariants() }
 
   override fun documentation(): String? =
-      types.map { it.documentation() }
-          .filterNotNull()
-          .firstOrNull()
+    types.map { it.documentation() }
+      .filterNotNull()
+      .firstOrNull()
 
   override fun referencedElement(): PsiElement? =
-      types.map { it.referencedElement() }
-          .filterNotNull()
-          .firstOrNull()
+    types.map { it.referencedElement() }
+      .filterNotNull()
+      .firstOrNull()
 
   override fun subtype(identifier: String): TypeDescriptor =
-      types.map { it.subtype(identifier) }
-          .find { it !is EmptyTypeDescriptor }
-          ?: EmptyTypeDescriptor()
+    types.map { it.subtype(identifier) }
+      .find { it !is EmptyTypeDescriptor }
+      ?: EmptyTypeDescriptor()
 
   override fun isArray(): Boolean = types.any { it.isArray() }
 
@@ -36,8 +36,8 @@ class MergedTypeDescriptor(vararg val types: TypeDescriptor) : TypeDescriptor {
   override fun isMap(): Boolean = types.any { it.isMap() }
 
   override fun asResolutionResult(): ResolutionResult = types
-      .map { it.asResolutionResult() }
-      .reduce { acc, next -> acc + next }
+    .map { it.asResolutionResult() }
+    .reduce { acc, next -> acc + next }
 
   /**
    * Plus operator function for [MergedTypeDescriptor].
@@ -47,6 +47,5 @@ class MergedTypeDescriptor(vararg val types: TypeDescriptor) : TypeDescriptor {
    * @return merged type descriptor
    */
   operator fun plus(other: TypeDescriptor): TypeDescriptor =
-      MergedTypeDescriptor(*this.types, other)
-
+    MergedTypeDescriptor(*this.types, other)
 }

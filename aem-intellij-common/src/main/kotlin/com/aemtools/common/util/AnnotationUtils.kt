@@ -17,17 +17,19 @@ import com.intellij.psi.PsiElement
  * @receiver [AnnotationHolder]
  * @return [AnnotationBuilder] object]
  */
-fun AnnotationHolder.createInfoAnnotationBuilder(range: TextRange,
-                                                 textAttributesKey: TextAttributesKey,
-                                                 message: String? = null): AnnotationBuilder {
+fun AnnotationHolder.createInfoAnnotationBuilder(
+  range: TextRange,
+  textAttributesKey: TextAttributesKey,
+  message: String? = null
+): AnnotationBuilder {
   val annotationBuilder = if (message == null) {
     newSilentAnnotation(HighlightSeverity.WEAK_WARNING)
   } else {
     newAnnotation(HighlightSeverity.WEAK_WARNING, message)
   }
   return annotationBuilder
-      .range(range)
-      .textAttributes(textAttributesKey)
+    .range(range)
+    .textAttributes(textAttributesKey)
 }
 
 /**
@@ -39,10 +41,12 @@ fun AnnotationHolder.createInfoAnnotationBuilder(range: TextRange,
  *
  * @receiver [AnnotationHolder]
  */
-fun AnnotationHolder.createInfoAnnotation(range: TextRange,
-                                          textAttributesKey: TextAttributesKey,
-                                          message: String? = null): Unit =
-    createInfoAnnotationBuilder(range, textAttributesKey, message).create()
+fun AnnotationHolder.createInfoAnnotation(
+  range: TextRange,
+  textAttributesKey: TextAttributesKey,
+  message: String? = null
+): Unit =
+  createInfoAnnotationBuilder(range, textAttributesKey, message).create()
 
 /**
  * Create info annotation builder in current annotation holder using given psi element.
@@ -54,10 +58,12 @@ fun AnnotationHolder.createInfoAnnotation(range: TextRange,
  * @receiver [AnnotationHolder]
  * @return [AnnotationBuilder] object
  */
-fun AnnotationHolder.createInfoAnnotationBuilder(element: PsiElement,
-                                                 textAttributesKey: TextAttributesKey,
-                                                 message: String? = null): AnnotationBuilder =
-    createInfoAnnotationBuilder(element.textRange, textAttributesKey, message)
+fun AnnotationHolder.createInfoAnnotationBuilder(
+  element: PsiElement,
+  textAttributesKey: TextAttributesKey,
+  message: String? = null
+): AnnotationBuilder =
+  createInfoAnnotationBuilder(element.textRange, textAttributesKey, message)
 
 /**
  * Create info annotation in current annotation holder using given psi element.
@@ -68,10 +74,12 @@ fun AnnotationHolder.createInfoAnnotationBuilder(element: PsiElement,
  *
  * @receiver [AnnotationHolder]
  */
-fun AnnotationHolder.createInfoAnnotation(element: PsiElement,
-                                          textAttributesKey: TextAttributesKey,
-                                          message: String? = null): Unit =
-    createInfoAnnotationBuilder(element, textAttributesKey, message).create()
+fun AnnotationHolder.createInfoAnnotation(
+  element: PsiElement,
+  textAttributesKey: TextAttributesKey,
+  message: String? = null
+): Unit =
+  createInfoAnnotationBuilder(element, textAttributesKey, message).create()
 
 /**
  * Create error annotation in current annotation holder using given psi element.
@@ -81,15 +89,16 @@ fun AnnotationHolder.createInfoAnnotation(element: PsiElement,
  *
  * @receiver [AnnotationHolder]
  */
-fun AnnotationHolder.error(element: PsiElement,
-                           message: String?) {
+fun AnnotationHolder.error(
+  element: PsiElement,
+  message: String?
+) {
   val annotationBuilder = if (message == null) {
     newSilentAnnotation(HighlightSeverity.WEAK_WARNING)
   } else {
     newAnnotation(HighlightSeverity.WEAK_WARNING, message)
   }
   return annotationBuilder
-      .range(element.textRange)
-      .create()
+    .range(element.textRange)
+    .create()
 }
-

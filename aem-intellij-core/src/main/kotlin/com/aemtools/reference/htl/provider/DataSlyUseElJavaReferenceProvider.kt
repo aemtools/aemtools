@@ -32,5 +32,4 @@ object DataSlyUseElJavaReferenceProvider : JavaClassReferenceProvider() {
   override fun getScope(project: Project): GlobalSearchScope {
     return project.allScope()
   }
-
 }

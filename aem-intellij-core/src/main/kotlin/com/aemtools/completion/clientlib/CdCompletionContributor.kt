@@ -12,5 +12,4 @@ class CdCompletionContributor : BaseCompletionContributor({
 
   basic(CdPatterns.basePath, ClientlibDeclarationBasePathCompletionProvider)
   basic(CdPatterns.include, ClientlibDeclarationIncludeCompletionProvider)
-
 })

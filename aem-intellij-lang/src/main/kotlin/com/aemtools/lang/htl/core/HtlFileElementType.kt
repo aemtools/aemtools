@@ -7,4 +7,3 @@ import com.intellij.psi.tree.IFileElementType
  * @author Dmytro Primshyts
  */
 object HtlFileElementType : IFileElementType("HTL File", HtlLanguage)
-

@@ -2,7 +2,7 @@ package com.aemtools.codeinsight.osgiservice
 
 import com.aemtools.codeinsight.osgiservice.markerinfo.OSGiPropertyMarkerInfo
 import com.aemtools.codeinsight.osgiservice.property.provider.OSGiPropertyDescriptorsProvider
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.common.util.findParentByType
 import com.aemtools.common.util.isFelixProperty
 import com.aemtools.common.util.isOSGiService
@@ -26,21 +26,21 @@ import com.intellij.psi.PsiReferenceExpression
 class FelixOSGiPropertyLineMarker : LineMarkerProvider {
   override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<PsiElement>? {
     val identifier = element as? PsiIdentifier
-        ?: return null
+      ?: return null
     val containingClass = identifier.findParentByType(PsiClass::class.java)
-        ?: return null
+      ?: return null
     val psiElement = getFieldOrAnnotationAttributePsiElement(identifier) ?: return null
 
     if (containingClass.isOSGiService() && isFelixProperty(psiElement)) {
-
       val value = extractPropertyName(psiElement) ?: return null
 
       val containingClassFqn = containingClass.qualifiedName ?: return null
 
       val configs = OSGiConfigSearch.findConfigsForClass(
-          containingClassFqn,
-          element.project,
-          false)
+        containingClassFqn,
+        element.project,
+        false
+      )
       if (configs.isEmpty()) {
         return null
       }
@@ -54,57 +54,59 @@ class FelixOSGiPropertyLineMarker : LineMarkerProvider {
   }
 
   private fun getFieldOrAnnotationAttributePsiElement(identifier: PsiIdentifier): PsiElement? =
-      when (identifier.parent) {
-        is PsiField -> identifier.parent
-        is PsiNameValuePair -> if ("name" == identifier.text) {
-          identifier.parent
-        } else {
-          null
-        }
-        else -> null
+    when (identifier.parent) {
+      is PsiField -> identifier.parent
+      is PsiNameValuePair -> if ("name" == identifier.text) {
+        identifier.parent
+      } else {
+        null
       }
+      else -> null
+    }
 
   private fun isFelixProperty(psiElement: PsiElement): Boolean =
-      when (psiElement) {
-        is PsiField -> psiElement.isFelixProperty()
-        is PsiNameValuePair -> isInnerNotPrivateFelixProperty(psiElement)
-        else -> false
-      }
+    when (psiElement) {
+      is PsiField -> psiElement.isFelixProperty()
+      is PsiNameValuePair -> isInnerNotPrivateFelixProperty(psiElement)
+      else -> false
+    }
 
   private fun isInnerNotPrivateFelixProperty(annotationAttribute: PsiNameValuePair): Boolean {
     val psiAnnotation = annotationAttribute.findParentByType(PsiAnnotation::class.java)
-    if (psiAnnotation != null && psiAnnotation.hasQualifiedName(const.java.FELIX_PROPERTY_ANNOTATION)
-        && isNotPrivateProperty(psiAnnotation)) {
+    if (psiAnnotation != null && psiAnnotation.hasQualifiedName(Const.Java.FELIX_PROPERTY_ANNOTATION) &&
+      isNotPrivateProperty(psiAnnotation)
+    ) {
       return psiAnnotation.findParentByType(PsiAnnotation::class.java, true)
-          ?.hasQualifiedName(const.java.FELIX_PROPERTIES_ANNOTATION) ?: false
+        ?.hasQualifiedName(Const.Java.FELIX_PROPERTIES_ANNOTATION) ?: false
     }
     return false
   }
 
   private fun extractPropertyName(identifierParentElement: PsiElement): String? =
-      when (identifierParentElement) {
-        is PsiField -> identifierParentElement.computeConstantValue() as? String
-        is PsiNameValuePair -> getPropertyNameFromAnnotation(identifierParentElement)
-        else -> null
-      }
+    when (identifierParentElement) {
+      is PsiField -> identifierParentElement.computeConstantValue() as? String
+      is PsiNameValuePair -> getPropertyNameFromAnnotation(identifierParentElement)
+      else -> null
+    }
 
   private fun getPropertyNameFromAnnotation(annotation: PsiNameValuePair): String? =
-      when (annotation.value) {
-        is PsiReferenceExpression -> {
-          val psiField = annotation.value?.reference?.resolve() as? PsiField
-          psiField?.computeConstantValue() as? String
-        }
-        is PsiLiteralExpression -> annotation.literalValue
-        else -> null
+    when (annotation.value) {
+      is PsiReferenceExpression -> {
+        val psiField = annotation.value?.reference?.resolve() as? PsiField
+        psiField?.computeConstantValue() as? String
       }
+      is PsiLiteralExpression -> annotation.literalValue
+      else -> null
+    }
 
   private fun isNotPrivateProperty(propertyAnnotation: PsiAnnotation?) =
-      propertyAnnotation
-          ?.findAttributeValue("propertyPrivate")
-          ?.text.toBoolean().not()
+    propertyAnnotation
+      ?.findAttributeValue("propertyPrivate")
+      ?.text.toBoolean().not()
 
-  override fun collectSlowLineMarkers(elements: MutableList<out PsiElement>,
-                                      result: MutableCollection<in LineMarkerInfo<*>>) {
+  override fun collectSlowLineMarkers(
+    elements: MutableList<out PsiElement>,
+    result: MutableCollection<in LineMarkerInfo<*>>
+  ) {
   }
-
 }

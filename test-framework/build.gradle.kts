@@ -86,4 +86,13 @@ dependencies {
     exclude(group = "org.jetbrains.kotlin")
     exclude(group = "org.junit.platform")
   }
+
+  // The core Kotest framework
+  implementation("io.kotest:kotest-runner-junit5:6.0.7")
+  implementation("io.kotest:kotest-framework-engine:6.0.7")
+  // Assertions library (optional but highly recommended)
+  implementation("io.kotest:kotest-assertions-core:6.0.7")
+
+  // Property-based testing (optional)
+  implementation("io.kotest:kotest-property:6.0.7")
 }

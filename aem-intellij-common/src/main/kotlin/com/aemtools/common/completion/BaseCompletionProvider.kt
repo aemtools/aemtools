@@ -14,25 +14,26 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 open class BaseCompletionProvider(
-    private val completionProvider: (
-        CompletionParameters,
-        ProcessingContext,
-        CompletionResultSet
-    ) -> List<LookupElement>,
-    private val shouldStop: Boolean = false
+  private val completionProvider: (
+    CompletionParameters,
+    ProcessingContext,
+    CompletionResultSet
+  ) -> List<LookupElement>,
+  private val shouldStop: Boolean = false
 ) : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(
-      parameters: CompletionParameters,
-      context: ProcessingContext,
-      result: CompletionResultSet) {
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     if (result.isStopped) {
       return
     }
 
     completionProvider.invoke(
-        parameters,
-        context,
-        result
+      parameters,
+      context,
+      result
     ).apply {
       if (isNotEmpty()) {
         result.addAllElements(this)
@@ -42,6 +43,5 @@ open class BaseCompletionProvider(
         }
       }
     }
-
   }
 }

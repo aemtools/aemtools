@@ -20,7 +20,7 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.properties.PropertiesT
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateParameterTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
 import com.aemtools.codeinsight.htl.model.*
-import com.aemtools.common.constant.const.java.WCM_API_COMPONENT
+import com.aemtools.common.constant.Const.Java.WCM_API_COMPONENT
 import com.aemtools.common.util.hasChild
 import com.aemtools.completion.htl.common.PredefinedVariables
 import com.aemtools.completion.htl.predefined.HtlELPredefined.LIST_AND_REPEAT_HELPER_OBJECT
@@ -60,8 +60,10 @@ object RawCallChainProcessor {
       val outputType = firstSegment.outputType()
       val newSegment = when (outputType) {
         is JavaPsiClassTypeDescriptor ->
-          constructTypedChainSegment(outputType,
-              rawChain.pop())
+          constructTypedChainSegment(
+            outputType,
+            rawChain.pop()
+          )
 
         else -> constructEmptyChainSegment(rawChain.pop())
       }
@@ -81,8 +83,9 @@ object RawCallChainProcessor {
       }
       is HtlTemplateDeclaration -> {
         TemplateTypeDescriptor(
-            declaration.templateDefinition,
-            rawChainUnit.myDeclaration.xmlAttribute.project)
+          declaration.templateDefinition,
+          rawChainUnit.myDeclaration.xmlAttribute.project
+        )
       }
       is HtlTemplateParameterDeclaration -> {
         TemplateParameterTypeDescriptor(declaration)
@@ -106,8 +109,9 @@ object RawCallChainProcessor {
       return CallChainSegment.empty()
     }
 
-    if (inputType is JavaPsiClassTypeDescriptor
-        || inputType is MergedTypeDescriptor) {
+    if (inputType is JavaPsiClassTypeDescriptor ||
+      inputType is MergedTypeDescriptor
+    ) {
       if (rawChainUnit.myCallChain.isNotEmpty()) {
         return constructTypedChainSegment(inputType, rawChainUnit)
       }
@@ -151,8 +155,7 @@ object RawCallChainProcessor {
     }
   }
 
-  private fun constructEmptyChainSegment(rawChainUnit: RawChainUnit)
-      : CallChainSegment = chainSegment {
+  private fun constructEmptyChainSegment(rawChainUnit: RawChainUnit): CallChainSegment = chainSegment {
     this.inputType = inputType
     this.declarationType = rawChainUnit.myDeclaration
 
@@ -162,11 +165,13 @@ object RawCallChainProcessor {
       val nextElement = rawElements.pop()
       val elementName = extractElementName(nextElement)
 
-      result.add(BaseChainElement(
+      result.add(
+        BaseChainElement(
           nextElement,
           elementName,
           TypeDescriptor.empty()
-      ))
+        )
+      )
     }
 
     chain = result
@@ -177,8 +182,10 @@ object RawCallChainProcessor {
   /**
    * Create typed chain segment.
    */
-  private fun constructTypedChainSegment(inputType: TypeDescriptor,
-                                         rawChainUnit: RawChainUnit): CallChainSegment = chainSegment {
+  private fun constructTypedChainSegment(
+    inputType: TypeDescriptor,
+    rawChainUnit: RawChainUnit
+  ): CallChainSegment = chainSegment {
     this.inputType = inputType
     this.declarationType = rawChainUnit.myDeclaration
     val rawElements = LinkedList(rawChainUnit.myCallChain)
@@ -188,30 +195,29 @@ object RawCallChainProcessor {
     var currentElement = rawElements.pop()
 
     var callChainElement = when {
-      rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.LIST_HELPER
-          || rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.REPEAT_HELPER -> {
-        BaseChainElement(currentElement,
-            extractElementName(currentElement),
-            PredefinedTypeDescriptor(LIST_AND_REPEAT_HELPER_OBJECT))
+      rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.LIST_HELPER ||
+        rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.REPEAT_HELPER -> {
+        BaseChainElement(
+          currentElement,
+          extractElementName(currentElement),
+          PredefinedTypeDescriptor(LIST_AND_REPEAT_HELPER_OBJECT)
+        )
       }
 
-      rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE
-          && inputType is ArrayJavaTypeDescriptor -> {
-
+      rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE &&
+        inputType is ArrayJavaTypeDescriptor -> {
         currentType = inputType.arrayType()
         BaseChainElement(currentElement, extractElementName(currentElement), currentType)
       }
 
-      rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE
-          && inputType is IterableJavaTypeDescriptor -> {
-
+      rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE &&
+        inputType is IterableJavaTypeDescriptor -> {
         currentType = inputType.iterableType()
         BaseChainElement(currentElement, extractElementName(currentElement), currentType)
       }
 
-      rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE
-          && inputType is MapJavaTypeDescriptor -> {
-
+      rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE &&
+        inputType is MapJavaTypeDescriptor -> {
         currentType = inputType.keyType()
         BaseChainElement(currentElement, extractElementName(currentElement), currentType)
       }
@@ -224,21 +230,21 @@ object RawCallChainProcessor {
     while (rawElements.isNotEmpty()) {
       val nextRawElement = rawElements.pop()
       when {
-        currentType.isArray()
-            && currentType is ArrayJavaTypeDescriptor
-            && nextRawElement.hasChild(HtlArrayLikeAccess::class.java) -> {
+        currentType.isArray() &&
+          currentType is ArrayJavaTypeDescriptor &&
+          nextRawElement.hasChild(HtlArrayLikeAccess::class.java) -> {
           callChainElement = ArrayAccessIdentifierElement(nextRawElement)
           currentType = currentType.arrayType()
         }
-        currentType.isIterable()
-            && currentType is IterableJavaTypeDescriptor
-            && nextRawElement.hasChild(HtlArrayLikeAccess::class.java) -> {
+        currentType.isIterable() &&
+          currentType is IterableJavaTypeDescriptor &&
+          nextRawElement.hasChild(HtlArrayLikeAccess::class.java) -> {
           callChainElement = ArrayAccessIdentifierElement(nextRawElement)
           currentType = currentType.iterableType()
         }
-        currentType.isMap()
-            && currentType is MapJavaTypeDescriptor
-            && nextRawElement.hasChild(HtlArrayLikeAccess::class.java) -> {
+        currentType.isMap() &&
+          currentType is MapJavaTypeDescriptor &&
+          nextRawElement.hasChild(HtlArrayLikeAccess::class.java) -> {
           callChainElement = ArrayAccessIdentifierElement(nextRawElement)
           currentType = currentType.valueType()
         }
@@ -271,10 +277,8 @@ object RawCallChainProcessor {
   }
 
   private fun hasInnerPropertiesTypeDescriptor(nextRawElement: PsiElement?, currentType: TypeDescriptor) =
-      nextRawElement is AccessIdentifierMixin
-          && nextRawElement.variableName() == "properties"
-          && currentType is JavaPsiClassTypeDescriptor
-          && currentType.qualifiedName() == WCM_API_COMPONENT
-
+    nextRawElement is AccessIdentifierMixin &&
+      nextRawElement.variableName() == "properties" &&
+      currentType is JavaPsiClassTypeDescriptor &&
+      currentType.qualifiedName() == WCM_API_COMPONENT
 }
-

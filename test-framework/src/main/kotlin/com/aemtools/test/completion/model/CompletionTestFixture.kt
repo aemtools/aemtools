@@ -8,8 +8,8 @@ import org.assertj.core.api.Assertions.assertThat
 /**
  * @author Dmytro Primshyts
  */
-class CompletionTestFixture(fixture: JavaCodeInsightTestFixture)
-  : TestFixture(fixture), ICompletionTestFixture {
+class CompletionTestFixture(fixture: JavaCodeInsightTestFixture) :
+  TestFixture(fixture), ICompletionTestFixture {
 
   var completionType = CompletionType.BASIC
   var shouldContain: List<String> = listOf()
@@ -21,36 +21,38 @@ class CompletionTestFixture(fixture: JavaCodeInsightTestFixture)
   override fun test() {
     super.test()
     val completionVariants = fixture.complete(completionType)
-        ?.toList()
-        .orEmpty()
-        .map { it.lookupString }
+      ?.toList()
+      .orEmpty()
+      .map { it.lookupString }
 
     if (shouldContain.isNotEmpty()) {
       when {
         shouldContainOrdered -> {
           assertThat(completionVariants)
-              .containsExactly(*shouldContain.toTypedArray())
+            .containsExactly(*shouldContain.toTypedArray())
         }
         shouldContainStrict -> {
           assertThat(completionVariants)
-              .containsOnly(*shouldContain.toTypedArray())
+            .containsOnly(*shouldContain.toTypedArray())
         }
         else -> {
           assertThat(completionVariants)
-              .contains(*shouldContain.toTypedArray())
+            .contains(*shouldContain.toTypedArray())
         }
       }
     }
 
     if (shouldNotContain.isNotEmpty()) {
       assertThat(completionVariants)
-          .doesNotContain(*shouldNotContain.toTypedArray())
+        .doesNotContain(*shouldNotContain.toTypedArray())
     }
   }
 
-  override fun shouldContain(variants: List<String>,
-                             strict: Boolean,
-                             ordered: Boolean) {
+  override fun shouldContain(
+    variants: List<String>,
+    strict: Boolean,
+    ordered: Boolean
+  ) {
     this.shouldContain = variants
     this.shouldContainStrict = strict
     this.shouldContainOrdered = ordered
@@ -67,5 +69,4 @@ class CompletionTestFixture(fixture: JavaCodeInsightTestFixture)
   override fun smart() {
     completionType = CompletionType.SMART
   }
-
 }

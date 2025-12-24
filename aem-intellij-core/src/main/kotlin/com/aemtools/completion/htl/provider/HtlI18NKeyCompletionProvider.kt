@@ -15,18 +15,22 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 object HtlI18NKeyCompletionProvider : CompletionProvider<CompletionParameters>() {
-  override fun addCompletions(parameters: CompletionParameters,
-                              context: ProcessingContext,
-                              result: CompletionResultSet) {
+  override fun addCompletions(
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     val position = parameters.position
 
     if (localizationMainString(position)) {
       val localizations = HtlIndexFacade.getAllLocalizationKeys(position.project)
 
-      result.addAllElements(localizations.map {
-        lookupElement(it)
+      result.addAllElements(
+        localizations.map {
+          lookupElement(it)
             .withTypeText("i18n", true)
-      })
+        }
+      )
 
       result.stopHere()
     }
@@ -34,9 +38,8 @@ object HtlI18NKeyCompletionProvider : CompletionProvider<CompletionParameters>()
 
   private fun localizationMainString(position: PsiElement): Boolean {
     return position.findParentByType(HtlHtlEl::class.java)
-        ?.findChildrenByType(PsiElement::class.java)
-        ?.any { it.text == "i18n" }
-        ?: false
+      ?.findChildrenByType(PsiElement::class.java)
+      ?.any { it.text == "i18n" }
+      ?: false
   }
-
 }

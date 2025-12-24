@@ -12,16 +12,17 @@ import com.intellij.util.ProcessingContext
  */
 object HtmlHrefLinkCheckerCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(
-      parameters: CompletionParameters,
-      context: ProcessingContext,
-      result: CompletionResultSet) {
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     if (result.isStopped) {
       return
     }
 
-    result.addElement(lookupElement("x-cq-linkchecker")
+    result.addElement(
+      lookupElement("x-cq-linkchecker")
         .withInsertHandler(XmlAttributeInsertHandler())
     )
   }
-
 }

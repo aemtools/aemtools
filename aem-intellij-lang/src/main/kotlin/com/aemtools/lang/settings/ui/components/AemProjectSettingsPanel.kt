@@ -24,49 +24,51 @@ class AemProjectSettingsPanel(private val currentState: AemProjectSettings) {
   fun getPanel(): DialogPanel = panel {
     row("AEM Version:") {
       comboBox(AemVersion.versions())
-          .comment("Select AEM version of the current project")
-          .gap(RightGap.SMALL)
-          .bindItem(newAemVersion)
-          .whenItemSelectedFromUi { aemVersion ->
-            if (isManuallyDefinedHtlVersion.get()) {
-              return@whenItemSelectedFromUi
-            }
-            val selectedAemVersion = AemVersion.fromFullVersion(aemVersion)
-            selectedAemVersion?.apply {
-              val suggestedHtlVersion = HtlVersion.getFirstCompatibleWith(selectedAemVersion)
-              newHtlVersion.set(suggestedHtlVersion.version)
-            }
+        .comment("Select AEM version of the current project")
+        .gap(RightGap.SMALL)
+        .bindItem(newAemVersion)
+        .whenItemSelectedFromUi { aemVersion ->
+          if (isManuallyDefinedHtlVersion.get()) {
+            return@whenItemSelectedFromUi
           }
+          val selectedAemVersion = AemVersion.fromFullVersion(aemVersion)
+          selectedAemVersion?.apply {
+            val suggestedHtlVersion = HtlVersion.getFirstCompatibleWith(selectedAemVersion)
+            newHtlVersion.set(suggestedHtlVersion.version)
+          }
+        }
     }
     buttonsGroup {
       row {
         isSetHtlVersionManuallyCheckbox = checkBox("Set HTL versions manually")
-            .gap(RightGap.SMALL)
-            .comment("""
+          .gap(RightGap.SMALL)
+          .comment(
+            """
               By default, it is set automatically based on AEM version.
               An implementation of version 1.4 of the HTL is available in AEM 6.3 SP3 and AEM 6.4 SP1.
-            """.trimIndent())
-            .bindSelected(isManuallyDefinedHtlVersion)
-            .whenStateChangedFromUi { isChecked ->
-              if (isChecked) {
-                return@whenStateChangedFromUi
-              }
-              if (newAemVersion.get() == currentState.aemVersion.version) {
-                newHtlVersion.set(currentState.htlVersion.version)
-              }
-              if (newAemVersion.get() != currentState.aemVersion.version) {
-                val selectedAemVersion = AemVersion.fromFullVersion(newAemVersion.get())
-                selectedAemVersion?.apply {
-                  val suggestedHtlVersion = HtlVersion.getFirstCompatibleWith(selectedAemVersion)
-                  newHtlVersion.set(suggestedHtlVersion.version)
-                }
+            """.trimIndent()
+          )
+          .bindSelected(isManuallyDefinedHtlVersion)
+          .whenStateChangedFromUi { isChecked ->
+            if (isChecked) {
+              return@whenStateChangedFromUi
+            }
+            if (newAemVersion.get() == currentState.aemVersion.version) {
+              newHtlVersion.set(currentState.htlVersion.version)
+            }
+            if (newAemVersion.get() != currentState.aemVersion.version) {
+              val selectedAemVersion = AemVersion.fromFullVersion(newAemVersion.get())
+              selectedAemVersion?.apply {
+                val suggestedHtlVersion = HtlVersion.getFirstCompatibleWith(selectedAemVersion)
+                newHtlVersion.set(suggestedHtlVersion.version)
               }
             }
+          }
       }
       row("HTL version:") {
         htlVersionComboBox = comboBox(HtlVersion.versions())
-            .enabledIf(isSetHtlVersionManuallyCheckbox.selected)
-            .bindItem(newHtlVersion)
+          .enabledIf(isSetHtlVersionManuallyCheckbox.selected)
+          .bindItem(newHtlVersion)
       }
     }
   }

@@ -15,16 +15,16 @@ abstract class BaseFixTest : BaseLightTest() {
     val fix = QuickFixDsl().apply(fixDsl)
 
     myFixture.configureByText(
-        fix.before!!.name,
-        fix.before!!.content
+      fix.before!!.name,
+      fix.before!!.content
     )
 
     myFixture.enableInspections(
-        fix.inspection!!
+      fix.inspection!!
     )
 
     val intentionAction = myFixture
-        .getAvailableIntention(fix.fixName!!)
+      .getAvailableIntention(fix.fixName!!)
 
     TestCase.assertNotNull(intentionAction)
 
@@ -37,13 +37,13 @@ abstract class BaseFixTest : BaseLightTest() {
     val fix = AnnotatorFixDsl().apply(annotatorFixDsl)
 
     myFixture.configureByText(
-        fix.before!!.name,
-        fix.before!!.content
+      fix.before!!.name,
+      fix.before!!.content
     )
 
     val quickFix = myFixture.getAllQuickFixes(fix.before!!.name)
-        .find { it.text == fix.fixName }
-        ?: throw AssertionError("Unable to find quick fix with name: ${fix.fixName}")
+      .find { it.text == fix.fixName }
+      ?: throw AssertionError("Unable to find quick fix with name: ${fix.fixName}")
 
     writeCommand(project) {
       quickFix.invoke(project, editor, myFixture.file)
@@ -51,12 +51,11 @@ abstract class BaseFixTest : BaseLightTest() {
 
     myFixture.checkResult(fix.after!!.content)
   }
-
 }
 
 data class FileDescriptor(
-    val name: String,
-    val content: String
+  val name: String,
+  val content: String
 )
 
 class QuickFixDsl {
@@ -68,11 +67,10 @@ class QuickFixDsl {
   var after: FileDescriptor? = null
 
   fun html(name: String, @Language("HTML") text: String) =
-      FileDescriptor(name, text)
+    FileDescriptor(name, text)
 
   fun xml(name: String, @Language("XML") text: String) =
-      FileDescriptor(name, text)
-
+    FileDescriptor(name, text)
 }
 
 class AnnotatorFixDsl {
@@ -83,6 +81,5 @@ class AnnotatorFixDsl {
   var after: FileDescriptor? = null
 
   fun html(name: String, @Language("HTML") text: String) =
-      FileDescriptor(name, text)
-
+    FileDescriptor(name, text)
 }

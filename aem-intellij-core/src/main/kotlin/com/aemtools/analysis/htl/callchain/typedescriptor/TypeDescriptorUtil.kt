@@ -10,5 +10,4 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
  * @return *true* if current type is iterable,
  * *false* otherwise
  */
-fun TypeDescriptor.mayBeIteratedUpon(): Boolean
-    = isArray() || isIterable() || isMap()
+fun TypeDescriptor.mayBeIteratedUpon(): Boolean = isArray() || isIterable() || isMap()

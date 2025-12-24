@@ -43,5 +43,4 @@ class JpHighlighter : SyntaxHighlighterBase() {
     WEAK_REFERENCE -> JpColors.TYPE
     else -> null
   }
-
 }

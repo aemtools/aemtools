@@ -26,13 +26,14 @@ class JcrPropertyParserDefinition : ParserDefinition {
   override fun createParser(project: Project?): PsiParser = JpParser()
 
   override fun createFile(viewProvider: FileViewProvider): PsiFile =
-      JpPsiFile(viewProvider)
+    JpPsiFile(viewProvider)
 
-  override fun spaceExistenceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements
-      = ParserDefinition.SpaceRequirements.MAY
+  override fun spaceExistenceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements =
+    ParserDefinition.SpaceRequirements.MAY
 
   override fun getStringLiteralElements(): TokenSet = TokenSet.create(
-      JpTypes.VALUE_TOKEN, JpTypes.ARRAY_VALUE_TOKEN
+    JpTypes.VALUE_TOKEN,
+    JpTypes.ARRAY_VALUE_TOKEN
   )
 
   override fun getWhitespaceTokens(): TokenSet = TokenSet.create(TokenType.WHITE_SPACE)

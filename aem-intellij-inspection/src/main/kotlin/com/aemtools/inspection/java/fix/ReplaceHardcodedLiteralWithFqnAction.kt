@@ -15,20 +15,20 @@ import com.intellij.psi.SmartPsiElementPointer
  * @author Dmytro Primshyts
  */
 class ReplaceHardcodedLiteralWithFqnAction(
-    message: String,
-    val cd: ConstantDescriptor,
-    private val psiLiteral: SmartPsiElementPointer<PsiLiteralExpression>
+  message: String,
+  val cd: ConstantDescriptor,
+  private val psiLiteral: SmartPsiElementPointer<PsiLiteralExpression>
 ) : BaseAemIntellijIntentionAction(
-    { message },
-    "AEM Inspections"
+  { message },
+  "AEM Inspections"
 ) {
   override fun invoke(project: Project, editor: Editor?, file: PsiFile) {
     val element = psiLiteral.element ?: return
 
     val psiDocumentManager = PsiDocumentManager.getInstance(project)
-        ?: return
+      ?: return
     val document = psiDocumentManager.getDocument(file)
-        ?: return
+      ?: return
 
     val (start, end) = element.textRange.startOffset to element.textRange.endOffset
     document.replaceString(start, end, "${cd.containerClass}.${cd.name}")

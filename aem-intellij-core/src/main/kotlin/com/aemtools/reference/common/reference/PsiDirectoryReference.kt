@@ -9,9 +9,9 @@ import com.intellij.psi.PsiReferenceBase
  * @author Dmytro Primshyts
  */
 class PsiDirectoryReference(
-    val psiDirectory: PsiDirectory,
-    element: PsiElement,
-    range: TextRange
+  val psiDirectory: PsiDirectory,
+  element: PsiElement,
+  range: TextRange
 ) : PsiReferenceBase<PsiElement>(element, range) {
   override fun getVariants(): Array<Any> {
     return emptyArray()

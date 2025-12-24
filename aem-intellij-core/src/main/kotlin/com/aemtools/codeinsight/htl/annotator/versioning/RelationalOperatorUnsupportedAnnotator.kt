@@ -18,6 +18,6 @@ class RelationalOperatorUnsupportedAnnotator : VersionedHtlElementAnnotator(HtlV
     }
 
     holder.notSupportedHtlFeatureAnnotationBuilder(element, getMessage(element.project))
-        .create()
+      .create()
   }
 }

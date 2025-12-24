@@ -18,22 +18,24 @@ import com.intellij.psi.search.GlobalSearchScope
  */
 class JavaInspectionService : IJavaInspectionService {
 
-  override fun reportHardcodedConstant(holder: ProblemsHolder,
-                                       literal: PsiLiteralExpression,
-                                       constantDescriptors: List<ConstantDescriptor>) {
+  override fun reportHardcodedConstant(
+    holder: ProblemsHolder,
+    literal: PsiLiteralExpression,
+    constantDescriptors: List<ConstantDescriptor>
+  ) {
     val fixes = constantDescriptors.map { constant ->
       ReplaceHardcodedLiteralWithFqnAction(
-          "Replace with '${constant.containerClass}.${constant.name}'",
-          constant,
-          literal.toSmartPointer()
+        "Replace with '${constant.containerClass}.${constant.name}'",
+        constant,
+        literal.toSmartPointer()
       )
     }
 
     holder.registerProblem(
-        literal,
-        "Hardcode of predefined constant",
-        ProblemHighlightType.WEAK_WARNING,
-        *fixes.toTypedArray()
+      literal,
+      "Hardcode of predefined constant",
+      ProblemHighlightType.WEAK_WARNING,
+      *fixes.toTypedArray()
     )
   }
 
@@ -49,9 +51,9 @@ class JavaInspectionService : IJavaInspectionService {
         val fieldValue = field.computeConstantValue() as? String ?: return@mapNotNull null
 
         ConstantDescriptor(
-            fqn,
-            fieldName,
-            fieldValue
+          fqn,
+          fieldName,
+          fieldValue
         )
       }
     }.filterNot {
@@ -74,8 +76,6 @@ class JavaInspectionService : IJavaInspectionService {
      * @return instance of java inspection service
      */
     fun getInstance(project: Project): IJavaInspectionService? =
-            project.getService(IJavaInspectionService::class.java)
-
+      project.getService(IJavaInspectionService::class.java)
   }
-
 }

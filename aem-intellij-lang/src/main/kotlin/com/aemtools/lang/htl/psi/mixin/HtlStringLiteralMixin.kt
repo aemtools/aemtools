@@ -12,8 +12,8 @@ import com.intellij.psi.PsiNamedElement
 /**
  * @author Dmytro Primshyts
  */
-abstract class HtlStringLiteralMixin(node: ASTNode)
-  : HtlPsiBaseElement(node), HtlStringLiteral, PsiNamedElement, PsiNameIdentifierOwner {
+abstract class HtlStringLiteralMixin(node: ASTNode) :
+  HtlPsiBaseElement(node), HtlStringLiteral, PsiNamedElement, PsiNameIdentifierOwner {
 
   override fun accept(visitor: PsiElementVisitor) {
     if (visitor is HtlElementVisitor) {
@@ -36,5 +36,4 @@ abstract class HtlStringLiteralMixin(node: ASTNode)
   }
 
   override fun getNameIdentifier() = this
-
 }

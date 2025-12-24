@@ -23,9 +23,9 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Dmytro Primshyts
  */
 class HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction(
-    private val pointer: SmartPsiElementPointer<XmlAttribute>
+  private val pointer: SmartPsiElementPointer<XmlAttribute>
 ) : BaseHtlIntentionAction(
-    text = { "Invert XML Attribute quotes" }
+  text = { "Invert XML Attribute quotes" }
 ) {
   override fun invoke(project: Project, editor: Editor, file: PsiFile) {
     val element = pointer.element ?: return
@@ -33,44 +33,44 @@ class HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction(
     val psiDocumentManager = project.psiDocumentManager()
 
     val document = psiDocumentManager.getDocument(file)
-        ?: return
+      ?: return
 
     val rootDoublequoted = element.isDoubleQuoted()
 
     val htl = element.containingFile.getHtlFile()
-        ?: return
+      ?: return
 
     if (rootDoublequoted) {
       document.replaceString(
-          valueElement.textRange.startOffset,
-          valueElement.textRange.startOffset + 1,
-          "'"
+        valueElement.textRange.startOffset,
+        valueElement.textRange.startOffset + 1,
+        "'"
       )
       document.replaceString(
-          valueElement.textRange.endOffset - 1,
-          valueElement.textRange.endOffset,
-          "'"
+        valueElement.textRange.endOffset - 1,
+        valueElement.textRange.endOffset,
+        "'"
       )
     } else {
       document.replaceString(
-          valueElement.textRange.startOffset,
-          valueElement.textRange.startOffset + 1,
-          "\""
+        valueElement.textRange.startOffset,
+        valueElement.textRange.startOffset + 1,
+        "\""
       )
       document.replaceString(
-          valueElement.textRange.endOffset - 1,
-          valueElement.textRange.endOffset,
-          "\""
+        valueElement.textRange.endOffset - 1,
+        valueElement.textRange.endOffset,
+        "\""
       )
     }
 
     val htlLiterals = element.findChildrenByType(OuterLanguageElement::class.java)
-        .flatMap { outerLanguageElement ->
-          val htlEl = htl.findElementAt(outerLanguageElement.textOffset)
-              ?.findParentByType(HtlHtlEl::class.java)
-              ?: return@flatMap emptyList<HtlStringLiteralMixin>()
-          htlEl.findChildrenByType(HtlStringLiteralMixin::class.java)
-        }
+      .flatMap { outerLanguageElement ->
+        val htlEl = htl.findElementAt(outerLanguageElement.textOffset)
+          ?.findParentByType(HtlHtlEl::class.java)
+          ?: return@flatMap emptyList<HtlStringLiteralMixin>()
+        htlEl.findChildrenByType(HtlStringLiteralMixin::class.java)
+      }
 
     htlLiterals.forEach { literal ->
       val newVal = if (rootDoublequoted) {
@@ -79,9 +79,9 @@ class HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction(
         literal.toSingleQuoted()
       }
       document.replaceString(
-          literal.textRange.startOffset,
-          literal.textRange.endOffset,
-          newVal
+        literal.textRange.startOffset,
+        literal.textRange.endOffset,
+        newVal
       )
     }
 

@@ -17,24 +17,27 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 object HtlElVariableNameCompletionProvider : CompletionProvider<CompletionParameters>() {
-  override fun addCompletions(parameters: CompletionParameters,
-                              context: ProcessingContext,
-                              result: CompletionResultSet) {
+  override fun addCompletions(
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     val currentPosition = parameters.position
     val contextObjects = PredefinedVariables.contextObjectsCompletion()
-        .map { it.withPriority(CompletionPriority.CONTEXT_OBJECT) }
+      .map { it.withPriority(CompletionPriority.CONTEXT_OBJECT) }
 
     val fileVariables = FileVariablesResolver.declarationsForPosition(parameters.position, parameters)
-        .filter { it.attributeType != DeclarationAttributeType.DATA_SLY_TEMPLATE }
-        .let { variables -> convertToLookupElements(currentPosition, variables) }
+      .filter { it.attributeType != DeclarationAttributeType.DATA_SLY_TEMPLATE }
+      .let { variables -> convertToLookupElements(currentPosition, variables) }
 
     result.addAllElements(fileVariables + contextObjects)
     result.stopHere()
   }
 
   private fun convertToLookupElements(
-      currentPosition: PsiElement,
-      variables: List<HtlVariableDeclaration>): List<LookupElement> {
+    currentPosition: PsiElement,
+    variables: List<HtlVariableDeclaration>
+  ): List<LookupElement> {
     val result = ArrayList<LookupElement>()
 
     val outsiders = variables.filter {
@@ -56,12 +59,13 @@ object HtlElVariableNameCompletionProvider : CompletionProvider<CompletionParame
       val variableDeclaration = pair.second
       val priority = weightedVars.size - 1 - index
 
-      result.add(variableDeclaration
+      result.add(
+        variableDeclaration
           .toLookupElement()
-          .withPriority(CompletionPriority.VARIABLE_BASE + priority))
+          .withPriority(CompletionPriority.VARIABLE_BASE + priority)
+      )
     }
 
     return result
   }
-
 }

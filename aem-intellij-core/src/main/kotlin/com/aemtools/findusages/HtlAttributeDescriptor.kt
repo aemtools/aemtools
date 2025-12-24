@@ -10,8 +10,8 @@ import com.intellij.xml.impl.XmlAttributeDescriptorEx
 /**
  * @author Dmytro Primshyts
  */
-class HtlAttributeDescriptor(val attributeName: String, private val parentTag: XmlTag)
-  : BasicXmlAttributeDescriptor(), XmlAttributeDescriptorEx {
+class HtlAttributeDescriptor(val attributeName: String, private val parentTag: XmlTag) :
+  BasicXmlAttributeDescriptor(), XmlAttributeDescriptorEx {
   override fun getDefaultValue(): String {
     return ""
   }
@@ -53,5 +53,4 @@ class HtlAttributeDescriptor(val attributeName: String, private val parentTag: X
     parentTag.getAttribute(attributeName)?.name = newTargetName
     return newTargetName
   }
-
 }

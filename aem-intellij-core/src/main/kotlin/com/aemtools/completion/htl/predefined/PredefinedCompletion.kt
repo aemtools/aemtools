@@ -11,13 +11,13 @@ import javax.swing.Icon
  * @author Dmytro Primshyts
  */
 data class PredefinedCompletion(
-    @SerializedName(value = "name")
-    val completionText: String,
-    val type: String? = null,
-    @SerializedName(value = "description")
-    val documentation: String? = null,
-    val typeText: String? = null,
-    val icon: Icon? = AllIcons.Nodes.Parameter
+  @SerializedName(value = "name")
+  val completionText: String,
+  val type: String? = null,
+  @SerializedName(value = "description")
+  val documentation: String? = null,
+  val typeText: String? = null,
+  val icon: Icon? = AllIcons.Nodes.Parameter
 ) {
   /**
    * Convert current predefined completion into lookup element.
@@ -26,7 +26,7 @@ data class PredefinedCompletion(
    */
   fun toLookupElement(): LookupElement {
     var result = lookupElement(completionText)
-        .withIcon(icon ?: AllIcons.Nodes.Parameter)
+      .withIcon(icon ?: AllIcons.Nodes.Parameter)
     if (type != null) {
       result = result.withTypeText(type)
     }
@@ -39,5 +39,5 @@ data class PredefinedCompletion(
    * @return instance of [PredefinedDescriptionTypeDescriptor]
    */
   fun asTypeDescriptor(): PredefinedDescriptionTypeDescriptor =
-      PredefinedDescriptionTypeDescriptor(this)
+    PredefinedDescriptionTypeDescriptor(this)
 }

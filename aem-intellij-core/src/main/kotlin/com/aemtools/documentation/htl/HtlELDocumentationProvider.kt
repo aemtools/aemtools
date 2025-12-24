@@ -35,61 +35,60 @@ open class HtlELDocumentationProvider : AbstractDocumentationProvider() {
         getAllHtlOptions(originalElement.project.getHtlVersion()).find {
           it.name == text
         }?.let(HtlOption::description)
-            ?: super.generateDoc(element, originalElement)
+          ?: super.generateDoc(element, originalElement)
       }
 
       resourceTypeOptionAssignment.accepts(originalElement) -> {
         val resourceType = (originalElement.findParentByType(HtlStringLiteralImpl::class.java))?.name
-            ?: return super.generateDoc(element, originalElement)
+          ?: return super.generateDoc(element, originalElement)
 
         val component = AemComponentSearch.findByResourceType(resourceType, originalElement.project)
-            ?: return super.generateDoc(element, originalElement)
+          ?: return super.generateDoc(element, originalElement)
 
         return component.generateDoc()
       }
 
       contextOptionAssignment.accepts(originalElement) -> {
         val literal = originalElement.findParentByType(HtlStringLiteralImpl::class.java)
-            ?: return super.generateDoc(element, originalElement)
+          ?: return super.generateDoc(element, originalElement)
         val stringValue = literal.name
 
         HtlAttributesRepository.getContextValues().find {
           it.name == stringValue
         }?.let(HtlAttributesRepository.HtlContextValue::description)
-            ?: super.generateDoc(element, originalElement)
+          ?: super.generateDoc(element, originalElement)
       }
 
       categoriesOptionAssignment.accepts(originalElement) ||
-          categoriesOptionAssignmentViaArray.accepts(originalElement) -> {
+        categoriesOptionAssignmentViaArray.accepts(originalElement) -> {
         val category = originalElement.findParentByType(HtlStringLiteralImpl::class.java)
-            ?.name ?: return super.generateDoc(element, originalElement)
+          ?.name ?: return super.generateDoc(element, originalElement)
 
         if (category.isEmpty()) {
           return super.generateDoc(element, originalElement)
         }
 
         ClientlibDocumentationGenerator.generateDoc(originalElement, category)
-            ?: super.generateDoc(element, originalElement)
+          ?: super.generateDoc(element, originalElement)
       }
 
       memberAccess.accepts(originalElement) -> {
         val propertyAccessMixin = originalElement.findParentByType(PropertyAccessMixin::class.java)
-            ?: return super.generateDoc(element, originalElement)
+          ?: return super.generateDoc(element, originalElement)
         val variableNameMixin = originalElement.findParentByType(VariableNameMixin::class.java)
-            ?: return super.generateDoc(element, originalElement)
+          ?: return super.generateDoc(element, originalElement)
         val currentChainElement = propertyAccessMixin.callchain()?.findChainElement(variableNameMixin)
-            ?: return super.generateDoc(element, originalElement)
+          ?: return super.generateDoc(element, originalElement)
 
         currentChainElement.type.documentation()
-            ?: super.generateDoc(element, originalElement)
+          ?: super.generateDoc(element, originalElement)
       }
       else -> super.generateDoc(element, originalElement)
     }
   }
 
   private fun getAllHtlOptions(htlVersion: HtlVersion): List<HtlOption> =
-      HtlAttributesRepository.getAttributesData(htlVersion).flatMap {
-        it.options ?: listOf()
-      } + HtlAttributesRepository.getHtlOptions(htlVersion)
-
+    HtlAttributesRepository.getAttributesData(htlVersion).flatMap {
+      it.options ?: listOf()
+    } + HtlAttributesRepository.getHtlOptions(htlVersion)
 }

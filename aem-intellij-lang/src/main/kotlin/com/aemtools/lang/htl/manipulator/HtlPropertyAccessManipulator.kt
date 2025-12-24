@@ -13,11 +13,12 @@ import java.util.*
  */
 class HtlPropertyAccessManipulator : AbstractElementManipulator<HtlPropertyAccess>() {
   override fun handleContentChange(
-      element: HtlPropertyAccess,
-      range: TextRange,
-      newContent: String): HtlPropertyAccess {
+    element: HtlPropertyAccess,
+    range: TextRange,
+    newContent: String
+  ): HtlPropertyAccess {
     val propertyAccessMixin = element as? PropertyAccessMixin
-        ?: throw IncorrectOperationException("Cannot rename: $element")
+      ?: throw IncorrectOperationException("Cannot rename: $element")
 
     val originalName = propertyAccessMixin.text.substring(range.startOffset, range.endOffset)
 
@@ -26,22 +27,24 @@ class HtlPropertyAccessManipulator : AbstractElementManipulator<HtlPropertyAcces
     val oldText = propertyAccessMixin.text
     val newText = "${oldText.substring(0, range.startOffset)}$newName${oldText.substring(range.endOffset)}"
     val newElement = HtlElementFactory.createPropertyAccess(newText, propertyAccessMixin.project)
-        ?: return element
+      ?: return element
 
     val oldNode = propertyAccessMixin.node.firstChildNode
     val newNode = newElement.node.firstChildNode
 
     propertyAccessMixin.node
-        .replaceChild(oldNode,
-            newNode)
+      .replaceChild(
+        oldNode,
+        newNode
+      )
 
     return element
   }
 
   private fun constructNewName(oldName: String, newName: String): String {
     return when {
-      (oldName.startsWith("get") && newName.startsWith("get"))
-          || (oldName.startsWith("is") && newName.startsWith("is")) ->
+      (oldName.startsWith("get") && newName.startsWith("get")) ||
+        (oldName.startsWith("is") && newName.startsWith("is")) ->
         newName
       !oldName.startsWith("get") && newName.startsWith("get") ->
         newName.substringAfter("get").replaceFirstChar { it.lowercase(Locale.getDefault()) }
@@ -50,5 +53,4 @@ class HtlPropertyAccessManipulator : AbstractElementManipulator<HtlPropertyAcces
       else -> newName
     }
   }
-
 }

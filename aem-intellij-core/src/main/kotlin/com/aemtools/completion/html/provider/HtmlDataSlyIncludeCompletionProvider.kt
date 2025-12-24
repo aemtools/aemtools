@@ -14,9 +14,10 @@ import com.intellij.util.ProcessingContext
  */
 object HtmlDataSlyIncludeCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(
-      parameters: CompletionParameters,
-      context: ProcessingContext,
-      result: CompletionResultSet) {
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     if (result.isStopped) {
       return
     }
@@ -24,15 +25,16 @@ object HtmlDataSlyIncludeCompletionProvider : CompletionProvider<CompletionParam
     val files = HtlIndexFacade.includableFiles(parameters.originalFile)
 
     val dirName = parameters.originalFile.containingDirectory.virtualFile.path
-        .normalizeToJcrRoot()
+      .normalizeToJcrRoot()
 
     val variants = files.map {
       lookupElement(
-          it.virtualFile.path.normalizeToJcrRoot()
-              .relativeTo(dirName))
-          .withTypeText(it.fileType.name)
-          .withTailText("(${it.virtualFile.path.normalizeToJcrRoot()})", true)
-          .withIcon(it.getIcon(0))
+        it.virtualFile.path.normalizeToJcrRoot()
+          .relativeTo(dirName)
+      )
+        .withTypeText(it.fileType.name)
+        .withTailText("(${it.virtualFile.path.normalizeToJcrRoot()})", true)
+        .withIcon(it.getIcon(0))
     }
     result.addAllElements(variants)
   }

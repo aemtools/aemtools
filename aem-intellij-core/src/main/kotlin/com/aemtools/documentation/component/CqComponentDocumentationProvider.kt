@@ -19,17 +19,17 @@ class CqComponentDocumentationProvider : AbstractDocumentationProvider() {
 
     if (attributeInCqComponent.accepts(originalElement)) {
       val parentAttribute = originalElement.parent as? XmlAttribute
-          ?: return super.generateDoc(element, originalElement)
+        ?: return super.generateDoc(element, originalElement)
 
       return CqComponentRepository.getNodeProperties()
-          .find { it.name == parentAttribute.name }
-          .let {
-            if (it == null) {
-              super.generateDoc(element, originalElement)
-            } else {
-              generateDocumentation(it)
-            }
+        .find { it.name == parentAttribute.name }
+        .let {
+          if (it == null) {
+            super.generateDoc(element, originalElement)
+          } else {
+            generateDocumentation(it)
           }
+        }
     }
     return super.generateDoc(element, originalElement)
   }

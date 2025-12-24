@@ -8,8 +8,8 @@ import com.intellij.psi.FileViewProvider
 /**
  * @author Dmytro Primshyts
  */
-class CdPsiFile(fileViewProvider: FileViewProvider)
-  : PsiFileBase(fileViewProvider, CdLanguage) {
+class CdPsiFile(fileViewProvider: FileViewProvider) :
+  PsiFileBase(fileViewProvider, CdLanguage) {
   override fun getFileType() = CdFileType
 
   override fun toString() = "CdFile:$name"

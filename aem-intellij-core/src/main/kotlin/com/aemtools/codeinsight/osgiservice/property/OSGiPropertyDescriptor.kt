@@ -9,21 +9,21 @@ import com.intellij.psi.PsiFile
  * @author Dmytro Primshyts
  */
 data class OSGiPropertyDescriptor(
-    /**
-     * Mods string.
-     */
-    val mods: String,
-    /**
-     * Value of property.
-     */
-    val propertyValue: String,
-    /**
-     * PSI element that contains declaration of property.
-     */
-    val containingPsiElement: PsiElement?,
+  /**
+   * Mods string.
+   */
+  val mods: String,
+  /**
+   * Value of property.
+   */
+  val propertyValue: String,
+  /**
+   * PSI element that contains declaration of property.
+   */
+  val containingPsiElement: PsiElement?,
 
-    /**
-     * OSGi configuration containing file.
-     */
-    val containingPsiFile: PsiFile
+  /**
+   * OSGi configuration containing file.
+   */
+  val containingPsiFile: PsiFile
 )

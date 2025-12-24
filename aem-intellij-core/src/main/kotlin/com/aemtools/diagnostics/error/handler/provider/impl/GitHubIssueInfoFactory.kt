@@ -14,25 +14,29 @@ import java.io.StringWriter
  */
 class GitHubIssueInfoFactory(private val envInfoProvider: EnvironmentInfoProvider) : IssueInfoFactory {
 
-  override fun create(event: IdeaLoggingEvent,
-                      pluginDescriptor: PluginDescriptor,
-                      additionalInfo: String?): GitHubIssue {
+  override fun create(
+    event: IdeaLoggingEvent,
+    pluginDescriptor: PluginDescriptor,
+    additionalInfo: String?
+  ): GitHubIssue {
     return GitHubIssue(
-        title = "User issue for version ${getPluginVersion(pluginDescriptor)}",
-        body = createIssueOverview(event, additionalInfo),
-        labels = listOf("bug")
+      title = "User issue for version ${getPluginVersion(pluginDescriptor)}",
+      body = createIssueOverview(event, additionalInfo),
+      labels = listOf("bug")
     )
   }
 
   private fun getPluginVersion(pluginDescriptor: PluginDescriptor?) =
-      if (pluginDescriptor != null && pluginDescriptor is IdeaPluginDescriptor) {
-        pluginDescriptor.version
-      } else {
-        ""
-      }
+    if (pluginDescriptor != null && pluginDescriptor is IdeaPluginDescriptor) {
+      pluginDescriptor.version
+    } else {
+      ""
+    }
 
-  private fun createIssueOverview(event: IdeaLoggingEvent,
-                                  additionalInfo: String?): String {
+  private fun createIssueOverview(
+    event: IdeaLoggingEvent,
+    additionalInfo: String?
+  ): String {
     val stringWriter = StringWriter()
     val stacktraceWriter = PrintWriter(stringWriter)
     event.throwable.printStackTrace(stacktraceWriter)

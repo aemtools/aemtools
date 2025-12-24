@@ -19,26 +19,28 @@ import com.intellij.util.ProcessingContext
  */
 object ValueOfCategoriesCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(
-      parameters: CompletionParameters,
-      context: ProcessingContext,
-      result: CompletionResultSet) {
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     if (result.isStopped) {
       return
     }
     val position = parameters.position
     val siblings = position.findParentByType(JpArray::class.java)
-        ?.findChildrenByType(JpArrayValue::class.java)
-        ?.map { it.text.trim() }
-        ?: emptyList()
+      ?.findChildrenByType(JpArrayValue::class.java)
+      ?.map { it.text.trim() }
+      ?: emptyList()
 
     val models = getAllClientLibraryModels(position.project)
 
-    result.addAllElements(models.flatMap {
-      it.categories
-    }
+    result.addAllElements(
+      models.flatMap {
+        it.categories
+      }
         .filterNot { it in siblings }
-        .map { lookupElement(it) })
+        .map { lookupElement(it) }
+    )
     result.stopHere()
   }
-
 }

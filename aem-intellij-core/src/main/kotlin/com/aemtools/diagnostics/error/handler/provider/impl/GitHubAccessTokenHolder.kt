@@ -24,10 +24,9 @@ class GitHubAccessTokenHolder : AccessTokenHolder {
 
     private fun readToken(): ByteArray {
       return GitHubAccessTokenProvider::class.java.classLoader.getResource(config.tokenFile)
-          .readText(StandardCharsets.UTF_8)
-          .trim()
-          .toByteArray()
+        .readText(StandardCharsets.UTF_8)
+        .trim()
+        .toByteArray()
     }
   }
 }
-

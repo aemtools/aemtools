@@ -17,34 +17,35 @@ import com.intellij.util.ProcessingContext
  */
 object HtlDataSlyCallOptionCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(
-      parameters: CompletionParameters,
-      context: ProcessingContext,
-      result: CompletionResultSet) {
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     val currentPosition = parameters.position
     val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
-        ?: return
+      ?: return
 
     val outputType = hel
-        .getMainPropertyAccess()
-        ?.callchain()
-        ?.getLastOutputType()
-        as? TemplateTypeDescriptor
-        ?: return
+      .getMainPropertyAccess()
+      ?.callchain()
+      ?.getLastOutputType()
+      as? TemplateTypeDescriptor
+      ?: return
 
     val templateParameters = outputType.parameters()
 
     val presentOptions = hel.getOptions()
-        .map { it.name() }
-        .filterNot { it == "" }
+      .map { it.name() }
+      .filterNot { it == "" }
 
     val variants = templateParameters
-        .filterNot { presentOptions.contains(it) }
-        .map {
-          lookupElement(it)
-              .withIcon(AllIcons.Nodes.Parameter)
-              .withTypeText("HTL Template Parameter")
-              .withInsertHandler(HtlElAssignmentInsertHandler())
-        }
+      .filterNot { presentOptions.contains(it) }
+      .map {
+        lookupElement(it)
+          .withIcon(AllIcons.Nodes.Parameter)
+          .withTypeText("HTL Template Parameter")
+          .withInsertHandler(HtlElAssignmentInsertHandler())
+      }
 
     result.addAllElements(variants)
     result.stopHere()

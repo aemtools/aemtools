@@ -16,22 +16,22 @@ import javax.swing.Icon
 /**
  * @author Dmytro Primshyts
  */
-object HtlFileType
-  : LanguageFileType(HtlLanguage),
-    TemplateLanguageFileType,
-    FileTypeIdentifiableByVirtualFile {
+object HtlFileType :
+  LanguageFileType(HtlLanguage),
+  TemplateLanguageFileType,
+  FileTypeIdentifiableByVirtualFile {
 
   init {
-    FileTypeEditorHighlighterProviders.getInstance().addExplicitExtension(this)
-    { project, _, virtualFile, colors ->
+    FileTypeEditorHighlighterProviders.getInstance().addExplicitExtension(this) { project, _, virtualFile, colors ->
       HtlTemplateHighlighter(project, virtualFile, colors)
     }
   }
 
   override fun isMyFileType(file: VirtualFile): Boolean {
-    if (file.isDirectory
-        || file.extension != "html"
-        || file is FakeVirtualFile) {
+    if (file.isDirectory ||
+      file.extension != "html" ||
+      file is FakeVirtualFile
+    ) {
       return false
     }
 
@@ -52,5 +52,4 @@ object HtlFileType
   override fun getDefaultExtension() = "htl"
 
   override fun getDescription() = "HTL File"
-
 }

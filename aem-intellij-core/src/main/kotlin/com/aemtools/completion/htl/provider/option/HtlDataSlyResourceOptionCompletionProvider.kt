@@ -1,6 +1,6 @@
 package com.aemtools.completion.htl.provider.option
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.common.util.findParentByType
 import com.aemtools.completion.htl.CompletionPriority.RESOURCE_TYPE
 import com.aemtools.completion.model.htl.HtlOption
@@ -18,32 +18,33 @@ import com.intellij.util.ProcessingContext
  */
 object HtlDataSlyResourceOptionCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(
-      parameters: CompletionParameters,
-      context: ProcessingContext,
-      result: CompletionResultSet) {
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     val currentPosition = parameters.position
     val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
-        ?: return
+      ?: return
 
     val names = hel.getOptions().map { it.name() }
-        .filterNot { it == "" }
+      .filterNot { it == "" }
 
     val htlVersion = currentPosition.project.getHtlVersion()
     val dataSlyResourceOptions = HtlAttributesRepository.getAttributesData(htlVersion)
-        .filter { it.name == const.htl.DATA_SLY_RESOURCE }
-        .flatMap { it.options ?: listOf() }
+      .filter { it.name == Const.Htl.DATA_SLY_RESOURCE }
+      .flatMap { it.options ?: listOf() }
     val options = dataSlyResourceOptions + HtlAttributesRepository.getHtlOptions(htlVersion)
 
     val completionVariants = options
-        .filterNot { names.contains(it.name) }
-        .map(HtlOption::toLookupElement)
-        .map {
-          if (it.lookupString in dataSlyResourceOptions.optionNames()) {
-            PrioritizedLookupElement.withPriority(it, RESOURCE_TYPE)
-          } else {
-            it
-          }
+      .filterNot { names.contains(it.name) }
+      .map(HtlOption::toLookupElement)
+      .map {
+        if (it.lookupString in dataSlyResourceOptions.optionNames()) {
+          PrioritizedLookupElement.withPriority(it, RESOURCE_TYPE)
+        } else {
+          it
         }
+      }
 
     result.addAllElements(completionVariants)
 
@@ -51,5 +52,4 @@ object HtlDataSlyResourceOptionCompletionProvider : CompletionProvider<Completio
   }
 
   private fun List<HtlOption>.optionNames() = this.map { it.name }
-
 }

@@ -11,5 +11,4 @@ interface ArrayTypeDescriptor : TypeDescriptor {
    * @return type descriptor for array
    */
   fun arrayType(): TypeDescriptor
-
 }

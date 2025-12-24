@@ -13,17 +13,19 @@ import com.intellij.psi.impl.source.tree.LeafPsiElement
 class HtlStringLiteralWordSelectioner : AbstractWordSelectioner() {
 
   override fun canSelect(element: PsiElement): Boolean {
-    return element is LeafPsiElement
-        && element.elementType in listOf(
+    return element is LeafPsiElement &&
+      element.elementType in listOf(
         HtlTypes.SINGLE_QUOTED_STRING,
         HtlTypes.DOUBLE_QUOTED_STRING
-    )
+      )
   }
 
-  override fun select(e: PsiElement,
-                      editorText: CharSequence,
-                      cursorOffset: Int,
-                      editor: Editor): MutableList<TextRange> {
+  override fun select(
+    e: PsiElement,
+    editorText: CharSequence,
+    cursorOffset: Int,
+    editor: Editor
+  ): MutableList<TextRange> {
     val ranges = super.select(e, editorText, cursorOffset, editor)
 
     val elementRange = e.textRange
@@ -31,5 +33,4 @@ class HtlStringLiteralWordSelectioner : AbstractWordSelectioner() {
 
     return ranges ?: ArrayList()
   }
-
 }

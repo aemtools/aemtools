@@ -15,10 +15,12 @@ import com.intellij.psi.templateLanguages.TemplateDataLanguageMappings
 /**
  * @author Dmytro Primshyts
  */
-class HtlTemplateHighlighter(val project: Project?,
-                             val virtualFile: VirtualFile?,
-                             scheme: EditorColorsScheme) :
-    LayeredLexerEditorHighlighter(HtlHighlighter(), scheme) {
+class HtlTemplateHighlighter(
+  val project: Project?,
+  val virtualFile: VirtualFile?,
+  scheme: EditorColorsScheme
+) :
+  LayeredLexerEditorHighlighter(HtlHighlighter(), scheme) {
   init {
     var type: FileType = if (project == null || virtualFile == null) {
       FileTypeManager.getInstance().getStdFileType("PLAIN_TEXT")

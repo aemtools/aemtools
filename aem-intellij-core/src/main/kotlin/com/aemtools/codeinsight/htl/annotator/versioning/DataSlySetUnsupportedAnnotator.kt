@@ -2,7 +2,7 @@ package com.aemtools.codeinsight.htl.annotator.versioning
 
 import com.aemtools.codeinsight.htl.intention.ReplaceDataSlySetWithDataSlyTestAction
 import com.aemtools.codeinsight.htl.util.notSupportedHtlFeatureAnnotationBuilder
-import com.aemtools.common.constant.const.htl.DATA_SLY_SET
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_SET
 import com.aemtools.common.util.toSmartPointer
 import com.aemtools.lang.settings.model.HtlVersion
 import com.aemtools.lang.util.htlAttributeName
@@ -30,8 +30,8 @@ class DataSlySetUnsupportedAnnotator : VersionedHtlElementAnnotator(HtlVersion.V
         TextRange.create(this, this + htlAttributeName.length)
       }
       holder.notSupportedHtlFeatureAnnotationBuilder(element, getMessage(element.project), textRange)
-          .withFix(ReplaceDataSlySetWithDataSlyTestAction(element.toSmartPointer()))
-          .create()
+        .withFix(ReplaceDataSlySetWithDataSlyTestAction(element.toSmartPointer()))
+        .create()
     }
   }
 }

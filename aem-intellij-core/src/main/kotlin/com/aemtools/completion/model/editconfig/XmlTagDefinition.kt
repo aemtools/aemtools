@@ -5,20 +5,20 @@ package com.aemtools.completion.model.editconfig
  */
 data class XmlTagDefinition(
 
-    /**
-     * Name of xml tag.
-     */
-    val name: String,
+  /**
+   * Name of xml tag.
+   */
+  val name: String,
 
-    /**
-     * List of possible child nodes.
-     */
-    val childNodes: List<String>,
+  /**
+   * List of possible child nodes.
+   */
+  val childNodes: List<String>,
 
-    /**
-     * List of possible attributes.
-     */
-    val attributes: List<XmlAttributeDefinition>
+  /**
+   * List of possible attributes.
+   */
+  val attributes: List<XmlAttributeDefinition>
 ) {
   companion object {
     /**

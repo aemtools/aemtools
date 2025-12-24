@@ -17,9 +17,9 @@ object ServiceFacade {
    * @return instance of widget doc repository
    */
   fun getWidgetRepository(): WidgetDocRepository =
-          ApplicationManager.getApplication()
-                  .getService(IRepositoryService::class.java)
-                  .getWidgetDocRepository()
+    ApplicationManager.getApplication()
+      .getService(IRepositoryService::class.java)
+      .getWidgetDocRepository()
 
   /**
    * Get [HtlAttributesRepository] instance.
@@ -34,5 +34,4 @@ object ServiceFacade {
    * @return instance rep policy repository
    */
   fun getRepPolicyRepository() = RepPolicyRepository
-
 }

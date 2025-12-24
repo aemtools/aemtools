@@ -32,10 +32,10 @@ object TokenDecryptService {
     return try {
       val factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1")
       val spec = PBEKeySpec(
-          KEY.toCharArray(),
-          SALT.toByteArray(StandardCharsets.UTF_8),
-          ITERATION_COUNT,
-          KEY_LENGTH
+        KEY.toCharArray(),
+        SALT.toByteArray(StandardCharsets.UTF_8),
+        ITERATION_COUNT,
+        KEY_LENGTH
       )
       val tmp = factory.generateSecret(spec)
       val secret = SecretKeySpec(tmp.encoded, "AES")

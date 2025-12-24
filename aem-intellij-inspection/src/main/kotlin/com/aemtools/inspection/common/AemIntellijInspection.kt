@@ -9,9 +9,9 @@ import com.intellij.codeInspection.LocalInspectionTool
  * @author Dmytro Primshyts
  */
 abstract class AemIntellijInspection(
-    val groupName: String,
-    val name: String,
-    val description: String
+  val groupName: String,
+  val name: String,
+  val description: String
 ) : LocalInspectionTool(), BatchSuppressableTool {
   override fun getGroupDisplayName(): String = groupName
   override fun getDisplayName(): String = name

@@ -9,8 +9,8 @@ import com.intellij.testFramework.LightProjectDescriptor
 /**
  * @author Dmytro Primshyts
  */
-abstract class BaseReferenceTest(withAemUberJar: Boolean = false)
-  : BaseLightTest(withAemUberJar) {
+abstract class BaseReferenceTest(withAemUberJar: Boolean = false) :
+  BaseLightTest(withAemUberJar) {
 
   fun testReference(unit: IReferenceTestFixture.() -> Unit) {
     val fixture = ReferenceTestFixture(fixture = myFixture).apply { unit() }
@@ -20,8 +20,5 @@ abstract class BaseReferenceTest(withAemUberJar: Boolean = false)
     fixture.test()
   }
 
-  override fun getProjectDescriptor(): LightProjectDescriptor
-      = JdkProjectDescriptor()
-
+  override fun getProjectDescriptor(): LightProjectDescriptor = JdkProjectDescriptor()
 }
-

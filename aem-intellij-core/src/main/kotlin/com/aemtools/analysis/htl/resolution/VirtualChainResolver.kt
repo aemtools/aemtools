@@ -21,7 +21,7 @@ object VirtualChainResolver {
    * @return lookup elements
    */
   fun nestedIterables(original: VirtualCallChainElement) =
-      resolve(original) { type.mayBeIteratedUpon() }
+    resolve(original) { type.mayBeIteratedUpon() }
 
   /**
    * Resolve call chain by given condition.
@@ -33,16 +33,18 @@ object VirtualChainResolver {
    *
    * @return list of lookup elements
    */
-  fun resolve(original: VirtualCallChainElement,
-              condition: VirtualCallChainElement.() -> Boolean)
-      : List<LookupElement> {
+  fun resolve(
+    original: VirtualCallChainElement,
+    condition: VirtualCallChainElement.() -> Boolean
+  ): List<LookupElement> {
     return innerResolve(original, condition, 1)
   }
 
   private fun innerResolve(
-      original: VirtualCallChainElement,
-      condition: VirtualCallChainElement.() -> Boolean,
-      depth: Int): List<LookupElement> {
+    original: VirtualCallChainElement,
+    condition: VirtualCallChainElement.() -> Boolean,
+    depth: Int
+  ): List<LookupElement> {
     if (depth >= OVERFLOW_GUARD) {
       return emptyList()
     }
@@ -56,7 +58,6 @@ object VirtualChainResolver {
       forEach {
         result += innerResolve(it, condition, depth.inc())
       }
-
     }
     return result
   }
@@ -64,19 +65,17 @@ object VirtualChainResolver {
   private fun VirtualCallChainElement.subtypes(): List<VirtualCallChainElement> {
     return type.myVariants().filterNot {
       it.lookupString in listOf(
-          "class", "toString", "parallelStream",
-          "stream", "toArray", "of"
+        "class", "toString", "parallelStream",
+        "stream", "toArray", "of"
       )
     }.map {
       val name = it.lookupString
       val type = type.subtype(name)
       BaseVirtualCallChainElement(
-          name,
-          type,
-          this
+        name,
+        type,
+        this
       )
     }
   }
-
 }
-

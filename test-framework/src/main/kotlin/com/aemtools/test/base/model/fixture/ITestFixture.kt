@@ -13,15 +13,19 @@ interface ITestFixture {
    * @param name name of the file
    * @param text the body of html file
    */
-  fun addHtml(name: String,
-              @Language("HTML") text: String)
+  fun addHtml(
+    name: String,
+    @Language("HTML") text: String
+  )
 
   /**
    * Add java class to the fixture.
    * @param text java class
    */
-  fun addClass(name: String,
-               @Language("Java") text: String)
+  fun addClass(
+    name: String,
+    @Language("Java") text: String
+  )
 
   /**
    * Add XML file to the fixture.
@@ -51,5 +55,4 @@ interface ITestFixture {
    * @receiver [IAssertionContext]
    */
   fun verify(verification: IAssertionContext.() -> Unit)
-
 }

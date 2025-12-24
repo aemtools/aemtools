@@ -1,6 +1,6 @@
 package com.aemtools.lang.htl.service
 
-import com.aemtools.common.constant.const
+import com.aemtools.common.constant.Const
 import com.aemtools.lang.settings.HtlRootDirectories
 import com.aemtools.test.base.BaseLightTest
 import org.assertj.core.api.Assertions
@@ -23,7 +23,7 @@ class HtlDetectionServiceTest : BaseLightTest(false) {
   fun `test isHtlFile should return true for html file in jcr_root`() {
     HtlDetectionService.markAllInTest = false
 
-    Assertions.assertThat(HtlDetectionService.isHtlFile("/${const.JCR_ROOT}/test.html", project))
+    Assertions.assertThat(HtlDetectionService.isHtlFile("/${Const.JCR_ROOT}/test.html", project))
         .isTrue
     HtlDetectionService.markAllInTest = true
   }

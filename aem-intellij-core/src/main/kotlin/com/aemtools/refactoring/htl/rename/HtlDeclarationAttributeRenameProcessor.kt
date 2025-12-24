@@ -24,17 +24,18 @@ import javax.swing.JPanel
 class HtlDeclarationAttributeRenameProcessor : RenamePsiElementProcessor() {
 
   override fun canProcessElement(element: PsiElement): Boolean {
-    return element is XmlAttribute
-        && element.isHtlDeclarationAttribute()
+    return element is XmlAttribute &&
+      element.isHtlDeclarationAttribute()
   }
 
   override fun renameElement(
-      element: PsiElement,
-      newName: String,
-      usages: Array<out UsageInfo>,
-      listener: RefactoringElementListener?) {
+    element: PsiElement,
+    newName: String,
+    usages: Array<out UsageInfo>,
+    listener: RefactoringElementListener?
+  ) {
     val attribute = element as? XmlAttribute
-        ?: return
+      ?: return
 
     val htlAttributeName = attribute.htlAttributeName() ?: return
 
@@ -67,26 +68,31 @@ class HtlDeclarationAttributeRenameProcessor : RenamePsiElementProcessor() {
     return true
   }
 
-  override fun createRenameDialog(project: Project,
-                                  element: PsiElement,
-                                  nameSuggestionContext: PsiElement?,
-                                  editor: Editor?): RenameDialog {
-    return HtlAttributeRenameDialog(project,
-        element,
-        nameSuggestionContext,
-        editor)
+  override fun createRenameDialog(
+    project: Project,
+    element: PsiElement,
+    nameSuggestionContext: PsiElement?,
+    editor: Editor?
+  ): RenameDialog {
+    return HtlAttributeRenameDialog(
+      project,
+      element,
+      nameSuggestionContext,
+      editor
+    )
   }
-
 }
 
 /**
  * Htl attribute rename dialog.
  */
-class HtlAttributeRenameDialog(project: Project,
-                               element: PsiElement,
-                               context: PsiElement?,
-                               editor: Editor?)
-  : RenameDialog(project, element, context, editor) {
+class HtlAttributeRenameDialog(
+  project: Project,
+  element: PsiElement,
+  context: PsiElement?,
+  editor: Editor?
+) :
+  RenameDialog(project, element, context, editor) {
 
   override fun hasPreviewButton(): Boolean = false
 
@@ -97,8 +103,8 @@ class HtlAttributeRenameDialog(project: Project,
     // hide checkboxes
     panel?.let {
       it.components.filterIsInstance<JCheckBox>().forEach {
-            it.isVisible = false
-          }
+        it.isVisible = false
+      }
     }
   }
 
@@ -107,5 +113,4 @@ class HtlAttributeRenameDialog(project: Project,
     val name = attribute?.htlVariableName()
     return arrayOf(name ?: "")
   }
-
 }

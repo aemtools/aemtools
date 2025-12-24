@@ -13,28 +13,32 @@ import com.intellij.psi.xml.XmlTag
 import com.intellij.psi.xml.XmlToken
 
 class AemMissedCqNamespaceInspection : AemIntellijInspection(
-    name = "Add missed 'cq' namespace",
-    groupName = "AEM",
-    description = """
+  name = "Add missed 'cq' namespace",
+  groupName = "AEM",
+  description = """
       Adds missed 'cq' namespace for _cq_dialog.xml or _cq_editConfig.xml
-    """.trimIndent()
+  """.trimIndent()
 ) {
   override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
     return object : XmlElementVisitor() {
       override fun visitXmlTag(tag: XmlTag) {
-        if (tag.containingFile !is XmlFile
-            || tag.name != "jcr:root"
-            || !tag.localNamespaceDeclarations["cq"].isNullOrEmpty()
-            || !tag.isFileWithCqNamespace()) {
+        if (tag.containingFile !is XmlFile ||
+          tag.name != "jcr:root" ||
+          !tag.localNamespaceDeclarations["cq"].isNullOrEmpty() ||
+          !tag.isFileWithCqNamespace()
+        ) {
           return
         }
 
         val xmlToken = tag.findChildrenByType(XmlToken::class.java)
-            .find { it.text == "jcr:root" } ?: return
+          .find { it.text == "jcr:root" } ?: return
 
-        holder.registerProblem(xmlToken, "Missed 'cq' namespace",
-            ProblemHighlightType.ERROR,
-            AddMissedNamespaceAction(tag, "cq"))
+        holder.registerProblem(
+          xmlToken,
+          "Missed 'cq' namespace",
+          ProblemHighlightType.ERROR,
+          AddMissedNamespaceAction(tag, "cq")
+        )
       }
     }
   }

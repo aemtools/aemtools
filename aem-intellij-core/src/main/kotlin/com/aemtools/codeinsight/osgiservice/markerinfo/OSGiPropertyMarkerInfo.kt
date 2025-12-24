@@ -15,14 +15,14 @@ import java.util.function.Supplier
  * @author Dmytro Primshyts
  */
 class OSGiPropertyMarkerInfo(
-        propertyIdentifier: PsiElement,
-        propertyDescriptorsProvider: () -> List<OSGiPropertyDescriptor>
+  propertyIdentifier: PsiElement,
+  propertyDescriptorsProvider: () -> List<OSGiPropertyDescriptor>
 ) : LineMarkerInfo<PsiElement>(
-        propertyIdentifier,
-        propertyIdentifier.textRange,
-        AllIcons.Nodes.PropertyRead,
-        Function { "OSGi Property" },
-        OSGiPropertyNavigationHandler(propertyDescriptorsProvider),
-        GutterIconRenderer.Alignment.CENTER,
-        Supplier { "OSGi Property" }
+  propertyIdentifier,
+  propertyIdentifier.textRange,
+  AllIcons.Nodes.PropertyRead,
+  Function { "OSGi Property" },
+  OSGiPropertyNavigationHandler(propertyDescriptorsProvider),
+  GutterIconRenderer.Alignment.CENTER,
+  Supplier { "OSGi Property" }
 )

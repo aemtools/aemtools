@@ -29,7 +29,7 @@ class HtlDeclarationAttributeRenameHandler : RenameHandler {
 
   override fun isAvailableOnDataContext(dataContext: DataContext): Boolean {
     val attribute = PsiElementRenameHandler.getElement(dataContext) as? XmlAttribute
-        ?: return false
+      ?: return false
 
     return attribute.isHtlGlobalDeclarationAttribute()
   }
@@ -39,8 +39,8 @@ class HtlDeclarationAttributeRenameHandler : RenameHandler {
       return
     }
     val element = getElement(dataContext)
-        ?: BaseRefactoringAction.getElementAtCaret(editor, file)
-        ?: return
+      ?: BaseRefactoringAction.getElementAtCaret(editor, file)
+      ?: return
     if (dataContext == null || file == null) {
       return
     }
@@ -55,7 +55,8 @@ class HtlDeclarationAttributeRenameHandler : RenameHandler {
 
     editor.scrollingModel.scrollToCaret(ScrollType.MAKE_VISIBLE)
     InjectedLanguageManager.getInstance(project).findInjectedElementAt(file, editor.caretModel.offset)?.let {
-      nameSuggestionContext -> RenameUtil.invoke(element, project, nameSuggestionContext, editor)
+        nameSuggestionContext ->
+      RenameUtil.invoke(element, project, nameSuggestionContext, editor)
     }
   }
 

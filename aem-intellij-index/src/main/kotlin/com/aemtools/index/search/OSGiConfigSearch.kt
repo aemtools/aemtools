@@ -32,13 +32,13 @@ object OSGiConfigSearch {
     val configs = getAllConfigs(project)
 
     val mapped = configs
-        .map { OSGiConfiguration(it.path, it.parameters) }
-        .filter { it.fullQualifiedName == fqn }
+      .map { OSGiConfiguration(it.path, it.parameters) }
+      .filter { it.fullQualifiedName == fqn }
     return if (!fillFile) {
       mapped
     } else {
       val fileNames = mapped.map { it.fileName }
-          .toSet()
+        .toSet()
 
       val virtualFiles = fileNames.flatMap {
         FilenameIndex.getVirtualFilesByName(it, GlobalSearchScope.projectScope(project))
@@ -74,5 +74,4 @@ object OSGiConfigSearch {
 
     return xmlConfigs + jsonConfigs
   }
-
 }

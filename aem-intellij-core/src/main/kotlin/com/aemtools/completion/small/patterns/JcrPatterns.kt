@@ -21,16 +21,23 @@ object JcrPatterns : IWithJcrPatterns {
   /**
    * Matches `jcr:root` tag with `cq:ClientLibraryFolder` `jcr:primaryType`.
    */
-  val clientLibraryRootTag = xmlTag().withName("jcr:root").with(xmlTagWithAttribute(
-      "jcr:primaryType", "cq:ClientLibraryFolder"))
+  val clientLibraryRootTag = xmlTag().withName("jcr:root").with(
+    xmlTagWithAttribute(
+      "jcr:primaryType",
+      "cq:ClientLibraryFolder"
+    )
+  )
 
   /**
    * Matches `jcr:root` tag with `rep:ACL` `jcr:primaryType`.
    */
   val aclRootTag = jcrRootTag()
-      .with(xmlTagWithAttribute(
-          "jcr:primaryType", "rep:ACL"
-      ))
+    .with(
+      xmlTagWithAttribute(
+        "jcr:primaryType",
+        "rep:ACL"
+      )
+    )
 
   /**
    * Matches `.content.xml` file.
@@ -53,21 +60,20 @@ object JcrPatterns : IWithJcrPatterns {
    * files.
    */
   val attributeInClientLibraryFolder = PlatformPatterns.psiElement(XML_NAME)
-      .inside(clientLibraryRootTag)
-      .inFile(contentXmlFile)
+    .inside(clientLibraryRootTag)
+    .inFile(contentXmlFile)
 
   /**
    * Matches value of an item within jcr array.
    */
   val jcrArrayValue: PsiElementPattern.Capture<PsiElement> = PlatformPatterns.psiElement()
-      .inside(PlatformPatterns.psiElement(JpTypes.ARRAY))
+    .inside(PlatformPatterns.psiElement(JpTypes.ARRAY))
 
   /**
    * Matches jcr type.
    */
   val jcrType: PsiElementPattern.Capture<PsiElement> = PlatformPatterns.psiElement()
-      .afterLeaf("{")
-
+    .afterLeaf("{")
 }
 
 /**
@@ -78,9 +84,9 @@ object JcrPatterns : IWithJcrPatterns {
  * @param value the value of attribute
  */
 fun xmlTagWithAttribute(name: String, value: String): PatternCondition<XmlTag?> =
-    object : PatternCondition<XmlTag?>("Tag with $name=$value") {
-      override fun accepts(tag: XmlTag, context: ProcessingContext?): Boolean =
-          tag.hasAttribute {
-            it.name == name && it.value == value
-          }
-    }
+  object : PatternCondition<XmlTag?>("Tag with $name=$value") {
+    override fun accepts(tag: XmlTag, context: ProcessingContext?): Boolean =
+      tag.hasAttribute {
+        it.name == name && it.value == value
+      }
+  }

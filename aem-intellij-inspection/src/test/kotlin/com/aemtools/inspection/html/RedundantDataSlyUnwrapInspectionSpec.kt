@@ -1,38 +1,38 @@
 package com.aemtools.inspection.html
 
+import io.kotest.core.spec.style.ShouldSpec
 import org.assertj.core.api.Assertions.assertThat
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.it
-import org.jetbrains.spek.api.dsl.on
 
 /**
  * Specification for [RedundantDataSlyUnwrapInspection].
  * @author Dmytro Primshyts
  */
-object RedundantDataSlyUnwrapInspectionSpec : Spek({
+object RedundantDataSlyUnwrapInspectionSpec : ShouldSpec({
   val tested = RedundantDataSlyUnwrapInspection()
 
-  on("style check") {
-    it("should have correct group display name") {
+  context("style check") {
+    should("have correct group display name") {
       assertThat(tested.groupDisplayName)
-          .isEqualTo("HTL")
+        .isEqualTo("HTL")
     }
 
-    it("should have correct display name") {
+    should("have correct display name") {
       assertThat(tested.displayName)
-          .isEqualTo("data-sly-unwrap is redundant inside sly tag")
+        .isEqualTo("data-sly-unwrap is redundant inside sly tag")
     }
 
-    it("should have correct static description") {
+    should("have correct static description") {
       assertThat(tested.staticDescription)
-          .isEqualTo("""
+        .isEqualTo(
+          """
 <html>
 <body>
 This inspection verifies that <i>data-sly-unwrap</i> is
 <b>not</b> used inside of <i>sly</i> tag
 </body>
 </html>
-          """.trimIndent())
+          """.trimIndent()
+        )
 
     }
   }

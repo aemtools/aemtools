@@ -31,4 +31,3 @@ class HtmlCompletionContributor : BaseCompletionContributor({
 
   basic(dataSlyIncludeNoEl, HtmlDataSlyIncludeCompletionProvider)
 })
-

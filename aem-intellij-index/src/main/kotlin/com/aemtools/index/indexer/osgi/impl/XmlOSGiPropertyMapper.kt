@@ -5,5 +5,5 @@ import com.intellij.psi.xml.XmlAttribute
 
 object XmlOSGiPropertyMapper : OSGiPropertyMapper<XmlAttribute> {
   override fun map(psiElement: XmlAttribute): Pair<String, String?> =
-      psiElement.name to psiElement.value
+    psiElement.name to psiElement.value
 }

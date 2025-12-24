@@ -8,10 +8,9 @@ import com.intellij.psi.NavigatablePsiElement
 /**
  * @author Dmytro Primshyts.
  */
-abstract class HtlELNavigableMixin(node: ASTNode)
-  : ASTWrapperPsiElement(node), NavigatablePsiElement, ContributedReferenceHost {
+abstract class HtlELNavigableMixin(node: ASTNode) :
+  ASTWrapperPsiElement(node), NavigatablePsiElement, ContributedReferenceHost {
   override fun canNavigate(): Boolean = super<ASTWrapperPsiElement>.canNavigate()
 
   override fun canNavigateToSource(): Boolean = super<ASTWrapperPsiElement>.canNavigateToSource()
-
 }

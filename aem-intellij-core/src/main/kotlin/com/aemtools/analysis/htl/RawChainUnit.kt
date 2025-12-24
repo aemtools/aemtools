@@ -23,13 +23,13 @@ import java.util.*
  * @author Dmytro Primshyts
  */
 open class RawChainUnit(
-    val myCallChain: LinkedList<PsiElement>,
-    val myDeclaration: HtlVariableDeclaration? = null) {
+  val myCallChain: LinkedList<PsiElement>,
+  val myDeclaration: HtlVariableDeclaration? = null
+) {
 
   override fun toString(): String {
     return "RawChainUnit(myCallChain=$myCallChain, myDeclaration=$myDeclaration)"
   }
-
 }
 
 /**
@@ -48,14 +48,15 @@ fun PropertyAccessMixin.rawCallChain(): LinkedList<RawChainUnit> {
 
   val declaration = FileVariablesResolver.findDeclaration(firstName, firstElement)
 
-  if (declaration != null
-      && declaration.attributeType !in listOf(
+  if (declaration != null &&
+    declaration.attributeType !in listOf(
       DeclarationAttributeType.LIST_HELPER,
       DeclarationAttributeType.REPEAT_HELPER,
       DeclarationAttributeType.DATA_SLY_USE
-  )) {
+    )
+  ) {
     val propertyAccessMixin = declaration.xmlAttribute
-        .extractHtlHel()?.extractPropertyAccess()
+      .extractHtlHel()?.extractPropertyAccess()
 
     // if property access mixin is available recursively obtain it's call chain
     if (propertyAccessMixin != null) {

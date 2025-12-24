@@ -29,18 +29,20 @@ class HtlStructureViewProvider : PsiStructureViewFactory {
       override fun createStructureViewModel(editor: Editor?): StructureViewModel {
         val _htmlStructureViewBuilder = htmlStructureViewBuilder
         if (_htmlStructureViewBuilder != null && htmlFile != null) {
-          val fileEditor = FileEditorManager.getInstance(psiFile.project).getSelectedEditor(psiFile.virtualFile)
+          val fileEditor = FileEditorManager.getInstance(
+            psiFile.project
+          ).getSelectedEditor(psiFile.virtualFile)
           val viewBuilder = _htmlStructureViewBuilder.createStructureView(fileEditor, psiFile.project)
           return viewBuilder.treeModel
         }
-        return StructureViewModelBase(psiFile,
-            editor,
-            HtlStructureViewElement(psiFile))
+        return StructureViewModelBase(
+          psiFile,
+          editor,
+          HtlStructureViewElement(psiFile)
+        )
       }
     }
-
   }
-
 }
 
 /**

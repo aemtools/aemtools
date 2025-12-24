@@ -11,7 +11,9 @@ interface IssueInfoFactory {
   /**
    * Create detail information about an issue.
    */
-  fun create(event: IdeaLoggingEvent,
-             pluginDescriptor: PluginDescriptor,
-             additionalInfo: String?): GitHubIssue
+  fun create(
+    event: IdeaLoggingEvent,
+    pluginDescriptor: PluginDescriptor,
+    additionalInfo: String?
+  ): GitHubIssue
 }

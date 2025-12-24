@@ -15,5 +15,5 @@ import com.intellij.psi.PsiElement
  * @author Dmytro Primshyts
  */
 class ArrayAccessIdentifierElement(
-    override val element: PsiElement
+  override val element: PsiElement
 ) : BaseChainElement(element, "", TypeDescriptor.empty())

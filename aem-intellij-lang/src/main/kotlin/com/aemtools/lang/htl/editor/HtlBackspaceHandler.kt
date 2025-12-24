@@ -1,6 +1,6 @@
 package com.aemtools.lang.htl.editor
 
-import com.aemtools.common.constant.const.DOLLAR
+import com.aemtools.common.constant.Const.DOLLAR
 import com.aemtools.lang.util.isHtlFile
 import com.intellij.codeInsight.editorActions.BackspaceHandlerDelegate
 import com.intellij.openapi.editor.Editor
@@ -32,7 +32,6 @@ class HtlBackspaceHandler : BackspaceHandlerDelegate() {
         document.replaceString(offset - 1, offset + 1, "")
         return true
       }
-
     }
 
     if (c == '\'') {

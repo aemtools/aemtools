@@ -13,11 +13,12 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Dmytro Primshyts
  */
 class HtlDeclarationReference(
-    val xmlAttribute: XmlAttribute?,
-    val callChainElement: BaseChainElement?,
-    holder: PsiElement,
-    range: TextRange)
-  : PsiReferenceBase<PsiElement>(holder, range, true) {
+  val xmlAttribute: XmlAttribute?,
+  val callChainElement: BaseChainElement?,
+  holder: PsiElement,
+  range: TextRange
+) :
+  PsiReferenceBase<PsiElement>(holder, range, true) {
 
   override fun resolve(): PsiElement? {
     val psiClass = callChainElement?.type?.asResolutionResult()?.psiClass
@@ -39,5 +40,4 @@ class HtlDeclarationReference(
   }
 
   override fun getVariants(): Array<Any> = emptyArray()
-
 }

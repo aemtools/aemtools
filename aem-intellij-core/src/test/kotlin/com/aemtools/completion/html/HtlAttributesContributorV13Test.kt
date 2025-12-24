@@ -1,7 +1,7 @@
 package com.aemtools.completion.html
 
-import com.aemtools.common.constant.const.htl.DATA_SLY_SET
-import com.aemtools.common.constant.const.htl.HTL_ATTRIBUTES
+import com.aemtools.common.constant.Const.Htl.DATA_SLY_SET
+import com.aemtools.common.constant.Const.Htl.HTL_ATTRIBUTES
 import com.aemtools.lang.settings.model.HtlVersion
 
 /**

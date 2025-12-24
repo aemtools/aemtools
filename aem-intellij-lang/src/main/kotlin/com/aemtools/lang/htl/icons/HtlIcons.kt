@@ -30,5 +30,4 @@ object HtlIcons {
   val HTL_ROOT: Icon = icon("/root/htlRoot.png")
 
   private fun icon(name: String) = IconLoader.getIcon("/icons/$name", HtlIcons::class.java)
-
 }

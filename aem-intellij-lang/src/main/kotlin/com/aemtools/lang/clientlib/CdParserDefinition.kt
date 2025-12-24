@@ -22,31 +22,22 @@ import com.intellij.psi.tree.TokenSet
  */
 class CdParserDefinition : ParserDefinition {
 
-  override fun createLexer(project: Project?): Lexer
-      = CdLexer()
+  override fun createLexer(project: Project?): Lexer = CdLexer()
 
-  override fun createParser(project: Project?): PsiParser
-      = CdParser()
+  override fun createParser(project: Project?): PsiParser = CdParser()
 
-  override fun createFile(viewProvider: FileViewProvider): PsiFile
-      = CdPsiFile(viewProvider)
+  override fun createFile(viewProvider: FileViewProvider): PsiFile = CdPsiFile(viewProvider)
 
-  override fun spaceExistenceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements
-      = ParserDefinition.SpaceRequirements.MAY
+  override fun spaceExistenceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements =
+    ParserDefinition.SpaceRequirements.MAY
 
-  override fun getStringLiteralElements(): TokenSet
-      = TokenSet.create()
+  override fun getStringLiteralElements(): TokenSet = TokenSet.create()
 
-  override fun getWhitespaceTokens(): TokenSet
-      = TokenSet.create(TokenType.WHITE_SPACE)
+  override fun getWhitespaceTokens(): TokenSet = TokenSet.create(TokenType.WHITE_SPACE)
 
-  override fun getFileNodeType(): IFileElementType
-      = CdFileElementType
+  override fun getFileNodeType(): IFileElementType = CdFileElementType
 
-  override fun createElement(node: ASTNode?): PsiElement
-      = CdTypes.Factory.createElement(node)
+  override fun createElement(node: ASTNode?): PsiElement = CdTypes.Factory.createElement(node)
 
-  override fun getCommentTokens(): TokenSet
-      = TokenSet.EMPTY
-
+  override fun getCommentTokens(): TokenSet = TokenSet.EMPTY
 }

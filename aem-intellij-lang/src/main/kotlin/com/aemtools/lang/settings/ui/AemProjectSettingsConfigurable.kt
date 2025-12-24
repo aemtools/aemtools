@@ -10,7 +10,7 @@ import javax.swing.JComponent
 /**
  * @author Kostiantyn Diachenko
  */
-class AemProjectSettingsConfigurable(val project: Project): Configurable {
+class AemProjectSettingsConfigurable(val project: Project) : Configurable {
 
   lateinit var component: AemProjectSettingsPanel
 
@@ -23,8 +23,8 @@ class AemProjectSettingsConfigurable(val project: Project): Configurable {
   override fun isModified(): Boolean {
     val newState = component.getPanelState()
     val aemProjectSettings = AemProjectSettings.getInstance(project)
-    return aemProjectSettings.aemVersion != newState.aemVersion
-        || aemProjectSettings.htlVersion != newState.htlVersion
+    return aemProjectSettings.aemVersion != newState.aemVersion ||
+      aemProjectSettings.htlVersion != newState.htlVersion
   }
 
   override fun apply() {

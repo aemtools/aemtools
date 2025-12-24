@@ -20,5 +20,4 @@ class HtlAttributeTargetElementEvaluator : TargetElementEvaluator {
   }
 
   override fun includeSelfInGotoImplementation(element: PsiElement): Boolean = true
-
 }

@@ -29,7 +29,7 @@ object HtlIndexFacade {
    */
   fun resolveUseFile(name: String, psiFile: PsiFile): PsiFile? {
     val extension = PathUtil.getFileExtension(name)
-        ?: return null
+      ?: return null
 
     if (extension !in SLY_USE_EXTENSIONS) {
       return null
@@ -38,11 +38,13 @@ object HtlIndexFacade {
     val normalizedName = normalizeName(name, psiFile) ?: return null
 
     val files = FilenameIndex
-        .getAllFilesByExt(psiFile.project,
-            extension,
-            GlobalSearchScope.projectScope(psiFile.project))
+      .getAllFilesByExt(
+        psiFile.project,
+        extension,
+        GlobalSearchScope.projectScope(psiFile.project)
+      )
     val file = files.find { it.path.endsWith(normalizedName) }
-        ?: return null
+      ?: return null
 
     return file.toPsiFile(psiFile.project)
   }
@@ -56,7 +58,7 @@ object HtlIndexFacade {
    */
   fun resolveIncludeFile(name: String, psiFile: PsiFile): PsiFile? {
     val extension = PathUtil.getFileExtension(name)
-        ?: return null
+      ?: return null
 
     if (extension !in SLY_INCLUDE_EXTENSIONS) {
       return null
@@ -65,11 +67,13 @@ object HtlIndexFacade {
     val normalizedName = normalizeName(name, psiFile) ?: return null
 
     val files = FilenameIndex
-        .getAllFilesByExt(psiFile.project,
-            extension,
-            GlobalSearchScope.projectScope(psiFile.project))
+      .getAllFilesByExt(
+        psiFile.project,
+        extension,
+        GlobalSearchScope.projectScope(psiFile.project)
+      )
     val file = files.find { it.path.endsWith(normalizedName) }
-        ?: return null
+      ?: return null
 
     return file.toPsiFile(psiFile.project)
   }
@@ -84,14 +88,18 @@ object HtlIndexFacade {
   fun includableFiles(relativeToFile: PsiFile): List<PsiFile> {
     val files = SLY_INCLUDE_EXTENSIONS.flatMap { extension ->
       FilenameIndex
-          .getAllFilesByExt(relativeToFile.project, extension, GlobalSearchScope.projectScope(relativeToFile.project))
+        .getAllFilesByExt(
+          relativeToFile.project,
+          extension,
+          GlobalSearchScope.projectScope(relativeToFile.project)
+        )
     }
 
     val relativeToDir = relativeToFile.containingDirectory.virtualFile.path
 
     return files.filter { it.path.startsWith(relativeToDir) }
-        .mapNotNull { it.toPsiFile(relativeToFile.project) }
-        .filterNot { it.name == relativeToFile.name }
+      .mapNotNull { it.toPsiFile(relativeToFile.project) }
+      .filterNot { it.name == relativeToFile.name }
   }
 
   /**
@@ -101,7 +109,7 @@ object HtlIndexFacade {
    * @return list of [TemplateDefinition] objects
    */
   fun getTemplates(project: Project): List<TemplateDefinition> =
-      allFromFbi(HtlTemplateIndex.HTL_TEMPLATE_ID, project)
+    allFromFbi(HtlTemplateIndex.HTL_TEMPLATE_ID, project)
 
   /**
    * Collect all localization models.
@@ -110,7 +118,7 @@ object HtlIndexFacade {
    * @return list of [LocalizationModel] objects
    */
   fun getAllLocalizationModels(project: Project): List<LocalizationModel> =
-      allFromFbi(LOCALIZATION_INDEX, project, GlobalSearchScope.projectScope(project))
+    allFromFbi(LOCALIZATION_INDEX, project, GlobalSearchScope.projectScope(project))
 
   /**
    * Collect all localization keys.
@@ -119,9 +127,9 @@ object HtlIndexFacade {
    * @return list of localization keys
    */
   fun getAllLocalizationKeys(project: Project): List<String> =
-      FileBasedIndex.getInstance().getAllKeys(LOCALIZATION_INDEX, project).map {
-        it.substringAfter("#")
-      }
+    FileBasedIndex.getInstance().getAllKeys(LOCALIZATION_INDEX, project).map {
+      it.substringAfter("#")
+    }
 
   /**
    * Collect localization models that correspond to given key.
@@ -130,10 +138,10 @@ object HtlIndexFacade {
    * @return list of [LocalizationModel] objects
    */
   fun getLocalizationModelsForKey(project: Project, key: String): List<LocalizationModel> =
-      FileBasedIndex.getInstance().let { fbi ->
-        fbi.getAllKeys(LOCALIZATION_INDEX, project).filter { it.endsWith(key) }
-            .flatMap { fbi.getValues(LOCALIZATION_INDEX, it, GlobalSearchScope.projectScope(project)) }
-      }
+    FileBasedIndex.getInstance().let { fbi ->
+      fbi.getAllKeys(LOCALIZATION_INDEX, project).filter { it.endsWith(key) }
+        .flatMap { fbi.getValues(LOCALIZATION_INDEX, it, GlobalSearchScope.projectScope(project)) }
+    }
 
   /**
    * Normalize file name relative to given psi file.
@@ -158,5 +166,4 @@ object HtlIndexFacade {
   }
 
   private fun isAbsolutePath(path: String): Boolean = path.startsWith("/")
-
 }

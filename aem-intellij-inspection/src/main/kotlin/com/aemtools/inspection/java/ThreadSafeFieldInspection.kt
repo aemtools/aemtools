@@ -20,9 +20,9 @@ import com.intellij.psi.search.GlobalSearchScope
  * @author Dmytro Primshyts
  */
 class ThreadSafeFieldInspection : AemIntellijInspection(
-    name = "Thread-safe field inspection",
-    groupName = "AEM",
-    description = """
+  name = "Thread-safe field inspection",
+  groupName = "AEM",
+  description = """
       This inspection checks that <b>Non</b>-threadsafe
       classes aren't used as fields in singleton classes.
       (e.g. filters or servlets)
@@ -33,12 +33,13 @@ class ThreadSafeFieldInspection : AemIntellijInspection(
       override fun visitField(field: PsiField) {
         val containerClass = field.containingClass ?: return
 
-        if (isVulnerableClass(containerClass)
-            && isVulnerableField(field)) {
+        if (isVulnerableClass(containerClass) &&
+          isVulnerableField(field)
+        ) {
           holder.registerProblem(
-              field,
-              "Non-thread safe field.",
-              ProblemHighlightType.ERROR
+            field,
+            "Non-thread safe field.",
+            ProblemHighlightType.ERROR
           )
         }
       }
@@ -60,37 +61,37 @@ class ThreadSafeFieldInspection : AemIntellijInspection(
 
   private fun isVulnerableField(psiField: PsiField): Boolean {
     val fqn = psiField.resolveReturnType()?.toPsiClass()?.qualifiedName
-        ?: return false
+      ?: return false
 
     return fqn in nonThreadSaveTypes
   }
 
   companion object {
     val nonThreadSaveTypes = setOf(
-        "org.apache.sling.api.resource.ResourceResolver",
-        "javax.jcr.Session",
-        "com.day.cq.wcm.api.PageManager",
-        "com.day.cq.wcm.api.components.ComponentManager",
-        "com.day.cq.wcm.api.designer.Designer",
-        "com.day.cq.dam.api.AssetManager",
-        "com.day.cq.tagging.TagManager",
-        "com.day.cq.security.UserManager",
-        "org.apache.jackrabbit.api.security.user.Authorizable",
-        "org.apache.jackrabbit.api.security.user.User",
-        "org.apache.jackrabbit.api.security.user.UserManager"
+      "org.apache.sling.api.resource.ResourceResolver",
+      "javax.jcr.Session",
+      "com.day.cq.wcm.api.PageManager",
+      "com.day.cq.wcm.api.components.ComponentManager",
+      "com.day.cq.wcm.api.designer.Designer",
+      "com.day.cq.dam.api.AssetManager",
+      "com.day.cq.tagging.TagManager",
+      "com.day.cq.security.UserManager",
+      "org.apache.jackrabbit.api.security.user.Authorizable",
+      "org.apache.jackrabbit.api.security.user.User",
+      "org.apache.jackrabbit.api.security.user.UserManager"
     )
 
     val vulnerableInterfaces = setOf(
-        "javax.servlet.Servlet",
-        "javax.servlet.Filter",
-        "org.osgi.service.event.EventHandler"
+      "javax.servlet.Servlet",
+      "javax.servlet.Filter",
+      "org.osgi.service.event.EventHandler"
     )
 
     val vulnerableAnnotations = setOf(
-        "org.apache.felix.scr.annotations.Component",
-        "org.osgi.service.component.annotations.Component",
-        "org.apache.felix.scr.annotations.sling.SlingServlet",
-        "org.apache.felix.scr.annotations.sling.SlingFilter"
+      "org.apache.felix.scr.annotations.Component",
+      "org.osgi.service.component.annotations.Component",
+      "org.apache.felix.scr.annotations.sling.SlingServlet",
+      "org.apache.felix.scr.annotations.sling.SlingFilter"
     )
   }
 }

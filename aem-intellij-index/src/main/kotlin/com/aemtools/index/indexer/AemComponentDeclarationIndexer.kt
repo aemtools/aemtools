@@ -1,6 +1,6 @@
 package com.aemtools.index.indexer
 
-import com.aemtools.common.constant.const.xml.JCR_PRIMARY_TYPE_CQ_COMPONENT
+import com.aemtools.common.constant.Const.Xml.JCR_PRIMARY_TYPE_CQ_COMPONENT
 import com.aemtools.common.util.getXmlFile
 import com.aemtools.index.model.AemComponentDefinition
 import com.intellij.util.indexing.DataIndexer
@@ -15,14 +15,14 @@ object AemComponentDeclarationIndexer : DataIndexer<String, AemComponentDefiniti
 
     if (content.contains(JCR_PRIMARY_TYPE_CQ_COMPONENT)) {
       val file = inputData.psiFile.getXmlFile()
-          ?: return mutableMapOf()
+        ?: return mutableMapOf()
 
       val mainTag = file.rootTag
-          ?: return mutableMapOf()
+        ?: return mutableMapOf()
 
       val key = inputData.file.path
       val aemComponentDefinition = AemComponentDefinition.fromTag(mainTag, key)
-          ?: return mutableMapOf()
+        ?: return mutableMapOf()
 
       return mutableMapOf(key to aemComponentDefinition)
     }

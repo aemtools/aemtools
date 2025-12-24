@@ -8,12 +8,12 @@ import com.intellij.codeInsight.lookup.LookupElement
  * @author Dmytro Primshyts
  */
 class MockTypeDescriptor(
-    val name: String,
-    val nameInParent: String?,
-    val array: Boolean,
-    val map: Boolean,
-    val iterable: Boolean,
-    val subtypes: List<MockTypeDescriptor>
+  val name: String,
+  val nameInParent: String?,
+  val array: Boolean,
+  val map: Boolean,
+  val iterable: Boolean,
+  val subtypes: List<MockTypeDescriptor>
 ) : TypeDescriptor {
   override fun myVariants(): List<LookupElement> = subtypes.map {
     lookupElement(it.nameInParent ?: it.name)
@@ -30,11 +30,11 @@ class MockTypeDescriptor(
   override fun isMap(): Boolean = map
 }
 
-fun typeDescriptor(typeDescriptorDsl: TypeDescriptorDsl.() -> Unit)
-    : TypeDescriptor = TypeDescriptorDsl().run {
-  typeDescriptorDsl()
-  build()
-}
+fun typeDescriptor(typeDescriptorDsl: TypeDescriptorDsl.() -> Unit): TypeDescriptor =
+  TypeDescriptorDsl().run {
+    typeDescriptorDsl()
+    build()
+  }
 
 class TypeDescriptorDsl {
   var array: Boolean = false
@@ -53,24 +53,24 @@ class TypeDescriptorDsl {
       TypeDescriptorDsl().apply { it() }
     }.map {
       MockTypeDescriptor(
-          it.name,
-          it.nameInParent,
-          it.array,
-          it.map,
-          it.iterable,
-          it.subtypes.map {
-            TypeDescriptorDsl().apply { it() }
-                .build()
-          }
+        it.name,
+        it.nameInParent,
+        it.array,
+        it.map,
+        it.iterable,
+        it.subtypes.map {
+          TypeDescriptorDsl().apply { it() }
+            .build()
+        }
       )
     }
     return MockTypeDescriptor(
-        name,
-        nameInParent,
-        array,
-        map,
-        iterable,
-        subtypes
+      name,
+      nameInParent,
+      array,
+      map,
+      iterable,
+      subtypes
     )
   }
 }

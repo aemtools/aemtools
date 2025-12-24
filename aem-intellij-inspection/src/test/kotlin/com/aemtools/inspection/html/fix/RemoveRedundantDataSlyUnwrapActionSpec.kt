@@ -1,6 +1,6 @@
 package com.aemtools.inspection.html.fix
 
-import com.aemtools.test.util.memo
+import com.aemtools.test.util.mock
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
@@ -9,12 +9,8 @@ import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiFile
 import com.intellij.psi.SmartPsiElementPointer
 import com.intellij.psi.xml.XmlAttribute
+import io.kotest.core.spec.style.ShouldSpec
 import org.assertj.core.api.Assertions.assertThat
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.describe
-import org.jetbrains.spek.api.dsl.it
-import org.jetbrains.spek.api.dsl.on
-import org.junit.runner.RunWith
 import org.mockito.Mockito.*
 
 /**
@@ -22,70 +18,70 @@ import org.mockito.Mockito.*
  *
  * @author Dmytro Primshyts
  */
-object RemoveRedundantDataSlyUnwrapActionSpec : Spek({
-  val xmlAttributePointer: SmartPsiElementPointer<XmlAttribute> by memo()
-  val xmlAttribute: XmlAttribute by memo()
-  val psiDocumentManager: PsiDocumentManager by memo()
-  val project: Project by memo()
-  val document: Document by memo()
-  val psiFile: PsiFile by memo()
-  val editor: Editor by memo()
-  val tested by memo {
+object RemoveRedundantDataSlyUnwrapActionSpec : ShouldSpec({
+  val xmlAttributePointer: SmartPsiElementPointer<XmlAttribute> = mock()
+  val xmlAttribute: XmlAttribute = mock()
+  val psiDocumentManager: PsiDocumentManager = mock()
+  val project: Project = mock()
+  val document: Document = mock()
+  val psiFile: PsiFile = mock()
+  val editor: Editor = mock()
+  val tested =
     RemoveRedundantDataSlyUnwrapAction(
-        xmlAttributePointer
+      xmlAttributePointer
     )
-  }
 
-  on("style check") {
-    it("should have correct family") {
+
+  context("style check") {
+    should("have correct family") {
       assertThat(tested.familyName)
-          .isEqualTo("HTL Intentions")
+        .isEqualTo("HTL Intentions")
     }
-    it("should have correct text") {
+    should("have correct text") {
       assertThat(tested.text)
-          .isEqualTo("Remove attribute.")
+        .isEqualTo("Remove attribute.")
     }
   }
 
-  describe("invoke") {
-    beforeEachTest {
+  context("invoke") {
+    beforeEach {
       `when`(xmlAttributePointer.element)
-          .thenReturn(xmlAttribute)
+        .thenReturn(xmlAttribute)
       `when`(project.getService(PsiDocumentManager::class.java))
-          .thenReturn(psiDocumentManager)
+        .thenReturn(psiDocumentManager)
       `when`(psiDocumentManager.getDocument(psiFile))
-          .thenReturn(document)
+        .thenReturn(document)
       `when`(xmlAttribute.textRange)
-          .thenReturn(TextRange.create(10, 20))
+        .thenReturn(TextRange.create(10, 20))
     }
 
-    it("should ignore if no element available") {
+    should("ignore if no element available") {
       `when`(xmlAttributePointer.element)
-          .thenReturn(null)
+        .thenReturn(null)
 
       tested.invoke(project, editor, psiFile)
 
       verify(project, never())
-          .getService(PsiDocumentManager::class.java)
+        .getService(PsiDocumentManager::class.java)
     }
 
-    it("should ignore if no document available") {
+    should("ignore if no document available") {
       `when`(psiDocumentManager.getDocument(psiFile))
-          .thenReturn(null)
+        .thenReturn(null)
 
       tested.invoke(project, editor, psiFile)
 
       verify(xmlAttribute, never())
-          .textRange
+        .textRange
     }
 
-    it("should replace if everything fine") {
+    should("replace if everything fine") {
       tested.invoke(project, editor, psiFile)
 
       verify(document)
-          .replaceString(10, 20, "")
+        .replaceString(10, 20, "")
       verify(psiDocumentManager)
-          .commitDocument(document)
+        .commitDocument(document)
     }
   }
 

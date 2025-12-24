@@ -28,9 +28,10 @@ import com.intellij.psi.PsiElement
  */
 class HtlVariablesAnnotator : Annotator, DumbAware {
   override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-    if (element !is VariableNameMixin
-        || element.isOption()
-        || element.hasParentOfType(HtlAccessIdentifier::class.java)) {
+    if (element !is VariableNameMixin ||
+      element.isOption() ||
+      element.hasParentOfType(HtlAccessIdentifier::class.java)
+    ) {
       return
     }
 
@@ -46,17 +47,19 @@ class HtlVariablesAnnotator : Annotator, DumbAware {
       }
 
       else -> {
-        val annotationBuilder = holder.createInfoAnnotationBuilder(element,
-            HTL_EL_UNRESOLVED_VARIABLE,
-            "Cannot resolve symbol '$name'")
+        val annotationBuilder = holder.createInfoAnnotationBuilder(
+          element,
+          HTL_EL_UNRESOLVED_VARIABLE,
+          "Cannot resolve symbol '$name'"
+        )
 
         val similar = findSimilarVariable(element, contextObjects, name)
         if (similar != null) {
           annotationBuilder.withFix(
-              VariableNameErrataIntentionAction(
-                  similar,
-                  element.toSmartPointer()
-              )
+            VariableNameErrataIntentionAction(
+              similar,
+              element.toSmartPointer()
+            )
           )
         }
         annotationBuilder.create()
@@ -64,16 +67,20 @@ class HtlVariablesAnnotator : Annotator, DumbAware {
     }
   }
 
-  private fun findSimilarVariable(element: PsiElement,
-                                  contextObjects: List<ContextObject>,
-                                  name: String): String? {
+  private fun findSimilarVariable(
+    element: PsiElement,
+    contextObjects: List<ContextObject>,
+    name: String
+  ): String? {
     val variables = FileVariablesResolver.declarationsForPosition(element)
 
-    val availableNames = (variables.map { it.variableName }
-        + contextObjects.map { it.name })
+    val availableNames = (
+      variables.map { it.variableName } +
+        contextObjects.map { it.name }
+      )
 
     val closest = name.closest(availableNames.toSet())
-        ?: return null
+      ?: return null
 
     return if (closest.distanceTo(name) < name.length / 2) {
       closest
@@ -81,5 +88,4 @@ class HtlVariablesAnnotator : Annotator, DumbAware {
       null
     }
   }
-
 }

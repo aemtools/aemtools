@@ -4,8 +4,8 @@ package com.aemtools.completion.model.htl
  * @author Dmytro Primshyts
  */
 data class HtlAttributeIdentifierDescription(
-    val required: String?,
-    val description: String?
+  val required: String?,
+  val description: String?
 ) {
 
   /**
@@ -14,5 +14,5 @@ data class HtlAttributeIdentifierDescription(
    * @return *true* if description is not empty, *false* otherwise
    */
   fun isNotEmpty() =
-      required != null || description != null
+    required != null || description != null
 }

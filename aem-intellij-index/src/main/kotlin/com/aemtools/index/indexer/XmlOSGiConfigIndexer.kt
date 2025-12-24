@@ -1,7 +1,7 @@
 package com.aemtools.index.indexer
 
-import com.aemtools.common.constant.const
-import com.aemtools.common.constant.const.JCR_PRIMARY_TYPE
+import com.aemtools.common.constant.Const
+import com.aemtools.common.constant.Const.JCR_PRIMARY_TYPE
 import com.aemtools.common.util.getXmlFile
 import com.aemtools.index.indexer.osgi.impl.XmlOSGiPropertyMapper
 import com.aemtools.index.model.OSGiConfigurationIndexModel
@@ -15,21 +15,21 @@ object XmlOSGiConfigIndexer : DataIndexer<String, OSGiConfigurationIndexModel, F
   override fun map(inputData: FileContent): MutableMap<String, OSGiConfigurationIndexModel> {
     val content = inputData.contentAsText
 
-    if (content.contains(const.xml.JCR_PRIMARY_TYPE_OSGI_CONFIG)) {
+    if (content.contains(Const.Xml.JCR_PRIMARY_TYPE_OSGI_CONFIG)) {
       val file = inputData.psiFile.getXmlFile()
-          ?: return mutableMapOf()
+        ?: return mutableMapOf()
 
       val mainTag = file.rootTag
-          ?: return mutableMapOf()
+        ?: return mutableMapOf()
 
       val attributes = mainTag.attributes
-          .filterNot {
-            it.name == JCR_PRIMARY_TYPE
-                || it.name == "xmlns:sling"
-                || it.name == "xmlns:jcr"
-          }
+        .filterNot {
+          it.name == JCR_PRIMARY_TYPE ||
+            it.name == "xmlns:sling" ||
+            it.name == "xmlns:jcr"
+        }
       val parameters = attributes.map { XmlOSGiPropertyMapper.map(it) }
-          .toMap()
+        .toMap()
       val path = inputData.file.path
       return mutableMapOf(path to OSGiConfigurationIndexModel(path, parameters))
     }

@@ -38,13 +38,13 @@ class PropertiesTypeDescriptor(val element: PsiElement) : BaseTypeDescriptor() {
     touchUIDialog?.let {
       return it.myParameters.map {
         it.toLookupElement()
-            .withPriority(DIALOG_PROPERTY)
+          .withPriority(DIALOG_PROPERTY)
       }
     }
     classicDialog?.let {
       return it.myParameters.map {
         it.toLookupElement()
-            .withPriority(DIALOG_PROPERTY)
+          .withPriority(DIALOG_PROPERTY)
       }
     }
     return emptyList()
@@ -53,18 +53,18 @@ class PropertiesTypeDescriptor(val element: PsiElement) : BaseTypeDescriptor() {
   override fun subtype(identifier: String): TypeDescriptor {
     touchUIDialog?.let {
       return TouchDialogPropertyTypeDescriptor(
-          identifier,
-          element,
-          it)
+        identifier,
+        element,
+        it
+      )
     }
     classicDialog?.let {
       return ClassicDialogPropertyTypeDescriptor(
-          identifier,
-          element,
-          it
+        identifier,
+        element,
+        it
       )
     }
     return TypeDescriptor.empty()
   }
-
 }

@@ -15,32 +15,32 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 object HtlListSmartCompletionProvider : CompletionProvider<CompletionParameters>() {
-  override fun addCompletions(parameters: CompletionParameters,
-                              context: ProcessingContext,
-                              result: CompletionResultSet) {
+  override fun addCompletions(
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     val currentPosition = parameters.position
 
     val useObjects = FileVariablesResolver.declarationsForPosition(currentPosition)
-        .mapNotNull { it as? HtlUseVariableDeclaration }
+      .mapNotNull { it as? HtlUseVariableDeclaration }
 
     useObjects.mapNotNull { useObject ->
       val virtualCallChainElement = useObject.toVirtualCallChainElement() ?: return@mapNotNull null
 
       VirtualChainResolver.nestedIterables(virtualCallChainElement)
     }.flatten()
-        .let { lookupElements ->
-          result.addAllElements(lookupElements)
-          result.stopHere()
-        }
-
+      .let { lookupElements ->
+        result.addAllElements(lookupElements)
+        result.stopHere()
+      }
   }
-
 }
 
 private fun HtlUseVariableDeclaration.toVirtualCallChainElement(): VirtualCallChainElement? {
   val psiClass = useClass() ?: return null
   return BaseVirtualCallChainElement(
-      variableName,
-      JavaPsiClassTypeDescriptor.create(psiClass)
+    variableName,
+    JavaPsiClassTypeDescriptor.create(psiClass)
   )
 }

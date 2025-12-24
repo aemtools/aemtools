@@ -1,7 +1,7 @@
 package com.aemtools.service.repository.inmemory
 
 import com.aemtools.completion.model.editconfig.XmlTagDefinition
-import com.aemtools.service.repository.const
+import com.aemtools.service.repository.Const
 import com.aemtools.service.repository.inmemory.util.FileUtils
 import com.aemtools.service.repository.inmemory.util.XmlTagDefinitionDeserializer
 import com.google.gson.GsonBuilder
@@ -18,14 +18,14 @@ object RepPolicyRepository {
   }
 
   private fun loadData() {
-    val jsonString = FileUtils.readFileAsString(const.file.REP_POLICY)
+    val jsonString = FileUtils.readFileAsString(Const.File.REP_POLICY)
 
     val gson = GsonBuilder()
-        .registerTypeAdapter(XmlTagDefinition::class.java, XmlTagDefinitionDeserializer())
-        .create()
+      .registerTypeAdapter(XmlTagDefinition::class.java, XmlTagDefinitionDeserializer())
+      .create()
 
     val result: Array<XmlTagDefinition> =
-        gson.fromJson(jsonString, emptyArray<XmlTagDefinition>().javaClass)
+      gson.fromJson(jsonString, emptyArray<XmlTagDefinition>().javaClass)
 
     data.addAll(result)
   }

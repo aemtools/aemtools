@@ -16,9 +16,10 @@ import com.intellij.util.ProcessingContext
  */
 object HtlElMemberAccessCompletionProvider : CompletionProvider<CompletionParameters>() {
   override fun addCompletions(
-      parameters: CompletionParameters,
-      context: ProcessingContext,
-      result: CompletionResultSet) {
+    parameters: CompletionParameters,
+    context: ProcessingContext,
+    result: CompletionResultSet
+  ) {
     val currentPosition = parameters.position
     val resolutionResult = resolve(currentPosition)
 
@@ -37,14 +38,13 @@ object HtlElMemberAccessCompletionProvider : CompletionProvider<CompletionParame
    */
   fun resolve(element: PsiElement): ResolutionResult {
     val propertyAccessElement = element.findParentByType(PropertyAccessMixin::class.java)
-        ?: return ResolutionResult()
+      ?: return ResolutionResult()
 
     val chain = propertyAccessElement.callchain()
-        ?: return ResolutionResult()
+      ?: return ResolutionResult()
     val lastSegment = chain.callChainSegments.lastOrNull()
-        ?: return ResolutionResult()
+      ?: return ResolutionResult()
 
     return lastSegment.resolveSelectedItem()
   }
-
 }

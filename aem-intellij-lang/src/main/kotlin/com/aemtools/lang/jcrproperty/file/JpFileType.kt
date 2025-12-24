@@ -3,8 +3,6 @@ package com.aemtools.lang.jcrproperty.file
 import com.aemtools.lang.jcrproperty.JcrPropertyLanguage
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.fileTypes.LanguageFileType
-import com.intellij.openapi.fileTypes.ex.FakeFileType
-import com.intellij.openapi.vfs.VirtualFile
 import javax.swing.Icon
 
 /**
@@ -24,5 +22,4 @@ object JpFileType : LanguageFileType(JcrPropertyLanguage) {
   }
 
   override fun getIcon(): Icon = AllIcons.FileTypes.Properties
-
 }
