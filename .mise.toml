@@ -1,0 +1,26 @@
+[tools]
+java = "openjdk-21"
+
+[tasks.build]
+description = "Build the plugin"
+run = "./gradlew buildPlugin"
+
+[tasks.test]
+description = "Run tests"
+run = "./gradlew test"
+
+[tasks.clean]
+description = "Clean build artifacts"
+run = "./gradlew clean"
+
+[tasks.check]
+description = "Run all checks"
+run = "./gradlew check koverHtmlReport"
+
+[tasks.verify]
+description = "Verify the plugin"
+run = "./gradlew verifyPlugin"
+
+[tasks.run]
+description = "Run IDE with plugin"
+run = "./gradlew runIde"

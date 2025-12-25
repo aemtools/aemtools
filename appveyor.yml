@@ -1,3 +1,10 @@
+branches:
+  only:
+    - develop
+
+pull_requests:
+  disable: true
+
 build:
   verbosity: detailed
 

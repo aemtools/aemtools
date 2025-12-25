@@ -5,6 +5,7 @@ import com.aemtools.lang.settings.model.AemVersion
 import com.intellij.notification.NotificationType
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture
+import kotlinx.coroutines.test.runTest
 
 class VersionsDiscoveringStartupActivityTest : BasePlatformTestCase() {
   fun fixture(): CodeInsightTestFixture = myFixture
@@ -89,7 +90,7 @@ class VersionsDiscoveringStartupActivityTest : BasePlatformTestCase() {
   }
 
   private fun testDependency(dependencyParamsUnit: DependencyParams.() -> Unit,
-                             expectedAemVersion: AemVersion? = null) {
+                             expectedAemVersion: AemVersion? = null) = runTest {
     val dependencyParams = DependencyParams().apply(dependencyParamsUnit)
     fixture().addFileToProject("pom.xml", dependencyParams.wrapInPomDependency())
 

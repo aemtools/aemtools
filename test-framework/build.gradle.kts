@@ -3,6 +3,7 @@ import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 
 fun properties(key: String) = providers.gradleProperty(key).get()
 val platformBundledPlugins = properties("platformBundledPlugins")
+val platformType = properties("platformType")
 val platformVersion = properties("platformVersion")
 val mockitoKotlinVersion = properties("mockitoKotlinVersion")
 val spekVersion = properties("spekVersion")
@@ -31,8 +32,8 @@ intellijPlatform {
 
 dependencies {
   intellijPlatform {
-    intellijIdeaCommunity(platformVersion)
-    bundledPlugins(platformBundledPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
+    //create(platformType, platformVersion)
+    //bundledPlugins(platformBundledPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
 
     testFramework(TestFrameworkType.Platform, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
     testFramework(TestFrameworkType.Plugin.Java, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
