@@ -8,40 +8,40 @@ import com.intellij.psi.PsiClass
  */
 object JavaUtilities {
 
-  /**
-   * Check if given class is [java.lang.Iterable].
-   *
-   * @param psiClass class to check
-   * @return *true* if given class implements iterable interface,
-   * *false* otherwise
-   */
-  fun isIterable(psiClass: PsiClass): Boolean =
-    isInheritorOf(psiClass, Const.Java.ITERABLE)
+    /**
+     * Check if given class is [java.lang.Iterable].
+     *
+     * @param psiClass class to check
+     * @return *true* if given class implements iterable interface,
+     * *false* otherwise
+     */
+    fun isIterable(psiClass: PsiClass): Boolean =
+        isInheritorOf(psiClass, Const.Java.ITERABLE)
 
-  /**
-   * Check if given class is [java.util.Iterator].
-   *
-   * @param psiClass class to check
-   * @return *true* if given class implements iterator interface,
-   * *false* otherwise
-   */
-  fun isIterator(psiClass: PsiClass): Boolean =
-    isInheritorOf(psiClass, Const.Java.ITERATOR)
+    /**
+     * Check if given class is [java.util.Iterator].
+     *
+     * @param psiClass class to check
+     * @return *true* if given class implements iterator interface,
+     * *false* otherwise
+     */
+    fun isIterator(psiClass: PsiClass): Boolean =
+        isInheritorOf(psiClass, Const.Java.ITERATOR)
 
-  /**
-   * Check if given class is [java.util.Map].
-   *
-   * @param psiClass class to check
-   * @return *true* if given class implements map interface,
-   * *false* otherwise
-   */
-  fun isMap(psiClass: PsiClass): Boolean =
-    isInheritorOf(psiClass, Const.Java.MAP)
+    /**
+     * Check if given class is [java.util.Map].
+     *
+     * @param psiClass class to check
+     * @return *true* if given class implements map interface,
+     * *false* otherwise
+     */
+    fun isMap(psiClass: PsiClass): Boolean =
+        isInheritorOf(psiClass, Const.Java.MAP)
 
-  private fun isInheritorOf(psiClass: PsiClass, other: String): Boolean {
-    val otherClass = JavaSearch.findClass(other, psiClass.project)
-      ?: return false
-    return psiClass.isEquivalentTo(otherClass) ||
-      psiClass.isInheritor(otherClass, true)
-  }
+    private fun isInheritorOf(psiClass: PsiClass, other: String): Boolean {
+        val otherClass = JavaSearch.findClass(other, psiClass.project)
+            ?: return false
+        return psiClass.isEquivalentTo(otherClass) ||
+            psiClass.isInheritor(otherClass, true)
+    }
 }

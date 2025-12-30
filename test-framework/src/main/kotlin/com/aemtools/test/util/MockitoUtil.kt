@@ -25,6 +25,6 @@ fun <T> anyKotlin(): T = any()
  * @param service service that should be attached
  */
 inline fun <reified SERVICE> mockComponent(project: Project, service: SERVICE) {
-  `when`(project.getComponent(SERVICE::class.java))
-    .thenReturn(service)
+    `when`(project.getComponent(SERVICE::class.java))
+        .thenReturn(service)
 }

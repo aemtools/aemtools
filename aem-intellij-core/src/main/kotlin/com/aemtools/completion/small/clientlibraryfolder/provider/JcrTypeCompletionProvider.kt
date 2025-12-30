@@ -11,33 +11,33 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 object JcrTypeCompletionProvider : CompletionProvider<CompletionParameters>() {
-  override fun addCompletions(
-    parameters: CompletionParameters,
-    context: ProcessingContext,
-    result: CompletionResultSet
-  ) {
-    if (result.isStopped) {
-      return
-    }
+    override fun addCompletions(
+        parameters: CompletionParameters,
+        context: ProcessingContext,
+        result: CompletionResultSet
+    ) {
+        if (result.isStopped) {
+            return
+        }
 
-    result.addAllElements(
-      listOf(
-        "String",
-        "Binary",
-        "Long",
-        "Double",
-        "Decimal",
-        "Date",
-        "Boolean",
-        "Name",
-        "Path",
-        "Reference",
-        "WeakReference",
-        "URI"
-      ).map {
-        lookupElement(it)
-          .withInsertHandler(JcrPropertyTypeCloseBraceInsertHandler())
-      }
-    )
-  }
+        result.addAllElements(
+            listOf(
+                "String",
+                "Binary",
+                "Long",
+                "Double",
+                "Decimal",
+                "Date",
+                "Boolean",
+                "Name",
+                "Path",
+                "Reference",
+                "WeakReference",
+                "URI"
+            ).map {
+                lookupElement(it)
+                    .withInsertHandler(JcrPropertyTypeCloseBraceInsertHandler())
+            }
+        )
+    }
 }

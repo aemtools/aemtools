@@ -34,37 +34,37 @@ import com.intellij.psi.tree.IElementType
  * @author Dmytro Primshyts
  */
 class ElHighlighter : SyntaxHighlighterBase() {
-  override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
-    return pack(map(tokenType))
-  }
+    override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
+        return pack(map(tokenType))
+    }
 
-  override fun getHighlightingLexer(): Lexer = ElHighlightingLexer()
+    override fun getHighlightingLexer(): Lexer = ElHighlightingLexer()
 
-  private fun map(tokenType: IElementType?) = when (tokenType) {
-    AND0, AND1,
-    OR0, OR1,
-    LE0, LE1,
-    GE0, GE1,
-    LT0, LT1,
-    GT0, GT0,
-    NULL_LITERAL_TOKEN,
-    EMPTY_ARRAY,
-    BOOLEAN_LITERAL -> ElColors.OPERATOR
+    private fun map(tokenType: IElementType?) = when (tokenType) {
+        AND0, AND1,
+        OR0, OR1,
+        LE0, LE1,
+        GE0, GE1,
+        LT0, LT1,
+        GT0, GT0,
+        NULL_LITERAL_TOKEN,
+        EMPTY_ARRAY,
+        BOOLEAN_LITERAL -> ElColors.OPERATOR
 
-    STRING_LITERAL -> ElColors.STRING
+        STRING_LITERAL -> ElColors.STRING
 
-    INTEGER_LITERAL -> ElColors.INTEGER
+        INTEGER_LITERAL -> ElColors.INTEGER
 
-    IDENTIFIER_TOKEN -> ElColors.IDENTIFIER
+        IDENTIFIER_TOKEN -> ElColors.IDENTIFIER
 
-    LBRACK, RBRACK -> ElColors.BRACKET
+        LBRACK, RBRACK -> ElColors.BRACKET
 
-    LPAREN, RPAREN -> ElColors.PARENTHESES
+        LPAREN, RPAREN -> ElColors.PARENTHESES
 
-    START_DEFERRED_EXPRESSION,
-    START_DYNAMIC_EXPRESSION,
-    END_EXPRESSION -> ElColors.DELIMITER
+        START_DEFERRED_EXPRESSION,
+        START_DYNAMIC_EXPRESSION,
+        END_EXPRESSION -> ElColors.DELIMITER
 
-    else -> null
-  }
+        else -> null
+    }
 }

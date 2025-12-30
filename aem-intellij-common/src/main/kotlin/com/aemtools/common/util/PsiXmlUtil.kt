@@ -16,7 +16,7 @@ import com.intellij.xml.util.IncludedXmlAttribute
  * @see [PsiTreeUtil.findChildrenOfType]
  */
 fun <T : PsiElement> PsiElement?.findChildrenByType(type: Class<T>): Collection<T> {
-  return PsiTreeUtil.findChildrenOfType(this, type)
+    return PsiTreeUtil.findChildrenOfType(this, type)
 }
 
 /**
@@ -29,30 +29,30 @@ fun <T : PsiElement> PsiElement?.findChildrenByType(type: Class<T>): Collection<
  */
 @Suppress("UNCHECKED_CAST")
 fun <T : PsiElement> PsiElement?.findParentByType(
-  type: Class<T>,
-  strict: Boolean = false
+    type: Class<T>,
+    strict: Boolean = false
 ): T? {
-  return PsiTreeUtil.findFirstParent(
-    this,
-    strict,
-    Conditions.instanceOf(type)
-  ) as? T?
+    return PsiTreeUtil.findFirstParent(
+        this,
+        strict,
+        Conditions.instanceOf(type)
+    ) as? T?
 }
 
 private fun <T : PsiElement> PsiElement?.findParentsByType(
-  type: Class<T>,
-  strict: Boolean = false
+    type: Class<T>,
+    strict: Boolean = false
 ): List<T> {
-  var element: T? = null
-  return generateSequence {
-    val next = (element ?: this).findParentByType(type, strict)
-    if (next?.text?.contains(IDEA_STRING_CARET_PLACEHOLDER) == true) {
-      element = next.findParentByType(type, strict)
+    var element: T? = null
+    return generateSequence {
+        val next = (element ?: this).findParentByType(type, strict)
+        if (next?.text?.contains(IDEA_STRING_CARET_PLACEHOLDER) == true) {
+            element = next.findParentByType(type, strict)
+        }
+        element = next
+        element
     }
-    element = next
-    element
-  }
-    .toList()
+        .toList()
 }
 
 /**
@@ -65,11 +65,11 @@ private fun <T : PsiElement> PsiElement?.findParentsByType(
  * @return the element
  */
 fun <T : PsiElement> PsiElement?.findParentByType(
-  type: Class<T>,
-  predicate: (T) -> Boolean,
-  strict: Boolean = false
+    type: Class<T>,
+    predicate: (T) -> Boolean,
+    strict: Boolean = false
 ): T? =
-  this.findParentsByType(type, strict).firstOrNull { predicate.invoke(it) }
+    this.findParentsByType(type, strict).firstOrNull { predicate.invoke(it) }
 
 /**
  * Check if current [PsiElement] has parent of specified class.
@@ -78,7 +78,7 @@ fun <T : PsiElement> PsiElement?.findParentByType(
  * @return *true* if current element has parent of specified type, *false* otherwise
  */
 fun <T : PsiElement> PsiElement?.hasParentOfType(type: Class<T>): Boolean =
-  this.findParentByType(type) != null
+    this.findParentByType(type) != null
 
 /**
  * Check if current [PsiElement] has parent which is evaluates to *true* by given predicate.
@@ -88,14 +88,14 @@ fun <T : PsiElement> PsiElement?.hasParentOfType(type: Class<T>): Boolean =
  * @return *true* if this psi element has element that conforms to given predicate, *false* otherwise
  */
 fun <T : PsiElement> T.hasParent(predicate: (element: PsiElement) -> Boolean): Boolean {
-  var parent = this.parent
-  while (parent != null) {
-    if (predicate.invoke(parent)) {
-      return true
+    var parent = this.parent
+    while (parent != null) {
+        if (predicate.invoke(parent)) {
+            return true
+        }
+        parent = parent.parent
     }
-    parent = parent.parent
-  }
-  return false
+    return false
 }
 
 /**
@@ -105,7 +105,7 @@ fun <T : PsiElement> T.hasParent(predicate: (element: PsiElement) -> Boolean): B
  * @return *true* if current element has one or more children of specified type
  */
 fun <T : PsiElement> PsiElement?.hasChild(type: Class<T>): Boolean =
-  this.findChildrenByType(type).isNotEmpty()
+    this.findChildrenByType(type).isNotEmpty()
 
 /**
  * Check if current [XmlTag] contains at least one attribute matched by
@@ -115,7 +115,7 @@ fun <T : PsiElement> PsiElement?.hasChild(type: Class<T>): Boolean =
  * @return *true* if current tag has matching attribute
  */
 infix fun XmlTag.hasAttribute(matcher: XmlAttributeMatcher): Boolean =
-  attributes.any(matcher)
+    attributes.any(matcher)
 
 typealias XmlAttributeMatcher = (attribute: XmlAttribute) -> Boolean
 
@@ -127,10 +127,10 @@ typealias XmlAttributeMatcher = (attribute: XmlAttribute) -> Boolean
  * @return xml attribute matcher
  */
 fun xmlAttributeMatcher(name: String, value: String? = null): XmlAttributeMatcher =
-  {
-    it.name == name &&
-      (value == null || it.value == value)
-  }
+    {
+        it.name == name &&
+            (value == null || it.value == value)
+    }
 
 /**
  * Check if current [XmlAttribute] is doublequoted attributed. e.g.:
@@ -144,7 +144,7 @@ fun xmlAttributeMatcher(name: String, value: String? = null): XmlAttributeMatche
  * @return *true* if current attribute is doublequoted, *false* otherwise
  */
 fun XmlAttribute.isDoubleQuoted(): Boolean {
-  return this.valueElement?.text?.startsWith("\"") ?: false
+    return this.valueElement?.text?.startsWith("\"") ?: false
 }
 
 /**
@@ -162,5 +162,5 @@ fun XmlAttribute.nameRange(): TextRange = this.nameElement.textRange
  * @return navigatable element
  */
 fun XmlAttribute.toNavigatable(): IncludedXmlAttribute {
-  return IncludedXmlAttribute(this, this.parent)
+    return IncludedXmlAttribute(this, this.parent)
 }

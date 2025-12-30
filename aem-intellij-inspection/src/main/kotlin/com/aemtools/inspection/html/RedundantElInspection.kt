@@ -19,39 +19,39 @@ import com.intellij.psi.PsiElementVisitor
  * @author Dmytro Primshyts
  */
 class RedundantElInspection : AemIntellijInspection(
-  groupName = "HTL",
-  name = "Redundant HTL expression",
-  description = """
+    groupName = "HTL",
+    name = "Redundant HTL expression",
+    description = """
       This inspection checks if HTL expression is used in `data-sly-use` or `data-sly-include` attributes
       without reason. Expression may be required in case if there is necessity to pass some arguments
       via "option" arguments, otherwise expression is redundant
-  """.trimIndent()
+    """.trimIndent()
 ) {
-  override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
-    return object : HtlElementVisitor() {
-      override fun visitHtlExpression(htlExpression: HtlElExpressionMixin) {
-        withServices(htlExpression.project) { service: IInspectionService ->
-          if (hasDefect(htlExpression)) {
-            service.reportRedundantEl(htlExpression, holder)
-          }
+    override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
+        return object : HtlElementVisitor() {
+            override fun visitHtlExpression(htlExpression: HtlElExpressionMixin) {
+                withServices(htlExpression.project) { service: IInspectionService ->
+                    if (hasDefect(htlExpression)) {
+                        service.reportRedundantEl(htlExpression, holder)
+                    }
+                }
+            }
         }
-      }
     }
-  }
 
-  private fun hasDefect(element: HtlElExpressionMixin): Boolean =
-    element.isDumbStringLiteralEl() &&
-      (element.isInsideOf(Const.Htl.DATA_SLY_USE) || element.isInsideOf(Const.Htl.DATA_SLY_INCLUDE))
+    private fun hasDefect(element: HtlElExpressionMixin): Boolean =
+        element.isDumbStringLiteralEl() &&
+            (element.isInsideOf(Const.Htl.DATA_SLY_USE) || element.isInsideOf(Const.Htl.DATA_SLY_INCLUDE))
 
-  /**
-   * Check if current current [HtlHtlEl] is a "Dumb String Literal", which mean
-   * that the expression doesn't contain anything except the string literal, e.g.:
-   * ```
-   *   ${'static string'}
-   * ```
-   */
-  private fun HtlElExpressionMixin.isDumbStringLiteralEl(): Boolean =
-    this.hasChild(HtlStringLiteral::class.java) &&
-      !this.hasChild(HtlPropertyAccess::class.java) &&
-      !this.hasChild(HtlContextExpression::class.java)
+    /**
+     * Check if current current [HtlHtlEl] is a "Dumb String Literal", which mean
+     * that the expression doesn't contain anything except the string literal, e.g.:
+     * ```
+     *   ${'static string'}
+     * ```
+     */
+    private fun HtlElExpressionMixin.isDumbStringLiteralEl(): Boolean =
+        this.hasChild(HtlStringLiteral::class.java) &&
+            !this.hasChild(HtlPropertyAccess::class.java) &&
+            !this.hasChild(HtlContextExpression::class.java)
 }

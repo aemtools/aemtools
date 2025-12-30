@@ -7,19 +7,19 @@ import com.aemtools.test.base.model.fixture.ITestFixture
  */
 interface JavaMixin {
 
-  /**
-   * Add `java.lang.String` to current fixture.
-   *
-   * @receiver [ITestFixture]
-   */
-  fun ITestFixture.javaLangString() {
-    addClass(
-      "String.java",
-      """
+    /**
+     * Add `java.lang.String` to current fixture.
+     *
+     * @receiver [ITestFixture]
+     */
+    fun ITestFixture.javaLangString() {
+        addClass(
+            "String.java",
+            """
         package java.lang;
 
         public class String {}
     """
-    )
-  }
+        )
+    }
 }

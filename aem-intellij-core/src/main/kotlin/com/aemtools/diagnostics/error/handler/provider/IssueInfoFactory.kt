@@ -8,12 +8,12 @@ import com.intellij.openapi.extensions.PluginDescriptor
  * @author DeusBit
  */
 interface IssueInfoFactory {
-  /**
-   * Create detail information about an issue.
-   */
-  fun create(
-    event: IdeaLoggingEvent,
-    pluginDescriptor: PluginDescriptor,
-    additionalInfo: String?
-  ): GitHubIssue
+    /**
+     * Create detail information about an issue.
+     */
+    fun create(
+        event: IdeaLoggingEvent,
+        pluginDescriptor: PluginDescriptor,
+        additionalInfo: String?
+    ): GitHubIssue
 }

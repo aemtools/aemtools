@@ -12,12 +12,12 @@ import com.intellij.psi.PsiFile
  * @author Kostiantyn Diachenko
  */
 class ChangeHtlVersionAction :
-  BaseHtlIntentionAction(
-    text = { "Change HTL version" },
-    startInWriteAction = false
-  ),
-  LowPriorityAction {
-  override fun invoke(project: Project, editor: Editor?, file: PsiFile?) {
-    ShowSettingsUtil.getInstance().showSettingsDialog(project, AemProjectSettingsConfigurable::class.java)
-  }
+    BaseHtlIntentionAction(
+        text = { "Change HTL version" },
+        startInWriteAction = false
+    ),
+    LowPriorityAction {
+    override fun invoke(project: Project, editor: Editor?, file: PsiFile?) {
+        ShowSettingsUtil.getInstance().showSettingsDialog(project, AemProjectSettingsConfigurable::class.java)
+    }
 }

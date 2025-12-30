@@ -13,30 +13,30 @@ import com.intellij.util.ProcessingContext
  * @author Kostiantyn Diachenko
  */
 object CqComponentGroupCompletionProvider : CompletionProvider<CompletionParameters>() {
-  override fun addCompletions(
-    parameters: CompletionParameters,
-    context: ProcessingContext,
-    result: CompletionResultSet
-  ) {
-    if (result.isStopped) {
-      return
+    override fun addCompletions(
+        parameters: CompletionParameters,
+        context: ProcessingContext,
+        result: CompletionResultSet
+    ) {
+        if (result.isStopped) {
+            return
+        }
+
+        val allProjectComponentGroups = AemComponentSearch.allComponentDeclarations(parameters.position.project)
+            .filter { it.componentGroup != null && it.componentGroup != ".hidden" }
+            .groupingBy { it.componentGroup }.eachCount()
+            .map { Pair(it.key, it.value) }
+            .sortedByDescending { it.second }
+            .mapNotNull { it.first }
+
+        result.addAllElements(
+            listOf(
+                ".hidden",
+                *allProjectComponentGroups.toTypedArray()
+            ).map {
+                lookupElement(it)
+            }
+        )
+        result.stopHere()
     }
-
-    val allProjectComponentGroups = AemComponentSearch.allComponentDeclarations(parameters.position.project)
-      .filter { it.componentGroup != null && it.componentGroup != ".hidden" }
-      .groupingBy { it.componentGroup }.eachCount()
-      .map { Pair(it.key, it.value) }
-      .sortedByDescending { it.second }
-      .mapNotNull { it.first }
-
-    result.addAllElements(
-      listOf(
-        ".hidden",
-        *allProjectComponentGroups.toTypedArray()
-      ).map {
-        lookupElement(it)
-      }
-    )
-    result.stopHere()
-  }
 }

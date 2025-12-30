@@ -13,29 +13,29 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 object HtmlDataSlyIncludeCompletionProvider : CompletionProvider<CompletionParameters>() {
-  override fun addCompletions(
-    parameters: CompletionParameters,
-    context: ProcessingContext,
-    result: CompletionResultSet
-  ) {
-    if (result.isStopped) {
-      return
+    override fun addCompletions(
+        parameters: CompletionParameters,
+        context: ProcessingContext,
+        result: CompletionResultSet
+    ) {
+        if (result.isStopped) {
+            return
+        }
+
+        val files = HtlIndexFacade.includableFiles(parameters.originalFile)
+
+        val dirName = parameters.originalFile.containingDirectory.virtualFile.path
+            .normalizeToJcrRoot()
+
+        val variants = files.map {
+            lookupElement(
+                it.virtualFile.path.normalizeToJcrRoot()
+                    .relativeTo(dirName)
+            )
+                .withTypeText(it.fileType.name)
+                .withTailText("(${it.virtualFile.path.normalizeToJcrRoot()})", true)
+                .withIcon(it.getIcon(0))
+        }
+        result.addAllElements(variants)
     }
-
-    val files = HtlIndexFacade.includableFiles(parameters.originalFile)
-
-    val dirName = parameters.originalFile.containingDirectory.virtualFile.path
-      .normalizeToJcrRoot()
-
-    val variants = files.map {
-      lookupElement(
-        it.virtualFile.path.normalizeToJcrRoot()
-          .relativeTo(dirName)
-      )
-        .withTypeText(it.fileType.name)
-        .withTailText("(${it.virtualFile.path.normalizeToJcrRoot()})", true)
-        .withIcon(it.getIcon(0))
-    }
-    result.addAllElements(variants)
-  }
 }

@@ -11,14 +11,14 @@ import com.intellij.codeInsight.lookup.LookupElement
  * @author Kostiantyn Diachenko
  */
 class JcrPropertyTypeCloseBraceInsertHandler : InsertHandler<LookupElement> {
-  override fun handleInsert(context: InsertionContext, item: LookupElement) {
-    val document = context.document
-    val editor = context.editor
-    val position = editor.caretModel.offset
+    override fun handleInsert(context: InsertionContext, item: LookupElement) {
+        val document = context.document
+        val editor = context.editor
+        val position = editor.caretModel.offset
 
-    if (!document.hasText("}", position)) {
-      document.insertString(position, "}")
-      editor.caretModel.moveToOffset(position + 1)
+        if (!document.hasText("}", position)) {
+            document.insertString(position, "}")
+            editor.caretModel.moveToOffset(position + 1)
+        }
     }
-  }
 }

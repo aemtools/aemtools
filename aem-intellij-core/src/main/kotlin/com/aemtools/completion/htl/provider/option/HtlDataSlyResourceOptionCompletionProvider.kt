@@ -17,39 +17,39 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 object HtlDataSlyResourceOptionCompletionProvider : CompletionProvider<CompletionParameters>() {
-  override fun addCompletions(
-    parameters: CompletionParameters,
-    context: ProcessingContext,
-    result: CompletionResultSet
-  ) {
-    val currentPosition = parameters.position
-    val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
-      ?: return
+    override fun addCompletions(
+        parameters: CompletionParameters,
+        context: ProcessingContext,
+        result: CompletionResultSet
+    ) {
+        val currentPosition = parameters.position
+        val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
+            ?: return
 
-    val names = hel.getOptions().map { it.name() }
-      .filterNot { it == "" }
+        val names = hel.getOptions().map { it.name() }
+            .filterNot { it == "" }
 
-    val htlVersion = currentPosition.project.getHtlVersion()
-    val dataSlyResourceOptions = HtlAttributesRepository.getAttributesData(htlVersion)
-      .filter { it.name == Const.Htl.DATA_SLY_RESOURCE }
-      .flatMap { it.options ?: listOf() }
-    val options = dataSlyResourceOptions + HtlAttributesRepository.getHtlOptions(htlVersion)
+        val htlVersion = currentPosition.project.getHtlVersion()
+        val dataSlyResourceOptions = HtlAttributesRepository.getAttributesData(htlVersion)
+            .filter { it.name == Const.Htl.DATA_SLY_RESOURCE }
+            .flatMap { it.options ?: listOf() }
+        val options = dataSlyResourceOptions + HtlAttributesRepository.getHtlOptions(htlVersion)
 
-    val completionVariants = options
-      .filterNot { names.contains(it.name) }
-      .map(HtlOption::toLookupElement)
-      .map {
-        if (it.lookupString in dataSlyResourceOptions.optionNames()) {
-          PrioritizedLookupElement.withPriority(it, RESOURCE_TYPE)
-        } else {
-          it
-        }
-      }
+        val completionVariants = options
+            .filterNot { names.contains(it.name) }
+            .map(HtlOption::toLookupElement)
+            .map {
+                if (it.lookupString in dataSlyResourceOptions.optionNames()) {
+                    PrioritizedLookupElement.withPriority(it, RESOURCE_TYPE)
+                } else {
+                    it
+                }
+            }
 
-    result.addAllElements(completionVariants)
+        result.addAllElements(completionVariants)
 
-    result.stopHere()
-  }
+        result.stopHere()
+    }
 
-  private fun List<HtlOption>.optionNames() = this.map { it.name }
+    private fun List<HtlOption>.optionNames() = this.map { it.name }
 }

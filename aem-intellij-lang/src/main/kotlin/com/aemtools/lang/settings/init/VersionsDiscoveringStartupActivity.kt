@@ -27,102 +27,102 @@ import com.intellij.psi.xml.XmlTag
  * @author Kostiantyn Diachenko
  */
 class VersionsDiscoveringStartupActivity : ProjectActivity {
-  override suspend fun execute(project: Project) {
-    val application = ApplicationManagerEx.getApplicationEx()
-    if (application == null ||
-      application.isUnitTestMode ||
-      application.isHeadlessEnvironment
-    ) {
-      return
+    override suspend fun execute(project: Project) {
+        val application = ApplicationManagerEx.getApplicationEx()
+        if (application == null ||
+            application.isUnitTestMode ||
+            application.isHeadlessEnvironment
+        ) {
+            return
+        }
+
+        val aemProjectSettings = AemProjectSettings.getInstance(project)
+        if (aemProjectSettings.isInitialized()) {
+            return
+        }
+
+        val aemVersion = findAemVersion(project) ?: return
+        saveDiscoveredVersions(aemVersion, aemProjectSettings)
+        notifyAboutDiscoveredVersions(aemProjectSettings, project)
     }
 
-    val aemProjectSettings = AemProjectSettings.getInstance(project)
-    if (aemProjectSettings.isInitialized()) {
-      return
+    suspend fun findAemVersion(project: Project): AemVersion? {
+        val xmlFiles = findPomFiles(project)
+        return xmlFiles.flatMap {
+            it.findChildrenByType(XmlTag::class.java)
+        }.filter {
+            it.isUberJarDependency() || it.isAemSdkApiDependency()
+        }.mapNotNull {
+            val version = it.extractAemDependencyVersion()
+            if (it.isUberJarDependency()) {
+                getAemVersionOrDefault(version, AemVersion.latest())
+            } else if (it.isAemSdkApiDependency()) {
+                getAemVersionOrDefault(version, AemVersion.CLOUD)
+            } else {
+                null
+            }
+        }.maxByOrNull { it.ordinal }
     }
 
-    val aemVersion = findAemVersion(project) ?: return
-    saveDiscoveredVersions(aemVersion, aemProjectSettings)
-    notifyAboutDiscoveredVersions(aemProjectSettings, project)
-  }
+    private fun getAemVersionOrDefault(version: String?, defaultAemVersion: AemVersion) =
+        if (version != null) {
+            AemVersion.fromFullVersion(version) ?: defaultAemVersion
+        } else {
+            defaultAemVersion
+        }
 
-  suspend fun findAemVersion(project: Project): AemVersion? {
-    val xmlFiles = findPomFiles(project)
-    return xmlFiles.flatMap {
-      it.findChildrenByType(XmlTag::class.java)
-    }.filter {
-      it.isUberJarDependency() || it.isAemSdkApiDependency()
-    }.mapNotNull {
-      val version = it.extractAemDependencyVersion()
-      if (it.isUberJarDependency()) {
-        getAemVersionOrDefault(version, AemVersion.latest())
-      } else if (it.isAemSdkApiDependency()) {
-        getAemVersionOrDefault(version, AemVersion.CLOUD)
-      } else {
-        null
-      }
-    }.maxByOrNull { it.ordinal }
-  }
-
-  private fun getAemVersionOrDefault(version: String?, defaultAemVersion: AemVersion) =
-    if (version != null) {
-      AemVersion.fromFullVersion(version) ?: defaultAemVersion
-    } else {
-      defaultAemVersion
+    private fun saveDiscoveredVersions(aemVersion: AemVersion, aemProjectSettings: AemProjectSettings) {
+        val newState = AemProjectSettings()
+        newState.aemVersion = aemVersion
+        newState.htlVersion = HtlVersion.getFirstCompatibleWith(aemVersion)
+        aemProjectSettings.loadState(newState)
     }
 
-  private fun saveDiscoveredVersions(aemVersion: AemVersion, aemProjectSettings: AemProjectSettings) {
-    val newState = AemProjectSettings()
-    newState.aemVersion = aemVersion
-    newState.htlVersion = HtlVersion.getFirstCompatibleWith(aemVersion)
-    aemProjectSettings.loadState(newState)
-  }
+    private fun XmlTag.extractAemDependencyVersion(): String? {
+        val version = this.parentTag?.findFirstSubTag("version")
+        return version?.value?.text
+    }
 
-  private fun XmlTag.extractAemDependencyVersion(): String? {
-    val version = this.parentTag?.findFirstSubTag("version")
-    return version?.value?.text
-  }
+    private fun XmlTag.isUberJarDependency(): Boolean =
+        this.parentTag?.name == "dependency" &&
+            this.name == "artifactId" &&
+            this.value.text == "uber-jar"
 
-  private fun XmlTag.isUberJarDependency(): Boolean =
-    this.parentTag?.name == "dependency" &&
-      this.name == "artifactId" &&
-      this.value.text == "uber-jar"
+    private fun XmlTag.isAemSdkApiDependency(): Boolean =
+        this.parentTag?.name == "dependency" &&
+            this.name == "artifactId" &&
+            this.value.text == "aem-sdk-api"
 
-  private fun XmlTag.isAemSdkApiDependency(): Boolean =
-    this.parentTag?.name == "dependency" &&
-      this.name == "artifactId" &&
-      this.value.text == "aem-sdk-api"
-
-  fun createNotification(aemProjectSettings: AemProjectSettings, project: Project): Notification {
-    val content = """
+    fun createNotification(aemProjectSettings: AemProjectSettings, project: Project): Notification {
+        val content = """
         Discovered versions:
         <strong>AEM version</strong>: ${aemProjectSettings.aemVersion.version}
         <strong>HTL version</strong>: ${aemProjectSettings.htlVersion.version}<br>
-    """.trimIndent()
-    return NotificationGroupManager.getInstance()
-      .getNotificationGroup("Project Settings")
-      .createNotification("AEM Tools plugin configuration", content, NotificationType.INFORMATION)
-      .addAction(setVersionsManuallyNotificationAction(project))
-  }
-
-  private fun notifyAboutDiscoveredVersions(aemProjectSettings: AemProjectSettings, project: Project) {
-    val notification = createNotification(aemProjectSettings, project)
-    notification.notify(project)
-  }
-
-  private suspend fun findPomFiles(project: Project): List<XmlFile> {
-    return readAction {
-      val poms = FilenameIndex.getVirtualFilesByName("pom.xml", GlobalSearchScope.projectScope(project))
-      poms.mapNotNull { it.toPsiFile(project) as? XmlFile }
+        """.trimIndent()
+        return NotificationGroupManager.getInstance()
+            .getNotificationGroup("Project Settings")
+            .createNotification("AEM Tools plugin configuration", content, NotificationType.INFORMATION)
+            .addAction(setVersionsManuallyNotificationAction(project))
     }
-  }
 
-  private fun setVersionsManuallyNotificationAction(project: Project): NotificationAction {
-    return object : NotificationAction("Set manually") {
-      override fun actionPerformed(e: AnActionEvent, notification: Notification) {
-        ShowSettingsUtil.getInstance().showSettingsDialog(project, AemProjectSettingsConfigurable::class.java)
-        notification.expire()
-      }
+    private fun notifyAboutDiscoveredVersions(aemProjectSettings: AemProjectSettings, project: Project) {
+        val notification = createNotification(aemProjectSettings, project)
+        notification.notify(project)
     }
-  }
+
+    private suspend fun findPomFiles(project: Project): List<XmlFile> {
+        return readAction {
+            val poms = FilenameIndex.getVirtualFilesByName("pom.xml", GlobalSearchScope.projectScope(project))
+            poms.mapNotNull { it.toPsiFile(project) as? XmlFile }
+        }
+    }
+
+    private fun setVersionsManuallyNotificationAction(project: Project): NotificationAction {
+        return object : NotificationAction("Set manually") {
+            override fun actionPerformed(e: AnActionEvent, notification: Notification) {
+                ShowSettingsUtil.getInstance().showSettingsDialog(project, AemProjectSettingsConfigurable::class.java)
+                notification.expire()
+            }
+        }
+    }
 }

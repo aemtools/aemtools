@@ -7,4 +7,4 @@ import com.aemtools.index.model.LocalizationModel
  * @author Dmytro Primshyts
  */
 object LocalizationModelExternalizer :
-  BaseExternalizer<LocalizationModel>()
+    BaseExternalizer<LocalizationModel>()

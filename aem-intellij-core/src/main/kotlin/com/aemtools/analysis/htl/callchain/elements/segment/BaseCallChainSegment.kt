@@ -10,14 +10,14 @@ import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
  * @author Dmytro Primshyts
  */
 class BaseCallChainSegment(
-  private val input: TypeDescriptor,
-  private val output: TypeDescriptor,
-  val declaration: HtlVariableDeclaration?,
-  private val elements: List<CallChainElement>
+    private val input: TypeDescriptor,
+    private val output: TypeDescriptor,
+    val declaration: HtlVariableDeclaration?,
+    private val elements: List<CallChainElement>
 ) : CallChainSegment {
-  override fun inputType(): TypeDescriptor = input
+    override fun inputType(): TypeDescriptor = input
 
-  override fun outputType(): TypeDescriptor = output
+    override fun outputType(): TypeDescriptor = output
 
-  override fun chainElements(): List<CallChainElement> = elements
+    override fun chainElements(): List<CallChainElement> = elements
 }

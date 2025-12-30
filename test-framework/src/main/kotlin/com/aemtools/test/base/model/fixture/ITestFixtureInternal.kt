@@ -7,9 +7,9 @@ import com.aemtools.test.base.model.assertion.IAssertionContext
  */
 interface ITestFixtureInternal {
 
-  fun init()
+    fun init()
 
-  fun test()
+    fun test()
 
-  fun assertionContext(): IAssertionContext
+    fun assertionContext(): IAssertionContext
 }

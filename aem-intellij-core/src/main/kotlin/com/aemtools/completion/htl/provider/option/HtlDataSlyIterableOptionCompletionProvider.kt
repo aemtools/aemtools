@@ -18,44 +18,44 @@ import com.intellij.util.ProcessingContext
  * @author Kostiantyn Diachenko
  */
 class HtlDataSlyIterableOptionCompletionProvider(
-  private val iterableAttributeName: String
+    private val iterableAttributeName: String
 ) : CompletionProvider<CompletionParameters>() {
 
-  override fun addCompletions(
-    parameters: CompletionParameters,
-    context: ProcessingContext,
-    result: CompletionResultSet
-  ) {
-    val currentPosition = parameters.position
-    val project = currentPosition.project
-    if (project.notSupportsHtlVersion(HtlVersion.V_1_4)) {
-      return
-    }
-    val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
-      ?: return
-
-    val names = hel.getOptions().map { it.name() }
-      .filterNot { it == "" }
-
-    val dataSlyIterableOptions = HtlAttributesRepository.getAttributesData(project.getHtlVersion())
-      .filter { it.name == iterableAttributeName }
-      .flatMap { it.options ?: listOf() }
-
-    val completionVariants = dataSlyIterableOptions
-      .filterNot { names.contains(it.name) }
-      .map(HtlOption::toLookupElement)
-      .map {
-        if (it.lookupString in dataSlyIterableOptions.optionNames()) {
-          PrioritizedLookupElement.withPriority(it, CompletionPriority.ITERABLE_OPTION)
-        } else {
-          it
+    override fun addCompletions(
+        parameters: CompletionParameters,
+        context: ProcessingContext,
+        result: CompletionResultSet
+    ) {
+        val currentPosition = parameters.position
+        val project = currentPosition.project
+        if (project.notSupportsHtlVersion(HtlVersion.V_1_4)) {
+            return
         }
-      }
+        val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
+            ?: return
 
-    result.addAllElements(completionVariants)
+        val names = hel.getOptions().map { it.name() }
+            .filterNot { it == "" }
 
-    result.stopHere()
-  }
+        val dataSlyIterableOptions = HtlAttributesRepository.getAttributesData(project.getHtlVersion())
+            .filter { it.name == iterableAttributeName }
+            .flatMap { it.options ?: listOf() }
 
-  private fun List<HtlOption>.optionNames() = this.map { it.name }
+        val completionVariants = dataSlyIterableOptions
+            .filterNot { names.contains(it.name) }
+            .map(HtlOption::toLookupElement)
+            .map {
+                if (it.lookupString in dataSlyIterableOptions.optionNames()) {
+                    PrioritizedLookupElement.withPriority(it, CompletionPriority.ITERABLE_OPTION)
+                } else {
+                    it
+                }
+            }
+
+        result.addAllElements(completionVariants)
+
+        result.stopHere()
+    }
+
+    private fun List<HtlOption>.optionNames() = this.map { it.name }
 }

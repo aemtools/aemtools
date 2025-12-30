@@ -18,48 +18,48 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 object HtlClientLibraryTemplateCategoryCompletionProvider : CompletionProvider<CompletionParameters>() {
-  override fun addCompletions(
-    parameters: CompletionParameters,
-    context: ProcessingContext,
-    result: CompletionResultSet
-  ) {
-    if (result.isStopped) {
-      return
-    }
+    override fun addCompletions(
+        parameters: CompletionParameters,
+        context: ProcessingContext,
+        result: CompletionResultSet
+    ) {
+        if (result.isStopped) {
+            return
+        }
 
-    val currentPosition = parameters.position
-    val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
-      ?: return
+        val currentPosition = parameters.position
+        val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
+            ?: return
 
-    val outputType = hel
-      .getMainPropertyAccess()
-      ?.callchain()
-      ?.getLastOutputType()
-      as? TemplateTypeDescriptor
-      ?: return
+        val outputType = hel
+            .getMainPropertyAccess()
+            ?.callchain()
+            ?.getLastOutputType()
+            as? TemplateTypeDescriptor
+            ?: return
 
-    if (outputType.template.fullName != Const.CLIENTLIB_TEMPLATE) {
-      return
-    }
+        if (outputType.template.fullName != Const.CLIENTLIB_TEMPLATE) {
+            return
+        }
 
-    val models = ClientLibraryIndexFacade.getAllClientLibraryModels(currentPosition.project)
+        val models = ClientLibraryIndexFacade.getAllClientLibraryModels(currentPosition.project)
 
-    models.flatMap { clientLibraryModel ->
-      clientLibraryModel.categories.map { category ->
-        lookupElement(category)
-          .withIcon(
-            if (outputType.template.name == "css") {
-              AllIcons.FileTypes.Css
-            } else {
-              AllIcons.FileTypes.JavaScript
+        models.flatMap { clientLibraryModel ->
+            clientLibraryModel.categories.map { category ->
+                lookupElement(category)
+                    .withIcon(
+                        if (outputType.template.name == "css") {
+                            AllIcons.FileTypes.Css
+                        } else {
+                            AllIcons.FileTypes.JavaScript
+                        }
+                    )
+                    .withPriority(clientLibraryModel.embed.size.toDouble())
             }
-          )
-          .withPriority(clientLibraryModel.embed.size.toDouble())
-      }
+        }
+            .apply {
+                result.addAllElements(this)
+                result.stopHere()
+            }
     }
-      .apply {
-        result.addAllElements(this)
-        result.stopHere()
-      }
-  }
 }

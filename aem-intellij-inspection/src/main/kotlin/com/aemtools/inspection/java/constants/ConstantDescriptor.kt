@@ -10,7 +10,7 @@ package com.aemtools.inspection.java.constants
  * @author Dmytro Primshyts
  */
 data class ConstantDescriptor(
-  val containerClass: String,
-  val name: String,
-  val value: String
+    val containerClass: String,
+    val name: String,
+    val value: String
 )

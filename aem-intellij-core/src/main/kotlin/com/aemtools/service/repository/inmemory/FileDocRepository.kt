@@ -14,46 +14,46 @@ import com.intellij.openapi.util.io.FileUtil
  */
 object FileDocRepository : WidgetDocRepository {
 
-  private var documents: List<WidgetDoc> = ArrayList()
+    private var documents: List<WidgetDoc> = ArrayList()
 
-  private var groupedByXtype: MutableMap<String, WidgetDoc> = HashMap()
-  private var groupedByClass: MutableMap<String, WidgetDoc> = HashMap()
-  private var xtypes: MutableList<String> = Lists.newArrayList()
+    private var groupedByXtype: MutableMap<String, WidgetDoc> = HashMap()
+    private var groupedByClass: MutableMap<String, WidgetDoc> = HashMap()
+    private var xtypes: MutableList<String> = Lists.newArrayList()
 
-  init {
-    val bytes: ByteArray? = getDocumentationFromClasspath()
+    init {
+        val bytes: ByteArray? = getDocumentationFromClasspath()
 
-    val jsonString = java.lang.String(bytes as ByteArray, "UTF-8")
-    val docs: Array<WidgetDoc> = Gson().fromJson(jsonString.toString(), emptyArray<WidgetDoc>().javaClass)
-    documents += docs
-    documents.filterNot { it.xtype.isNullOrBlank() }
-      .forEach {
-        groupedByXtype[it.xtype as String] = it
-        xtypes.add(it.xtype as String)
-      }
-    documents.forEach { groupedByClass[it.className] = it }
-  }
-
-  private fun getDocumentationFromClasspath(): ByteArray? {
-    val input = FileDocRepository::class.java.classLoader.getResourceAsStream(
-      Const.File.WIDGET_DOCUMENTATION
-    ) ?: return null
-    return FileUtil.loadBytes(input)
-  }
-
-  override fun findByXType(xtype: String): WidgetDoc? {
-    return groupedByXtype[xtype]
-  }
-
-  override fun findByClass(className: String): WidgetDoc? {
-    return groupedByClass[className]
-  }
-
-  override fun findXTypes(query: String?): List<String> {
-    if (query == null || query.isEmpty()) {
-      return xtypes
+        val jsonString = java.lang.String(bytes as ByteArray, "UTF-8")
+        val docs: Array<WidgetDoc> = Gson().fromJson(jsonString.toString(), emptyArray<WidgetDoc>().javaClass)
+        documents += docs
+        documents.filterNot { it.xtype.isNullOrBlank() }
+            .forEach {
+                groupedByXtype[it.xtype as String] = it
+                xtypes.add(it.xtype as String)
+            }
+        documents.forEach { groupedByClass[it.className] = it }
     }
 
-    return xtypes.filter { it.startsWith(query) }
-  }
+    private fun getDocumentationFromClasspath(): ByteArray? {
+        val input = FileDocRepository::class.java.classLoader.getResourceAsStream(
+            Const.File.WIDGET_DOCUMENTATION
+        ) ?: return null
+        return FileUtil.loadBytes(input)
+    }
+
+    override fun findByXType(xtype: String): WidgetDoc? {
+        return groupedByXtype[xtype]
+    }
+
+    override fun findByClass(className: String): WidgetDoc? {
+        return groupedByClass[className]
+    }
+
+    override fun findXTypes(query: String?): List<String> {
+        if (query == null || query.isEmpty()) {
+            return xtypes
+        }
+
+        return xtypes.filter { it.startsWith(query) }
+    }
 }

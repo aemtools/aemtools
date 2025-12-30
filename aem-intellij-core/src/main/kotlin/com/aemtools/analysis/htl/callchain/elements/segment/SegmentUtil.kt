@@ -16,31 +16,31 @@ import com.aemtools.completion.htl.model.ResolutionResult
  */
 @Suppress("ReturnCount")
 fun CallChainSegment.resolveSelectedItem(): ResolutionResult {
-  val chainElements = this.chainElements()
-  if (chainElements.isEmpty()) {
-    return ResolutionResult()
-  }
+    val chainElements = this.chainElements()
+    if (chainElements.isEmpty()) {
+        return ResolutionResult()
+    }
 
-  val selectedItem = selectedElement()
-    ?: return ResolutionResult()
-  val indexOfSelectedItem = chainElements.indexOf(selectedItem)
+    val selectedItem = selectedElement()
+        ?: return ResolutionResult()
+    val indexOfSelectedItem = chainElements.indexOf(selectedItem)
 
-  val resolutionResult = when {
-    chainElements.size > 2 &&
-      chainElements[indexOfSelectedItem - 1] is ArrayAccessIdentifierElement ->
-      with(chainElements[indexOfSelectedItem - 2].type) {
-        when (this) {
-          is ArrayJavaTypeDescriptor -> this.arrayType().asResolutionResult()
-          is IterableJavaTypeDescriptor -> this.iterableType().asResolutionResult()
-          is MapJavaTypeDescriptor -> this.valueType().asResolutionResult()
-          else -> this.asResolutionResult()
-        }
-      }
+    val resolutionResult = when {
+        chainElements.size > 2 &&
+            chainElements[indexOfSelectedItem - 1] is ArrayAccessIdentifierElement ->
+            with(chainElements[indexOfSelectedItem - 2].type) {
+                when (this) {
+                    is ArrayJavaTypeDescriptor -> this.arrayType().asResolutionResult()
+                    is IterableJavaTypeDescriptor -> this.iterableType().asResolutionResult()
+                    is MapJavaTypeDescriptor -> this.valueType().asResolutionResult()
+                    else -> this.asResolutionResult()
+                }
+            }
 
-    else -> chainElements[indexOfSelectedItem - 1].type.asResolutionResult()
-  }
+        else -> chainElements[indexOfSelectedItem - 1].type.asResolutionResult()
+    }
 
-  return resolutionResult
+    return resolutionResult
 }
 
 /**
@@ -50,5 +50,5 @@ fun CallChainSegment.resolveSelectedItem(): ResolutionResult {
  * @return the element
  */
 fun CallChainSegment.selectedElement(): CallChainElement? {
-  return chainElements().find { it.name.contains(Const.IDEA_STRING_CARET_PLACEHOLDER) }
+    return chainElements().find { it.name.contains(Const.IDEA_STRING_CARET_PLACEHOLDER) }
 }

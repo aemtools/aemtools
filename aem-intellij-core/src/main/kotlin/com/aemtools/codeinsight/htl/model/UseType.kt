@@ -5,23 +5,23 @@ package com.aemtools.codeinsight.htl.model
  * @author Dmytro Primshyts
  */
 enum class UseType {
-  /**
-   * Implementor of `Use` interface or a `Sling` model.
-   */
-  BEAN,
+    /**
+     * Implementor of `Use` interface or a `Sling` model.
+     */
+    BEAN,
 
-  /**
-   * Javascript file.
-   */
-  JAVASCRIPT,
+    /**
+     * Javascript file.
+     */
+    JAVASCRIPT,
 
-  /**
-   * The HTL file.
-   */
-  HTL,
+    /**
+     * The HTL file.
+     */
+    HTL,
 
-  /**
-   * Unable to resolve data-sly-use.
-   */
-  UNKNOWN
+    /**
+     * Unable to resolve data-sly-use.
+     */
+    UNKNOWN
 }

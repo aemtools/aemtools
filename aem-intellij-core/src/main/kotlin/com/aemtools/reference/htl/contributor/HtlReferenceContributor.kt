@@ -22,35 +22,35 @@ import com.intellij.psi.PsiReferenceRegistrar
  * @author Dmytro Primshyts
  */
 class HtlReferenceContributor : PsiReferenceContributor() {
-  override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
-    registrar.registerReferenceProvider(
-      psiElement(HtlPropertyAccess::class.java),
-      HtlPropertyAccessReferenceProvider
-    )
+    override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {
+        registrar.registerReferenceProvider(
+            psiElement(HtlPropertyAccess::class.java),
+            HtlPropertyAccessReferenceProvider
+        )
 
-    registrar.registerReferenceProvider(
-      dataSlyUseMainString,
-      DataSlyUseElReferenceProvider
-    )
+        registrar.registerReferenceProvider(
+            dataSlyUseMainString,
+            DataSlyUseElReferenceProvider
+        )
 
-    registrar.registerReferenceProvider(
-      dataSlyIncludeMainString,
-      DataSlyIncludeElReferenceProvider
-    )
+        registrar.registerReferenceProvider(
+            dataSlyIncludeMainString,
+            DataSlyIncludeElReferenceProvider
+        )
 
-    registrar.registerReferenceProvider(
-      resourceTypeOptionAssignment,
-      ResourceTypeReferenceProvider
-    )
+        registrar.registerReferenceProvider(
+            resourceTypeOptionAssignment,
+            ResourceTypeReferenceProvider
+        )
 
-    registrar.registerReferenceProvider(
-      stringLiteralValue,
-      I18nReferenceProvider
-    )
+        registrar.registerReferenceProvider(
+            stringLiteralValue,
+            I18nReferenceProvider
+        )
 
-    registrar.registerReferenceProvider(
-      psiElement(HtlTypes.VARIABLE_NAME),
-      DataSlyCallPropertiesReferenceProvider
-    )
-  }
+        registrar.registerReferenceProvider(
+            psiElement(HtlTypes.VARIABLE_NAME),
+            DataSlyCallPropertiesReferenceProvider
+        )
+    }
 }

@@ -27,107 +27,107 @@ import javax.swing.Icon
  */
 object I18nReferenceProvider : PsiReferenceProvider() {
 
-  override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
-    val htlString = element as? HtlStringLiteralMixin ?: return emptyArray()
+    override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
+        val htlString = element as? HtlStringLiteralMixin ?: return emptyArray()
 
-    if (localizationMainString(element)) {
-      val value = htlString.name
+        if (localizationMainString(element)) {
+            val value = htlString.name
 
-      val localizations = HtlIndexFacade
-        .getLocalizationModelsForKey(htlString.project, value)
+            val localizations = HtlIndexFacade
+                .getLocalizationModelsForKey(htlString.project, value)
 
-      val filtered = localizations.filter { it.key == value }
-        .mapNotNull {
-          val declaration = it.resolve(element.project)
-          if (declaration != null) {
-            it to declaration
-          } else {
-            null
-          }
-        }.toMap()
+            val filtered = localizations.filter { it.key == value }
+                .mapNotNull {
+                    val declaration = it.resolve(element.project)
+                    if (declaration != null) {
+                        it to declaration
+                    } else {
+                        null
+                    }
+                }.toMap()
 
-      if (filtered.isEmpty()) {
+            if (filtered.isEmpty()) {
+                return emptyArray()
+            }
+
+            return arrayOf(I18nReference(filtered, htlString))
+        }
+
         return emptyArray()
-      }
-
-      return arrayOf(I18nReference(filtered, htlString))
     }
 
-    return emptyArray()
-  }
-
-  private fun localizationMainString(position: PsiElement): Boolean {
-    return position.findParentByType(HtlHtlEl::class.java)
-      ?.findChildrenByType(PsiElement::class.java)
-      ?.any { it.text == "i18n" }
-      ?: false
-  }
-
-  private class I18nReference(
-    val declarations: Map<LocalizationModel, XmlTag>,
-    htlStringLiteralMixin: HtlStringLiteralMixin
-  ) : PsiPolyVariantReferenceBase<HtlStringLiteralMixin>(
-    htlStringLiteralMixin,
-    TextRange.create(1, htlStringLiteralMixin.name.length + 1),
-    true
-  ) {
-    override fun getVariants(): Array<Any> {
-      return emptyArray()
+    private fun localizationMainString(position: PsiElement): Boolean {
+        return position.findParentByType(HtlHtlEl::class.java)
+            ?.findChildrenByType(PsiElement::class.java)
+            ?.any { it.text == "i18n" }
+            ?: false
     }
 
-    override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
-      return declarations.map {
-        I18nResolveResult(it.value, it.key)
-      }.toTypedArray()
-    }
-  }
-
-  private class I18nResolveResult(
-    private val xmlTag: XmlTag,
-    private val localizationModel: LocalizationModel
-  ) : PsiElementResolveResult(xmlTag) {
-    override fun getElement(): PsiElement {
-      return I18nNavigationWrapper(xmlTag, localizationModel)
-    }
-
-    override fun isValidResult(): Boolean = true
-  }
-
-  private class I18nNavigationWrapper(
-    val xmlTag: XmlTag,
-    val localizationModel: LocalizationModel
-  ) :
-    NavigationItem, XmlTag by xmlTag {
-    override fun navigate(requestFocus: Boolean) {
-      val offset = xmlTag.textOffset
-      val virtualFile = PsiUtilCore.getVirtualFile(xmlTag)
-      if (virtualFile != null && virtualFile.isValid) {
-        PsiNavigationSupport.getInstance()
-          .createNavigatable(xmlTag.project, virtualFile, offset)
-          .navigate(requestFocus)
-      }
-    }
-
-    override fun getPresentation(): ItemPresentation {
-      return object : ItemPresentation {
-        override fun getLocationString(): String {
-          return localizationModel.message
+    private class I18nReference(
+        val declarations: Map<LocalizationModel, XmlTag>,
+        htlStringLiteralMixin: HtlStringLiteralMixin
+    ) : PsiPolyVariantReferenceBase<HtlStringLiteralMixin>(
+        htlStringLiteralMixin,
+        TextRange.create(1, htlStringLiteralMixin.name.length + 1),
+        true
+    ) {
+        override fun getVariants(): Array<Any> {
+            return emptyArray()
         }
 
-        override fun getIcon(unused: Boolean): Icon {
-          return AllIcons.Nodes.ResourceBundle
+        override fun multiResolve(incompleteCode: Boolean): Array<ResolveResult> {
+            return declarations.map {
+                I18nResolveResult(it.value, it.key)
+            }.toTypedArray()
         }
-
-        override fun getPresentableText(): String {
-          return localizationModel.language
-        }
-      }
     }
 
-    override fun canNavigate(): Boolean = true
+    private class I18nResolveResult(
+        private val xmlTag: XmlTag,
+        private val localizationModel: LocalizationModel
+    ) : PsiElementResolveResult(xmlTag) {
+        override fun getElement(): PsiElement {
+            return I18nNavigationWrapper(xmlTag, localizationModel)
+        }
 
-    override fun getName(): String = localizationModel.key
+        override fun isValidResult(): Boolean = true
+    }
 
-    override fun canNavigateToSource(): Boolean = true
-  }
+    private class I18nNavigationWrapper(
+        val xmlTag: XmlTag,
+        val localizationModel: LocalizationModel
+    ) :
+        NavigationItem, XmlTag by xmlTag {
+        override fun navigate(requestFocus: Boolean) {
+            val offset = xmlTag.textOffset
+            val virtualFile = PsiUtilCore.getVirtualFile(xmlTag)
+            if (virtualFile != null && virtualFile.isValid) {
+                PsiNavigationSupport.getInstance()
+                    .createNavigatable(xmlTag.project, virtualFile, offset)
+                    .navigate(requestFocus)
+            }
+        }
+
+        override fun getPresentation(): ItemPresentation {
+            return object : ItemPresentation {
+                override fun getLocationString(): String {
+                    return localizationModel.message
+                }
+
+                override fun getIcon(unused: Boolean): Icon {
+                    return AllIcons.Nodes.ResourceBundle
+                }
+
+                override fun getPresentableText(): String {
+                    return localizationModel.language
+                }
+            }
+        }
+
+        override fun canNavigate(): Boolean = true
+
+        override fun getName(): String = localizationModel.key
+
+        override fun canNavigateToSource(): Boolean = true
+    }
 }

@@ -10,18 +10,18 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 class HostCondition(
-  message: String,
-  private val condition:
-  (
-    PsiElement,
-    PsiLanguageInjectionHost,
-    ProcessingContext?
-  ) -> Boolean
+    message: String,
+    private val condition:
+    (
+        PsiElement,
+        PsiLanguageInjectionHost,
+        ProcessingContext?
+    ) -> Boolean
 ) : PatternCondition<PsiElement>(message) {
-  override fun accepts(t: PsiElement, context: ProcessingContext?): Boolean {
-    val host = t.project.injectedLanguageManager().getInjectionHost(t)
-      ?: return false
+    override fun accepts(t: PsiElement, context: ProcessingContext?): Boolean {
+        val host = t.project.injectedLanguageManager().getInjectionHost(t)
+            ?: return false
 
-    return condition(t, host, context)
-  }
+        return condition(t, host, context)
+    }
 }

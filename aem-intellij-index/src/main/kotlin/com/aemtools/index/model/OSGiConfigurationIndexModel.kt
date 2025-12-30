@@ -8,11 +8,11 @@ import java.io.Serializable
  * @author Dmytro Primshyts
  */
 data class OSGiConfigurationIndexModel(
-  val path: String,
-  val parameters: Map<String, String?>
+    val path: String,
+    val parameters: Map<String, String?>
 ) : Serializable {
-  companion object {
-    @JvmStatic
-    val serialVersionUID: Long = 1L
-  }
+    companion object {
+        @JvmStatic
+        val serialVersionUID: Long = 1L
+    }
 }

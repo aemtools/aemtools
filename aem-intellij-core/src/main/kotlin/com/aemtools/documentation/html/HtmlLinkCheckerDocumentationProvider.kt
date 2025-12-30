@@ -11,24 +11,24 @@ import com.intellij.psi.xml.XmlToken
  */
 class HtmlLinkCheckerDocumentationProvider : AbstractDocumentationProvider() {
 
-  override fun generateDoc(element: PsiElement?, originalElement: PsiElement?): String? {
-    return when {
-      xLinkCheckerAttribute.accepts(originalElement) ->
-        "Link checker configuration"
-      valueOfXLinkChecker.accepts(originalElement) -> {
-        val attribute = originalElement as? XmlToken
-          ?: return super.generateDoc(element, originalElement)
+    override fun generateDoc(element: PsiElement?, originalElement: PsiElement?): String? {
+        return when {
+            xLinkCheckerAttribute.accepts(originalElement) ->
+                "Link checker configuration"
+            valueOfXLinkChecker.accepts(originalElement) -> {
+                val attribute = originalElement as? XmlToken
+                    ?: return super.generateDoc(element, originalElement)
 
-        val value = attribute.text
+                val value = attribute.text
 
-        when (value) {
-          "skip" -> "This link will be ignored by Link checker"
-          "valid" -> "Link checker will check this link and mark as valid"
-          else -> super.generateDoc(element, originalElement)
+                when (value) {
+                    "skip" -> "This link will be ignored by Link checker"
+                    "valid" -> "Link checker will check this link and mark as valid"
+                    else -> super.generateDoc(element, originalElement)
+                }
+            }
+
+            else -> super.generateDoc(element, originalElement)
         }
-      }
-
-      else -> super.generateDoc(element, originalElement)
     }
-  }
 }

@@ -8,8 +8,8 @@ import com.intellij.psi.PsiMember
  * @author Dmytro Primshyts
  */
 open class JavaPsiUnresolvedTypeDescriptor(
-  val psiMember: PsiMember
+    val psiMember: PsiMember
 ) : EmptyTypeDescriptor() {
 
-  override fun referencedElement(): PsiElement? = psiMember
+    override fun referencedElement(): PsiElement? = psiMember
 }

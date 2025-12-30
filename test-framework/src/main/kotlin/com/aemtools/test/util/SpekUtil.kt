@@ -18,17 +18,17 @@ import org.jetbrains.spek.api.lifecycle.LifecycleAware
  * @return lifecycle aware instance
  */
 inline fun <reified MOCK> SpecBody.memo(
-  crossinline initializer: () -> MOCK = {
-    com.aemtools.test.util.mock<MOCK>()
-  }
+    crossinline initializer: () -> MOCK = {
+        com.aemtools.test.util.mock<MOCK>()
+    }
 ): LifecycleAware<MOCK> {
-  return memoized(CachingMode.TEST) {
-    initializer()
-  }
+    return memoized(CachingMode.TEST) {
+        initializer()
+    }
 }
 
 inline fun <reified MOCK> ExpectSpec.memo2(
-  crossinline initializer: () -> MOCK = { mock<MOCK>() }
+    crossinline initializer: () -> MOCK = { mock<MOCK>() }
 ): MOCK {
-  return initializer()
+    return initializer()
 }

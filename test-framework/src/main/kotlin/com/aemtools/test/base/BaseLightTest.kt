@@ -18,47 +18,47 @@ import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase
  * @author Dmytro Primshyts
  */
 abstract class BaseLightTest(private val withAemUberJar: Boolean = false) :
-  LightJavaCodeInsightFixtureTestCase(),
-  HtlVersioningFixtureMixin,
-  UberJarFixtureMixin {
+    LightJavaCodeInsightFixtureTestCase(),
+    HtlVersioningFixtureMixin,
+    UberJarFixtureMixin {
 
-  val fixture: JavaCodeInsightTestFixture
-    get() = super.myFixture
+    val fixture: JavaCodeInsightTestFixture
+        get() = super.myFixture
 
-  public override fun getProject(): Project {
-    return super.getProject()
-  }
-
-  override fun getProjectDescriptor(): LightProjectDescriptor {
-    return JdkProjectDescriptor()
-  }
-
-  fun fileCase(case: ITestFixture.() -> Unit) {
-    val fixture = TestFixture(myFixture)
-
-    case.invoke(fixture)
-
-    fixture.init()
-
-    fixture.test()
-  }
-
-  override fun setUp() {
-    super.setUp()
-    IdeaTestUtil.setProjectLanguageLevel(project, TestSdk.getSdkLanguageLevel())
-    myFixture.setHtlVersion(HtlVersion.V_1_4)
-
-    if (withAemUberJar) {
-      myFixture.addUberJar()
+    public override fun getProject(): Project {
+        return super.getProject()
     }
-  }
 
-  override fun tearDown() {
-    super.tearDown()
-  }
+    override fun getProjectDescriptor(): LightProjectDescriptor {
+        return JdkProjectDescriptor()
+    }
 
-  companion object {
-    const val DOLLAR: String = "$"
-    const val CARET: String = CARET_MARKER
-  }
+    fun fileCase(case: ITestFixture.() -> Unit) {
+        val fixture = TestFixture(myFixture)
+
+        case.invoke(fixture)
+
+        fixture.init()
+
+        fixture.test()
+    }
+
+    override fun setUp() {
+        super.setUp()
+        IdeaTestUtil.setProjectLanguageLevel(project, TestSdk.getSdkLanguageLevel())
+        myFixture.setHtlVersion(HtlVersion.V_1_4)
+
+        if (withAemUberJar) {
+            myFixture.addUberJar()
+        }
+    }
+
+    override fun tearDown() {
+        super.tearDown()
+    }
+
+    companion object {
+        const val DOLLAR: String = "$"
+        const val CARET: String = CARET_MARKER
+    }
 }

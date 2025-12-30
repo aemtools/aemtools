@@ -22,35 +22,35 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Kostiantyn Diachenko
  */
 class DataSlyUnwrapUnsupportedAnnotator : VersionedHtlElementAnnotator(HtlVersion.V_1_4) {
-  override fun annotateNotSupportedElement(element: PsiElement, holder: AnnotationHolder) {
-    if (element !is XmlAttribute ||
-      !element.isHtlAttribute(true) ||
-      element.htlAttributeName(true) != DATA_SLY_UNWRAP
-    ) {
-      return
-    }
+    override fun annotateNotSupportedElement(element: PsiElement, holder: AnnotationHolder) {
+        if (element !is XmlAttribute ||
+            !element.isHtlAttribute(true) ||
+            element.htlAttributeName(true) != DATA_SLY_UNWRAP
+        ) {
+            return
+        }
 
-    val htlVariableName = element.name.substringAfterLast(".", "")
-    if (htlVariableName.isNotEmpty()) {
-      val identifierTextRange = with(element.nameElement.textRange) {
-        TextRange(this.endOffset - htlVariableName.length, this.endOffset)
-      }
-      holder.notSupportedHtlFeatureAnnotationBuilder(element, getMessage(element.project), identifierTextRange)
-        .withFix(RemoveHtlIdentifierAction(element.toSmartPointer(), "Remove \"$htlVariableName\" identifier"))
-        .create()
-    }
+        val htlVariableName = element.name.substringAfterLast(".", "")
+        if (htlVariableName.isNotEmpty()) {
+            val identifierTextRange = with(element.nameElement.textRange) {
+                TextRange(this.endOffset - htlVariableName.length, this.endOffset)
+            }
+            holder.notSupportedHtlFeatureAnnotationBuilder(element, getMessage(element.project), identifierTextRange)
+                .withFix(RemoveHtlIdentifierAction(element.toSmartPointer(), "Remove \"$htlVariableName\" identifier"))
+                .create()
+        }
 
-    if (element.valueElement != null) {
-      val xmlAttributeValue = element.valueElement as PsiElement
+        if (element.valueElement != null) {
+            val xmlAttributeValue = element.valueElement as PsiElement
 
-      val currentHtlVersion = element.project.getHtlVersion().version
-      val message = "This expression has no effect in current HTL version $currentHtlVersion. " +
-        "Support for this feature starts with HTL version ${HtlVersion.V_1_4.version}."
-      holder.newAnnotation(HighlightSeverity.WEAK_WARNING, message)
-        .range(xmlAttributeValue)
-        .withFix(ChangeHtlVersionAction())
-        .withFix(RemoveRedundantDataSlyUnwrapValueAction(element.toSmartPointer()))
-        .create()
+            val currentHtlVersion = element.project.getHtlVersion().version
+            val message = "This expression has no effect in current HTL version $currentHtlVersion. " +
+                "Support for this feature starts with HTL version ${HtlVersion.V_1_4.version}."
+            holder.newAnnotation(HighlightSeverity.WEAK_WARNING, message)
+                .range(xmlAttributeValue)
+                .withFix(ChangeHtlVersionAction())
+                .withFix(RemoveRedundantDataSlyUnwrapValueAction(element.toSmartPointer()))
+                .create()
+        }
     }
-  }
 }

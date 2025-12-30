@@ -10,11 +10,11 @@ import com.intellij.psi.tree.IElementType
  * @author Dmytro Primshyts
  */
 class JpBraceMatcher : PairedBraceMatcher {
-  override fun getCodeConstructStart(file: PsiFile?, openingBraceOffset: Int): Int = openingBraceOffset
+    override fun getCodeConstructStart(file: PsiFile?, openingBraceOffset: Int): Int = openingBraceOffset
 
-  override fun getPairs(): Array<BracePair> = arrayOf(
-    BracePair(JpTypes.LBRACKET, JpTypes.RBRACKET, false)
-  )
+    override fun getPairs(): Array<BracePair> = arrayOf(
+        BracePair(JpTypes.LBRACKET, JpTypes.RBRACKET, false)
+    )
 
-  override fun isPairedBracesAllowedBeforeType(lbraceType: IElementType, contextType: IElementType?): Boolean = true
+    override fun isPairedBracesAllowedBeforeType(lbraceType: IElementType, contextType: IElementType?): Boolean = true
 }

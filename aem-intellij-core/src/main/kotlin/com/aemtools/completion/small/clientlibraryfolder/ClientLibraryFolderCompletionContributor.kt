@@ -8,5 +8,5 @@ import com.aemtools.completion.small.patterns.JcrPatterns.attributeInClientLibra
  * @author Dmytro Primshyts
  */
 class ClientLibraryFolderCompletionContributor : BaseCompletionContributor({
-  basic(attributeInClientLibraryFolder, ClientLibraryFolderCompletionProvider)
+    basic(attributeInClientLibraryFolder, ClientLibraryFolderCompletionProvider)
 })

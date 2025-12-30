@@ -9,7 +9,7 @@ import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry
  */
 abstract class PropertyAccessMixin(node: ASTNode) : HtlELNavigableMixin(node) {
 
-  override fun getReferences(): Array<PsiReference> {
-    return ReferenceProvidersRegistry.getReferencesFromProviders(this)
-  }
+    override fun getReferences(): Array<PsiReference> {
+        return ReferenceProvidersRegistry.getReferencesFromProviders(this)
+    }
 }

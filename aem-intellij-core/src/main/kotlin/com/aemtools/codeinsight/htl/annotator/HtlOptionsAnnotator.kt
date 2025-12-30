@@ -22,62 +22,62 @@ import com.intellij.psi.PsiElement
  * @author Dmytro Primshyts
  */
 class HtlOptionsAnnotator : Annotator {
-  override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-    if (element !is VariableNameMixin ||
-      !element.isOption()
-    ) {
-      return
+    override fun annotate(element: PsiElement, holder: AnnotationHolder) {
+        if (element !is VariableNameMixin ||
+            !element.isOption()
+        ) {
+            return
+        }
+
+        if (element.isInsideOf(Const.Htl.DATA_SLY_CALL)) {
+            val hel = element.findParentByType(HtlElExpressionMixin::class.java)
+                ?: return
+
+            val outputType = hel
+                .getMainPropertyAccess()
+                ?.callchain()
+                ?.getLastOutputType()
+                as? TemplateTypeDescriptor
+                ?: return
+
+            val templateParameters = outputType.parameters()
+            if (templateParameters.any { it == element.variableName() }) {
+                holder.createInfoAnnotation(element, HtlColors.TEMPLATE_ARGUMENT, "Template Argument")
+            }
+            return
+        }
+
+        if (element.isInsideOf(Const.Htl.DATA_SLY_TEMPLATE)) {
+            holder.createInfoAnnotation(element, HtlColors.TEMPLATE_PARAMETER, "Template Parameter")
+        }
+
+        if (element.project.supportsHtlVersion(HtlVersion.V_1_4) &&
+            listOf(Const.Htl.DATA_SLY_LIST, Const.Htl.DATA_SLY_REPEAT).any { element.isBlockSpecificOption(it) }
+        ) {
+            holder.createInfoAnnotation(element, HtlColors.STANDARD_OPTION, "Iterable Parameter")
+            return
+        }
+
+        if (element.isBlockSpecificOption(Const.Htl.DATA_SLY_RESOURCE)) {
+            holder.createInfoAnnotation(element, HtlColors.STANDARD_OPTION, "Standard Option")
+            return
+        }
+
+        if (element.isInsideOf(Const.Htl.DATA_SLY_USE)) {
+            return
+        }
+
+        if (HtlAttributesRepository.getHtlOptions(element.project.getHtlVersion())
+                .any { it.name == element.variableName() }
+        ) {
+            holder.createInfoAnnotation(element, HtlColors.STANDARD_OPTION, "Standard Option")
+        }
     }
 
-    if (element.isInsideOf(Const.Htl.DATA_SLY_CALL)) {
-      val hel = element.findParentByType(HtlElExpressionMixin::class.java)
-        ?: return
-
-      val outputType = hel
-        .getMainPropertyAccess()
-        ?.callchain()
-        ?.getLastOutputType()
-        as? TemplateTypeDescriptor
-        ?: return
-
-      val templateParameters = outputType.parameters()
-      if (templateParameters.any { it == element.variableName() }) {
-        holder.createInfoAnnotation(element, HtlColors.TEMPLATE_ARGUMENT, "Template Argument")
-      }
-      return
-    }
-
-    if (element.isInsideOf(Const.Htl.DATA_SLY_TEMPLATE)) {
-      holder.createInfoAnnotation(element, HtlColors.TEMPLATE_PARAMETER, "Template Parameter")
-    }
-
-    if (element.project.supportsHtlVersion(HtlVersion.V_1_4) &&
-      listOf(Const.Htl.DATA_SLY_LIST, Const.Htl.DATA_SLY_REPEAT).any { element.isBlockSpecificOption(it) }
-    ) {
-      holder.createInfoAnnotation(element, HtlColors.STANDARD_OPTION, "Iterable Parameter")
-      return
-    }
-
-    if (element.isBlockSpecificOption(Const.Htl.DATA_SLY_RESOURCE)) {
-      holder.createInfoAnnotation(element, HtlColors.STANDARD_OPTION, "Standard Option")
-      return
-    }
-
-    if (element.isInsideOf(Const.Htl.DATA_SLY_USE)) {
-      return
-    }
-
-    if (HtlAttributesRepository.getHtlOptions(element.project.getHtlVersion())
-        .any { it.name == element.variableName() }
-    ) {
-      holder.createInfoAnnotation(element, HtlColors.STANDARD_OPTION, "Standard Option")
-    }
-  }
-
-  private fun VariableNameMixin.isBlockSpecificOption(blockName: String): Boolean =
-    this.isInsideOf(blockName) &&
-      HtlAttributesRepository.getAttributesData(this.project.getHtlVersion())
-        .filter { it.name == blockName }
-        .flatMap { it.options ?: listOf() }
-        .any { it.name == this.variableName() }
+    private fun VariableNameMixin.isBlockSpecificOption(blockName: String): Boolean =
+        this.isInsideOf(blockName) &&
+            HtlAttributesRepository.getAttributesData(this.project.getHtlVersion())
+                .filter { it.name == blockName }
+                .flatMap { it.options ?: listOf() }
+                .any { it.name == this.variableName() }
 }

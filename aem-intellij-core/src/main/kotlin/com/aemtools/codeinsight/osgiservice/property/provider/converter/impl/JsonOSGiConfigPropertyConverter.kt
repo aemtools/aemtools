@@ -10,24 +10,24 @@ import com.intellij.json.psi.JsonProperty
 import com.intellij.psi.PsiElement
 
 class JsonOSGiConfigPropertyConverter : OSGiConfigPropertyConverter {
-  override fun canConvert(osgiConfig: OSGiConfiguration): Boolean {
-    return osgiConfig.file is JsonFile
-  }
-
-  override fun convert(osgiConfig: OSGiConfiguration, propertyName: String): OSGiPropertyDescriptor? {
-    val file = osgiConfig.file as? JsonFile ?: return null
-
-    val containingPsiElement: PsiElement? by lazy {
-      file
-        .findChildrenByType(JsonProperty::class.java)
-        .find { it.name == propertyName }
+    override fun canConvert(osgiConfig: OSGiConfiguration): Boolean {
+        return osgiConfig.file is JsonFile
     }
 
-    return OSGiPropertyDescriptor(
-      osgiConfig.mods.joinToString { it },
-      osgiConfig.parameters[propertyName] ?: NO_PROPERTY_VALUE_SET,
-      containingPsiElement,
-      file
-    )
-  }
+    override fun convert(osgiConfig: OSGiConfiguration, propertyName: String): OSGiPropertyDescriptor? {
+        val file = osgiConfig.file as? JsonFile ?: return null
+
+        val containingPsiElement: PsiElement? by lazy {
+            file
+                .findChildrenByType(JsonProperty::class.java)
+                .find { it.name == propertyName }
+        }
+
+        return OSGiPropertyDescriptor(
+            osgiConfig.mods.joinToString { it },
+            osgiConfig.parameters[propertyName] ?: NO_PROPERTY_VALUE_SET,
+            containingPsiElement,
+            file
+        )
+    }
 }

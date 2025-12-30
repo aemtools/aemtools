@@ -27,72 +27,72 @@ import com.intellij.psi.PsiNameValuePair
  * @author Kostiantyn Diachenko
  */
 class OSGiObjectClassDefinitionLineMarker : LineMarkerProvider {
-  override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<PsiElement>? {
-    val identifier = element as? PsiIdentifier
-      ?: return null
-    val osgiDsConfigClass = identifier.findParentByType(PsiClass::class.java)
-      ?: return null
-    val osgiConfigMethod = identifier.parent as? PsiMethod
-      ?: return null
-    if (!osgiDsConfigClass.isDsOSGiConfig() || !osgiConfigMethod.isDsOSGiConfigProperty()) {
-      return null
+    override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<PsiElement>? {
+        val identifier = element as? PsiIdentifier
+            ?: return null
+        val osgiDsConfigClass = identifier.findParentByType(PsiClass::class.java)
+            ?: return null
+        val osgiConfigMethod = identifier.parent as? PsiMethod
+            ?: return null
+        if (!osgiDsConfigClass.isDsOSGiConfig() || !osgiConfigMethod.isDsOSGiConfigProperty()) {
+            return null
+        }
+
+        val referencedOsgiComponent = osgiDsConfigClass.incomingReferences()
+            .firstOrNull { isDsOSGiConfigComponent(it.element) }
+        val referencedOsgiComponentClass: PsiClass? = if (referencedOsgiComponent != null) {
+            referencedOsgiComponent.element.findParentByType(PsiClass::class.java)
+        } else {
+            findReferencedOsgiComponentClassInCurrentClass(osgiDsConfigClass)
+        }
+
+        val referencedOsgiComponentFqn = referencedOsgiComponentClass?.qualifiedName ?: return null
+        val configs = OSGiConfigSearch.findConfigsForClass(
+            referencedOsgiComponentFqn,
+            element.project,
+            false
+        )
+        if (configs.isEmpty()) {
+            return null
+        }
+
+        return OSGiPropertyMarkerInfo(element) {
+            OSGiPropertyDescriptorsProvider.get(
+                referencedOsgiComponentClass,
+                OSGiComponentPropertyNameMapper.mapByMethodName(osgiConfigMethod.name)
+            )
+        }
     }
 
-    val referencedOsgiComponent = osgiDsConfigClass.incomingReferences()
-      .firstOrNull { isDsOSGiConfigComponent(it.element) }
-    val referencedOsgiComponentClass: PsiClass? = if (referencedOsgiComponent != null) {
-      referencedOsgiComponent.element.findParentByType(PsiClass::class.java)
-    } else {
-      findReferencedOsgiComponentClassInCurrentClass(osgiDsConfigClass)
+    private fun isDsOSGiConfigComponent(element: PsiElement?): Boolean {
+        val referencedOsgiComponent = element as? PsiJavaCodeReferenceElement
+            ?: return false
+        val designateAnnotation = referencedOsgiComponent.findParentByType(PsiAnnotation::class.java)
+            ?: return false
+
+        if (!designateAnnotation.hasQualifiedName(DS_DESIGNATE_ANNOTATION)) {
+            return false
+        }
+
+        val attribute = referencedOsgiComponent.findParentByType(PsiNameValuePair::class.java) ?: return false
+        return DESIGNATE_OCD_ANNOTATION_ATTRIBUTE == attribute.name
     }
 
-    val referencedOsgiComponentFqn = referencedOsgiComponentClass?.qualifiedName ?: return null
-    val configs = OSGiConfigSearch.findConfigsForClass(
-      referencedOsgiComponentFqn,
-      element.project,
-      false
-    )
-    if (configs.isEmpty()) {
-      return null
+    private fun findReferencedOsgiComponentClassInCurrentClass(configPsiClass: PsiClass): PsiClass? {
+        val osgiComponentPsiClass = configPsiClass.parent as? PsiClass ?: return null
+        val isReferencedOsgiComponentClass = osgiComponentPsiClass.annotations
+            .filter { it.hasQualifiedName(DS_DESIGNATE_ANNOTATION) }
+            .flatMap { it.parameterList.attributes.asList() }
+            .any { attribute ->
+                DESIGNATE_OCD_ANNOTATION_ATTRIBUTE == attribute.name && isOsgiConfig(attribute, configPsiClass)
+            }
+
+        if (!isReferencedOsgiComponentClass) {
+            return null
+        }
+        return osgiComponentPsiClass
     }
 
-    return OSGiPropertyMarkerInfo(element) {
-      OSGiPropertyDescriptorsProvider.get(
-        referencedOsgiComponentClass,
-        OSGiComponentPropertyNameMapper.mapByMethodName(osgiConfigMethod.name)
-      )
-    }
-  }
-
-  private fun isDsOSGiConfigComponent(element: PsiElement?): Boolean {
-    val referencedOsgiComponent = element as? PsiJavaCodeReferenceElement
-      ?: return false
-    val designateAnnotation = referencedOsgiComponent.findParentByType(PsiAnnotation::class.java)
-      ?: return false
-
-    if (!designateAnnotation.hasQualifiedName(DS_DESIGNATE_ANNOTATION)) {
-      return false
-    }
-
-    val attribute = referencedOsgiComponent.findParentByType(PsiNameValuePair::class.java) ?: return false
-    return DESIGNATE_OCD_ANNOTATION_ATTRIBUTE == attribute.name
-  }
-
-  private fun findReferencedOsgiComponentClassInCurrentClass(configPsiClass: PsiClass): PsiClass? {
-    val osgiComponentPsiClass = configPsiClass.parent as? PsiClass ?: return null
-    val isReferencedOsgiComponentClass = osgiComponentPsiClass.annotations
-      .filter { it.hasQualifiedName(DS_DESIGNATE_ANNOTATION) }
-      .flatMap { it.parameterList.attributes.asList() }
-      .any { attribute ->
-        DESIGNATE_OCD_ANNOTATION_ATTRIBUTE == attribute.name && isOsgiConfig(attribute, configPsiClass)
-      }
-
-    if (!isReferencedOsgiComponentClass) {
-      return null
-    }
-    return osgiComponentPsiClass
-  }
-
-  private fun isOsgiConfig(attribute: PsiNameValuePair, configPsiClass: PsiClass) =
-    attribute.value.findChildrenByType(PsiIdentifier::class.java).any { it.text == configPsiClass.name }
+    private fun isOsgiConfig(attribute: PsiNameValuePair, configPsiClass: PsiClass) =
+        attribute.value.findChildrenByType(PsiIdentifier::class.java).any { it.text == configPsiClass.name }
 }

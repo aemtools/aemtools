@@ -10,9 +10,9 @@ import com.intellij.psi.tree.IElementType
  * @author Dmytro Primshyts
  */
 class HtlParser : PsiParser {
-  override fun parse(root: IElementType, builder: PsiBuilder): ASTNode {
-    val parser = HtlParser()
-    val result = parser.parse(root, builder)
-    return result
-  }
+    override fun parse(root: IElementType, builder: PsiBuilder): ASTNode {
+        val parser = HtlParser()
+        val result = parser.parse(root, builder)
+        return result
+    }
 }

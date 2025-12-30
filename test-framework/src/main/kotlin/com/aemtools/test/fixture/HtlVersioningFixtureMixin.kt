@@ -8,7 +8,7 @@ import com.intellij.testFramework.fixtures.IdeaProjectTestFixture
  * @author Kostiantyn Diachenko
  */
 interface HtlVersioningFixtureMixin {
-  fun IdeaProjectTestFixture.setHtlVersion(htlVersion: HtlVersion) {
-    AemProjectSettings.getInstance(this.project).htlVersion = htlVersion
-  }
+    fun IdeaProjectTestFixture.setHtlVersion(htlVersion: HtlVersion) {
+        AemProjectSettings.getInstance(this.project).htlVersion = htlVersion
+    }
 }

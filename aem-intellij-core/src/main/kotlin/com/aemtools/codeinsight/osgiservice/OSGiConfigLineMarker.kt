@@ -15,29 +15,29 @@ import com.intellij.psi.PsiIdentifier
  * @author Dmytro Primshyts
  */
 class OSGiConfigLineMarker : LineMarkerProvider {
-  override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<PsiElement>? {
-    if (element is PsiIdentifier && element.parent is PsiClass) {
-      val psiClass = element.parent as? PsiClass
-        ?: return null
+    override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<PsiElement>? {
+        if (element is PsiIdentifier && element.parent is PsiClass) {
+            val psiClass = element.parent as? PsiClass
+                ?: return null
 
-      if (psiClass.isOSGiService()) {
-        val fqn = psiClass.qualifiedName ?: return null
-        val configs = OSGiConfigSearch.findConfigsForClass(fqn, element.project, false)
-        if (configs.isEmpty()) {
-          return null
-        }
+            if (psiClass.isOSGiService()) {
+                val fqn = psiClass.qualifiedName ?: return null
+                val configs = OSGiConfigSearch.findConfigsForClass(fqn, element.project, false)
+                if (configs.isEmpty()) {
+                    return null
+                }
 
-        return OSGiServiceConfigMarkerInfo(element) {
-          OSGiConfigSearch.findConfigsForClass(fqn, element.project, true)
+                return OSGiServiceConfigMarkerInfo(element) {
+                    OSGiConfigSearch.findConfigsForClass(fqn, element.project, true)
+                }
+            }
         }
-      }
+        return null
     }
-    return null
-  }
 
-  override fun collectSlowLineMarkers(
-    elements: MutableList<out PsiElement>,
-    result: MutableCollection<in LineMarkerInfo<*>>
-  ) {
-  }
+    override fun collectSlowLineMarkers(
+        elements: MutableList<out PsiElement>,
+        result: MutableCollection<in LineMarkerInfo<*>>
+    ) {
+    }
 }

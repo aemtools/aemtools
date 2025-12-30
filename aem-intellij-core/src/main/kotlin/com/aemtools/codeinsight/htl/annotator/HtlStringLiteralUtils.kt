@@ -9,20 +9,20 @@ import com.aemtools.lang.htl.psi.mixin.HtlStringLiteralMixin
  * @return singlequoted version of string literal
  */
 fun HtlStringLiteralMixin.toSingleQuoted(): String {
-  return if (this.isDoubleQuoted()) {
-    text
-      // "input ' \" " -> 'input \' " '
-      // escape singlequotes inside the literal
-      .replace("\\'", "'")
-      .replace("'", "\\'")
-      // unescape doublequotes inside the literal
-      .replace("\\\"", "\"")
-      // swap quotes
-      .replaceFirst("\"", "'")
-      .replaceLast("\"", "'")
-  } else {
-    text
-  }
+    return if (this.isDoubleQuoted()) {
+        text
+            // "input ' \" " -> 'input \' " '
+            // escape singlequotes inside the literal
+            .replace("\\'", "'")
+            .replace("'", "\\'")
+            // unescape doublequotes inside the literal
+            .replace("\\\"", "\"")
+            // swap quotes
+            .replaceFirst("\"", "'")
+            .replaceLast("\"", "'")
+    } else {
+        text
+    }
 }
 
 /**
@@ -32,20 +32,20 @@ fun HtlStringLiteralMixin.toSingleQuoted(): String {
  * @return doublequoted version of string literal
  */
 fun HtlStringLiteralMixin.toDoubleQuoted(): String {
-  return if (!this.isDoubleQuoted()) {
-    text
-      // 'input " \' ' -> "input \" ' "
-      // escape doublequotes inside the literal
-      .replace("\\\"", "\"")
-      .replace("\"", "\\\"")
-      // unescape singlequotes inside the literal
-      .replace("\\'", "'")
-      // swap quotes
-      .replaceFirst("'", "\"")
-      .replaceLast("'", "\"")
-  } else {
-    text
-  }
+    return if (!this.isDoubleQuoted()) {
+        text
+            // 'input " \' ' -> "input \" ' "
+            // escape doublequotes inside the literal
+            .replace("\\\"", "\"")
+            .replace("\"", "\\\"")
+            // unescape singlequotes inside the literal
+            .replace("\\'", "'")
+            // swap quotes
+            .replaceFirst("'", "\"")
+            .replaceLast("'", "\"")
+    } else {
+        text
+    }
 }
 
 /**
@@ -56,11 +56,11 @@ fun HtlStringLiteralMixin.toDoubleQuoted(): String {
  * @return string with swapped quote
  */
 fun HtlStringLiteralMixin.swapQuotes(): String {
-  return if (this.isDoubleQuoted()) {
-    toSingleQuoted()
-  } else {
-    toDoubleQuoted()
-  }
+    return if (this.isDoubleQuoted()) {
+        toSingleQuoted()
+    } else {
+        toDoubleQuoted()
+    }
 }
 
 /**
@@ -70,10 +70,10 @@ fun HtlStringLiteralMixin.swapQuotes(): String {
  * @return *true* if current string is doublequoted, *false* otherwise
  */
 fun HtlStringLiteralMixin.isDoubleQuoted(): Boolean {
-  return this.text.startsWith("\"")
+    return this.text.startsWith("\"")
 }
 
 private fun String.replaceLast(oldValue: String, newValue: String, ignoreCase: Boolean = false): String =
-  reversed()
-    .replaceFirst(oldValue, newValue, ignoreCase)
-    .reversed()
+    reversed()
+        .replaceFirst(oldValue, newValue, ignoreCase)
+        .reversed()

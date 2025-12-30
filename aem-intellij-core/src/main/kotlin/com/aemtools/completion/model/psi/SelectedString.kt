@@ -8,27 +8,27 @@ import com.aemtools.common.constant.Const
  * @author Dmytro Primshyts
  */
 data class SelectedString constructor(
-  val value: String,
-  val cursorPosition: Int
+    val value: String,
+    val cursorPosition: Int
 ) {
 
-  companion object {
+    companion object {
 
-    /**
-     * Builder method for [SelectedString].
-     *
-     * @param value incoming string
-     * @return selected string instance, *null* for null input
-     */
-    fun create(value: String?): SelectedString? {
-      if (value == null) {
-        return null
-      }
+        /**
+         * Builder method for [SelectedString].
+         *
+         * @param value incoming string
+         * @return selected string instance, *null* for null input
+         */
+        fun create(value: String?): SelectedString? {
+            if (value == null) {
+                return null
+            }
 
-      return SelectedString(
-        value.replace(Const.IDEA_STRING_CARET_PLACEHOLDER, ""),
-        value.indexOf(Const.IDEA_STRING_CARET_PLACEHOLDER)
-      )
+            return SelectedString(
+                value.replace(Const.IDEA_STRING_CARET_PLACEHOLDER, ""),
+                value.indexOf(Const.IDEA_STRING_CARET_PLACEHOLDER)
+            )
+        }
     }
-  }
 }

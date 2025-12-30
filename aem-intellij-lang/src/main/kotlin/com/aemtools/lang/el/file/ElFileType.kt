@@ -10,11 +10,11 @@ import javax.swing.Icon
  */
 object ElFileType : LanguageFileType(ElLanguage) {
 
-  override fun getIcon(): Icon = ProductIcons.getInstance().productIcon
+    override fun getIcon(): Icon = ProductIcons.getInstance().productIcon
 
-  override fun getName(): String = "Expression Language"
+    override fun getName(): String = "Expression Language"
 
-  override fun getDefaultExtension(): String = "el"
+    override fun getDefaultExtension(): String = "el"
 
-  override fun getDescription(): String = "EL Test File"
+    override fun getDescription(): String = "EL Test File"
 }

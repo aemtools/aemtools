@@ -11,16 +11,16 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 object HtlContextOptionAssignmentCompletionProvider : CompletionProvider<CompletionParameters>() {
-  override fun addCompletions(
-    parameters: CompletionParameters,
-    context: ProcessingContext,
-    result: CompletionResultSet
-  ) {
-    val variants = HtlELPredefined.CONTEXT_VALUES.map {
-      lookupElement(it.completionText)
-        .withTypeText("HTL Context Value")
-    }
+    override fun addCompletions(
+        parameters: CompletionParameters,
+        context: ProcessingContext,
+        result: CompletionResultSet
+    ) {
+        val variants = HtlELPredefined.CONTEXT_VALUES.map {
+            lookupElement(it.completionText)
+                .withTypeText("HTL Context Value")
+        }
 
-    result.addAllElements(variants)
-  }
+        result.addAllElements(variants)
+    }
 }

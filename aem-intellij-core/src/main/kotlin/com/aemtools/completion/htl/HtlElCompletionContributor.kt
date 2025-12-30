@@ -3,8 +3,20 @@ package com.aemtools.completion.htl
 import com.aemtools.common.completion.BaseCompletionContributor
 import com.aemtools.common.constant.Const.Htl.DATA_SLY_LIST
 import com.aemtools.common.constant.Const.Htl.DATA_SLY_REPEAT
-import com.aemtools.completion.htl.provider.*
-import com.aemtools.completion.htl.provider.option.*
+import com.aemtools.completion.htl.provider.HtlDataSlyUseCompletionProvider
+import com.aemtools.completion.htl.provider.HtlElDataSlyCallVariableCompletionProvider
+import com.aemtools.completion.htl.provider.HtlElMemberAccessCompletionProvider
+import com.aemtools.completion.htl.provider.HtlElVariableNameCompletionProvider
+import com.aemtools.completion.htl.provider.HtlI18NKeyCompletionProvider
+import com.aemtools.completion.htl.provider.HtlListSmartCompletionProvider
+import com.aemtools.completion.htl.provider.option.HtlClientLibraryTemplateCategoryCompletionProvider
+import com.aemtools.completion.htl.provider.option.HtlContextOptionAssignmentCompletionProvider
+import com.aemtools.completion.htl.provider.option.HtlDataSlyCallOptionCompletionProvider
+import com.aemtools.completion.htl.provider.option.HtlDataSlyIterableOptionCompletionProvider
+import com.aemtools.completion.htl.provider.option.HtlDataSlyResourceOptionCompletionProvider
+import com.aemtools.completion.htl.provider.option.HtlDataSlyTemplateOptionCompletionProvider
+import com.aemtools.completion.htl.provider.option.HtlOptionCompletionProvider
+import com.aemtools.completion.htl.provider.option.HtlResourceTypeOptionAssignmentCompletionProvider
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.categoriesOptionAssignment
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.categoriesOptionAssignmentViaArray
 import com.aemtools.lang.htl.psi.pattern.HtlPatterns.contextOptionAssignment
@@ -28,34 +40,34 @@ import com.intellij.patterns.StandardPatterns.or
  * @author Dmytro Primshyts.
  */
 class HtlElCompletionContributor : BaseCompletionContributor({
-  basic(memberAccess, HtlElMemberAccessCompletionProvider)
+    basic(memberAccess, HtlElMemberAccessCompletionProvider)
 
-  basic(mainVariableInsideOfDataSlyCall, HtlElDataSlyCallVariableCompletionProvider)
+    basic(mainVariableInsideOfDataSlyCall, HtlElDataSlyCallVariableCompletionProvider)
 
-  basic(dataSlyUseMainString, HtlDataSlyUseCompletionProvider)
-  smart(dataSlyUseMainString, HtlDataSlyUseCompletionProvider)
+    basic(dataSlyUseMainString, HtlDataSlyUseCompletionProvider)
+    smart(dataSlyUseMainString, HtlDataSlyUseCompletionProvider)
 
-  basic(stringLiteralValue, HtlI18NKeyCompletionProvider)
+    basic(stringLiteralValue, HtlI18NKeyCompletionProvider)
 
-  basic(variableName, HtlElVariableNameCompletionProvider)
+    basic(variableName, HtlElVariableNameCompletionProvider)
 
-  basic(dataSlyTemplateOption, HtlDataSlyTemplateOptionCompletionProvider)
-  basic(dataSlyCallOption, HtlDataSlyCallOptionCompletionProvider)
-  basic(dataSlyResourceOption, HtlDataSlyResourceOptionCompletionProvider)
+    basic(dataSlyTemplateOption, HtlDataSlyTemplateOptionCompletionProvider)
+    basic(dataSlyCallOption, HtlDataSlyCallOptionCompletionProvider)
+    basic(dataSlyResourceOption, HtlDataSlyResourceOptionCompletionProvider)
 
-  basic(dataSlyListOption, HtlDataSlyIterableOptionCompletionProvider(DATA_SLY_LIST))
-  basic(dataSlyRepeatOption, HtlDataSlyIterableOptionCompletionProvider(DATA_SLY_REPEAT))
+    basic(dataSlyListOption, HtlDataSlyIterableOptionCompletionProvider(DATA_SLY_LIST))
+    basic(dataSlyRepeatOption, HtlDataSlyIterableOptionCompletionProvider(DATA_SLY_REPEAT))
 
-  basic(optionName, HtlOptionCompletionProvider)
+    basic(optionName, HtlOptionCompletionProvider)
 
-  smart(
-    or(mainVariableInsideOfDataSlyList, mainVariableInsideOfDataSlyRepeat),
-    HtlListSmartCompletionProvider
-  )
+    smart(
+        or(mainVariableInsideOfDataSlyList, mainVariableInsideOfDataSlyRepeat),
+        HtlListSmartCompletionProvider
+    )
 
-  basic(contextOptionAssignment, HtlContextOptionAssignmentCompletionProvider)
-  basic(resourceTypeOptionAssignment, HtlResourceTypeOptionAssignmentCompletionProvider)
+    basic(contextOptionAssignment, HtlContextOptionAssignmentCompletionProvider)
+    basic(resourceTypeOptionAssignment, HtlResourceTypeOptionAssignmentCompletionProvider)
 
-  basic(categoriesOptionAssignment, HtlClientLibraryTemplateCategoryCompletionProvider)
-  basic(categoriesOptionAssignmentViaArray, HtlClientLibraryTemplateCategoryCompletionProvider)
+    basic(categoriesOptionAssignment, HtlClientLibraryTemplateCategoryCompletionProvider)
+    basic(categoriesOptionAssignmentViaArray, HtlClientLibraryTemplateCategoryCompletionProvider)
 })

@@ -7,13 +7,13 @@ package com.aemtools.codeinsight.htl.model
  */
 enum class DeclarationType {
 
-  /**
-   * The ordinary variable (spawned by `data-sly-use`, `data-sly-test`)
-   */
-  VARIABLE,
+    /**
+     * The ordinary variable (spawned by `data-sly-use`, `data-sly-test`)
+     */
+    VARIABLE,
 
-  /**
-   * Iterable variable (`data-sly-list`, `data-sly-repeat`)
-   */
-  ITERABLE
+    /**
+     * Iterable variable (`data-sly-list`, `data-sly-repeat`)
+     */
+    ITERABLE
 }

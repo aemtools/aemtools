@@ -11,17 +11,17 @@ import com.intellij.testFramework.fixtures.CodeInsightTestFixture
  * @author Dmytro Primshyts
  */
 abstract class BasePlatformLightTest :
-  HtlVersioningFixtureMixin,
-  BasePlatformTestCase() {
+    HtlVersioningFixtureMixin,
+    BasePlatformTestCase() {
 
-  fun fixture(): CodeInsightTestFixture = myFixture
+    fun fixture(): CodeInsightTestFixture = myFixture
 
-  override fun getProjectDescriptor(): LightProjectDescriptor {
-    return JdkProjectDescriptor()
-  }
+    override fun getProjectDescriptor(): LightProjectDescriptor {
+        return JdkProjectDescriptor()
+    }
 
-  override fun setUp() {
-    super.setUp()
-    myFixture.setHtlVersion(HtlVersion.V_1_4)
-  }
+    override fun setUp() {
+        super.setUp()
+        myFixture.setHtlVersion(HtlVersion.V_1_4)
+    }
 }

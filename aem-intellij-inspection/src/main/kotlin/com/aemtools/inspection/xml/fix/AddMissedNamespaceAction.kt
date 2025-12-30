@@ -4,8 +4,8 @@ import com.intellij.codeInsight.daemon.impl.analysis.CreateNSDeclarationIntentio
 import com.intellij.psi.PsiElement
 
 class AddMissedNamespaceAction(element: PsiElement, private val namespacePrefix: String) :
-  CreateNSDeclarationIntentionFix(element, namespacePrefix) {
-  override fun getText(): String {
-    return "Add missed '$namespacePrefix' namespace"
-  }
+    CreateNSDeclarationIntentionFix(element, namespacePrefix) {
+    override fun getText(): String {
+        return "Add missed '$namespacePrefix' namespace"
+    }
 }

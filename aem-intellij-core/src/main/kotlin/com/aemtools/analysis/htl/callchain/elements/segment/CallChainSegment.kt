@@ -8,35 +8,35 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.base.TypeDescriptor
  */
 interface CallChainSegment {
 
-  /**
-   * [TypeDescriptor] for output type.
-   *
-   * @return output type descriptor
-   */
-  fun outputType(): TypeDescriptor
-
-  /**
-   * [TypeDescriptor] for input type.
-   *
-   * @return input type descriptor
-   */
-  fun inputType(): TypeDescriptor
-
-  /**
-   * List of [CallChainElement] items.
-   *
-   * @return list of call chain elements
-   */
-  fun chainElements(): List<CallChainElement>
-
-  companion object {
-    private val EMPTY = EmptyCallChainSegment()
+    /**
+     * [TypeDescriptor] for output type.
+     *
+     * @return output type descriptor
+     */
+    fun outputType(): TypeDescriptor
 
     /**
-     * Create empty call chain segment.
+     * [TypeDescriptor] for input type.
      *
-     * @return empty call chain segment
+     * @return input type descriptor
      */
-    fun empty(): CallChainSegment = EMPTY
-  }
+    fun inputType(): TypeDescriptor
+
+    /**
+     * List of [CallChainElement] items.
+     *
+     * @return list of call chain elements
+     */
+    fun chainElements(): List<CallChainElement>
+
+    companion object {
+        private val EMPTY = EmptyCallChainSegment()
+
+        /**
+         * Create empty call chain segment.
+         *
+         * @return empty call chain segment
+         */
+        fun empty(): CallChainSegment = EMPTY
+    }
 }

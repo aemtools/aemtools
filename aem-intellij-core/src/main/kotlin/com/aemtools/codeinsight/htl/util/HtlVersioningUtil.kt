@@ -20,12 +20,12 @@ import com.intellij.psi.PsiElement
  * @return [AnnotationBuilder]
  */
 fun AnnotationHolder.notSupportedHtlFeatureAnnotationBuilder(
-  element: PsiElement,
-  textRange: TextRange = element.textRange
+    element: PsiElement,
+    textRange: TextRange = element.textRange
 ): AnnotationBuilder {
-  val currentProjectHtlVersion = element.project.getHtlVersion().version
-  val message = "Support for this option starts with HTL version $currentProjectHtlVersion."
-  return this.notSupportedHtlFeatureAnnotationBuilder(element, message, textRange)
+    val currentProjectHtlVersion = element.project.getHtlVersion().version
+    val message = "Support for this option starts with HTL version $currentProjectHtlVersion."
+    return this.notSupportedHtlFeatureAnnotationBuilder(element, message, textRange)
 }
 
 /**
@@ -39,14 +39,14 @@ fun AnnotationHolder.notSupportedHtlFeatureAnnotationBuilder(
  * @return [AnnotationBuilder]
  */
 fun AnnotationHolder.notSupportedHtlFeatureAnnotationBuilder(
-  element: PsiElement,
-  message: String,
-  textRange: TextRange = element.textRange
+    element: PsiElement,
+    message: String,
+    textRange: TextRange = element.textRange
 ): AnnotationBuilder {
-  return this.newAnnotation(HighlightSeverity.ERROR, message)
-    .textAttributes(CodeInsightColors.ERRORS_ATTRIBUTES)
-    .withFix(ChangeHtlVersionAction())
-    .range(textRange)
+    return this.newAnnotation(HighlightSeverity.ERROR, message)
+        .textAttributes(CodeInsightColors.ERRORS_ATTRIBUTES)
+        .withFix(ChangeHtlVersionAction())
+        .range(textRange)
 }
 
 /**
@@ -56,5 +56,5 @@ fun AnnotationHolder.notSupportedHtlFeatureAnnotationBuilder(
  * @param sinceHtlVersion the HTL version since feature is available
  */
 fun notSupportedHtlFeatureText(projectHtlVersion: HtlVersion, sinceHtlVersion: HtlVersion) =
-  "Support for this option starts with HTL version ${sinceHtlVersion.version}. " +
-    "Current project version - ${projectHtlVersion.version}."
+    "Support for this option starts with HTL version ${sinceHtlVersion.version}. " +
+        "Current project version - ${projectHtlVersion.version}."

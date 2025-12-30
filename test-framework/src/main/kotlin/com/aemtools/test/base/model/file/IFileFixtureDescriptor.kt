@@ -5,13 +5,13 @@ package com.aemtools.test.base.model.file
  */
 interface IFileFixtureDescriptor {
 
-  /**
-   * Check if current file contains [com.intellij.testFramework.fixtures.CodeInsightTestFixture.CARET_MARKER]
-   */
-  fun containsCaret(): Boolean
+    /**
+     * Check if current file contains [com.intellij.testFramework.fixtures.CodeInsightTestFixture.CARET_MARKER]
+     */
+    fun containsCaret(): Boolean
 
-  /**
-   * Add current file fixture to actual fixture.
-   */
-  fun initialize()
+    /**
+     * Add current file fixture to actual fixture.
+     */
+    fun initialize()
 }

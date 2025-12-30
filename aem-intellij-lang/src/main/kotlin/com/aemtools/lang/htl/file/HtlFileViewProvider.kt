@@ -23,74 +23,74 @@ import java.util.concurrent.ConcurrentMap
  * @author Dmytro Primshyts
  */
 class HtlFileViewProvider @JvmOverloads constructor(
-  manager: PsiManager,
-  virtualFile: VirtualFile,
-  physical: Boolean,
-  val myBaseLanguage: Language,
-  val myTemplateLanguage: Language = getTemplateDataLanguage(manager, virtualFile)
+    manager: PsiManager,
+    virtualFile: VirtualFile,
+    physical: Boolean,
+    val myBaseLanguage: Language,
+    val myTemplateLanguage: Language = getTemplateDataLanguage(manager, virtualFile)
 ) :
-  MultiplePsiFilesPerDocumentFileViewProvider(manager, virtualFile, physical),
-  ConfigurableTemplateLanguageFileViewProvider {
+    MultiplePsiFilesPerDocumentFileViewProvider(manager, virtualFile, physical),
+    ConfigurableTemplateLanguageFileViewProvider {
 
-  companion object {
-    private val TEMPLATE_DATA_TO_LANG: ConcurrentMap<String, TemplateDataElementType> =
-      ConcurrentHashMap()
+    companion object {
+        private val TEMPLATE_DATA_TO_LANG: ConcurrentMap<String, TemplateDataElementType> =
+            ConcurrentHashMap()
 
-    private fun getTemplateDataElementType(lang: Language): TemplateDataElementType {
-      var result = TEMPLATE_DATA_TO_LANG.get(lang.id)
+        private fun getTemplateDataElementType(lang: Language): TemplateDataElementType {
+            var result = TEMPLATE_DATA_TO_LANG.get(lang.id)
 
-      if (result != null) {
-        return result
-      }
+            if (result != null) {
+                return result
+            }
 
-      val created = TemplateDataElementType(
-        "SIGHTLY_DATA_TEMPLATE",
-        lang,
-        OUTER_LANGUAGE,
-        OuterLanguageElementType(HEL.toString(), HEL.language)
-      )
+            val created = TemplateDataElementType(
+                "SIGHTLY_DATA_TEMPLATE",
+                lang,
+                OUTER_LANGUAGE,
+                OuterLanguageElementType(HEL.toString(), HEL.language)
+            )
 
-      return TEMPLATE_DATA_TO_LANG.putIfAbsent(lang.id, created) ?: created
+            return TEMPLATE_DATA_TO_LANG.putIfAbsent(lang.id, created) ?: created
+        }
     }
-  }
 
-  override fun getBaseLanguage(): Language = myBaseLanguage
+    override fun getBaseLanguage(): Language = myBaseLanguage
 
-  override fun getTemplateDataLanguage(): Language = myTemplateLanguage
+    override fun getTemplateDataLanguage(): Language = myTemplateLanguage
 
-  override fun supportsIncrementalReparse(rootLanguage: Language): Boolean = false
+    override fun supportsIncrementalReparse(rootLanguage: Language): Boolean = false
 
-  override fun getLanguages(): Set<Language> {
-    return HashSet(listOf(myBaseLanguage, myTemplateLanguage))
-  }
-
-  override fun cloneInner(virtualFile: VirtualFile): MultiplePsiFilesPerDocumentFileViewProvider {
-    return HtlFileViewProvider(manager, virtualFile, false, myBaseLanguage, myTemplateLanguage)
-  }
-
-  override fun createFile(lang: Language): PsiFile? {
-    val parserDefinition = getDefinition(lang) ?: return null
-
-    return when {
-      lang.`is`(templateDataLanguage) -> {
-        val file: PsiFileImpl = parserDefinition.createFile(this) as PsiFileImpl
-        file.contentElementType = getTemplateDataElementType(myBaseLanguage)
-        file
-      }
-      lang.isKindOf(baseLanguage) -> {
-        parserDefinition.createFile(this)
-      }
-      else -> null
+    override fun getLanguages(): Set<Language> {
+        return HashSet(listOf(myBaseLanguage, myTemplateLanguage))
     }
-  }
 
-  private fun getDefinition(lang: Language): ParserDefinition? {
-    return if (lang.isKindOf(myBaseLanguage)) {
-      LanguageParserDefinitions.INSTANCE.forLanguage(if (lang.`is`(baseLanguage)) lang else baseLanguage)
-    } else {
-      LanguageParserDefinitions.INSTANCE.forLanguage(lang)
+    override fun cloneInner(virtualFile: VirtualFile): MultiplePsiFilesPerDocumentFileViewProvider {
+        return HtlFileViewProvider(manager, virtualFile, false, myBaseLanguage, myTemplateLanguage)
     }
-  }
+
+    override fun createFile(lang: Language): PsiFile? {
+        val parserDefinition = getDefinition(lang) ?: return null
+
+        return when {
+            lang.`is`(templateDataLanguage) -> {
+                val file: PsiFileImpl = parserDefinition.createFile(this) as PsiFileImpl
+                file.contentElementType = getTemplateDataElementType(myBaseLanguage)
+                file
+            }
+            lang.isKindOf(baseLanguage) -> {
+                parserDefinition.createFile(this)
+            }
+            else -> null
+        }
+    }
+
+    private fun getDefinition(lang: Language): ParserDefinition? {
+        return if (lang.isKindOf(myBaseLanguage)) {
+            LanguageParserDefinitions.INSTANCE.forLanguage(if (lang.`is`(baseLanguage)) lang else baseLanguage)
+        } else {
+            LanguageParserDefinitions.INSTANCE.forLanguage(lang)
+        }
+    }
 }
 
 /**
@@ -102,23 +102,23 @@ class HtlFileViewProvider @JvmOverloads constructor(
  * @return the template language
  */
 fun getTemplateDataLanguage(manager: PsiManager, virtualFile: VirtualFile): Language {
-  val mappings = TemplateDataLanguageMappings.getInstance(manager.project)
-  var dataLang: Language? = null
+    val mappings = TemplateDataLanguageMappings.getInstance(manager.project)
+    var dataLang: Language? = null
 
-  if (mappings != null) {
-    dataLang = mappings.getMapping(virtualFile)
-  }
+    if (mappings != null) {
+        dataLang = mappings.getMapping(virtualFile)
+    }
 
-  if (dataLang == null) {
-    dataLang = getDefaultTemplateLang().language
-  }
+    if (dataLang == null) {
+        dataLang = getDefaultTemplateLang().language
+    }
 
-  val substituteLanguage = LanguageSubstitutors.getInstance()
-    .substituteLanguage(dataLang, virtualFile, manager.project)
+    val substituteLanguage = LanguageSubstitutors.getInstance()
+        .substituteLanguage(dataLang, virtualFile, manager.project)
 
-  if (TemplateDataLanguageMappings.getTemplateableLanguages().contains(substituteLanguage)) {
-    dataLang = substituteLanguage
-  }
+    if (TemplateDataLanguageMappings.getTemplateableLanguages().contains(substituteLanguage)) {
+        dataLang = substituteLanguage
+    }
 
-  return dataLang
+    return dataLang
 }

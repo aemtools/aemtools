@@ -12,12 +12,12 @@ import com.intellij.psi.SingleRootFileViewProvider
  * @author Dmytro Primshyts
  */
 class ElViewProviderFactory : FileViewProviderFactory {
-  override fun createFileViewProvider(
-    file: VirtualFile,
-    language: Language?,
-    manager: PsiManager,
-    eventSystemEnabled: Boolean
-  ): FileViewProvider {
-    return SingleRootFileViewProvider(manager, file, eventSystemEnabled, HtlFileType)
-  }
+    override fun createFileViewProvider(
+        file: VirtualFile,
+        language: Language?,
+        manager: PsiManager,
+        eventSystemEnabled: Boolean
+    ): FileViewProvider {
+        return SingleRootFileViewProvider(manager, file, eventSystemEnabled, HtlFileType)
+    }
 }

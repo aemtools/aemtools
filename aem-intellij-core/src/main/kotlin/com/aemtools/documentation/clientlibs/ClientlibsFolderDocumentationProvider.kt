@@ -17,31 +17,31 @@ import com.intellij.psi.PsiFile
  */
 open class ClientlibsFolderDocumentationProvider : AbstractDocumentationProvider() {
 
-  override fun getCustomDocumentationElement(
-    editor: Editor,
-    file: PsiFile,
-    contextElement: PsiElement?,
-    targetOffset: Int
-  ): PsiElement? {
-    return contextElement?.parent as? JpArrayValue
-  }
-
-  override fun generateDoc(element: PsiElement?, originalElement: PsiElement?): String? {
-    if (originalElement == null) {
-      return super.generateDoc(element, originalElement)
+    override fun getCustomDocumentationElement(
+        editor: Editor,
+        file: PsiFile,
+        contextElement: PsiElement?,
+        targetOffset: Int
+    ): PsiElement? {
+        return contextElement?.parent as? JpArrayValue
     }
 
-    if (jcrArrayValueOfCategories.accepts(originalElement) ||
-      jcrArrayValueOfDependencies.accepts(originalElement) ||
-      jcrArrayValueOfEmbeds.accepts(originalElement)
-    ) {
-      val categoryPsiElement = element as? JpArrayValue
-      val category = categoryPsiElement?.text
-        ?: return super.generateDoc(element, originalElement)
+    override fun generateDoc(element: PsiElement?, originalElement: PsiElement?): String? {
+        if (originalElement == null) {
+            return super.generateDoc(element, originalElement)
+        }
 
-      return ClientlibDocumentationGenerator.generateDoc(categoryPsiElement, category)
-        ?: super.generateDoc(element, originalElement)
+        if (jcrArrayValueOfCategories.accepts(originalElement) ||
+            jcrArrayValueOfDependencies.accepts(originalElement) ||
+            jcrArrayValueOfEmbeds.accepts(originalElement)
+        ) {
+            val categoryPsiElement = element as? JpArrayValue
+            val category = categoryPsiElement?.text
+                ?: return super.generateDoc(element, originalElement)
+
+            return ClientlibDocumentationGenerator.generateDoc(categoryPsiElement, category)
+                ?: super.generateDoc(element, originalElement)
+        }
+        return super.generateDoc(element, originalElement)
     }
-    return super.generateDoc(element, originalElement)
-  }
 }

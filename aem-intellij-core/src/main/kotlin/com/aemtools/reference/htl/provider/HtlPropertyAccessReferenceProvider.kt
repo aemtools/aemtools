@@ -22,125 +22,125 @@ import com.intellij.psi.PsiReference
 import com.intellij.psi.PsiReferenceBase
 import com.intellij.psi.PsiReferenceProvider
 import com.intellij.util.ProcessingContext
-import java.util.LinkedList
+import java.util.*
 
 /**
  * @author Dmytro Primshyts
  */
 object HtlPropertyAccessReferenceProvider : PsiReferenceProvider() {
-  override fun getReferencesByElement(
-    element: PsiElement,
-    context: ProcessingContext
-  ): Array<PsiReference> {
-    val propertyAccess = element as? PropertyAccessMixin ?: return arrayOf()
+    override fun getReferencesByElement(
+        element: PsiElement,
+        context: ProcessingContext
+    ): Array<PsiReference> {
+        val propertyAccess = element as? PropertyAccessMixin ?: return arrayOf()
 
-    val chain = propertyAccess.callchain() ?: return arrayOf()
+        val chain = propertyAccess.callchain() ?: return arrayOf()
 
-    val chainSegment = chain.callChainSegments.lastOrNull() as? BaseCallChainSegment ?: return arrayOf()
+        val chainSegment = chain.callChainSegments.lastOrNull() as? BaseCallChainSegment ?: return arrayOf()
 
-    val elements = LinkedList<CallChainElement>(chainSegment.chainElements())
+        val elements = LinkedList<CallChainElement>(chainSegment.chainElements())
 
-    val firstElement = elements.firstOrNull() ?: return arrayOf()
-    elements.pop()
+        val firstElement = elements.firstOrNull() ?: return arrayOf()
+        elements.pop()
 
-    val firstReference = extractFirstReference(chainSegment, firstElement, propertyAccess)
+        val firstReference = extractFirstReference(chainSegment, firstElement, propertyAccess)
 
-    val references: List<PsiReference> = elements.flatMap {
-      val actualReferenceHolder = it.element
-      val type = it.type
-      val referencedElement = type.referencedElement()
-        ?: return@flatMap emptyList<PsiReference>()
+        val references: List<PsiReference> = elements.flatMap {
+            val actualReferenceHolder = it.element
+            val type = it.type
+            val referencedElement = type.referencedElement()
+                ?: return@flatMap emptyList<PsiReference>()
 
-      val reference = HtlPropertyAccessReference(
-        propertyAccess,
-        it,
-        extractTextRange(actualReferenceHolder),
-        referencedElement
-      )
+            val reference = HtlPropertyAccessReference(
+                propertyAccess,
+                it,
+                extractTextRange(actualReferenceHolder),
+                referencedElement
+            )
 
-      return@flatMap listOf(reference)
-    }
-    val refs = LinkedList(references)
-    refs.addFirst(firstReference)
-    return refs.toTypedArray()
-  }
-
-  private fun extractFirstReference(
-    chainSegment: BaseCallChainSegment,
-    firstElement: CallChainElement,
-    propertyAccess: PropertyAccessMixin
-  ): PsiReferenceBase<PsiElement> {
-    val _type = firstElement.type
-    val _declaration = chainSegment.declaration
-    return when {
-      _type is TemplateParameterTypeDescriptor -> {
-        HtlTemplateParameterReference(
-          _type,
-          propertyAccess,
-          firstElementTextRange(firstElement)
-        )
-      }
-      _type is TemplateTypeDescriptor -> {
-        HtlDeclarationReference(
-          _declaration?.xmlAttribute,
-          firstElement as? BaseChainElement,
-          propertyAccess,
-          firstElementTextRange(firstElement)
-        )
-      }
-      _declaration is HtlListHelperDeclaration -> {
-        HtlListHelperReference(
-          _declaration.xmlAttribute,
-          propertyAccess,
-          firstElementTextRange(firstElement)
-        )
-      }
-      else -> {
-        HtlDeclarationReference(
-          chainSegment.declaration?.xmlAttribute,
-          firstElement as? BaseChainElement,
-          propertyAccess,
-          firstElementTextRange(firstElement)
-        )
-      }
-    }
-  }
-
-  private fun firstElementTextRange(firstElement: CallChainElement) =
-    TextRange(
-      firstElement.element.startOffsetInParent,
-      firstElement.element.startOffsetInParent + firstElement.element.textLength
-    )
-
-  private fun extractTextRange(element: PsiElement): TextRange {
-    return when (element) {
-      is com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin ->
-        if (element.hasChild(HtlArrayLikeAccess::class.java) &&
-          element.hasChild(HtlStringLiteral::class.java)
-        ) {
-          val stringLiteral: PsiElement = element.findChildrenByType(
-            HtlStringLiteral::class.java
-          ).firstOrNull() as? PsiElement
-            ?: return TextRange.EMPTY_RANGE
-
-          val offset = element.startOffsetInParent + stringLiteral.startOffsetInParent + 1
-
-          TextRange(offset, offset + stringLiteral.text.length - 2)
-        } else if (!element.hasChild(HtlArrayLikeAccess::class.java)) {
-          TextRange(
-            element.startOffsetInParent + 1,
-            element.startOffsetInParent + element.variableName().length + 1
-          )
-        } else {
-          TextRange.EMPTY_RANGE
+            return@flatMap listOf(reference)
         }
-
-      is com.aemtools.lang.htl.psi.mixin.VariableNameMixin -> TextRange(
-        element.startOffsetInParent + 1,
-        element.startOffsetInParent + element.variableName().length + 1
-      )
-
-      else -> TextRange.EMPTY_RANGE
+        val refs = LinkedList(references)
+        refs.addFirst(firstReference)
+        return refs.toTypedArray()
     }
-  }
+
+    private fun extractFirstReference(
+        chainSegment: BaseCallChainSegment,
+        firstElement: CallChainElement,
+        propertyAccess: PropertyAccessMixin
+    ): PsiReferenceBase<PsiElement> {
+        val _type = firstElement.type
+        val _declaration = chainSegment.declaration
+        return when {
+            _type is TemplateParameterTypeDescriptor -> {
+                HtlTemplateParameterReference(
+                    _type,
+                    propertyAccess,
+                    firstElementTextRange(firstElement)
+                )
+            }
+            _type is TemplateTypeDescriptor -> {
+                HtlDeclarationReference(
+                    _declaration?.xmlAttribute,
+                    firstElement as? BaseChainElement,
+                    propertyAccess,
+                    firstElementTextRange(firstElement)
+                )
+            }
+            _declaration is HtlListHelperDeclaration -> {
+                HtlListHelperReference(
+                    _declaration.xmlAttribute,
+                    propertyAccess,
+                    firstElementTextRange(firstElement)
+                )
+            }
+            else -> {
+                HtlDeclarationReference(
+                    chainSegment.declaration?.xmlAttribute,
+                    firstElement as? BaseChainElement,
+                    propertyAccess,
+                    firstElementTextRange(firstElement)
+                )
+            }
+        }
+    }
+
+    private fun firstElementTextRange(firstElement: CallChainElement) =
+        TextRange(
+            firstElement.element.startOffsetInParent,
+            firstElement.element.startOffsetInParent + firstElement.element.textLength
+        )
+
+    private fun extractTextRange(element: PsiElement): TextRange {
+        return when (element) {
+            is com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin ->
+                if (element.hasChild(HtlArrayLikeAccess::class.java) &&
+                    element.hasChild(HtlStringLiteral::class.java)
+                ) {
+                    val stringLiteral: PsiElement = element.findChildrenByType(
+                        HtlStringLiteral::class.java
+                    ).firstOrNull() as? PsiElement
+                        ?: return TextRange.EMPTY_RANGE
+
+                    val offset = element.startOffsetInParent + stringLiteral.startOffsetInParent + 1
+
+                    TextRange(offset, offset + stringLiteral.text.length - 2)
+                } else if (!element.hasChild(HtlArrayLikeAccess::class.java)) {
+                    TextRange(
+                        element.startOffsetInParent + 1,
+                        element.startOffsetInParent + element.variableName().length + 1
+                    )
+                } else {
+                    TextRange.EMPTY_RANGE
+                }
+
+            is com.aemtools.lang.htl.psi.mixin.VariableNameMixin -> TextRange(
+                element.startOffsetInParent + 1,
+                element.startOffsetInParent + element.variableName().length + 1
+            )
+
+            else -> TextRange.EMPTY_RANGE
+        }
+    }
 }

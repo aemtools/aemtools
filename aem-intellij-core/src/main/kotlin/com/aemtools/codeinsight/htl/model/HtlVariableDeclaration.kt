@@ -21,7 +21,12 @@ import com.aemtools.lang.htl.icons.HtlIcons.SLY_UNWRAP_VARIABLE_ICON
 import com.aemtools.lang.htl.icons.HtlIcons.SLY_USE_VARIABLE_ICON
 import com.aemtools.lang.htl.icons.HtlIcons.TEMPLATE_PARAMETER_ICON
 import com.aemtools.lang.htl.psi.HtlVariableName
-import com.aemtools.lang.util.*
+import com.aemtools.lang.util.extractHtlHel
+import com.aemtools.lang.util.extractItemAndItemListNames
+import com.aemtools.lang.util.htlAttributeName
+import com.aemtools.lang.util.htlVariableName
+import com.aemtools.lang.util.isOption
+import com.aemtools.lang.util.resolveUseClass
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.psi.xml.XmlAttribute
 
@@ -31,227 +36,227 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Dmytro Primshyts
  */
 open class HtlVariableDeclaration internal constructor(
-  /**
-   * Declaration [XmlAttribute].
-   */
-  val xmlAttribute: XmlAttribute,
-  /**
-   * The name of variable.
-   */
-  val variableName: String,
-  /**
-   * The type of Htl declaration attribute.
-   */
-  val attributeType: DeclarationAttributeType,
-  /**
-   * The [DeclarationType] of current variable.
-   */
-  val type: DeclarationType = DeclarationType.VARIABLE
+    /**
+     * Declaration [XmlAttribute].
+     */
+    val xmlAttribute: XmlAttribute,
+    /**
+     * The name of variable.
+     */
+    val variableName: String,
+    /**
+     * The type of Htl declaration attribute.
+     */
+    val attributeType: DeclarationAttributeType,
+    /**
+     * The [DeclarationType] of current variable.
+     */
+    val type: DeclarationType = DeclarationType.VARIABLE
 ) {
 
-  /**
-   * Convert current [HtlVariableDeclaration] into [LookupElement].
-   *
-   * @return lookup element
-   */
-  @Suppress("LongMethod", "CyclomaticComplexMethod")
-  fun toLookupElement(): LookupElement {
-    var result = lookupElement(variableName)
-
-    when (attributeType) {
-      DeclarationAttributeType.DATA_SLY_USE -> {
-        val varClass = xmlAttribute.resolveUseClass()
-        result = result.withTypeText("Sly Use Variable")
-          .withIcon(SLY_USE_VARIABLE_ICON)
-        if (!varClass.isNullOrEmpty()) {
-          result = result.withTailText("($varClass)", true)
-        }
-      }
-
-      DeclarationAttributeType.DATA_SLY_TEST -> {
-        val varClass = xmlAttribute.resolveUseClass()
-        result = result.withTypeText("Sly Test Variable")
-          .withIcon(SLY_TEST_VARIABLE_ICON)
-        if (!varClass.isNullOrEmpty()) {
-          result = result.withTailText("($varClass)")
-        }
-      }
-
-      DeclarationAttributeType.DATA_SLY_SET -> {
-        val varClass = xmlAttribute.resolveUseClass()
-        result = result.withTypeText("Sly Set Variable")
-          .withIcon(SLY_SET_VARIABLE_ICON)
-        if (!varClass.isNullOrEmpty()) {
-          result = result.withTailText("($varClass)")
-        }
-      }
-
-      DeclarationAttributeType.DATA_SLY_UNWRAP -> {
-        val varClass = xmlAttribute.resolveUseClass()
-        result = result.withTypeText("Sly Sly Unwrap")
-          .withIcon(SLY_UNWRAP_VARIABLE_ICON)
-        if (!varClass.isNullOrEmpty()) {
-          result = result.withTailText("($varClass)")
-        }
-      }
-
-      DeclarationAttributeType.DATA_SLY_LIST -> {
-        result = result.withTypeText("Data Sly List")
-          .withIcon(DATA_SLY_LIST_ICON)
-      }
-
-      DeclarationAttributeType.DATA_SLY_REPEAT -> {
-        result = result.withTypeText("Data Sly Repeat")
-          .withIcon(DATA_SLY_REPEAT_ICON)
-      }
-
-      DeclarationAttributeType.DATA_SLY_TEMPLATE_PARAMETER -> {
-        result = result.withTypeText("Template Parameter")
-          .withIcon(TEMPLATE_PARAMETER_ICON)
-      }
-
-      DeclarationAttributeType.DATA_SLY_TEMPLATE -> {
-        result = result.withTypeText("HTL Template")
-          .withIcon(HTL_FILE_ICON)
-      }
-
-      DeclarationAttributeType.LIST_HELPER -> {
-        result = result.withTypeText("List Helper")
-          .withIcon(LIST_HELPER_ICON)
-      }
-
-      DeclarationAttributeType.REPEAT_HELPER -> {
-        result = result.withTypeText("Repeat Helper")
-          .withIcon(REPEAT_HELPER_ICON)
-      }
-    }
-    return result
-  }
-
-  companion object {
-
     /**
-     * Builder method for [HtlVariableDeclaration].
+     * Convert current [HtlVariableDeclaration] into [LookupElement].
      *
-     * @param attribute the declaration attribute
-     * @return list of htl variable declaration objects spawned by a given attribute
+     * @return lookup element
      */
-    @Suppress("LongMethod")
-    fun create(attribute: XmlAttribute): List<HtlVariableDeclaration> {
-      val htlAttributeName = attribute.htlAttributeName()
-      val htlVariableName = attribute.htlVariableName()
-      return when {
-        htlAttributeName == DATA_SLY_USE &&
-          htlVariableName != null -> {
-          listOf(
-            HtlUseVariableDeclaration(
-              attribute,
-              htlVariableName,
-              DeclarationAttributeType.DATA_SLY_USE
-            )
-          )
+    @Suppress("LongMethod", "CyclomaticComplexMethod")
+    fun toLookupElement(): LookupElement {
+        var result = lookupElement(variableName)
+
+        when (attributeType) {
+            DeclarationAttributeType.DATA_SLY_USE -> {
+                val varClass = xmlAttribute.resolveUseClass()
+                result = result.withTypeText("Sly Use Variable")
+                    .withIcon(SLY_USE_VARIABLE_ICON)
+                if (!varClass.isNullOrEmpty()) {
+                    result = result.withTailText("($varClass)", true)
+                }
+            }
+
+            DeclarationAttributeType.DATA_SLY_TEST -> {
+                val varClass = xmlAttribute.resolveUseClass()
+                result = result.withTypeText("Sly Test Variable")
+                    .withIcon(SLY_TEST_VARIABLE_ICON)
+                if (!varClass.isNullOrEmpty()) {
+                    result = result.withTailText("($varClass)")
+                }
+            }
+
+            DeclarationAttributeType.DATA_SLY_SET -> {
+                val varClass = xmlAttribute.resolveUseClass()
+                result = result.withTypeText("Sly Set Variable")
+                    .withIcon(SLY_SET_VARIABLE_ICON)
+                if (!varClass.isNullOrEmpty()) {
+                    result = result.withTailText("($varClass)")
+                }
+            }
+
+            DeclarationAttributeType.DATA_SLY_UNWRAP -> {
+                val varClass = xmlAttribute.resolveUseClass()
+                result = result.withTypeText("Sly Sly Unwrap")
+                    .withIcon(SLY_UNWRAP_VARIABLE_ICON)
+                if (!varClass.isNullOrEmpty()) {
+                    result = result.withTailText("($varClass)")
+                }
+            }
+
+            DeclarationAttributeType.DATA_SLY_LIST -> {
+                result = result.withTypeText("Data Sly List")
+                    .withIcon(DATA_SLY_LIST_ICON)
+            }
+
+            DeclarationAttributeType.DATA_SLY_REPEAT -> {
+                result = result.withTypeText("Data Sly Repeat")
+                    .withIcon(DATA_SLY_REPEAT_ICON)
+            }
+
+            DeclarationAttributeType.DATA_SLY_TEMPLATE_PARAMETER -> {
+                result = result.withTypeText("Template Parameter")
+                    .withIcon(TEMPLATE_PARAMETER_ICON)
+            }
+
+            DeclarationAttributeType.DATA_SLY_TEMPLATE -> {
+                result = result.withTypeText("HTL Template")
+                    .withIcon(HTL_FILE_ICON)
+            }
+
+            DeclarationAttributeType.LIST_HELPER -> {
+                result = result.withTypeText("List Helper")
+                    .withIcon(LIST_HELPER_ICON)
+            }
+
+            DeclarationAttributeType.REPEAT_HELPER -> {
+                result = result.withTypeText("Repeat Helper")
+                    .withIcon(REPEAT_HELPER_ICON)
+            }
         }
-
-        htlAttributeName == DATA_SLY_SET &&
-          htlVariableName != null -> {
-          listOf(
-            HtlVariableDeclaration(
-              attribute,
-              htlVariableName,
-              DeclarationAttributeType.DATA_SLY_SET,
-              DeclarationType.VARIABLE
-            )
-          )
-        }
-
-        htlAttributeName == DATA_SLY_TEST &&
-          htlVariableName != null -> {
-          listOf(
-            HtlVariableDeclaration(
-              attribute,
-              htlVariableName,
-              DeclarationAttributeType.DATA_SLY_TEST,
-              DeclarationType.VARIABLE
-            )
-          )
-        }
-
-        htlAttributeName == DATA_SLY_UNWRAP &&
-          htlVariableName != null -> {
-          listOf(
-            HtlVariableDeclaration(
-              attribute,
-              htlVariableName,
-              DeclarationAttributeType.DATA_SLY_UNWRAP,
-              DeclarationType.VARIABLE
-            )
-          )
-        }
-
-        htlAttributeName == DATA_SLY_LIST -> {
-          val (item, itemList) = extractItemAndItemListNames(attribute.name)
-
-          listOf(
-            HtlVariableDeclaration(
-              attribute,
-              item,
-              DeclarationAttributeType.DATA_SLY_LIST,
-              DeclarationType.ITERABLE
-            ),
-            HtlListHelperDeclaration.createForList(
-              attribute,
-              itemList
-            )
-          )
-        }
-
-        htlAttributeName == DATA_SLY_REPEAT -> {
-          val (item, itemList) = extractItemAndItemListNames(attribute.name)
-
-          listOf(
-            HtlVariableDeclaration(
-              attribute,
-              item,
-              DeclarationAttributeType.DATA_SLY_REPEAT,
-              DeclarationType.ITERABLE
-            ),
-            HtlListHelperDeclaration.createForRepeat(
-              attribute,
-              itemList
-            )
-          )
-        }
-
-        htlAttributeName == DATA_SLY_TEMPLATE -> {
-          val templateParameters = extractTemplateParams(attribute)
-
-          val templateName = attribute.htlVariableName()
-          val templateDefinition = attribute.extractTemplateDefinition()
-          if (templateName != null) {
-            templateParameters + HtlTemplateDeclaration(
-              templateDefinition,
-              templateParameters,
-              attribute,
-              templateName
-            )
-          } else {
-            templateParameters
-          }
-        }
-
-        else -> listOf()
-      }
+        return result
     }
 
-    private fun extractTemplateParams(attribute: XmlAttribute): List<HtlTemplateParameterDeclaration> =
-      attribute.extractHtlHel().findChildrenByType(HtlVariableName::class.java)
-        .filter(HtlVariableName::isOption)
-        .map {
-          HtlTemplateParameterDeclaration(
-            it,
-            attribute,
-            it.text
-          )
+    companion object {
+
+        /**
+         * Builder method for [HtlVariableDeclaration].
+         *
+         * @param attribute the declaration attribute
+         * @return list of htl variable declaration objects spawned by a given attribute
+         */
+        @Suppress("LongMethod")
+        fun create(attribute: XmlAttribute): List<HtlVariableDeclaration> {
+            val htlAttributeName = attribute.htlAttributeName()
+            val htlVariableName = attribute.htlVariableName()
+            return when {
+                htlAttributeName == DATA_SLY_USE &&
+                    htlVariableName != null -> {
+                    listOf(
+                        HtlUseVariableDeclaration(
+                            attribute,
+                            htlVariableName,
+                            DeclarationAttributeType.DATA_SLY_USE
+                        )
+                    )
+                }
+
+                htlAttributeName == DATA_SLY_SET &&
+                    htlVariableName != null -> {
+                    listOf(
+                        HtlVariableDeclaration(
+                            attribute,
+                            htlVariableName,
+                            DeclarationAttributeType.DATA_SLY_SET,
+                            DeclarationType.VARIABLE
+                        )
+                    )
+                }
+
+                htlAttributeName == DATA_SLY_TEST &&
+                    htlVariableName != null -> {
+                    listOf(
+                        HtlVariableDeclaration(
+                            attribute,
+                            htlVariableName,
+                            DeclarationAttributeType.DATA_SLY_TEST,
+                            DeclarationType.VARIABLE
+                        )
+                    )
+                }
+
+                htlAttributeName == DATA_SLY_UNWRAP &&
+                    htlVariableName != null -> {
+                    listOf(
+                        HtlVariableDeclaration(
+                            attribute,
+                            htlVariableName,
+                            DeclarationAttributeType.DATA_SLY_UNWRAP,
+                            DeclarationType.VARIABLE
+                        )
+                    )
+                }
+
+                htlAttributeName == DATA_SLY_LIST -> {
+                    val (item, itemList) = extractItemAndItemListNames(attribute.name)
+
+                    listOf(
+                        HtlVariableDeclaration(
+                            attribute,
+                            item,
+                            DeclarationAttributeType.DATA_SLY_LIST,
+                            DeclarationType.ITERABLE
+                        ),
+                        HtlListHelperDeclaration.createForList(
+                            attribute,
+                            itemList
+                        )
+                    )
+                }
+
+                htlAttributeName == DATA_SLY_REPEAT -> {
+                    val (item, itemList) = extractItemAndItemListNames(attribute.name)
+
+                    listOf(
+                        HtlVariableDeclaration(
+                            attribute,
+                            item,
+                            DeclarationAttributeType.DATA_SLY_REPEAT,
+                            DeclarationType.ITERABLE
+                        ),
+                        HtlListHelperDeclaration.createForRepeat(
+                            attribute,
+                            itemList
+                        )
+                    )
+                }
+
+                htlAttributeName == DATA_SLY_TEMPLATE -> {
+                    val templateParameters = extractTemplateParams(attribute)
+
+                    val templateName = attribute.htlVariableName()
+                    val templateDefinition = attribute.extractTemplateDefinition()
+                    if (templateName != null) {
+                        templateParameters + HtlTemplateDeclaration(
+                            templateDefinition,
+                            templateParameters,
+                            attribute,
+                            templateName
+                        )
+                    } else {
+                        templateParameters
+                    }
+                }
+
+                else -> listOf()
+            }
         }
-  }
+
+        private fun extractTemplateParams(attribute: XmlAttribute): List<HtlTemplateParameterDeclaration> =
+            attribute.extractHtlHel().findChildrenByType(HtlVariableName::class.java)
+                .filter(HtlVariableName::isOption)
+                .map {
+                    HtlTemplateParameterDeclaration(
+                        it,
+                        attribute,
+                        it.text
+                    )
+                }
+    }
 }

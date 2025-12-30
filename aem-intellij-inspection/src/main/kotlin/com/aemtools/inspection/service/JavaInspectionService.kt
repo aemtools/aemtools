@@ -18,64 +18,64 @@ import com.intellij.psi.search.GlobalSearchScope
  */
 class JavaInspectionService : IJavaInspectionService {
 
-  override fun reportHardcodedConstant(
-    holder: ProblemsHolder,
-    literal: PsiLiteralExpression,
-    constantDescriptors: List<ConstantDescriptor>
-  ) {
-    val fixes = constantDescriptors.map { constant ->
-      ReplaceHardcodedLiteralWithFqnAction(
-        "Replace with '${constant.containerClass}.${constant.name}'",
-        constant,
-        literal.toSmartPointer()
-      )
-    }
+    override fun reportHardcodedConstant(
+        holder: ProblemsHolder,
+        literal: PsiLiteralExpression,
+        constantDescriptors: List<ConstantDescriptor>
+    ) {
+        val fixes = constantDescriptors.map { constant ->
+            ReplaceHardcodedLiteralWithFqnAction(
+                "Replace with '${constant.containerClass}.${constant.name}'",
+                constant,
+                literal.toSmartPointer()
+            )
+        }
 
-    holder.registerProblem(
-      literal,
-      "Hardcode of predefined constant",
-      ProblemHighlightType.WEAK_WARNING,
-      *fixes.toTypedArray()
-    )
-  }
-
-  override fun standardConstants(project: Project, module: Module): List<ConstantDescriptor> {
-    val jpf = JavaPsiFacade.getInstance(project)
-
-    val variants = ConstantClasses.ALL.mapNotNull { fqn ->
-      jpf.findClass(fqn, GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(module))
-    }.flatMap { psiClass ->
-      psiClass.allFields.mapNotNull { field ->
-        val fqn = psiClass.qualifiedName ?: return@mapNotNull null
-        val fieldName = field.name
-        val fieldValue = field.computeConstantValue() as? String ?: return@mapNotNull null
-
-        ConstantDescriptor(
-          fqn,
-          fieldName,
-          fieldValue
+        holder.registerProblem(
+            literal,
+            "Hardcode of predefined constant",
+            ProblemHighlightType.WEAK_WARNING,
+            *fixes.toTypedArray()
         )
-      }
-    }.filterNot {
-      it.value in ConstantClasses.EXLUSIONS
     }
 
-    return variants
-  }
+    override fun standardConstants(project: Project, module: Module): List<ConstantDescriptor> {
+        val jpf = JavaPsiFacade.getInstance(project)
 
-  override fun isJavaLangString(psiLiteralExpression: PsiLiteralExpression): Boolean {
-    return psiLiteralExpression.isJavaLangString()
-  }
+        val variants = ConstantClasses.ALL.mapNotNull { fqn ->
+            jpf.findClass(fqn, GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(module))
+        }.flatMap { psiClass ->
+            psiClass.allFields.mapNotNull { field ->
+                val fqn = psiClass.qualifiedName ?: return@mapNotNull null
+                val fieldName = field.name
+                val fieldValue = field.computeConstantValue() as? String ?: return@mapNotNull null
 
-  companion object {
+                ConstantDescriptor(
+                    fqn,
+                    fieldName,
+                    fieldValue
+                )
+            }
+        }.filterNot {
+            it.value in ConstantClasses.EXLUSIONS
+        }
 
-    /**
-     * Get instance of [IJavaInspectionService].
-     *
-     * @param project the project
-     * @return instance of java inspection service
-     */
-    fun getInstance(project: Project): IJavaInspectionService? =
-      project.getService(IJavaInspectionService::class.java)
-  }
+        return variants
+    }
+
+    override fun isJavaLangString(psiLiteralExpression: PsiLiteralExpression): Boolean {
+        return psiLiteralExpression.isJavaLangString()
+    }
+
+    companion object {
+
+        /**
+         * Get instance of [IJavaInspectionService].
+         *
+         * @param project the project
+         * @return instance of java inspection service
+         */
+        fun getInstance(project: Project): IJavaInspectionService? =
+            project.getService(IJavaInspectionService::class.java)
+    }
 }

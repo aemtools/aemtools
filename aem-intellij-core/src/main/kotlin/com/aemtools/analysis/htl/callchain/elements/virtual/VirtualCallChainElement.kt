@@ -11,25 +11,25 @@ import com.intellij.codeInsight.lookup.LookupElement
  * @author Dmytro Primshyts
  */
 interface VirtualCallChainElement {
-  /**
-   * Name of current call chain element.
-   */
-  val name: String
+    /**
+     * Name of current call chain element.
+     */
+    val name: String
 
-  /**
-   * Type descriptor of current call chain element.
-   */
-  val type: TypeDescriptor
+    /**
+     * Type descriptor of current call chain element.
+     */
+    val type: TypeDescriptor
 
-  /**
-   * Previous virtual call chain element from current call chain.
-   */
-  val previous: VirtualCallChainElement?
+    /**
+     * Previous virtual call chain element from current call chain.
+     */
+    val previous: VirtualCallChainElement?
 
-  /**
-   * Convert current virtual call chain element into [LookupElement].
-   *
-   * @return lookup element
-   */
-  fun toLookupElement(): LookupElement
+    /**
+     * Convert current virtual call chain element into [LookupElement].
+     *
+     * @return lookup element
+     */
+    fun toLookupElement(): LookupElement
 }

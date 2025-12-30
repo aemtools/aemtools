@@ -10,13 +10,13 @@ import com.intellij.psi.PsiFile
  * @author Dmytro Primshyts
  */
 abstract class BaseHtlIntentionAction(
-  text: () -> String,
-  family: String = "HTL Intentions",
-  startInWriteAction: Boolean = true,
-  isAvailable: (project: Project, editor: Editor?, file: PsiFile?) -> Boolean = { _, _, _ -> true }
+    text: () -> String,
+    family: String = "HTL Intentions",
+    startInWriteAction: Boolean = true,
+    isAvailable: (project: Project, editor: Editor?, file: PsiFile?) -> Boolean = { _, _, _ -> true }
 ) : BaseAemIntellijIntentionAction(
-  text,
-  family,
-  startInWriteAction,
-  isAvailable
+    text,
+    family,
+    startInWriteAction,
+    isAvailable
 )

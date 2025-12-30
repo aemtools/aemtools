@@ -13,27 +13,27 @@ import com.intellij.psi.PsiNamedElement
  * @author Dmytro Primshyts
  */
 abstract class HtlStringLiteralMixin(node: ASTNode) :
-  HtlPsiBaseElement(node), HtlStringLiteral, PsiNamedElement, PsiNameIdentifierOwner {
+    HtlPsiBaseElement(node), HtlStringLiteral, PsiNamedElement, PsiNameIdentifierOwner {
 
-  override fun accept(visitor: PsiElementVisitor) {
-    if (visitor is HtlElementVisitor) {
-      return visitor.visitString(this)
-    } else {
-      super.accept(visitor)
+    override fun accept(visitor: PsiElementVisitor) {
+        if (visitor is HtlElementVisitor) {
+            return visitor.visitString(this)
+        } else {
+            super.accept(visitor)
+        }
     }
-  }
 
-  override fun setName(name: String): PsiElement {
-    return this
-  }
-
-  override fun getName(): String {
-    return if (this.text.length <= 2) {
-      return ""
-    } else {
-      this.text.substring(1, this.text.length - 1)
+    override fun setName(name: String): PsiElement {
+        return this
     }
-  }
 
-  override fun getNameIdentifier() = this
+    override fun getName(): String {
+        return if (this.text.length <= 2) {
+            return ""
+        } else {
+            this.text.substring(1, this.text.length - 1)
+        }
+    }
+
+    override fun getNameIdentifier() = this
 }

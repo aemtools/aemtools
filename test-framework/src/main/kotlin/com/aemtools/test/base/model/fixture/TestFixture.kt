@@ -11,47 +11,47 @@ import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
  * @author Dmytro Primshyts
  */
 open class TestFixture(val fixture: JavaCodeInsightTestFixture) :
-  ITestFixture, ITestFixtureInternal {
+    ITestFixture, ITestFixtureInternal {
 
-  override fun assertionContext(): IAssertionContext {
-    checkInitialized()
-    return AssertionContext(fixture)
-  }
+    override fun assertionContext(): IAssertionContext {
+        checkInitialized()
+        return AssertionContext(fixture)
+    }
 
-  protected val files: ArrayList<IFileFixtureDescriptor> = ArrayList()
-  protected var verificationFunction: IAssertionContext.() -> Unit = {}
-  protected var initialized: Boolean = false
+    protected val files: ArrayList<IFileFixtureDescriptor> = ArrayList()
+    protected var verificationFunction: IAssertionContext.() -> Unit = {}
+    protected var initialized: Boolean = false
 
-  override fun verify(verification: IAssertionContext.() -> Unit) {
-    verificationFunction = verification
-  }
+    override fun verify(verification: IAssertionContext.() -> Unit) {
+        verificationFunction = verification
+    }
 
-  override fun test() {
-    checkInitialized()
+    override fun test() {
+        checkInitialized()
 
-    verificationFunction.invoke(assertionContext())
-  }
+        verificationFunction.invoke(assertionContext())
+    }
 
-  override fun init() {
-    initialized = true
-    files.forEach { it.initialize() }
-  }
+    override fun init() {
+        initialized = true
+        files.forEach { it.initialize() }
+    }
 
-  override fun addHtml(name: String, text: String) = addFile(name, text)
+    override fun addHtml(name: String, text: String) = addFile(name, text)
 
-  override fun addClass(name: String, text: String) {
-    files.add(JavaClassFileFixtureDescriptor(name, text, fixture))
-  }
+    override fun addClass(name: String, text: String) {
+        files.add(JavaClassFileFixtureDescriptor(name, text, fixture))
+    }
 
-  override fun addXml(name: String, text: String) = addFile(name, text)
+    override fun addXml(name: String, text: String) = addFile(name, text)
 
-  override fun addJson(name: String, text: String) = addFile(name, text)
+    override fun addJson(name: String, text: String) = addFile(name, text)
 
-  override fun addFile(name: String, text: String) {
-    files.add(TextFileFixtureDescriptor(name, text, fixture))
-  }
+    override fun addFile(name: String, text: String) {
+        files.add(TextFileFixtureDescriptor(name, text, fixture))
+    }
 
-  protected fun checkInitialized() {
-    assert(initialized, { "Current fixture is not initialized" })
-  }
+    protected fun checkInitialized() {
+        assert(initialized, { "Current fixture is not initialized" })
+    }
 }

@@ -7,55 +7,55 @@ import java.io.Serializable
  * @author Dmytro Primshyts
  */
 data class OSGiConfiguration(
-  val path: String,
-  val parameters: Map<String, String?>,
-  @Transient var file: PsiFile? = null
+    val path: String,
+    val parameters: Map<String, String?>,
+    @Transient var file: PsiFile? = null
 ) : Serializable {
 
-  /**
-   * Full qualified name of associated OSGi Service or Service factory.
-   */
-  val fullQualifiedName: String
-    get() =
-      Regex("([a-z_\\d-]+\\.)+[A-z]\\w+").find(fileName)
-        ?.groups?.firstOrNull()
-        ?.value ?: ""
+    /**
+     * Full qualified name of associated OSGi Service or Service factory.
+     */
+    val fullQualifiedName: String
+        get() =
+            Regex("([a-z_\\d-]+\\.)+[A-z]\\w+").find(fileName)
+                ?.groups?.firstOrNull()
+                ?.value ?: ""
 
-  /**
-   * Return name suffix.
-   *
-   * com.test.MyService-first.xml -> "first"
-   * com.test.MyService-long-suffix -> "long-suffix"
-   * com.test.MyService.xml -> ""
-   *
-   * @return the suffix or empty string
-   */
-  fun suffix(): String = fileName.substringAfter("-", "")
-    .substringBefore(".", "")
+    /**
+     * Return name suffix.
+     *
+     * com.test.MyService-first.xml -> "first"
+     * com.test.MyService-long-suffix -> "long-suffix"
+     * com.test.MyService.xml -> ""
+     *
+     * @return the suffix or empty string
+     */
+    fun suffix(): String = fileName.substringAfter("-", "")
+        .substringBefore(".", "")
 
-  /**
-   * File name of current OSGi Configuration.
-   */
-  val fileName: String
-    get() = path.substringAfterLast("/", "")
+    /**
+     * File name of current OSGi Configuration.
+     */
+    val fileName: String
+        get() = path.substringAfterLast("/", "")
 
-  /**
-   * List of run modes.
-   */
-  val mods: List<String>
-    get() {
-      val result = path
-        .substringBeforeLast("/")
-        .substringAfterLast("/")
-        .split(".")
-        .filterNot { it == "config" }
+    /**
+     * List of run modes.
+     */
+    val mods: List<String>
+        get() {
+            val result = path
+                .substringBeforeLast("/")
+                .substringAfterLast("/")
+                .split(".")
+                .filterNot { it == "config" }
 
-      return if (result.isEmpty()) {
-        listOf("default")
-      } else {
-        result
-      }
-    }
+            return if (result.isEmpty()) {
+                listOf("default")
+            } else {
+                result
+            }
+        }
 }
 
 /**
@@ -64,20 +64,20 @@ data class OSGiConfiguration(
  * @return collection sorted by mods
  */
 fun List<OSGiConfiguration>.sortByMods(): List<OSGiConfiguration> =
-  this.sortedWith { o1, o2 ->
-    when {
-      o1.mods.size != o2.mods.size ->
-        o1.mods.size - o2.mods.size
+    this.sortedWith { o1, o2 ->
+        when {
+            o1.mods.size != o2.mods.size ->
+                o1.mods.size - o2.mods.size
 
-      o1.modsConcatenated() == o2.modsConcatenated() ->
-        o1.suffix().compareTo(o2.suffix())
+            o1.modsConcatenated() == o2.modsConcatenated() ->
+                o1.suffix().compareTo(o2.suffix())
 
-      o1.modsConcatenated() == "default" -> -1
-      o2.modsConcatenated() == "default" -> 1
-      else -> o1.modsConcatenated()
-        .compareTo(o2.modsConcatenated())
+            o1.modsConcatenated() == "default" -> -1
+            o2.modsConcatenated() == "default" -> 1
+            else -> o1.modsConcatenated()
+                .compareTo(o2.modsConcatenated())
+        }
     }
-  }
 
 /**
  * Get all mods concatenated into single string.
@@ -85,4 +85,4 @@ fun List<OSGiConfiguration>.sortByMods(): List<OSGiConfiguration> =
  * @return concatenated mods string
  */
 fun OSGiConfiguration.modsConcatenated(): String =
-  mods.joinToString(separator = "") { it }
+    mods.joinToString(separator = "") { it }

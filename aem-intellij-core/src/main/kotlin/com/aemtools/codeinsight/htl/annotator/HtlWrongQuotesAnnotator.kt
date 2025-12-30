@@ -21,41 +21,41 @@ import com.intellij.psi.PsiElement
  * @author Dmytro Primshyts
  */
 class HtlWrongQuotesAnnotator : Annotator {
-  override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-    val literal = element as? HtlStringLiteralMixin
-      ?: return
+    override fun annotate(element: PsiElement, holder: AnnotationHolder) {
+        val literal = element as? HtlStringLiteralMixin
+            ?: return
 
-    val parentAttribute = literal.containerAttribute()
-      ?: return
+        val parentAttribute = literal.containerAttribute()
+            ?: return
 
-    when {
-      literal.isDoubleQuoted() &&
-        parentAttribute.isDoubleQuoted() -> {
-        holder.newAnnotation(HighlightSeverity.ERROR, "Incorrect quotes")
-          .newFix(HtlWrongQuotesLiteralFixIntentionAction(literal.toSmartPointer()))
-          .registerFix()
-          .newFix(
-            HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction(
-              parentAttribute.toSmartPointer()
-            )
-          )
-          .registerFix()
-          .create()
-      }
+        when {
+            literal.isDoubleQuoted() &&
+                parentAttribute.isDoubleQuoted() -> {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Incorrect quotes")
+                    .newFix(HtlWrongQuotesLiteralFixIntentionAction(literal.toSmartPointer()))
+                    .registerFix()
+                    .newFix(
+                        HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction(
+                            parentAttribute.toSmartPointer()
+                        )
+                    )
+                    .registerFix()
+                    .create()
+            }
 
-      !literal.isDoubleQuoted() &&
-        !parentAttribute.isDoubleQuoted() -> {
-        holder.newAnnotation(HighlightSeverity.ERROR, "Incorrect quotes")
-          .newFix(HtlWrongQuotesLiteralFixIntentionAction(literal.toSmartPointer()))
-          .registerFix()
-          .newFix(
-            HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction(
-              parentAttribute.toSmartPointer()
-            )
-          )
-          .registerFix()
-          .create()
-      }
+            !literal.isDoubleQuoted() &&
+                !parentAttribute.isDoubleQuoted() -> {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Incorrect quotes")
+                    .newFix(HtlWrongQuotesLiteralFixIntentionAction(literal.toSmartPointer()))
+                    .registerFix()
+                    .newFix(
+                        HtlWrongQuotesXmlAttributeInvertQuotesIntentionAction(
+                            parentAttribute.toSmartPointer()
+                        )
+                    )
+                    .registerFix()
+                    .create()
+            }
+        }
     }
-  }
 }

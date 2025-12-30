@@ -23,134 +23,134 @@ import java.io.Serializable
  */
 data class AemComponentDefinition(
 
-  /**
-   * Represents the `jcr:title` attribute.
-   */
-  val title: String?,
+    /**
+     * Represents the `jcr:title` attribute.
+     */
+    val title: String?,
 
-  /**
-   * Represents the `jcr:description` attribute.
-   */
-  val description: String?,
+    /**
+     * Represents the `jcr:description` attribute.
+     */
+    val description: String?,
 
-  /**
-   * Full path of current component on file system.
-   */
-  val fullPath: String,
+    /**
+     * Full path of current component on file system.
+     */
+    val fullPath: String,
 
-  /**
-   * Represents the `sling:resourceSuperType` attribute.
-   */
-  val resourceSuperType: String?,
+    /**
+     * Represents the `sling:resourceSuperType` attribute.
+     */
+    val resourceSuperType: String?,
 
-  /**
-   * Represents the `componentGroup` attribute.
-   */
-  val componentGroup: String?,
+    /**
+     * Represents the `componentGroup` attribute.
+     */
+    val componentGroup: String?,
 
-  /**
-   * Represents the `cq:isContainer` attribute.
-   *
-   * Default: *false*
-   */
-  val isContainer: Boolean = false,
+    /**
+     * Represents the `cq:isContainer` attribute.
+     *
+     * Default: *false*
+     */
+    val isContainer: Boolean = false,
 
-  /**
-   * Represents the `cq:icon` attribute.
-   */
-  val cqIcon: String? = null
+    /**
+     * Represents the `cq:icon` attribute.
+     */
+    val cqIcon: String? = null
 
 ) : Serializable {
 
-  /**
-   * Resource type of current component.
-   *
-   * @see [normalizeToJcrRoot]
-   * @return resource type
-   */
-  fun resourceType(): String = fullPath.normalizeToJcrRoot().substringBeforeLast("/")
-
-  /**
-   * Get component name.
-   *
-   * `/apps/components/mycomponent/.content.xml -> mycomponent`
-   *
-   * @return component's name
-   */
-  fun componentName(): String = fullPath
-    .substringBeforeLast("/")
-    .substringAfterLast("/")
-
-  companion object {
-
-    @JvmStatic
-    val serialVersionUID: Long = 1L
+    /**
+     * Resource type of current component.
+     *
+     * @see [normalizeToJcrRoot]
+     * @return resource type
+     */
+    fun resourceType(): String = fullPath.normalizeToJcrRoot().substringBeforeLast("/")
 
     /**
-     * Extract [AemComponentDefinition] from given [XmlTag].
+     * Get component name.
      *
-     * Note: if component doesn't have `jcr:title` or `componentGroup` *null* will be returned.
+     * `/apps/components/mycomponent/.content.xml -> mycomponent`
      *
-     * @param tag the tag
-     * @param fullPath path to component
-     * @return aem component definition
+     * @return component's name
      */
-    fun fromTag(tag: XmlTag, fullPath: String): AemComponentDefinition? {
-      val title = tag.getAttributeValue(JCR_TITLE)
-        ?: return null
-      val group = tag.getAttributeValue(COMPONENT_GROUP)
-        ?: return null
-      return AemComponentDefinition(
-        title = title,
-        description = tag.getAttributeValue(JCR_DESCRIPTION),
-        fullPath = fullPath,
-        resourceSuperType = tag.getAttributeValue(SLING_RESOURCE_SUPER_TYPE),
-        componentGroup = group,
-        isContainer = BooleanUtils.toBoolean(
-          tag.getAttributeValue(IS_CONTAINER)
-        ),
-        cqIcon = tag.getAttributeValue(CQ_ICON)
-      )
-    }
+    fun componentName(): String = fullPath
+        .substringBeforeLast("/")
+        .substringAfterLast("/")
 
-    /**
-     * Convert current [AemComponentDefinition] to [LookupElement].
-     *
-     * @receiver [AemComponentDefinition]
-     * @return lookup element
-     */
-    fun AemComponentDefinition.toLookupElement(): LookupElement =
-      lookupElement(resourceType())
-        .withTypeText("AEM Component")
-        .withPresentableText(title ?: componentName())
-        .withIcon(HtlIcons.AEM_COMPONENT)
-        .let {
-          if (title != null) {
-            it.withTailText("(${componentName()})", true)
-          } else {
-            it
-          }
+    companion object {
+
+        @JvmStatic
+        val serialVersionUID: Long = 1L
+
+        /**
+         * Extract [AemComponentDefinition] from given [XmlTag].
+         *
+         * Note: if component doesn't have `jcr:title` or `componentGroup` *null* will be returned.
+         *
+         * @param tag the tag
+         * @param fullPath path to component
+         * @return aem component definition
+         */
+        fun fromTag(tag: XmlTag, fullPath: String): AemComponentDefinition? {
+            val title = tag.getAttributeValue(JCR_TITLE)
+                ?: return null
+            val group = tag.getAttributeValue(COMPONENT_GROUP)
+                ?: return null
+            return AemComponentDefinition(
+                title = title,
+                description = tag.getAttributeValue(JCR_DESCRIPTION),
+                fullPath = fullPath,
+                resourceSuperType = tag.getAttributeValue(SLING_RESOURCE_SUPER_TYPE),
+                componentGroup = group,
+                isContainer = BooleanUtils.toBoolean(
+                    tag.getAttributeValue(IS_CONTAINER)
+                ),
+                cqIcon = tag.getAttributeValue(CQ_ICON)
+            )
         }
 
-    /**
-     * Create IDEA doc compliable string from current [AemComponentDefinition].
-     *
-     * @receiver [AemComponentDefinition]
-     * @return documentation string
-     */
-    fun AemComponentDefinition.generateDoc(): String {
-      val result = """AEM Component:<br/>""".toStringBuilder()
-      with(result) {
-        append("<b>Name</b>: ${componentName()}<br/>")
-        append("<b>Group</b>: $componentGroup<br/>")
-        title?.let { append("<b>jcr:title</b>: $it<br/>") }
-        description?.let { append("<b>jcr:description</b>: $it<br/>") }
-        resourceSuperType?.let { append("<b>sling:resourceSuperType</b>: $it<br/>") }
+        /**
+         * Convert current [AemComponentDefinition] to [LookupElement].
+         *
+         * @receiver [AemComponentDefinition]
+         * @return lookup element
+         */
+        fun AemComponentDefinition.toLookupElement(): LookupElement =
+            lookupElement(resourceType())
+                .withTypeText("AEM Component")
+                .withPresentableText(title ?: componentName())
+                .withIcon(HtlIcons.AEM_COMPONENT)
+                .let {
+                    if (title != null) {
+                        it.withTailText("(${componentName()})", true)
+                    } else {
+                        it
+                    }
+                }
 
-        append("<b>Container</b>: $isContainer<br/>")
-        cqIcon?.let { append("<b>cq:icon</b>: $it") }
-      }
-      return result.toString()
+        /**
+         * Create IDEA doc compliable string from current [AemComponentDefinition].
+         *
+         * @receiver [AemComponentDefinition]
+         * @return documentation string
+         */
+        fun AemComponentDefinition.generateDoc(): String {
+            val result = """AEM Component:<br/>""".toStringBuilder()
+            with(result) {
+                append("<b>Name</b>: ${componentName()}<br/>")
+                append("<b>Group</b>: $componentGroup<br/>")
+                title?.let { append("<b>jcr:title</b>: $it<br/>") }
+                description?.let { append("<b>jcr:description</b>: $it<br/>") }
+                resourceSuperType?.let { append("<b>sling:resourceSuperType</b>: $it<br/>") }
+
+                append("<b>Container</b>: $isContainer<br/>")
+                cqIcon?.let { append("<b>cq:icon</b>: $it") }
+            }
+            return result.toString()
+        }
     }
-  }
 }

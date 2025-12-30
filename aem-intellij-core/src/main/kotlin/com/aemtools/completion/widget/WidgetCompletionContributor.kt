@@ -13,29 +13,29 @@ import com.intellij.util.ProcessingContext
  */
 class WidgetCompletionContributor : BaseCompletionContributor({
 
-  basic(PlatformPatterns.psiElement(), WidgetCompletionProvider())
+    basic(PlatformPatterns.psiElement(), WidgetCompletionProvider())
 })
 
 private class WidgetCompletionProvider : CompletionProvider<CompletionParameters>() {
 
-  override fun addCompletions(
-    parameters: CompletionParameters,
-    context: ProcessingContext,
-    result: CompletionResultSet
-  ) {
-    if (!accept(parameters)) {
-      return
+    override fun addCompletions(
+        parameters: CompletionParameters,
+        context: ProcessingContext,
+        result: CompletionResultSet
+    ) {
+        if (!accept(parameters)) {
+            return
+        }
+
+        val widgetDefinition = WidgetDefinitionUtil.extract(parameters.position)
+
+        val suggestions = WidgetVariantsProvider.generateVariants(parameters, widgetDefinition)
+
+        result.addAllElements(suggestions)
+        result.stopHere()
     }
 
-    val widgetDefinition = WidgetDefinitionUtil.extract(parameters.position)
-
-    val suggestions = WidgetVariantsProvider.generateVariants(parameters, widgetDefinition)
-
-    result.addAllElements(suggestions)
-    result.stopHere()
-  }
-
-  private fun accept(parameters: CompletionParameters): Boolean {
-    return DIALOG_XML == parameters.originalFile.name
-  }
+    private fun accept(parameters: CompletionParameters): Boolean {
+        return DIALOG_XML == parameters.originalFile.name
+    }
 }

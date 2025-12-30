@@ -14,31 +14,31 @@ import java.io.Serializable
  */
 abstract class BaseParameterDeclaration : Serializable {
 
-  abstract val name: String
+    abstract val name: String
 
-  protected abstract val tailText: String
+    protected abstract val tailText: String
 
-  /**
-   * Convert current parameter declaration into [LookupElement].
-   *
-   * @return lookup element
-   */
-  fun toLookupElement(): LookupElement =
-    lookupElement(name.normalize())
-      .withIcon(AllIcons.Nodes.Parameter)
-      .withTailText("($tailText)", true)
-      .withTypeText("Dialog")
+    /**
+     * Convert current parameter declaration into [LookupElement].
+     *
+     * @return lookup element
+     */
+    fun toLookupElement(): LookupElement =
+        lookupElement(name.normalize())
+            .withIcon(AllIcons.Nodes.Parameter)
+            .withTailText("($tailText)", true)
+            .withTypeText("Dialog")
 
-  /**
-   * Normalize dialog parameter name.
-   * In case if parameter has "./" prefix it will be removed.
-   *
-   * @receiver [String]
-   * @return normalized parameter name
-   */
-  private fun String.normalize() = if (this.startsWith("./")) {
-    this.substringAfter("./")
-  } else {
-    this
-  }
+    /**
+     * Normalize dialog parameter name.
+     * In case if parameter has "./" prefix it will be removed.
+     *
+     * @receiver [String]
+     * @return normalized parameter name
+     */
+    private fun String.normalize() = if (this.startsWith("./")) {
+        this.substringAfter("./")
+    } else {
+        this
+    }
 }

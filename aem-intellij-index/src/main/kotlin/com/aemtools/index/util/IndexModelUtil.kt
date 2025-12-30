@@ -11,13 +11,13 @@ import com.intellij.psi.xml.XmlAttribute
  * @return template definition, _null_ in case if current tag isn't of `data-sly-template` type.
  */
 fun XmlAttribute.extractTemplateDefinition(): TemplateDefinition {
-  val name = if (name.contains(".")) {
-    name.substring(name.indexOf(".") + 1)
-  } else {
-    ""
-  }
+    val name = if (name.contains(".")) {
+        name.substring(name.indexOf(".") + 1)
+    } else {
+        ""
+    }
 
-  val params = extractTemplateParameters()
+    val params = extractTemplateParameters()
 
-  return TemplateDefinition(containingFile.virtualFile?.path, name, params)
+    return TemplateDefinition(containingFile.virtualFile?.path, name, params)
 }

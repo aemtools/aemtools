@@ -13,31 +13,31 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Dmytro Primshyts
  */
 class HtlDeclarationReference(
-  val xmlAttribute: XmlAttribute?,
-  val callChainElement: BaseChainElement?,
-  holder: PsiElement,
-  range: TextRange
+    val xmlAttribute: XmlAttribute?,
+    val callChainElement: BaseChainElement?,
+    holder: PsiElement,
+    range: TextRange
 ) :
-  PsiReferenceBase<PsiElement>(holder, range, true) {
+    PsiReferenceBase<PsiElement>(holder, range, true) {
 
-  override fun resolve(): PsiElement? {
-    val psiClass = callChainElement?.type?.asResolutionResult()?.psiClass
-    return when {
-      xmlAttribute != null -> {
-        HtlDeclarationIdentifier(xmlAttribute)
-      }
-      psiClass != null -> {
-        psiClass
-      }
-      else -> {
-        null
-      }
+    override fun resolve(): PsiElement? {
+        val psiClass = callChainElement?.type?.asResolutionResult()?.psiClass
+        return when {
+            xmlAttribute != null -> {
+                HtlDeclarationIdentifier(xmlAttribute)
+            }
+            psiClass != null -> {
+                psiClass
+            }
+            else -> {
+                null
+            }
+        }
     }
-  }
 
-  override fun isReferenceTo(element: PsiElement): Boolean {
-    return super.isReferenceTo(element) || xmlAttribute?.isEquivalentTo(element) ?: false
-  }
+    override fun isReferenceTo(element: PsiElement): Boolean {
+        return super.isReferenceTo(element) || xmlAttribute?.isEquivalentTo(element) ?: false
+    }
 
-  override fun getVariants(): Array<Any> = emptyArray()
+    override fun getVariants(): Array<Any> = emptyArray()
 }

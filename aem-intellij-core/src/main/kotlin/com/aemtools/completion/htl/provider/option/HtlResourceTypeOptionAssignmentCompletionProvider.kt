@@ -11,22 +11,22 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 object HtlResourceTypeOptionAssignmentCompletionProvider :
-  CompletionProvider<CompletionParameters>() {
+    CompletionProvider<CompletionParameters>() {
 
-  override fun addCompletions(
-    parameters: CompletionParameters,
-    context: ProcessingContext,
-    result: CompletionResultSet
-  ) {
-    val myDirectory = parameters.position.containingFile.originalFile.containingDirectory.virtualFile
-      .path
+    override fun addCompletions(
+        parameters: CompletionParameters,
+        context: ProcessingContext,
+        result: CompletionResultSet
+    ) {
+        val myDirectory = parameters.position.containingFile.originalFile.containingDirectory.virtualFile
+            .path
 
-    val myNormalizedDirectory = myDirectory.normalizeToJcrRoot()
-    val declarations = SlingResourceTypesCompletionResolver.resolveDeclarations(
-      parameters.position.project,
-      myNormalizedDirectory
-    )
-    result.addAllElements(declarations)
-    result.stopHere()
-  }
+        val myNormalizedDirectory = myDirectory.normalizeToJcrRoot()
+        val declarations = SlingResourceTypesCompletionResolver.resolveDeclarations(
+            parameters.position.project,
+            myNormalizedDirectory
+        )
+        result.addAllElements(declarations)
+        result.stopHere()
+    }
 }

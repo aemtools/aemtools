@@ -15,8 +15,8 @@ import com.aemtools.completion.small.patterns.CqComponentPatterns.cqComponentSli
  * @author Kostiantyn Diachenko
  */
 class JcrCqComponentCompletionContributor : BaseCompletionContributor({
-  basic(cqComponentComponentGroup, CqComponentGroupCompletionProvider)
-  basic(cqComponentSlingResourceSuperType, JpSlingResourceTypeCompletionProvider)
-  basic(cqComponentIsContainer, JpBooleanValueCompletionProvider)
-  basic(cqComponentNoDecoration, JpBooleanValueCompletionProvider)
+    basic(cqComponentComponentGroup, CqComponentGroupCompletionProvider)
+    basic(cqComponentSlingResourceSuperType, JpSlingResourceTypeCompletionProvider)
+    basic(cqComponentIsContainer, JpBooleanValueCompletionProvider)
+    basic(cqComponentNoDecoration, JpBooleanValueCompletionProvider)
 })

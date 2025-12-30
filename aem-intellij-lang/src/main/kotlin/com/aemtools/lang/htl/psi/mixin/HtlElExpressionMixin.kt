@@ -14,29 +14,29 @@ import com.intellij.psi.PsiElementVisitor
  */
 abstract class HtlElExpressionMixin(node: ASTNode) : ASTWrapperPsiElement(node), PsiElement {
 
-  override fun accept(visitor: PsiElementVisitor) {
-    if (visitor is HtlElementVisitor) {
-      visitor.visitHtlExpression(this)
-    } else {
-      super.accept(visitor)
+    override fun accept(visitor: PsiElementVisitor) {
+        if (visitor is HtlElementVisitor) {
+            visitor.visitHtlExpression(this)
+        } else {
+            super.accept(visitor)
+        }
     }
-  }
 
-  /**
-   * Get list of options available in current Htl expression.
-   *
-   * @return list of options
-   */
-  fun getOptions(): List<HtlOptionModel> =
-    this.findChildrenByClass(HtlContextExpression::class.java)
-      .map(::HtlOptionModel)
+    /**
+     * Get list of options available in current Htl expression.
+     *
+     * @return list of options
+     */
+    fun getOptions(): List<HtlOptionModel> =
+        this.findChildrenByClass(HtlContextExpression::class.java)
+            .map(::HtlOptionModel)
 
-  /**
-   * Get main property access.
-   *
-   * @return property access mixin, *null* if no property access available
-   */
-  fun getMainPropertyAccess(): PropertyAccessMixin? =
-    this.findChildrenByType(PropertyAccessMixin::class.java)
-      .firstOrNull()
+    /**
+     * Get main property access.
+     *
+     * @return property access mixin, *null* if no property access available
+     */
+    fun getMainPropertyAccess(): PropertyAccessMixin? =
+        this.findChildrenByType(PropertyAccessMixin::class.java)
+            .firstOrNull()
 }

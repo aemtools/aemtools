@@ -10,21 +10,21 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 object HtmlLinkCheckerValueCompletionProvider : CompletionProvider<CompletionParameters>() {
-  override fun addCompletions(
-    parameters: CompletionParameters,
-    context: ProcessingContext,
-    result: CompletionResultSet
-  ) {
-    if (result.isStopped) {
-      return
-    }
+    override fun addCompletions(
+        parameters: CompletionParameters,
+        context: ProcessingContext,
+        result: CompletionResultSet
+    ) {
+        if (result.isStopped) {
+            return
+        }
 
-    result.addAllElements(
-      listOf(
-        lookupElement("skip"),
-        lookupElement("valid")
-      )
-    )
-    result.stopHere()
-  }
+        result.addAllElements(
+            listOf(
+                lookupElement("skip"),
+                lookupElement("valid")
+            )
+        )
+        result.stopHere()
+    }
 }

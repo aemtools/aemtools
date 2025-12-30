@@ -19,22 +19,22 @@ import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
  *              call chain element list.
  */
 class SegmentDataHolder(
-  var inputType: TypeDescriptor = TypeDescriptor.empty(),
-  var outputType: TypeDescriptor = TypeDescriptor.empty(),
-  var declarationType: HtlVariableDeclaration? = null,
-  var chain: List<CallChainElement> = listOf()
+    var inputType: TypeDescriptor = TypeDescriptor.empty(),
+    var outputType: TypeDescriptor = TypeDescriptor.empty(),
+    var declarationType: HtlVariableDeclaration? = null,
+    var chain: List<CallChainElement> = listOf()
 ) {
-  /**
-   * Build call chain segment.
-   *
-   * @return call chain segment instance
-   */
-  fun build() = BaseCallChainSegment(
-    inputType,
-    outputType,
-    declarationType,
-    chain
-  )
+    /**
+     * Build call chain segment.
+     *
+     * @return call chain segment instance
+     */
+    fun build() = BaseCallChainSegment(
+        inputType,
+        outputType,
+        declarationType,
+        chain
+    )
 }
 
 /**
@@ -45,9 +45,9 @@ class SegmentDataHolder(
  * @return call chain segment instance
  */
 fun chainSegment(init: SegmentDataHolder.() -> Unit): CallChainSegment {
-  val dataHolder = SegmentDataHolder()
+    val dataHolder = SegmentDataHolder()
 
-  init.invoke(dataHolder)
+    init.invoke(dataHolder)
 
-  return dataHolder.build()
+    return dataHolder.build()
 }

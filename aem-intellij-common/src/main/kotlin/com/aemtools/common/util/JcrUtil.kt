@@ -16,19 +16,19 @@ import com.intellij.psi.xml.XmlTag
  * @return the jcr value (_null_ if conversion is not possible)
  */
 inline fun <reified T> XmlTag.jcrProperty(name: String): T? {
-  val value = getAttribute(name)?.value ?: return null
+    val value = getAttribute(name)?.value ?: return null
 
-  when {
-    T::class == Boolean::class -> {
-      return when (value) {
-        "{Boolean}true", "true" -> true as T
-        "{Boolean}false", "false" -> false as T
-        else -> null
-      }
+    when {
+        T::class == Boolean::class -> {
+            return when (value) {
+                "{Boolean}true", "true" -> true as T
+                "{Boolean}false", "false" -> false as T
+                else -> null
+            }
+        }
     }
-  }
 
-  return null
+    return null
 }
 
 /**
@@ -41,20 +41,20 @@ inline fun <reified T> XmlTag.jcrProperty(name: String): T? {
  * if the property is empty)
  */
 fun XmlTag.jcrPropertyArray(name: String): List<String> {
-  val unary = jcrProperty<String>(name)
-  if (unary != null) {
-    return listOf(unary)
-  }
+    val unary = jcrProperty<String>(name)
+    if (unary != null) {
+        return listOf(unary)
+    }
 
-  val value = getAttribute(name)?.value ?: return emptyList()
+    val value = getAttribute(name)?.value ?: return emptyList()
 
-  if (value.contains('[') && value.contains(']')) {
-    return value.substringAfter('[')
-      .substringBefore(']')
-      .split(',')
-      .map { it.trim() }
-      .filterNot { it.isEmpty() }
-  }
+    if (value.contains('[') && value.contains(']')) {
+        return value.substringAfter('[')
+            .substringBefore(']')
+            .split(',')
+            .map { it.trim() }
+            .filterNot { it.isEmpty() }
+    }
 
-  return emptyList()
+    return emptyList()
 }

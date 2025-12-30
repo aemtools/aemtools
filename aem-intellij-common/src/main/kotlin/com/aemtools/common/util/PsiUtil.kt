@@ -55,7 +55,7 @@ fun PsiFile.getXmlFile(): XmlFile? = getPsi(XMLLanguage.INSTANCE) as? XmlFile
  * @return instance of virtual file
  */
 fun PsiElement.virtualFile(): VirtualFile? =
-  PsiUtilCore.getVirtualFile(this)
+    PsiUtilCore.getVirtualFile(this)
 
 /**
  * Find incoming references (usages) for current element.
@@ -65,9 +65,9 @@ fun PsiElement.virtualFile(): VirtualFile? =
  * @return list of incoming references
  */
 fun PsiElement.incomingReferences(): List<PsiReference> = runReadAction {
-  RenamePsiElementProcessor.forElement(this)
-    .findReferences(this, GlobalSearchScope.projectScope(this.project), false)
-    .toList()
+    RenamePsiElementProcessor.forElement(this)
+        .findReferences(this, GlobalSearchScope.projectScope(this.project), false)
+        .toList()
 }
 
 /**
@@ -77,6 +77,6 @@ fun PsiElement.incomingReferences(): List<PsiReference> = runReadAction {
  * @return [SmartPsiElementPointer] pointing to current [PsiElement]
  */
 inline fun <reified T : PsiElement> T.toSmartPointer(): SmartPsiElementPointer<T> = SmartPointerManager.getInstance(
-  project
+    project
 )
-  .createSmartPsiElementPointer(this)
+    .createSmartPsiElementPointer(this)

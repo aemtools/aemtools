@@ -36,114 +36,114 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Dmytro Primshyts
  */
 class HtlAttributesAnnotator : Annotator {
-  override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-    if (element is XmlAttribute && element.containingFile.isHtlFile()) {
-      val attributeName = element.htlAttributeName()
-      val variableName = element.htlVariableName()
+    override fun annotate(element: PsiElement, holder: AnnotationHolder) {
+        if (element is XmlAttribute && element.containingFile.isHtlFile()) {
+            val attributeName = element.htlAttributeName()
+            val variableName = element.htlVariableName()
 
-      if (attributeName != null) {
-        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-          .textAttributes(HTL_ATTRIBUTE)
-          .range(
-            TextRange.create(
-              element.nameRange().startOffset,
-              element.nameRange().startOffset + attributeName.length
-            )
-          )
-          .create()
-      }
+            if (attributeName != null) {
+                holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                    .textAttributes(HTL_ATTRIBUTE)
+                    .range(
+                        TextRange.create(
+                            element.nameRange().startOffset,
+                            element.nameRange().startOffset + attributeName.length
+                        )
+                    )
+                    .create()
+            }
 
-      if (attributeName != null && variableName != null) {
-        val range = TextRange(
-          element.nameElement.textRange.startOffset + element.name.indexOf(".") + 1,
-          element.nameElement.textRange.endOffset
-        )
+            if (attributeName != null && variableName != null) {
+                val range = TextRange(
+                    element.nameElement.textRange.startOffset + element.name.indexOf(".") + 1,
+                    element.nameElement.textRange.endOffset
+                )
 
-        annotate(range, element, attributeName, variableName, holder)
-      }
+                annotate(range, element, attributeName, variableName, holder)
+            }
+        }
     }
-  }
 
-  private fun annotate(
-    range: TextRange,
-    attribute: XmlAttribute,
-    attributeName: String,
-    variableName: String,
-    holder: AnnotationHolder
-  ) {
-    when (attributeName) {
-      DATA_SLY_USE,
-      DATA_SLY_SET,
-      DATA_SLY_UNWRAP,
-      DATA_SLY_TEST -> annotateSingleVariable(range, attribute, variableName, holder)
-      DATA_SLY_LIST,
-      DATA_SLY_REPEAT -> annotateIterable(range, attribute, variableName, holder)
-      else -> holder.newSilentAnnotation(
-        HighlightSeverity.INFORMATION
-      ).range(range).textAttributes(HTL_VARIABLE_DECLARATION)
-        .create()
-    }
-  }
-
-  private fun annotateIterable(
-    range: TextRange,
-    attribute: XmlAttribute,
-    variableName: String,
-    holder: AnnotationHolder
-  ) {
-    val references = attribute.incomingReferences()
-
-    if (references.any {
-        it is HtlDeclarationReference ||
-          it is HtlListHelperReference
-      }
+    private fun annotate(
+        range: TextRange,
+        attribute: XmlAttribute,
+        attributeName: String,
+        variableName: String,
+        holder: AnnotationHolder
     ) {
-      holder.createInfoAnnotation(range, HTL_VARIABLE_DECLARATION)
-    } else {
-      holder.newSilentAnnotation(HighlightSeverity.WARNING)
-        .range(range)
-        .textAttributes(HTL_VARIABLE_UNUSED)
-        .tooltip("Variable '$variableName' is never used.")
-        .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
-        .withFix(RemoveUnusedVariableFix(range))
-        .create()
+        when (attributeName) {
+            DATA_SLY_USE,
+            DATA_SLY_SET,
+            DATA_SLY_UNWRAP,
+            DATA_SLY_TEST -> annotateSingleVariable(range, attribute, variableName, holder)
+            DATA_SLY_LIST,
+            DATA_SLY_REPEAT -> annotateIterable(range, attribute, variableName, holder)
+            else -> holder.newSilentAnnotation(
+                HighlightSeverity.INFORMATION
+            ).range(range).textAttributes(HTL_VARIABLE_DECLARATION)
+                .create()
+        }
     }
-  }
 
-  private fun annotateSingleVariable(
-    range: TextRange,
-    attribute: XmlAttribute,
-    variableName: String,
-    holder: AnnotationHolder
-  ) {
-    val references = attribute.incomingReferences()
+    private fun annotateIterable(
+        range: TextRange,
+        attribute: XmlAttribute,
+        variableName: String,
+        holder: AnnotationHolder
+    ) {
+        val references = attribute.incomingReferences()
 
-    if (references.any { it is HtlDeclarationReference }) {
-      holder.createInfoAnnotation(range, HTL_VARIABLE_DECLARATION)
-    } else {
-      holder.newSilentAnnotation(HighlightSeverity.WARNING)
-        .textAttributes(HTL_VARIABLE_UNUSED)
-        .range(range)
-        .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
-        .tooltip("Variable '$variableName' is never used.")
-        .withFix(RemoveUnusedVariableFix(range))
-        .create()
+        if (references.any {
+                it is HtlDeclarationReference ||
+                    it is HtlListHelperReference
+            }
+        ) {
+            holder.createInfoAnnotation(range, HTL_VARIABLE_DECLARATION)
+        } else {
+            holder.newSilentAnnotation(HighlightSeverity.WARNING)
+                .range(range)
+                .textAttributes(HTL_VARIABLE_UNUSED)
+                .tooltip("Variable '$variableName' is never used.")
+                .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
+                .withFix(RemoveUnusedVariableFix(range))
+                .create()
+        }
     }
-  }
 
-  private class RemoveUnusedVariableFix(val range: TextRange) : IntentionAction {
-    override fun getFamilyName(): String = "Htl"
-    override fun startInWriteAction(): Boolean = true
+    private fun annotateSingleVariable(
+        range: TextRange,
+        attribute: XmlAttribute,
+        variableName: String,
+        holder: AnnotationHolder
+    ) {
+        val references = attribute.incomingReferences()
 
-    override fun getText(): String = "Remove unused variable."
-
-    override fun isAvailable(project: Project, editor: Editor?, file: PsiFile?): Boolean = true
-
-    override fun invoke(project: Project, editor: Editor?, file: PsiFile) {
-      val document = PsiDocumentManager.getInstance(project)
-        .getDocument(file)
-        ?: return
-      document.replaceString(range.startOffset - 1, range.endOffset, "")
+        if (references.any { it is HtlDeclarationReference }) {
+            holder.createInfoAnnotation(range, HTL_VARIABLE_DECLARATION)
+        } else {
+            holder.newSilentAnnotation(HighlightSeverity.WARNING)
+                .textAttributes(HTL_VARIABLE_UNUSED)
+                .range(range)
+                .highlightType(ProblemHighlightType.LIKE_UNUSED_SYMBOL)
+                .tooltip("Variable '$variableName' is never used.")
+                .withFix(RemoveUnusedVariableFix(range))
+                .create()
+        }
     }
-  }
+
+    private class RemoveUnusedVariableFix(val range: TextRange) : IntentionAction {
+        override fun getFamilyName(): String = "Htl"
+        override fun startInWriteAction(): Boolean = true
+
+        override fun getText(): String = "Remove unused variable."
+
+        override fun isAvailable(project: Project, editor: Editor?, file: PsiFile?): Boolean = true
+
+        override fun invoke(project: Project, editor: Editor?, file: PsiFile) {
+            val document = PsiDocumentManager.getInstance(project)
+                .getDocument(file)
+                ?: return
+            document.replaceString(range.startOffset - 1, range.endOffset, "")
+        }
+    }
 }

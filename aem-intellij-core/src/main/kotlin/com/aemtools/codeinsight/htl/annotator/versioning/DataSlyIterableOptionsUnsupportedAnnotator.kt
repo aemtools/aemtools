@@ -18,29 +18,29 @@ import com.intellij.psi.PsiElement
  * @author Kostiantyn Diachenko
  */
 class DataSlyIterableOptionsUnsupportedAnnotator : VersionedHtlElementAnnotator(HtlVersion.V_1_4) {
-  override fun annotateNotSupportedElement(element: PsiElement, holder: AnnotationHolder) {
-    if (element !is HtlContextExpression) {
-      return
+    override fun annotateNotSupportedElement(element: PsiElement, holder: AnnotationHolder) {
+        if (element !is HtlContextExpression) {
+            return
+        }
+
+        if (element.assignment?.variableName?.isBlockSpecificOption(Const.Htl.DATA_SLY_LIST) == true ||
+            element.assignment?.variableName?.isBlockSpecificOption(Const.Htl.DATA_SLY_REPEAT) == true
+        ) {
+            val variableNameTextRange = element.assignment?.variableName?.textRange ?: element.textRange
+            val currentHtlVersion = element.project.getHtlVersion().version
+            val message = "This option has no effect in current HTL version $currentHtlVersion. " +
+                "Support for this option starts with HTL version ${HtlVersion.V_1_4.version}."
+            holder.newAnnotation(HighlightSeverity.WEAK_WARNING, message)
+                .range(variableNameTextRange)
+                .withFix(ChangeHtlVersionAction())
+                .create()
+        }
     }
 
-    if (element.assignment?.variableName?.isBlockSpecificOption(Const.Htl.DATA_SLY_LIST) == true ||
-      element.assignment?.variableName?.isBlockSpecificOption(Const.Htl.DATA_SLY_REPEAT) == true
-    ) {
-      val variableNameTextRange = element.assignment?.variableName?.textRange ?: element.textRange
-      val currentHtlVersion = element.project.getHtlVersion().version
-      val message = "This option has no effect in current HTL version $currentHtlVersion. " +
-        "Support for this option starts with HTL version ${HtlVersion.V_1_4.version}."
-      holder.newAnnotation(HighlightSeverity.WEAK_WARNING, message)
-        .range(variableNameTextRange)
-        .withFix(ChangeHtlVersionAction())
-        .create()
-    }
-  }
-
-  private fun HtlVariableName.isBlockSpecificOption(blockName: String): Boolean =
-    this.isInsideOf(blockName) &&
-      HtlAttributesRepository.getAttributesData(HtlVersion.V_1_4)
-        .filter { it.name == blockName }
-        .flatMap { it.options ?: listOf() }
-        .any { it.name == this.varName.text }
+    private fun HtlVariableName.isBlockSpecificOption(blockName: String): Boolean =
+        this.isInsideOf(blockName) &&
+            HtlAttributesRepository.getAttributesData(HtlVersion.V_1_4)
+                .filter { it.name == blockName }
+                .flatMap { it.options ?: listOf() }
+                .any { it.name == this.varName.text }
 }

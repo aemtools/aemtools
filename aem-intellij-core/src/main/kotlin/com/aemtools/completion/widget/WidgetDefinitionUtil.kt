@@ -11,20 +11,20 @@ import com.intellij.psi.xml.XmlTag
  */
 object WidgetDefinitionUtil {
 
-  /**
-   * Try to extract [PsiWidgetDefinition] instance from given
-   * [PsiElement] object
-   * @param element element to look into
-   * @return PsiWidgetDefinition object or *null*
-   */
-  fun extract(element: PsiElement): PsiWidgetDefinition? {
-    val tag = element.findParentByType(XmlTag::class.java) ?: return null
+    /**
+     * Try to extract [PsiWidgetDefinition] instance from given
+     * [PsiElement] object
+     * @param element element to look into
+     * @return PsiWidgetDefinition object or *null*
+     */
+    fun extract(element: PsiElement): PsiWidgetDefinition? {
+        val tag = element.findParentByType(XmlTag::class.java) ?: return null
 
-    return extractDefinition(tag, element as XmlElement)
-  }
+        return extractDefinition(tag, element as XmlElement)
+    }
 
-  private fun extractDefinition(tag: XmlTag, selectedElement: XmlElement): PsiWidgetDefinition {
-    val attributes = tag.attributes
-    return PsiWidgetDefinition.create(attributes, selectedElement)
-  }
+    private fun extractDefinition(tag: XmlTag, selectedElement: XmlElement): PsiWidgetDefinition {
+        val attributes = tag.attributes
+        return PsiWidgetDefinition.create(attributes, selectedElement)
+    }
 }

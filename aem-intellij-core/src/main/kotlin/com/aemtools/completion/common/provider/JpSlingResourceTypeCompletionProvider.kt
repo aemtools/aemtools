@@ -9,5 +9,5 @@ import com.aemtools.completion.htl.common.SlingResourceTypesCompletionResolver
  * @author Kostiantyn Diachenko
  */
 object JpSlingResourceTypeCompletionProvider : BaseCompletionProvider({ parameters, _, _ ->
-  SlingResourceTypesCompletionResolver.resolveDeclarations(parameters.position.project)
+    SlingResourceTypesCompletionResolver.resolveDeclarations(parameters.position.project)
 })

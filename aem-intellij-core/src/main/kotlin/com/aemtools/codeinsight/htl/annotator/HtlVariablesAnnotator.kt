@@ -27,65 +27,65 @@ import com.intellij.psi.PsiElement
  * @author Dmytro Primshyts
  */
 class HtlVariablesAnnotator : Annotator, DumbAware {
-  override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-    if (element !is VariableNameMixin ||
-      element.isOption() ||
-      element.hasParentOfType(HtlAccessIdentifier::class.java)
-    ) {
-      return
-    }
-
-    val name = element.variableName()
-    val contextObjects = PredefinedVariables.allContextObjects()
-    when {
-      contextObjects.find { it.name == name } != null -> {
-        holder.createInfoAnnotation(element, HTL_EL_GLOBAL_VARIABLE, "Context Object")
-      }
-
-      FileVariablesResolver.validVariable(name, element) -> {
-        holder.createInfoAnnotation(element, HTL_EL_LOCAL_VARIABLE)
-      }
-
-      else -> {
-        val annotationBuilder = holder.createInfoAnnotationBuilder(
-          element,
-          HTL_EL_UNRESOLVED_VARIABLE,
-          "Cannot resolve symbol '$name'"
-        )
-
-        val similar = findSimilarVariable(element, contextObjects, name)
-        if (similar != null) {
-          annotationBuilder.withFix(
-            VariableNameErrataIntentionAction(
-              similar,
-              element.toSmartPointer()
-            )
-          )
+    override fun annotate(element: PsiElement, holder: AnnotationHolder) {
+        if (element !is VariableNameMixin ||
+            element.isOption() ||
+            element.hasParentOfType(HtlAccessIdentifier::class.java)
+        ) {
+            return
         }
-        annotationBuilder.create()
-      }
+
+        val name = element.variableName()
+        val contextObjects = PredefinedVariables.allContextObjects()
+        when {
+            contextObjects.find { it.name == name } != null -> {
+                holder.createInfoAnnotation(element, HTL_EL_GLOBAL_VARIABLE, "Context Object")
+            }
+
+            FileVariablesResolver.validVariable(name, element) -> {
+                holder.createInfoAnnotation(element, HTL_EL_LOCAL_VARIABLE)
+            }
+
+            else -> {
+                val annotationBuilder = holder.createInfoAnnotationBuilder(
+                    element,
+                    HTL_EL_UNRESOLVED_VARIABLE,
+                    "Cannot resolve symbol '$name'"
+                )
+
+                val similar = findSimilarVariable(element, contextObjects, name)
+                if (similar != null) {
+                    annotationBuilder.withFix(
+                        VariableNameErrataIntentionAction(
+                            similar,
+                            element.toSmartPointer()
+                        )
+                    )
+                }
+                annotationBuilder.create()
+            }
+        }
     }
-  }
 
-  private fun findSimilarVariable(
-    element: PsiElement,
-    contextObjects: List<ContextObject>,
-    name: String
-  ): String? {
-    val variables = FileVariablesResolver.declarationsForPosition(element)
+    private fun findSimilarVariable(
+        element: PsiElement,
+        contextObjects: List<ContextObject>,
+        name: String
+    ): String? {
+        val variables = FileVariablesResolver.declarationsForPosition(element)
 
-    val availableNames = (
-      variables.map { it.variableName } +
-        contextObjects.map { it.name }
-      )
+        val availableNames = (
+            variables.map { it.variableName } +
+                contextObjects.map { it.name }
+            )
 
-    val closest = name.closest(availableNames.toSet())
-      ?: return null
+        val closest = name.closest(availableNames.toSet())
+            ?: return null
 
-    return if (closest.distanceTo(name) < name.length / 2) {
-      closest
-    } else {
-      null
+        return if (closest.distanceTo(name) < name.length / 2) {
+            closest
+        } else {
+            null
+        }
     }
-  }
 }

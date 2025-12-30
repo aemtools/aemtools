@@ -11,27 +11,27 @@ import com.intellij.openapi.application.ApplicationManager
  */
 object ServiceFacade {
 
-  /**
-   * Get [WidgetDocRepository] instance.
-   *
-   * @return instance of widget doc repository
-   */
-  fun getWidgetRepository(): WidgetDocRepository =
-    ApplicationManager.getApplication()
-      .getService(IRepositoryService::class.java)
-      .getWidgetDocRepository()
+    /**
+     * Get [WidgetDocRepository] instance.
+     *
+     * @return instance of widget doc repository
+     */
+    fun getWidgetRepository(): WidgetDocRepository =
+        ApplicationManager.getApplication()
+            .getService(IRepositoryService::class.java)
+            .getWidgetDocRepository()
 
-  /**
-   * Get [HtlAttributesRepository] instance.
-   *
-   * @return instance of htl attribute repository
-   */
-  fun getHtlAttributesRepository(): HtlAttributesRepository = HtlAttributesRepository
+    /**
+     * Get [HtlAttributesRepository] instance.
+     *
+     * @return instance of htl attribute repository
+     */
+    fun getHtlAttributesRepository(): HtlAttributesRepository = HtlAttributesRepository
 
-  /**
-   * Get [RepPolicyRepository] instance.
-   *
-   * @return instance rep policy repository
-   */
-  fun getRepPolicyRepository() = RepPolicyRepository
+    /**
+     * Get [RepPolicyRepository] instance.
+     *
+     * @return instance rep policy repository
+     */
+    fun getRepPolicyRepository() = RepPolicyRepository
 }

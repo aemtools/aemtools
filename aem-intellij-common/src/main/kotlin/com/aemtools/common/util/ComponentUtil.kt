@@ -10,12 +10,12 @@ import com.intellij.openapi.vfs.VirtualFile
  * @return resource type of current virtual file
  */
 fun VirtualFile.resourceType(): String? {
-  var currentDir: VirtualFile? = this
-  while (currentDir != null) {
-    if (currentDir.findChild(".content.xml") != null) {
-      return currentDir.path.normalizeToJcrRoot()
+    var currentDir: VirtualFile? = this
+    while (currentDir != null) {
+        if (currentDir.findChild(".content.xml") != null) {
+            return currentDir.path.normalizeToJcrRoot()
+        }
+        currentDir = currentDir.parent
     }
-    currentDir = currentDir.parent
-  }
-  return null
+    return null
 }

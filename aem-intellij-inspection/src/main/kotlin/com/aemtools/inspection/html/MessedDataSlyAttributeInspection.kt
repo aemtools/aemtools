@@ -14,12 +14,12 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Dmytro Primshyts
  */
 class MessedDataSlyAttributeInspection : HtmlLocalInspectionTool() {
-  override fun getGroupDisplayName(): String = "HTL"
+    override fun getGroupDisplayName(): String = "HTL"
 
-  override fun getDisplayName(): String = "data-sly-attribute with prohibited attributes"
+    override fun getDisplayName(): String = "data-sly-attribute with prohibited attributes"
 
-  override fun getStaticDescription(): String {
-    return """
+    override fun getStaticDescription(): String {
+        return """
 <html>
 <body>
 This inspection verifies that <i>data-sly-attribute</i> is
@@ -27,32 +27,32 @@ This inspection verifies that <i>data-sly-attribute</i> is
 attributes that take JavaScript as input (e.g. onclick, onmousemove, etc).
 </body>
 </html>
-    """.trimIndent()
-  }
-
-  public override fun checkAttribute(
-    attribute: XmlAttribute,
-    holder: ProblemsHolder,
-    isOnTheFly: Boolean
-  ) {
-    val inspectionService = InspectionService.getInstance(attribute.project)
-      ?: return
-    if (!inspectionService.validTarget(attribute)) {
-      return
+        """.trimIndent()
     }
 
-    val htlAttributeName = attribute.htlAttributeName()
-    if (htlAttributeName != Const.Htl.DATA_SLY_ATTRIBUTE) {
-      return
-    }
+    public override fun checkAttribute(
+        attribute: XmlAttribute,
+        holder: ProblemsHolder,
+        isOnTheFly: Boolean
+    ) {
+        val inspectionService = InspectionService.getInstance(attribute.project)
+            ?: return
+        if (!inspectionService.validTarget(attribute)) {
+            return
+        }
 
-    val htlVariableName = attribute.name.substringAfter(".")
-    if (htlVariableName == "style" || htlVariableName in Const.html.JS_ATTRIBUTES) {
-      inspectionService.messedDataSlyAttribute(
-        holder,
-        attribute,
-        htlVariableName
-      )
+        val htlAttributeName = attribute.htlAttributeName()
+        if (htlAttributeName != Const.Htl.DATA_SLY_ATTRIBUTE) {
+            return
+        }
+
+        val htlVariableName = attribute.name.substringAfter(".")
+        if (htlVariableName == "style" || htlVariableName in Const.html.JS_ATTRIBUTES) {
+            inspectionService.messedDataSlyAttribute(
+                holder,
+                attribute,
+                htlVariableName
+            )
+        }
     }
-  }
 }

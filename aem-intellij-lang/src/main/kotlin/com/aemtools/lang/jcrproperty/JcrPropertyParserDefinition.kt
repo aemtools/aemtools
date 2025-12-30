@@ -22,25 +22,25 @@ import com.intellij.psi.tree.TokenSet
  */
 class JcrPropertyParserDefinition : ParserDefinition {
 
-  override fun createLexer(project: Project?): Lexer = JpLexer()
-  override fun createParser(project: Project?): PsiParser = JpParser()
+    override fun createLexer(project: Project?): Lexer = JpLexer()
+    override fun createParser(project: Project?): PsiParser = JpParser()
 
-  override fun createFile(viewProvider: FileViewProvider): PsiFile =
-    JpPsiFile(viewProvider)
+    override fun createFile(viewProvider: FileViewProvider): PsiFile =
+        JpPsiFile(viewProvider)
 
-  override fun spaceExistenceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements =
-    ParserDefinition.SpaceRequirements.MAY
+    override fun spaceExistenceTypeBetweenTokens(left: ASTNode?, right: ASTNode?): ParserDefinition.SpaceRequirements =
+        ParserDefinition.SpaceRequirements.MAY
 
-  override fun getStringLiteralElements(): TokenSet = TokenSet.create(
-    JpTypes.VALUE_TOKEN,
-    JpTypes.ARRAY_VALUE_TOKEN
-  )
+    override fun getStringLiteralElements(): TokenSet = TokenSet.create(
+        JpTypes.VALUE_TOKEN,
+        JpTypes.ARRAY_VALUE_TOKEN
+    )
 
-  override fun getWhitespaceTokens(): TokenSet = TokenSet.create(TokenType.WHITE_SPACE)
+    override fun getWhitespaceTokens(): TokenSet = TokenSet.create(TokenType.WHITE_SPACE)
 
-  override fun getFileNodeType(): IFileElementType = JpFileElementType
+    override fun getFileNodeType(): IFileElementType = JpFileElementType
 
-  override fun createElement(node: ASTNode?): PsiElement = JpTypes.Factory.createElement(node)
+    override fun createElement(node: ASTNode?): PsiElement = JpTypes.Factory.createElement(node)
 
-  override fun getCommentTokens(): TokenSet = TokenSet.EMPTY
+    override fun getCommentTokens(): TokenSet = TokenSet.EMPTY
 }

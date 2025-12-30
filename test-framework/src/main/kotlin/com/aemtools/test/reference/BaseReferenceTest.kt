@@ -10,15 +10,15 @@ import com.intellij.testFramework.LightProjectDescriptor
  * @author Dmytro Primshyts
  */
 abstract class BaseReferenceTest(withAemUberJar: Boolean = false) :
-  BaseLightTest(withAemUberJar) {
+    BaseLightTest(withAemUberJar) {
 
-  fun testReference(unit: IReferenceTestFixture.() -> Unit) {
-    val fixture = ReferenceTestFixture(fixture = myFixture).apply { unit() }
+    fun testReference(unit: IReferenceTestFixture.() -> Unit) {
+        val fixture = ReferenceTestFixture(fixture = myFixture).apply { unit() }
 
-    fixture.init()
+        fixture.init()
 
-    fixture.test()
-  }
+        fixture.test()
+    }
 
-  override fun getProjectDescriptor(): LightProjectDescriptor = JdkProjectDescriptor()
+    override fun getProjectDescriptor(): LightProjectDescriptor = JdkProjectDescriptor()
 }

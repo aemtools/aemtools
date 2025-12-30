@@ -13,49 +13,49 @@ import com.intellij.codeInsight.lookup.LookupElement
  * @author Dmytro Primshyts
  */
 class BaseVirtualCallChainElement(
-  override val name: String,
-  override val type: TypeDescriptor,
-  override val previous: VirtualCallChainElement? = null
+    override val name: String,
+    override val type: TypeDescriptor,
+    override val previous: VirtualCallChainElement? = null
 ) : VirtualCallChainElement {
-  override fun toLookupElement(): LookupElement {
-    val lookupString = buildString {
-      append(name)
+    override fun toLookupElement(): LookupElement {
+        val lookupString = buildString {
+            append(name)
 
-      var _previous = previous
-      while (_previous != null) {
-        insert(0, "${_previous.name}.")
-        _previous = _previous.previous
-      }
-    }
-
-    var lookupElement = lookupElement(lookupString)
-
-    when (type) {
-      is ArrayJavaTypeDescriptor -> {
-        lookupElement = lookupElement.withTailText(type.psiClass.qualifiedName)
-        lookupElement = lookupElement.withIcon(type.psiClass.getIcon(0))
-      }
-      is IterableJavaTypeDescriptor -> {
-        val memberName = type.psiMember?.name
-        if (memberName != null) {
-          lookupElement = lookupElement.withTailText(" $lookupString", true)
-          lookupElement = lookupElement.withPresentableText(memberName)
+            var _previous = previous
+            while (_previous != null) {
+                insert(0, "${_previous.name}.")
+                _previous = _previous.previous
+            }
         }
 
-        val typeText = type.originalType?.presentableText
-        if (typeText != null) {
-          lookupElement = lookupElement.withTypeText(typeText)
+        var lookupElement = lookupElement(lookupString)
+
+        when (type) {
+            is ArrayJavaTypeDescriptor -> {
+                lookupElement = lookupElement.withTailText(type.psiClass.qualifiedName)
+                lookupElement = lookupElement.withIcon(type.psiClass.getIcon(0))
+            }
+            is IterableJavaTypeDescriptor -> {
+                val memberName = type.psiMember?.name
+                if (memberName != null) {
+                    lookupElement = lookupElement.withTailText(" $lookupString", true)
+                    lookupElement = lookupElement.withPresentableText(memberName)
+                }
+
+                val typeText = type.originalType?.presentableText
+                if (typeText != null) {
+                    lookupElement = lookupElement.withTypeText(typeText)
+                }
+
+                lookupElement = lookupElement.withIcon(type.psiClass.getIcon(0))
+            }
+            is MapJavaTypeDescriptor -> {
+                lookupElement = lookupElement.withTailText(type.psiClass.qualifiedName)
+                lookupElement = lookupElement.withIcon(type.psiClass.getIcon(0))
+            }
+            else -> Unit
         }
 
-        lookupElement = lookupElement.withIcon(type.psiClass.getIcon(0))
-      }
-      is MapJavaTypeDescriptor -> {
-        lookupElement = lookupElement.withTailText(type.psiClass.qualifiedName)
-        lookupElement = lookupElement.withIcon(type.psiClass.getIcon(0))
-      }
-      else -> Unit
+        return lookupElement
     }
-
-    return lookupElement
-  }
 }

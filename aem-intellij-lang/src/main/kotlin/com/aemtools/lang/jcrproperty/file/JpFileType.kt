@@ -9,17 +9,17 @@ import javax.swing.Icon
  * @author Dmytro Primshyts
  */
 object JpFileType : LanguageFileType(JcrPropertyLanguage) {
-  override fun getDescription(): String {
-    return ""
-  }
+    override fun getDescription(): String {
+        return ""
+    }
 
-  override fun getDefaultExtension(): String {
-    return "xml"
-  }
+    override fun getDefaultExtension(): String {
+        return "xml"
+    }
 
-  override fun getName(): String {
-    return "JcrProperty"
-  }
+    override fun getName(): String {
+        return "JcrProperty"
+    }
 
-  override fun getIcon(): Icon = AllIcons.FileTypes.Properties
+    override fun getIcon(): Icon = AllIcons.FileTypes.Properties
 }

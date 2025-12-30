@@ -7,4 +7,4 @@ import com.intellij.lang.ASTNode
  * @author Dmytro Primshyts
  */
 open class ElPsiBaseElement(node: ASTNode) :
-  ASTWrapperPsiElement(node)
+    ASTWrapperPsiElement(node)

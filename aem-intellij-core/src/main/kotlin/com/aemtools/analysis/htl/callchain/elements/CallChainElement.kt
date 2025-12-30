@@ -10,7 +10,7 @@ import com.intellij.psi.PsiElement
  * @author Dmytro Primshyts
  */
 interface CallChainElement {
-  val element: PsiElement
-  val name: String
-  val type: TypeDescriptor
+    val element: PsiElement
+    val name: String
+    val type: TypeDescriptor
 }

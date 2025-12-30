@@ -16,34 +16,34 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 object HtmlAttributeReferenceProvider : PsiReferenceProvider() {
-  override fun getReferencesByElement(
-    element: PsiElement,
-    context: ProcessingContext
-  ): Array<out PsiReference> {
-    val attr = element as XmlAttribute
+    override fun getReferencesByElement(
+        element: PsiElement,
+        context: ProcessingContext
+    ): Array<out PsiReference> {
+        val attr = element as XmlAttribute
 
-    if (attr.isHtlAttribute()) {
-      return arrayOf(XmlAttributeReferenceWrapper(attr as XmlAttributeImpl))
-    }
-
-    return arrayOf()
-  }
-
-  /**
-   * Xml attribute reference wrapper.
-   */
-  class XmlAttributeReferenceWrapper(val xmlAttribute: XmlAttribute) : XmlAttributeReference(xmlAttribute) {
-    override fun resolve() = xmlAttribute
-
-    override fun getRangeInElement(): TextRange {
-      val range = with(xmlAttribute.name) {
-        if (contains(".")) {
-          TextRange(0, indexOf("."))
-        } else {
-          TextRange(0, length)
+        if (attr.isHtlAttribute()) {
+            return arrayOf(XmlAttributeReferenceWrapper(attr as XmlAttributeImpl))
         }
-      }
-      return range
+
+        return arrayOf()
     }
-  }
+
+    /**
+     * Xml attribute reference wrapper.
+     */
+    class XmlAttributeReferenceWrapper(val xmlAttribute: XmlAttribute) : XmlAttributeReference(xmlAttribute) {
+        override fun resolve() = xmlAttribute
+
+        override fun getRangeInElement(): TextRange {
+            val range = with(xmlAttribute.name) {
+                if (contains(".")) {
+                    TextRange(0, indexOf("."))
+                } else {
+                    TextRange(0, length)
+                }
+            }
+            return range
+        }
+    }
 }

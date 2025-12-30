@@ -31,7 +31,7 @@ fun lookupElement(text: String) = LookupElementBuilder.create(text)
  * @return [PrioritizedLookupElement] with given priority
  */
 fun LookupElement.withPriority(priority: Double): LookupElement =
-  PrioritizedLookupElement.withPriority(this, priority)
+    PrioritizedLookupElement.withPriority(this, priority)
 
 /**
  * Get priority of current lookup element if available.
@@ -42,9 +42,9 @@ fun LookupElement.withPriority(priority: Double): LookupElement =
  * _null_ if current element is not instance of [PrioritizedLookupElement]
  */
 fun LookupElement.priority(): Double? = if (this is PrioritizedLookupElement<*>) {
-  this.priority
+    this.priority
 } else {
-  null
+    null
 }
 
 /**
@@ -55,4 +55,4 @@ fun LookupElement.priority(): Double? = if (this is PrioritizedLookupElement<*>)
  * @return [PrioritizedLookupElement] with given proximity
  */
 fun LookupElement.withProximity(proximity: Int) =
-  PrioritizedLookupElement.withExplicitProximity(this, proximity)
+    PrioritizedLookupElement.withExplicitProximity(this, proximity)

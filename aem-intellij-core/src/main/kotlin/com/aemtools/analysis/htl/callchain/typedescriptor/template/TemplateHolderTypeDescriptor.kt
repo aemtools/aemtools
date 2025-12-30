@@ -15,30 +15,30 @@ import com.intellij.openapi.project.Project
  * @author Dmytro Primshyts
  */
 class TemplateHolderTypeDescriptor(
-  val templates: List<TemplateDefinition>,
-  val project: Project
+    val templates: List<TemplateDefinition>,
+    val project: Project
 ) :
-  BaseTypeDescriptor() {
-  override fun myVariants(): List<LookupElement> {
-    return templates.map {
-      lookupElement(it.name)
-        .withTypeText("HTL Template")
-        .withIcon(HtlIcons.HTL_FILE_ICON)
+    BaseTypeDescriptor() {
+    override fun myVariants(): List<LookupElement> {
+        return templates.map {
+            lookupElement(it.name)
+                .withTypeText("HTL Template")
+                .withIcon(HtlIcons.HTL_FILE_ICON)
+        }
     }
-  }
 
-  override fun subtype(identifier: String): TypeDescriptor {
-    return templates.find { it.name == identifier }
-      .toTypeDescriptor()
-  }
-
-  override fun asResolutionResult(): ResolutionResult =
-    ResolutionResult(null, myVariants())
-
-  private fun TemplateDefinition?.toTypeDescriptor(): TypeDescriptor =
-    if (this != null) {
-      TemplateTypeDescriptor(this, project)
-    } else {
-      TypeDescriptor.empty()
+    override fun subtype(identifier: String): TypeDescriptor {
+        return templates.find { it.name == identifier }
+            .toTypeDescriptor()
     }
+
+    override fun asResolutionResult(): ResolutionResult =
+        ResolutionResult(null, myVariants())
+
+    private fun TemplateDefinition?.toTypeDescriptor(): TypeDescriptor =
+        if (this != null) {
+            TemplateTypeDescriptor(this, project)
+        } else {
+            TypeDescriptor.empty()
+        }
 }

@@ -9,9 +9,9 @@ import com.intellij.psi.FileViewProvider
  * @author Dmytro Primshyts
  */
 class HtlPsiFile(fileViewProvider: FileViewProvider) :
-  PsiFileBase(fileViewProvider, HtlLanguage) {
+    PsiFileBase(fileViewProvider, HtlLanguage) {
 
-  override fun getFileType() = HtlFileType
+    override fun getFileType() = HtlFileType
 
-  override fun toString() = "HtlFile:$name"
+    override fun toString() = "HtlFile:$name"
 }

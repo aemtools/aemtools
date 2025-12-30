@@ -9,24 +9,24 @@ import com.intellij.util.indexing.DataIndexer
 import com.intellij.util.indexing.FileContent
 
 object JsonOSGiConfigIndexer : DataIndexer<String, OSGiConfigurationIndexModel, FileContent> {
-  override fun map(inputData: FileContent): MutableMap<String, OSGiConfigurationIndexModel> {
-    val content = inputData.contentAsText.trim()
+    override fun map(inputData: FileContent): MutableMap<String, OSGiConfigurationIndexModel> {
+        val content = inputData.contentAsText.trim()
 
-    if (!content.startsWith("{") || !content.endsWith("}")) {
-      return mutableMapOf()
+        if (!content.startsWith("{") || !content.endsWith("}")) {
+            return mutableMapOf()
+        }
+
+        val jsonFile = inputData.psiFile.viewProvider.getPsi(JsonLanguage.INSTANCE) as? JsonFile
+            ?: return mutableMapOf()
+
+        val jsonObject = jsonFile.topLevelValue as? JsonObject
+            ?: return mutableMapOf()
+
+        val parameters = jsonObject.propertyList
+            .map { JsonOSGiPropertyMapper.map(it) }
+            .toMap()
+
+        val path = inputData.file.path
+        return mutableMapOf(path to OSGiConfigurationIndexModel(path, parameters))
     }
-
-    val jsonFile = inputData.psiFile.viewProvider.getPsi(JsonLanguage.INSTANCE) as? JsonFile
-      ?: return mutableMapOf()
-
-    val jsonObject = jsonFile.topLevelValue as? JsonObject
-      ?: return mutableMapOf()
-
-    val parameters = jsonObject.propertyList
-      .map { JsonOSGiPropertyMapper.map(it) }
-      .toMap()
-
-    val path = inputData.file.path
-    return mutableMapOf(path to OSGiConfigurationIndexModel(path, parameters))
-  }
 }

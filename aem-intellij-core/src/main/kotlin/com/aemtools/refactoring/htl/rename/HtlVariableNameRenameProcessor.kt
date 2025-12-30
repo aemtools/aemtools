@@ -11,22 +11,22 @@ import com.intellij.usageView.UsageInfo
  */
 class HtlVariableNameRenameProcessor : RenamePsiElementProcessor() {
 
-  override fun canProcessElement(element: PsiElement): Boolean {
-    return element is HtlVariableName
-  }
+    override fun canProcessElement(element: PsiElement): Boolean {
+        return element is HtlVariableName
+    }
 
-  override fun renameElement(
-    element: PsiElement,
-    newName: String,
-    usages: Array<out UsageInfo>,
-    listener: RefactoringElementListener?
-  ) {
-    val variableName = element as? com.aemtools.lang.htl.psi.mixin.VariableNameMixin
-      ?: return
+    override fun renameElement(
+        element: PsiElement,
+        newName: String,
+        usages: Array<out UsageInfo>,
+        listener: RefactoringElementListener?
+    ) {
+        val variableName = element as? com.aemtools.lang.htl.psi.mixin.VariableNameMixin
+            ?: return
 
-    variableName.setName(newName)
-    usages.forEach { it.reference?.handleElementRename(newName) }
+        variableName.setName(newName)
+        usages.forEach { it.reference?.handleElementRename(newName) }
 
-    listener?.elementRenamed(variableName)
-  }
+        listener?.elementRenamed(variableName)
+    }
 }

@@ -11,63 +11,63 @@ import java.io.Serializable
  */
 object ObjectSerializer {
 
-  /**
-   * Serialize given object into [String] using [ObjectOutputStream].
-   * @param obj object to serialize
-   * @see ObjectInputStream
-   * @return the serialization result, empty string for _null_ input
-   */
-  fun <T : Serializable> serialize(obj: T?): String {
-    if (obj == null) {
-      return ""
+    /**
+     * Serialize given object into [String] using [ObjectOutputStream].
+     * @param obj object to serialize
+     * @see ObjectInputStream
+     * @return the serialization result, empty string for _null_ input
+     */
+    fun <T : Serializable> serialize(obj: T?): String {
+        if (obj == null) {
+            return ""
+        }
+
+        return obj.serializeToByteArray().toString(charset("ISO-8859-1"))
     }
 
-    return obj.serializeToByteArray().toString(charset("ISO-8859-1"))
-  }
+    /**
+     *  Serialize given [Serializable] object into [ByteArray] using [ObjectOutputStream].
+     *  @param obj object to serialize
+     *  @return byte array
+     */
+    fun <T : Serializable> serializeToByteArray(obj: T?): ByteArray {
+        if (obj == null) {
+            return ByteArray(0)
+        }
 
-  /**
-   *  Serialize given [Serializable] object into [ByteArray] using [ObjectOutputStream].
-   *  @param obj object to serialize
-   *  @return byte array
-   */
-  fun <T : Serializable> serializeToByteArray(obj: T?): ByteArray {
-    if (obj == null) {
-      return ByteArray(0)
+        val baos = ByteArrayOutputStream()
+        val oos = ObjectOutputStream(baos)
+        oos.writeObject(obj)
+        oos.close()
+
+        return baos.toByteArray()
     }
 
-    val baos = ByteArrayOutputStream()
-    val oos = ObjectOutputStream(baos)
-    oos.writeObject(obj)
-    oos.close()
+    /**
+     * Deserialize given [String] using [ObjectInputStream].
+     * @param string the string to deserialize
+     * @return deserialized object, _null_ in case of error.
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun <T : Serializable> deserialize(string: String): T? =
+        deserialize(string.toByteArray(charset("ISO-8859-1")))
 
-    return baos.toByteArray()
-  }
+    /**
+     * Deserialize given [ByteArray] using [ObjectInputStream].
+     * @param byteArray the array to deserialize
+     * @return deserialized object, _null_ in case of error.
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun <T : Serializable> deserialize(byteArray: ByteArray): T? {
+        if (byteArray.isEmpty()) {
+            return null
+        }
 
-  /**
-   * Deserialize given [String] using [ObjectInputStream].
-   * @param string the string to deserialize
-   * @return deserialized object, _null_ in case of error.
-   */
-  @Suppress("UNCHECKED_CAST")
-  fun <T : Serializable> deserialize(string: String): T? =
-    deserialize(string.toByteArray(charset("ISO-8859-1")))
+        val bais = ByteArrayInputStream(byteArray)
+        val ois = ObjectInputStream(bais)
 
-  /**
-   * Deserialize given [ByteArray] using [ObjectInputStream].
-   * @param byteArray the array to deserialize
-   * @return deserialized object, _null_ in case of error.
-   */
-  @Suppress("UNCHECKED_CAST")
-  fun <T : Serializable> deserialize(byteArray: ByteArray): T? {
-    if (byteArray.isEmpty()) {
-      return null
+        return ois.readObject() as T
     }
-
-    val bais = ByteArrayInputStream(byteArray)
-    val ois = ObjectInputStream(bais)
-
-    return ois.readObject() as T
-  }
 }
 
 /**

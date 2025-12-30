@@ -19,15 +19,15 @@ import com.aemtools.lang.html.psi.pattern.HtmlPatterns.valueOfXLinkChecker
  */
 class HtmlCompletionContributor : BaseCompletionContributor({
 
-  basic(dataSlyUseNoEl, HtmlDataSlyUseCompletionProvider)
+    basic(dataSlyUseNoEl, HtmlDataSlyUseCompletionProvider)
 
-  smart(dataSlyUseNoEl, HtmlDataSlyUseCompletionProvider)
+    smart(dataSlyUseNoEl, HtmlDataSlyUseCompletionProvider)
 
-  basic(attributeInHtlFile, HtmlAttributeCompletionProvider)
+    basic(attributeInHtlFile, HtmlAttributeCompletionProvider)
 
-  basic(aInHtlFile, HtmlHrefLinkCheckerCompletionProvider)
+    basic(aInHtlFile, HtmlHrefLinkCheckerCompletionProvider)
 
-  basic(valueOfXLinkChecker, HtmlLinkCheckerValueCompletionProvider)
+    basic(valueOfXLinkChecker, HtmlLinkCheckerValueCompletionProvider)
 
-  basic(dataSlyIncludeNoEl, HtmlDataSlyIncludeCompletionProvider)
+    basic(dataSlyIncludeNoEl, HtmlDataSlyIncludeCompletionProvider)
 })

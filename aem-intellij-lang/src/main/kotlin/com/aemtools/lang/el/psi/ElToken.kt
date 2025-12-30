@@ -7,4 +7,4 @@ import com.intellij.psi.tree.IElementType
  * @author Dmytro Primshyts
  */
 class ElToken(debugName: String) :
-  IElementType(debugName, ElLanguage)
+    IElementType(debugName, ElLanguage)

@@ -9,9 +9,9 @@ import com.intellij.psi.FileViewProvider
  * @author Dmytro Primshyts
  */
 class JpPsiFile(fileViewProvider: FileViewProvider) :
-  PsiFileBase(fileViewProvider, JcrPropertyLanguage) {
+    PsiFileBase(fileViewProvider, JcrPropertyLanguage) {
 
-  override fun getFileType(): FileType = JpFileType
+    override fun getFileType(): FileType = JpFileType
 
-  override fun toString() = "JpFile:$name"
+    override fun toString() = "JpFile:$name"
 }

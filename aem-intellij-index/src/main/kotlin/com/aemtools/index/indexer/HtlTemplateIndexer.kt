@@ -13,30 +13,30 @@ import com.intellij.util.indexing.FileContent
  * @author Dmytro Primshyts
  */
 object HtlTemplateIndexer : DataIndexer<String, TemplateDefinition, FileContent> {
-  override fun map(inputData: FileContent): MutableMap<String, TemplateDefinition> {
-    val content = inputData.contentAsText
+    override fun map(inputData: FileContent): MutableMap<String, TemplateDefinition> {
+        val content = inputData.contentAsText
 
-    if (content.contains(Const.Htl.DATA_SLY_TEMPLATE)) {
-      val file = inputData.psiFile.getHtmlFile()
-        ?: return mutableMapOf()
-      val attributes = file.findChildrenByType(XmlAttribute::class.java)
+        if (content.contains(Const.Htl.DATA_SLY_TEMPLATE)) {
+            val file = inputData.psiFile.getHtmlFile()
+                ?: return mutableMapOf()
+            val attributes = file.findChildrenByType(XmlAttribute::class.java)
 
-      val templates = attributes.filter { it.name.startsWith(Const.Htl.DATA_SLY_TEMPLATE) }
+            val templates = attributes.filter { it.name.startsWith(Const.Htl.DATA_SLY_TEMPLATE) }
 
-      val templateDefinitions: List<TemplateDefinition> = templates.flatMap {
-        with(it.extractTemplateDefinition()) {
-          listOf(this)
+            val templateDefinitions: List<TemplateDefinition> = templates.flatMap {
+                with(it.extractTemplateDefinition()) {
+                    listOf(this)
+                }
+            }
+            val path = inputData.file.path
+            templateDefinitions.forEach { it.fullName = path }
+
+            return mutableMapOf(
+                *templateDefinitions.map {
+                    "$path.$${it.name}" to it
+                }.toTypedArray()
+            )
         }
-      }
-      val path = inputData.file.path
-      templateDefinitions.forEach { it.fullName = path }
-
-      return mutableMapOf(
-        *templateDefinitions.map {
-          "$path.$${it.name}" to it
-        }.toTypedArray()
-      )
+        return mutableMapOf()
     }
-    return mutableMapOf()
-  }
 }

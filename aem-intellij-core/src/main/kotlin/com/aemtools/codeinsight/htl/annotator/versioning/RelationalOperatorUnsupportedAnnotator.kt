@@ -12,12 +12,12 @@ import com.intellij.psi.PsiElement
  * @author Kostiantyn Diachenko
  */
 class RelationalOperatorUnsupportedAnnotator : VersionedHtlElementAnnotator(HtlVersion.V_1_4) {
-  override fun annotateNotSupportedElement(element: PsiElement, holder: AnnotationHolder) {
-    if (element !is HtlRelationalOperator) {
-      return
-    }
+    override fun annotateNotSupportedElement(element: PsiElement, holder: AnnotationHolder) {
+        if (element !is HtlRelationalOperator) {
+            return
+        }
 
-    holder.notSupportedHtlFeatureAnnotationBuilder(element, getMessage(element.project))
-      .create()
-  }
+        holder.notSupportedHtlFeatureAnnotationBuilder(element, getMessage(element.project))
+            .create()
+    }
 }

@@ -12,19 +12,19 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Kostiantyn Diachenko
  */
 class RemoveRedundantDataSlyUnwrapValueAction(
-  val pointer: SmartPsiElementPointer<XmlAttribute>
+    val pointer: SmartPsiElementPointer<XmlAttribute>
 ) : BaseHtlIntentionAction(
-  { "Remove data-sly-unwrap attribute value" }
+    { "Remove data-sly-unwrap attribute value" }
 ) {
-  override fun invoke(project: Project, editor: Editor, file: PsiFile) {
-    val element = pointer.element ?: return
-    val psiDocumentManager = PsiDocumentManager.getInstance(project)
-    val document = psiDocumentManager.getDocument(file)
-      ?: return
+    override fun invoke(project: Project, editor: Editor, file: PsiFile) {
+        val element = pointer.element ?: return
+        val psiDocumentManager = PsiDocumentManager.getInstance(project)
+        val document = psiDocumentManager.getDocument(file)
+            ?: return
 
-    val valueTextRange = element.valueElement?.textRange ?: return
-    val (start, end) = valueTextRange.startOffset to valueTextRange.endOffset
-    document.replaceString(start - 1, end, "")
-    psiDocumentManager.commitDocument(document)
-  }
+        val valueTextRange = element.valueElement?.textRange ?: return
+        val (start, end) = valueTextRange.startOffset to valueTextRange.endOffset
+        document.replaceString(start - 1, end, "")
+        psiDocumentManager.commitDocument(document)
+    }
 }

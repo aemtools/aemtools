@@ -11,37 +11,37 @@ import com.intellij.profile.codeInspection.ProjectInspectionProfileManager
  * @author Dmytro Primshyts
  */
 class AemIntellijStartupActivity : ProjectActivity {
-  override suspend fun execute(project: Project) {
-    val application = ApplicationManagerEx.getApplicationEx()
-    if (application == null ||
-      application.isUnitTestMode ||
-      application.isHeadlessEnvironment
-    ) {
-      return
-    }
-
-    runActivity(project)
-  }
-
-  private fun runActivity(project: Project) {
-    val currentProfile = ProjectInspectionProfileManager.getInstance(project).currentProfile
-    currentProfile.modifyProfile {
-      it.getInspectionTool("HtmlUnknownAttribute", project)
-        ?.let {
-          val htmlUnknownAttribute = it.tool
-          if (htmlUnknownAttribute is HtmlUnknownAttributeInspection) {
-            htmlUnknownAttribute.addEntry("x-cq-linkchecker")
-          }
+    override suspend fun execute(project: Project) {
+        val application = ApplicationManagerEx.getApplicationEx()
+        if (application == null ||
+            application.isUnitTestMode ||
+            application.isHeadlessEnvironment
+        ) {
+            return
         }
 
-      it.getInspectionTool("HtmlUnknownTag", project)
-        ?.let {
-          val htmlUnknownTag = it.tool
+        runActivity(project)
+    }
 
-          if (htmlUnknownTag is HtmlUnknownTagInspection) {
-            htmlUnknownTag.addEntry("sly")
-          }
+    private fun runActivity(project: Project) {
+        val currentProfile = ProjectInspectionProfileManager.getInstance(project).currentProfile
+        currentProfile.modifyProfile {
+            it.getInspectionTool("HtmlUnknownAttribute", project)
+                ?.let {
+                    val htmlUnknownAttribute = it.tool
+                    if (htmlUnknownAttribute is HtmlUnknownAttributeInspection) {
+                        htmlUnknownAttribute.addEntry("x-cq-linkchecker")
+                    }
+                }
+
+            it.getInspectionTool("HtmlUnknownTag", project)
+                ?.let {
+                    val htmlUnknownTag = it.tool
+
+                    if (htmlUnknownTag is HtmlUnknownTagInspection) {
+                        htmlUnknownTag.addEntry("sly")
+                    }
+                }
         }
     }
-  }
 }

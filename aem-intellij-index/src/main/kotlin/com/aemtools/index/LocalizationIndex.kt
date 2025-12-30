@@ -14,22 +14,22 @@ import com.intellij.xml.index.XmlIndex
  * @author Dmytro Primshyts
  */
 class LocalizationIndex : XmlIndex<LocalizationModel>() {
-  companion object {
-    val LOCALIZATION_INDEX: ID<String, LocalizationModel> =
-      ID.create<String, LocalizationModel>("LocalizationIndex")
-  }
-
-  override fun getValueExternalizer(): DataExternalizer<LocalizationModel> =
-    LocalizationModelExternalizer
-
-  override fun getName(): ID<String, LocalizationModel> =
-    LOCALIZATION_INDEX
-
-  override fun getIndexer(): DataIndexer<String, LocalizationModel, FileContent> =
-    LocalizationModelIndexer
-
-  override fun getInputFilter(): FileBasedIndex.InputFilter =
-    FileBasedIndex.InputFilter {
-      it.name.endsWith(".xml")
+    companion object {
+        val LOCALIZATION_INDEX: ID<String, LocalizationModel> =
+            ID.create<String, LocalizationModel>("LocalizationIndex")
     }
+
+    override fun getValueExternalizer(): DataExternalizer<LocalizationModel> =
+        LocalizationModelExternalizer
+
+    override fun getName(): ID<String, LocalizationModel> =
+        LOCALIZATION_INDEX
+
+    override fun getIndexer(): DataIndexer<String, LocalizationModel, FileContent> =
+        LocalizationModelIndexer
+
+    override fun getInputFilter(): FileBasedIndex.InputFilter =
+        FileBasedIndex.InputFilter {
+            it.name.endsWith(".xml")
+        }
 }

@@ -13,7 +13,7 @@ import com.aemtools.common.constant.Const.JCR_ROOT_SEPARATED
  * @return path normalized to jcr_root
  */
 fun String.normalizeToJcrRoot(): String =
-  "/${substringAfter(JCR_ROOT_SEPARATED)}"
+    "/${substringAfter(JCR_ROOT_SEPARATED)}"
 
 /**
  * Given:
@@ -30,8 +30,8 @@ fun String.normalizeToJcrRoot(): String =
  * @return new relative path
  */
 fun String.relativeTo(path: String): String =
-  if (startsWith("$path/")) {
-    substring(path.length + 1)
-  } else {
-    this
-  }
+    if (startsWith("$path/")) {
+        substring(path.length + 1)
+    } else {
+        this
+    }

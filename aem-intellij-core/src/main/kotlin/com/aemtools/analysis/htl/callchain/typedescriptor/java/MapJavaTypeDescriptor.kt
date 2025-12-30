@@ -13,50 +13,50 @@ import com.intellij.psi.impl.source.PsiClassReferenceType
  * @author Dmytro Primshyts
  */
 class MapJavaTypeDescriptor(
-  psiClass: PsiClass,
-  psiMember: PsiMember?,
-  override val originalType: PsiClassReferenceType? = null
+    psiClass: PsiClass,
+    psiMember: PsiMember?,
+    override val originalType: PsiClassReferenceType? = null
 ) :
-  JavaPsiClassTypeDescriptor(psiClass, psiMember, originalType), MapTypeDescriptor {
-  override fun keyType(): TypeDescriptor {
-    if (originalType == null) {
-      return TypeDescriptor.empty()
+    JavaPsiClassTypeDescriptor(psiClass, psiMember, originalType), MapTypeDescriptor {
+    override fun keyType(): TypeDescriptor {
+        if (originalType == null) {
+            return TypeDescriptor.empty()
+        }
+
+        val keyParam = getMapType()?.parameters?.get(0)?.canonicalText ?: return TypeDescriptor.empty()
+
+        val psiClass = JavaSearch.findClass(keyParam, psiClass.project)
+            ?: return TypeDescriptor.empty()
+
+        return JavaPsiClassTypeDescriptor.create(psiClass, null, null)
     }
 
-    val keyParam = getMapType()?.parameters?.get(0)?.canonicalText ?: return TypeDescriptor.empty()
+    override fun valueType(): TypeDescriptor {
+        if (originalType == null) {
+            return TypeDescriptor.empty()
+        }
 
-    val psiClass = JavaSearch.findClass(keyParam, psiClass.project)
-      ?: return TypeDescriptor.empty()
+        val valueType = getMapType()?.parameters?.get(1)?.canonicalText ?: return TypeDescriptor.empty()
 
-    return JavaPsiClassTypeDescriptor.create(psiClass, null, null)
-  }
+        val psiClass = JavaSearch.findClass(valueType, psiClass.project)
+            ?: return TypeDescriptor.empty()
 
-  override fun valueType(): TypeDescriptor {
-    if (originalType == null) {
-      return TypeDescriptor.empty()
+        return JavaPsiClassTypeDescriptor.create(psiClass, null, null)
     }
 
-    val valueType = getMapType()?.parameters?.get(1)?.canonicalText ?: return TypeDescriptor.empty()
+    private fun getMapType(): PsiClassReferenceType? =
+        if (originalType?.parameterCount == 0) {
+            getMapSupertype()
+        } else {
+            originalType
+        }
 
-    val psiClass = JavaSearch.findClass(valueType, psiClass.project)
-      ?: return TypeDescriptor.empty()
-
-    return JavaPsiClassTypeDescriptor.create(psiClass, null, null)
-  }
-
-  private fun getMapType(): PsiClassReferenceType? =
-    if (originalType?.parameterCount == 0) {
-      getMapSupertype()
-    } else {
-      originalType
+    private fun getMapSupertype(): PsiClassReferenceType? {
+        return originalType
+            ?.superTypes
+            ?.find {
+                val psiClass = it.toPsiClass() ?: return@find false
+                JavaUtilities.isMap(psiClass)
+            } as? PsiClassReferenceType
     }
-
-  private fun getMapSupertype(): PsiClassReferenceType? {
-    return originalType
-      ?.superTypes
-      ?.find {
-        val psiClass = it.toPsiClass() ?: return@find false
-        JavaUtilities.isMap(psiClass)
-      } as? PsiClassReferenceType
-  }
 }

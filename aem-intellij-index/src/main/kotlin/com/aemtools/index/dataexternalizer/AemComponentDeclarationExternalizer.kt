@@ -7,4 +7,4 @@ import com.aemtools.index.model.AemComponentDefinition
  * @author Dmytro Primshyts
  */
 object AemComponentDeclarationExternalizer :
-  BaseExternalizer<AemComponentDefinition>()
+    BaseExternalizer<AemComponentDefinition>()

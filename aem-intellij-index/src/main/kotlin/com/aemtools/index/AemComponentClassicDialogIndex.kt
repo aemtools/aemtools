@@ -17,18 +17,18 @@ import com.intellij.xml.index.XmlIndex
  */
 class AemComponentClassicDialogIndex : XmlIndex<AemComponentClassicDialogDefinition>() {
 
-  override fun getValueExternalizer(): DataExternalizer<AemComponentClassicDialogDefinition> =
-    AemComponentClassicDialogDefinitionExternalizer
+    override fun getValueExternalizer(): DataExternalizer<AemComponentClassicDialogDefinition> =
+        AemComponentClassicDialogDefinitionExternalizer
 
-  override fun getName(): ID<String, AemComponentClassicDialogDefinition> = AEM_COMPONENT_CLASSIC_DIALOG_INDEX_ID
+    override fun getName(): ID<String, AemComponentClassicDialogDefinition> = AEM_COMPONENT_CLASSIC_DIALOG_INDEX_ID
 
-  override fun getIndexer(): DataIndexer<String, AemComponentClassicDialogDefinition, FileContent> =
-    AemComponentClassicDialogIndexer
+    override fun getIndexer(): DataIndexer<String, AemComponentClassicDialogDefinition, FileContent> =
+        AemComponentClassicDialogIndexer
 
-  override fun getInputFilter(): FileBasedIndex.InputFilter = FileBasedIndex.InputFilter {
-    it.name == "dialog.xml"
-  }
+    override fun getInputFilter(): FileBasedIndex.InputFilter = FileBasedIndex.InputFilter {
+        it.name == "dialog.xml"
+    }
 }
 
 val AEM_COMPONENT_CLASSIC_DIALOG_INDEX_ID: ID<String, AemComponentClassicDialogDefinition> =
-  ID.create<String, AemComponentClassicDialogDefinition>("AemComponentClassicDialogDefinitionIndex")
+    ID.create<String, AemComponentClassicDialogDefinition>("AemComponentClassicDialogDefinitionIndex")

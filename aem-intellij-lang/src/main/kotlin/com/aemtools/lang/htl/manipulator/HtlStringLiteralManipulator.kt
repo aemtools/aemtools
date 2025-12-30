@@ -11,25 +11,25 @@ import com.intellij.psi.AbstractElementManipulator
  * @author Dmytro Primshyts
  */
 class HtlStringLiteralManipulator : AbstractElementManipulator<HtlStringLiteral>() {
-  override fun handleContentChange(
-    element: HtlStringLiteral,
-    range: TextRange,
-    newContent: String
-  ): HtlStringLiteral {
-    val newElement = HtlElementFactory.createStringLiteral(
-      newContent,
-      element.project,
-      element.text.startsWith("\"")
-    )
-      ?: return element
-    element.node.getChildren(null).forEach {
-      element.node.removeChild(it)
-    }
+    override fun handleContentChange(
+        element: HtlStringLiteral,
+        range: TextRange,
+        newContent: String
+    ): HtlStringLiteral {
+        val newElement = HtlElementFactory.createStringLiteral(
+            newContent,
+            element.project,
+            element.text.startsWith("\"")
+        )
+            ?: return element
+        element.node.getChildren(null).forEach {
+            element.node.removeChild(it)
+        }
 
-    newElement.node.getChildren(null).forEach {
-      element.node.addChild(it)
-    }
+        newElement.node.getChildren(null).forEach {
+            element.node.addChild(it)
+        }
 
-    return element
-  }
+        return element
+    }
 }

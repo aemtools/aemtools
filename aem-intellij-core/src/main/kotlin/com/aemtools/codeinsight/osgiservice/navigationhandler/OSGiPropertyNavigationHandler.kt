@@ -17,46 +17,46 @@ import javax.swing.Icon
  * @author Dmytro Primshyts
  */
 class OSGiPropertyNavigationHandler(
-  val propertyDescriptors: () -> List<OSGiPropertyDescriptor>
+    val propertyDescriptors: () -> List<OSGiPropertyDescriptor>
 ) : GutterIconNavigationHandler<PsiElement> {
 
-  override fun navigate(e: MouseEvent, elt: PsiElement?) {
-    val propertyDescriptors = propertyDescriptors()
-    PsiElementListNavigator.openTargets(
-      e,
-      propertyDescriptors.map {
-        (it.containingPsiElement ?: it.containingPsiFile) as NavigatablePsiElement
-      }.toTypedArray(),
-      "OSGi Property",
-      null,
-      createListCellRenderer(propertyDescriptors)
-    )
-  }
-
-  private fun createListCellRenderer(
-    propertyDescriptors: List<OSGiPropertyDescriptor>
-  ): PsiElementListCellRenderer<PsiElement> {
-    return object : PsiElementListCellRenderer<PsiElement>() {
-      override fun getIconFlags(): Int = Iconable.ICON_FLAG_READ_STATUS
-
-      override fun getIcon(element: PsiElement): Icon {
-        return element.containingFile?.getIcon(iconFlags) ?: AllIcons.Nodes.Variable
-      }
-
-      override fun getContainerText(element: PsiElement, name: String): String? {
-        return propertyDescriptors.find {
-          it.containingPsiElement == element || it.containingPsiFile == element
-        }?.propertyValue
-      }
-
-      override fun getElementText(element: PsiElement?): String {
-        if (element == null) {
-          return ""
-        }
-        return propertyDescriptors.find {
-          it.containingPsiElement == element || it.containingPsiFile == element
-        }?.mods ?: ""
-      }
+    override fun navigate(e: MouseEvent, elt: PsiElement?) {
+        val propertyDescriptors = propertyDescriptors()
+        PsiElementListNavigator.openTargets(
+            e,
+            propertyDescriptors.map {
+                (it.containingPsiElement ?: it.containingPsiFile) as NavigatablePsiElement
+            }.toTypedArray(),
+            "OSGi Property",
+            null,
+            createListCellRenderer(propertyDescriptors)
+        )
     }
-  }
+
+    private fun createListCellRenderer(
+        propertyDescriptors: List<OSGiPropertyDescriptor>
+    ): PsiElementListCellRenderer<PsiElement> {
+        return object : PsiElementListCellRenderer<PsiElement>() {
+            override fun getIconFlags(): Int = Iconable.ICON_FLAG_READ_STATUS
+
+            override fun getIcon(element: PsiElement): Icon {
+                return element.containingFile?.getIcon(iconFlags) ?: AllIcons.Nodes.Variable
+            }
+
+            override fun getContainerText(element: PsiElement, name: String): String? {
+                return propertyDescriptors.find {
+                    it.containingPsiElement == element || it.containingPsiFile == element
+                }?.propertyValue
+            }
+
+            override fun getElementText(element: PsiElement?): String {
+                if (element == null) {
+                    return ""
+                }
+                return propertyDescriptors.find {
+                    it.containingPsiElement == element || it.containingPsiFile == element
+                }?.mods ?: ""
+            }
+        }
+    }
 }

@@ -23,13 +23,13 @@ import java.util.*
  * @author Dmytro Primshyts
  */
 open class RawChainUnit(
-  val myCallChain: LinkedList<PsiElement>,
-  val myDeclaration: HtlVariableDeclaration? = null
+    val myCallChain: LinkedList<PsiElement>,
+    val myDeclaration: HtlVariableDeclaration? = null
 ) {
 
-  override fun toString(): String {
-    return "RawChainUnit(myCallChain=$myCallChain, myDeclaration=$myDeclaration)"
-  }
+    override fun toString(): String {
+        return "RawChainUnit(myCallChain=$myCallChain, myDeclaration=$myDeclaration)"
+    }
 }
 
 /**
@@ -39,38 +39,38 @@ open class RawChainUnit(
  * @return list of raw chain units
  */
 fun PropertyAccessMixin.rawCallChain(): LinkedList<RawChainUnit> {
-  var result = LinkedList<RawChainUnit>()
+    var result = LinkedList<RawChainUnit>()
 
-  val myChain: LinkedList<PsiElement> = LinkedList(listOf(*this.children).filterIsInstance<VariableNameMixin>())
+    val myChain: LinkedList<PsiElement> = LinkedList(listOf(*this.children).filterIsInstance<VariableNameMixin>())
 
-  val firstElement = myChain.first() as VariableNameMixin
-  val firstName = firstElement.variableName()
+    val firstElement = myChain.first() as VariableNameMixin
+    val firstName = firstElement.variableName()
 
-  val declaration = FileVariablesResolver.findDeclaration(firstName, firstElement)
+    val declaration = FileVariablesResolver.findDeclaration(firstName, firstElement)
 
-  if (declaration != null &&
-    declaration.attributeType !in listOf(
-      DeclarationAttributeType.LIST_HELPER,
-      DeclarationAttributeType.REPEAT_HELPER,
-      DeclarationAttributeType.DATA_SLY_USE
-    )
-  ) {
-    val propertyAccessMixin = declaration.xmlAttribute
-      .extractHtlHel()?.extractPropertyAccess()
+    if (declaration != null &&
+        declaration.attributeType !in listOf(
+            DeclarationAttributeType.LIST_HELPER,
+            DeclarationAttributeType.REPEAT_HELPER,
+            DeclarationAttributeType.DATA_SLY_USE
+        )
+    ) {
+        val propertyAccessMixin = declaration.xmlAttribute
+            .extractHtlHel()?.extractPropertyAccess()
 
-    // if property access mixin is available recursively obtain it's call chain
-    if (propertyAccessMixin != null) {
-      result = propertyAccessMixin.rawCallChain()
+        // if property access mixin is available recursively obtain it's call chain
+        if (propertyAccessMixin != null) {
+            result = propertyAccessMixin.rawCallChain()
+        }
+
+        if (propertyAccessMixin == null) {
+            createDeclarationChainUnit(declaration)
+        }
     }
 
-    if (propertyAccessMixin == null) {
-      createDeclarationChainUnit(declaration)
-    }
-  }
+    val myChainUnit = RawChainUnit(myChain, declaration)
 
-  val myChainUnit = RawChainUnit(myChain, declaration)
-
-  return LinkedList(listOf(*result.toTypedArray(), myChainUnit))
+    return LinkedList(listOf(*result.toTypedArray(), myChainUnit))
 }
 
 /**
@@ -82,5 +82,5 @@ fun PropertyAccessMixin.rawCallChain(): LinkedList<RawChainUnit> {
 fun PropertyAccessMixin.callchain(): CallChain? = RawCallChainProcessor.processChain(rawCallChain())
 
 private fun createDeclarationChainUnit(declaration: HtlVariableDeclaration): LinkedList<RawChainUnit> {
-  return LinkedList(listOf(RawChainUnit(LinkedList(), declaration)))
+    return LinkedList(listOf(RawChainUnit(LinkedList(), declaration)))
 }

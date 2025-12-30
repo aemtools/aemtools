@@ -15,36 +15,36 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Dmytro Primshyts
  */
 class HtmlAttributeUsagesProvider : FindUsagesHandlerFactory() {
-  override fun createFindUsagesHandler(element: PsiElement, forHighlightUsages: Boolean): FindUsagesHandler? {
-    return if (element is XmlAttribute && element.isHtlDeclarationAttribute()) {
-      HtlAttributesFindUsagesHandler(element)
-    } else {
-      null
-    }
-  }
-
-  override fun canFindUsages(element: PsiElement): Boolean {
-    return element is XmlAttribute && element.isHtlDeclarationAttribute()
-  }
-
-  /**
-   * Htl attributes find usages handler.
-   */
-  class HtlAttributesFindUsagesHandler(val xmlAttribute: XmlAttribute) : FindUsagesHandler(xmlAttribute) {
-
-    override fun findReferencesToHighlight(
-      target: PsiElement,
-      searchScope: SearchScope
-    ): MutableCollection<PsiReference> {
-      return super.findReferencesToHighlight(target, searchScope)
-        .filter { it is HtlDeclarationReference || it is HtlListHelperReference }
-        .toMutableList()
+    override fun createFindUsagesHandler(element: PsiElement, forHighlightUsages: Boolean): FindUsagesHandler? {
+        return if (element is XmlAttribute && element.isHtlDeclarationAttribute()) {
+            HtlAttributesFindUsagesHandler(element)
+        } else {
+            null
+        }
     }
 
-    override fun getSecondaryElements(): Array<PsiElement> {
-      return xmlAttribute.incomingReferences().mapNotNull {
-        it.element
-      }.toTypedArray()
+    override fun canFindUsages(element: PsiElement): Boolean {
+        return element is XmlAttribute && element.isHtlDeclarationAttribute()
     }
-  }
+
+    /**
+     * Htl attributes find usages handler.
+     */
+    class HtlAttributesFindUsagesHandler(val xmlAttribute: XmlAttribute) : FindUsagesHandler(xmlAttribute) {
+
+        override fun findReferencesToHighlight(
+            target: PsiElement,
+            searchScope: SearchScope
+        ): MutableCollection<PsiReference> {
+            return super.findReferencesToHighlight(target, searchScope)
+                .filter { it is HtlDeclarationReference || it is HtlListHelperReference }
+                .toMutableList()
+        }
+
+        override fun getSecondaryElements(): Array<PsiElement> {
+            return xmlAttribute.incomingReferences().mapNotNull {
+                it.element
+            }.toTypedArray()
+        }
+    }
 }

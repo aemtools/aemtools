@@ -9,28 +9,28 @@ import org.apache.commons.text.similarity.LevenshteinDistance
 
 object SlingResourceTypesCompletionResolver {
 
-  private const val BASE_LINE: Double = 1.0
-  private const val ONE_HUNDRED: Double = 100.0
+    private const val BASE_LINE: Double = 1.0
+    private const val ONE_HUNDRED: Double = 100.0
 
-  fun resolveDeclarations(project: Project, myNormalizedDirectory: String? = null) =
-    AemComponentSearch.allComponentDeclarations(project)
-      .filterNot {
-        myNormalizedDirectory != null &&
-          (myNormalizedDirectory == it.resourceType() || myNormalizedDirectory.startsWith(it.resourceType()))
-      }
-      .map {
-        val lookupElement = it.toLookupElement()
+    fun resolveDeclarations(project: Project, myNormalizedDirectory: String? = null) =
+        AemComponentSearch.allComponentDeclarations(project)
+            .filterNot {
+                myNormalizedDirectory != null &&
+                    (myNormalizedDirectory == it.resourceType() || myNormalizedDirectory.startsWith(it.resourceType()))
+            }
+            .map {
+                val lookupElement = it.toLookupElement()
 
-        if (myNormalizedDirectory == null) {
-          lookupElement
-        } else {
-          PrioritizedLookupElement
-            .withPriority(lookupElement, calcPriority(lookupElement, myNormalizedDirectory))
-        }
-      }
+                if (myNormalizedDirectory == null) {
+                    lookupElement
+                } else {
+                    PrioritizedLookupElement
+                        .withPriority(lookupElement, calcPriority(lookupElement, myNormalizedDirectory))
+                }
+            }
 
-  private fun calcPriority(lookupElement: LookupElement, myDirectory: String): Double {
-    return BASE_LINE - LevenshteinDistance.getDefaultInstance().apply(lookupElement.lookupString, myDirectory)
-      .toDouble() / ONE_HUNDRED
-  }
+    private fun calcPriority(lookupElement: LookupElement, myDirectory: String): Double {
+        return BASE_LINE - LevenshteinDistance.getDefaultInstance().apply(lookupElement.lookupString, myDirectory)
+            .toDouble() / ONE_HUNDRED
+    }
 }

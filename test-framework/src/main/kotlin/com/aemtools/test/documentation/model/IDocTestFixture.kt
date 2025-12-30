@@ -8,10 +8,10 @@ import org.intellij.lang.annotations.Language
  */
 interface IDocTestFixture : ITestFixture {
 
-  /**
-   * Specify text of required documentation.
-   *
-   * @param result html text of required documentation
-   */
-  fun documentation(@Language("HTML") result: String)
+    /**
+     * Specify text of required documentation.
+     *
+     * @param result html text of required documentation
+     */
+    fun documentation(@Language("HTML") result: String)
 }

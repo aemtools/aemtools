@@ -16,78 +16,78 @@ import com.intellij.util.indexing.FileBasedIndex
  */
 object HtlTemplateSearch {
 
-  /**
-   * Find all template definitions available in opened project.
-   *
-   * @param project the project
-   * @return list of template definitions
-   */
-  fun all(project: Project): List<TemplateDefinition> {
-    val fbi = FileBasedIndex.getInstance()
-    val keys = fbi.getAllKeys(HtlTemplateIndex.HTL_TEMPLATE_ID, project)
+    /**
+     * Find all template definitions available in opened project.
+     *
+     * @param project the project
+     * @return list of template definitions
+     */
+    fun all(project: Project): List<TemplateDefinition> {
+        val fbi = FileBasedIndex.getInstance()
+        val keys = fbi.getAllKeys(HtlTemplateIndex.HTL_TEMPLATE_ID, project)
 
-    val values = keys.flatMap {
-      fbi.getValues(HtlTemplateIndex.HTL_TEMPLATE_ID, it, GlobalSearchScope.projectScope(project))
-    }.filterNotNull()
+        val values = keys.flatMap {
+            fbi.getValues(HtlTemplateIndex.HTL_TEMPLATE_ID, it, GlobalSearchScope.projectScope(project))
+        }.filterNotNull()
 
-    return values
-  }
-
-  /**
-   * Resolve use template by name, relative to given file.
-   *
-   * @param name the name of template
-   * @param file the file where the template is used
-   * @return list of available templates
-   */
-  fun resolveUseTemplate(name: String, file: PsiFile): List<TemplateDefinition> {
-    if (isPredefinedTemplate(name)) {
-      return predefinedTemplate(name)
+        return values
     }
 
-    val templates = all(file.project)
-    return if (name.isAbsolutePath()) {
-      templates.filter {
-        it.normalizedPath == name
-      }
-    } else {
-      val containingDirectoryPath = file.originalFile.containingDirectory?.virtualFile?.path
-      val filePath = if (containingDirectoryPath != null) {
-        "$containingDirectoryPath/$name"
-      } else {
-        findFileByRelativePath(name, file.project) ?: return listOf()
-      }
-      return templates.filter {
-        it.fullName == filePath
-      }
+    /**
+     * Resolve use template by name, relative to given file.
+     *
+     * @param name the name of template
+     * @param file the file where the template is used
+     * @return list of available templates
+     */
+    fun resolveUseTemplate(name: String, file: PsiFile): List<TemplateDefinition> {
+        if (isPredefinedTemplate(name)) {
+            return predefinedTemplate(name)
+        }
+
+        val templates = all(file.project)
+        return if (name.isAbsolutePath()) {
+            templates.filter {
+                it.normalizedPath == name
+            }
+        } else {
+            val containingDirectoryPath = file.originalFile.containingDirectory?.virtualFile?.path
+            val filePath = if (containingDirectoryPath != null) {
+                "$containingDirectoryPath/$name"
+            } else {
+                findFileByRelativePath(name, file.project) ?: return listOf()
+            }
+            return templates.filter {
+                it.fullName == filePath
+            }
+        }
     }
-  }
 
-  private fun String.isAbsolutePath(): Boolean = this.startsWith("/")
+    private fun String.isAbsolutePath(): Boolean = this.startsWith("/")
 
-  private fun predefinedTemplate(name: String): List<TemplateDefinition> {
-    return if (name == Const.CLIENTLIB_TEMPLATE) {
-      listOf(
-        TemplateDefinition(
-          Const.CLIENTLIB_TEMPLATE,
-          "js",
-          listOf("categories")
-        ),
-        TemplateDefinition(
-          Const.CLIENTLIB_TEMPLATE,
-          "all",
-          listOf("categories")
-        ),
-        TemplateDefinition(
-          Const.CLIENTLIB_TEMPLATE,
-          "css",
-          listOf("categories")
-        )
-      )
-    } else {
-      emptyList()
+    private fun predefinedTemplate(name: String): List<TemplateDefinition> {
+        return if (name == Const.CLIENTLIB_TEMPLATE) {
+            listOf(
+                TemplateDefinition(
+                    Const.CLIENTLIB_TEMPLATE,
+                    "js",
+                    listOf("categories")
+                ),
+                TemplateDefinition(
+                    Const.CLIENTLIB_TEMPLATE,
+                    "all",
+                    listOf("categories")
+                ),
+                TemplateDefinition(
+                    Const.CLIENTLIB_TEMPLATE,
+                    "css",
+                    listOf("categories")
+                )
+            )
+        } else {
+            emptyList()
+        }
     }
-  }
 
-  private fun isPredefinedTemplate(name: String) = name == Const.CLIENTLIB_TEMPLATE
+    private fun isPredefinedTemplate(name: String) = name == Const.CLIENTLIB_TEMPLATE
 }

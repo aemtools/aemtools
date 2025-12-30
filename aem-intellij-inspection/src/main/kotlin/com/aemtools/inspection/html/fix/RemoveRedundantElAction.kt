@@ -14,24 +14,24 @@ import com.intellij.psi.SmartPsiElementPointer
  * @author Dmytro Primshyts
  */
 class RemoveRedundantElAction(private val pointer: SmartPsiElementPointer<HtlElExpressionMixin>) :
-  BaseHtlIntentionAction(
-    text = { "Remove redundant expression." }
-  ) {
+    BaseHtlIntentionAction(
+        text = { "Remove redundant expression." }
+    ) {
 
-  override fun invoke(project: Project, editor: Editor, file: PsiFile) {
-    val element = pointer.element ?: return
+    override fun invoke(project: Project, editor: Editor, file: PsiFile) {
+        val element = pointer.element ?: return
 
-    val psiDocumentManager = project.psiDocumentManager()
+        val psiDocumentManager = project.psiDocumentManager()
 
-    val document = psiDocumentManager.getDocument(file)
-      ?: return
+        val document = psiDocumentManager.getDocument(file)
+            ?: return
 
-    val newValue = element.findChildrenByType(HtlStringLiteralMixin::class.java)
-      .firstOrNull()?.name ?: return
+        val newValue = element.findChildrenByType(HtlStringLiteralMixin::class.java)
+            .firstOrNull()?.name ?: return
 
-    val (start, end) = element.textRange.startOffset to element.textRange.endOffset
+        val (start, end) = element.textRange.startOffset to element.textRange.endOffset
 
-    document.replaceString(start, end, newValue)
-    psiDocumentManager.commitDocument(document)
-  }
+        document.replaceString(start, end, newValue)
+        psiDocumentManager.commitDocument(document)
+    }
 }

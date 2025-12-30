@@ -11,18 +11,18 @@ import com.intellij.psi.impl.source.PsiClassReferenceType
  * @author Dmytro Primshyts
  */
 class IterableJavaTypeDescriptor(
-  psiClass: PsiClass,
-  psiMember: PsiMember?,
-  override val originalType: PsiClassReferenceType? = null
+    psiClass: PsiClass,
+    psiMember: PsiMember?,
+    override val originalType: PsiClassReferenceType? = null
 ) :
-  JavaPsiClassTypeDescriptor(psiClass, psiMember, originalType), IterableTypeDescriptor {
-  override fun iterableType(): TypeDescriptor {
-    val className = originalType?.parameters?.getOrNull(0)?.canonicalText
-      ?: return TypeDescriptor.empty()
+    JavaPsiClassTypeDescriptor(psiClass, psiMember, originalType), IterableTypeDescriptor {
+    override fun iterableType(): TypeDescriptor {
+        val className = originalType?.parameters?.getOrNull(0)?.canonicalText
+            ?: return TypeDescriptor.empty()
 
-    val psiClass = JavaSearch.findClass(className, psiClass.project)
-      ?: return TypeDescriptor.empty()
+        val psiClass = JavaSearch.findClass(className, psiClass.project)
+            ?: return TypeDescriptor.empty()
 
-    return JavaPsiClassTypeDescriptor.create(psiClass, null, null)
-  }
+        return JavaPsiClassTypeDescriptor.create(psiClass, null, null)
+    }
 }

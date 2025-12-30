@@ -11,24 +11,24 @@ import com.intellij.psi.xml.XmlAttribute
 import com.intellij.psi.xml.XmlFile
 
 class XmlOSGiConfigPropertyConverter : OSGiConfigPropertyConverter {
-  override fun canConvert(osgiConfig: OSGiConfiguration): Boolean {
-    return osgiConfig.file is XmlFile
-  }
-
-  override fun convert(osgiConfig: OSGiConfiguration, propertyName: String): OSGiPropertyDescriptor? {
-    val xmlFile = osgiConfig.file as? XmlFile ?: return null
-    val containingPsiElement: PsiElement? by lazy {
-      xmlFile
-        .findChildrenByType(XmlAttribute::class.java)
-        .find { it.name == propertyName }
-        ?.toNavigatable()
+    override fun canConvert(osgiConfig: OSGiConfiguration): Boolean {
+        return osgiConfig.file is XmlFile
     }
 
-    return OSGiPropertyDescriptor(
-      osgiConfig.mods.joinToString { it },
-      osgiConfig.parameters[propertyName] ?: NO_PROPERTY_VALUE_SET,
-      containingPsiElement,
-      xmlFile
-    )
-  }
+    override fun convert(osgiConfig: OSGiConfiguration, propertyName: String): OSGiPropertyDescriptor? {
+        val xmlFile = osgiConfig.file as? XmlFile ?: return null
+        val containingPsiElement: PsiElement? by lazy {
+            xmlFile
+                .findChildrenByType(XmlAttribute::class.java)
+                .find { it.name == propertyName }
+                ?.toNavigatable()
+        }
+
+        return OSGiPropertyDescriptor(
+            osgiConfig.mods.joinToString { it },
+            osgiConfig.parameters[propertyName] ?: NO_PROPERTY_VALUE_SET,
+            containingPsiElement,
+            xmlFile
+        )
+    }
 }

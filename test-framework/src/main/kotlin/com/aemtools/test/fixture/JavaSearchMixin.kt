@@ -11,15 +11,15 @@ import com.intellij.psi.PsiClass
  */
 interface JavaSearchMixin {
 
-  /**
-   * Get [PsiClass] by full qualified name.
-   *
-   * @param fqn full qualified class name
-   * @receiver [BaseLightTest]
-   * @throws AssertionError in case if given class not found
-   */
-  fun BaseLightTest.psiClass(fqn: String): PsiClass = (
-    JavaSearch.findClass(fqn, project)
-      ?: throw AssertionError("Unable to find fixture class: $fqn")
-    )
+    /**
+     * Get [PsiClass] by full qualified name.
+     *
+     * @param fqn full qualified class name
+     * @receiver [BaseLightTest]
+     * @throws AssertionError in case if given class not found
+     */
+    fun BaseLightTest.psiClass(fqn: String): PsiClass = (
+        JavaSearch.findClass(fqn, project)
+            ?: throw AssertionError("Unable to find fixture class: $fqn")
+        )
 }

@@ -15,34 +15,34 @@ import com.intellij.util.ProcessingContext
  */
 object ClientLibraryFolderCompletionProvider : CompletionProvider<CompletionParameters>() {
 
-  override fun addCompletions(
-    parameters: CompletionParameters,
-    context: ProcessingContext,
-    result: CompletionResultSet
-  ) {
-    if (result.isStopped) {
-      return
+    override fun addCompletions(
+        parameters: CompletionParameters,
+        context: ProcessingContext,
+        result: CompletionResultSet
+    ) {
+        if (result.isStopped) {
+            return
+        }
+
+        val tag = parameters.position.findParentByType(XmlTag::class.java) ?: return
+
+        attributes.filterNot { attributeName ->
+            tag.hasAttribute { it.name == attributeName }
+        }.map {
+            lookupElement(it)
+                .withInsertHandler(JcrArrayInsertHandler())
+        }.apply {
+            if (this.isNotEmpty()) {
+                result.addAllElements(this)
+                result.stopHere()
+            }
+        }
     }
 
-    val tag = parameters.position.findParentByType(XmlTag::class.java) ?: return
-
-    attributes.filterNot { attributeName ->
-      tag.hasAttribute { it.name == attributeName }
-    }.map {
-      lookupElement(it)
-        .withInsertHandler(JcrArrayInsertHandler())
-    }.apply {
-      if (this.isNotEmpty()) {
-        result.addAllElements(this)
-        result.stopHere()
-      }
-    }
-  }
-
-  val attributes: List<String> = listOf(
-    "channels",
-    "categories",
-    "dependencies",
-    "embed"
-  )
+    val attributes: List<String> = listOf(
+        "channels",
+        "categories",
+        "dependencies",
+        "embed"
+    )
 }

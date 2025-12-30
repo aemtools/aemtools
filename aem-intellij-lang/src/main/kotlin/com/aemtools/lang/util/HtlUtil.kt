@@ -2,9 +2,22 @@ package com.aemtools.lang.util
 
 import com.aemtools.common.constant.Const
 import com.aemtools.common.constant.Const.SLY_TAG
-import com.aemtools.common.util.*
+import com.aemtools.common.util.findChildrenByType
+import com.aemtools.common.util.findParentByType
+import com.aemtools.common.util.getHtmlFile
+import com.aemtools.common.util.getPsi
+import com.aemtools.common.util.hasParentOfType
+import com.aemtools.common.util.isHtlAttributeName
 import com.aemtools.lang.htl.HtlLanguage
-import com.aemtools.lang.htl.psi.*
+import com.aemtools.lang.htl.psi.HtlAssignmentValue
+import com.aemtools.lang.htl.psi.HtlContextExpression
+import com.aemtools.lang.htl.psi.HtlExpression
+import com.aemtools.lang.htl.psi.HtlHel
+import com.aemtools.lang.htl.psi.HtlHtlEl
+import com.aemtools.lang.htl.psi.HtlPsiBaseElement
+import com.aemtools.lang.htl.psi.HtlPsiFile
+import com.aemtools.lang.htl.psi.HtlStringLiteral
+import com.aemtools.lang.htl.psi.HtlVariableName
 import com.aemtools.lang.htl.psi.mixin.PropertyAccessMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.aemtools.lang.settings.AemProjectSettings
@@ -32,18 +45,18 @@ import com.intellij.psi.xml.XmlTag
  * @return _iterable_ to _list variable_ names pair
  */
 fun extractItemAndItemListNames(value: String): Pair<String, String> {
-  val item: String = when {
-    value.startsWith(Const.Htl.DATA_SLY_REPEAT) && value.length > Const.Htl.DATA_SLY_REPEAT.length + 1 -> {
-      value.substring(value.lastIndexOf(".") + 1)
+    val item: String = when {
+        value.startsWith(Const.Htl.DATA_SLY_REPEAT) && value.length > Const.Htl.DATA_SLY_REPEAT.length + 1 -> {
+            value.substring(value.lastIndexOf(".") + 1)
+        }
+        value.startsWith(Const.Htl.DATA_SLY_LIST) && value.length > Const.Htl.DATA_SLY_LIST.length + 1 -> {
+            value.substring(value.lastIndexOf(".") + 1)
+        }
+        else -> {
+            "item"
+        }
     }
-    value.startsWith(Const.Htl.DATA_SLY_LIST) && value.length > Const.Htl.DATA_SLY_LIST.length + 1 -> {
-      value.substring(value.lastIndexOf(".") + 1)
-    }
-    else -> {
-      "item"
-    }
-  }
-  return item to "${item}List"
+    return item to "${item}List"
 }
 
 /**
@@ -54,9 +67,9 @@ fun extractItemAndItemListNames(value: String): Pair<String, String> {
  * @return *true* if current string is main EL string, *false* otherwise
  */
 fun HtlStringLiteral.isMainString(): Boolean {
-  val expression = this.findParentByType(HtlExpression::class.java) ?: return false
+    val expression = this.findParentByType(HtlExpression::class.java) ?: return false
 
-  return expression.parent is HtlHel
+    return expression.parent is HtlHel
 }
 
 /**
@@ -71,8 +84,8 @@ fun HtlStringLiteral.isMainString(): Boolean {
  * @return *true* if current variable name is "option", *false* otherwise
  */
 fun HtlVariableName.isOption(): Boolean {
-  return this.hasParentOfType(HtlContextExpression::class.java) &&
-    !this.hasParentOfType(HtlAssignmentValue::class.java)
+    return this.hasParentOfType(HtlContextExpression::class.java) &&
+        !this.hasParentOfType(HtlAssignmentValue::class.java)
 }
 
 /**
@@ -83,9 +96,9 @@ fun HtlVariableName.isOption(): Boolean {
  * @return *true* if current variable is "option", *false* otherwise
  */
 fun VariableNameMixin.isOption(): Boolean =
-  (this as? HtlVariableName)
-    ?.isOption()
-    ?: false
+    (this as? HtlVariableName)
+        ?.isOption()
+        ?: false
 
 /**
  * Extract first (top level) [PropertyAccessMixin].
@@ -94,11 +107,11 @@ fun VariableNameMixin.isOption(): Boolean =
  * @return first [PropertyAccessMixin] in current [HtlHtlEl], *null* if no property access mixin present
  */
 fun HtlHtlEl.extractPropertyAccess(): PropertyAccessMixin? {
-  val propertyAccessItems = findChildrenByType(PropertyAccessMixin::class.java)
-  if (propertyAccessItems.isEmpty()) {
-    return null
-  }
-  return propertyAccessItems.first()
+    val propertyAccessItems = findChildrenByType(PropertyAccessMixin::class.java)
+    if (propertyAccessItems.isEmpty()) {
+        return null
+    }
+    return propertyAccessItems.first()
 }
 
 /**
@@ -108,12 +121,12 @@ fun HtlHtlEl.extractPropertyAccess(): PropertyAccessMixin? {
  * @return __true__ if current element is the value of attribute with given name
  */
 fun HtlHtlEl.isInsideOF(attributeName: String): Boolean {
-  val html = this.containingFile.getHtmlFile()
-    ?: return false
-  val attribute = html.findElementAt(this.textOffset - 1)
-    .findParentByType(XmlAttribute::class.java) ?: return false
+    val html = this.containingFile.getHtmlFile()
+        ?: return false
+    val attribute = html.findElementAt(this.textOffset - 1)
+        .findParentByType(XmlAttribute::class.java) ?: return false
 
-  return attribute.name.startsWith(attributeName)
+    return attribute.name.startsWith(attributeName)
 }
 
 /**
@@ -124,8 +137,8 @@ fun HtlHtlEl.isInsideOF(attributeName: String): Boolean {
  * @return __true__ if current element si the value of attribute with given name
  */
 fun PsiElement.isInsideOf(attributeName: String): Boolean {
-  val htlHtlEl = findParentByType(HtlHtlEl::class.java) ?: return false
-  return htlHtlEl.isInsideOF(attributeName)
+    val htlHtlEl = findParentByType(HtlHtlEl::class.java) ?: return false
+    return htlHtlEl.isInsideOF(attributeName)
 }
 
 /**
@@ -135,12 +148,12 @@ fun PsiElement.isInsideOf(attributeName: String): Boolean {
  * @return container xml attribute, *null* if no container attribute exists
  */
 fun HtlPsiBaseElement.containerAttribute(): XmlAttribute? {
-  val htlHtlEl = findParentByType(HtlHtlEl::class.java) ?: return null
+    val htlHtlEl = findParentByType(HtlHtlEl::class.java) ?: return null
 
-  val html = containingFile.getHtmlFile() ?: return null
+    val html = containingFile.getHtmlFile() ?: return null
 
-  return html.findElementAt(htlHtlEl.textOffset - 1)
-    .findParentByType(XmlAttribute::class.java)
+    return html.findElementAt(htlHtlEl.textOffset - 1)
+        .findParentByType(XmlAttribute::class.java)
 }
 
 /**
@@ -158,15 +171,15 @@ fun HtlPsiBaseElement.containerAttribute(): XmlAttribute? {
  * @return the name of Htl attribute, _null_ if current attribute is not Htl one
  */
 fun XmlAttribute.htlAttributeName(ignoreVersioning: Boolean = false): String? {
-  if (!isHtlAttribute(ignoreVersioning)) {
-    return null
-  }
+    if (!isHtlAttribute(ignoreVersioning)) {
+        return null
+    }
 
-  return if (name.contains(".")) {
-    name.substring(0, name.indexOf("."))
-  } else {
-    name
-  }
+    return if (name.contains(".")) {
+        name.substring(0, name.indexOf("."))
+    } else {
+        name
+    }
 }
 
 /**
@@ -183,15 +196,15 @@ fun XmlAttribute.htlAttributeName(ignoreVersioning: Boolean = false): String? {
  * @return the name of Htl variable declared in current Htl attribute
  */
 fun XmlAttribute.htlVariableName(ignoreVersioning: Boolean = false): String? {
-  if (!isHtlDeclarationAttribute(ignoreVersioning)) {
-    return null
-  }
+    if (!isHtlDeclarationAttribute(ignoreVersioning)) {
+        return null
+    }
 
-  return if (name.contains(".")) {
-    name.substring(name.indexOf(".") + 1)
-  } else {
-    null
-  }
+    return if (name.contains(".")) {
+        name.substring(name.indexOf(".") + 1)
+    } else {
+        null
+    }
 }
 
 /**
@@ -207,11 +220,11 @@ fun XmlTag.isSlyTag(): Boolean = this.name == SLY_TAG
  * @return first [HtlHtlEl] element from current attribute, *null* if no such element found
  */
 fun XmlAttribute.extractHtlHel(): HtlHtlEl? {
-  val htlFile = containingFile?.viewProvider?.getPsi(HtlLanguage)
-    ?: return null
-  val valueElement = valueElement ?: return null
-  val helStart = htlFile.findElementAt(valueElement.textOffset + 1)
-  return helStart.findParentByType(HtlHtlEl::class.java)
+    val htlFile = containingFile?.viewProvider?.getPsi(HtlLanguage)
+        ?: return null
+    val valueElement = valueElement ?: return null
+    val helStart = htlFile.findElementAt(valueElement.textOffset + 1)
+    return helStart.findParentByType(HtlHtlEl::class.java)
 }
 
 /**
@@ -237,7 +250,7 @@ fun PsiFile.isHtlFile(): Boolean = getHtlFile() != null
  * @return *true* if current attribute is data-sly-use, *false* otherwise
  */
 fun XmlAttribute.isDataSlyUse(): Boolean = this.name.startsWith("${Const.Htl.DATA_SLY_USE}.") ||
-  this.name == Const.Htl.DATA_SLY_USE
+    this.name == Const.Htl.DATA_SLY_USE
 
 /**
  * Check if current [XmlAttribute] is Htl attribute.
@@ -247,10 +260,10 @@ fun XmlAttribute.isDataSlyUse(): Boolean = this.name.startsWith("${Const.Htl.DAT
  * @return __true__ if current element is Htl attribute
  */
 fun XmlAttribute.isHtlAttribute(ignoreVersioning: Boolean = false): Boolean {
-  if (!ignoreVersioning && this.isDataSlySet() && this.project.notSupportsHtlVersion(HtlVersion.V_1_4)) {
-    return false
-  }
-  return this.name.isHtlAttributeName()
+    if (!ignoreVersioning && this.isDataSlySet() && this.project.notSupportsHtlVersion(HtlVersion.V_1_4)) {
+        return false
+    }
+    return this.name.isHtlAttributeName()
 }
 
 /**
@@ -260,7 +273,7 @@ fun XmlAttribute.isHtlAttribute(ignoreVersioning: Boolean = false): Boolean {
  * @return *true* if current attribute is data-sly-set, *false* otherwise
  */
 private fun XmlAttribute.isDataSlySet(): Boolean = this.name.startsWith("${Const.Htl.DATA_SLY_SET}.") ||
-  this.name == Const.Htl.DATA_SLY_SET
+    this.name == Const.Htl.DATA_SLY_SET
 
 /**
  * Check if current element is Htl attribute which declares some variable.
@@ -279,21 +292,21 @@ private fun XmlAttribute.isDataSlySet(): Boolean = this.name.startsWith("${Const
  * @return *true* if current element declares some variable
  */
 fun XmlAttribute.isHtlDeclarationAttribute(ignoreVersioning: Boolean = false): Boolean {
-  val project = this.project
-  return with(this.name) {
-    when {
-      hasVariableDeclaration(Const.Htl.DATA_SLY_USE) -> true
-      hasVariableDeclaration(Const.Htl.DATA_SLY_SET) &&
-        !ignoreVersioning && project.supportsHtlVersion(HtlVersion.V_1_4) -> true
-      hasVariableDeclaration(Const.Htl.DATA_SLY_TEST) -> true
-      hasVariableDeclaration(Const.Htl.DATA_SLY_UNWRAP) &&
-        !ignoreVersioning && project.supportsHtlVersion(HtlVersion.V_1_4) -> true
-      startsWith(Const.Htl.DATA_SLY_TEMPLATE) -> true
-      startsWith(Const.Htl.DATA_SLY_LIST) -> true
-      startsWith(Const.Htl.DATA_SLY_REPEAT) -> true
-      else -> false
+    val project = this.project
+    return with(this.name) {
+        when {
+            hasVariableDeclaration(Const.Htl.DATA_SLY_USE) -> true
+            hasVariableDeclaration(Const.Htl.DATA_SLY_SET) &&
+                !ignoreVersioning && project.supportsHtlVersion(HtlVersion.V_1_4) -> true
+            hasVariableDeclaration(Const.Htl.DATA_SLY_TEST) -> true
+            hasVariableDeclaration(Const.Htl.DATA_SLY_UNWRAP) &&
+                !ignoreVersioning && project.supportsHtlVersion(HtlVersion.V_1_4) -> true
+            startsWith(Const.Htl.DATA_SLY_TEMPLATE) -> true
+            startsWith(Const.Htl.DATA_SLY_LIST) -> true
+            startsWith(Const.Htl.DATA_SLY_REPEAT) -> true
+            else -> false
+        }
     }
-  }
 }
 
 /**
@@ -305,7 +318,7 @@ fun XmlAttribute.isHtlDeclarationAttribute(ignoreVersioning: Boolean = false): B
  * @return *true* if current attribute is HTL attribute and declares some variable
  */
 private fun String.hasVariableDeclaration(htlAttributeName: String): Boolean {
-  return this.startsWith(htlAttributeName) && this.length > htlAttributeName.length
+    return this.startsWith(htlAttributeName) && this.length > htlAttributeName.length
 }
 
 /**
@@ -316,7 +329,7 @@ private fun String.hasVariableDeclaration(htlAttributeName: String): Boolean {
  * @return *true* if current attribute is local declaration attribute
  */
 fun XmlAttribute.isHtlLocalDeclarationAttribute(): Boolean =
-  isHtlDeclarationAttribute() && !isHtlGlobalDeclarationAttribute()
+    isHtlDeclarationAttribute() && !isHtlGlobalDeclarationAttribute()
 
 /**
  * Check if current attribute is "global" declaration attribute
@@ -326,12 +339,12 @@ fun XmlAttribute.isHtlLocalDeclarationAttribute(): Boolean =
  * @return *true* if current element is global declaration attribute
  */
 fun XmlAttribute.isHtlGlobalDeclarationAttribute(): Boolean =
-  with(this.name) {
-    when {
-      startsWith(Const.Htl.DATA_SLY_TEMPLATE) -> true
-      else -> false
+    with(this.name) {
+        when {
+            startsWith(Const.Htl.DATA_SLY_TEMPLATE) -> true
+            else -> false
+        }
     }
-  }
 
 /**
  * Extract template parameters from current [XmlAttribute]
@@ -348,14 +361,14 @@ fun XmlAttribute.isHtlGlobalDeclarationAttribute(): Boolean =
  * or in case if the attribute is not `data-sly-template`
  */
 fun XmlAttribute.extractTemplateParameters(): List<String> {
-  if (!this.name.startsWith(Const.Htl.DATA_SLY_TEMPLATE)) {
-    return listOf()
-  }
+    if (!this.name.startsWith(Const.Htl.DATA_SLY_TEMPLATE)) {
+        return listOf()
+    }
 
-  val htlHel = this.extractHtlHel() ?: return listOf()
+    val htlHel = this.extractHtlHel() ?: return listOf()
 
-  return htlHel.findChildrenByType(HtlVariableName::class.java)
-    .filter(HtlVariableName::isOption).map { it.text }
+    return htlHel.findChildrenByType(HtlVariableName::class.java)
+        .filter(HtlVariableName::isOption).map { it.text }
 }
 
 /**
@@ -365,7 +378,7 @@ fun XmlAttribute.extractTemplateParameters(): List<String> {
  * @return new collection with only Htl attributes
  */
 fun List<XmlAttribute>.htlAttributes(): List<XmlAttribute> =
-  filter { it.isHtlAttribute() }
+    filter { it.isHtlAttribute() }
 
 /**
  * Resolves the class of variable declared in current [XmlAttribute] element.
@@ -385,21 +398,21 @@ fun List<XmlAttribute>.htlAttributes(): List<XmlAttribute> =
  * @return full qualified class name, or _null_ in case if resolution is not possible
  */
 fun XmlAttribute.resolveUseClass(): String? {
-  val attributeValue = valueElement?.value ?: return null
-  return when {
-    attributeValue.matches(Regex("[\\w.]+")) -> attributeValue
-    attributeValue.indexOf("\${") != -1 -> extractBeanNameFromEl(attributeValue)
-    else -> null
-  }
+    val attributeValue = valueElement?.value ?: return null
+    return when {
+        attributeValue.matches(Regex("[\\w.]+")) -> attributeValue
+        attributeValue.indexOf("\${") != -1 -> extractBeanNameFromEl(attributeValue)
+        else -> null
+    }
 }
 
 private fun extractBeanNameFromEl(el: String): String? {
-  val start = el.indexOf("'") + 1
-  val end = el.indexOf("'", start + 1)
-  if (start != -1 && end != -1) {
-    return el.substring(start, end)
-  }
-  return null
+    val start = el.indexOf("'") + 1
+    val end = el.indexOf("'", start + 1)
+    if (start != -1 && end != -1) {
+        return el.substring(start, end)
+    }
+    return null
 }
 
 /**
@@ -418,7 +431,7 @@ fun Project.getHtlVersion(): HtlVersion = AemProjectSettings.getInstance(this).h
  * @return true if project supports version
  */
 fun Project.supportsHtlVersion(version: HtlVersion): Boolean =
-  this.getHtlVersion().isAtLeast(version)
+    this.getHtlVersion().isAtLeast(version)
 
 /**
  * Checks if the current project doesn't support HTL version.
@@ -429,4 +442,4 @@ fun Project.supportsHtlVersion(version: HtlVersion): Boolean =
  * @return true if project doesn't support version
  */
 fun Project.notSupportsHtlVersion(version: HtlVersion): Boolean =
-  !this.supportsHtlVersion(version)
+    !this.supportsHtlVersion(version)

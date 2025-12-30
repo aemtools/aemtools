@@ -10,19 +10,19 @@ import com.intellij.xml.XmlAttributeDescriptorsProvider
  * @author Dmytro Primshyts
  */
 class HtlAttributesDescriptorsProvider : XmlAttributeDescriptorsProvider {
-  override fun getAttributeDescriptors(context: XmlTag?): Array<XmlAttributeDescriptor> {
-    return arrayOf()
-  }
-
-  override fun getAttributeDescriptor(attributeName: String?, context: XmlTag?): XmlAttributeDescriptor? {
-    if (attributeName != null &&
-      context != null &&
-      attributeName.isHtlAttributeName() &&
-      context.containingFile.isHtlFile()
-    ) {
-      return HtlAttributeDescriptor(attributeName, context)
+    override fun getAttributeDescriptors(context: XmlTag?): Array<XmlAttributeDescriptor> {
+        return arrayOf()
     }
 
-    return null
-  }
+    override fun getAttributeDescriptor(attributeName: String?, context: XmlTag?): XmlAttributeDescriptor? {
+        if (attributeName != null &&
+            context != null &&
+            attributeName.isHtlAttributeName() &&
+            context.containingFile.isHtlFile()
+        ) {
+            return HtlAttributeDescriptor(attributeName, context)
+        }
+
+        return null
+    }
 }

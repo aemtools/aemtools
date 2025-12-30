@@ -19,7 +19,13 @@ import com.aemtools.analysis.htl.callchain.typedescriptor.predefined.PredefinedT
 import com.aemtools.analysis.htl.callchain.typedescriptor.properties.PropertiesTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateParameterTypeDescriptor
 import com.aemtools.analysis.htl.callchain.typedescriptor.template.TemplateTypeDescriptor
-import com.aemtools.codeinsight.htl.model.*
+import com.aemtools.codeinsight.htl.model.DeclarationAttributeType
+import com.aemtools.codeinsight.htl.model.DeclarationType
+import com.aemtools.codeinsight.htl.model.HtlListHelperDeclaration
+import com.aemtools.codeinsight.htl.model.HtlTemplateDeclaration
+import com.aemtools.codeinsight.htl.model.HtlTemplateParameterDeclaration
+import com.aemtools.codeinsight.htl.model.HtlUseVariableDeclaration
+import com.aemtools.codeinsight.htl.model.HtlVariableDeclaration
 import com.aemtools.common.constant.Const.Java.WCM_API_COMPONENT
 import com.aemtools.common.util.hasChild
 import com.aemtools.completion.htl.common.PredefinedVariables
@@ -29,256 +35,255 @@ import com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
 import com.aemtools.lang.htl.psi.mixin.VariableNameMixin
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiElement
-import java.util.ArrayList
-import java.util.LinkedList
+import java.util.*
 
 /**
  * @author Dmytro Primshyts
  */
 object RawCallChainProcessor {
 
-  /**
-   * Convert raw call chain into [CallChain].
-   *
-   * @param rawChain the raw chain
-   * @return call chain instance
-   */
-  fun processChain(rawChain: LinkedList<RawChainUnit>): CallChain {
-    if (rawChain.isEmpty()) {
-      return CallChain.empty()
-    }
-
-    val segments = ArrayList<CallChainSegment>()
-
-    val firstElement: RawChainUnit = rawChain.pop()
-
-    var firstSegment = extractFirstSegment(firstElement)
-
-    segments.add(firstSegment)
-
-    while (rawChain.isNotEmpty()) {
-      val outputType = firstSegment.outputType()
-      val newSegment = when (outputType) {
-        is JavaPsiClassTypeDescriptor ->
-          constructTypedChainSegment(
-            outputType,
-            rawChain.pop()
-          )
-
-        else -> constructEmptyChainSegment(rawChain.pop())
-      }
-
-      segments.add(newSegment)
-      firstSegment = newSegment
-    }
-    return CallChain(segments)
-  }
-
-  private fun extractFirstSegment(rawChainUnit: RawChainUnit): CallChainSegment {
-    val declaration = rawChainUnit.myDeclaration
-
-    val type: TypeDescriptor? = when (declaration) {
-      is HtlUseVariableDeclaration -> {
-        declaration.typeDescriptor()
-      }
-      is HtlTemplateDeclaration -> {
-        TemplateTypeDescriptor(
-          declaration.templateDefinition,
-          rawChainUnit.myDeclaration.xmlAttribute.project
-        )
-      }
-      is HtlTemplateParameterDeclaration -> {
-        TemplateParameterTypeDescriptor(declaration)
-      }
-      is HtlListHelperDeclaration -> {
-        PredefinedTypeDescriptor(LIST_AND_REPEAT_HELPER_OBJECT)
-      }
-      is HtlVariableDeclaration -> {
-        TypeDescriptor.empty()
-      }
-      else -> null
-    }
-
-    if (type != null) {
-      return constructTypedChainSegment(type, rawChainUnit)
-    }
-
-    val inputType = resolveFirstType(rawChainUnit)
-
-    if (inputType.isEmpty()) {
-      return CallChainSegment.empty()
-    }
-
-    if (inputType is JavaPsiClassTypeDescriptor ||
-      inputType is MergedTypeDescriptor
-    ) {
-      if (rawChainUnit.myCallChain.isNotEmpty()) {
-        return constructTypedChainSegment(inputType, rawChainUnit)
-      }
-      return BaseCallChainSegment(inputType, inputType, rawChainUnit.myDeclaration, emptyList())
-    } else {
-      return CallChainSegment.empty()
-    }
-  }
-
-  /**
-   * Resolve first [PsiClass] of first call chain segment.
-   */
-  private fun resolveFirstType(rawChainUnit: RawChainUnit): TypeDescriptor {
-    val elements = rawChainUnit.myCallChain
-    val firstElement = if (elements.isNotEmpty()) {
-      elements.first() as? com.aemtools.lang.htl.psi.mixin.VariableNameMixin
-    } else {
-      null
-    }
-
-    var psiClass: PsiClass? = null
-
-    if (psiClass == null && firstElement != null) {
-      val type = PredefinedVariables.typeDescriptorByIdentifier(firstElement, firstElement.project)
-      if (type !is EmptyTypeDescriptor) {
-        return type
-      }
-    }
-
-    if (psiClass == null) {
-      val declaration = rawChainUnit.myDeclaration
-      if (declaration is HtlUseVariableDeclaration) {
-        return declaration.typeDescriptor()
-      }
-    }
-
-    return if (psiClass != null) {
-      JavaPsiClassTypeDescriptor(psiClass, null, null)
-    } else {
-      TypeDescriptor.empty()
-    }
-  }
-
-  private fun constructEmptyChainSegment(rawChainUnit: RawChainUnit): CallChainSegment = chainSegment {
-    this.inputType = inputType
-    this.declarationType = rawChainUnit.myDeclaration
-
-    val rawElements = LinkedList(rawChainUnit.myCallChain)
-    val result: ArrayList<CallChainElement> = ArrayList()
-    while (rawElements.isNotEmpty()) {
-      val nextElement = rawElements.pop()
-      val elementName = extractElementName(nextElement)
-
-      result.add(
-        BaseChainElement(
-          nextElement,
-          elementName,
-          TypeDescriptor.empty()
-        )
-      )
-    }
-
-    chain = result
-
-    this.outputType = result.last().type
-  }
-
-  /**
-   * Create typed chain segment.
-   */
-  private fun constructTypedChainSegment(
-    inputType: TypeDescriptor,
-    rawChainUnit: RawChainUnit
-  ): CallChainSegment = chainSegment {
-    this.inputType = inputType
-    this.declarationType = rawChainUnit.myDeclaration
-    val rawElements = LinkedList(rawChainUnit.myCallChain)
-    val result: ArrayList<CallChainElement> = ArrayList()
-
-    var currentType: TypeDescriptor = inputType
-    var currentElement = rawElements.pop()
-
-    var callChainElement = when {
-      rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.LIST_HELPER ||
-        rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.REPEAT_HELPER -> {
-        BaseChainElement(
-          currentElement,
-          extractElementName(currentElement),
-          PredefinedTypeDescriptor(LIST_AND_REPEAT_HELPER_OBJECT)
-        )
-      }
-
-      rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE &&
-        inputType is ArrayJavaTypeDescriptor -> {
-        currentType = inputType.arrayType()
-        BaseChainElement(currentElement, extractElementName(currentElement), currentType)
-      }
-
-      rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE &&
-        inputType is IterableJavaTypeDescriptor -> {
-        currentType = inputType.iterableType()
-        BaseChainElement(currentElement, extractElementName(currentElement), currentType)
-      }
-
-      rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE &&
-        inputType is MapJavaTypeDescriptor -> {
-        currentType = inputType.keyType()
-        BaseChainElement(currentElement, extractElementName(currentElement), currentType)
-      }
-
-      else -> BaseChainElement(currentElement, extractElementName(currentElement), currentType)
-    }
-
-    result.add(callChainElement)
-
-    while (rawElements.isNotEmpty()) {
-      val nextRawElement = rawElements.pop()
-      when {
-        currentType.isArray() &&
-          currentType is ArrayJavaTypeDescriptor &&
-          nextRawElement.hasChild(HtlArrayLikeAccess::class.java) -> {
-          callChainElement = ArrayAccessIdentifierElement(nextRawElement)
-          currentType = currentType.arrayType()
+    /**
+     * Convert raw call chain into [CallChain].
+     *
+     * @param rawChain the raw chain
+     * @return call chain instance
+     */
+    fun processChain(rawChain: LinkedList<RawChainUnit>): CallChain {
+        if (rawChain.isEmpty()) {
+            return CallChain.empty()
         }
-        currentType.isIterable() &&
-          currentType is IterableJavaTypeDescriptor &&
-          nextRawElement.hasChild(HtlArrayLikeAccess::class.java) -> {
-          callChainElement = ArrayAccessIdentifierElement(nextRawElement)
-          currentType = currentType.iterableType()
+
+        val segments = ArrayList<CallChainSegment>()
+
+        val firstElement: RawChainUnit = rawChain.pop()
+
+        var firstSegment = extractFirstSegment(firstElement)
+
+        segments.add(firstSegment)
+
+        while (rawChain.isNotEmpty()) {
+            val outputType = firstSegment.outputType()
+            val newSegment = when (outputType) {
+                is JavaPsiClassTypeDescriptor ->
+                    constructTypedChainSegment(
+                        outputType,
+                        rawChain.pop()
+                    )
+
+                else -> constructEmptyChainSegment(rawChain.pop())
+            }
+
+            segments.add(newSegment)
+            firstSegment = newSegment
         }
-        currentType.isMap() &&
-          currentType is MapJavaTypeDescriptor &&
-          nextRawElement.hasChild(HtlArrayLikeAccess::class.java) -> {
-          callChainElement = ArrayAccessIdentifierElement(nextRawElement)
-          currentType = currentType.valueType()
-        }
-        hasInnerPropertiesTypeDescriptor(nextRawElement, currentType) -> {
-          val newType = PropertiesTypeDescriptor(nextRawElement)
-          callChainElement = BaseChainElement(nextRawElement, "properties", newType)
-          currentType = newType
-        }
-        else -> {
-          val varName = extractElementName(nextRawElement)
-          val newType = currentType.subtype(varName)
-          callChainElement = BaseChainElement(nextRawElement, varName, newType)
-          currentType = newType
-        }
-      }
-      result.add(callChainElement)
+        return CallChain(segments)
     }
 
-    chain = result
+    private fun extractFirstSegment(rawChainUnit: RawChainUnit): CallChainSegment {
+        val declaration = rawChainUnit.myDeclaration
 
-    outputType = result.last().type
-  }
+        val type: TypeDescriptor? = when (declaration) {
+            is HtlUseVariableDeclaration -> {
+                declaration.typeDescriptor()
+            }
+            is HtlTemplateDeclaration -> {
+                TemplateTypeDescriptor(
+                    declaration.templateDefinition,
+                    rawChainUnit.myDeclaration.xmlAttribute.project
+                )
+            }
+            is HtlTemplateParameterDeclaration -> {
+                TemplateParameterTypeDescriptor(declaration)
+            }
+            is HtlListHelperDeclaration -> {
+                PredefinedTypeDescriptor(LIST_AND_REPEAT_HELPER_OBJECT)
+            }
+            is HtlVariableDeclaration -> {
+                TypeDescriptor.empty()
+            }
+            else -> null
+        }
 
-  private fun extractElementName(element: PsiElement?): String {
-    return when (element) {
-      is AccessIdentifierMixin -> element.variableName()
-      is VariableNameMixin -> element.variableName()
-      else -> ""
+        if (type != null) {
+            return constructTypedChainSegment(type, rawChainUnit)
+        }
+
+        val inputType = resolveFirstType(rawChainUnit)
+
+        if (inputType.isEmpty()) {
+            return CallChainSegment.empty()
+        }
+
+        if (inputType is JavaPsiClassTypeDescriptor ||
+            inputType is MergedTypeDescriptor
+        ) {
+            if (rawChainUnit.myCallChain.isNotEmpty()) {
+                return constructTypedChainSegment(inputType, rawChainUnit)
+            }
+            return BaseCallChainSegment(inputType, inputType, rawChainUnit.myDeclaration, emptyList())
+        } else {
+            return CallChainSegment.empty()
+        }
     }
-  }
 
-  private fun hasInnerPropertiesTypeDescriptor(nextRawElement: PsiElement?, currentType: TypeDescriptor) =
-    nextRawElement is AccessIdentifierMixin &&
-      nextRawElement.variableName() == "properties" &&
-      currentType is JavaPsiClassTypeDescriptor &&
-      currentType.qualifiedName() == WCM_API_COMPONENT
+    /**
+     * Resolve first [PsiClass] of first call chain segment.
+     */
+    private fun resolveFirstType(rawChainUnit: RawChainUnit): TypeDescriptor {
+        val elements = rawChainUnit.myCallChain
+        val firstElement = if (elements.isNotEmpty()) {
+            elements.first() as? com.aemtools.lang.htl.psi.mixin.VariableNameMixin
+        } else {
+            null
+        }
+
+        var psiClass: PsiClass? = null
+
+        if (psiClass == null && firstElement != null) {
+            val type = PredefinedVariables.typeDescriptorByIdentifier(firstElement, firstElement.project)
+            if (type !is EmptyTypeDescriptor) {
+                return type
+            }
+        }
+
+        if (psiClass == null) {
+            val declaration = rawChainUnit.myDeclaration
+            if (declaration is HtlUseVariableDeclaration) {
+                return declaration.typeDescriptor()
+            }
+        }
+
+        return if (psiClass != null) {
+            JavaPsiClassTypeDescriptor(psiClass, null, null)
+        } else {
+            TypeDescriptor.empty()
+        }
+    }
+
+    private fun constructEmptyChainSegment(rawChainUnit: RawChainUnit): CallChainSegment = chainSegment {
+        this.inputType = inputType
+        this.declarationType = rawChainUnit.myDeclaration
+
+        val rawElements = LinkedList(rawChainUnit.myCallChain)
+        val result: ArrayList<CallChainElement> = ArrayList()
+        while (rawElements.isNotEmpty()) {
+            val nextElement = rawElements.pop()
+            val elementName = extractElementName(nextElement)
+
+            result.add(
+                BaseChainElement(
+                    nextElement,
+                    elementName,
+                    TypeDescriptor.empty()
+                )
+            )
+        }
+
+        chain = result
+
+        this.outputType = result.last().type
+    }
+
+    /**
+     * Create typed chain segment.
+     */
+    private fun constructTypedChainSegment(
+        inputType: TypeDescriptor,
+        rawChainUnit: RawChainUnit
+    ): CallChainSegment = chainSegment {
+        this.inputType = inputType
+        this.declarationType = rawChainUnit.myDeclaration
+        val rawElements = LinkedList(rawChainUnit.myCallChain)
+        val result: ArrayList<CallChainElement> = ArrayList()
+
+        var currentType: TypeDescriptor = inputType
+        var currentElement = rawElements.pop()
+
+        var callChainElement = when {
+            rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.LIST_HELPER ||
+                rawChainUnit.myDeclaration?.attributeType == DeclarationAttributeType.REPEAT_HELPER -> {
+                BaseChainElement(
+                    currentElement,
+                    extractElementName(currentElement),
+                    PredefinedTypeDescriptor(LIST_AND_REPEAT_HELPER_OBJECT)
+                )
+            }
+
+            rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE &&
+                inputType is ArrayJavaTypeDescriptor -> {
+                currentType = inputType.arrayType()
+                BaseChainElement(currentElement, extractElementName(currentElement), currentType)
+            }
+
+            rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE &&
+                inputType is IterableJavaTypeDescriptor -> {
+                currentType = inputType.iterableType()
+                BaseChainElement(currentElement, extractElementName(currentElement), currentType)
+            }
+
+            rawChainUnit.myDeclaration?.type == DeclarationType.ITERABLE &&
+                inputType is MapJavaTypeDescriptor -> {
+                currentType = inputType.keyType()
+                BaseChainElement(currentElement, extractElementName(currentElement), currentType)
+            }
+
+            else -> BaseChainElement(currentElement, extractElementName(currentElement), currentType)
+        }
+
+        result.add(callChainElement)
+
+        while (rawElements.isNotEmpty()) {
+            val nextRawElement = rawElements.pop()
+            when {
+                currentType.isArray() &&
+                    currentType is ArrayJavaTypeDescriptor &&
+                    nextRawElement.hasChild(HtlArrayLikeAccess::class.java) -> {
+                    callChainElement = ArrayAccessIdentifierElement(nextRawElement)
+                    currentType = currentType.arrayType()
+                }
+                currentType.isIterable() &&
+                    currentType is IterableJavaTypeDescriptor &&
+                    nextRawElement.hasChild(HtlArrayLikeAccess::class.java) -> {
+                    callChainElement = ArrayAccessIdentifierElement(nextRawElement)
+                    currentType = currentType.iterableType()
+                }
+                currentType.isMap() &&
+                    currentType is MapJavaTypeDescriptor &&
+                    nextRawElement.hasChild(HtlArrayLikeAccess::class.java) -> {
+                    callChainElement = ArrayAccessIdentifierElement(nextRawElement)
+                    currentType = currentType.valueType()
+                }
+                hasInnerPropertiesTypeDescriptor(nextRawElement, currentType) -> {
+                    val newType = PropertiesTypeDescriptor(nextRawElement)
+                    callChainElement = BaseChainElement(nextRawElement, "properties", newType)
+                    currentType = newType
+                }
+                else -> {
+                    val varName = extractElementName(nextRawElement)
+                    val newType = currentType.subtype(varName)
+                    callChainElement = BaseChainElement(nextRawElement, varName, newType)
+                    currentType = newType
+                }
+            }
+            result.add(callChainElement)
+        }
+
+        chain = result
+
+        outputType = result.last().type
+    }
+
+    private fun extractElementName(element: PsiElement?): String {
+        return when (element) {
+            is AccessIdentifierMixin -> element.variableName()
+            is VariableNameMixin -> element.variableName()
+            else -> ""
+        }
+    }
+
+    private fun hasInnerPropertiesTypeDescriptor(nextRawElement: PsiElement?, currentType: TypeDescriptor) =
+        nextRawElement is AccessIdentifierMixin &&
+            nextRawElement.variableName() == "properties" &&
+            currentType is JavaPsiClassTypeDescriptor &&
+            currentType.qualifiedName() == WCM_API_COMPONENT
 }

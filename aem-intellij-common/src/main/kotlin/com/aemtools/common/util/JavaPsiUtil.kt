@@ -35,15 +35,15 @@ import java.util.*
  * @return *true* if class is marked with corresponding OSGi annotations, *false* otherwise
  */
 fun PsiClass.isOSGiService(): Boolean {
-  return annotations().any {
-    it.qualifiedName in listOf(
-      FELIX_SERVICE_ANNOTATION,
-      SLING_SERVLET_ANNOTATION,
-      SLING_FILTER_ANNOTATION,
-      SLING_HEALTH_CHECK_ANNOTATION,
-      DS_COMPONENT_ANNOTATION
-    )
-  }
+    return annotations().any {
+        it.qualifiedName in listOf(
+            FELIX_SERVICE_ANNOTATION,
+            SLING_SERVLET_ANNOTATION,
+            SLING_FILTER_ANNOTATION,
+            SLING_HEALTH_CHECK_ANNOTATION,
+            DS_COMPONENT_ANNOTATION
+        )
+    }
 }
 
 /**
@@ -54,9 +54,9 @@ fun PsiClass.isOSGiService(): Boolean {
  * @return _true_ if current field is felix property
  */
 fun PsiField.isFelixProperty(): Boolean =
-  annotations().any {
-    it.qualifiedName == FELIX_PROPERTY_ANNOTATION
-  }
+    annotations().any {
+        it.qualifiedName == FELIX_PROPERTY_ANNOTATION
+    }
 
 /**
  * Check if current [PsiClass] is an OSGi Declarative Service (R6, R7).
@@ -65,9 +65,9 @@ fun PsiField.isFelixProperty(): Boolean =
  * @return *true* if class is marked with corresponding OSGi annotations, *false* otherwise
  */
 fun PsiClass.isDsOSGiConfig(): Boolean =
-  annotations().any {
-    it.qualifiedName == DS_OBJECT_CLASS_DEFINITION_ANNOTATION
-  }
+    annotations().any {
+        it.qualifiedName == DS_OBJECT_CLASS_DEFINITION_ANNOTATION
+    }
 
 /**
  * Check if current method is OSGi DS config metadata property.
@@ -77,9 +77,9 @@ fun PsiClass.isDsOSGiConfig(): Boolean =
  * @return _true_ if current field is Object Class Definition method
  */
 fun PsiMethod.isDsOSGiConfigProperty(): Boolean =
-  annotations().any {
-    it.qualifiedName == DS_ATTRIBUTE_DEFINITION_ANNOTATION
-  }
+    annotations().any {
+        it.qualifiedName == DS_ATTRIBUTE_DEFINITION_ANNOTATION
+    }
 
 /**
  * Get list of [PsiAnnotation] objects from current psi modifier list owner.
@@ -88,7 +88,7 @@ fun PsiMethod.isDsOSGiConfigProperty(): Boolean =
  * @return list of annotations
  */
 fun PsiModifierListOwner.annotations(): List<PsiAnnotation> =
-  modifierList?.annotations?.toList() ?: emptyList()
+    modifierList?.annotations?.toList() ?: emptyList()
 
 /**
  * Find all methods which may used from EL
@@ -99,26 +99,26 @@ fun PsiModifierListOwner.annotations(): List<PsiAnnotation> =
  * @return list of psi methods suitable for usage in EL
  */
 fun PsiClass.elMethods(): List<PsiMethod> {
-  val grouped: Map<PsiClass?, List<PsiMethod>> = this.allMethods.groupBy { it.containingClass }
-  val myMethods = grouped[this] ?: listOf()
+    val grouped: Map<PsiClass?, List<PsiMethod>> = this.allMethods.groupBy { it.containingClass }
+    val myMethods = grouped[this] ?: listOf()
 
-  return grouped.flatMap<PsiClass?, List<PsiMethod>, PsiMethod> {
-    when {
-      it.key == this@elMethods.containingClass -> listOf()
-      else -> it.value.filter {
+    return grouped.flatMap<PsiClass?, List<PsiMethod>, PsiMethod> {
+        when {
+            it.key == this@elMethods.containingClass -> listOf()
+            else -> it.value.filter {
+                !it.isConstructor &&
+                    it.hasModifierProperty(PsiModifier.PUBLIC) &&
+                    it.parameterList.parameters.isEmpty() &&
+                    !it.returnType!!.isAssignableFrom(PsiTypes.voidType()) &&
+                    myMethods.find { myMethod -> it.name == myMethod.name } == null
+            }
+        }
+    } + myMethods.filter {
         !it.isConstructor &&
-          it.hasModifierProperty(PsiModifier.PUBLIC) &&
-          it.parameterList.parameters.isEmpty() &&
-          !it.returnType!!.isAssignableFrom(PsiTypes.voidType()) &&
-          myMethods.find { myMethod -> it.name == myMethod.name } == null
-      }
+            it.hasModifierProperty(PsiModifier.PUBLIC) &&
+            it.parameterList.parameters.isEmpty() &&
+            !it.returnType!!.isAssignableFrom(PsiTypes.voidType())
     }
-  } + myMethods.filter {
-    !it.isConstructor &&
-      it.hasModifierProperty(PsiModifier.PUBLIC) &&
-      it.parameterList.parameters.isEmpty() &&
-      !it.returnType!!.isAssignableFrom(PsiTypes.voidType())
-  }
 }
 
 /**
@@ -127,10 +127,10 @@ fun PsiClass.elMethods(): List<PsiMethod> {
  * The suitable fields should be public
  */
 fun PsiClass.elFields(): List<PsiField> = this.allFields
-  .filter {
-    it.hasModifierProperty(PsiModifier.PUBLIC) &&
-      !it.hasModifierProperty(PsiModifier.STATIC)
-  }
+    .filter {
+        it.hasModifierProperty(PsiModifier.PUBLIC) &&
+            !it.hasModifierProperty(PsiModifier.STATIC)
+    }
 
 /**
  * Find all Htl EL compatible members.
@@ -145,20 +145,20 @@ fun PsiClass.elMembers(): List<PsiMember> = this.elMethods() + this.elFields()
  * @return found [PsiMember] or _null_
  */
 fun PsiClass.findElMemberByName(name: String): PsiMember? = elMembers().find {
-  if (it is PsiMethod) {
-    name == it.elName() || name == it.name
-  } else {
-    name == it.name
-  }
+    if (it is PsiMethod) {
+        name == it.elName() || name == it.name
+    } else {
+        name == it.name
+    }
 }
 
 /**
  * Get return [PsiType] of current [PsiMember].
  */
 fun PsiMember.resolveReturnType(): PsiType? = when (this) {
-  is PsiMethod -> this.returnType
-  is PsiField -> this.type
-  else -> null
+    is PsiMethod -> this.returnType
+    is PsiField -> this.type
+    else -> null
 }
 
 /**
@@ -173,11 +173,11 @@ fun PsiMember.resolveReturnType(): PsiType? = when (this) {
  * @return normalized method name
  */
 fun PsiMethod.elName() = this.name.run {
-  when {
-    startsWith("is") -> substringAfter("is").replaceFirstChar { it.lowercase(Locale.getDefault()) }
-    startsWith("get") -> substringAfter("get").replaceFirstChar { it.lowercase(Locale.getDefault()) }
-    else -> this
-  }
+    when {
+        startsWith("is") -> substringAfter("is").replaceFirstChar { it.lowercase(Locale.getDefault()) }
+        startsWith("get") -> substringAfter("get").replaceFirstChar { it.lowercase(Locale.getDefault()) }
+        else -> this
+    }
 }
 
 /**
@@ -197,12 +197,12 @@ fun PsiType.toPsiClass() = PsiTypesUtil.getPsiClass(this)
  * *false* otherwise
  */
 fun PsiLiteralExpression.isJavaLangString(): Boolean {
-  val psiManager = PsiManager.getInstance(project)
+    val psiManager = PsiManager.getInstance(project)
 
-  val myModule = ModuleUtil.findModuleForPsiElement(this) ?: return false
+    val myModule = ModuleUtil.findModuleForPsiElement(this) ?: return false
 
-  return type == PsiType.getJavaLangString(
-    psiManager,
-    GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(myModule)
-  )
+    return type == PsiType.getJavaLangString(
+        psiManager,
+        GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(myModule)
+    )
 }

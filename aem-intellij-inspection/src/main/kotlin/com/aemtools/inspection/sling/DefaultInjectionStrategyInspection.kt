@@ -21,53 +21,53 @@ import com.intellij.psi.PsiElementVisitor
  * @author Dmytro Primshyts
  */
 class DefaultInjectionStrategyInspection : AemIntellijInspection(
-  groupName = "AEM",
-  name = "Default Injection Strategy",
-  description = """
+    groupName = "AEM",
+    name = "Default Injection Strategy",
+    description = """
        This inspection checks that <i>@Optional</i>
        is not used with <i>defaultInjectionStrategy</i> set
        to <i>OPTIONAL</i>
     """
 ) {
-  private fun checkAnnotation(
-    annotation: PsiAnnotation,
-    containerClass: PsiClass,
-    holder: ProblemsHolder
-  ) {
-    val modelAnnotation = containerClass.annotations()
-      .find {
-        it.qualifiedName == Const.Java.SLING_MODEL
-      } ?: return
+    private fun checkAnnotation(
+        annotation: PsiAnnotation,
+        containerClass: PsiClass,
+        holder: ProblemsHolder
+    ) {
+        val modelAnnotation = containerClass.annotations()
+            .find {
+                it.qualifiedName == Const.Java.SLING_MODEL
+            } ?: return
 
-    val injectionStrategy = modelAnnotation.parameterList.attributes.find { nameValuePair ->
-      nameValuePair.name == "defaultInjectionStrategy"
-    } ?: return
+        val injectionStrategy = modelAnnotation.parameterList.attributes.find { nameValuePair ->
+            nameValuePair.name == "defaultInjectionStrategy"
+        } ?: return
 
-    if (injectionStrategy.value?.text?.contains("OPTIONAL") == true) {
-      holder.registerProblem(
-        annotation,
-        "Redundant annotation",
-        ProblemHighlightType.LIKE_UNUSED_SYMBOL,
-        RemoveAnnotationQuickFix(
-          annotation,
-          null
-        )
-      )
-    }
-  }
-
-  override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
-    return object : JavaElementVisitor() {
-      override fun visitAnnotation(annotation: PsiAnnotation) {
-        if (annotation.qualifiedName == Const.Java.OPTIONAL) {
-          val containerClass = annotation.findParentByType(PsiClass::class.java) ?: return
-          checkAnnotation(
-            annotation,
-            containerClass,
-            holder
-          )
+        if (injectionStrategy.value?.text?.contains("OPTIONAL") == true) {
+            holder.registerProblem(
+                annotation,
+                "Redundant annotation",
+                ProblemHighlightType.LIKE_UNUSED_SYMBOL,
+                RemoveAnnotationQuickFix(
+                    annotation,
+                    null
+                )
+            )
         }
-      }
     }
-  }
+
+    override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
+        return object : JavaElementVisitor() {
+            override fun visitAnnotation(annotation: PsiAnnotation) {
+                if (annotation.qualifiedName == Const.Java.OPTIONAL) {
+                    val containerClass = annotation.findParentByType(PsiClass::class.java) ?: return
+                    checkAnnotation(
+                        annotation,
+                        containerClass,
+                        holder
+                    )
+                }
+            }
+        }
+    }
 }

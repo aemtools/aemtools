@@ -20,78 +20,78 @@ import com.intellij.psi.search.GlobalSearchScope
  * @author Dmytro Primshyts
  */
 class ThreadSafeFieldInspection : AemIntellijInspection(
-  name = "Thread-safe field inspection",
-  groupName = "AEM",
-  description = """
+    name = "Thread-safe field inspection",
+    groupName = "AEM",
+    description = """
       This inspection checks that <b>Non</b>-threadsafe
       classes aren't used as fields in singleton classes.
       (e.g. filters or servlets)
     """
 ) {
-  override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
-    return object : JavaElementVisitor() {
-      override fun visitField(field: PsiField) {
-        val containerClass = field.containingClass ?: return
+    override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
+        return object : JavaElementVisitor() {
+            override fun visitField(field: PsiField) {
+                val containerClass = field.containingClass ?: return
 
-        if (isVulnerableClass(containerClass) &&
-          isVulnerableField(field)
-        ) {
-          holder.registerProblem(
-            field,
-            "Non-thread safe field.",
-            ProblemHighlightType.ERROR
-          )
+                if (isVulnerableClass(containerClass) &&
+                    isVulnerableField(field)
+                ) {
+                    holder.registerProblem(
+                        field,
+                        "Non-thread safe field.",
+                        ProblemHighlightType.ERROR
+                    )
+                }
+            }
         }
-      }
-    }
-  }
-
-  private fun isVulnerableClass(psiClass: PsiClass): Boolean {
-    val module = ModuleUtil.findModuleForPsiElement(psiClass) ?: return false
-    val jpf = JavaPsiFacade.getInstance(psiClass.project)
-
-    val interfaces = vulnerableInterfaces.mapNotNull { inter ->
-      jpf.findClass(inter, GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(module))
     }
 
-    return psiClass.annotations().any { annotation ->
-      annotation.qualifiedName in vulnerableAnnotations
-    } || interfaces.any { psiClass.isInheritorDeep(it, null) }
-  }
+    private fun isVulnerableClass(psiClass: PsiClass): Boolean {
+        val module = ModuleUtil.findModuleForPsiElement(psiClass) ?: return false
+        val jpf = JavaPsiFacade.getInstance(psiClass.project)
 
-  private fun isVulnerableField(psiField: PsiField): Boolean {
-    val fqn = psiField.resolveReturnType()?.toPsiClass()?.qualifiedName
-      ?: return false
+        val interfaces = vulnerableInterfaces.mapNotNull { inter ->
+            jpf.findClass(inter, GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(module))
+        }
 
-    return fqn in nonThreadSaveTypes
-  }
+        return psiClass.annotations().any { annotation ->
+            annotation.qualifiedName in vulnerableAnnotations
+        } || interfaces.any { psiClass.isInheritorDeep(it, null) }
+    }
 
-  companion object {
-    val nonThreadSaveTypes = setOf(
-      "org.apache.sling.api.resource.ResourceResolver",
-      "javax.jcr.Session",
-      "com.day.cq.wcm.api.PageManager",
-      "com.day.cq.wcm.api.components.ComponentManager",
-      "com.day.cq.wcm.api.designer.Designer",
-      "com.day.cq.dam.api.AssetManager",
-      "com.day.cq.tagging.TagManager",
-      "com.day.cq.security.UserManager",
-      "org.apache.jackrabbit.api.security.user.Authorizable",
-      "org.apache.jackrabbit.api.security.user.User",
-      "org.apache.jackrabbit.api.security.user.UserManager"
-    )
+    private fun isVulnerableField(psiField: PsiField): Boolean {
+        val fqn = psiField.resolveReturnType()?.toPsiClass()?.qualifiedName
+            ?: return false
 
-    val vulnerableInterfaces = setOf(
-      "javax.servlet.Servlet",
-      "javax.servlet.Filter",
-      "org.osgi.service.event.EventHandler"
-    )
+        return fqn in nonThreadSaveTypes
+    }
 
-    val vulnerableAnnotations = setOf(
-      "org.apache.felix.scr.annotations.Component",
-      "org.osgi.service.component.annotations.Component",
-      "org.apache.felix.scr.annotations.sling.SlingServlet",
-      "org.apache.felix.scr.annotations.sling.SlingFilter"
-    )
-  }
+    companion object {
+        val nonThreadSaveTypes = setOf(
+            "org.apache.sling.api.resource.ResourceResolver",
+            "javax.jcr.Session",
+            "com.day.cq.wcm.api.PageManager",
+            "com.day.cq.wcm.api.components.ComponentManager",
+            "com.day.cq.wcm.api.designer.Designer",
+            "com.day.cq.dam.api.AssetManager",
+            "com.day.cq.tagging.TagManager",
+            "com.day.cq.security.UserManager",
+            "org.apache.jackrabbit.api.security.user.Authorizable",
+            "org.apache.jackrabbit.api.security.user.User",
+            "org.apache.jackrabbit.api.security.user.UserManager"
+        )
+
+        val vulnerableInterfaces = setOf(
+            "javax.servlet.Servlet",
+            "javax.servlet.Filter",
+            "org.osgi.service.event.EventHandler"
+        )
+
+        val vulnerableAnnotations = setOf(
+            "org.apache.felix.scr.annotations.Component",
+            "org.osgi.service.component.annotations.Component",
+            "org.apache.felix.scr.annotations.sling.SlingServlet",
+            "org.apache.felix.scr.annotations.sling.SlingFilter"
+        )
+    }
 }

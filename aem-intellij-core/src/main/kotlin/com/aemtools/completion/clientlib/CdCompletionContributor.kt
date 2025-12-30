@@ -10,6 +10,6 @@ import com.aemtools.lang.clientlib.psi.pattern.CdPatterns
  */
 class CdCompletionContributor : BaseCompletionContributor({
 
-  basic(CdPatterns.basePath, ClientlibDeclarationBasePathCompletionProvider)
-  basic(CdPatterns.include, ClientlibDeclarationIncludeCompletionProvider)
+    basic(CdPatterns.basePath, ClientlibDeclarationBasePathCompletionProvider)
+    basic(CdPatterns.include, ClientlibDeclarationIncludeCompletionProvider)
 })

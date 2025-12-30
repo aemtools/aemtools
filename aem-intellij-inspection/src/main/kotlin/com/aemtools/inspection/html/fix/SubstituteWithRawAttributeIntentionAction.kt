@@ -19,13 +19,13 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Dmytro Primshyts
  */
 class SubstituteWithRawAttributeIntentionAction(
-  private val pointer: SmartPsiElementPointer<XmlAttribute>,
-  private val message: String
+    private val pointer: SmartPsiElementPointer<XmlAttribute>,
+    private val message: String
 ) : BaseHtlIntentionAction({ message }) {
 
-  override fun invoke(project: Project, editor: Editor?, file: PsiFile?) {
-    val attribute = pointer.element ?: return
+    override fun invoke(project: Project, editor: Editor?, file: PsiFile?) {
+        val attribute = pointer.element ?: return
 
-    attribute.name = attribute.name.substringAfterLast(".")
-  }
+        attribute.name = attribute.name.substringAfterLast(".")
+    }
 }

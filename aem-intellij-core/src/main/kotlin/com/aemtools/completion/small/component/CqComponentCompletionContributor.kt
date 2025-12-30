@@ -10,5 +10,5 @@ import com.aemtools.completion.small.patterns.CqComponentPatterns.attributeInCqC
  * @author Kostiantyn Diachenko
  */
 class CqComponentCompletionContributor : BaseCompletionContributor({
-  basic(attributeInCqComponent, CqComponentCompletionProvider)
+    basic(attributeInCqComponent, CqComponentCompletionProvider)
 })

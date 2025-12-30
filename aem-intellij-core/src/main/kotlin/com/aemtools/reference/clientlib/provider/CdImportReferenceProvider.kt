@@ -14,30 +14,30 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 object CdImportReferenceProvider : PsiReferenceProvider() {
-  override fun getReferencesByElement(
-    element: PsiElement,
-    context: ProcessingContext
-  ): Array<PsiReference> {
-    val include = element.originalElement as? CdInclude
-      ?: return emptyArray()
+    override fun getReferencesByElement(
+        element: PsiElement,
+        context: ProcessingContext
+    ): Array<PsiReference> {
+        val include = element.originalElement as? CdInclude
+            ?: return emptyArray()
 
-    val path = addBasePath(include.text, include)
+        val path = addBasePath(include.text, include)
 
-    val file = ClientlibDeclarationIndexFacade.findFileByPath(path, include.containingFile)
+        val file = ClientlibDeclarationIndexFacade.findFileByPath(path, include.containingFile)
 
-    if (file != null) {
-      return arrayOf(PsiFileReference(file, include, TextRange(0, include.textLength)))
+        if (file != null) {
+            return arrayOf(PsiFileReference(file, include, TextRange(0, include.textLength)))
+        }
+
+        return arrayOf()
     }
 
-    return arrayOf()
-  }
-
-  private fun addBasePath(path: String, include: CdInclude): String {
-    val basePath = include.basePathElement()?.include?.text
-    return if (basePath != null) {
-      "$basePath/$path"
-    } else {
-      path
+    private fun addBasePath(path: String, include: CdInclude): String {
+        val basePath = include.basePathElement()?.include?.text
+        return if (basePath != null) {
+            "$basePath/$path"
+        } else {
+            path
+        }
     }
-  }
 }

@@ -17,39 +17,39 @@ import javax.swing.Icon
  * @author Dmytro Primshyts
  */
 object HtlFileType :
-  LanguageFileType(HtlLanguage),
-  TemplateLanguageFileType,
-  FileTypeIdentifiableByVirtualFile {
+    LanguageFileType(HtlLanguage),
+    TemplateLanguageFileType,
+    FileTypeIdentifiableByVirtualFile {
 
-  init {
-    FileTypeEditorHighlighterProviders.getInstance().addExplicitExtension(this) { project, _, virtualFile, colors ->
-      HtlTemplateHighlighter(project, virtualFile, colors)
-    }
-  }
-
-  override fun isMyFileType(file: VirtualFile): Boolean {
-    if (file.isDirectory ||
-      file.extension != "html" ||
-      file is FakeVirtualFile
-    ) {
-      return false
+    init {
+        FileTypeEditorHighlighterProviders.getInstance().addExplicitExtension(this) { project, _, virtualFile, colors ->
+            HtlTemplateHighlighter(project, virtualFile, colors)
+        }
     }
 
-    val project = ProjectLocator.getInstance().guessProjectForFile(file)
-    val path = file.path
+    override fun isMyFileType(file: VirtualFile): Boolean {
+        if (file.isDirectory ||
+            file.extension != "html" ||
+            file is FakeVirtualFile
+        ) {
+            return false
+        }
 
-    return if (project == null) {
-      HtlDetectionService.isHtlFile(path)
-    } else {
-      HtlDetectionService.isHtlFile(path, project)
+        val project = ProjectLocator.getInstance().guessProjectForFile(file)
+        val path = file.path
+
+        return if (project == null) {
+            HtlDetectionService.isHtlFile(path)
+        } else {
+            HtlDetectionService.isHtlFile(path, project)
+        }
     }
-  }
 
-  override fun getIcon(): Icon = HTL_FILE_ICON
+    override fun getIcon(): Icon = HTL_FILE_ICON
 
-  override fun getName() = "HTL"
+    override fun getName() = "HTL"
 
-  override fun getDefaultExtension() = "htl"
+    override fun getDefaultExtension() = "htl"
 
-  override fun getDescription() = "HTL File"
+    override fun getDescription() = "HTL File"
 }

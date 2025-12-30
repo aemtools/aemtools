@@ -4,53 +4,53 @@ package com.aemtools.codeinsight.htl.model
  * @author Dmytro Primshyts
  */
 enum class DeclarationAttributeType {
-  /**
-   * Variable spawned by `data-sly-use`.
-   */
-  DATA_SLY_USE,
+    /**
+     * Variable spawned by `data-sly-use`.
+     */
+    DATA_SLY_USE,
 
-  /**
-   * Variable spawned by `data-sly-set`.
-   */
-  DATA_SLY_SET,
+    /**
+     * Variable spawned by `data-sly-set`.
+     */
+    DATA_SLY_SET,
 
-  /**
-   * Variable spawned by `data-sly-test`.
-   */
-  DATA_SLY_TEST,
+    /**
+     * Variable spawned by `data-sly-test`.
+     */
+    DATA_SLY_TEST,
 
-  /**
-   * Variable spawned by `data-sly-unwrap`.
-   */
-  DATA_SLY_UNWRAP,
+    /**
+     * Variable spawned by `data-sly-unwrap`.
+     */
+    DATA_SLY_UNWRAP,
 
-  /**
-   * Variable spawned by `data-sly-template`.
-   */
-  DATA_SLY_TEMPLATE,
+    /**
+     * Variable spawned by `data-sly-template`.
+     */
+    DATA_SLY_TEMPLATE,
 
-  /**
-   * Variable spawned by `data-sly-template's` parameter.
-   */
-  DATA_SLY_TEMPLATE_PARAMETER,
+    /**
+     * Variable spawned by `data-sly-template's` parameter.
+     */
+    DATA_SLY_TEMPLATE_PARAMETER,
 
-  /**
-   * Variable spawned by `data-sly-list`.
-   */
-  DATA_SLY_LIST,
+    /**
+     * Variable spawned by `data-sly-list`.
+     */
+    DATA_SLY_LIST,
 
-  /**
-   * Variable spawned by `data-sly-repeat`.
-   */
-  DATA_SLY_REPEAT,
+    /**
+     * Variable spawned by `data-sly-repeat`.
+     */
+    DATA_SLY_REPEAT,
 
-  /**
-   * Helper variable spawned by `data-sly-repeat`.
-   */
-  REPEAT_HELPER,
+    /**
+     * Helper variable spawned by `data-sly-repeat`.
+     */
+    REPEAT_HELPER,
 
-  /**
-   * Helper variable spawned by `data-sly-list`.
-   */
-  LIST_HELPER
+    /**
+     * Helper variable spawned by `data-sly-list`.
+     */
+    LIST_HELPER
 }

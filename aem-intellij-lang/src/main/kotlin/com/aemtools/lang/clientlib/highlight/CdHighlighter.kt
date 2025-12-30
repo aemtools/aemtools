@@ -12,18 +12,18 @@ import com.intellij.psi.tree.IElementType
  * @author Dmytro Primshyts
  */
 class CdHighlighter : SyntaxHighlighterBase() {
-  override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
-    return pack(map(tokenType))
-  }
+    override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
+        return pack(map(tokenType))
+    }
 
-  private fun map(tokenType: IElementType?) = when (tokenType) {
-    CdTypes.COMMENT_TOKEN -> CdColors.COMMENT
-    CdTypes.PREFIX_TOKEN -> CdColors.PREFIX
-    CdTypes.DD, CdTypes.DOT -> CdColors.DOT
-    CdTypes.SEPARATOR,
-    CdTypes.WORD -> CdColors.IMPORT
-    else -> null
-  }
+    private fun map(tokenType: IElementType?) = when (tokenType) {
+        CdTypes.COMMENT_TOKEN -> CdColors.COMMENT
+        CdTypes.PREFIX_TOKEN -> CdColors.PREFIX
+        CdTypes.DD, CdTypes.DOT -> CdColors.DOT
+        CdTypes.SEPARATOR,
+        CdTypes.WORD -> CdColors.IMPORT
+        else -> null
+    }
 
-  override fun getHighlightingLexer(): Lexer = LayeredLexer(CdLexer())
+    override fun getHighlightingLexer(): Lexer = LayeredLexer(CdLexer())
 }

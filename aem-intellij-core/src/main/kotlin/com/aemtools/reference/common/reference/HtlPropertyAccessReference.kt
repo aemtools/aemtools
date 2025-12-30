@@ -15,71 +15,71 @@ import java.util.*
  * @author Dmytro Primshyts
  */
 class HtlPropertyAccessReference(
-  val propertyAccess: PropertyAccessMixin,
-  val callChainElement: CallChainElement,
-  textRange: TextRange,
-  val referencedElement: PsiElement,
-  soft: Boolean = true
+    val propertyAccess: PropertyAccessMixin,
+    val callChainElement: CallChainElement,
+    textRange: TextRange,
+    val referencedElement: PsiElement,
+    soft: Boolean = true
 ) : PsiReferenceBase<PropertyAccessMixin>(propertyAccess, textRange, soft) {
 
-  override fun resolve(): PsiElement = referencedElement
+    override fun resolve(): PsiElement = referencedElement
 
-  override fun isReferenceTo(element: PsiElement): Boolean {
-    return referencedElement == element
-  }
-
-  override fun getVariants(): Array<Any> = emptyArray()
-
-  override fun getValue(): String {
-    return if (referencedElement.text.startsWith("get")) {
-      referencedElement.text.substringAfter("get")
-        .replaceFirstChar { it.lowercase(Locale.getDefault()) }
-    } else {
-      referencedElement.text
-    }
-  }
-
-  override fun handleElementRename(newElementName: String): PsiElement {
-    val actualElement = callChainElement.element as? com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
-      ?: return propertyAccess
-
-    val typeDescriptor = callChainElement.type
-
-    actualElement.setName(preprocessName(newElementName, actualElement, typeDescriptor))
-
-    return propertyAccess
-  }
-
-  private fun preprocessName(
-    newName: String,
-    actualElement: com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin,
-    typeDescriptor: TypeDescriptor
-  ): String {
-    if (typeDescriptor is JavaPsiClassTypeDescriptor) {
-      val psiMember = typeDescriptor.psiMember
-      if (psiMember is PsiMethod) {
-        return persistNameConventionForMethod(actualElement.variableName(), newName)
-      }
+    override fun isReferenceTo(element: PsiElement): Boolean {
+        return referencedElement == element
     }
 
-    if (typeDescriptor is JavaPsiUnresolvedTypeDescriptor) {
-      val psiMember = typeDescriptor.psiMember
-      if (psiMember is PsiMethod) {
-        return persistNameConventionForMethod(actualElement.variableName(), newName)
-      }
+    override fun getVariants(): Array<Any> = emptyArray()
+
+    override fun getValue(): String {
+        return if (referencedElement.text.startsWith("get")) {
+            referencedElement.text.substringAfter("get")
+                .replaceFirstChar { it.lowercase(Locale.getDefault()) }
+        } else {
+            referencedElement.text
+        }
     }
 
-    return newName
-  }
+    override fun handleElementRename(newElementName: String): PsiElement {
+        val actualElement = callChainElement.element as? com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin
+            ?: return propertyAccess
 
-  private fun persistNameConventionForMethod(oldName: String, newName: String): String =
-    when {
-      oldName.startsWith("is") && newName.startsWith("is") -> newName
-      oldName.startsWith("get") && newName.startsWith("get") -> newName
-      newName.startsWith("is") ->
-        newName.substringAfter("is").replaceFirstChar { it.lowercase(Locale.getDefault()) }
-      newName.startsWith("get") ->
-        newName.substringAfter("get").replaceFirstChar { it.lowercase(Locale.getDefault()) }
-      else -> newName
+        val typeDescriptor = callChainElement.type
+
+        actualElement.setName(preprocessName(newElementName, actualElement, typeDescriptor))
+
+        return propertyAccess
     }
+
+    private fun preprocessName(
+        newName: String,
+        actualElement: com.aemtools.lang.htl.psi.mixin.AccessIdentifierMixin,
+        typeDescriptor: TypeDescriptor
+    ): String {
+        if (typeDescriptor is JavaPsiClassTypeDescriptor) {
+            val psiMember = typeDescriptor.psiMember
+            if (psiMember is PsiMethod) {
+                return persistNameConventionForMethod(actualElement.variableName(), newName)
+            }
+        }
+
+        if (typeDescriptor is JavaPsiUnresolvedTypeDescriptor) {
+            val psiMember = typeDescriptor.psiMember
+            if (psiMember is PsiMethod) {
+                return persistNameConventionForMethod(actualElement.variableName(), newName)
+            }
+        }
+
+        return newName
+    }
+
+    private fun persistNameConventionForMethod(oldName: String, newName: String): String =
+        when {
+            oldName.startsWith("is") && newName.startsWith("is") -> newName
+            oldName.startsWith("get") && newName.startsWith("get") -> newName
+            newName.startsWith("is") ->
+                newName.substringAfter("is").replaceFirstChar { it.lowercase(Locale.getDefault()) }
+            newName.startsWith("get") ->
+                newName.substringAfter("get").replaceFirstChar { it.lowercase(Locale.getDefault()) }
+            else -> newName
+        }
 }

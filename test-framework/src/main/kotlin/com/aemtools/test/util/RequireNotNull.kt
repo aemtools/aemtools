@@ -12,16 +12,16 @@ import kotlin.reflect.KProperty
  */
 class RequireNotNull<out T>(private val supplier: () -> T?) {
 
-  operator fun provideDelegate(thisRef: Nothing?, prop: KProperty<*>): ReadOnlyProperty<Nothing?, T> {
-    val result = supplier.invoke()
-    return ReadOnlyProperty<Nothing?, T> { _, property ->
-      requireNotNull(result) {
-        "Supplier provided null for ${property.name}"
-      }
+    operator fun provideDelegate(thisRef: Nothing?, prop: KProperty<*>): ReadOnlyProperty<Nothing?, T> {
+        val result = supplier.invoke()
+        return ReadOnlyProperty<Nothing?, T> { _, property ->
+            requireNotNull(result) {
+                "Supplier provided null for ${property.name}"
+            }
 
-      result
+            result
+        }
     }
-  }
 }
 
 /**

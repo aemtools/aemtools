@@ -8,11 +8,11 @@ import com.intellij.testFramework.IdeaTestUtil
  */
 class TestSdk {
 
-  companion object {
-    @JvmStatic
-    fun getSdk() = IdeaTestUtil.getMockJdk11()
+    companion object {
+        @JvmStatic
+        fun getSdk() = IdeaTestUtil.getMockJdk11()
 
-    @JvmStatic
-    fun getSdkLanguageLevel() = LanguageLevel.JDK_11
-  }
+        @JvmStatic
+        fun getSdkLanguageLevel() = LanguageLevel.JDK_11
+    }
 }

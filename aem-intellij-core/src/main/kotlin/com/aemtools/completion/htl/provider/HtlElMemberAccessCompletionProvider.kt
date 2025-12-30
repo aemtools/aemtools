@@ -15,36 +15,36 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 object HtlElMemberAccessCompletionProvider : CompletionProvider<CompletionParameters>() {
-  override fun addCompletions(
-    parameters: CompletionParameters,
-    context: ProcessingContext,
-    result: CompletionResultSet
-  ) {
-    val currentPosition = parameters.position
-    val resolutionResult = resolve(currentPosition)
+    override fun addCompletions(
+        parameters: CompletionParameters,
+        context: ProcessingContext,
+        result: CompletionResultSet
+    ) {
+        val currentPosition = parameters.position
+        val resolutionResult = resolve(currentPosition)
 
-    resolutionResult.predefined?.let {
-      result.addAllElements(it)
+        resolutionResult.predefined?.let {
+            result.addAllElements(it)
+        }
+
+        result.stopHere()
     }
 
-    result.stopHere()
-  }
+    /**
+     * Resolve given psi element.
+     *
+     * @param element the element
+     * @return resolution result object
+     */
+    fun resolve(element: PsiElement): ResolutionResult {
+        val propertyAccessElement = element.findParentByType(PropertyAccessMixin::class.java)
+            ?: return ResolutionResult()
 
-  /**
-   * Resolve given psi element.
-   *
-   * @param element the element
-   * @return resolution result object
-   */
-  fun resolve(element: PsiElement): ResolutionResult {
-    val propertyAccessElement = element.findParentByType(PropertyAccessMixin::class.java)
-      ?: return ResolutionResult()
+        val chain = propertyAccessElement.callchain()
+            ?: return ResolutionResult()
+        val lastSegment = chain.callChainSegments.lastOrNull()
+            ?: return ResolutionResult()
 
-    val chain = propertyAccessElement.callchain()
-      ?: return ResolutionResult()
-    val lastSegment = chain.callChainSegments.lastOrNull()
-      ?: return ResolutionResult()
-
-    return lastSegment.resolveSelectedItem()
-  }
+        return lastSegment.resolveSelectedItem()
+    }
 }

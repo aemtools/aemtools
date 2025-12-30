@@ -18,30 +18,30 @@ import com.intellij.psi.xml.XmlAttribute
  */
 class HtlDeclarationSearchScopeOptimizer : ScopeOptimizer {
 
-  companion object {
-    val FILE_SCOPE_DECLARATION: List<String> = listOf(
-      DATA_SLY_USE,
-      DATA_SLY_SET,
-      DATA_SLY_UNWRAP,
-      DATA_SLY_TEST,
-      DATA_SLY_LIST,
-      DATA_SLY_REPEAT
-    )
-  }
-
-  override fun getRestrictedUseScope(element: PsiElement): GlobalSearchScope? {
-    if (element is XmlAttribute &&
-      element.htlAttributeName() in FILE_SCOPE_DECLARATION
-    ) {
-      val originalFile = element.containingFile
-      val htlFile = originalFile.getHtlFile()
-        ?: return null
-
-      return GlobalSearchScope.filesScope(
-        element.project,
-        mutableListOf(originalFile.virtualFile, htlFile.virtualFile)
-      )
+    companion object {
+        val FILE_SCOPE_DECLARATION: List<String> = listOf(
+            DATA_SLY_USE,
+            DATA_SLY_SET,
+            DATA_SLY_UNWRAP,
+            DATA_SLY_TEST,
+            DATA_SLY_LIST,
+            DATA_SLY_REPEAT
+        )
     }
-    return null
-  }
+
+    override fun getRestrictedUseScope(element: PsiElement): GlobalSearchScope? {
+        if (element is XmlAttribute &&
+            element.htlAttributeName() in FILE_SCOPE_DECLARATION
+        ) {
+            val originalFile = element.containingFile
+            val htlFile = originalFile.getHtlFile()
+                ?: return null
+
+            return GlobalSearchScope.filesScope(
+                element.project,
+                mutableListOf(originalFile.virtualFile, htlFile.virtualFile)
+            )
+        }
+        return null
+    }
 }

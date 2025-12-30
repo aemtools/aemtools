@@ -14,9 +14,9 @@ import com.intellij.util.ProcessingContext
  */
 class HtlTemplatePattern(val name: String) : PatternCondition<PsiElement?>(name) {
 
-  override fun accepts(element: PsiElement, context: ProcessingContext?): Boolean {
-    return element.findParentByType(HtlHtlEl::class.java)
-      ?.isInsideOf(name)
-      ?: false
-  }
+    override fun accepts(element: PsiElement, context: ProcessingContext?): Boolean {
+        return element.findParentByType(HtlHtlEl::class.java)
+            ?.isInsideOf(name)
+            ?: false
+    }
 }

@@ -16,38 +16,38 @@ import com.intellij.util.ProcessingContext
  * @author Dmytro Primshyts
  */
 object HtlDataSlyCallOptionCompletionProvider : CompletionProvider<CompletionParameters>() {
-  override fun addCompletions(
-    parameters: CompletionParameters,
-    context: ProcessingContext,
-    result: CompletionResultSet
-  ) {
-    val currentPosition = parameters.position
-    val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
-      ?: return
+    override fun addCompletions(
+        parameters: CompletionParameters,
+        context: ProcessingContext,
+        result: CompletionResultSet
+    ) {
+        val currentPosition = parameters.position
+        val hel = currentPosition.findParentByType(HtlElExpressionMixin::class.java)
+            ?: return
 
-    val outputType = hel
-      .getMainPropertyAccess()
-      ?.callchain()
-      ?.getLastOutputType()
-      as? TemplateTypeDescriptor
-      ?: return
+        val outputType = hel
+            .getMainPropertyAccess()
+            ?.callchain()
+            ?.getLastOutputType()
+            as? TemplateTypeDescriptor
+            ?: return
 
-    val templateParameters = outputType.parameters()
+        val templateParameters = outputType.parameters()
 
-    val presentOptions = hel.getOptions()
-      .map { it.name() }
-      .filterNot { it == "" }
+        val presentOptions = hel.getOptions()
+            .map { it.name() }
+            .filterNot { it == "" }
 
-    val variants = templateParameters
-      .filterNot { presentOptions.contains(it) }
-      .map {
-        lookupElement(it)
-          .withIcon(AllIcons.Nodes.Parameter)
-          .withTypeText("HTL Template Parameter")
-          .withInsertHandler(HtlElAssignmentInsertHandler())
-      }
+        val variants = templateParameters
+            .filterNot { presentOptions.contains(it) }
+            .map {
+                lookupElement(it)
+                    .withIcon(AllIcons.Nodes.Parameter)
+                    .withTypeText("HTL Template Parameter")
+                    .withInsertHandler(HtlElAssignmentInsertHandler())
+            }
 
-    result.addAllElements(variants)
-    result.stopHere()
-  }
+        result.addAllElements(variants)
+        result.stopHere()
+    }
 }

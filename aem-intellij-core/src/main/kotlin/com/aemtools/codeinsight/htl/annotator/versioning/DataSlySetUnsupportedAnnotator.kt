@@ -19,19 +19,19 @@ import com.intellij.psi.xml.XmlAttribute
  * @author Kostiantyn Diachenko
  */
 class DataSlySetUnsupportedAnnotator : VersionedHtlElementAnnotator(HtlVersion.V_1_4) {
-  override fun annotateNotSupportedElement(element: PsiElement, holder: AnnotationHolder) {
-    if (element !is XmlAttribute || !element.isHtlAttribute(true)) {
-      return
-    }
+    override fun annotateNotSupportedElement(element: PsiElement, holder: AnnotationHolder) {
+        if (element !is XmlAttribute || !element.isHtlAttribute(true)) {
+            return
+        }
 
-    val htlAttributeName = element.htlAttributeName(true) ?: return
-    if (htlAttributeName == DATA_SLY_SET) {
-      val textRange = with(element.nameElement.startOffset) {
-        TextRange.create(this, this + htlAttributeName.length)
-      }
-      holder.notSupportedHtlFeatureAnnotationBuilder(element, getMessage(element.project), textRange)
-        .withFix(ReplaceDataSlySetWithDataSlyTestAction(element.toSmartPointer()))
-        .create()
+        val htlAttributeName = element.htlAttributeName(true) ?: return
+        if (htlAttributeName == DATA_SLY_SET) {
+            val textRange = with(element.nameElement.startOffset) {
+                TextRange.create(this, this + htlAttributeName.length)
+            }
+            holder.notSupportedHtlFeatureAnnotationBuilder(element, getMessage(element.project), textRange)
+                .withFix(ReplaceDataSlySetWithDataSlyTestAction(element.toSmartPointer()))
+                .create()
+        }
     }
-  }
 }

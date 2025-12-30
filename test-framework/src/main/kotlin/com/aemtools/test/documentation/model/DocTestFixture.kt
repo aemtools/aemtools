@@ -9,28 +9,28 @@ import junit.framework.TestCase.assertEquals
  * @author Dmytro Primshyts
  */
 class DocTestFixture(
-  val documentationProvider: AbstractDocumentationProvider,
-  fixture: JavaCodeInsightTestFixture
+    val documentationProvider: AbstractDocumentationProvider,
+    fixture: JavaCodeInsightTestFixture
 ) :
-  TestFixture(fixture), IDocTestFixture {
+    TestFixture(fixture), IDocTestFixture {
 
-  var documentation: String? = null
+    var documentation: String? = null
 
-  override fun documentation(result: String) {
-    documentation = result.trimIndent().replace(Regex("\n|\r"), "")
-  }
+    override fun documentation(result: String) {
+        documentation = result.trimIndent().replace(Regex("\n|\r"), "")
+    }
 
-  override fun test() {
-    super.test()
+    override fun test() {
+        super.test()
 
-    val elementUnderCaret = assertionContext().elementUnderCaret()
-    val customDocumentationElement = documentationProvider.getCustomDocumentationElement(
-      fixture.editor, fixture.file, elementUnderCaret, fixture.caretOffset
-    )
-      ?: elementUnderCaret
+        val elementUnderCaret = assertionContext().elementUnderCaret()
+        val customDocumentationElement = documentationProvider.getCustomDocumentationElement(
+            fixture.editor, fixture.file, elementUnderCaret, fixture.caretOffset
+        )
+            ?: elementUnderCaret
 
-    val result = documentationProvider.generateDoc(customDocumentationElement, customDocumentationElement)
+        val result = documentationProvider.generateDoc(customDocumentationElement, customDocumentationElement)
 
-    assertEquals(documentation, result)
-  }
+        assertEquals(documentation, result)
+    }
 }

@@ -11,33 +11,33 @@ import com.intellij.psi.PsiElement
 import javax.swing.DefaultListCellRenderer
 
 class JsonOSGiConfigGotoClassLineMarkerProvider : LineMarkerProvider {
-  override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<PsiElement>? {
-    val jsonObject = element as? JsonObject ?: return null
+    override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<PsiElement>? {
+        val jsonObject = element as? JsonObject ?: return null
 
-    val fileName = jsonObject.containingFile.name
+        val fileName = jsonObject.containingFile.name
 
-    val className = fileName.substringBeforeLast(".cfg.json")
-      .substringBefore("-")
+        val className = fileName.substringBeforeLast(".cfg.json")
+            .substringBefore("-")
 
-    val serviceClass = JavaSearch.findClass(className, jsonObject.project)
-      ?: return null
+        val serviceClass = JavaSearch.findClass(className, jsonObject.project)
+            ?: return null
 
-    return LineMarkerInfo(
-      jsonObject.firstChild,
-      jsonObject.firstChild.textRange,
-      AllIcons.FileTypes.JavaClass,
-      { "Open associated OSGi service" },
-      { mouseEvent, _ ->
-        PsiElementListNavigator.openTargets(
-          mouseEvent,
-          arrayOf(serviceClass),
-          "Open associated OSGi service",
-          null,
-          DefaultListCellRenderer()
+        return LineMarkerInfo(
+            jsonObject.firstChild,
+            jsonObject.firstChild.textRange,
+            AllIcons.FileTypes.JavaClass,
+            { "Open associated OSGi service" },
+            { mouseEvent, _ ->
+                PsiElementListNavigator.openTargets(
+                    mouseEvent,
+                    arrayOf(serviceClass),
+                    "Open associated OSGi service",
+                    null,
+                    DefaultListCellRenderer()
+                )
+            },
+            GutterIconRenderer.Alignment.CENTER,
+            { "Open associated OSGi service" }
         )
-      },
-      GutterIconRenderer.Alignment.CENTER,
-      { "Open associated OSGi service" }
-    )
-  }
+    }
 }

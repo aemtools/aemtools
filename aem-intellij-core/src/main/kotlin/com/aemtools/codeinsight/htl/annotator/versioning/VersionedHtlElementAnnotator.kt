@@ -13,18 +13,18 @@ import com.intellij.psi.PsiElement
  * @author Kostiantyn Diachenko
  */
 abstract class VersionedHtlElementAnnotator(
-  private val sinceVersion: HtlVersion
+    private val sinceVersion: HtlVersion
 ) : Annotator {
-  override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-    if (element.project.supportsHtlVersion(sinceVersion)) {
-      return
+    override fun annotate(element: PsiElement, holder: AnnotationHolder) {
+        if (element.project.supportsHtlVersion(sinceVersion)) {
+            return
+        }
+        annotateNotSupportedElement(element, holder)
     }
-    annotateNotSupportedElement(element, holder)
-  }
 
-  abstract fun annotateNotSupportedElement(element: PsiElement, holder: AnnotationHolder)
+    abstract fun annotateNotSupportedElement(element: PsiElement, holder: AnnotationHolder)
 
-  fun getSinceVersion() = sinceVersion
+    fun getSinceVersion() = sinceVersion
 
-  fun getMessage(project: Project) = notSupportedHtlFeatureText(project.getHtlVersion(), sinceVersion)
+    fun getMessage(project: Project) = notSupportedHtlFeatureText(project.getHtlVersion(), sinceVersion)
 }

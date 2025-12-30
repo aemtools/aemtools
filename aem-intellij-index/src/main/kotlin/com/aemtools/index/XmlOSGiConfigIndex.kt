@@ -18,18 +18,18 @@ import com.intellij.xml.index.XmlIndex
  */
 class XmlOSGiConfigIndex : XmlIndex<OSGiConfigurationIndexModel>() {
 
-  companion object {
-    val XML_OSGI_INDEX_ID: ID<String, OSGiConfigurationIndexModel> =
-      ID.create("OSGiConfigIndex")
-  }
+    companion object {
+        val XML_OSGI_INDEX_ID: ID<String, OSGiConfigurationIndexModel> =
+            ID.create("OSGiConfigIndex")
+    }
 
-  override fun getIndexer(): DataIndexer<String, OSGiConfigurationIndexModel, FileContent> = XmlOSGiConfigIndexer
+    override fun getIndexer(): DataIndexer<String, OSGiConfigurationIndexModel, FileContent> = XmlOSGiConfigIndexer
 
-  override fun getInputFilter(): FileBasedIndex.InputFilter = FileBasedIndex.InputFilter {
-    it.fileType == XmlFileType.INSTANCE && it.path.contains("config")
-  }
+    override fun getInputFilter(): FileBasedIndex.InputFilter = FileBasedIndex.InputFilter {
+        it.fileType == XmlFileType.INSTANCE && it.path.contains("config")
+    }
 
-  override fun getValueExternalizer(): DataExternalizer<OSGiConfigurationIndexModel> = OSGiConfigurationExternalizer
+    override fun getValueExternalizer(): DataExternalizer<OSGiConfigurationIndexModel> = OSGiConfigurationExternalizer
 
-  override fun getName(): ID<String, OSGiConfigurationIndexModel> = XML_OSGI_INDEX_ID
+    override fun getName(): ID<String, OSGiConfigurationIndexModel> = XML_OSGI_INDEX_ID
 }

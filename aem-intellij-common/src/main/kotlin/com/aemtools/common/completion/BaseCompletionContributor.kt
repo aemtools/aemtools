@@ -11,19 +11,19 @@ import com.intellij.psi.PsiElement
  * @author Dmytro Primshyts
  */
 open class BaseCompletionContributor(
-  contributorDsl: CompletionContributorDsl.() -> Unit
+    contributorDsl: CompletionContributorDsl.() -> Unit
 ) : CompletionContributor() {
-  init {
-    val result = CompletionContributorDsl()
-    contributorDsl.invoke(result)
-    result.extensions.forEach { extension ->
-      extend(
-        extension.type,
-        extension.pattern,
-        extension.provider
-      )
+    init {
+        val result = CompletionContributorDsl()
+        contributorDsl.invoke(result)
+        result.extensions.forEach { extension ->
+            extend(
+                extension.type,
+                extension.pattern,
+                extension.provider
+            )
+        }
     }
-  }
 }
 
 /**
@@ -31,52 +31,52 @@ open class BaseCompletionContributor(
  */
 class CompletionContributorDsl {
 
-  internal data class ExtensionModel(
-    val type: CompletionType,
-    val pattern: ElementPattern<out PsiElement>,
-    val provider: CompletionProvider<in CompletionParameters>
-  )
-
-  internal val extensions = mutableListOf<ExtensionModel>()
-
-  /**
-   * Register completion provider.
-   *
-   * @param type completion type
-   * @param pattern the pattern
-   * @param provider the completion provider
-   */
-  fun extend(
-    type: CompletionType,
-    pattern: ElementPattern<out PsiElement>,
-    provider: CompletionProvider<in CompletionParameters>
-  ) {
-    extensions += ExtensionModel(
-      type,
-      pattern,
-      provider
+    internal data class ExtensionModel(
+        val type: CompletionType,
+        val pattern: ElementPattern<out PsiElement>,
+        val provider: CompletionProvider<in CompletionParameters>
     )
-  }
 
-  /**
-   * Register [CompletionProvider] for [CompletionType.BASIC].
-   *
-   * @param pattern the pattern
-   * @param provider the completion provider
-   */
-  fun basic(
-    pattern: ElementPattern<out PsiElement>,
-    provider: CompletionProvider<in CompletionParameters>
-  ) = extend(CompletionType.BASIC, pattern, provider)
+    internal val extensions = mutableListOf<ExtensionModel>()
 
-  /**
-   * Register [CompletionProvider] for [CompletionType.SMART].
-   *
-   * @param pattern the pattern
-   * @param provider the completion provider
-   */
-  fun smart(
-    pattern: ElementPattern<out PsiElement>,
-    provider: CompletionProvider<in CompletionParameters>
-  ) = extend(CompletionType.SMART, pattern, provider)
+    /**
+     * Register completion provider.
+     *
+     * @param type completion type
+     * @param pattern the pattern
+     * @param provider the completion provider
+     */
+    fun extend(
+        type: CompletionType,
+        pattern: ElementPattern<out PsiElement>,
+        provider: CompletionProvider<in CompletionParameters>
+    ) {
+        extensions += ExtensionModel(
+            type,
+            pattern,
+            provider
+        )
+    }
+
+    /**
+     * Register [CompletionProvider] for [CompletionType.BASIC].
+     *
+     * @param pattern the pattern
+     * @param provider the completion provider
+     */
+    fun basic(
+        pattern: ElementPattern<out PsiElement>,
+        provider: CompletionProvider<in CompletionParameters>
+    ) = extend(CompletionType.BASIC, pattern, provider)
+
+    /**
+     * Register [CompletionProvider] for [CompletionType.SMART].
+     *
+     * @param pattern the pattern
+     * @param provider the completion provider
+     */
+    fun smart(
+        pattern: ElementPattern<out PsiElement>,
+        provider: CompletionProvider<in CompletionParameters>
+    ) = extend(CompletionType.SMART, pattern, provider)
 }

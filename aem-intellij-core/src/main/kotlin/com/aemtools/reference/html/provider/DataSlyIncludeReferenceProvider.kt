@@ -10,8 +10,8 @@ import com.intellij.util.ProcessingContext
  */
 object DataSlyIncludeReferenceProvider : DataSlyIncludeReferenceProviderBase() {
 
-  override fun name(element: PsiElement, context: ProcessingContext): String? {
-    val valueElement = element as? XmlAttributeValue
-    return valueElement?.value
-  }
+    override fun name(element: PsiElement, context: ProcessingContext): String? {
+        val valueElement = element as? XmlAttributeValue
+        return valueElement?.value
+    }
 }

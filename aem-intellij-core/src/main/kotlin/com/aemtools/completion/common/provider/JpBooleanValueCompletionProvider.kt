@@ -9,8 +9,8 @@ import com.aemtools.common.completion.lookupElement
  * @author Kostiantyn Diachenko
  */
 object JpBooleanValueCompletionProvider : BaseCompletionProvider({ _, _, _ ->
-  listOf(
-    lookupElement("true"),
-    lookupElement("false")
-  )
+    listOf(
+        lookupElement("true"),
+        lookupElement("false")
+    )
 })

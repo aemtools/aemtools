@@ -21,42 +21,42 @@ import com.intellij.util.Processor
  */
 class HtlAttributeReferencesSearch : QueryExecutorBase<PsiReference, ReferencesSearch.SearchParameters>() {
 
-  override fun processQuery(queryParameters: ReferencesSearch.SearchParameters, consumer: Processor<in PsiReference>) {
-    val attribute = queryParameters.elementToSearch as? XmlAttribute
-      ?: return
+    override fun processQuery(queryParameters: ReferencesSearch.SearchParameters, consumer: Processor<in PsiReference>) {
+        val attribute = queryParameters.elementToSearch as? XmlAttribute
+            ?: return
 
-    if (!attribute.isHtlAttribute() || !attribute.isHtlDeclarationAttribute()) {
-      return
+        if (!attribute.isHtlAttribute() || !attribute.isHtlDeclarationAttribute()) {
+            return
+        }
+
+        val htlAttributeName = attribute.htlAttributeName()
+
+        when (htlAttributeName) {
+            in listOf(DATA_SLY_LIST, DATA_SLY_REPEAT) -> {
+                val (item, itemList) = extractItemAndItemListNames(attribute.name)
+                val scope = queryParameters.effectiveSearchScope
+                val optimizer = queryParameters.optimizer
+                optimizer.searchWord(item, scope, true, attribute)
+                optimizer.searchWord(itemList, scope, true, attribute)
+            }
+            DATA_SLY_TEMPLATE -> {
+                val name = attribute.htlVariableName()
+                    ?: return
+
+                val scope = GlobalSearchScope.getScopeRestrictedByFileTypes(
+                    GlobalSearchScope.projectScope(attribute.project),
+                    HtlFileType
+                )
+                val optimizer = queryParameters.optimizer
+                optimizer.searchWord(name, scope, true, attribute)
+            }
+            else -> {
+                val name = attribute.htlVariableName()
+                    ?: return
+                val scope = queryParameters.effectiveSearchScope
+                val optimizer = queryParameters.optimizer
+                optimizer.searchWord(name, scope, true, attribute)
+            }
+        }
     }
-
-    val htlAttributeName = attribute.htlAttributeName()
-
-    when (htlAttributeName) {
-      in listOf(DATA_SLY_LIST, DATA_SLY_REPEAT) -> {
-        val (item, itemList) = extractItemAndItemListNames(attribute.name)
-        val scope = queryParameters.effectiveSearchScope
-        val optimizer = queryParameters.optimizer
-        optimizer.searchWord(item, scope, true, attribute)
-        optimizer.searchWord(itemList, scope, true, attribute)
-      }
-      DATA_SLY_TEMPLATE -> {
-        val name = attribute.htlVariableName()
-          ?: return
-
-        val scope = GlobalSearchScope.getScopeRestrictedByFileTypes(
-          GlobalSearchScope.projectScope(attribute.project),
-          HtlFileType
-        )
-        val optimizer = queryParameters.optimizer
-        optimizer.searchWord(name, scope, true, attribute)
-      }
-      else -> {
-        val name = attribute.htlVariableName()
-          ?: return
-        val scope = queryParameters.effectiveSearchScope
-        val optimizer = queryParameters.optimizer
-        optimizer.searchWord(name, scope, true, attribute)
-      }
-    }
-  }
 }

@@ -19,41 +19,41 @@ import com.intellij.psi.impl.source.html.HtmlFileImpl
  * @author Dmytro Primshyts
  */
 class HtlStructureViewProvider : PsiStructureViewFactory {
-  override fun getStructureViewBuilder(psiFile: PsiFile): StructureViewBuilder? {
-    val htmlFile = psiFile.getHtmlFile() as? HtmlFileImpl
-    var htmlStructureViewBuilder: StructureViewBuilder? = null
-    if (htmlFile != null) {
-      htmlStructureViewBuilder = LanguageStructureViewBuilder.getInstance().getStructureViewBuilder(htmlFile)
-    }
-    return object : TreeBasedStructureViewBuilder() {
-      override fun createStructureViewModel(editor: Editor?): StructureViewModel {
-        val _htmlStructureViewBuilder = htmlStructureViewBuilder
-        if (_htmlStructureViewBuilder != null && htmlFile != null) {
-          val fileEditor = FileEditorManager.getInstance(
-            psiFile.project
-          ).getSelectedEditor(psiFile.virtualFile)
-          val viewBuilder = _htmlStructureViewBuilder.createStructureView(fileEditor, psiFile.project)
-          return viewBuilder.treeModel
+    override fun getStructureViewBuilder(psiFile: PsiFile): StructureViewBuilder? {
+        val htmlFile = psiFile.getHtmlFile() as? HtmlFileImpl
+        var htmlStructureViewBuilder: StructureViewBuilder? = null
+        if (htmlFile != null) {
+            htmlStructureViewBuilder = LanguageStructureViewBuilder.getInstance().getStructureViewBuilder(htmlFile)
         }
-        return StructureViewModelBase(
-          psiFile,
-          editor,
-          HtlStructureViewElement(psiFile)
-        )
-      }
+        return object : TreeBasedStructureViewBuilder() {
+            override fun createStructureViewModel(editor: Editor?): StructureViewModel {
+                val _htmlStructureViewBuilder = htmlStructureViewBuilder
+                if (_htmlStructureViewBuilder != null && htmlFile != null) {
+                    val fileEditor = FileEditorManager.getInstance(
+                        psiFile.project
+                    ).getSelectedEditor(psiFile.virtualFile)
+                    val viewBuilder = _htmlStructureViewBuilder.createStructureView(fileEditor, psiFile.project)
+                    return viewBuilder.treeModel
+                }
+                return StructureViewModelBase(
+                    psiFile,
+                    editor,
+                    HtlStructureViewElement(psiFile)
+                )
+            }
+        }
     }
-  }
 }
 
 /**
  * Htl structure view element.
  */
 class HtlStructureViewElement(val file: PsiFile) : PsiTreeElementBase<PsiElement>(file) {
-  override fun getPresentableText(): String {
-    return "HtlStructure: ${file.name}"
-  }
+    override fun getPresentableText(): String {
+        return "HtlStructure: ${file.name}"
+    }
 
-  override fun getChildrenBase(): MutableCollection<StructureViewTreeElement> {
-    return mutableListOf()
-  }
+    override fun getChildrenBase(): MutableCollection<StructureViewTreeElement> {
+        return mutableListOf()
+    }
 }

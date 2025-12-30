@@ -7,4 +7,4 @@ import com.intellij.psi.xml.XmlTag
 fun XmlTag.isFileWithCqNamespace(): Boolean = virtualFile()?.isFileWithCqNamespace() ?: false
 
 fun VirtualFile.isFileWithCqNamespace(): Boolean =
-  path.matches(Regex(".*/_cq_[^/]+(/\\.content)?\\.xml"))
+    path.matches(Regex(".*/_cq_[^/]+(/\\.content)?\\.xml"))

@@ -9,9 +9,9 @@ import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
  * @author Kostiantyn Diachenko
  */
 interface OSGiConfigTestClassesMixin {
-  fun JavaCodeInsightTestFixture.addFelixPropertyAnnotation(): PsiClass =
-    addClass(
-      """
+    fun JavaCodeInsightTestFixture.addFelixPropertyAnnotation(): PsiClass =
+        addClass(
+            """
           package org.apache.felix.scr.annotations;
           
           public @interface Property {
@@ -34,11 +34,11 @@ interface OSGiConfigTestClassesMixin {
               PropertyOption[] options() default {};
           }
         """
-    )
+        )
 
-  fun JavaCodeInsightTestFixture.addFelixComponentClass(): PsiClass =
-    addClass(
-      """
+    fun JavaCodeInsightTestFixture.addFelixComponentClass(): PsiClass =
+        addClass(
+            """
         package org.apache.felix.scr.annotations;
         
         public @interface Component {
@@ -59,16 +59,16 @@ interface OSGiConfigTestClassesMixin {
             String configurationPid() default "";
         }
         """
-    )
+        )
 
-  fun JavaCodeInsightTestFixture.addFelixPropertiesClass(): PsiClass =
-    addClass(
-      """
+    fun JavaCodeInsightTestFixture.addFelixPropertiesClass(): PsiClass =
+        addClass(
+            """
         package org.apache.felix.scr.annotations;
 
         public @interface Properties {
             Property[] value();
         }
         """
-    )
+        )
 }

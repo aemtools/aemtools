@@ -13,13 +13,13 @@ import org.mockito.Mockito.`when`
  * @return mocked xml attribute
  */
 fun createMockAttribute(name: String, value: String = ""): XmlAttribute {
-  val result = mock<XmlAttribute>()
+    val result = mock<XmlAttribute>()
 
-  `when`(result.name).thenReturn(name)
+    `when`(result.name).thenReturn(name)
 
-  `when`(result.value).thenReturn(value)
+    `when`(result.value).thenReturn(value)
 
-  return result
+    return result
 }
 
 /**
@@ -32,19 +32,19 @@ fun createMockAttribute(name: String, value: String = ""): XmlAttribute {
  * @return mocked xml attribute
  */
 fun XmlTag.mockAttribute(name: String, value: String = ""): XmlAttribute {
-  val attribute = createMockAttribute(name, value)
+    val attribute = createMockAttribute(name, value)
 
-  val attributesConcat = if (attributes != null) {
-    attributes + attribute
-  } else {
-    arrayOf(attribute)
-  }
+    val attributesConcat = if (attributes != null) {
+        attributes + attribute
+    } else {
+        arrayOf(attribute)
+    }
 
-  `when`(this.attributes).thenReturn(
-    attributesConcat
-  )
+    `when`(this.attributes).thenReturn(
+        attributesConcat
+    )
 
-  `when`(this.getAttribute(name)).thenReturn(attribute)
+    `when`(this.getAttribute(name)).thenReturn(attribute)
 
-  return attribute
+    return attribute
 }
