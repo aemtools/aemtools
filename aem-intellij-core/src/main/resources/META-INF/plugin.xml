@@ -1,4 +1,4 @@
-<idea-plugin>
+<idea-plugin xmlns:xi="http://www.w3.org/2001/XInclude">
     <id>com.aemtools</id>
     <name>AEM Tools</name>
     <version>@version@</version>
@@ -54,11 +54,12 @@
     <depends>com.intellij.modules.platform</depends>
     <!--To support OSGi configs in JSON format-->
     <depends>com.intellij.modules.json</depends>
+    <depends>com.intellij.modules.lang</depends>
     <depends optional="true" config-file="java.xml">com.intellij.java</depends>
-    <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
-    <depends optional="true" config-file="inspections.xml">com.intellij.modules.lang</depends>
-    <depends optional="true" config-file="expression-language.xml">com.intellij.modules.lang</depends>
-    <depends optional="true" config-file="jcr-property-language.xml">com.intellij.modules.lang</depends>
+    <xi:include href="clientlibdeclaration.xml"/>
+    <xi:include href="inspections.xml"/>
+    <xi:include href="expression-language.xml"/>
+    <xi:include href="jcr-property-language.xml"/>
 
     <idea-version since-build="223"/>
 
