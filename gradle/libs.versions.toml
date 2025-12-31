@@ -1,0 +1,58 @@
+[versions]
+# plugins
+java = "21"
+kotlin = "2.2.21"
+changelog = "2.4.0"
+intelliJPlatform = "2.10.5"
+kover = "0.9.1"
+detekt = "1.23.8"
+powerAssert = "2.2.0"
+grammarkit = "2022.3.2.2"
+
+# 3rd-party dependencies
+gson="2.13.2"
+junit4="4.13.2"
+junitBom="5.8.2"
+mockito="5.12.0"
+mockitoKotlin="5.2.1"
+assertj="3.21.0"
+spek="1.1.5"
+kotest="6.0.7"
+apacheCommons="3.20.0"
+apacheCommonsText="1.15.0"
+
+[libraries]
+kotlinStdLib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+kotlinReflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
+kotlinStdLibJdk8 = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
+assertjCore = { group = "org.assertj", name = "assertj-core", version.ref = "assertj" }
+mockitoCore = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+mockitoKotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
+junitBom = { group = "org.junit", name = "junit-bom", version.ref = "junitBom" }
+junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
+junitJupiter = { group = "org.junit.jupiter", name = "junit-jupiter" }
+junitVintageEngine = { group = "org.junit.vintage", name = "junit-vintage-engine" }
+junitPlatformSuite = { group = "org.junit.platform", name = "junit-platform-suite" }
+junitPlatformLauncher = { group = "org.junit.platform", name = "junit-platform-launcher" }
+junitPlatformConsole = { group = "org.junit.platform", name = "junit-platform-console" }
+spekApi = { group = "org.jetbrains.spek", name = "spek-api", version.ref = "spek" }
+spekJunitPlatformEngine = { group = "org.jetbrains.spek", name = "spek-junit-platform-engine", version.ref = "spek" }
+spekSubjectExtension = { group = "org.jetbrains.spek", name = "spek-subject-extension", version.ref = "spek" }
+kotestRunner = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
+kotestFrameworkEngine = { group = "io.kotest", name = "kotest-framework-engine", version.ref = "kotest" }
+kotestAssertionsCore = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
+kotestProperty = { group = "io.kotest", name = "kotest-property", version.ref = "kotest" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+apacheCommons = { group = "org.apache.commons", name = "commons-lang3", version.ref = "apacheCommons" }
+apacheCommonsText = { group = "org.apache.commons", name = "commons-text", version.ref = "apacheCommonsText" }
+
+[plugins]
+changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
+intelliJPlatform = { id = "org.jetbrains.intellij.platform", version.ref = "intelliJPlatform" }
+intelliJPlatformModule = { id = "org.jetbrains.intellij.platform.module" }
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+kotest = { id = "io.kotest", version.ref = "kotest" }
+powerAssert = { id = "org.jetbrains.kotlin.plugin.power-assert", version.ref = "powerAssert" }
+grammarkit = { id = "org.jetbrains.grammarkit", version.ref = "grammarkit" }

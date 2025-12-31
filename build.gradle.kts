@@ -1,5 +1,6 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import kotlinx.kover.gradle.plugin.dsl.CoverageUnit
+import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.date
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.Constants
@@ -15,22 +16,21 @@ val pluginVersion = properties("pluginVersion")
 val platformType = properties("platformType")
 val platformVersion = properties("platformVersion")
 val platformBundledPlugins = properties("platformBundledPlugins")
-val javaVersion = properties("javaVersion")
-val kotlinVersion = properties("kotlinVersion")
+val javaVersion = libs.versions.java.get()
 val rootProjectDirectory = projectDir
 val rootProject = project
 val pluginSinceBuild = properties("pluginSinceBuild")
 val pluginUntilBuild = properties("pluginUntilBuild")
-val detektVersion = properties("detektVersion")
+val detektVersion = libs.versions.detekt.get()
 
 plugins {
   id("java")
-  kotlin("jvm") version "1.9.20"
-  id("org.jetbrains.intellij.platform") version "2.5.0"
-  id("org.jetbrains.changelog") version "1.3.1"
-  id("io.gitlab.arturbosch.detekt") version "1.23.5"
-  id("org.jetbrains.kotlinx.kover") version "0.9.1"
-  id("org.jetbrains.kotlin.plugin.power-assert") version "2.2.0"
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.intelliJPlatform)
+  alias(libs.plugins.changelog)
+  alias(libs.plugins.detekt)
+  alias(libs.plugins.kover)
+  alias(libs.plugins.powerAssert)
 }
 
 group = pluginGroup
@@ -44,12 +44,16 @@ repositories {
 }
 
 java {
-  sourceCompatibility = JavaVersion.toVersion(javaVersion.toInt())
-  targetCompatibility = JavaVersion.toVersion(javaVersion.toInt())
+  sourceCompatibility = JavaVersion.toVersion(javaVersion)
+  targetCompatibility = JavaVersion.toVersion(javaVersion)
 
   toolchain {
     languageVersion.set(JavaLanguageVersion.of(javaVersion))
   }
+}
+
+kotlin {
+  jvmToolchain(javaVersion.toInt())
 }
 
 intellijPlatform {
@@ -75,23 +79,26 @@ intellijPlatform {
         subList(indexOf(start) + 1, indexOf(end)).joinToString("\n").let(::markdownToHTML)
       }
     }
-    changeNotes = rootProject.changelog.getLatest().toHTML()
+    val changelog = rootProject.changelog // local variable for configuration cache compatibility
+    // Get the latest available change notes from the changelog file
+    changeNotes = providers.gradleProperty("pluginVersion").map { pluginVersion ->
+      with(changelog) {
+        renderItem(
+            (getOrNull(pluginVersion) ?: getUnreleased())
+                .withHeader(false)
+                .withEmptySections(false),
+            Changelog.OutputType.HTML,
+        )
+      }
+    }
   }
   pluginVerification {
     subsystemsToCheck = VerifyPluginTask.Subsystems.ALL
     ides {
       recommended()
-      /*select {
-        types.set(listOf(IntelliJPlatformType.IntellijIdeaCommunity))
-        channels.set(listOf(ProductRelease.Channel.RELEASE))
-        sinceBuild = pluginSinceBuild
-        untilBuild = pluginUntilBuild
-      }*/
     }
     failureLevel.set(
         setOf(
-            // Temporarily disabled due to https://platform.jetbrains.com/t/plugin-verifier-fails-with-plugin-com-intellij-modules-json-not-declared-as-a-plugin-dependency/580
-            // TODO: Uncomment when https://youtrack.jetbrains.com/issue/MP-7366 is fixed
             VerifyPluginTask.FailureLevel.COMPATIBILITY_PROBLEMS,
             VerifyPluginTask.FailureLevel.INTERNAL_API_USAGES,
             VerifyPluginTask.FailureLevel.INVALID_PLUGIN,
@@ -100,6 +107,7 @@ intellijPlatform {
   }
 }
 
+// Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
 changelog {
   version.set(pluginVersion)
   path.set("${project.projectDir}/CHANGELOG.md")
@@ -123,11 +131,6 @@ dependencies {
 
     testFramework(TestFrameworkType.Platform, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
     testFramework(TestFrameworkType.Plugin.Java, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
-
-    // Use a specific version of the verifier
-    // TODO: remove when https://youtrack.jetbrains.com/issue/MP-7366 is fixed
-    // TODO: track updates https://platform.jetbrains.com/t/plugin-verifier-fails-with-plugin-com-intellij-modules-json-not-declared-as-a-plugin-dependency/580
-    //pluginVerifier(version = "1.383")
   }
 
   kover(project(":aem-intellij-common"))
@@ -226,13 +229,7 @@ allprojects {
   tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
       this.jvmTarget.set(JvmTarget.fromTarget(javaVersion))
-//      apiVersion.set(KotlinVersion.CURRENT)
-//      languageVersion.set(KotlinVersion.CURRENT)
     }
-
-//    kotlinOptions.jvmTarget = javaVersion
-//    kotlinOptions.apiVersion = "1.9"
-//    kotlinOptions.languageVersion = "1.9"
   }
 
   tasks.withType<Test>().configureEach {
@@ -287,73 +284,13 @@ subprojects {
     buildSearchableOptions = false
   }
 
-  val mockitoKotlinVersion = properties("mockitoKotlinVersion")
-  val spekVersion = properties("spekVersion")
-  val junit4Version = properties("junit4Version")
-  val junitBomVersion = properties("junitBomVersion")
-  val assertjVersion = properties("assertjVersion")
-  val mockitoVersion = properties("mockitoVersion")
-
   dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
-
-    testImplementation("org.assertj:assertj-core:$assertjVersion")
-    testImplementation("org.mockito:mockito-core:$mockitoVersion")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
-
-    // Use junit-bom to align versions
-    // https://docs.gradle.org/current/userguide/managing_transitive_dependencies.html#sec:bom_import
-    implementation(platform("org.junit:junit-bom:$junitBomVersion")) {
-      because("Platform, Jupiter, and Vintage versions should match")
-    }
-
-    // JUnit Jupiter
-    testImplementation("org.junit.jupiter:junit-jupiter")
-
-    // JUnit Vintage
-    testImplementation("junit:junit:$junit4Version")
-    testRuntimeOnly("org.junit.vintage:junit-vintage-engine") {
-      because("allows JUnit 3 and JUnit 4 tests to run")
-    }
-
-    // JUnit Suites
-    testImplementation("org.junit.platform:junit-platform-suite")
-
-    // JUnit Platform Launcher + Console
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
-      because("allows tests to run from IDEs that bundle older version of launcher")
-    }
-    testRuntimeOnly("org.junit.platform:junit-platform-console") {
-      because("needed to launch the JUnit Platform Console program")
-    }
-
-    testImplementation("org.jetbrains.spek:spek-api:$spekVersion") {
-      exclude(group = "org.jetbrains.kotlin")
-    }
-    testRuntimeOnly("org.jetbrains.spek:spek-junit-platform-engine:$spekVersion") {
-      exclude(group = "org.jetbrains.kotlin")
-      exclude(group = "org.junit.platform")
-    }
-    testImplementation("org.jetbrains.spek:spek-subject-extension:$spekVersion") {
-      exclude(group = "org.jetbrains.kotlin")
-      exclude(group = "org.junit.platform")
-    }
-
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
-
     intellijPlatform {
       create(platformType, platformVersion)
       bundledPlugins(platformBundledPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
 
       testFramework(TestFrameworkType.Platform, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
       testFramework(TestFrameworkType.Plugin.Java, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
-
-      // Use a specific version of the verifier
-      // TODO: remove when https://youtrack.jetbrains.com/issue/MP-7366 is fixed
-      // TODO: track updates https://platform.jetbrains.com/t/plugin-verifier-fails-with-plugin-com-intellij-modules-json-not-declared-as-a-plugin-dependency/580
-      //pluginVerifier(version = "1.383")
     }
   }
 }

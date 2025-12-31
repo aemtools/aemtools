@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.0]
+[1.1.0]: https://github.com/aemtools/aemtools/tree/v1.1.0
+### Maintenance
+- Fix checkstyle, update dependencies, refactor gradle build model
+
 ## [1.0.9]
 [1.0.9]: https://github.com/aemtools/aemtools/tree/v1.0.8
 ### Maintenance
