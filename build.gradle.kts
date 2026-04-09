@@ -113,11 +113,11 @@ dependencies {
 
     bundledPlugins(platformBundledPlugins.split(',').map(String::trim).filter(String::isNotEmpty))
 
-    pluginModule(implementation(project(":aem-intellij-common")))
-    pluginModule(implementation(project(":aem-intellij-core")))
-    pluginModule(implementation(project(":aem-intellij-lang")))
-    pluginModule(implementation(project(":aem-intellij-inspection")))
-    pluginModule(implementation(project(":aem-intellij-index")))
+    implementation(project(":aem-intellij-common"))
+    implementation(project(":aem-intellij-core"))
+    implementation(project(":aem-intellij-lang"))
+    implementation(project(":aem-intellij-inspection"))
+    implementation(project(":aem-intellij-index"))
 
     testFramework(TestFrameworkType.Platform, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
     testFramework(TestFrameworkType.Plugin.Java, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
