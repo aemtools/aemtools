@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.0.11]
+[1.0.11]: https://github.com/aemtools/aemtools/tree/v1.0.11
+### Maintenance
+- Add support of 2026.2 IDEA version
+
+
 ## [1.0.10]
 [1.0.10]: https://github.com/aemtools/aemtools/tree/v1.0.10
 ### Maintenance
