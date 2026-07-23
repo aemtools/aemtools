@@ -1,0 +1,53 @@
+[versions]
+# libraries
+assertj = "3.27.4"
+commonsLang3 = "3.18.0"
+commonsText = "1.14.0"
+gson = "2.13.1"
+junit4 = "4.13.2"
+junitBom = "5.13.4"
+mockito = "5.18.0"
+mockitoKotlin = "5.4.0"
+spek = "1.1.5"
+coroutines = "1.8.0"
+
+# plugins
+changelog = "2.5.0"
+detekt = "1.23.5"
+intelliJPlatform = "2.18.1"
+kotlin = "2.0.21"
+kover = "0.9.8"
+qodana = "2026.1.3"
+
+[libraries]
+assertj = { group = "org.assertj", name = "assertj-core", version.ref = "assertj" }
+commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonsLang3" }
+commons-text = { group = "org.apache.commons", name = "commons-text", version.ref = "commonsText" }
+detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+junit = { group = "junit", name = "junit", version.ref = "junit4" }
+junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junitBom" }
+junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter" }
+junit-platform-suite = { group = "org.junit.platform", name = "junit-platform-suite" }
+junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }
+junit-platform-console = { group = "org.junit.platform", name = "junit-platform-console" }
+junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
+spek-api = { group = "org.jetbrains.spek", name = "spek-api", version.ref = "spek" }
+spek-junit-platform-engine = { group = "org.jetbrains.spek", name = "spek-junit-platform-engine", version.ref = "spek" }
+spek-subject-extension = { group = "org.jetbrains.spek", name = "spek-subject-extension", version.ref = "spek" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+
+[bundles]
+test-junit = ["junit", "junit-jupiter", "junit-platform-suite"]
+test-mockito = ["mockito-core", "mockito-kotlin"]
+test-spek = ["spek-api", "spek-subject-extension"]
+
+[plugins]
+changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+intelliJPlatform = { id = "org.jetbrains.intellij.platform", version.ref = "intelliJPlatform" }
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+qodana = { id = "org.jetbrains.qodana", version.ref = "qodana" }

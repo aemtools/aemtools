@@ -2,18 +2,9 @@ import org.jetbrains.intellij.platform.gradle.Constants
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 
 fun properties(key: String) = providers.gradleProperty(key).get()
-val platformBundledPlugins = properties("platformBundledPlugins")
-val platformType = properties("platformType")
-val platformVersion = properties("platformVersion")
-val mockitoKotlinVersion = properties("mockitoKotlinVersion")
-val spekVersion = properties("spekVersion")
-val junit4Version = properties("junit4Version")
-val junitBomVersion = properties("junitBomVersion")
-val assertjVersion = properties("assertjVersion")
-val mockitoVersion = properties("mockitoVersion")
 
 plugins {
-  kotlin("jvm")
+  id("org.jetbrains.kotlin.jvm")
   id("org.jetbrains.intellij.platform.module")
 }
 
@@ -37,6 +28,7 @@ dependencies {
 
     testFramework(TestFrameworkType.Platform, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
     testFramework(TestFrameworkType.Plugin.Java, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
+    testFramework(TestFrameworkType.JUnit5, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
   }
 
   implementation(kotlin("test"))
@@ -45,44 +37,44 @@ dependencies {
   implementation(project(":aem-intellij-common"))
   implementation(project(":aem-intellij-lang"))
 
-  implementation("org.assertj:assertj-core:$assertjVersion")
-  implementation("org.mockito:mockito-core:$mockitoVersion")
-  implementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
+  implementation(libs.assertj)
+  implementation(libs.mockito.core)
+  implementation(libs.mockito.kotlin)
 
   // Use junit-bom to align versions
   // https://docs.gradle.org/current/userguide/managing_transitive_dependencies.html#sec:bom_import
-  implementation(platform("org.junit:junit-bom:$junitBomVersion")) {
+  implementation(platform(libs.junit.bom)) {
     because("Platform, Jupiter, and Vintage versions should match")
   }
 
   // JUnit Jupiter
-  implementation("org.junit.jupiter:junit-jupiter")
+  implementation(libs.junit.jupiter)
 
   // JUnit Vintage
-  implementation("junit:junit:$junit4Version")
-  testRuntimeOnly("org.junit.vintage:junit-vintage-engine") {
+  implementation(libs.junit)
+  testRuntimeOnly(libs.junit.vintage.engine) {
     because("allows JUnit 3 and JUnit 4 tests to run")
   }
 
   // JUnit Suites
-  implementation("org.junit.platform:junit-platform-suite")
+  implementation(libs.junit.platform.suite)
 
   // JUnit Platform Launcher + Console
-  testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
+  testRuntimeOnly(libs.junit.platform.launcher) {
     because("allows tests to run from IDEs that bundle older version of launcher")
   }
-  testRuntimeOnly("org.junit.platform:junit-platform-console") {
+  testRuntimeOnly(libs.junit.platform.console) {
     because("needed to launch the JUnit Platform Console program")
   }
 
-  implementation("org.jetbrains.spek:spek-api:$spekVersion") {
+  implementation(libs.spek.api) {
     exclude(group = "org.jetbrains.kotlin")
   }
-  runtimeOnly("org.jetbrains.spek:spek-junit-platform-engine:$spekVersion") {
+  runtimeOnly(libs.spek.junit.platform.engine) {
     exclude(group = "org.jetbrains.kotlin")
     exclude(group = "org.junit.platform")
   }
-  implementation("org.jetbrains.spek:spek-subject-extension:$spekVersion") {
+  implementation(libs.spek.subject.extension) {
     exclude(group = "org.jetbrains.kotlin")
     exclude(group = "org.junit.platform")
   }

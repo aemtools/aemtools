@@ -71,10 +71,13 @@ class VersionsDiscoveringStartupActivity : ProjectActivity {
       }
 
   private fun saveDiscoveredVersions(aemVersion: AemVersion, aemProjectSettings: AemProjectSettings) {
-    val newState = AemProjectSettings()
-    newState.aemVersion = aemVersion
-    newState.htlVersion = HtlVersion.getFirstCompatibleWith(aemVersion)
-    aemProjectSettings.loadState(newState)
+    val newState = AemProjectSettings.State(
+        aemVersion = aemVersion,
+        htlVersion = HtlVersion.getFirstCompatibleWith(aemVersion),
+        isManuallyDefinedHtlVersion = false,
+        wasInitialized = true
+    )
+    aemProjectSettings.updateFrom(newState)
   }
 
   private fun XmlTag.extractAemDependencyVersion(): String? {

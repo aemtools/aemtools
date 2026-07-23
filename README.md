@@ -1,6 +1,6 @@
 # AEM Tools – IntelliJ IDEA Plugin
 
-[![Build status](https://ci.appveyor.com/api/projects/status/i0jamppjexluy5xk/branch/master?svg=true)](https://ci.appveyor.com/project/aemtools/aemtools/branch/master) | [![codebeat badge](https://codebeat.co/badges/0cc34216-7e9d-4154-8bfc-2561f77f1cbc)](https://codebeat.co/projects/github-com-dmytrotroynikov-aemtools-master) | [![codecov](https://codecov.io/gh/aemtools/aemtools/branch/master/graph/badge.svg)](https://codecov.io/gh/aemtools/aemtools) | [![downloads](https://img.shields.io/jetbrains/plugin/d/9397-aem-tools.svg)](https://plugins.jetbrains.com/plugin/9397-aem-tools)
+[![Build](https://github.com/aemtools/aemtools/actions/workflows/build.yml/badge.svg)](https://github.com/aemtools/aemtools/actions/workflows/build.yml) | [![codebeat badge](https://codebeat.co/badges/0cc34216-7e9d-4154-8bfc-2561f77f1cbc)](https://codebeat.co/projects/github-com-dmytrotroynikov-aemtools-master) | [![codecov](https://codecov.io/gh/aemtools/aemtools/branch/master/graph/badge.svg)](https://codecov.io/gh/aemtools/aemtools) | [![downloads](https://img.shields.io/jetbrains/plugin/d/9397-aem-tools.svg)](https://plugins.jetbrains.com/plugin/9397-aem-tools)
 
 <!-- Plugin description -->
 
@@ -46,11 +46,12 @@ Or install manually from the [JetBrains plugin page](https://plugins.jetbrains.c
 
 ## ⚙️ Compatibility
 
-Supports IntelliJ IDEA **2020.3+**.
+Supports IntelliJ IDEA **2024.3 through 2026.1** on the current compatibility line.
 Refer to [JetBrains build version mapping](https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html#intellij-platform-based-products-of-recent-ide-versions) for version compatibility.
 
 | Build Range | Recommended Version                                                    |
 | ----------- | ---------------------------------------------------------------------- |
+| 243 – 261   | vNext                                                                  |
 | 243+        | [v1.0.7](https://github.com/aemtools/aemtools/releases/tag/v1.0.7)     |
 | 223 – 243   | [v1.0.6](https://github.com/aemtools/aemtools/releases/tag/v1.0.6)     |
 | 222 – 243   | [v1.0.5](https://github.com/aemtools/aemtools/releases/tag/v1.0.5)     |

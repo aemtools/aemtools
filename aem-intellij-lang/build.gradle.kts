@@ -3,8 +3,9 @@ import org.jetbrains.grammarkit.tasks.GenerateParserTask
 
 plugins {
   java
-  kotlin("jvm")
+  id("org.jetbrains.kotlin.jvm")
   id("org.jetbrains.intellij.platform.module")
+  // Modernization note: migrate to org.jetbrains.intellij.platform.grammarkit after Gradle 9 baseline is stable.
   id("org.jetbrains.grammarkit") version "2022.3.2.2"
   id("org.jetbrains.kotlinx.kover")
 }
@@ -13,6 +14,11 @@ dependencies {
   implementation(project(":aem-intellij-common"))
 
   testImplementation(project(":test-framework"))
+  testImplementation(libs.kotlinx.coroutines.test) {
+    exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-bom")
+    exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-core")
+    exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-core-jvm")
+  }
 }
 
 configure<SourceSetContainer> {

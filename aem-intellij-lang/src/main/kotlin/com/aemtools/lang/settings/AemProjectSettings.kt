@@ -7,7 +7,6 @@ import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 import com.intellij.openapi.components.StoragePathMacros
 import com.intellij.openapi.project.Project
-import com.intellij.util.xmlb.annotations.Tag
 
 /**
  * Storage for AEM project settings.
@@ -18,29 +17,46 @@ import com.intellij.util.xmlb.annotations.Tag
     name = "AemProjectConfiguration",
     storages = [(Storage(StoragePathMacros.WORKSPACE_FILE))]
 )
-class AemProjectSettings : PersistentStateComponent<AemProjectSettings> {
+class AemProjectSettings : PersistentStateComponent<AemProjectSettings.State> {
 
-  @Tag
-  var aemVersion: AemVersion = AemVersion.latest()
+  data class State(
+      var aemVersion: AemVersion = AemVersion.latest(),
+      var htlVersion: HtlVersion = HtlVersion.latest(),
+      var isManuallyDefinedHtlVersion: Boolean = false,
+      var wasInitialized: Boolean = false
+  )
 
-  @Tag
-  var htlVersion: HtlVersion = HtlVersion.latest()
+  private var state = State()
 
-  @Tag
-  var isManuallyDefinedHtlVersion: Boolean = false
+  var aemVersion: AemVersion
+    get() = state.aemVersion
+    set(value) {
+      state.aemVersion = value
+    }
 
-  var wasInitialized: Boolean = false
+  var htlVersion: HtlVersion
+    get() = state.htlVersion
+    set(value) {
+      state.htlVersion = value
+    }
 
-  override fun getState(): AemProjectSettings = this
+  var isManuallyDefinedHtlVersion: Boolean
+    get() = state.isManuallyDefinedHtlVersion
+    set(value) {
+      state.isManuallyDefinedHtlVersion = value
+    }
 
-  override fun loadState(state: AemProjectSettings) {
-    aemVersion = state.aemVersion
-    htlVersion = state.htlVersion
-    isManuallyDefinedHtlVersion = state.isManuallyDefinedHtlVersion
-    wasInitialized = true
+  override fun getState(): State = state
+
+  override fun loadState(state: State) {
+    this.state = state.copy(wasInitialized = true)
   }
 
-  fun isInitialized(): Boolean = wasInitialized
+  fun updateFrom(newState: State) {
+    state = newState.copy(wasInitialized = true)
+  }
+
+  fun isInitialized(): Boolean = state.wasInitialized
 
   companion object {
 

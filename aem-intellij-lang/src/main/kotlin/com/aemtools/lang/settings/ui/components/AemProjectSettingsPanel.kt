@@ -71,11 +71,12 @@ class AemProjectSettingsPanel(private val currentState: AemProjectSettings) {
     }
   }
 
-  fun getPanelState(): AemProjectSettings {
-    val newState = AemProjectSettings()
-    newState.aemVersion = AemVersion.fromFullVersion(newAemVersion.get()) ?: currentState.aemVersion
-    newState.htlVersion = HtlVersion.fromVersion(newHtlVersion.get()) ?: currentState.htlVersion
-    newState.isManuallyDefinedHtlVersion = isManuallyDefinedHtlVersion.get()
-    return newState
+  fun getPanelState(): AemProjectSettings.State {
+    return AemProjectSettings.State(
+        aemVersion = AemVersion.fromFullVersion(newAemVersion.get()) ?: currentState.aemVersion,
+        htlVersion = HtlVersion.fromVersion(newHtlVersion.get()) ?: currentState.htlVersion,
+        isManuallyDefinedHtlVersion = isManuallyDefinedHtlVersion.get(),
+        wasInitialized = true
+    )
   }
 }

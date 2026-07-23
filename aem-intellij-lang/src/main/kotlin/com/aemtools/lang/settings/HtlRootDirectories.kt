@@ -5,8 +5,6 @@ import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 import com.intellij.openapi.components.StoragePathMacros.WORKSPACE_FILE
 import com.intellij.openapi.project.Project
-import com.intellij.util.xmlb.annotations.OptionTag
-import com.intellij.util.xmlb.annotations.Tag
 
 /**
  * Storage for HTL root folders.
@@ -17,11 +15,14 @@ import com.intellij.util.xmlb.annotations.Tag
     name = "HtlRootsConfiguration",
     storages = [(Storage(WORKSPACE_FILE))]
 )
-class HtlRootDirectories : PersistentStateComponent<HtlRootDirectories> {
+class HtlRootDirectories : PersistentStateComponent<HtlRootDirectories.State> {
 
-  @Tag("htl-roots")
-  @OptionTag(tag = "list")
-  val directories: MutableList<String> = ArrayList()
+  data class State(var directories: MutableList<String> = ArrayList())
+
+  private var state = State()
+
+  val directories: MutableList<String>
+    get() = state.directories
 
   /**
    * Add folder as Htl root.
@@ -41,13 +42,11 @@ class HtlRootDirectories : PersistentStateComponent<HtlRootDirectories> {
     directories.remove(folder)
   }
 
-  override fun loadState(state: HtlRootDirectories) {
-    directories.clear()
-
-    directories.addAll(state.directories)
+  override fun loadState(state: State) {
+    this.state = state
   }
 
-  override fun getState(): HtlRootDirectories? = this
+  override fun getState(): State = state
 
   companion object {
 

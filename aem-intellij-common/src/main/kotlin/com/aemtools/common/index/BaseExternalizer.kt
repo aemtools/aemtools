@@ -1,58 +1,64 @@
 package com.aemtools.common.index
 
-import com.aemtools.common.util.ObjectSerializer
-import com.aemtools.common.util.serializeToByteArray
 import com.intellij.util.io.DataExternalizer
-import java.io.ByteArrayOutputStream
 import java.io.DataInput
 import java.io.DataOutput
-import java.io.Serializable
+import java.nio.charset.StandardCharsets
 
 /**
+ * Base class for stable IntelliJ index value externalizers.
+ *
  * @author Dmytro Primshyts
  */
-open class BaseExternalizer<T : Serializable> : DataExternalizer<T> {
-  companion object {
-    val MARKER_BYTES: ByteArray =
-        byteArrayOf(Byte.MAX_VALUE, Byte.MAX_VALUE)
+abstract class BaseExternalizer<T> : DataExternalizer<T> {
+
+  protected fun DataOutput.writeString(value: String) {
+    val bytes = value.toByteArray(StandardCharsets.UTF_8)
+    writeInt(bytes.size)
+    write(bytes)
   }
 
-  override fun save(out: DataOutput, value: T?) {
+  protected fun DataInput.readString(): String {
+    val bytes = ByteArray(readInt())
+    readFully(bytes)
+    return String(bytes, StandardCharsets.UTF_8)
+  }
+
+  protected fun DataOutput.writeNullableString(value: String?) {
+    writeBoolean(value != null)
     if (value != null) {
-      val byteArray = value.serializeToByteArray() + MARKER_BYTES
-      out.write(byteArray)
+      writeString(value)
     }
   }
 
-  override fun read(input: DataInput): T? {
-    val baos = ByteArrayOutputStream()
-
-    var nextByte: Byte
-    while (true) {
-      nextByte = input.readByte()
-      baos.write(byteArrayOf(nextByte))
-
-      val currentSequence = baos.toByteArray()
-      if (currentSequence.endsWith(MARKER_BYTES)) {
-        break
-      }
+  protected fun DataInput.readNullableString(): String? {
+    return if (readBoolean()) {
+      readString()
+    } else {
+      null
     }
-    val result = baos.toByteArray()
-    val resultString = result.copyOfRange(0, result.size - 2).toString(charset("ISO-8859-1"))
-    return ObjectSerializer.deserialize(resultString)
   }
 
-}
-
-/**
- * Check if current [ByteArray] ends with given byte array sequence.
- * @param other the array to check against
- * @return __true__ if current array ends with given sequence
- */
-fun ByteArray.endsWith(other: ByteArray): Boolean {
-  if (other.size > this.size || other.isEmpty()) {
-    return false
+  protected fun DataOutput.writeStringList(values: List<String>) {
+    writeInt(values.size)
+    values.forEach { writeString(it) }
   }
 
-  return (0 until other.size).none { this[this.lastIndex - it] != other[other.lastIndex - it] }
+  protected fun DataInput.readStringList(): List<String> {
+    return List(readInt()) { readString() }
+  }
+
+  protected fun DataOutput.writeNullableStringMap(values: Map<String, String?>) {
+    writeInt(values.size)
+    values.toSortedMap().forEach { (key, value) ->
+      writeString(key)
+      writeNullableString(value)
+    }
+  }
+
+  protected fun DataInput.readNullableStringMap(): Map<String, String?> {
+    return List(readInt()) {
+      readString() to readNullableString()
+    }.toMap()
+  }
 }

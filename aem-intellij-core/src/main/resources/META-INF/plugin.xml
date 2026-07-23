@@ -55,10 +55,7 @@
     <!--To support OSGi configs in JSON format-->
     <depends>com.intellij.modules.json</depends>
     <depends optional="true" config-file="java.xml">com.intellij.java</depends>
-    <depends optional="true" config-file="clientlibdeclaration.xml">com.intellij.modules.lang</depends>
-    <depends optional="true" config-file="inspections.xml">com.intellij.modules.lang</depends>
-    <depends optional="true" config-file="expression-language.xml">com.intellij.modules.lang</depends>
-    <depends optional="true" config-file="jcr-property-language.xml">com.intellij.modules.lang</depends>
+    <depends optional="true" config-file="lang.xml">com.intellij.modules.lang</depends>
 
     <idea-version since-build="223"/>
 
@@ -224,7 +221,7 @@
                              parentId="language"
                              displayName="AEM Project Configuration"
                              instance="com.aemtools.lang.settings.ui.AemProjectSettingsConfigurable"/>
-        <backgroundPostStartupActivity implementation="com.aemtools.lang.settings.init.VersionsDiscoveringStartupActivity"/>
+        <postStartupActivity implementation="com.aemtools.lang.settings.init.VersionsDiscoveringStartupActivity"/>
 
         <projectService
                 serviceInterface="com.aemtools.inspection.service.IInspectionService"
@@ -242,7 +239,7 @@
                 file="com/aemtools/ide/colorscheme/HtlDarcula.xml"/>
         <colorSettingsPage implementation="com.aemtools.ide.htl.HtlColorsAndFontsPage"/>
 
-        <backgroundPostStartupActivity implementation="com.aemtools.init.AemIntellijStartupActivity"/>
+        <postStartupActivity implementation="com.aemtools.init.AemIntellijStartupActivity"/>
 
         <errorHandler implementation="com.aemtools.diagnostics.error.handler.GitHubErrorHandler"/>
 

@@ -1,38 +1,25 @@
 package com.aemtools.diagnostics.error.handler
 
-import com.aemtools.diagnostics.error.handler.exception.TokenInitializationException
 import com.aemtools.diagnostics.error.handler.model.GitHubIssue
-import com.aemtools.diagnostics.error.handler.provider.AccessTokenHolder
 import com.aemtools.diagnostics.error.handler.provider.IssueInfoFactory
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.diagnostic.IdeaLoggingEvent
+import com.intellij.openapi.diagnostic.SubmittedReportInfo
 import com.intellij.openapi.extensions.PluginDescriptor
-import com.intellij.openapi.progress.ProgressIndicator
-import com.intellij.openapi.progress.Task
 import com.intellij.openapi.project.Project
-import org.apache.http.StatusLine
-import org.apache.http.client.methods.CloseableHttpResponse
-import org.apache.http.client.methods.HttpPost
-import org.apache.http.impl.client.CloseableHttpClient
-import org.apache.http.message.BasicHeader
+import com.intellij.util.Consumer
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito.any
-import org.mockito.Mockito.doAnswer
 import org.mockito.Mockito.doNothing
 import org.mockito.Mockito.doReturn
-import org.mockito.Mockito.doThrow
-import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.Spy
 import org.mockito.junit.MockitoJUnitRunner
-import org.mockito.kotlin.argumentCaptor
 import java.awt.Component
-
 
 /**
  * @author DeusBit
@@ -40,18 +27,7 @@ import java.awt.Component
 @RunWith(MockitoJUnitRunner::class)
 class GitHubErrorHandlerTest {
 
-  private val testToken: String = "testToken"
-
   private lateinit var events: Array<out IdeaLoggingEvent>
-
-  @Mock
-  private lateinit var postRequest: HttpPost
-
-  @Mock
-  private lateinit var httpClient: CloseableHttpClient
-
-  @Mock
-  private lateinit var accessTokenHolder: AccessTokenHolder
 
   @Mock
   private lateinit var project: Project
@@ -63,22 +39,10 @@ class GitHubErrorHandlerTest {
   private lateinit var loggingEvent: IdeaLoggingEvent
 
   @Mock
-  private lateinit var indicator: ProgressIndicator
-
-  @Mock
   private lateinit var pluginDescriptor: PluginDescriptor
 
   @Mock
   private lateinit var issueInfoFactory: IssueInfoFactory
-
-  @Mock
-  private lateinit var response: CloseableHttpResponse
-
-  @Mock
-  private lateinit var gitHubIssue: GitHubIssue
-
-  @Mock
-  private lateinit var statusLine: StatusLine
 
   @Spy
   @InjectMocks
@@ -86,98 +50,44 @@ class GitHubErrorHandlerTest {
 
   @Before
   fun init() {
-    doReturn(postRequest).`when`(target).createRequest()
-    doReturn(httpClient).`when`(target).createHttpClient()
-    doReturn(accessTokenHolder).`when`(target).accessTokenHolder()
-    doReturn(project).`when`(target).currentProject(component)
-
     events = arrayOf(loggingEvent)
 
-    doAnswer({ (it.getArgument<Task>(0) as Task.Backgroundable).run(indicator) })
-        .`when`(target).startReporting(org.mockito.kotlin.any())
-
+    doReturn(project).`when`(target).currentProject(component)
     doReturn(pluginDescriptor).`when`(target).pluginDescriptor
     doReturn(issueInfoFactory).`when`(target).issueInfoHolder()
-    doReturn(gitHubIssue).`when`(issueInfoFactory).create(loggingEvent, pluginDescriptor, null)
-    doReturn(response).`when`(httpClient).execute(any())
-    doReturn(statusLine).`when`(response).statusLine
     doNothing().`when`(target).notifyUser(org.mockito.kotlin.any(), org.mockito.kotlin.any())
   }
 
   @Test
-  fun testAccessTokenShouldBeAddedToRequestHeader() {
-    doReturn(testToken).`when`(accessTokenHolder).getToken()
+  fun testShouldCreatePrefilledIssueUrl() {
+    val url = target.createIssueUrl("Broken dialog", "Line one\nLine two")
 
-    target.submit(events, null, component, {})
-
-    argumentCaptor<BasicHeader>().apply {
-      verify(postRequest, times(3)).addHeader(capture())
-
-      assertEquals("Authorization", firstValue.name)
-      assertEquals("token $testToken", firstValue.value)
-    }
+    assertEquals(
+        "https://github.com/aem-tools-issue-tracker/aem-tools-issues/issues/new" +
+            "?title=Broken+dialog&body=Line+one%0ALine+two&labels=bug",
+        url
+    )
   }
 
   @Test
-  fun testAcceptHeaderShouldBeAddedToRequest() {
-    doReturn(testToken).`when`(accessTokenHolder).getToken()
+  fun testShouldPrepareGitHubIssueReportForUserReview() {
+    val issue = GitHubIssue("User issue", "Stacktrace body")
+    var submittedReportInfo: SubmittedReportInfo? = null
 
-    target.submit(events, null, component, {})
+    doReturn(issue).`when`(issueInfoFactory).create(loggingEvent, pluginDescriptor, null)
 
-    argumentCaptor<BasicHeader>().apply {
-      verify(postRequest, times(3)).addHeader(capture())
-
-      assertEquals("Accept", secondValue.name)
-      assertEquals("application/vnd.github.v3+json", secondValue.value)
-    }
-  }
-
-  @Test
-  fun testContentTypeHeaderShouldBeAddedToRequest() {
-    doReturn(testToken).`when`(accessTokenHolder).getToken()
-
-    target.submit(events, null, component, {})
-
-    argumentCaptor<BasicHeader>().apply {
-      verify(postRequest, times(3)).addHeader(capture())
-
-      assertEquals("Content-Type", lastValue.name)
-      assertEquals("application/json", lastValue.value)
-    }
-  }
-
-
-  @Test
-  fun testShouldShouldNotifyUserWhenCannotGetAccessToken() {
-    doThrow(TokenInitializationException()).`when`(accessTokenHolder).getToken()
-
-    target.submit(events, null, component, {})
-
-    verify(target).notifyUser(GitHubErrorHandler.NotificationData("Report error", NotificationType.WARNING), project)
-  }
-
-  @Test
-  fun testShouldShowSuccessNotificationWhenUserIssueHadPublishedToGitHub() {
-
-    doReturn(201).`when`(statusLine).statusCode
-
-    target.submit(events, null, component) {}
+    target.submit(events, null, component, Consumer { submittedReportInfo = it })
 
     verify(target).notifyUser(
-            GitHubErrorHandler.NotificationData(
-            "Report successful",
-            "Thank you for reporting this issue. The issue on the GitHub issue-tracking project has been created.",
-             "", NotificationType.INFORMATION),
-            project)
-  }
-
-  @Test
-  fun testShouldShowWarningNotificationWhenUserIssueHadNotPublishedToGitHub() {
-
-    doReturn(502).`when`(statusLine).statusCode
-
-    target.submit(events, null, component) {}
-
-    verify(target).notifyUser(GitHubErrorHandler.NotificationData("Report error", NotificationType.WARNING), project)
+        GitHubErrorHandler.NotificationData(
+            "Report prepared",
+            "Open GitHub to review and submit the issue.",
+            "https://github.com/aem-tools-issue-tracker/aem-tools-issues/issues/new" +
+                "?title=User+issue&body=Stacktrace+body&labels=bug",
+            NotificationType.INFORMATION
+        ),
+        project
+    )
+    assertEquals(SubmittedReportInfo.SubmissionStatus.NEW_ISSUE, submittedReportInfo?.status)
   }
 }
