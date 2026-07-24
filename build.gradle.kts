@@ -8,6 +8,7 @@ import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 import org.jetbrains.intellij.platform.gradle.tasks.VerifyPluginTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+import org.gradle.api.tasks.JavaExec
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 fun properties(key: String) = providers.gradleProperty(key).get()
@@ -20,7 +21,7 @@ val platformVersion = properties("platformVersion")
 val platformPlugins = csvProperty("platformPlugins")
 val platformBundledPlugins = csvProperty("platformBundledPlugins")
 val platformBundledModules = csvProperty("platformBundledModules")
-val javaVersion = properties("javaVersion")
+val javaLanguageLevel = properties("javaVersion")
 val rootProjectDirectory = projectDir
 val rootProject = project
 val pluginSinceBuild = properties("pluginSinceBuild")
@@ -63,11 +64,11 @@ repositories {
 }
 
 java {
-  sourceCompatibility = JavaVersion.toVersion(javaVersion.toInt())
-  targetCompatibility = JavaVersion.toVersion(javaVersion.toInt())
+  sourceCompatibility = JavaVersion.toVersion(javaLanguageLevel.toInt())
+  targetCompatibility = JavaVersion.toVersion(javaLanguageLevel.toInt())
 
   toolchain {
-    languageVersion.set(JavaLanguageVersion.of(javaVersion))
+    languageVersion.set(JavaLanguageVersion.of(javaLanguageLevel))
   }
 }
 
@@ -262,30 +263,36 @@ allprojects {
   }
 
   java {
-    sourceCompatibility = JavaVersion.toVersion(javaVersion.toInt())
-    targetCompatibility = JavaVersion.toVersion(javaVersion.toInt())
+    sourceCompatibility = JavaVersion.toVersion(javaLanguageLevel.toInt())
+    targetCompatibility = JavaVersion.toVersion(javaLanguageLevel.toInt())
 
     toolchain {
-      languageVersion.set(JavaLanguageVersion.of(javaVersion))
+      languageVersion.set(JavaLanguageVersion.of(javaLanguageLevel))
     }
   }
 
   tasks.withType<JavaCompile>().configureEach {
-    options.release.set(javaVersion.toInt())
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
+    options.release.set(javaLanguageLevel.toInt())
+    sourceCompatibility = javaLanguageLevel
+    targetCompatibility = javaLanguageLevel
 
     javaCompiler.set(javaToolchains.compilerFor {
-      languageVersion.set(JavaLanguageVersion.of(javaVersion))
+      languageVersion.set(JavaLanguageVersion.of(javaLanguageLevel))
     })
   }
 
   tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
-      jvmTarget.set(JvmTarget.fromTarget(javaVersion))
-      apiVersion.set(KotlinVersion.KOTLIN_2_0)
-      languageVersion.set(KotlinVersion.KOTLIN_2_0)
+      jvmTarget.set(JvmTarget.fromTarget(javaLanguageLevel))
+      apiVersion.set(KotlinVersion.fromVersion("2.4"))
+      languageVersion.set(KotlinVersion.fromVersion("2.4"))
     }
+  }
+
+  tasks.withType<JavaExec>().configureEach {
+    javaLauncher.set(javaToolchains.launcherFor {
+      languageVersion.set(JavaLanguageVersion.of(javaLanguageLevel))
+    })
   }
 
   tasks.withType<Test>().configureEach {
@@ -308,7 +315,7 @@ allprojects {
   }
 
   tasks.withType<Detekt>().configureEach {
-    jvmTarget = javaVersion
+    jvmTarget = javaLanguageLevel
     exclude("com.aemtools.test.*", ".*test.*")
 
     reports {
