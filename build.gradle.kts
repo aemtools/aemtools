@@ -95,7 +95,7 @@ intellijPlatform {
         subList(indexOf(start) + 1, indexOf(end)).joinToString("\n").let(::markdownToHTML)
       }
     }
-    val changelog = rootProject.changelog
+    val changelog = project.changelog
     val pluginVersion = providers.gradleProperty("pluginVersion").get()
     changeNotes = provider {
       changelog.renderItem(
@@ -143,12 +143,8 @@ intellijPlatform {
 }
 
 changelog {
-  version.set(pluginVersion)
-  path.set("${project.projectDir}/CHANGELOG.md")
-  header.set(provider { "[$version] - ${date()}" })
-  itemPrefix.set("-")
-  keepUnreleasedSection.set(true)
-  groups.set(listOf("New features", "Bug fixes", "Maintenance"))
+  version = pluginVersion
+  groups = listOf("New features", "Bug fixes", "Maintenance")
 }
 
 dependencies {
