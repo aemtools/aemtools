@@ -1,12 +1,4 @@
 
-build:
-  maxIssues: 10
-  weights:
-    complexity: 2
-    formatting: 1
-    functionThreshold: 1
-    comments: 1
-
 processors:
   active: true
   exclude:
@@ -24,12 +16,6 @@ console-reports:
   #  - 'NotificationReport'
   #  - 'FindingsReport'
   #  - 'BuildFailureReport'
-
-output-reports:
-  active: true
-  exclude:
-  #  - 'PlainOutputReport'
-  #  - 'XmlOutputReport'
 
 potential-bugs:
   active: true
@@ -141,24 +127,24 @@ empty-blocks:
 complexity:
   active: true
   LongMethod:
-    threshold: 20
+    allowedLines: 20
   LongParameterList:
-    functionThreshold: 5
+    allowedFunctionParameters: 5
   LargeClass:
-    threshold: 150
+    allowedLines: 150
   CyclomaticComplexMethod:
-    threshold: 10
+    allowedComplexity: 10
   TooManyFunctions:
-    thresholdInFiles: 30
+    allowedFunctionsPerFile: 30
   ComplexCondition:
-    threshold: 3
+    allowedConditions: 3
   LabeledExpression:
     active: false
   StringLiteralDuplication:
     active: false
-    threshold: 2
+    allowedDuplications: 2
     ignoreAnnotation: true
-    excludeStringsWithLessThan5Characters: true
+    allowedWithLengthLessThan: 5
     ignoreStringsRegex: '$^'
 
 #code-smell:
@@ -168,7 +154,7 @@ complexity:
 #    weight: 0.45
 #    base: 0.5
 
-formatting:
+ktlint:
   active: true
   #useTabs: false
   autoCorrect: false
@@ -274,7 +260,7 @@ style:
         value: 'TODO:'
   ForbiddenImport:
     active: false
-    imports: []
+    forbiddenImports: []
   ModifierOrder:
     active: true
   MagicNumber:
@@ -305,7 +291,9 @@ style:
     active: false
   UseDataClass:
     active: false
-  UnnecessaryAbstractClass:
+  AbstractClassCanBeConcreteClass:
+    active: false
+  AbstractClassCanBeInterface:
     active: false
 
 naming:
@@ -321,10 +309,10 @@ naming:
   FunctionNaming:
     active: true
     functionPattern: '^[a-z$][a-zA-Z$0-9]*$'
-  FunctionMaxLength:
+  FunctionNameMaxLength:
     active: false
     maximumFunctionNameLength: 30
-  FunctionMinLength:
+  FunctionNameMinLength:
     active: false
     minimumFunctionNameLength: 3
   VariableNaming:
@@ -345,9 +333,9 @@ naming:
 
 comments:
   active: true
-  CommentOverPrivateFunction:
+  DocumentationOverPrivateFunction:
     active: false
-  CommentOverPrivateProperty:
+  DocumentationOverPrivateProperty:
     active: false
   UndocumentedPublicClass:
     active: true
@@ -365,4 +353,4 @@ comments:
 #  imports:
     # your.package.Class: new.package.or.Class
     # for example:
-    # io.gitlab.arturbosch.detekt.api.Rule: io.gitlab.arturbosch.detekt.rule.Rule
+    # dev.detekt.api.Rule: dev.detekt.rule.Rule

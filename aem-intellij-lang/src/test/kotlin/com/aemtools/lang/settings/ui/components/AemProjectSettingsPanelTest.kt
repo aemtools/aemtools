@@ -3,20 +3,19 @@ package com.aemtools.lang.settings.ui.components
 import com.aemtools.lang.settings.AemProjectSettings
 import com.aemtools.lang.settings.model.AemVersion
 import com.aemtools.lang.settings.model.HtlVersion
+import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Test
 
 /**
  * Tests for [AemProjectSettingsPanel].
  *
  * @author Kostiantyn Diachenko
  */
-class AemProjectSettingsPanelTest {
+class AemProjectSettingsPanelTest : BasePlatformTestCase() {
 
-  @Test
-  fun `should save custom HTL version`() {
+  fun `test should save custom HTL version`() {
     val panel = initAemProjectSettingsPanel()
 
     panel.newHtlVersion.set(HtlVersion.V_1_3.version)
@@ -29,8 +28,7 @@ class AemProjectSettingsPanelTest {
     assertTrue(panelState.isManuallyDefinedHtlVersion)
   }
 
-  @Test
-  fun `should save HTL version from current state`() {
+  fun `test should save HTL version from current state`() {
     val panel = initAemProjectSettingsPanel()
 
     val panelState = panel.getPanelState()
@@ -40,8 +38,7 @@ class AemProjectSettingsPanelTest {
     assertFalse(panelState.isManuallyDefinedHtlVersion)
   }
 
-  @Test
-  fun `should save custom AEM version`() {
+  fun `test should save custom AEM version`() {
     val panel = initAemProjectSettingsPanel()
 
     panel.newAemVersion.set(AemVersion.V_6_4.version)
@@ -53,8 +50,7 @@ class AemProjectSettingsPanelTest {
     assertFalse(panelState.isManuallyDefinedHtlVersion)
   }
 
-  @Test
-  fun `should save cloud AEM version`() {
+  fun `test should save cloud AEM version`() {
     val panel = initAemProjectSettingsPanel()
 
     panel.newAemVersion.set(AemVersion.CLOUD.version)
@@ -66,8 +62,7 @@ class AemProjectSettingsPanelTest {
     assertFalse(panelState.isManuallyDefinedHtlVersion)
   }
 
-  @Test
-  fun `should save AEM version from current state`() {
+  fun `test should save AEM version from current state`() {
     val panel = initAemProjectSettingsPanel()
 
     val panelState = panel.getPanelState()

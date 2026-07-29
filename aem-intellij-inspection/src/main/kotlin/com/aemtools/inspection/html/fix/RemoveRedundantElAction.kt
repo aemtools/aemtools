@@ -26,8 +26,12 @@ class RemoveRedundantElAction(private val pointer: SmartPsiElementPointer<HtlElE
     val document = psiDocumentManager.getDocument(file)
         ?: return
 
-    val newValue = element.findChildrenByType(HtlStringLiteralMixin::class.java)
-        .firstOrNull()?.name ?: return
+    val newValue = element.children.asSequence()
+        .filterIsInstance<HtlStringLiteralMixin>()
+        .firstOrNull()?.name
+        ?: element.findChildrenByType(HtlStringLiteralMixin::class.java)
+            .firstOrNull()?.name
+        ?: return
 
     val (start, end) = element.textRange.startOffset to element.textRange.endOffset
 

@@ -1,4 +1,4 @@
-import io.gitlab.arturbosch.detekt.Detekt
+import dev.detekt.gradle.Detekt
 import org.jetbrains.changelog.Changelog
 import kotlinx.kover.gradle.plugin.dsl.CoverageUnit
 import org.jetbrains.changelog.date
@@ -38,7 +38,7 @@ plugins {
 }
 
 val detektToolVersion = libs.versions.detekt.get()
-val detektFormattingDependency = libs.detekt.formatting
+val detektKtlintWrapperDependency = libs.detekt.ktlint.wrapper
 val assertjDependency = libs.assertj
 val mockitoCoreDependency = libs.mockito.core
 val mockitoKotlinDependency = libs.mockito.kotlin
@@ -178,7 +178,7 @@ dependencies {
   kover(project(":aem-intellij-index"))
   kover(project(":aem-intellij-inspection"))
 
-  detektPlugins(detektFormattingDependency)
+  detektPlugins(detektKtlintWrapperDependency)
 }
 
 kover {
@@ -239,7 +239,7 @@ tasks {
 
 allprojects {
   apply {
-    plugin("io.gitlab.arturbosch.detekt")
+    plugin("dev.detekt")
     plugin("java")
   }
 
@@ -256,6 +256,20 @@ allprojects {
     disableDefaultRuleSets = true
     autoCorrect = true
     source.setFrom(files("src/main/java", "src/main/kotlin"))
+  }
+
+  plugins.withId("org.jetbrains.kotlinx.kover") {
+    kover {
+      currentProject {
+        instrumentation {
+          excludedClasses.addAll(
+              "com.intellij.debugger.*",
+              "com.intellij.platform.debugger.*",
+              "org.jetbrains.kotlin.idea.debugger.*",
+          )
+        }
+      }
+    }
   }
 
   java {
@@ -292,6 +306,8 @@ allprojects {
   }
 
   tasks.withType<Test>().configureEach {
+    jvmArgs("--add-modules=jdk.jdi")
+
     useJUnitPlatform {
       includeEngines("spek", "junit-vintage", "junit-jupiter")
     }
@@ -311,19 +327,19 @@ allprojects {
   }
 
   tasks.withType<Detekt>().configureEach {
-    jvmTarget = javaLanguageLevel
+    jvmTarget.set(javaLanguageLevel)
     exclude("com.aemtools.test.*", ".*test.*")
 
     reports {
       html.required.set(true)
-      xml.required.set(true)
+      checkstyle.required.set(true)
       sarif.required.set(true)
-      md.required.set(true)
+      markdown.required.set(true)
     }
   }
 
   dependencies {
-    detektPlugins(detektFormattingDependency)
+    detektPlugins(detektKtlintWrapperDependency)
   }
 }
 

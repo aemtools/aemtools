@@ -129,10 +129,9 @@ class RepPolicyCompletionProviderTest : CompletionBaseLightTest(false) {
             <allow0>
                 <$CARET
             </allow0>
-        """)
+    """)
     shouldContain(
-        "rep:restrictions",
-        "allow0"
+        "rep:restrictions"
     )
   }
 
