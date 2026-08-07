@@ -17,6 +17,7 @@ import com.intellij.psi.PsiPolyVariantReferenceBase
 import com.intellij.psi.PsiReference
 import com.intellij.psi.PsiReferenceProvider
 import com.intellij.psi.ResolveResult
+import com.intellij.psi.impl.FakePsiElement
 import com.intellij.psi.util.PsiUtilCore
 import com.intellij.psi.xml.XmlTag
 import com.intellij.util.ProcessingContext
@@ -94,7 +95,13 @@ object I18nReferenceProvider : PsiReferenceProvider() {
 
   private class I18nNavigationWrapper(val xmlTag: XmlTag,
                                       val localizationModel: LocalizationModel)
-    : NavigationItem, XmlTag by xmlTag {
+    : FakePsiElement(), NavigationItem {
+    override fun getNavigationElement(): PsiElement = xmlTag
+
+    override fun isValid(): Boolean = xmlTag.isValid
+
+    override fun getParent(): PsiElement? = xmlTag
+
     override fun navigate(requestFocus: Boolean) {
       val offset = xmlTag.textOffset
       val virtualFile = PsiUtilCore.getVirtualFile(xmlTag)
@@ -126,6 +133,8 @@ object I18nReferenceProvider : PsiReferenceProvider() {
     override fun getName(): String = localizationModel.key
 
     override fun canNavigateToSource(): Boolean = true
+
+    override fun getTextOffset(): Int = xmlTag.textOffset
 
   }
 
