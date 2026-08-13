@@ -155,11 +155,11 @@ dependencies {
     bundledPlugins(platformBundledPlugins)
     plugins(platformPlugins)
 
-    pluginModule(implementation(project(":aem-intellij-common")))
-    pluginModule(implementation(project(":aem-intellij-core")))
-    pluginModule(implementation(project(":aem-intellij-lang")))
-    pluginModule(implementation(project(":aem-intellij-inspection")))
-    pluginModule(implementation(project(":aem-intellij-index")))
+    pluginComposedModule(implementation(project(":aem-intellij-common")))
+    pluginComposedModule(implementation(project(":aem-intellij-core")))
+    pluginComposedModule(implementation(project(":aem-intellij-lang")))
+    pluginComposedModule(implementation(project(":aem-intellij-inspection")))
+    pluginComposedModule(implementation(project(":aem-intellij-index")))
 
     testFramework(TestFrameworkType.Platform, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
     testFramework(TestFrameworkType.Plugin.Java, configurationName = Constants.Configurations.INTELLIJ_PLATFORM_DEPENDENCIES)
