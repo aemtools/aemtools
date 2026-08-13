@@ -1,6 +1,11 @@
 package com.aemtools.index.dataexternalizer
 
-import com.aemtools.common.index.BaseExternalizer
+import com.aemtools.common.index.CodecExternalizer
+import com.aemtools.common.index.IndexValueCodec
+import com.aemtools.common.index.readNullableStringMap
+import com.aemtools.common.index.readString
+import com.aemtools.common.index.writeNullableStringMap
+import com.aemtools.common.index.writeString
 import com.aemtools.index.model.OSGiConfigurationIndexModel
 import java.io.DataInput
 import java.io.DataOutput
@@ -8,7 +13,11 @@ import java.io.DataOutput
 /**
  * @author Dmytro Primshyts
  */
-object OSGiConfigurationExternalizer : BaseExternalizer<OSGiConfigurationIndexModel>() {
+object OSGiConfigurationExternalizer : CodecExternalizer<OSGiConfigurationIndexModel>(
+    OSGiConfigurationCodec
+)
+
+object OSGiConfigurationCodec : IndexValueCodec<OSGiConfigurationIndexModel> {
 
   override fun save(out: DataOutput, value: OSGiConfigurationIndexModel) {
     out.writeString(value.path)

@@ -1,6 +1,9 @@
 package com.aemtools.index.dataexternalizer
 
-import com.aemtools.common.index.BaseExternalizer
+import com.aemtools.common.index.CodecExternalizer
+import com.aemtools.common.index.IndexValueCodec
+import com.aemtools.common.index.readString
+import com.aemtools.common.index.writeString
 import com.aemtools.index.model.LocalizationModel
 import java.io.DataInput
 import java.io.DataOutput
@@ -9,7 +12,9 @@ import java.io.DataOutput
  * @author Dmytro Primshyts
  */
 object LocalizationModelExternalizer
-  : BaseExternalizer<LocalizationModel>() {
+  : CodecExternalizer<LocalizationModel>(LocalizationModelCodec)
+
+object LocalizationModelCodec : IndexValueCodec<LocalizationModel> {
 
   override fun save(out: DataOutput, value: LocalizationModel) {
     out.writeString(value.fileName)
