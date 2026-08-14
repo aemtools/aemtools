@@ -3,6 +3,7 @@ package com.aemtools.diagnostics.error.handler
 import com.aemtools.diagnostics.error.handler.provider.IssueInfoFactory
 import com.aemtools.diagnostics.error.handler.provider.impl.EnvironmentInfoProviderImpl
 import com.aemtools.diagnostics.error.handler.provider.impl.GitHubIssueInfoFactory
+import com.intellij.ide.BrowserUtil
 import com.intellij.ide.DataManager
 import com.intellij.notification.BrowseNotificationAction
 import com.intellij.notification.Notification
@@ -47,13 +48,14 @@ class GitHubErrorHandler : ErrorReportSubmitter() {
     notifyUser(
         NotificationData(
             "Report prepared",
-            "Open GitHub to review and submit the issue.",
+            "Review and submit the prefilled GitHub issue to track this error.",
             url,
             NotificationType.INFORMATION
         ),
         project
     )
-    consumer.consume(SubmittedReportInfo(SubmittedReportInfo.SubmissionStatus.NEW_ISSUE))
+    openIssue(url, project)
+    consumer.consume(SubmittedReportInfo(url, "Open GitHub issue", SubmittedReportInfo.SubmissionStatus.FAILED))
     return true
   }
 
@@ -76,6 +78,10 @@ class GitHubErrorHandler : ErrorReportSubmitter() {
       notification.addAction(BrowseNotificationAction("Open GitHub issue", notificationData.url))
     }
     notification.notify(project)
+  }
+
+  fun openIssue(url: String, project: Project?) {
+    BrowserUtil.browse(url, project)
   }
 
   data class NotificationData(

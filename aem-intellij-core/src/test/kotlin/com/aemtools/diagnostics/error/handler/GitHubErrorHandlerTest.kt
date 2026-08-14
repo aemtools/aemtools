@@ -55,6 +55,7 @@ class GitHubErrorHandlerTest {
     doReturn(project).`when`(target).currentProject(component)
     doReturn(pluginDescriptor).`when`(target).pluginDescriptor
     doReturn(issueInfoFactory).`when`(target).issueInfoHolder()
+    doNothing().`when`(target).openIssue(org.mockito.kotlin.any(), org.mockito.kotlin.any())
     doNothing().`when`(target).notifyUser(org.mockito.kotlin.any(), org.mockito.kotlin.any())
   }
 
@@ -70,7 +71,7 @@ class GitHubErrorHandlerTest {
   }
 
   @Test
-  fun testShouldPrepareGitHubIssueReportForUserReview() {
+  fun testShouldOpenGitHubIssueReportForUserReview() {
     val issue = GitHubIssue("User issue", "Stacktrace body")
     var submittedReportInfo: SubmittedReportInfo? = null
 
@@ -81,13 +82,24 @@ class GitHubErrorHandlerTest {
     verify(target).notifyUser(
         GitHubErrorHandler.NotificationData(
             "Report prepared",
-            "Open GitHub to review and submit the issue.",
+            "Review and submit the prefilled GitHub issue to track this error.",
             "https://github.com/aem-tools-issue-tracker/aem-tools-issues/issues/new" +
                 "?title=User+issue&body=Stacktrace+body&labels=bug",
             NotificationType.INFORMATION
         ),
         project
     )
-    assertEquals(SubmittedReportInfo.SubmissionStatus.NEW_ISSUE, submittedReportInfo?.status)
+    verify(target).openIssue(
+        "https://github.com/aem-tools-issue-tracker/aem-tools-issues/issues/new" +
+            "?title=User+issue&body=Stacktrace+body&labels=bug",
+        project
+    )
+    assertEquals(SubmittedReportInfo.SubmissionStatus.FAILED, submittedReportInfo?.status)
+    assertEquals(
+        "https://github.com/aem-tools-issue-tracker/aem-tools-issues/issues/new" +
+            "?title=User+issue&body=Stacktrace+body&labels=bug",
+        submittedReportInfo?.url
+    )
+    assertEquals("Open GitHub issue", submittedReportInfo?.linkText)
   }
 }
