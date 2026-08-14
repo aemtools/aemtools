@@ -17,5 +17,7 @@
                            implementationClass="com.aemtools.lang.el.editor.ElBraceMatcher"/>
         <lang.quoteHandler language="El"
                            implementationClass="com.aemtools.lang.el.editor.ElQuoteHandler"/>
+        <typedHandler implementation="com.aemtools.lang.el.editor.ElTypedHandler"/>
+        <backspaceHandlerDelegate implementation="com.aemtools.lang.el.editor.ElBackspaceHandler"/>
     </extensions>
 </idea-plugin>

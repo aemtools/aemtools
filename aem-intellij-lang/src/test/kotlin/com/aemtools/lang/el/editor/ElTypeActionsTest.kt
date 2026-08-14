@@ -14,55 +14,55 @@ class ElTypeActionsTest : BasePlatformLightTest(),
   fun `test should close parentheses`() = elTypeTest(
       "$DOLLAR{$CARET}",
       "(",
-      "$DOLLAR{($CARET}"
+      "$DOLLAR{($CARET)}"
   )
 
   fun `test should skip parentheses`() = elTypeTest(
       "$DOLLAR{($CARET)}",
       ")",
-      "$DOLLAR{()$CARET)}"
+      "$DOLLAR{()$CARET}"
   )
 
   fun `test should remove parentheses`() = elTypeTest(
       "$DOLLAR{($CARET)}",
       "\b",
-      "$DOLLAR{$CARET)}"
+      "$DOLLAR{$CARET}"
   )
 
   fun `test should close bracket`() = elTypeTest(
       "$DOLLAR{$CARET}",
       "[",
-      "$DOLLAR{[$CARET}"
+      "$DOLLAR{[$CARET]}"
   )
 
   fun `test should skip bracket`() = elTypeTest(
       "$DOLLAR{[$CARET]}",
       "]",
-      "$DOLLAR{[]$CARET]}"
+      "$DOLLAR{[]$CARET}"
   )
 
   fun `test should remove bracket`() = elTypeTest(
       "$DOLLAR{[$CARET]}",
       "\b",
-      "$DOLLAR{$CARET]}"
+      "$DOLLAR{$CARET}"
   )
 
   fun `test should close single quote string`() = elTypeTest(
       "$DOLLAR{$CARET}",
       "'",
-      "$DOLLAR{'$CARET}"
+      "$DOLLAR{'$CARET'}"
   )
 
   fun `test should skip single quote string`() = elTypeTest(
       "$DOLLAR{'$CARET'}",
       "\'",
-      "$DOLLAR{''$CARET'}"
+      "$DOLLAR{''$CARET}"
   )
 
   fun `test should remove single quote string`() = elTypeTest(
       "$DOLLAR{'$CARET'}",
       "\b",
-      "$DOLLAR{$CARET'}"
+      "$DOLLAR{$CARET}"
   )
 
   private fun elTypeTest(
