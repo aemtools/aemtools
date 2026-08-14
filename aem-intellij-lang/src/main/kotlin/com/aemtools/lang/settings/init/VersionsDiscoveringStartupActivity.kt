@@ -12,7 +12,7 @@ import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.application.ex.ApplicationManagerEx
-import com.intellij.openapi.application.runReadActionBlocking
+import com.intellij.openapi.application.runReadAction
 import com.intellij.openapi.options.ShowSettingsUtil
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.startup.ProjectActivity
@@ -113,7 +113,7 @@ class VersionsDiscoveringStartupActivity : ProjectActivity {
   }
 
   private fun findPomFiles(project: Project): List<XmlFile> {
-    return runReadActionBlocking {
+    return runReadAction {
       val poms = FilenameIndex.getVirtualFilesByName("pom.xml", GlobalSearchScope.projectScope(project))
       poms.mapNotNull { it.toPsiFile(project) as? XmlFile }
     }
