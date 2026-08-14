@@ -1,71 +1,72 @@
-# AEM Tools – IntelliJ IDEA Plugin
+# AEM Tools - IntelliJ IDEA Plugin
 
-[![Build](https://github.com/aemtools/aemtools/actions/workflows/build.yml/badge.svg)](https://github.com/aemtools/aemtools/actions/workflows/build.yml) | [![codebeat badge](https://codebeat.co/badges/0cc34216-7e9d-4154-8bfc-2561f77f1cbc)](https://codebeat.co/projects/github-com-dmytrotroynikov-aemtools-master) | [![codecov](https://codecov.io/gh/aemtools/aemtools/branch/master/graph/badge.svg)](https://codecov.io/gh/aemtools/aemtools) | [![downloads](https://img.shields.io/jetbrains/plugin/d/9397-aem-tools.svg)](https://plugins.jetbrains.com/plugin/9397-aem-tools)
+[![Build](https://github.com/aemtools/aemtools/actions/workflows/build.yml/badge.svg)](https://github.com/aemtools/aemtools/actions/workflows/build.yml) | [![codecov](https://codecov.io/gh/aemtools/aemtools/branch/master/graph/badge.svg)](https://codecov.io/gh/aemtools/aemtools) | [![downloads](https://img.shields.io/jetbrains/plugin/d/9397-aem-tools.svg)](https://plugins.jetbrains.com/plugin/9397-aem-tools)
 
 <!-- Plugin description -->
 
 **Speed up Adobe Experience Manager (AEM) development with powerful IntelliJ IDEA integration.**
 
-AEM Tools is a feature-rich IntelliJ IDEA plugin designed to make AEM project development faster, smarter, and more convenient by harnessing the full power of the IDE. It provides native support for HTL, OSGi configurations, ClientLibs, and Jackrabbit FileVault XML, giving you code intelligence where it matters most.
+AEM Tools adds IDE support for the parts of AEM projects that are usually hard to work with as plain text: HTL, Expression Language, OSGi configurations, ClientLib declarations, and Jackrabbit FileVault XML. It brings completion, navigation, validation, quick documentation, and refactoring support closer to the files AEM developers edit every day.
 
-## 🔗 Key Features
-1. 📝 HTL (Sightly) support
-   * Syntax highlighting
-   * Code completion and navigation
-   * Refactoring and documentation support
-   * Sling Models & `Java Use` class support
-   * Supports HTL versions **1.3 - 1.4**
+## Key Features
 
-2. ⚙️ OSGi Configuration Support
-   * Resolves Felix and OSGi R6-R7 configurations and properties
-   * Metadata property validation 
+### HTL and Expression Language
 
-3. 📦 Jackrabbit FileVault (XML content) Support
-   1. Syntax highlighting for XML content files
-   2. `dialog.xml` auto-completion (Classic UI):
-      * Full xtype list from official documentation
-      * Suggests fields based on selected xtype
-      * Quick documentation for fields and xtypes
-   3. `cq:Component`, `cq:editConfig` completion and highlighting support
+- Syntax highlighting, parsing, completion, and navigation for HTL and EL.
+- Refactoring and quick documentation support for common HTL workflows.
+- Sling Models and Java Use class resolution.
+- HTL version awareness for HTL 1.3 and 1.4 features.
+- Paired editing support inside EL expressions.
 
-4. 📁 ClientLibs (Client Libraries) Support
-   * Autocompletion for:
-     * Category names in HTL and clientlibs declarations 
-     * js.txt and css.txt file entries 
-   * Reference resolution for clientlib assets 
-   * Inline documentation for categories and templates
+### OSGi Configurations
 
-## 🧩 Installation
-Available directly in the **JetBrains Plugin Repository**:
-1. Go to Settings → Plugins
-2. Click Marketplace
-3. Search for **AEM Tools**
-4. Click **Install** and restart the IDE
+- Resolution between OSGi configuration files and Felix or OSGi R6-R7 components.
+- Navigation from configuration properties to Java declarations.
+- Metadata validation for supported OSGi component annotations.
 
-Or install manually from the [JetBrains plugin page](https://plugins.jetbrains.com/plugin/9397-aem-tools).
+### Jackrabbit FileVault XML
 
-## ⚙️ Compatibility
+- Syntax highlighting and validation for AEM XML content files.
+- Classic UI `dialog.xml` completion based on xtype documentation.
+- Completion and highlighting for `cq:Component`, `cq:editConfig`, and related AEM content structures.
 
-Supports IntelliJ IDEA **2024.3 through 2026.1** on the current compatibility line.
-Refer to [JetBrains build version mapping](https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html#intellij-platform-based-products-of-recent-ide-versions) for version compatibility.
+### Client Libraries
 
-| Build Range | Recommended Version                                                    |
-| ----------- | ---------------------------------------------------------------------- |
-| 243 – 261   | vNext                                                                  |
-| 243+        | [v1.0.7](https://github.com/aemtools/aemtools/releases/tag/v1.0.7)     |
-| 223 – 243   | [v1.0.6](https://github.com/aemtools/aemtools/releases/tag/v1.0.6)     |
-| 222 – 243   | [v1.0.5](https://github.com/aemtools/aemtools/releases/tag/v1.0.5)     |
-| 203 – 222   | [v0.9.4.1](https://github.com/aemtools/aemtools/releases/tag/v0.9.4.1) |
+- Completion for ClientLib category names in HTL and ClientLib declarations.
+- Completion and reference resolution for `js.txt` and `css.txt` entries.
+- Inline documentation for categories and client library templates.
 
-## 💡 Why Use AEM Tools?
-* Free: it's an open-source, free feature-rich IntelliJ IDEA plugin available for everyone.
-* Boost Productivity: Skip repetitive tasks with smart code insight.
-* Reduce Errors: Get real-time validation and suggestions.
-* Stay in Flow: Develop AEM components without switching between docs and IDE.
-* Support Modern AEM: Covers essential features for both Classic UI and HTL/Sling Models.
+## Installation
 
-## 🧑‍💻 Contribute
-We welcome contributions and feedback!
-Feel free to open issues or pull requests on GitHub.
+AEM Tools is available from the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/9397-aem-tools).
+
+1. Open **Settings | Plugins** in IntelliJ IDEA.
+2. Select **Marketplace**.
+3. Search for **AEM Tools**.
+4. Install the plugin and restart the IDE when prompted.
+
+## Compatibility
+
+The current release supports IntelliJ IDEA **2024.3 through 2026.2** and matching IntelliJ Platform-based IDEs. See JetBrains' [build number ranges](https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html#intellij-platform-based-products-of-recent-ide-versions) when matching an IDE version to a platform build.
+
+| IDE Build Range | Recommended Version                                                    |
+|-----------------|------------------------------------------------------------------------|
+| 243-263         | [v1.1.0](https://github.com/aemtools/aemtools/releases/tag/v1.1.0)     |
+| 243-261         | [v1.0.10](https://github.com/aemtools/aemtools/releases/tag/v1.0.10)   |
+| 243-252         | [v1.0.7](https://github.com/aemtools/aemtools/releases/tag/v1.0.7)     |
+| 223-243         | [v1.0.6](https://github.com/aemtools/aemtools/releases/tag/v1.0.6)     |
+| 222-243         | [v1.0.5](https://github.com/aemtools/aemtools/releases/tag/v1.0.5)     |
+| 203-222         | [v0.9.4.1](https://github.com/aemtools/aemtools/releases/tag/v0.9.4.1) |
+
+## Why Use AEM Tools?
+
+- Stay in the IDE while working with HTL, dialogs, ClientLibs, OSGi configs, and FileVault content.
+- Catch common AEM markup and configuration mistakes earlier.
+- Navigate between AEM declarations instead of searching manually.
+- Use a free, open-source plugin built specifically for AEM projects.
+
+## Contributing
+
+Issues and pull requests are welcome. For larger changes, open an issue first so the implementation can be discussed before work begins.
 
 <!-- Plugin description end -->

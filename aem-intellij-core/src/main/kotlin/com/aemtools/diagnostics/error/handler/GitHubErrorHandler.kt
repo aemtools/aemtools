@@ -89,8 +89,6 @@ class GitHubErrorHandler : ErrorReportSubmitter() {
           val text: String,
           val url: String,
           val notificationType: NotificationType
-  ) {
-    constructor(title: String, notificationType: NotificationType) : this(title, "", "", notificationType)
-  }
+  )
 }
 

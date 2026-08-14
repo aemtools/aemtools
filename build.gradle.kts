@@ -1,7 +1,6 @@
 import dev.detekt.gradle.Detekt
 import org.jetbrains.changelog.Changelog
 import kotlinx.kover.gradle.plugin.dsl.CoverageUnit
-import org.jetbrains.changelog.date
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.Constants
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType

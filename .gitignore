@@ -19,3 +19,6 @@ build/
 
 # internal docs
 docs
+
+.kotlin/
+.intellijPlatform/

@@ -1,11 +1,21 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.0.11]
-[1.0.11]: https://github.com/aemtools/aemtools/tree/v1.0.10
+## [1.1.0]
+[1.1.0]: https://github.com/aemtools/aemtools/tree/v1.1.0
+### New features
+- #278: Add support for IntelliJ IDEA 2026.2 and 2026.2-based IDEs.
+- Improve EL expression editing with paired parentheses, brackets, and single quotes in EL files and `.content.xml` attribute expressions.
+
+### Bug fixes
+- Fix plugin artifact structure for the split language module.
+- Improve GitHub error reporting by opening a prefilled issue directly and clarifying the IDE notification.
+- Improve HTL i18n reference navigation and startup version discovery read-action handling.
+
 ### Maintenance
-- #278: Add support of 2026.2+ IDEA version
-- Modernize build configuration and update dependencies for Gradle 9 compatibility
+- Modernize the build for Gradle 9 and Java 25.
+- Update compatibility metadata for IntelliJ Platform build range 243-263.
+- Clean up plugin descriptors, changelog configuration, tests, Detekt settings, and shared externalizer infrastructure.
 
 ## [1.0.10]
 [1.0.10]: https://github.com/aemtools/aemtools/tree/v1.0.10

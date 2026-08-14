@@ -100,7 +100,7 @@ object I18nReferenceProvider : PsiReferenceProvider() {
 
     override fun isValid(): Boolean = xmlTag.isValid
 
-    override fun getParent(): PsiElement? = xmlTag
+    override fun getParent(): PsiElement = xmlTag
 
     override fun navigate(requestFocus: Boolean) {
       val offset = xmlTag.textOffset
