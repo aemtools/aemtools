@@ -25,12 +25,13 @@ class AemProjectSettingsConfigurable(val project: Project): Configurable {
     val aemProjectSettings = AemProjectSettings.getInstance(project)
     return aemProjectSettings.aemVersion != newState.aemVersion
         || aemProjectSettings.htlVersion != newState.htlVersion
+        || aemProjectSettings.isManuallyDefinedHtlVersion != newState.isManuallyDefinedHtlVersion
   }
 
   override fun apply() {
     val newState = component.getPanelState()
     val currentState = AemProjectSettings.getInstance(project)
-    currentState.loadState(newState)
+    currentState.updateFrom(newState)
   }
 
   @Nls(capitalization = Nls.Capitalization.Title)

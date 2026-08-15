@@ -15,3 +15,10 @@ src/test/resources/testLibs/**
 
 #Gradle build output
 build/
+.gradle
+
+# internal docs
+docs
+
+.kotlin/
+.intellijPlatform/

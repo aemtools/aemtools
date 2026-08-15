@@ -1,12 +1,12 @@
-import org.gradle.plugins.ide.idea.model.IdeaWorkspace
-
 apply {
   plugin("idea")
 }
 
-task<Copy>("copyCodeStyle") {
+val copyCodeStyle by tasks.registering(Copy::class) {
   from("$projectDir/config/codeStyleSettings.xml")
   into("$projectDir/.idea")
 }
 
-tasks["idea"].dependsOn(tasks["copyCodeStyle"])
+tasks.named("idea") {
+  dependsOn(copyCodeStyle)
+}

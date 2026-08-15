@@ -35,8 +35,7 @@ class HtlRootDirectoriesTest {
 
   @Test
   fun `loadState should override existing roots`() {
-    val newState = HtlRootDirectories()
-    newState.addRoot("/new/root")
+    val newState = HtlRootDirectories.State(mutableListOf("/new/root"))
 
     tested.addRoot("/old/root")
     tested.loadState(newState)
@@ -51,7 +50,7 @@ class HtlRootDirectoriesTest {
   @Test
   fun `getState should return this`() {
     assertThat(tested.state)
-        .isEqualTo(tested)
+        .isEqualTo(HtlRootDirectories.State())
   }
 
 }

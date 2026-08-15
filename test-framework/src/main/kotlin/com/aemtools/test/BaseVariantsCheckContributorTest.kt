@@ -8,11 +8,14 @@ import com.aemtools.test.fixture.UberJarFixtureMixin
 import com.aemtools.test.sdk.TestSdk
 import com.intellij.codeInsight.completion.LightFixtureCompletionTestCase
 import com.intellij.codeInsight.lookup.LookupElement
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.roots.LanguageLevelProjectExtension
 import com.intellij.testFramework.IdeaTestUtil
 import com.intellij.testFramework.LightProjectDescriptor
 import com.intellij.testFramework.fixtures.JavaCodeInsightTestFixture
+import com.intellij.openapi.vfs.newvfs.impl.VfsRootAccess
 import org.assertj.core.api.Assertions.assertThat
+import java.io.File
 
 /**
  * @author Dmytro Primshyts.
@@ -179,8 +182,11 @@ abstract class BaseVariantsCheckContributorTest(val dataPath: String)
 
   override fun setUp() {
     super.setUp()
-    IdeaTestUtil.setProjectLanguageLevel(project, TestSdk.getSdkLanguageLevel())
-    LanguageLevelProjectExtension.getInstance(project).languageLevel = TestSdk.getSdkLanguageLevel()
+    VfsRootAccess.allowRootAccess(myFixture.testRootDisposable, File("src/test").absolutePath)
+    ApplicationManager.getApplication().runWriteAction {
+      IdeaTestUtil.setProjectLanguageLevel(project, TestSdk.getSdkLanguageLevel())
+      LanguageLevelProjectExtension.getInstance(project).languageLevel = TestSdk.getSdkLanguageLevel()
+    }
     myFixture.addUberJar()
     myFixture.addClasses()
     myFixture.setHtlVersion(HtlVersion.V_1_4)

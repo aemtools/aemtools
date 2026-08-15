@@ -1,11 +1,11 @@
-import org.jetbrains.grammarkit.tasks.GenerateLexerTask
-import org.jetbrains.grammarkit.tasks.GenerateParserTask
+import org.jetbrains.intellij.platform.gradle.tasks.GenerateLexerTask
+import org.jetbrains.intellij.platform.gradle.tasks.GenerateParserTask
 
 plugins {
   java
-  kotlin("jvm")
+  id("org.jetbrains.kotlin.jvm")
   id("org.jetbrains.intellij.platform.module")
-  id("org.jetbrains.grammarkit") version "2022.3.2.2"
+  id("org.jetbrains.intellij.platform.grammarkit")
   id("org.jetbrains.kotlinx.kover")
 }
 
@@ -13,6 +13,11 @@ dependencies {
   implementation(project(":aem-intellij-common"))
 
   testImplementation(project(":test-framework"))
+  testImplementation(libs.kotlinx.coroutines.test) {
+    exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-bom")
+    exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-core")
+    exclude(group = "org.jetbrains.kotlinx", module = "kotlinx-coroutines-core-jvm")
+  }
 }
 
 configure<SourceSetContainer> {
@@ -25,15 +30,17 @@ tasks {
   val generateCdLexer by register<GenerateLexerTask>("generateCdLexer") {
     group = "grammar"
     sourceFile.set(file(file("src/main/flex/Htl.flex")))
-    targetOutputDir.set(file("src/main/gen/com/aemtools/lang/htl/lexer"))
+    targetRootOutputDir.set(file("src/main/gen"))
+    pathToClass.set("/com/aemtools/lang/htl/lexer/_HtlLexer.java")
     purgeOldFiles.set(true)
   }
 
   val generateHtlLexer by register<GenerateLexerTask>("generateHtlLexer") {
     group = "grammar"
     sourceFile.set(file("src/main/flex/_ClientlibDeclarationLexer.flex"))
-    targetOutputDir.set(file("src/main/gen/com/aemtools/lang/clientlib"))
-    //purgeOldFiles.set(true)
+    targetRootOutputDir.set(file("src/main/gen"))
+    pathToClass.set("/com/aemtools/lang/clientlib/_ClientlibDeclarationLexer.java")
+    purgeOldFiles.set(true)
 
     mustRunAfter(generateCdLexer)
   }
@@ -41,8 +48,9 @@ tasks {
   val generateJpLexer by register<GenerateLexerTask>("generateJpLexer") {
     group = "grammar"
     sourceFile.set(file("src/main/flex/JcrPropertyLexer.flex"))
-    targetOutputDir.set(file("src/main/gen/com/aemtools/lang/jcrproperty"))
-    //purgeOldFiles.set(true)
+    targetRootOutputDir.set(file("src/main/gen"))
+    pathToClass.set("/com/aemtools/lang/jcrproperty/_JcrPropertyLexer.java")
+    purgeOldFiles.set(true)
 
     mustRunAfter(generateHtlLexer)
   }
@@ -50,8 +58,9 @@ tasks {
   val generateElLexer by register<GenerateLexerTask>("generateElLexer") {
     group = "grammar"
     sourceFile.set(file("src/main/flex/el.flex"))
-    targetOutputDir.set(file("src/main/gen/com/aemtools/lang/el"))
-    //purgeOldFiles.set(true)
+    targetRootOutputDir.set(file("src/main/gen"))
+    pathToClass.set("/com/aemtools/lang/el/_ElLexer.java")
+    purgeOldFiles.set(true)
 
     mustRunAfter(generateJpLexer)
   }

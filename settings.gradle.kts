@@ -1,3 +1,15 @@
+pluginManagement {
+  repositories {
+    gradlePluginPortal()
+    google()
+    mavenCentral()
+  }
+}
+
+plugins {
+  id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
+
 rootProject.name = "aemtools"
 rootProject.buildFileName = "build.gradle.kts"
 
@@ -10,14 +22,3 @@ include(
     "aem-intellij-inspection",
     "test-framework"
 )
-
-pluginManagement {
-  repositories {
-    gradlePluginPortal()
-    google()
-    maven {
-      setUrl("https://dl.bintray.com/jetbrains/intellij-plugin-service")
-    }
-  }
-}
-
